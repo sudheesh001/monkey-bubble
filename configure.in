@@ -69,6 +69,7 @@ PKG_CHECK_MODULES(LIBMONKEYAUDIO_A,[
 	gtk+-2.0
 	gthread-2.0
 	gstreamer-0.8
+	gstreamer-gconf-0.8
 	])
 AC_SUBST(LIBMONKEYAUDIO_A_CFLAGS)
 AC_SUBST(LIBMONKEYAUDIO_A_LIBS)
@@ -88,6 +89,7 @@ PKG_CHECK_MODULES(UI,[
 	librsvg-2.0
 	libgnomeui-2.0
 	gstreamer-0.8
+	gstreamer-gconf-0.8
 	gconf-2.0
 	libglade-2.0
 	])

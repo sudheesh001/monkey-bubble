@@ -64,18 +64,17 @@ struct Client {
 	NetworkGame * game;
         GMutex * monkey_lock;
 	gboolean playing;
-	guint disconnected_handler_id;
 };
 
 
 static void init_clients(NetworkGame * self);
-static void client_disconnected(NetworkMessageHandler * handler,
+static void client_disconnected(NetworkClient * c,
 				struct Client * client);
 
 static void remove_client(NetworkGame * self,struct Client * client);
 
 static void 
-client_disconnected(NetworkMessageHandler * handler,
+client_disconnected(NetworkClient * c,
 		    struct Client * client)
 {
 
@@ -85,6 +84,8 @@ client_disconnected(NetworkMessageHandler * handler,
 
 	g_mutex_lock(PRIVATE(self)->clients_lock);
 
+	g_assert( NETWORK_IS_CLIENT(c));
+	g_assert( NETWORK_IS_CLIENT(client->client));
 	remove_client( client->game,client);
 
 	g_mutex_unlock(PRIVATE(self)->clients_lock);
@@ -116,8 +117,10 @@ add_client(gpointer data,gpointer user_data)
 	c->monkey = monkey_new(TRUE);
 
 
-	c->disconnected_handler_id = g_signal_connect( G_OBJECT(client), "disconnected",
-						     G_CALLBACK(client_disconnected),c);
+	g_signal_connect( G_OBJECT(client), "disconnected",
+			  G_CALLBACK(client_disconnected),c);
+
+
 	PRIVATE(game)->clients = g_list_append( PRIVATE(game)->clients,
 						c);
 
@@ -609,6 +612,8 @@ remove_client(NetworkGame * self,struct Client * client) {
 	
 	g_signal_handlers_disconnect_matched(  G_OBJECT( c ),
 					       G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,self);
+	g_signal_handlers_disconnect_matched(  G_OBJECT( c ),
+					       G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,client);
 
 	g_signal_handlers_disconnect_matched( client->monkey,
 					      G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,client);
@@ -634,9 +639,6 @@ network_game_finalize (GObject * object)
 	
 	g_assert( PRIVATE(self)->clients == NULL);
 	
-
-
-
 	g_list_free(PRIVATE(self)->clients);
 	
                       

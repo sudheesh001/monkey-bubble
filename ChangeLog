@@ -1,3 +1,19 @@
+2004-06-25  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	some sound code work...
+	fix bug in network-message-handler 
+	* configure.in:
+	* src/audio/sound-manager.c: (stop_play), (oggdemux_new_pad),
+	(start_play), (sound_manager_play_music_file):
+	* src/monkey/shooter.c: (shooter_shoot):
+	* src/net/game-manager.c: (send_game_list):
+	* src/net/game.c: (client_disconnected), (add_client),
+	(remove_client), (network_game_finalize):
+	* src/net/message-handler.c: (parse_xml_message), (handler_loop),
+	(read_chunk), (network_message_handler_send_xml_message),
+	(network_message_handler_send_waiting_added),
+	(parse_waiting_added):
+
 2004-06-24  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	some code cleanup

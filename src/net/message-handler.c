@@ -405,9 +405,9 @@ void parse_xml_message(NetworkMessageHandler * mmh,
         t->chunk_count = g_ntohl( t->chunk_count);
 
         size = (t->chunk_count-1) * CHUNK_SIZE;
-        xml_message = g_malloc(size);
+        xml_message = g_malloc(size+1);
 
-        memset(xml_message,0, size);
+        memset(xml_message,0, size+1);
         count = 0;
         while( count < (t->chunk_count -1 )) {
                 
@@ -419,6 +419,7 @@ void parse_xml_message(NetworkMessageHandler * mmh,
 
         xmlMessage = xmlStrdup((const xmlChar *) ( xml_message ));
 
+        g_free(xml_message);
         ctxt = xmlNewParserCtxt();
         if (ctxt == NULL) {
                 fprintf(stderr, "Failed to allocate parser context\n");
@@ -440,6 +441,7 @@ void * handler_loop(NetworkMessageHandler * mmh) {
         while( PRIVATE(mmh)->is_running) {
                 memset(message,0,CHUNK_SIZE);
                 if(read_chunk(mmh,message) ) {
+                        g_print("\nrecieve message %d\n",message[0]);
                         parse_message(mmh,message);
                 }
                 // handle the message
@@ -517,6 +519,7 @@ gboolean read_chunk(NetworkMessageHandler * mmh,
 
         }
 
+                        
         return TRUE;
 
 }
@@ -584,14 +587,14 @@ void network_message_handler_send_xml_message(NetworkMessageHandler * mmh,
         xmlDocDumpMemory(doc,&mem,&size);
 
         computed_size = size + CHUNK_SIZE;
-        computed_size = ceil((( float)computed_size / CHUNK_SIZE)) * CHUNK_SIZE;// + computed_size % CHUNK_SIZE) ;
-
+        computed_size = ceil((( float)computed_size / CHUNK_SIZE)) * CHUNK_SIZE;
         t->chunk_count = htonl( computed_size / CHUNK_SIZE);
 
         xml_message = g_malloc( computed_size);
         memset(xml_message,0,computed_size);
         memcpy(xml_message,t,CHUNK_SIZE);
         memcpy(xml_message+CHUNK_SIZE,mem,size);
+
         write_chunk(mmh,(guint8 *)xml_message,computed_size / CHUNK_SIZE );
 
         xmlFree(mem);
@@ -643,7 +646,7 @@ void network_message_handler_send_waiting_added (NetworkMessageHandler * mmh,
         }
 
         
-                        
+                    
         for(i = 0 ; i < bubbles_count; i++ ){
                 if(j >= CHUNK_SIZE) {
                         write_chunk(mmh,message,1);
@@ -656,9 +659,9 @@ void network_message_handler_send_waiting_added (NetworkMessageHandler * mmh,
                 j++;
 
         }
-
-        write_chunk(mmh,message,1);
-
+        if( j != 0 ) {
+                write_chunk(mmh,message,1);
+        }
 }
 
 
@@ -690,32 +693,33 @@ void parse_waiting_added(NetworkMessageHandler * mmh,
         
         for(i = 0;  i < bubble_count ; i++) {
                 
-
-                bubbles[i] = message[j];
-
-                j++;
                 if( j >= CHUNK_SIZE && i < bubble_count) {
                         read_chunk(mmh,message);
                         j = 0;
                         
                 }
+
+                bubbles[i] = message[j];
+
+                j++;
 
         }
 
         for(i = 0;  i < bubble_count ; i++) {
 
-
-                columns[i] = message[j];
-
-                j++;
                 if( j >= CHUNK_SIZE && i < bubble_count) {
                         read_chunk(mmh,message);
                         j = 0;
                         
                 }
 
+                columns[i] = message[j];
+
+                j++;
+
         }
 
+        g_print("waiting added %d\n",bubble_count);
         g_signal_emit( G_OBJECT(mmh),signals[RECV_WAITING_ADDED],0,
                        monkey_id,
                        bubble_count,

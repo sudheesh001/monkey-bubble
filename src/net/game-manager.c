@@ -419,6 +419,8 @@ void send_game_list(NetworkGameManager * manager) {
                 xmlAddChild(current,text);
                 xmlAddChild(root,current);
 
+
+
                 next = g_list_next(next);
         }
 
