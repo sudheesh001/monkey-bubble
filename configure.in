@@ -1,0 +1,154 @@
+dnl
+dnl configure.in for monkey-bubble
+dnl
+
+dnl  -------------------------
+dnl | autotool initialization |-----------------------------------------------
+dnl  -------------------------
+
+AC_INIT(configure.in)
+AM_INIT_AUTOMAKE(monkey-bubble, 0.1.9)
+AM_CONFIG_HEADER(config.h)
+AM_MAINTAINER_MODE
+
+dnl --------------------------------------------------------------------------
+
+AC_ISC_POSIX
+AC_PROG_CC
+AM_PROG_CC_STDC
+AC_HEADER_STDC
+
+dnl Initialize libtool
+AM_DISABLE_STATIC
+AC_LIBTOOL_WIN32_DLL
+AM_PROG_LIBTOOL
+AC_PROG_INTLTOOL
+
+dnl  ----------------------
+dnl | library dependencies |--------------------------------------------------
+dnl  ----------------------
+
+dnl Versions shared with the (upcoming) .spec file.
+GTK_REQUIRED=2.0.0
+G_THREAD_REQUIRED=2.0.0
+
+AC_SUBST(GTK_REQUIRED)
+AC_SUBST(G_THREAD_REQUIRED)
+
+PKG_CHECK_MODULES(LIBMONKEYUTIL_A,[
+	gtk+-2.0
+	gthread-2.0
+	])
+AC_SUBST(LIBMONKEYUTIL_A_CFLAGS)
+AC_SUBST(LIBMONKEYUTIL_A_LIBS)
+
+PKG_CHECK_MODULES(LIBMONKEY_A,[
+	gtk+-2.0
+	gthread-2.0
+	])
+AC_SUBST(LIBMONKEY_A_CFLAGS)
+AC_SUBST(LIBMONKEY_A_LIBS)
+
+PKG_CHECK_MODULES(LIBMONKEYVIEW_A,[
+	gtk+-2.0
+	gthread-2.0
+	librsvg-2.0
+	])
+AC_SUBST(LIBMONKEYVIEW_A_CFLAGS)
+AC_SUBST(LIBMONKEYVIEW_A_LIBS)
+
+PKG_CHECK_MODULES(LIBMONKEYAUDIO_A,[
+	gtk+-2.0
+	gthread-2.0
+	gstreamer-0.6
+	])
+AC_SUBST(LIBMONKEYAUDIO_A_CFLAGS)
+AC_SUBST(LIBMONKEYAUDIO_A_LIBS)
+
+PKG_CHECK_MODULES(MONKEY_SRV,[
+	gtk+-2.0
+	gthread-2.0
+	])
+AC_SUBST(MONKEY_SRV_CFLAGS)
+AC_SUBST(MONKEY_SRV_LIBS)
+
+
+PKG_CHECK_MODULES(UI,[
+	gtk+-2.0
+	gthread-2.0
+	librsvg-2.0
+	libgnomeui-2.0
+	gstreamer-0.6
+	gconf-2.0
+	libglade-2.0
+	])
+AC_SUBST(UI_CFLAGS)
+AC_SUBST(UI_LIBS)
+
+dnl ***********
+dnl GConf stuff
+dnl ***********
+AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
+AM_GCONF_SOURCE_2
+
+
+# Check for utility programs 
+AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
+dnl --------------------------------------------------------------------------
+
+
+dnl  ------------------
+dnl | language support |------------------------------------------------------
+dnl  ------------------
+
+GETTEXT_PACKAGE=monkey-bubble
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE",[The package name, for gettext])
+
+dnl Please keep this in alphabetical order
+ALL_LINGUAS="de es eu fr"
+
+AM_GLIB_GNU_GETTEXT
+
+dnl AM_GLIB_GNU_GETTEXT sets $DATADIRNAME
+AC_MSG_CHECKING(locale directory)
+
+if test "x$prefix" = "xNONE"; then
+  PACKAGE_LOCALE_DIR=$ac_default_prefix/share/locale
+else
+  PACKAGE_LOCALE_DIR=$prefix/share/locale
+fi
+
+AC_DEFINE_UNQUOTED(PACKAGE_LOCALE_DIR, "$PACKAGE_LOCALE_DIR",
+	[The directory in which gphpedit's locale data will be stored])
+AC_MSG_RESULT($PACKAGE_LOCALE_DIR)
+
+dnl --------------------------------------------------------------------------
+
+dnl  --------
+dnl | output |----------------------------------------------------------------
+dnl  --------
+
+AC_OUTPUT([
+  Makefile
+  debian/Makefile
+  data/Makefile
+  pixmaps/Makefile
+  pixmaps/bubbles/Makefile
+  pixmaps/snake/Makefile
+  pixmaps/number/Makefile
+  pixmaps/frozen-bubble/Makefile
+  sounds/Makefile
+  src/Makefile
+  src/util/Makefile
+  src/monkey/Makefile
+  src/view/Makefile
+  src/audio/Makefile
+  src/ui/Makefile
+  help/Makefile
+  help/C/Makefile
+  help/fr/Makefile
+  po/Makefile.in
+])
+
+dnl --------------------------------------------------------------------------
