@@ -224,6 +224,13 @@ game_network_player_config_notify (GConfClient *client,
   
 }
 
+gboolean add_bubble(gpointer ud) {
+    Monkey * monkey;
+    monkey = (Monkey*)ud;
+    shooter_add_bubble(monkey_get_shooter(monkey),bubble_new(1,0,0));
+    return FALSE;
+}
+
 
 void recv_add_bubble(MonkeyMessageHandler * handler,
 							Color color,
@@ -231,9 +238,10 @@ void recv_add_bubble(MonkeyMessageHandler * handler,
 	   Monkey * monkey;
 
 
-		monkey = PRIVATE(game)->monkey;
-
-		shooter_add_bubble(monkey_get_shooter(monkey),bubble_new(color,0,0));
+	   monkey = PRIVATE(game)->monkey;
+	   
+	   g_idle_add( add_bubble,monkey);
+	   
   
 }
 

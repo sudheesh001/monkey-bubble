@@ -43,6 +43,7 @@
 #define SEND_BUBBLE_ARRAY 3
 #define SEND_ADD_BUBBLE 4
 #define SEND_START 5
+#define SEND_SHOOT 6
 
 enum {
         CONNECTION_CLOSED,
@@ -79,6 +80,10 @@ void parse_bubble_array(MonkeyMessageHandler * mmh,
 
 void parse_add_bubble(MonkeyMessageHandler * mmh,
                       guint8 * message);
+
+
+void parse_shoot(MonkeyMessageHandler * mmh,
+                 guint8 * message);
 
 gboolean read_chunk(MonkeyMessageHandler * mmh,
                 guint8 * data);
@@ -264,6 +269,9 @@ void parse_message(MonkeyMessageHandler * mmh,
                 break;
         case SEND_ADD_BUBBLE :
                 parse_add_bubble(mmh,message);
+                break;
+        case SEND_SHOOT :
+                parse_shoot(mmh,message);
                 break;
         case SEND_START :
                 g_signal_emit( G_OBJECT(mmh),signals[RECV_START],0);
@@ -629,9 +637,55 @@ void monkey_message_handler_send_shoot       (MonkeyMessageHandler * mmh,
 					      guint32 monkey_id,
 					      guint32 time,
                                               gfloat angle) {
-        g_print("send shoot %f \n",angle);
+
+        guint8 message[CHUNK_SIZE];
+
+        struct Test {
+                guint8 message_type;
+                guint32 monkey_id;
+                guint32 time;
+                gint32 angle;
+        };
+
+        struct Test * t;
+
+
+        t = (struct Test *)  message;
+        memset(t,0,CHUNK_SIZE);
+        
+        t->message_type = SEND_SHOOT;
+        
+        t->monkey_id = htonl( monkey_id);
+        t->time = htonl(time);
+        t->angle = htonl( (gint32)rint(  angle*100000 ) );
+        write_chunk(mmh,message,1);
 }
 
+
+
+void parse_shoot(MonkeyMessageHandler * mmh,
+                      guint8 * message) {
+
+
+        struct Test {
+                guint8 message_type;
+                guint32 monkey_id;
+                guint32 time;
+                gint32 angle;
+        };
+        struct Test * t;
+  
+        t = (struct Test *)  message;
+
+        t->monkey_id = g_ntohl( t->monkey_id);
+        t->time = g_ntohl( t->time);
+        t->angle = g_ntohl( t->angle);
+        g_signal_emit( G_OBJECT(mmh),signals[RECV_SHOOT],0,
+                       t->monkey_id,
+                       t->time,
+                       ((gfloat)t->angle)/100000);     
+ 
+}
 
 void monkey_message_handler_send_winlost     (MonkeyMessageHandler * mmh,
 					      guint32 monkey_id,

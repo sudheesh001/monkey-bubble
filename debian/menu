@@ -1,0 +1,6 @@
+?package(monkey-bubble):needs="X11"\
+  section="Games"\
+  hints="Gnome"\
+  title="Monkey Bubble"\
+  icon="/usr/share/pixmaps/monkey-bubble.xpm"\
+  command="/usr/bin/monkey-bubble"

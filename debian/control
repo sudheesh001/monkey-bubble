@@ -1,0 +1,20 @@
+Source: monkey-bubble
+Section: gnome
+Priority: optional
+Maintainer: Thomas Cataldo <thomas.cataldo@aliacom.fr>
+Standards-Version: 3.6.1
+Build-Depends: cdbs, debhelper (>= 3.4.4), librsvg2-dev (>= 2.5.0-2), intltool,
+ libgstreamer0.6-dev (>= 0.6.4-1), libgnomeui-dev (>= 2.4.0.1-5)
+ libglade2-dev (>= 2.0.0), scrollkeeper, libstartup-notification0-dev, gnome-pkg-tools,
+ docbook-to-man
+
+Package: monkey-bubble
+Architecture: any
+Depends: ${shlibs:Depends}, scrollkeeper (>= 0.3.14-5)
+Recommends: yelp
+Description: The GNOME bust'a'move clone
+ Blow up some bubbles in the jungle. You can play alone, with another monkey
+ thanks to the split-screen 2 player game, or with all your friends thanks to the
+ multiplayer game.
+ .
+ URL: http://home.gna.org/monkeybubble/

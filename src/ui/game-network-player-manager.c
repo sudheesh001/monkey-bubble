@@ -35,7 +35,9 @@ struct GameNetworkPlayerManagerPrivate {
   gint current_score;
   MonkeyMessageHandler * handler;
   Monkey * monkey;
-	 int client_id;
+    int client_id;
+
+    gulong add_bubble_handler_id;
 };
 
 static void game_network_player_manager_state_changed(Game * game,GameNetworkPlayerManager * g);
@@ -229,6 +231,9 @@ gboolean start_timeout(gpointer data) {
 
   game_start( GAME(game) );
   
+  g_signal_handler_disconnect( G_OBJECT( PRIVATE(manager)->handler),
+			       PRIVATE(manager)->add_bubble_handler_id);
+
   g_signal_connect( G_OBJECT(game), "state-changed",
 		    G_CALLBACK(game_network_player_manager_state_changed),manager);
   PRIVATE(manager)->current_game = game;
@@ -294,8 +299,9 @@ void game_network_player_manager_start(GameManager * g) {
   g_signal_connect( G_OBJECT( PRIVATE(manager)->handler), "recv-bubble-array",
 		    G_CALLBACK(recv_bubble_array),manager);
 
-  g_signal_connect( G_OBJECT( PRIVATE(manager)->handler), "recv-add-bubble",
-		    G_CALLBACK(recv_add_bubble),manager);
+  PRIVATE(manager)->add_bubble_handler_id = 
+      g_signal_connect( G_OBJECT( PRIVATE(manager)->handler), "recv-add-bubble",
+			G_CALLBACK(recv_add_bubble),manager);
 
   g_signal_connect( G_OBJECT( PRIVATE(manager)->handler), "recv-start",
 		    G_CALLBACK(recv_start),manager);

@@ -1,3 +1,31 @@
+2004-03-10  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	added debian directory maintened by 
+	tom <thomas.cataldo@aliacom.fr>
+
+	more and more network code
+	some .cvsignore update
+
+	* .cvsignore:
+	* debian/changelog:
+	* debian/compat:
+	* debian/control:
+	* debian/copyright:
+	* debian/menu:
+	* debian/monkey-bubble.sgml:
+	* debian/monkey-bubble.xpm:
+	* debian/postinst:
+	* debian/prerm:
+	* debian/rules:
+	* sounds/.cvsignore:
+	* src/net/.cvsignore:
+	* src/net/monkey-message-handler.c: (parse_message),
+	(monkey_message_handler_send_shoot), (parse_shoot):
+	* src/net/monkey-network-game.c: (recv_shoot), (start_new_game):
+	* src/ui/game-network-player-manager.c: (start_timeout),
+	(game_network_player_manager_start):
+	* src/ui/game-network-player.c: (add_bubble), (recv_add_bubble):
+
 2004-03-09  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	the glade file with network menu item so everybody

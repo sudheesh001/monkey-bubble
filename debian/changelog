@@ -1,0 +1,6 @@
+monkey-bubble (0.1.9+0.2.0-1) unstable; urgency=low
+
+  * New maintainer
+  * Use cdbs for the packaging
+
+ -- Thomas Cataldo <thomas.cataldo@aliacom.fr>  Tue, 9 Mar 2004 23:15:32 +0100

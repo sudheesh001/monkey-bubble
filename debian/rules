@@ -1,0 +1,16 @@
+#!/usr/bin/make -f
+# -*- mode: makefile; coding: utf-8 -*-
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/gnome.mk
+
+DEB_INSTALL_MANPAGES_monkey-bubble := debian/monkey-bubble.1
+
+build/monkey-bubble::
+	/usr/bin/docbook-to-man debian/monkey-bubble.sgml > debian/monkey-bubble.1
+
+binary-post-install/monkey-bubble::
+	cp debian/monkey-bubble.xpm debian/monkey-bubble/usr/share/pixmaps
+
+clean::
+	rm -f debian/monkey-bubble.1

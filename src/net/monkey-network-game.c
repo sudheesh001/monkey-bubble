@@ -40,6 +40,18 @@ static GObjectClass* parent_class = NULL;
 void monkey_network_game_finalize(GObject *);
 
 
+static void recv_shoot(MonkeyMessageHandler * handler,
+                       guint32 monkey_id,
+                       guint32 time,
+                       gfloat angle) {
+        g_print("RECV SHOOT angle %f *******************\n\n*********\n",angle);
+
+        monkey_message_handler_send_add_bubble(handler,
+                                               0,
+                                               1);
+
+}
+
 void start_new_game(MonkeyNetworkGame * g) {
         GList * next;
         Bubble  * bubbles[INIT_BUBBLES_COUNT];
@@ -75,6 +87,13 @@ void start_new_game(MonkeyNetworkGame * g) {
                 monkey_message_handler_send_add_bubble(nc->handler,
                                                        nc->client_id,
                                                        1);
+
+
+                g_signal_connect( G_OBJECT(nc->handler),
+                                  "recv-shoot",
+                                  G_CALLBACK( recv_shoot ),
+                                  m);
+
                 next = g_list_next(next);
 
         }
