@@ -1,3 +1,32 @@
+2004-03-01  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	some update to the network code.
+
+	* data/netgame.glade:
+	* src/net/mn-game-manager.c: (connect_client), (disconnect_client),
+	(client_connection_closed), (is_unique_client_name),
+	(add_client_to_game), (remove_client_to_game),
+	(get_network_client_by_handler), (get_network_client_by_client_id),
+	(init_client), (send_game_list_to_client), (send_game_list),
+	(mn_game_manager_new), (create_client):
+	* src/net/monkey-message-handler.c: (monkey_message_handler_new),
+	(monkey_message_handler_finalize),
+	(monkey_message_handler_instance_init),
+	(monkey_message_handler_class_init), (parse_message),
+	(parse_xml_message), (monkey_message_handler_disconnect),
+	(write_chunk), (read_chunk), (monkey_message_handler_send_message),
+	(monkey_message_handler_send_xml_message):
+	* src/net/monkey-message-handler.h:
+	* src/ui/network-game-launcher.c: (network_game_launcher_new),
+	(status_idle), (set_status_message), (connect_server_signal),
+	(free_network_client), (quit_server_signal),
+	(recv_network_init_message), (update_players_list_idle),
+	(update_players_list), (recv_network_xml_message),
+	(set_sensitive_true_idle), (set_sensitive_false_idle),
+	(set_sensitive), (connect_server),
+	(network_game_launcher_finalize),
+	(network_game_launcher_instance_init):
+
 2004-02-22  Danilo Šegan  <dsegan@gmx.net>
 
 	* configure.in: Added "sr" and "sr@Latn" to ALL_LINGUAS.

@@ -21,6 +21,7 @@
 
 #include <glib-object.h>
 #include "color.h"
+#include <libxml/tree.h>
 
 G_BEGIN_DECLS
 
@@ -60,6 +61,10 @@ typedef struct {
 				  guint32 client_id,
 				  gchar * message);
 
+  void (* recv_xml_message)          (MonkeyMessageHandler * mmh,
+				  guint32 client_id,
+				  xmlDoc * doc);
+
   void (* connection_closed)         (MonkeyMessageHandler * mmh);
 
 } MonkeyMessageHandlerClass;
@@ -70,6 +75,9 @@ MonkeyMessageHandler * monkey_message_handler_new(int sock);
 
 void monkey_message_handler_join(MonkeyMessageHandler * mnh);
 void monkey_message_handler_start_listening(MonkeyMessageHandler * mmh);
+
+void monkey_message_handler_disconnect(MonkeyMessageHandler * mmh);
+
 void monkey_message_handler_send_message (MonkeyMessageHandler * mmh,
 					  guint32 client_id,
 					  const gchar * message,
@@ -90,6 +98,9 @@ void monkey_message_handler_send_winlost     (MonkeyMessageHandler * mmh,
 
 void monkey_message_handler_send_start       (MonkeyMessageHandler * mmh);
 
+void monkey_message_handler_send_xml_message(MonkeyMessageHandler * mmh,
+                                             guint32 client_id,
+                                             xmlDoc * doc);
 G_END_DECLS
 
 #endif

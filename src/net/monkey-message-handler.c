@@ -32,6 +32,7 @@
 #include <sys/time.h>
 #include <time.h>
 
+#include <math.h>
 #include <libxml/tree.h> 
 #include "monkey-message-handler.h"
 #include "monkey-net-marshal.h"
@@ -47,6 +48,7 @@ enum {
         RECV_WINLOST,
         RECV_START,
         RECV_MESSAGE,
+        RECV_XML_MESSAGE,
         LAST_SIGNAL
 };
 
@@ -65,11 +67,14 @@ static GObjectClass* parent_class = NULL;
 void monkey_message_handler_finalize(GObject *);
 
 
+void parse_xml_message(MonkeyMessageHandler * mnh,
+                       guint8 * message);
 
 gboolean read_chunk(MonkeyMessageHandler * mmh,
                 guint8 * data);
 	
-MonkeyMessageHandler *monkey_message_handler_new(int sock) {
+MonkeyMessageHandler *
+monkey_message_handler_new(int sock) {
         MonkeyMessageHandler * mmh;
         
         mmh = 
@@ -82,7 +87,8 @@ MonkeyMessageHandler *monkey_message_handler_new(int sock) {
 }
 
 
-void monkey_message_handler_finalize(GObject *object) {
+void 
+monkey_message_handler_finalize(GObject *object) {
         MonkeyMessageHandler * mmh = (MonkeyMessageHandler *) object;
 	
         g_free(PRIVATE(mmh));
@@ -92,11 +98,13 @@ void monkey_message_handler_finalize(GObject *object) {
         }		
 }
 
-static void monkey_message_handler_instance_init(MonkeyMessageHandler * mmh) {
+static void 
+monkey_message_handler_instance_init(MonkeyMessageHandler * mmh) {
         mmh->private =g_new0 (MonkeyMessageHandlerPrivate, 1);
 }
 
-static void monkey_message_handler_class_init (MonkeyMessageHandlerClass *klass) {
+static void 
+monkey_message_handler_class_init (MonkeyMessageHandlerClass *klass) {
         GObjectClass* object_class;
         
         parent_class = g_type_class_peek_parent(klass);
@@ -158,6 +166,16 @@ static void monkey_message_handler_class_init (MonkeyMessageHandlerClass *klass)
                                              G_TYPE_NONE,
                                              2,G_TYPE_UINT,G_TYPE_POINTER);
 
+
+        signals[RECV_XML_MESSAGE]= g_signal_new ("recv-xml-message",
+                                                 G_TYPE_FROM_CLASS (klass),
+                                                 G_SIGNAL_RUN_FIRST |
+                                                 G_SIGNAL_NO_RECURSE,
+                                                 G_STRUCT_OFFSET (MonkeyMessageHandlerClass, recv_xml_message),
+                                                 NULL, NULL,
+                                                 monkey_net_marshal_VOID__UINT_POINTER,
+                                                 G_TYPE_NONE,
+                                                 2,G_TYPE_UINT,G_TYPE_POINTER);
         
         
         signals[CONNECTION_CLOSED]= g_signal_new ("connection-closed",
@@ -217,6 +235,10 @@ void parse_message(MonkeyMessageHandler * mnh,
                                g_ntohl(t->client_id),
                                t->message);               
                 break;
+        case SEND_XML_MESSAGE :
+                parse_xml_message( mnh,
+                                   message);
+                break;             
         default :
                 break;
         }
@@ -224,6 +246,60 @@ void parse_message(MonkeyMessageHandler * mnh,
 
 }
 
+void parse_xml_message(MonkeyMessageHandler * mnh,
+                       guint8 * message) {
+
+        guint8 message2[CHUNK_SIZE];
+        gpointer xml_message;
+        gint size;
+        gint count;
+        xmlChar * xmlMessage;
+        xmlParserCtxt * ctxt; 
+        xmlDocPtr doc;
+        
+        struct Test {
+                guint8 message_type;
+                guint32 client_id;
+                guint32 chunk_count;
+                gchar message[CHUNK_SIZE-(1+4+4)];
+        };
+
+        struct Test * t;
+  
+        t = (struct Test *)  message;
+        t->client_id = g_ntohl( t->client_id);
+        t->chunk_count = g_ntohl( t->chunk_count);
+
+        size = (t->chunk_count-1) * CHUNK_SIZE;
+        xml_message = g_malloc(size);
+
+        memset(xml_message,0, size);
+        count = 0;
+        while( count < (t->chunk_count -1 )) {
+                
+                read_chunk(mnh,message2);
+                memcpy((xml_message+(CHUNK_SIZE*count)),message2,CHUNK_SIZE);
+                count++;
+        }
+
+        g_print("***********************************************\nxml readed\n %s\n*************************************************************\n",(char *)xml_message);
+
+        xmlMessage = xmlStrdup((const xmlChar *) ( xml_message ));
+
+        ctxt = xmlNewParserCtxt();
+        if (ctxt == NULL) {
+                fprintf(stderr, "Failed to allocate parser context\n");
+                return;
+        }
+        doc = xmlCtxtReadDoc(ctxt, xmlMessage, 
+                             NULL,NULL,0);
+        
+        
+        g_signal_emit( G_OBJECT(mnh),signals[RECV_XML_MESSAGE],0,
+                       g_ntohl(t->client_id),
+                       doc);               
+        
+}
 
 void * handler_loop(MonkeyMessageHandler * mmh) {
         guint8  message[32];
@@ -242,6 +318,15 @@ void * handler_loop(MonkeyMessageHandler * mmh) {
 }
 
 
+void monkey_message_handler_disconnect(MonkeyMessageHandler * mmh) {
+        g_assert( IS_MONKEY_MESSAGE_HANDLER(mmh));
+
+        close( PRIVATE(mmh)->sock );
+
+        PRIVATE(mmh)->is_running = FALSE;
+
+}
+
 void monkey_message_handler_start_listening(MonkeyMessageHandler * mmh) {
         GError ** error;
 
@@ -256,16 +341,18 @@ void write_chunk(MonkeyMessageHandler * mmh,
                   guint8 * data,guint chunk_count) {
 
         guint size;
-        guint wsize;
-
+        guint p;
+        guint writed;
+        p = 0;
+        writed = 0;
         size = chunk_count * CHUNK_SIZE;
         
         while( size > 0 ) {
-                if( (wsize = write(PRIVATE(mmh)->sock, data, size)) < 1) {
+                if( (writed = write(PRIVATE(mmh)->sock, data+p, size)) < 1) {
                         g_error("write()");
                 }
-
-                size -= wsize;
+                size -= writed;
+                p += writed;
         }
         
 }
@@ -273,19 +360,21 @@ void write_chunk(MonkeyMessageHandler * mmh,
 gboolean read_chunk(MonkeyMessageHandler * mmh,
                 guint8 * data) {
 
-        guint size;
-        guint wsize;
-
+        guint size,p;
+        guint readed;
         size = CHUNK_SIZE;
-        wsize = 1;
-        while( size > 0 && wsize > 0) {
-                if( (wsize = read(PRIVATE(mmh)->sock, data, size)) < 1) {
+        readed = 1;
+        p = 0;
+        while( size > 0 && readed > 0) {
+                if( (readed = read(PRIVATE(mmh)->sock, data+p, size)) < 1) {
                         g_log(G_LOG_DOMAIN,G_LOG_LEVEL_DEBUG,"Connection close %d\n",PRIVATE(mmh)->sock);
                         PRIVATE(mmh)->is_running = FALSE;
                         return FALSE;
                 } else {
-                        size -= wsize;
+                        p += readed;
+                        size -= readed;
                 }
+
         }
 
         return TRUE;
@@ -317,8 +406,10 @@ void monkey_message_handler_send_message (MonkeyMessageHandler * mmh,
         t->message_type = SEND_MESSAGE;
         
         t->client_id = htonl( client_id);
-        g_print("message :\n%s",text);
-       g_strlcat( t->message,text,CHUNK_SIZE -5);
+
+        g_print("*********************************************************\nmessage :\n%s\n*****************************************************************\n",text);
+
+        g_strlcat( t->message,text,CHUNK_SIZE -5);
         
         write_chunk(mmh,message,1);
 }
@@ -332,7 +423,7 @@ void monkey_message_handler_send_xml_message(MonkeyMessageHandler * mmh,
         int size;
         guint32 computed_size;
         guint8 message[CHUNK_SIZE];
-        gpointer * xml_message;
+        gpointer xml_message;
  
         struct Test {
                 guint8 message_type;
@@ -350,20 +441,21 @@ void monkey_message_handler_send_xml_message(MonkeyMessageHandler * mmh,
         
         t->client_id = htonl( client_id);
 
-        
+        mem = NULL;
         xmlDocDumpMemory(doc,&mem,&size);
 
         computed_size = size + CHUNK_SIZE;
-        computed_size = (computed_size + computed_size % CHUNK_SIZE) ;
+        computed_size = ceil((( float)computed_size / CHUNK_SIZE)) * CHUNK_SIZE;// + computed_size % CHUNK_SIZE) ;
 
         t->chunk_count = htonl( computed_size / CHUNK_SIZE);
 
         xml_message = g_malloc( computed_size);
-
+        g_print("****************************************************\nsend xml message:\n%s\n******************************************************************\n",mem);
         memset(xml_message,0,computed_size);
         memcpy(xml_message,t,CHUNK_SIZE);
         memcpy(xml_message+CHUNK_SIZE,mem,size);
-        write_chunk(mmh,(guint8 *)xml_message,computed_size % CHUNK_SIZE );
+        write_chunk(mmh,(guint8 *)xml_message,computed_size / CHUNK_SIZE );
+        
 }
 
 void monkey_message_handler_join(MonkeyMessageHandler * mnh) {

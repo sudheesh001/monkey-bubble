@@ -31,6 +31,7 @@
 #include <sys/time.h>
 #include <time.h>
 
+#include <libxml/tree.h>
 #include <gtk/gtk.h>
 
 #include "mn-game-manager.h"
@@ -38,22 +39,30 @@
 #include "monkey-message-handler.h"
 
 #define SERVER_PORT 6666
-typedef struct NetworkClient {
+
+typedef struct NetworkClient NetworkClient;
+typedef struct NetworkGame NetworkGame;
+
+struct NetworkClient {
         guint          client_id;
         gchar *        client_name;
         MonkeyMessageHandler * handler;
-} NetworkClient;
+        NetworkGame * game;
+};
 
-typedef struct NetworkGame {
+struct NetworkGame {
         guint                 game_id;
         MonkeyNetworkGame *   game;
         GList *               clients;
         NetworkClient *       game_owner;
-} NetworkGame;
+};
 
 struct MnGameManagerPrivate {
         GHashTable *    pending_clients;
-        GHashTable *    clients;
+        GHashTable *    clients_by_name;
+        GHashTable *    clients_by_id;
+        GHashTable *    clients_by_handler;
+
         GList *         games;
         GMutex *        global_lock;
         gint            socket;
@@ -62,6 +71,7 @@ struct MnGameManagerPrivate {
         GThread *       main_thread;
         guint32         current_client_id;
         gboolean        init_ok;
+        NetworkGame *   ng;
 };
 
 #define PRIVATE( MnGameManager ) (MnGameManager->private)
@@ -69,13 +79,175 @@ struct MnGameManagerPrivate {
 static GObjectClass* parent_class = NULL;
 
 void mn_game_manager_finalize(GObject *);
+
+gboolean connect_client(MnGameManager * manager,
+                    NetworkClient * client);
+
+void disconnect_client(MnGameManager * manager,
+                       NetworkClient * client);
+
 void init_client(MonkeyMessageHandler * mmh,
                  guint32 client_id,
                  gchar * message,
                  MnGameManager * manager);
 
+void send_game_list(MnGameManager * manager);
+
 gboolean init_server_socket(MnGameManager * manager);
 
+
+
+static NetworkClient * get_network_client_by_handler(MnGameManager * manager,MonkeyMessageHandler * handler);
+static NetworkClient * get_network_client_by_client_id(MnGameManager * manager,int client_id);
+
+static gboolean is_unique_client_name(MnGameManager * manager,
+                                      const gchar * client_name);
+
+static void add_client_to_game(MnGameManager * manager,
+                               NetworkGame * ng,
+                               NetworkClient * client);
+
+
+static void remove_client_to_game(MnGameManager * manager,
+                                  NetworkGame * ng,
+                                  NetworkClient * client);
+
+gboolean connect_client(MnGameManager * manager,
+                    NetworkClient * client) {
+
+        if( is_unique_client_name(manager,client->client_name) ) {
+                g_hash_table_insert( PRIVATE(manager)->clients_by_handler,
+                                     (gpointer)client->handler,
+                                     client);
+                
+                g_hash_table_insert( PRIVATE(manager)->clients_by_name,
+                                     (gpointer)client->client_name,
+                                     client);
+                
+                g_hash_table_insert( PRIVATE(manager)->clients_by_id,
+                                     (gpointer)&(client->client_id),
+                                     client);
+                
+                g_hash_table_remove( PRIVATE(manager)->pending_clients,
+                                     (gpointer)&(client->client_id));
+                return TRUE;
+        } else {
+                return FALSE;
+        }
+}
+
+void disconnect_client(MnGameManager * manager,
+                       NetworkClient * client) {
+        
+        if( g_hash_table_lookup(PRIVATE(manager)->pending_clients,
+                                &(client->client_id)) != NULL) {
+
+                // just a pending client
+
+                g_hash_table_remove( PRIVATE(manager)->pending_clients,
+                                     &(client->client_id));
+                
+        } else {
+
+                if( client->game != NULL) {
+                        remove_client_to_game(manager,client->game,client);
+                }
+
+                
+                
+                g_hash_table_remove( PRIVATE(manager)->clients_by_name,
+                                     (gpointer)client->client_name);
+                
+                g_hash_table_remove( PRIVATE(manager)->clients_by_id,
+                                     (gpointer)&(client->client_id));
+                
+                
+
+        }
+
+
+
+
+        monkey_message_handler_disconnect(client->handler);
+                
+}
+
+
+
+void client_connection_closed(MonkeyMessageHandler * mmh,
+                              MnGameManager * manager) {
+
+
+        NetworkClient * client;
+
+        client = get_network_client_by_handler(manager,mmh);
+        g_print("client connection closed \n");
+        if( client != NULL ) {
+                g_print("client connection closed %s\n",client->client_name);
+
+                disconnect_client(manager,client);
+                g_hash_table_remove( PRIVATE(manager)->clients_by_handler,
+                                     (gpointer)client->handler);
+
+                g_object_unref( G_OBJECT( client->handler) );
+                client->handler = NULL;
+                
+                g_free(client->client_name);
+                
+                g_free(client);
+
+          
+        }
+        
+}
+
+static gboolean is_unique_client_name(MnGameManager * manager,
+                                      const gchar * client_name) {
+
+        return TRUE;
+}
+
+static void add_client_to_game(MnGameManager * manager,
+                               NetworkGame * ng,
+                               NetworkClient * client) {
+
+        ng->clients = g_list_append(ng->clients,
+                                    client);
+
+        client->game = ng;
+        if( ng->game_owner == NULL ) {
+                ng->game_owner = client;
+        }
+
+        send_game_list(manager);
+}
+
+static void remove_client_to_game(MnGameManager * manager,
+                                  NetworkGame * ng,
+                                  NetworkClient * client) {
+
+        ng->clients = g_list_remove(ng->clients,
+                                    client);
+
+        if( ng->game_owner == client) {
+                if( ng->clients != NULL ) {
+                        ng->game_owner = (NetworkClient *)ng->clients->data;
+                } else {
+                        ng->game_owner = NULL;
+                }       
+        }
+        
+        send_game_list(manager);
+}
+
+static NetworkClient * get_network_client_by_handler(MnGameManager * manager,MonkeyMessageHandler * handler) {
+        return (NetworkClient *) g_hash_table_lookup(PRIVATE(manager)->clients_by_handler,handler);
+}
+
+
+static NetworkClient * get_network_client_by_client_id(MnGameManager * manager,int client_id) {
+        return (NetworkClient *) g_hash_table_lookup(PRIVATE(manager)->clients_by_id,&client_id);
+}
 
 
 void init_client(MonkeyMessageHandler * mmh,
@@ -86,38 +258,127 @@ void init_client(MonkeyMessageHandler * mmh,
         NetworkClient * nc;
 
         g_print("Message client %d, message :\n%s\n",client_id,message);
-        
-        nc = (NetworkClient *) g_hash_table_lookup(PRIVATE(manager)->pending_clients,
-                                                   &client_id);
 
-        
-        if( nc == NULL) {
-                g_print("Bad client %d\n",client_id);
-        } else {
-                char ** s = g_strsplit(message,"=",2);
-                if( s[0] != NULL && s[1] != NULL) {
-                        char * client_name;
-                        g_assert(client_id == nc->client_id);
-                        client_name = g_strdup(s[1]);
+        if( g_str_has_prefix(message,"INIT_MESSAGE") ) {
+                nc = (NetworkClient *) g_hash_table_lookup(PRIVATE(manager)->pending_clients,
+                                                           &client_id);
+                
+                
+                
+                if( nc == NULL) {
+                        g_print("Bad client %d\n",client_id);
+                } else {
+                        char ** s = g_strsplit(message,"=",2);
+                        if( s[0] != NULL && s[1] != NULL) {
+                                NetworkGame * ng;
+                                char * client_name;
+                                g_assert(client_id == nc->client_id);
+                                client_name = g_strdup(s[1]);
+                                nc->client_name = client_name;
+                                
+                                ng = PRIVATE(manager)->ng;
+                                g_print("client name =%s\n",client_name);
+                                
+                                if( is_unique_client_name(manager,client_name) ) {
+                                        
+                                        
+                                        monkey_message_handler_send_message( mmh, 
+                                                                             nc->client_id,
+                                                                             "INIT_OK",
+                                                                             strlen("INIT_OK"));
+                                        
+                                        if( connect_client(manager,nc) ) {
+                                                
+                                                add_client_to_game(manager,ng,nc);
+                                        } else {
+                                                monkey_message_handler_send_message( mmh, 
+                                                                                     nc->client_id,
+                                                                                     "INIT_NOT_OK:BAD_NAME",
+                                                                                     strlen("INIT_NOT_OK:BAD_NAME"));
+                                                
+                                                disconnect_client(manager,nc);
+                                        }
 
-                        g_print("client name =%s\n",client_name);
-                        nc->client_name = client_name;
-
-                        g_hash_table_remove( PRIVATE(manager)->pending_clients,
-                                             &client_id);
-
-                        monkey_message_handler_send_message( mmh, 
-                                                             nc->client_id,
-                                                             "INIT_OK",
-                                                             strlen("INIT_OK"));
-
-                        //                        send_game_list(manager,
-                        //nc);
-
+                                } else {
+                                        
+                                        monkey_message_handler_send_message( mmh, 
+                                                                             nc->client_id,
+                                                                             "INIT_NOT_OK:BAD_NAME",
+                                                                             strlen("INIT_NOT_OK:BAD_NAME"));
+                                        
+                                        disconnect_client(manager,nc);
+                                }
+                                
+                                
+                        }
+                        g_strfreev(s);
                 }
-                g_strfreev(s);
+        } else if( g_str_equal(message,"DISCONNECT") ) { 
+                NetworkClient * nc;
+                g_print("disconnect %d",client_id);
+                nc = get_network_client_by_client_id(manager,client_id);
+                if( nc != NULL ) {
+                        disconnect_client(manager,nc);
+                } else {
+                        g_print("nc is NULL !! ? \n");
+                }
+
         }
+
         
+}
+
+void send_game_list_to_client(gpointer data,
+                              gpointer user_data) {
+        NetworkClient * nc;
+        xmlDoc * doc;
+
+        nc = (NetworkClient *)data;
+        doc =(xmlDoc *)user_data;
+        monkey_message_handler_send_xml_message(nc->handler,
+                                                nc->client_id,
+                                                doc);
+
+}
+
+void send_game_list(MnGameManager * manager) {
+
+        xmlDoc * doc;
+        xmlNode * current, * root;
+        NetworkGame * ng;
+        GList * next;
+        doc = xmlNewDoc("1.0");
+        root = xmlNewNode(NULL,
+                          "root");
+
+        xmlDocSetRootElement(doc, root);
+         
+
+        ng = PRIVATE(manager)->ng;
+
+        next = ng->clients;
+
+        while( next != NULL) {
+                xmlNode * text;
+                NetworkClient * client;
+
+                client = (NetworkClient *)next->data;
+                current = xmlNewNode(NULL,
+                                     "player");
+                
+                if( client == ng->game_owner) {
+                        xmlNewProp(current,"owner","true");
+                }
+
+                text = xmlNewText(client->client_name);
+
+                xmlAddChild(current,text);
+                xmlAddChild(root,current);
+                next = g_list_next(next);
+        }
+
+        g_list_foreach(ng->clients,send_game_list_to_client,
+                       doc);
 }
 
 guint32 get_next_client_id(MnGameManager * manager) {
@@ -135,9 +396,23 @@ MnGameManager *mn_game_manager_new() {
         PRIVATE(manager)->games = NULL;
         PRIVATE(manager)->global_lock = g_mutex_new();
 
-        PRIVATE(manager)->clients = g_hash_table_new(g_int_hash,g_int_equal);
+
+
+        PRIVATE(manager)->ng =(NetworkGame *) g_malloc( sizeof(NetworkGame));
+        PRIVATE(manager)->ng->game_id = 1;
+        PRIVATE(manager)->ng->game = NULL;
+        PRIVATE(manager)->ng->clients = NULL;
+        PRIVATE(manager)->ng->game_owner = NULL;
 
         PRIVATE(manager)->pending_clients = g_hash_table_new(g_int_hash,g_int_equal);
+
+        PRIVATE(manager)->clients_by_handler =
+                g_hash_table_new(g_direct_hash,g_direct_equal);
+
+        PRIVATE(manager)->clients_by_name = g_hash_table_new(g_str_hash,g_str_equal);
+
+        PRIVATE(manager)->clients_by_id = g_hash_table_new(g_int_hash,g_int_equal);
+                
         PRIVATE(manager)->init_ok = init_server_socket(manager);
         return manager;        
 }
@@ -191,8 +466,13 @@ void create_client(MnGameManager * manager,int sock) {
         
         handler = monkey_message_handler_new( sock);
         
-        nc->handler = handler;
+        g_signal_connect( G_OBJECT(handler),
+                          "connection-closed",
+                          G_CALLBACK(client_connection_closed),
+                          manager);
 
+        nc->handler = handler;
+        nc->game = NULL;
         g_signal_connect( G_OBJECT(handler),
                           "recv-message",
                           G_CALLBACK( init_client ),
@@ -208,6 +488,7 @@ void create_client(MnGameManager * manager,int sock) {
         g_hash_table_insert( PRIVATE(manager)->pending_clients,
                              (gpointer )&(nc->client_id),
                              nc);
+
 
         monkey_message_handler_start_listening( handler);
 
