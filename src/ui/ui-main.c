@@ -43,6 +43,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "network-game-launcher.h"
+
 #define PRIVATE(main) (main->private)
 
 static GObjectClass* parent_class = NULL;
@@ -55,6 +57,11 @@ static void new_1_player_game(gpointer    callback_data,
 static void new_2_player_game(gpointer    callback_data,
 			      guint       callback_action,
 			      GtkWidget  *widget);
+
+static void new_network_game(gpointer    callback_data,
+			      guint       callback_action,
+			      GtkWidget  *widget);
+
 
 static void pause_game(gpointer    callback_data,
 		       guint       callback_action,
@@ -204,6 +211,10 @@ static UiMain* ui_main_new(void) {
   g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(new_2_player_game),ui_main);
   gtk_menu_item_set_accel_path( GTK_MENU_ITEM(item),
 				ACCEL_PATH_NEW_2_PLAYERS);
+
+
+  item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"new_network_game");
+  g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(new_network_game),ui_main);
 
 
   item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"pause_game");
@@ -519,6 +530,14 @@ void ui_main_game_changed(Game * game,
   
 }
 
+
+static void new_network_game(gpointer    callback_data,
+			      guint       callback_action,
+			     GtkWidget  *widget) {
+  NetworkGameLauncher  * ngl;
+
+  ngl = network_game_launcher_new();
+}
 
 static void show_preferences_dialog(gpointer    callback_data,
 				    guint       callback_action,

@@ -251,7 +251,7 @@ static void hurry_up(Monkey *m,MonkeyView * p) {
         monkey_canvas_add_block( PRIVATE(p)->canvas,
                                  PRIVATE(p)->star_layer,
                                  PRIVATE(p)->hurry_up_block,
-                                 432,375);
+                                 415,380);
         PRIVATE(p)->hurry_up_flag = TRUE;
 }
 

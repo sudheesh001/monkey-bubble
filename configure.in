@@ -143,6 +143,7 @@ AC_OUTPUT([
   src/monkey/Makefile
   src/view/Makefile
   src/audio/Makefile
+  src/net/Makefile
   src/ui/Makefile
   help/Makefile
   help/C/Makefile

@@ -2,40 +2,73 @@ NULL=
 
 
 INCLUDES = \
-	$(LIBNETCLTMONKEY_LA_CFLAGS) \
-$(MONEY_SRV_CFLAGS) \
+	$(MONKEY_SRV_CFLAGS) \
 	-I$(top_srcdir)/src/monkey \
 	-I$(top_srcdir)/src/view \
 	-I$(top_srcdir)/src/ui \
 	-I$(top_srcdir)/src/util \
-	-g -O2 -Wall -Werror -D_REENTRANT  -D_DEBUG_ -D_TIME_DEBUG_
+	-g -O2 -Wall -Werror -D_REENTRANT  -D_DEBUG_ -D_TIME_DEBUG_ \
+	$(NULL)
 # -g -O2 -Wall -Wstrict-prototypes -Wmissing-prototypes -Werror -D_REENTRANT  -D_TIME_DEBUG_ -D_DEBUG_
 
-lib_LTLIBRARIES = libnetcltmonkey.la
 
-bin_PROGRAMS = monkey-srv
+noinst_PROGRAMS = monkey-srv test
+
+noinst_LIBRARIES = libmonkeynet.a
+
+marshal_sources = \
+	monkey-net-marshal.h \
+	monkey-net-marshal.c \
+	$(NULL)
 
 monkey_srv_SOURCES = \
-	monkey-server.c monkey-server.h \
-	client-handler.c client-handler.h \
-	main.c iclient-handler-observer.c \
-	monkey-message.h monkey-client.h
+	mn-game-manager.c mn-game-manager.h \
+	monkey-message-handler.c monkey-message-handler.h \
+	monkey-network-game.c monkey-network-game.h \
+	main.c \
+	$(marshal_sources) \
+	$(NULL)
 
 monkey_srv_LDFLAGS =
 
 monkey_srv_LDADD = \
 	$(MONKEY_SRV_LIBS) \
-	../monkey/libmonkey.la \
-	../util/libmonkeyutil.la
+	../monkey/libmonkey.a \
+	../util/libmonkeyutil.a
 
-libnetcltmonkey_la_SOURCES = \
-	monkey-client.c monkey-client.h \
-	monkey-server.c monkey-server.h \
-	client-handler.c client-handler.h \
-	iclient-handler-observer.c monkey-network.h
+$(monkey_srv_OBJECTS): $(marshal_sources)
 
-libnetcltmonkey_la_LDFLAGS =  
 
-libnetcltmonkey_la_LIBADD =  \
-	$(LIBNETCLTMONKEY_LA_LIBS)
+test_SOURCES = \
+	mn-game-manager.c mn-game-manager.h \
+	monkey-message-handler.c monkey-message-handler.h \
+	monkey-network-game.c monkey-network-game.h \
+	test-client.c \
+	$(marshal_sources) \
+	$(NULL)
+
+test_LDFLAGS =
+
+test_LDADD = \
+	$(MONKEY_SRV_LIBS) \
+	../monkey/libmonkey.a \
+	../util/libmonkeyutil.a
+
+$(test_OBJECTS): $(marshal_sources)
+
+
+libmonkeynet_a_SOURCES = \
+	mn-game-manager.c mn-game-manager.h \
+	monkey-message-handler.c monkey-message-handler.h \
+	monkey-network-game.c monkey-network-game.h \
+	$(marshal_sources)
+
+monkey-net-marshal.c monkey-net-marshal.h: monkey-marshal.list
+	glib-genmarshal --prefix=monkey_net_marshal --body $^ > monkey-net-marshal.c
+	glib-genmarshal --prefix=monkey_net_marshal --header $^ > monkey-net-marshal.h
+
+CLEANFILES = $(marshal_sources)
+
+EXTRA_DIST = monkey-marshal.list
+
 

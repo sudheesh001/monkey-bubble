@@ -17,43 +17,22 @@
  * Boston, MA 02111-1307, USA.
  */
  
-#include "monkey-server.h"
+#include "mn-game-manager.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
 
-static MonkeyServer *srv;
-void interrupt_catch(int);
-static gint only_master;
 
-// FIX by lolo, respect the code law
-// can it be a static method
-void interrupt_catch(int s)
-{    
-	if (only_master == 0) {
-		only_master++;
-	    g_print("CATCH SIGINT...\nExiting\n"); 
-	    g_object_unref(srv);        
-	    exit(-1);
-	}
-}
 int main(int argc, char **argv) {
-	GError **err = NULL;
-	GThread *thr = NULL;
-	
-    signal(SIGINT, interrupt_catch);
+	MnGameManager * manager;
 
     g_type_init();
-	if ((srv = (MonkeyServer *) monkey_server_new()) == NULL) {
-    	fprintf(stdout, "Unable to create server\n");	
-    	exit(-1);
-    }		   
-    if (!monkey_server_init(srv,(unsigned short) MONKEY_PORT)) {
-    	fprintf(stdout, "Unable to initialize server\n");	
-    	exit(-1);
-    }    
-	thr = g_thread_create((GThreadFunc) monkey_server_start, srv, TRUE, err);
-	g_thread_join(thr); 
-	return(0);
+    g_thread_init(NULL);
+
+    manager = mn_game_manager_new();
+
+    mn_game_manager_start_server(manager);
+    mn_game_manager_join(manager);
+    return(0);
 }

@@ -1,3 +1,50 @@
+2004-02-03  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+        Begin of the new network implementation
+	* configure.in:
+	* data/netgame.glade:
+	* src/Makefile.am:
+	* src/net/Makefile.am:
+	* src/net/client-handler.c:
+	* src/net/client-handler.h:
+	* src/net/main.c: (main):
+	* src/net/mn-game-manager.c: (init_client), (get_next_client_id),
+	(mn_game_manager_new), (init_server_socket), (create_client),
+	(server_main_loop), (mn_game_manager_join),
+	(mn_game_manager_start_server), (mn_game_manager_finalize),
+	(mn_game_manager_instance_init), (mn_game_manager_class_init),
+	(mn_game_manager_get_type):
+	* src/net/mn-game-manager.h:
+	* src/net/monkey-client.c:
+	* src/net/monkey-client.h:
+	* src/net/monkey-marshal.list:
+	* src/net/monkey-message-handler.c: (monkey_message_handler_new),
+	(monkey_message_handler_finalize),
+	(monkey_message_handler_instance_init),
+	(monkey_message_handler_class_init),
+	(monkey_message_handler_get_type), (parse_message), (handler_loop),
+	(monkey_message_handler_start_listening), (write_chunk),
+	(read_chunk), (monkey_message_handler_send_message),
+	(monkey_message_handler_join):
+	* src/net/monkey-message-handler.h:
+	* src/net/monkey-message.h:
+	* src/net/monkey-network-game.c: (start_waiting_connect_loop),
+	(monkey_network_game_new), (monkey_network_game_finalize),
+	(monkey_network_game_instance_init),
+	(monkey_network_game_class_init), (monkey_network_game_get_type):
+	* src/net/monkey-network-game.h:
+	* src/net/test-client.c: (recv_message), (main):
+	* src/ui/Makefile.am:
+	* src/ui/network-game-launcher.c: (network_game_launcher_new),
+	(connect_server_signal), (recv_network_init_message),
+	(connect_server), (network_game_launcher_finalize),
+	(network_game_launcher_instance_init),
+	(network_game_launcher_class_init),
+	(network_game_launcher_get_type):
+	* src/ui/network-game-launcher.h:
+	* src/ui/ui-main.c: (ui_main_new), (new_network_game):
+	* src/view/monkey-view.c: (hurry_up):
+
 2004-02-02  Christian Rose  <menthos@menthos.com>
 
 	* configure.in: Added "sv" to ALL_LINGUAS.

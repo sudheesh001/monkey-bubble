@@ -11,6 +11,7 @@ INCLUDES = \
 	-I$(top_srcdir)/src/view 			\
 	-I$(top_srcdir)/src/audio			\
 	-I$(top_srcdir)/src/util			\
+	-I$(top_srcdir)/src/net 			\
 	-Wall -Werror
 
 
@@ -31,6 +32,7 @@ monkey_bubble_SOURCES = \
 	game-2-player-manager.c game-2-player-manager.h \
 	main.c \
 	keyboard-properties.c keyboard-properties.h \
+	network-game-launcher.c network-game-launcher.h \
 	ui-main.c ui-main.h \
 	$(EGGFILES)
 
@@ -48,4 +50,5 @@ monkey_bubble_LDADD =  \
 	../monkey/libmonkey.a \
 	../view/libmonkeyview.a \
 	../util/libmonkeyutil.a \
+	../net/libmonkeynet.a \
 	../audio/libmonkeyaudio.a
