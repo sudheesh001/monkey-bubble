@@ -1,0 +1,403 @@
+# Chinese/Traditional translation of monkey-bubble.
+# Copyright (C) 2004, 05 Free Software Foundation. Inc.
+# Woodman Tuen <wmtuen@gmail.com>, 2005.
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: monkey-bubble 0.3.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-03-16 23:02+0800\n"
+"PO-Revision-Date: 2005-03-17 07:48+0800\n"
+"Last-Translator: Woodman Tuen <wmtuen@gmail.com>\n"
+"Language-Team: Chinese/Traditional <zh-l10n@linux.org.tw>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../data/keybinding.glade.h:1
+msgid "Keyboard Shortcuts"
+msgstr "鍵盤捷徑"
+
+#: ../data/keybinding.glade.h:2
+msgid "_Shortcut Keys:"
+msgstr "捷徑鍵(_S)："
+
+#: ../data/monkey-bubble.glade.h:1
+msgid ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Can't create server !\n"
+"</span>\n"
+"</markup>"
+msgstr ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"無法建立伺服器！\n"
+"</span>\n"
+"</markup>"
+
+#: ../data/monkey-bubble.glade.h:7
+msgid "Create network game"
+msgstr "建立網路遊戲"
+
+#: ../data/monkey-bubble.glade.h:8
+msgid "Join _network game"
+msgstr "加入網路遊戲(_N)"
+
+#: ../data/monkey-bubble.glade.h:9 ../monkey-bubble.desktop.in.h:1
+msgid "Monkey Bubble"
+msgstr "泡泡猴"
+
+#: ../data/monkey-bubble.glade.h:10
+msgid "New 1 player"
+msgstr "開始新的單人遊戲"
+
+#: ../data/monkey-bubble.glade.h:11
+msgid "New 2 players"
+msgstr "開始新的雙人遊戲"
+
+#: ../data/monkey-bubble.glade.h:12 ../src/ui/ui-main.c:408
+#: ../src/ui/ui-main.c:540
+msgid "Pause game"
+msgstr "暫停遊戲"
+
+#: ../data/monkey-bubble.glade.h:13 ../src/ui/keyboard-properties.c:86
+msgid "Stop game"
+msgstr "停止遊戲"
+
+#: ../data/monkey-bubble.glade.h:14
+msgid "Warning"
+msgstr "警告"
+
+#: ../data/monkey-bubble.glade.h:15
+msgid "_About"
+msgstr "關於(_A)"
+
+#: ../data/monkey-bubble.glade.h:16
+msgid "_Contents"
+msgstr "內容(_C)"
+
+#: ../data/monkey-bubble.glade.h:17
+msgid "_Game"
+msgstr "遊戲(_G)"
+
+#: ../data/monkey-bubble.glade.h:18
+msgid "_Help"
+msgstr "求助(_H)"
+
+#: ../data/monkey-bubble.glade.h:19
+msgid "_Settings"
+msgstr "設定(_S)"
+
+#: ../data/monkey-bubble.schemas.in.h:1
+msgid "1 player game"
+msgstr "單人遊戲"
+
+#: ../data/monkey-bubble.schemas.in.h:2
+msgid "2 players game"
+msgstr "雙人遊戲"
+
+#: ../data/monkey-bubble.schemas.in.h:3
+msgid "F1"
+msgstr "F1"
+
+#: ../data/monkey-bubble.schemas.in.h:4
+msgid "F2"
+msgstr "F2"
+
+#: ../data/monkey-bubble.schemas.in.h:5
+msgid "Left"
+msgstr "左"
+
+#: ../data/monkey-bubble.schemas.in.h:6
+msgid "Pause"
+msgstr "暫停"
+
+#: ../data/monkey-bubble.schemas.in.h:7
+msgid "Pause the game"
+msgstr "暫停遊戲"
+
+#: ../data/monkey-bubble.schemas.in.h:8
+msgid "Quit the game"
+msgstr "離開遊戲"
+
+#: ../data/monkey-bubble.schemas.in.h:9
+msgid "Right"
+msgstr "右"
+
+#: ../data/monkey-bubble.schemas.in.h:10
+msgid "Stop the game"
+msgstr "停止遊戲"
+
+#: ../data/monkey-bubble.schemas.in.h:11
+msgid "Up"
+msgstr "上"
+
+#: ../data/monkey-bubble.schemas.in.h:12
+msgid "d"
+msgstr "d"
+
+#: ../data/monkey-bubble.schemas.in.h:13
+msgid "f"
+msgstr "f"
+
+#: ../data/monkey-bubble.schemas.in.h:14
+msgid "left key for player one"
+msgstr "玩家 1 的左鏈"
+
+#: ../data/monkey-bubble.schemas.in.h:15
+msgid "left key for player two"
+msgstr "玩家 2 的左鏈"
+
+#: ../data/monkey-bubble.schemas.in.h:16
+msgid "right key for player one"
+msgstr "玩家 1 的右鏈"
+
+#: ../data/monkey-bubble.schemas.in.h:17
+msgid "right key for player two"
+msgstr "玩家 2 的右鏈"
+
+#: ../data/monkey-bubble.schemas.in.h:18
+msgid "s"
+msgstr "s"
+
+#: ../data/monkey-bubble.schemas.in.h:19
+msgid "shoot key for player one"
+msgstr "玩家 1 的發射鏈"
+
+#: ../data/monkey-bubble.schemas.in.h:20
+msgid "shoot key for player two"
+msgstr "玩家 2 的發射鏈"
+
+#: ../data/netgame.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: ../data/netgame.glade.h:2 ../data/netserver.glade.h:1
+msgid "Network game"
+msgstr "網路遊戲"
+
+#: ../data/netgame.glade.h:3
+msgid "Number of games :"
+msgstr "遊戲數目："
+
+#: ../data/netgame.glade.h:4
+msgid "Number of players :"
+msgstr "玩家數目："
+
+#: ../data/netgame.glade.h:5 ../data/netserver.glade.h:4
+#: ../src/ui/keyboard-properties.c:88
+msgid "Quit game"
+msgstr "離開遊戲"
+
+#: ../data/netgame.glade.h:6 ../data/netserver.glade.h:5
+msgid "Ready"
+msgstr "準備"
+
+#: ../data/netgame.glade.h:7
+msgid "_Go"
+msgstr "開始(_G)"
+
+#: ../data/netgame.glade.h:8
+msgid "_Server"
+msgstr "伺服器(_S)"
+
+#: ../data/netserver.glade.h:2
+msgid "Number of game"
+msgstr "遊戲數目"
+
+#: ../data/netserver.glade.h:3
+msgid "Number of players"
+msgstr "玩家數目"
+
+#: ../data/netserver.glade.h:6
+msgid "Start Game"
+msgstr "開始遊戲"
+
+#: ../monkey-bubble.desktop.in.h:2
+msgid "Monkey Bubble Arcade Game"
+msgstr "泡泡猴電動遊戲"
+
+#: ../src/ui/eggcellrendererkeys.c:160 ../src/ui/eggcellrendererkeys.c:161
+msgid "Accelerator key"
+msgstr "捷徑鍵"
+
+#: ../src/ui/eggcellrendererkeys.c:170 ../src/ui/eggcellrendererkeys.c:171
+msgid "Accelerator modifiers"
+msgstr "捷徑鍵中的特殊按鍵(Alt、Ctrl 等)"
+
+#: ../src/ui/eggcellrendererkeys.c:180
+msgid "Accelerator Mode"
+msgstr "捷徑鍵模式"
+
+#: ../src/ui/eggcellrendererkeys.c:181
+msgid "The type of accelerator."
+msgstr "捷徑鍵類型。"
+
+#: ../src/ui/eggcellrendererkeys.c:219 ../src/ui/keyboard-properties.c:765
+msgid "Disabled"
+msgstr "停用"
+
+#: ../src/ui/eggcellrendererkeys.c:330 ../src/ui/eggcellrendererkeys.c:568
+msgid "Type a new accelerator, or press Backspace to clear"
+msgstr "輸入新的捷徑鍵，或按後退鍵來清除"
+
+#: ../src/ui/eggcellrendererkeys.c:571
+msgid "Type a new accelerator"
+msgstr "輸入新的捷徑鍵"
+
+#: ../src/ui/keyboard-properties.c:80
+msgid "New game 1 player"
+msgstr "玩家 1 新遊戲"
+
+#: ../src/ui/keyboard-properties.c:82
+msgid "New game 2 player"
+msgstr "玩家 2 新遊戲"
+
+#: ../src/ui/keyboard-properties.c:84
+msgid "Pause/Resume"
+msgstr "暫停/恢復"
+
+#: ../src/ui/keyboard-properties.c:94
+msgid "Full Screen"
+msgstr "全螢幕"
+
+#: ../src/ui/keyboard-properties.c:96
+msgid "Normal Size"
+msgstr "正常大小"
+
+#: ../src/ui/keyboard-properties.c:101 ../src/ui/keyboard-properties.c:111
+msgid "aim left"
+msgstr "向左瞄準"
+
+#: ../src/ui/keyboard-properties.c:103 ../src/ui/keyboard-properties.c:113
+msgid "aim right"
+msgstr "向右瞄準"
+
+#: ../src/ui/keyboard-properties.c:105 ../src/ui/keyboard-properties.c:115
+msgid "shoot"
+msgstr "發射"
+
+#: ../src/ui/keyboard-properties.c:122
+msgid "Player 1"
+msgstr "玩家 1"
+
+#: ../src/ui/keyboard-properties.c:123
+msgid "Player 2"
+msgstr "玩家 2"
+
+#: ../src/ui/keyboard-properties.c:124
+msgid "Game"
+msgstr "遊戲"
+
+#: ../src/ui/keyboard-properties.c:125
+msgid "View"
+msgstr "顯示"
+
+#: ../src/ui/keyboard-properties.c:338
+#, c-format
+msgid "There was an error loading config from %s. (%s)\n"
+msgstr "從 %s 載入設定檔時發生錯誤 (%s)\n"
+
+#: ../src/ui/keyboard-properties.c:352
+#, c-format
+msgid ""
+"There was an error subscribing to notification of terminal keybinding "
+"changes. (%s)\n"
+msgstr "訂閱終端機按鍵組合更改的通知時發生錯誤(%s)\n"
+
+#: ../src/ui/keyboard-properties.c:395
+#, c-format
+msgid "There was an error loading a terminal keybinding. (%s)\n"
+msgstr "載入終端機按鍵組合時發生錯誤。(%s)\n"
+
+#: ../src/ui/keyboard-properties.c:411
+#, c-format
+msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
+msgstr "設定鍵 %s 的數值無效；數值是“%s”\n"
+
+#: ../src/ui/keyboard-properties.c:434
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menubar access "
+"keys. (%s)\n"
+msgstr "載入是否使用選單列存取按鍵的設定數值 (%s) 時發生錯誤\n"
+
+#: ../src/ui/keyboard-properties.c:448
+#, c-format
+msgid ""
+"There was an error subscribing to notification on changes on whether to use "
+"menubar access keys (%s)\n"
+msgstr "訂閱是否使用選單列存取按鍵時發生錯誤通知。(%s)\n"
+
+#: ../src/ui/keyboard-properties.c:459
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menu "
+"accelerators. (%s)\n"
+msgstr "載入是否使用選單列加速鍵的設定數值·(%s)·時發生錯誤\n"
+
+#: ../src/ui/keyboard-properties.c:475
+#, c-format
+msgid ""
+"There was an error subscribing to notification for use_menu_accelerators (%"
+"s)\n"
+msgstr "訂閱 use_menu_accelerators 的通知時發生錯誤。(%s)\n"
+
+#: ../src/ui/keyboard-properties.c:825
+#, c-format
+msgid "Error propagating accelerator change to configuration database: %s\n"
+msgstr "傳送加速鍵的更改到設定資料庫時發生錯誤：%s\n"
+
+#: ../src/ui/keyboard-properties.c:994
+#, c-format
+msgid "Error setting new accelerator in configuration database: %s\n"
+msgstr "在設定資料庫中設定新的加速鍵時發生錯誤：%s\n"
+
+#: ../src/ui/keyboard-properties.c:1093
+msgid "_Action"
+msgstr "動作(_A)"
+
+#: ../src/ui/keyboard-properties.c:1115
+msgid "Shortcut _Key"
+msgstr "捷徑鍵(_K)"
+
+#: ../src/ui/ui-main.c:533
+msgid "Resume game"
+msgstr "恢復遊戲"
+
+#: ../src/ui/ui-main.c:618
+msgid "translator_credits"
+msgstr ""
+"i18n 程式中文化計劃\n"
+"http://i18n.linux.org.tw/\n"
+"\n"
+"Woodman Tuen <wmtuen@gmail.com>, 2005"
+
+#: ../src/ui/ui-main.c:626
+msgid ""
+"Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
+"remove all Bubbles by the creation of unicolor triplets."
+msgstr ""
+"泡泡猴是GNOME 桌面環境上的電動遊戲。玩法是很簡單：把所有泡泡移除。\n"
+"而移除的方法是把相同顏色的泡泡弄成三個一組。"
+
+#: ../src/ui/ui-main.c:647
+#, c-format
+msgid "There was an error displaying help: %s"
+msgstr "顯示說明文件時發生錯誤：%s"
+
+#: ../src/ui/ui-network-server.c:159 ../src/ui/ui-network-client.c:149
+msgid "_Player name"
+msgstr "玩家名稱(_P)"
+
+#: ../src/ui/ui-network-server.c:166 ../src/ui/ui-network-client.c:156
+msgid "_Owner"
+msgstr "擁有者(_O)"
+
+#: ../src/ui/ui-network-server.c:173 ../src/ui/ui-network-client.c:163
+msgid "_Ready"
+msgstr "準備(_R)"
