@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: monkey-buble VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-10 04:20+0100\n"
-"PO-Revision-Date: 2004-03-10 14:15+0100\n"
+"POT-Creation-Date: 2004-06-17 04:29+0200\n"
+"PO-Revision-Date: 2004-06-17 09:09+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +44,7 @@ msgstr "Nová pro jednoho hráče"
 msgid "New 2 players"
 msgstr "Nová pro dva hráče"
 
-#: data/monkey-bubble.glade.h:6 src/ui/ui-main.c:391 src/ui/ui-main.c:521
+#: data/monkey-bubble.glade.h:6 src/ui/ui-main.c:400 src/ui/ui-main.c:530
 msgid "Pause game"
 msgstr "Pozastavit hru"
 
@@ -161,20 +161,20 @@ msgid "Network game"
 msgstr "Síťová hra"
 
 #: data/netgame.glade.h:3
-msgid "Players"
-msgstr "Hráči"
+msgid "Number of games :"
+msgstr "Počet her:"
 
-#: data/netgame.glade.h:4 src/ui/keyboard-properties.c:87
+#: data/netgame.glade.h:4
+msgid "Number of players :"
+msgstr "Počet hráčů:"
+
+#: data/netgame.glade.h:5 src/ui/keyboard-properties.c:87
 msgid "Quit game"
 msgstr "Ukončit hru"
 
-#: data/netgame.glade.h:5
+#: data/netgame.glade.h:6
 msgid "Ready"
 msgstr "Připraven"
-
-#: data/netgame.glade.h:6
-msgid "Start Game"
-msgstr "Spustit hru"
 
 #: data/netgame.glade.h:7
 msgid "_Go"
@@ -344,15 +344,21 @@ msgstr "_Akce"
 msgid "Shortcut _Key"
 msgstr "_Klávesová zkratka"
 
-#: src/ui/ui-main.c:514
+#: src/ui/ui-main.c:523
 msgid "Resume game"
 msgstr "Obnovit hru"
 
-#: src/ui/ui-main.c:568
+#: src/ui/ui-main.c:586
 msgid "translator_credits"
 msgstr "Miloslav Trmač <mitr@volny.cz>"
 
-#: src/ui/ui-main.c:597
+#: src/ui/ui-main.c:615
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Při zobrazování nápovědy došlo k chybě: %s"
+
+#~ msgid "Players"
+#~ msgstr "Hráči"
+
+#~ msgid "Start Game"
+#~ msgstr "Spustit hru"
