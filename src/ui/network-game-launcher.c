@@ -520,22 +520,10 @@ static void recv_player_list(NetworkGameLauncher * launcher,xmlDoc * doc) {
 
 gboolean start_game_idle(gpointer data) {
         NetworkGameLauncher * launcher;
-        GameNetworkPlayerManager * manager;
-        UiMain * ui;
-        xmlDoc * doc;
-        xmlNode * text, * root;
 
         launcher = NETWORK_GAME_LAUNCHER(data);
 
         gtk_widget_destroy( PRIVATE(launcher)->window);
-        ui = ui_main_get_instance();
-        manager = game_network_player_manager_new(ui_main_get_window(ui),
-                                                  ui_main_get_canvas(ui),
-                                                  PRIVATE(launcher)->handler,
-                                                  PRIVATE(launcher)->client_id);
-        ui_main_set_game_manager(ui,
-                                 GAME_MANAGER(manager));
-
         g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(launcher)->handler ),
                                                G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,launcher);
               
@@ -544,26 +532,6 @@ gboolean start_game_idle(gpointer data) {
                       
         g_print("Network-game-launcher : game started\n");
 
-
-        doc = xmlNewDoc("1.0");
-        root = xmlNewNode(NULL,
-                          "message");
-
-        xmlDocSetRootElement(doc, root);
-         
-
-        xmlNewProp(root,"name","game_created_ok");
-	
-        text = xmlNewText("1");
-        xmlAddChild(root,text);
-	
-
-        network_message_handler_send_xml_message(PRIVATE(launcher)->handler,
-                                                PRIVATE(launcher)->client_id,
-                                                doc);
-	
-        xmlFreeDoc(doc);
-        
         return FALSE;
 }
 
@@ -624,11 +592,25 @@ void recv_network_xml_message(NetworkMessageHandler * mmh,
                 }
         } else if(g_str_equal(message_name,"game_joined")) {
                 int game_id;
+                GameNetworkPlayerManager * manager;
+                UiMain * ui;
                 
                 sscanf(root->children->content,"%d",&game_id);
                 g_print("game id : %d\n",game_id);                
                 set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
                                                      ,"connected_game_hbox"),TRUE); 
+
+                sscanf(root->children->content,"%d",&game_id);
+             
+                
+                ui = ui_main_get_instance();
+                manager = game_network_player_manager_new(ui_main_get_window(ui),
+                                                          ui_main_get_canvas(ui),
+                                                          PRIVATE(launcher)->handler,
+                                                          PRIVATE(launcher)->client_id);
+                ui_main_set_game_manager(ui,
+                                         GAME_MANAGER(manager));
+
 
         } else if(g_str_equal(message_name,"game_created") ) {
                 

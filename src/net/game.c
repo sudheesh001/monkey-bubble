@@ -71,6 +71,8 @@ static void init_clients(NetworkGame * self);
 static void client_disconnected(NetworkMessageHandler * handler,
 				struct Client * client);
 
+static void remove_client(NetworkGame * self,struct Client * client);
+
 static void 
 client_disconnected(NetworkMessageHandler * handler,
 		    struct Client * client)
@@ -185,7 +187,8 @@ bubble_added(Shooter * s,
 	     Bubble * b,
 	     struct Client * c) {
         
-        network_message_handler_send_add_bubble(network_client_get_handler(c->client),
+	g_print("network-game : bubble added c %d, client %d, monkey %d \n",(int)c,(int)(c->client),(int)(c->monkey));
+	network_message_handler_send_add_bubble(network_client_get_handler(c->client),
 						network_client_get_id(c->client),
 						bubble_get_color(b));
         
@@ -506,14 +509,18 @@ update_lost(NetworkGame * game) {
 
 		c = (struct Client *) next->data;
 
-		PRIVATE(game)->clients = g_list_remove( PRIVATE(game)->clients,c);
-        
-		PRIVATE(game)->lost_clients =
-			g_list_remove( PRIVATE(game)->lost_clients,c);
-        
+		
+		remove_client(game,c);
 		
 		next = g_list_next( next);
 	}
+
+
+	g_list_free( PRIVATE(game)->lost_clients);
+	PRIVATE(game)->lost_clients = NULL;
+
+        
+		
 
 	if( g_list_length( PRIVATE(game)->clients) == 1 ) {
 		struct Client * client;
@@ -524,7 +531,7 @@ update_lost(NetworkGame * game) {
 		network_message_handler_send_winlost( network_client_get_handler(client->client),
 						      network_client_get_id(client->client),
 						      0);
-		PRIVATE(game)->clients = g_list_remove( PRIVATE(game)->clients,client);
+		remove_client(game,client);
 		
 		finished = TRUE;
 	}
@@ -590,6 +597,40 @@ network_game_instance_init(NetworkGame * self)
 
 
 static void
+remove_client(NetworkGame * self,struct Client * client) {
+	
+	NetworkClient * c;
+	
+	
+	c = client->client;
+	PRIVATE(self)->clients = g_list_remove( PRIVATE(self)->clients,client);	
+
+	g_signal_handlers_disconnect_matched(  network_client_get_handler(c) ,
+						       G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,self);
+		
+		
+		g_signal_handlers_disconnect_matched(  network_client_get_handler(c) ,
+						       G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,client);
+		
+		
+	
+		g_signal_handlers_disconnect_matched(  G_OBJECT( c ),
+						       G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,self);
+
+		g_signal_handlers_disconnect_matched( client->monkey,
+						      G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,client);
+
+		g_signal_handlers_disconnect_matched( monkey_get_shooter(client->monkey),
+						      G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,client);
+		
+		g_object_unref( client->monkey);
+
+		g_mutex_free(client->monkey_lock);
+		g_free(client);
+		
+}
+
+static void
 network_game_finalize (GObject * object) 
 {
 	NetworkGame * self;
@@ -597,7 +638,14 @@ network_game_finalize (GObject * object)
 	self = NETWORK_GAME(object);
 	
 	g_assert( PRIVATE(self)->clients == NULL);
+	g_print("network-game-finalisze\n");
 	
+
+
+
+	g_list_free(PRIVATE(self)->clients);
+	
+                      
 	g_object_unref( PRIVATE(self)->clock);
 	g_mutex_free( PRIVATE(self)->clients_lock );
 	g_free(PRIVATE(self));

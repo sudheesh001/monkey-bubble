@@ -1,3 +1,23 @@
+2004-06-08  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	nearly playable network game
+	* src/net/game-manager.c: (game_stopped),
+	(client_request_game_created_ok):
+	* src/net/game.c: (bubble_added), (update_lost), (remove_client),
+	(network_game_finalize):
+	* src/ui/game-network-player-manager.c:
+	(game_network_player_manager_state_changed), (start_timeout),
+	(recv_add_bubble), (recv_bubble_array), (game_created_ok),
+	(recv_xml_message), (game_network_player_manager_start),
+	(game_network_player_manager_stop):
+	* src/ui/game-network-player.c: (game_network_player_finalize),
+	(recv_add_bubble), (recv_winlost), (game_network_player_timeout),
+	(game_network_player_bubbles_exploded):
+	* src/ui/network-game-launcher.c: (start_game_idle),
+	(recv_network_xml_message):
+	* src/ui/network-server-launcher.c: (start_game_idle),
+	(recv_network_xml_message):
+
 2004-06-07  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	more network stuff...

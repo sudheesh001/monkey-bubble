@@ -408,6 +408,17 @@ static void game_stopped(NetworkGame * game,
 
 	// restart after 5 seconde ?
 	g_print("NetworkGameManager : Game Stopped \n");
+	
+	g_signal_handlers_disconnect_matched(  game ,
+					       G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,manager);
+                      
+
+
+
+	g_object_unref( G_OBJECT(PRIVATE(manager)->game));
+	PRIVATE(manager)->game = NULL;
+
+	start_game(manager);
 }
 
 static void 
@@ -431,7 +442,7 @@ client_request_game_created_ok(NetworkClient * client,
 
 	if( g_list_length(PRIVATE(manager)->waited_clients) == 0) {
 		PRIVATE(manager)->game = network_game_new(PRIVATE(manager)->clients);
-	
+		
 		g_signal_connect( G_OBJECT( PRIVATE(manager)->game),
 				  "game-stopped",
 				  G_CALLBACK(game_stopped),

@@ -142,16 +142,19 @@ static void game_network_player_manager_state_changed(Game * game,
 
   UiMain * ui_main =  ui_main_get_instance();
 
-
+  g_print("STATE changed \n");
   if( game_get_state( game ) == GAME_FINISHED ) {
-    PRIVATE(manager)->current_score = game_network_player_get_score( GAME_NETWORK_PLAYER(game));
-      ui_main_set_game(ui_main,NULL);	 
-		g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(manager)->handler ),
-															G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,manager);
-                      
+      g_print("GAME finished\n");
+      PRIVATE(manager)->current_score = game_network_player_get_score( GAME_NETWORK_PLAYER(game));
 
+      ui_main_set_game(ui_main,NULL);
+      //   g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(manager)->handler ),
+      //					     G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,manager);
+      
+      monkey_canvas_clear(PRIVATE(manager)->canvas);
 
-		g_object_unref(G_OBJECT(PRIVATE(manager)->current_game));
+      g_object_unref(G_OBJECT(PRIVATE(manager)->current_game));
+      PRIVATE(manager)->current_game = NULL;
   }
 				
 }
@@ -166,25 +169,28 @@ gboolean start_timeout(gpointer data) {
 
   UiMain * ui_main =  ui_main_get_instance();
 
+  monkey_canvas_clear( PRIVATE(manager)->canvas);
 
   ui_main_set_game(ui_main,
 		   GAME( game = game_network_player_new( PRIVATE(manager)->window,
 							 PRIVATE(manager)->canvas,
 							 PRIVATE(manager)->monkey,
-															  PRIVATE(manager)->handler,
-															  PRIVATE(manager)->client_id))
+							 PRIVATE(manager)->handler,
+							 PRIVATE(manager)->client_id))
 		   );
 
 
+  g_print("GameNetworkPlaeyrManager start timeout \n");
   game_start( GAME(game) );
   
-/*  g_signal_handler_disconnect( G_OBJECT( PRIVATE(manager)->handler),
-			       PRIVATE(manager)->add_bubble_handler_id);
-*/
+  /*  g_signal_handler_disconnect( G_OBJECT( PRIVATE(manager)->handler),
+		PRIVATE(manager)->add_bubble_handler_id);
+  */
+
   g_signal_connect( G_OBJECT(game), "state-changed",
 		    G_CALLBACK(game_network_player_manager_state_changed),manager);
   PRIVATE(manager)->current_game = game;
-  monkey_canvas_paint( PRIVATE(manager)->canvas);
+  //  monkey_canvas_paint( PRIVATE(manager)->canvas);
 
   return FALSE;
 }
@@ -193,8 +199,11 @@ static void recv_add_bubble(NetworkMessageHandler * handler,
 		     guint32 monkey_id,
 		     Color bubble,
 		     GameNetworkPlayerManager * manager) {
+
+    g_print("recv add bubble \n");
     if( PRIVATE(manager)->current_game == NULL) {
-		  shooter_add_bubble(monkey_get_shooter(PRIVATE(manager)->monkey),bubble_new(bubble,0,0));
+	g_print("and add it!\n");
+	shooter_add_bubble(monkey_get_shooter(PRIVATE(manager)->monkey),bubble_new(bubble,0,0));
     }
   
 }
@@ -218,11 +227,7 @@ void recv_bubble_array(NetworkMessageHandler * handler,
   int i;
   g_print("game-network-player-manager : recv bubble array %d,%d\n",monkey_id,bubble_count);
   
-  m = monkey_new(TRUE);
-
-
-  PRIVATE(manager)->monkey = m;
-
+  m = PRIVATE(manager)->monkey;
   bubbles = g_malloc(bubble_count*( sizeof(Bubble *)));
   
   for(i = 0 ; i < bubble_count; i++) {
@@ -237,6 +242,70 @@ void recv_bubble_array(NetworkMessageHandler * handler,
 }
 
 
+
+static void 
+game_created_ok(GameNetworkPlayerManager * manager) 
+{
+	 xmlDoc * doc;
+	 xmlNode * text, * root;
+	
+
+
+	 PRIVATE(manager)->monkey = monkey_new(TRUE);
+
+
+ 
+	 doc = xmlNewDoc("1.0");
+	 root = xmlNewNode(NULL,
+			   "message");
+	 
+	 xmlDocSetRootElement(doc, root);
+    
+	 
+	 xmlNewProp(root,"name","game_created_ok");
+	 
+	 text = xmlNewText("1");
+	 xmlAddChild(root,text);
+	 
+	 
+	 network_message_handler_send_xml_message(PRIVATE(manager)->handler,
+															PRIVATE(manager)->client_id,
+															doc);
+	 
+	 xmlFreeDoc(doc);
+}
+
+
+
+static void
+recv_xml_message(NetworkMessageHandler * handler,
+					  guint32 client_id,
+					  xmlDoc * message,
+					  GameNetworkPlayerManager * manager) {
+
+
+        xmlNode * root;
+        char * message_name;
+        
+        root = message->children;
+        
+        g_assert( g_str_equal(root->name,"message"));
+        
+        
+        message_name = xmlGetProp(root,"name");
+        
+		  if(g_str_equal(message_name,"game_created") ) {
+				
+				int game_id;
+            
+				sscanf(root->children->content,"%d",&game_id);
+				g_print("game-network-player-manager.c : game started %d \n",game_id);                
+				
+				game_created_ok(manager);
+        }
+
+
+}
 void game_network_player_manager_start(GameManager * g) {
 	 
   GameNetworkPlayerManager * manager;
@@ -247,6 +316,11 @@ void game_network_player_manager_start(GameManager * g) {
   PRIVATE(manager)->current_score = 0;
 
   //  game_network_player_manager_start_level(manager);
+
+  g_signal_connect( G_OBJECT(PRIVATE(manager)->handler),
+						  "recv-xml-message",
+						  G_CALLBACK( recv_xml_message ),
+						  manager);
   
   g_signal_connect( G_OBJECT( PRIVATE(manager)->handler), "recv-bubble-array",
 		    G_CALLBACK(recv_bubble_array),manager);
@@ -268,11 +342,12 @@ void game_network_player_manager_stop(GameManager * g) {
   manager = GAME_NETWORK_PLAYER_MANAGER(g);
   game_stop( GAME(PRIVATE(manager)->current_game));
 
+  g_print("manager STOP\n");
   g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(manager)->current_game ),
                                          G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,manager);
 
   g_object_unref( PRIVATE(manager)->current_game);
-
+  PRIVATE(manager)->current_game = NULL;
   ui_main_set_game(ui_main,NULL);
-  monkey_canvas_paint( PRIVATE(manager)->canvas);
+  //  monkey_canvas_paint( PRIVATE(manager)->canvas);
 }
