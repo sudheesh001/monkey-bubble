@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-29 14:08+0100\n"
-"PO-Revision-Date: 2004-02-29 14:12+0100\n"
+"POT-Creation-Date: 2004-04-10 15:33+0200\n"
+"PO-Revision-Date: 2004-04-10 15:33+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,43 +27,51 @@ msgstr "Combinaciones de teclas"
 msgid "_Shortcut Keys:"
 msgstr "Com_binaciones de teclas:"
 
-#: data/monkey-bubble.glade.h:1 monkey-bubble.desktop.in.h:1
+#: data/monkey-bubble.glade.h:1
+msgid "Create network game"
+msgstr "Crear juego en red"
+
+#: data/monkey-bubble.glade.h:2
+msgid "Join _network game"
+msgstr "Unirse a un juego en _red"
+
+#: data/monkey-bubble.glade.h:3 monkey-bubble.desktop.in.h:1
 msgid "Monkey Bubble"
 msgstr "Monkey Bubble"
 
-#: data/monkey-bubble.glade.h:2
+#: data/monkey-bubble.glade.h:4
 msgid "New 1 player"
 msgstr "Nuevo 1 jugador"
 
-#: data/monkey-bubble.glade.h:3
+#: data/monkey-bubble.glade.h:5
 msgid "New 2 players"
 msgstr "Nuevo 2 jugadores"
 
-#: data/monkey-bubble.glade.h:4 src/ui/ui-main.c:393 src/ui/ui-main.c:523
+#: data/monkey-bubble.glade.h:6 src/ui/ui-main.c:391 src/ui/ui-main.c:521
 msgid "Pause game"
 msgstr "Pausar juego"
 
-#: data/monkey-bubble.glade.h:5 src/ui/keyboard-properties.c:85
+#: data/monkey-bubble.glade.h:7 src/ui/keyboard-properties.c:85
 msgid "Stop game"
 msgstr "Detener juego"
 
-#: data/monkey-bubble.glade.h:6
+#: data/monkey-bubble.glade.h:8
 msgid "_About"
 msgstr "A_cerca de"
 
-#: data/monkey-bubble.glade.h:7
+#: data/monkey-bubble.glade.h:9
 msgid "_Contents"
 msgstr "_Índice"
 
-#: data/monkey-bubble.glade.h:8
+#: data/monkey-bubble.glade.h:10
 msgid "_Game"
 msgstr "_Juego"
 
-#: data/monkey-bubble.glade.h:9
+#: data/monkey-bubble.glade.h:11
 msgid "_Help"
 msgstr "_Ayuda"
 
-#: data/monkey-bubble.glade.h:10
+#: data/monkey-bubble.glade.h:12
 msgid "_Settings"
 msgstr "_Opciones"
 
@@ -276,12 +284,14 @@ msgstr ""
 #: src/ui/keyboard-properties.c:394
 #, c-format
 msgid "There was an error loading a terminal keybinding. (%s)\n"
-msgstr "Ha ocurrido un error cargando una asignación de teclas de terminal. (%s)\n"
+msgstr ""
+"Ha ocurrido un error cargando una asignación de teclas de terminal. (%s)\n"
 
 #: src/ui/keyboard-properties.c:410
 #, c-format
 msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
-msgstr "El valor de la clave de configuración %s no es válido; el valor es «%s»\n"
+msgstr ""
+"El valor de la clave de configuración %s no es válido; el valor es «%s»\n"
 
 #: src/ui/keyboard-properties.c:433
 #, c-format
@@ -315,7 +325,8 @@ msgstr ""
 msgid ""
 "There was an error subscribing to notification for use_menu_accelerators (%"
 "s)\n"
-msgstr "Ha ocurrido un error subscribiendo al aviso de use_menu_accelerators (%s)\n"
+msgstr ""
+"Ha ocurrido un error subscribiendo al aviso de use_menu_accelerators (%s)\n"
 
 #: src/ui/keyboard-properties.c:824
 #, c-format
@@ -339,15 +350,15 @@ msgstr "_Acción"
 msgid "Shortcut _Key"
 msgstr "Co_mbinación de teclas"
 
-#: src/ui/ui-main.c:516
+#: src/ui/ui-main.c:514
 msgid "Resume game"
 msgstr "Continuar juego"
 
-#: src/ui/ui-main.c:570
+#: src/ui/ui-main.c:568
 msgid "translator_credits"
 msgstr "creditos de _traduccion"
 
-#: src/ui/ui-main.c:599
+#: src/ui/ui-main.c:597
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Hubo un error al mostrar la ayuda: %s"
@@ -366,4 +377,3 @@ msgstr "Hubo un error al mostrar la ayuda: %s"
 
 #~ msgid "Keybinding"
 #~ msgstr "Teclas"
-
