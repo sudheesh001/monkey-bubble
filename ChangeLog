@@ -1,3 +1,15 @@
+2004-09-20  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+        Russian translation updated by <zcd043@sectorb.msk.ru>
+	fix missing translation in ui
+
+	* configure.in:
+	* po/POTFILES.in:
+	* src/ui/keyboard-properties.c:
+	* src/ui/ui-main.c: (about):
+	* src/ui/ui-network-client.c: (ui_network_client_new):
+	* src/ui/ui-network-server.c: (ui_network_server_new):
+
 2004-07-16  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	some re-indent :(

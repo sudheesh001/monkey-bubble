@@ -17,6 +17,7 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+#include <config.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -32,6 +33,7 @@
 
 #include <gtk/gtk.h>
 #include <glade/glade.h>
+#include <bonobo/bonobo-i18n.h>
 
 #include "message-handler.h"
 
@@ -154,22 +156,22 @@ ui_network_server_new(NetworkSimpleServer * server)
        item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml,"players_treeview");
        list = gtk_list_store_new(3,G_TYPE_STRING,G_TYPE_BOOLEAN,G_TYPE_BOOLEAN);
 
-        column = gtk_tree_view_column_new_with_attributes("Player name",gtk_cell_renderer_text_new(),
-                                                          "text",0);
+        column = gtk_tree_view_column_new_with_attributes(_("_Player name"),gtk_cell_renderer_text_new(),
+                                                          "text",0, NULL);
 
         gtk_tree_view_append_column (GTK_TREE_VIEW (item), column);
 
         column = gtk_tree_view_column_new();
 
-        column = gtk_tree_view_column_new_with_attributes("Owner",gtk_cell_renderer_toggle_new(),
-                                                          "active",1);
+        column = gtk_tree_view_column_new_with_attributes(_("_Owner"),gtk_cell_renderer_toggle_new(),
+                                                          "active",1, NULL);
 
         gtk_tree_view_append_column (GTK_TREE_VIEW (item), column);
 
         column = gtk_tree_view_column_new();
 
-        column = gtk_tree_view_column_new_with_attributes("Ready",gtk_cell_renderer_toggle_new(),
-                                                          "active",2);
+        column = gtk_tree_view_column_new_with_attributes(_("_Ready"),gtk_cell_renderer_toggle_new(),
+                                                          "active",2, NULL);
 
         gtk_tree_view_append_column (GTK_TREE_VIEW (item), column);
 
