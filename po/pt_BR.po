@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: monkey-bubble 0.1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-11 17:55-0500\n"
-"PO-Revision-Date: 2004-03-11 17:53-0500\n"
+"POT-Creation-Date: 2004-06-17 13:13-0400\n"
+"PO-Revision-Date: 2004-06-17 13:13-0400\n"
 "Last-Translator: Gustavo Maciel Dias Vieira <gdvieira@zaz.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
@@ -23,50 +23,70 @@ msgid "_Shortcut Keys:"
 msgstr "_Teclas de atalho:"
 
 #: data/monkey-bubble.glade.h:1
+msgid ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Can't create server !\n"
+"</span>\n"
+"</markup>"
+msgstr ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Não é possível criar servidor !\n"
+"</span>\n"
+"</markup>"
+
+#: data/monkey-bubble.glade.h:7
 msgid "Create network game"
 msgstr "Criar jogo em rede"
 
-#: data/monkey-bubble.glade.h:2
+#: data/monkey-bubble.glade.h:8
 msgid "Join _network game"
 msgstr "Participar de jogo em _rede"
 
-#: data/monkey-bubble.glade.h:3 monkey-bubble.desktop.in.h:1
+#: data/monkey-bubble.glade.h:9 monkey-bubble.desktop.in.h:1
 msgid "Monkey Bubble"
 msgstr "Monkey Bubble"
 
-#: data/monkey-bubble.glade.h:4
+#: data/monkey-bubble.glade.h:10
 msgid "New 1 player"
 msgstr "Novo 1 jogador"
 
-#: data/monkey-bubble.glade.h:5
+#: data/monkey-bubble.glade.h:11
 msgid "New 2 players"
 msgstr "Novo 2 jogadores"
 
-#: data/monkey-bubble.glade.h:6 src/ui/ui-main.c:391 src/ui/ui-main.c:521
+#: data/monkey-bubble.glade.h:12 src/ui/ui-main.c:401 src/ui/ui-main.c:531
 msgid "Pause game"
 msgstr "Suspender jogo"
 
-#: data/monkey-bubble.glade.h:7 src/ui/keyboard-properties.c:85
+#: data/monkey-bubble.glade.h:13 src/ui/keyboard-properties.c:85
 msgid "Stop game"
 msgstr "Parar jogo"
 
-#: data/monkey-bubble.glade.h:8
+#: data/monkey-bubble.glade.h:14
+msgid "Warning"
+msgstr "Alerta"
+
+#: data/monkey-bubble.glade.h:15
 msgid "_About"
 msgstr "_Sobre"
 
-#: data/monkey-bubble.glade.h:9
+#: data/monkey-bubble.glade.h:16
 msgid "_Contents"
 msgstr "_Conteúdo"
 
-#: data/monkey-bubble.glade.h:10
+#: data/monkey-bubble.glade.h:17
 msgid "_Game"
 msgstr "J_ogo"
 
-#: data/monkey-bubble.glade.h:11
+#: data/monkey-bubble.glade.h:18
 msgid "_Help"
 msgstr "A_juda"
 
-#: data/monkey-bubble.glade.h:12
+#: data/monkey-bubble.glade.h:19
 msgid "_Settings"
 msgstr "_Configurações"
 
@@ -159,20 +179,20 @@ msgid "Network game"
 msgstr "Jogo em rede"
 
 #: data/netgame.glade.h:3
-msgid "Players"
-msgstr "Jogadores"
+msgid "Number of games :"
+msgstr "Número de jogos:"
 
-#: data/netgame.glade.h:4 src/ui/keyboard-properties.c:87
+#: data/netgame.glade.h:4
+msgid "Number of players :"
+msgstr "Número de jogadores:"
+
+#: data/netgame.glade.h:5 src/ui/keyboard-properties.c:87
 msgid "Quit game"
 msgstr "Sair do jogo"
 
-#: data/netgame.glade.h:5
+#: data/netgame.glade.h:6
 msgid "Ready"
 msgstr "Pronto"
-
-#: data/netgame.glade.h:6
-msgid "Start Game"
-msgstr "Iniciar jogo"
 
 #: data/netgame.glade.h:7
 msgid "_Go"
@@ -344,15 +364,21 @@ msgstr "_Ação"
 msgid "Shortcut _Key"
 msgstr "_Tecla de atalho"
 
-#: src/ui/ui-main.c:514
+#: src/ui/ui-main.c:524
 msgid "Resume game"
 msgstr "Continuar jogo"
 
-#: src/ui/ui-main.c:568
+#: src/ui/ui-main.c:608
 msgid "translator_credits"
 msgstr "Gustavo Maciel Dias Vieira <gdvieira@zaz.com.br>"
 
-#: src/ui/ui-main.c:597
+#: src/ui/ui-main.c:637
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Ocorreu um erro ao exibir a ajuda: %s"
+
+#~ msgid "Players"
+#~ msgstr "Jogadores"
+
+#~ msgid "Start Game"
+#~ msgstr "Iniciar jogo"
