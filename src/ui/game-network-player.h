@@ -1,3 +1,4 @@
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
 /* game_network_player.h
  * Copyright (C) 2002 Laurent Belmonte
  *
@@ -24,7 +25,7 @@
 #include "game.h"
 #include "monkey-canvas.h"
 #include "monkey.h"
-#include "monkey-message-handler.h"
+#include "message-handler.h"
 G_BEGIN_DECLS
 
 #define TYPE_GAME_NETWORK_PLAYER            (game_network_player_get_type())
@@ -40,22 +41,22 @@ typedef struct GameNetworkPlayerPrivate GameNetworkPlayerPrivate;
 
 
 typedef struct {
-  Game parent_instance;
-  GameNetworkPlayerPrivate * private;
+    Game parent_instance;
+    GameNetworkPlayerPrivate * private;
 } GameNetworkPlayer;
 
 typedef struct {
-  GameClass parent_class;
+    GameClass parent_class;
 } GameNetworkPlayerClass;
 
 
 GType game_network_player_get_type(void);
 
 GameNetworkPlayer * game_network_player_new(GtkWidget * window,
-														  MonkeyCanvas * canvas,
-														  Monkey * m,
-														  MonkeyMessageHandler * handler,
-														  int monkey_id);
+					    MonkeyCanvas * canvas,
+					    Monkey * m,
+					    NetworkMessageHandler * handler,
+					    int monkey_id);
 
 gint game_network_player_get_score(GameNetworkPlayer * g);
 gboolean game_network_player_is_lost(GameNetworkPlayer * g);

@@ -1,3 +1,4 @@
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
 /* game_network_player_manager.h
  * Copyright (C) 2002 Laurent Belmonte
  *
@@ -25,7 +26,7 @@
 #include "monkey-canvas.h"
 #include "monkey.h"
 
-#include "monkey-message-handler.h"
+#include "message-handler.h"
 G_BEGIN_DECLS
 
 #define TYPE_GAME_NETWORK_PLAYER_MANAGER            (game_network_player_manager_get_type())
@@ -40,20 +41,21 @@ typedef struct GameNetworkPlayerManagerPrivate GameNetworkPlayerManagerPrivate;
 
 
 
-typedef struct {
-  GObject parent_instance;
-  GameNetworkPlayerManagerPrivate * private;
+typedef struct 
+{
+    GObject parent_instance;
+    GameNetworkPlayerManagerPrivate * private;
 } GameNetworkPlayerManager;
 
 typedef struct {
-  GObjectClass parent_class;
+    GObjectClass parent_class;
 } GameNetworkPlayerManagerClass;
 
 
 GType game_network_player_manager_get_type(void);
 
 GameNetworkPlayerManager * game_network_player_manager_new(GtkWidget * window,MonkeyCanvas * canvas,
-																			  MonkeyMessageHandler * handler,int client_id);
+							   NetworkMessageHandler * handler,int client_id);
 void game_network_player_manager_start(GameManager * g);
 void game_network_player_manager_stop(GameManager * g);
 

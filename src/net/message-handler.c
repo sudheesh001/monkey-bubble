@@ -32,9 +32,11 @@
 #include <sys/time.h>
 #include <time.h>
 
+#include <netdb.h>
+
 #include <math.h>
 #include <libxml/tree.h> 
-#include "monkey-message-handler.h"
+#include "message-handler.h"
 #include "monkey-net-marshal.h"
 
 #define CHUNK_SIZE 32
@@ -61,46 +63,46 @@ enum {
 
 static guint32 signals[LAST_SIGNAL];
 
-struct MonkeyMessageHandlerPrivate {
+struct _NetworkMessageHandlerPrivate {
         int sock;
         GThread * main_thread;
         gboolean is_running;
 };
 
-#define PRIVATE( MonkeyMessageHandler ) (MonkeyMessageHandler->private)
+#define PRIVATE( NetworkMessageHandler ) (NetworkMessageHandler->private)
 
 static GObjectClass* parent_class = NULL;
 
-void monkey_message_handler_finalize(GObject *);
+void network_message_handler_finalize(GObject *);
 
 
-void parse_xml_message(MonkeyMessageHandler * mmh,
+void parse_xml_message(NetworkMessageHandler * mmh,
                        guint8 * message);
 
-void parse_bubble_array(MonkeyMessageHandler * mmh,
+void parse_bubble_array(NetworkMessageHandler * mmh,
                         guint8 * message);
 
-void parse_add_bubble(MonkeyMessageHandler * mmh,
+void parse_add_bubble(NetworkMessageHandler * mmh,
                       guint8 * message);
 
-void parse_winlost(MonkeyMessageHandler * mmh,
+void parse_winlost(NetworkMessageHandler * mmh,
                    guint8 * message);
 
-void parse_waiting_added(MonkeyMessageHandler * mmh,
+void parse_waiting_added(NetworkMessageHandler * mmh,
                          guint8 * message);
 
-void parse_shoot(MonkeyMessageHandler * mmh,
+void parse_shoot(NetworkMessageHandler * mmh,
                  guint8 * message);
 
-gboolean read_chunk(MonkeyMessageHandler * mmh,
+gboolean read_chunk(NetworkMessageHandler * mmh,
                 guint8 * data);
 	
-MonkeyMessageHandler *
-monkey_message_handler_new(int sock) {
-        MonkeyMessageHandler * mmh;
+NetworkMessageHandler *
+network_message_handler_new(int sock) {
+        NetworkMessageHandler * mmh;
         
         mmh = 
-                MONKEY_MESSAGE_HANDLER(g_object_new(TYPE_MONKEY_MESSAGE_HANDLER
+                NETWORK_MESSAGE_HANDLER(g_object_new(NETWORK_TYPE_MESSAGE_HANDLER
                                                     , NULL));
         
         PRIVATE(mmh)->sock = sock;
@@ -108,10 +110,53 @@ monkey_message_handler_new(int sock) {
         
 }
 
+gboolean
+network_message_handler_connect(NetworkMessageHandler * handler,
+                               const gchar * host,int port) 
+{
+
+
+        int sock;
+        struct sockaddr_in sock_client;
+        struct hostent *src_host;
+        
+        g_print("connect sever \n");
+        sock =  socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+  
+ 
+        if ( sock == -1) {
+                perror("socket()");
+                return FALSE;
+        }
+        
+        
+        bzero((char *) &sock_client, sizeof(sock_client));
+        sock_client.sin_family = AF_INET;
+        sock_client.sin_port = (unsigned short) htons(port);
+        src_host = (struct hostent *) gethostbyname(host);	
+        if (!src_host) {
+                fprintf(stderr, "Not a valid Server IP...\n");
+                return FALSE;
+        }
+        
+        bcopy( (char *) src_host->h_addr, (char *) &sock_client.sin_addr.s_addr, src_host->h_length);
+        
+        while (connect(sock, (struct sockaddr *) &sock_client, sizeof(sock_client)) == -1) {
+                if (errno != EAGAIN)
+                        {
+                                perror("connect()");
+                                return FALSE;
+                        }
+        }
+
+        PRIVATE(handler)->sock = sock;
+        return TRUE;
+}
+
 
 void 
-monkey_message_handler_finalize(GObject *object) {
-        MonkeyMessageHandler * mmh = (MonkeyMessageHandler *) object;
+network_message_handler_finalize(GObject *object) {
+        NetworkMessageHandler * mmh = (NetworkMessageHandler *) object;
 	
         g_free(PRIVATE(mmh));
 
@@ -121,23 +166,23 @@ monkey_message_handler_finalize(GObject *object) {
 }
 
 static void 
-monkey_message_handler_instance_init(MonkeyMessageHandler * mmh) {
-        mmh->private =g_new0 (MonkeyMessageHandlerPrivate, 1);
+network_message_handler_instance_init(NetworkMessageHandler * mmh) {
+        mmh->private =g_new0 (NetworkMessageHandlerPrivate, 1);
 }
 
 static void 
-monkey_message_handler_class_init (MonkeyMessageHandlerClass *klass) {
+network_message_handler_class_init (NetworkMessageHandlerClass *klass) {
         GObjectClass* object_class;
         
         parent_class = g_type_class_peek_parent(klass);
         object_class = G_OBJECT_CLASS(klass);
-        object_class->finalize = monkey_message_handler_finalize;
+        object_class->finalize = network_message_handler_finalize;
 
         signals[RECV_SHOOT]= g_signal_new ("recv-shoot",
                                            G_TYPE_FROM_CLASS (klass),
                                            G_SIGNAL_RUN_FIRST |
                                            G_SIGNAL_NO_RECURSE,
-                                           G_STRUCT_OFFSET (MonkeyMessageHandlerClass, recv_shoot),
+                                           G_STRUCT_OFFSET (NetworkMessageHandlerClass, recv_shoot),
                                            NULL, NULL,
                                            monkey_net_marshal_VOID__UINT_UINT_FLOAT,
                                            G_TYPE_NONE,
@@ -148,7 +193,7 @@ monkey_message_handler_class_init (MonkeyMessageHandlerClass *klass) {
                                            G_TYPE_FROM_CLASS (klass),
                                            G_SIGNAL_RUN_FIRST |
                                            G_SIGNAL_NO_RECURSE,
-                                           G_STRUCT_OFFSET (MonkeyMessageHandlerClass,recv_add_bubble ),
+                                           G_STRUCT_OFFSET (NetworkMessageHandlerClass,recv_add_bubble ),
                                            NULL, NULL,
                                            monkey_net_marshal_VOID__UINT_UINT,
                                            G_TYPE_NONE,
@@ -159,7 +204,7 @@ monkey_message_handler_class_init (MonkeyMessageHandlerClass *klass) {
                                               G_TYPE_FROM_CLASS (klass),
                                               G_SIGNAL_RUN_FIRST |
                                               G_SIGNAL_NO_RECURSE,
-                                              G_STRUCT_OFFSET (MonkeyMessageHandlerClass, recv_winlost),
+                                              G_STRUCT_OFFSET (NetworkMessageHandlerClass, recv_winlost),
                                               NULL, NULL,
                                               monkey_net_marshal_VOID__UINT_BOOLEAN,
                                               G_TYPE_NONE,
@@ -169,7 +214,7 @@ monkey_message_handler_class_init (MonkeyMessageHandlerClass *klass) {
                                               G_TYPE_FROM_CLASS (klass),
                                               G_SIGNAL_RUN_FIRST |
                                               G_SIGNAL_NO_RECURSE,
-                                              G_STRUCT_OFFSET (MonkeyMessageHandlerClass, recv_waiting_added),
+                                              G_STRUCT_OFFSET (NetworkMessageHandlerClass, recv_waiting_added),
                                               NULL, NULL,
                                               monkey_net_marshal_VOID__UINT_UINT_POINTER_POINTER,
                                               G_TYPE_NONE,
@@ -181,7 +226,7 @@ monkey_message_handler_class_init (MonkeyMessageHandlerClass *klass) {
                                                G_TYPE_FROM_CLASS (klass),
                                                G_SIGNAL_RUN_FIRST |
                                                G_SIGNAL_NO_RECURSE,
-                                               G_STRUCT_OFFSET (MonkeyMessageHandlerClass, recv_start),
+                                               G_STRUCT_OFFSET (NetworkMessageHandlerClass, recv_start),
                                                NULL, NULL,
                                                g_cclosure_marshal_VOID__VOID,
                                                G_TYPE_NONE,
@@ -191,7 +236,7 @@ monkey_message_handler_class_init (MonkeyMessageHandlerClass *klass) {
                                              G_TYPE_FROM_CLASS (klass),
                                              G_SIGNAL_RUN_FIRST |
                                              G_SIGNAL_NO_RECURSE,
-                                             G_STRUCT_OFFSET (MonkeyMessageHandlerClass, recv_message),
+                                             G_STRUCT_OFFSET (NetworkMessageHandlerClass, recv_message),
                                              NULL, NULL,
                                              monkey_net_marshal_VOID__UINT_POINTER,
                                              G_TYPE_NONE,
@@ -202,7 +247,7 @@ monkey_message_handler_class_init (MonkeyMessageHandlerClass *klass) {
                                                  G_TYPE_FROM_CLASS (klass),
                                                  G_SIGNAL_RUN_FIRST |
                                                  G_SIGNAL_NO_RECURSE,
-                                                 G_STRUCT_OFFSET (MonkeyMessageHandlerClass, recv_xml_message),
+                                                 G_STRUCT_OFFSET (NetworkMessageHandlerClass, recv_xml_message),
                                                  NULL, NULL,
                                                  monkey_net_marshal_VOID__UINT_POINTER,
                                                  G_TYPE_NONE,
@@ -212,7 +257,7 @@ monkey_message_handler_class_init (MonkeyMessageHandlerClass *klass) {
                                              G_TYPE_FROM_CLASS (klass),
                                              G_SIGNAL_RUN_FIRST |
                                              G_SIGNAL_NO_RECURSE,
-                                             G_STRUCT_OFFSET (MonkeyMessageHandlerClass, recv_bubble_array),
+                                             G_STRUCT_OFFSET (NetworkMessageHandlerClass, recv_bubble_array),
                                              NULL, NULL,
                                              monkey_net_marshal_VOID__UINT_UINT_POINTER,
                                              G_TYPE_NONE,
@@ -222,7 +267,7 @@ monkey_message_handler_class_init (MonkeyMessageHandlerClass *klass) {
                                                   G_TYPE_FROM_CLASS (klass),
                                                   G_SIGNAL_RUN_FIRST |
                                                   G_SIGNAL_NO_RECURSE,
-                                                  G_STRUCT_OFFSET (MonkeyMessageHandlerClass, connection_closed),
+                                                  G_STRUCT_OFFSET (NetworkMessageHandlerClass, connection_closed),
                                                   NULL, NULL,
                                                   g_cclosure_marshal_VOID__VOID,
                                                   G_TYPE_NONE,
@@ -230,33 +275,33 @@ monkey_message_handler_class_init (MonkeyMessageHandlerClass *klass) {
 
 }
 
-GType monkey_message_handler_get_type(void) {
-        static GType monkey_message_handler_type = 0;
+GType network_message_handler_get_type(void) {
+        static GType network_message_handler_type = 0;
         
-        if (!monkey_message_handler_type) {
-                static const GTypeInfo monkey_message_handler_info = {
-                        sizeof(MonkeyMessageHandlerClass),
+        if (!network_message_handler_type) {
+                static const GTypeInfo network_message_handler_info = {
+                        sizeof(NetworkMessageHandlerClass),
                         NULL,           /* base_init */
                         NULL,           /* base_finalize */
-                        (GClassInitFunc) monkey_message_handler_class_init,
+                        (GClassInitFunc) network_message_handler_class_init,
                         NULL,           /* class_finalize */
                         NULL,           /* class_data */
-                        sizeof(MonkeyMessageHandler),
+                        sizeof(NetworkMessageHandler),
                         1,              /* n_preallocs */
-                        (GInstanceInitFunc) monkey_message_handler_instance_init,
+                        (GInstanceInitFunc) network_message_handler_instance_init,
                 };
                 
-                monkey_message_handler_type = g_type_register_static(G_TYPE_OBJECT,
-                                                                     "MonkeyMessageHandler",
-                                                                     &monkey_message_handler_info, 0
+                network_message_handler_type = g_type_register_static(G_TYPE_OBJECT,
+                                                                     "NetworkMessageHandler",
+                                                                     &network_message_handler_info, 0
                                                                      );
 
         }
         
-        return monkey_message_handler_type;
+        return network_message_handler_type;
 }
 
-void parse_message(MonkeyMessageHandler * mmh,
+void parse_message(NetworkMessageHandler * mmh,
                    guint8 * message) {
 
         struct Test {
@@ -307,7 +352,7 @@ void parse_message(MonkeyMessageHandler * mmh,
 
 }
 
-void parse_xml_message(MonkeyMessageHandler * mmh,
+void parse_xml_message(NetworkMessageHandler * mmh,
                        guint8 * message) {
 
         guint8 message2[CHUNK_SIZE];
@@ -362,7 +407,7 @@ void parse_xml_message(MonkeyMessageHandler * mmh,
         
 }
 
-void * handler_loop(MonkeyMessageHandler * mmh) {
+void * handler_loop(NetworkMessageHandler * mmh) {
         guint8  message[CHUNK_SIZE];
         
         while( PRIVATE(mmh)->is_running) {
@@ -378,8 +423,8 @@ void * handler_loop(MonkeyMessageHandler * mmh) {
 }
 
 
-void monkey_message_handler_disconnect(MonkeyMessageHandler * mmh) {
-        g_assert( IS_MONKEY_MESSAGE_HANDLER(mmh));
+void network_message_handler_disconnect(NetworkMessageHandler * mmh) {
+        g_assert( IS_NETWORK_MESSAGE_HANDLER(mmh));
 
         close( PRIVATE(mmh)->sock );
 
@@ -387,7 +432,7 @@ void monkey_message_handler_disconnect(MonkeyMessageHandler * mmh) {
 
 }
 
-void monkey_message_handler_start_listening(MonkeyMessageHandler * mmh) {
+void network_message_handler_start_listening(NetworkMessageHandler * mmh) {
         GError ** error;
 
         error = NULL;
@@ -397,7 +442,7 @@ void monkey_message_handler_start_listening(MonkeyMessageHandler * mmh) {
 
 }
 
-void write_chunk(MonkeyMessageHandler * mmh,
+void write_chunk(NetworkMessageHandler * mmh,
                   guint8 * data,guint chunk_count) {
 
         guint size;
@@ -418,7 +463,7 @@ void write_chunk(MonkeyMessageHandler * mmh,
         
 }
 
-gboolean read_chunk(MonkeyMessageHandler * mmh,
+gboolean read_chunk(NetworkMessageHandler * mmh,
                     guint8 * data) {
         
         guint size,p;
@@ -445,7 +490,7 @@ gboolean read_chunk(MonkeyMessageHandler * mmh,
 }
 
 
-void monkey_message_handler_send_message (MonkeyMessageHandler * mmh,
+void network_message_handler_send_message (NetworkMessageHandler * mmh,
                                           guint32 client_id,
                                           const gchar * text,
                                           guint message_size) {
@@ -478,7 +523,7 @@ void monkey_message_handler_send_message (MonkeyMessageHandler * mmh,
 }
 
 
-void monkey_message_handler_send_xml_message(MonkeyMessageHandler * mmh,
+void network_message_handler_send_xml_message(NetworkMessageHandler * mmh,
                                              guint32 client_id,
                                              xmlDoc * doc) {
 
@@ -521,11 +566,11 @@ void monkey_message_handler_send_xml_message(MonkeyMessageHandler * mmh,
         
 }
 
-void monkey_message_handler_join(MonkeyMessageHandler * mmh) {
+void network_message_handler_join(NetworkMessageHandler * mmh) {
         g_thread_join( PRIVATE(mmh)->main_thread);
 }
 
-void monkey_message_handler_send_waiting_added (MonkeyMessageHandler * mmh,
+void network_message_handler_send_waiting_added (NetworkMessageHandler * mmh,
                                                 guint32 monkey_id,
                                                 guint8 bubbles_count,
                                                 Color * colors,
@@ -587,7 +632,7 @@ void monkey_message_handler_send_waiting_added (MonkeyMessageHandler * mmh,
 }
 
 
-void parse_waiting_added(MonkeyMessageHandler * mmh,
+void parse_waiting_added(NetworkMessageHandler * mmh,
                          guint8 * message) {
 
         int i,j;
@@ -658,7 +703,7 @@ void parse_waiting_added(MonkeyMessageHandler * mmh,
 static int calculate_size(int size) {
         return (int) ceil((( float)size / CHUNK_SIZE)) * CHUNK_SIZE;
 }
-void monkey_message_handler_send_bubble_array( MonkeyMessageHandler * mmh,
+void network_message_handler_send_bubble_array( NetworkMessageHandler * mmh,
                                                guint32 monkey_id,
                                                guint8  bubbles_count,
                                                Color * bubbles) {
@@ -701,7 +746,7 @@ void monkey_message_handler_send_bubble_array( MonkeyMessageHandler * mmh,
 
 }
 
-void parse_bubble_array(MonkeyMessageHandler * mmh,
+void parse_bubble_array(NetworkMessageHandler * mmh,
                         guint8 * message) {
 
         int i,j;
@@ -748,7 +793,7 @@ void parse_bubble_array(MonkeyMessageHandler * mmh,
         
 }
                      
-void monkey_message_handler_send_add_bubble  (MonkeyMessageHandler * mmh,
+void network_message_handler_send_add_bubble  (NetworkMessageHandler * mmh,
 					      guint32 monkey_id,
 					      Color color) {
 
@@ -774,7 +819,7 @@ void monkey_message_handler_send_add_bubble  (MonkeyMessageHandler * mmh,
 
 }
 
-void parse_add_bubble(MonkeyMessageHandler * mmh,
+void parse_add_bubble(NetworkMessageHandler * mmh,
                       guint8 * message) {
         struct Test {
                 guint8 message_type;
@@ -794,7 +839,7 @@ void parse_add_bubble(MonkeyMessageHandler * mmh,
  
 }
 
-void monkey_message_handler_send_shoot       (MonkeyMessageHandler * mmh,
+void network_message_handler_send_shoot       (NetworkMessageHandler * mmh,
 					      guint32 monkey_id,
 					      guint32 time,
                                               gfloat angle) {
@@ -824,7 +869,7 @@ void monkey_message_handler_send_shoot       (MonkeyMessageHandler * mmh,
 
 
 
-void parse_shoot(MonkeyMessageHandler * mmh,
+void parse_shoot(NetworkMessageHandler * mmh,
                       guint8 * message) {
 
 
@@ -848,7 +893,7 @@ void parse_shoot(MonkeyMessageHandler * mmh,
  
 }
 
-void monkey_message_handler_send_winlost     (MonkeyMessageHandler * mmh,
+void network_message_handler_send_winlost     (NetworkMessageHandler * mmh,
 					      guint32 monkey_id,
 					      guint8 win_lost) {
         guint8 message[CHUNK_SIZE];
@@ -874,7 +919,7 @@ void monkey_message_handler_send_winlost     (MonkeyMessageHandler * mmh,
 
 
 
-void parse_winlost(MonkeyMessageHandler * mmh,
+void parse_winlost(NetworkMessageHandler * mmh,
                       guint8 * message) {
 
 
@@ -895,7 +940,7 @@ void parse_winlost(MonkeyMessageHandler * mmh,
  
 }
 
-void monkey_message_handler_send_start       (MonkeyMessageHandler * mmh) {
+void network_message_handler_send_start       (NetworkMessageHandler * mmh) {
 
         guint8 message[CHUNK_SIZE];
 

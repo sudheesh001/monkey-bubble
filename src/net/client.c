@@ -44,17 +44,17 @@ static guint32 signals[LAST_SIGNAL];
 struct NetworkClientPrivate 
 {
 	NetworkPlayer * player;
-	MonkeyMessageHandler * handler;
+	NetworkMessageHandler * handler;
 	guint32 client_id;
 	gboolean state;
 };
 
-static void  recv_xml_message(MonkeyMessageHandler * mmh,
+static void  recv_xml_message(NetworkMessageHandler * mmh,
 			      guint32 client_id,
 			      xmlDoc * doc,
 			      NetworkClient * client);
 
-static void client_connection_closed(MonkeyMessageHandler * mmh,
+static void client_connection_closed(NetworkMessageHandler * mmh,
 				     NetworkClient * client);
 
 NetworkClient *
@@ -92,7 +92,7 @@ gboolean network_client_get_state(NetworkClient * client) {
 }
 
 void network_client_set_handler(NetworkClient * client,
-				MonkeyMessageHandler * handler) 
+				NetworkMessageHandler * handler) 
 {
 	g_assert(NETWORK_IS_CLIENT(client));
 	g_assert(PRIVATE(client)->handler == NULL);
@@ -113,7 +113,7 @@ void network_client_set_handler(NetworkClient * client,
 }
 
 
-MonkeyMessageHandler * network_client_get_handler(NetworkClient * client) 
+NetworkMessageHandler * network_client_get_handler(NetworkClient * client) 
 {
 	g_assert(NETWORK_IS_CLIENT(client));
 
@@ -129,7 +129,7 @@ network_client_get_id(NetworkClient * client)
 
 
 static void 
-recv_xml_message(MonkeyMessageHandler * mmh,
+recv_xml_message(NetworkMessageHandler * mmh,
 		 guint32 client_id,
 		 xmlDoc * doc,
 		 NetworkClient * client) 
@@ -166,7 +166,7 @@ recv_xml_message(MonkeyMessageHandler * mmh,
 	
 }
 
-static void client_connection_closed(MonkeyMessageHandler * mmh,
+static void client_connection_closed(NetworkMessageHandler * mmh,
 				     NetworkClient * client) 
 {
 	g_signal_emit( G_OBJECT(client),signals[DISCONNECTED],0);

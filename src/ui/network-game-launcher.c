@@ -33,7 +33,7 @@
 #include <gtk/gtk.h>
 #include <glade/glade.h>
 
-#include "monkey-message-handler.h"
+#include "message-handler.h"
 
 #include "network-game-launcher.h"
 #include "game-network-player-manager.h"
@@ -54,7 +54,7 @@ struct NetworkGameLauncherPrivate {
         GladeXML * glade_xml;
         GtkWidget * window;
         gchar * server_name;
-        MonkeyMessageHandler * handler;
+        NetworkMessageHandler * handler;
         int client_id;
         gboolean ready;
         GtkLabel * connection_label;
@@ -102,7 +102,7 @@ static void set_sensitive(GtkWidget * w,
 
 static void update_players_list(NetworkGameLauncher * launcher);
 
-void recv_network_xml_message(MonkeyMessageHandler * mmh,
+void recv_network_xml_message(NetworkMessageHandler * mmh,
                               guint32 client_id,
                               xmlDoc * message,
                               gpointer * p);
@@ -275,7 +275,7 @@ static void send_disconnect(NetworkGameLauncher * launcher) {
         
         xmlNewProp(root,"name","disconnect");
         
-        monkey_message_handler_send_xml_message(PRIVATE(launcher)->handler,
+        network_message_handler_send_xml_message(PRIVATE(launcher)->handler,
                                                 PRIVATE(launcher)->client_id,
                                                 doc);
 
@@ -311,9 +311,9 @@ static void quit_server_signal(gpointer    callback_data,
         
         send_disconnect(launcher);
 
-        monkey_message_handler_disconnect(PRIVATE(launcher)->handler);
+        network_message_handler_disconnect(PRIVATE(launcher)->handler);
         
-        monkey_message_handler_join(PRIVATE(launcher)->handler);
+        network_message_handler_join(PRIVATE(launcher)->handler);
         g_object_unref( PRIVATE(launcher)->handler);
         PRIVATE(launcher)->handler = NULL;
 
@@ -337,7 +337,7 @@ static void send_ready_state(NetworkGameLauncher * launcher,
         
         xmlAddChild(root,text);
 
-        monkey_message_handler_send_xml_message(PRIVATE(launcher)->handler,
+        network_message_handler_send_xml_message(PRIVATE(launcher)->handler,
                                                 PRIVATE(launcher)->client_id,
                                                 doc);
 
@@ -388,7 +388,7 @@ static void send_start(NetworkGameLauncher * launcher) {
         
         xmlAddChild(root,text);
 
-        monkey_message_handler_send_xml_message(PRIVATE(launcher)->handler,
+        network_message_handler_send_xml_message(PRIVATE(launcher)->handler,
                                                 PRIVATE(launcher)->client_id,
                                                 doc);
 
@@ -440,7 +440,7 @@ void send_init(NetworkGameLauncher * launcher) {
         xmlAddChild(current,text);
         xmlAddChild(root,current);
 
-        monkey_message_handler_send_xml_message(PRIVATE(launcher)->handler,
+        network_message_handler_send_xml_message(PRIVATE(launcher)->handler,
                                                 PRIVATE(launcher)->client_id,
                                                 doc);
 
@@ -577,7 +577,7 @@ void start_game(NetworkGameLauncher * launcher) {
         
 }
 
-void recv_network_xml_message(MonkeyMessageHandler * mmh,
+void recv_network_xml_message(NetworkMessageHandler * mmh,
 		  guint32 client_id,
 		  xmlDoc * message,
 		  gpointer * p) {
@@ -678,7 +678,7 @@ static void set_sensitive(GtkWidget * w,
         }
  }
 
-static void connection_closed(MonkeyMessageHandler * handler,
+static void connection_closed(NetworkMessageHandler * handler,
                               NetworkGameLauncher * launcher) {
         disconnected(launcher);
 }
@@ -686,41 +686,15 @@ static void connection_closed(MonkeyMessageHandler * handler,
 
 static gboolean connect_server(NetworkGameLauncher * launcher) {
         
-        int sock;
-        struct sockaddr_in sock_client;
-        struct hostent *src_host;
-        
-        g_print("connect sever \n");
-        sock =  socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-  
- 
-        if ( sock == -1) {
-                perror("socket()");
-                return FALSE;
-        }
-        
-        
-        bzero((char *) &sock_client, sizeof(sock_client));
-        sock_client.sin_family = AF_INET;
-        sock_client.sin_port = (unsigned short) htons(6666);
-        src_host = (struct hostent *) gethostbyname(PRIVATE(launcher)->server_name);	
-        if (!src_host) {
-                fprintf(stderr, "Not a valid Server IP...\n");
-                return FALSE;
-        }
-        
-        bcopy( (char *) src_host->h_addr, (char *) &sock_client.sin_addr.s_addr, src_host->h_length);
-        
-        while (connect(sock, (struct sockaddr *) &sock_client, sizeof(sock_client)) == -1) {
-                if (errno != EAGAIN)
-                        {
-                                perror("connect()");
-                                return FALSE;
-                        }
-        }
 
-        PRIVATE(launcher)->handler = monkey_message_handler_new(sock);
+        PRIVATE(launcher)->handler = network_message_handler_new(0);
         
+        if( network_message_handler_connect(PRIVATE(launcher)->handler,PRIVATE(launcher)->server_name,6666) == FALSE) {
+                g_object_unref( G_OBJECT(PRIVATE(launcher)->handler));
+                PRIVATE(launcher)->handler = NULL;
+
+                return FALSE;
+        }
    
 
         g_signal_connect( G_OBJECT(PRIVATE(launcher)->handler),
@@ -734,7 +708,7 @@ static gboolean connect_server(NetworkGameLauncher * launcher) {
                           G_CALLBACK( connection_closed ),
                           launcher);
 
-        monkey_message_handler_start_listening(PRIVATE(launcher)->handler);
+        network_message_handler_start_listening(PRIVATE(launcher)->handler);
 
         PRIVATE(launcher)->ready = FALSE;
         return TRUE;

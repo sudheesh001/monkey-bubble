@@ -27,7 +27,7 @@
 #include <glib-object.h>
 
 #include "player.h"
-#include "monkey-message-handler.h"
+#include "message-handler.h"
 
 G_BEGIN_DECLS
 
@@ -48,9 +48,9 @@ NetworkPlayer * network_client_get_player(NetworkClient * client);
 
 
 void network_client_set_handler(NetworkClient * client,
-				MonkeyMessageHandler * handler);
+				NetworkMessageHandler * handler);
 
-MonkeyMessageHandler * network_client_get_handler(NetworkClient * client);
+NetworkMessageHandler * network_client_get_handler(NetworkClient * client);
 
 gboolean network_client_get_state(NetworkClient * client);
 

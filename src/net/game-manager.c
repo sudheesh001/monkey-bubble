@@ -1,6 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
-/* this file is part of criawips a gnome presentation application
- *
+/*
  * AUTHORS
  *       Laurent Belmonte        <laurent.belmonte@aliacom.fr>
  *
@@ -43,7 +42,7 @@ struct NetworkGameManagerPrivate
 };
 
 
-static void client_connection_closed(MonkeyMessageHandler * mmh,
+static void client_connection_closed(NetworkMessageHandler * mmh,
 				     NetworkGameManager * manager);
 
 
@@ -75,7 +74,7 @@ void
 network_game_manager_add_client(NetworkGameManager * manager,
 				NetworkClient * client) 
 {
-	MonkeyMessageHandler * handler;
+	NetworkMessageHandler * handler;
 
 	g_mutex_lock( PRIVATE(manager)->started_lock);
 
@@ -126,7 +125,7 @@ network_game_manager_add_client(NetworkGameManager * manager,
 		xmlNewProp(root,"name","cant_join_game");
 		
 		
-		monkey_message_handler_send_xml_message(network_client_get_handler(client),
+		network_message_handler_send_xml_message(network_client_get_handler(client),
 							network_client_get_id(client),
 							doc);
 		
@@ -172,7 +171,7 @@ send_game_joined(NetworkGameManager * manager,
         
         xmlAddChild(root,text);
 	
-        monkey_message_handler_send_xml_message(network_client_get_handler(client),
+        network_message_handler_send_xml_message(network_client_get_handler(client),
                                                 network_client_get_id(client),
                                                 doc);
         
@@ -215,7 +214,7 @@ void send_game_list_to_client(gpointer data,
         client = NETWORK_CLIENT(data);
         doc =(xmlDoc *)user_data;
 
-        monkey_message_handler_send_xml_message(network_client_get_handler(client),
+        network_message_handler_send_xml_message(network_client_get_handler(client),
                                                 network_client_get_id(client),
                                                 doc);
 
@@ -271,12 +270,53 @@ void send_game_list(NetworkGameManager * manager) {
         xmlFreeDoc(doc);
 }
 
+void send_start_game_to_client(gpointer data,
+                              gpointer user_data)
+{
+        NetworkClient * nc;
+        xmlDoc * doc;
+        
+        nc = (NetworkClient *)data;
+        doc =(xmlDoc *)user_data;
+        network_message_handler_send_xml_message(network_client_get_handler(nc),
+                                                network_client_get_id(nc),
+                                                doc);
+        
+}
+
 static void 
 start_game(NetworkGameManager * manager) 
 {
 
 	
+        xmlDoc * doc;
+        xmlNode * text, * root;
+
+        doc = xmlNewDoc("1.0");
+        root = xmlNewNode(NULL,
+                          "message");
+
+        xmlDocSetRootElement(doc, root);
+         
+
+        xmlNewProp(root,"name","game_created");
+	
+        text = xmlNewText("1");
+        xmlAddChild(root,text);
+	
+	
+	
+        g_list_foreach(PRIVATE(manager)->clients,
+		       send_start_game_to_client,
+                       doc);
+
+        xmlFreeDoc(doc);
+
 	PRIVATE(manager)->game = network_game_new(PRIVATE(manager)->clients);
+
+	
+        
+
 }
 
 static void 
@@ -302,7 +342,7 @@ client_request_start(NetworkClient * client,
 }
 
 static void 
-client_connection_closed(MonkeyMessageHandler * mmh,
+client_connection_closed(NetworkMessageHandler * mmh,
 			 NetworkGameManager * manager) {
 }
 

@@ -33,7 +33,7 @@ struct GameNetworkPlayerManagerPrivate {
   GameNetworkPlayer * current_game;
   int current_level;
   gint current_score;
-  MonkeyMessageHandler * handler;
+  NetworkMessageHandler * handler;
   Monkey * monkey;
     int client_id;
 
@@ -101,7 +101,7 @@ GType game_network_player_manager_get_type(void) {
 
 
 GameNetworkPlayerManager * game_network_player_manager_new(GtkWidget * window,MonkeyCanvas * canvas,
-																			  MonkeyMessageHandler * handler,int client_id) {
+																			  NetworkMessageHandler * handler,int client_id) {
 
   GameNetworkPlayerManager * game_network_player_manager;
   game_network_player_manager = GAME_NETWORK_PLAYER_MANAGER (g_object_new (TYPE_GAME_NETWORK_PLAYER_MANAGER, NULL));
@@ -189,7 +189,7 @@ gboolean start_timeout(gpointer data) {
   return FALSE;
 }
 
-static void recv_add_bubble(MonkeyMessageHandler * handler,
+static void recv_add_bubble(NetworkMessageHandler * handler,
 		     guint32 monkey_id,
 		     Color bubble,
 		     GameNetworkPlayerManager * manager) {
@@ -200,14 +200,14 @@ static void recv_add_bubble(MonkeyMessageHandler * handler,
   
 }
 
-void recv_start(MonkeyMessageHandler * handler,
+void recv_start(NetworkMessageHandler * handler,
 		GameNetworkPlayerManager * manager) {
   g_print("recv start \n");
 
   g_idle_add(start_timeout,manager);
 }
 
-void recv_bubble_array(MonkeyMessageHandler * handler,
+void recv_bubble_array(NetworkMessageHandler * handler,
 		       guint32 monkey_id,
 		       guint8 bubble_count,
 		       Color * colors,

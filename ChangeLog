@@ -1,3 +1,65 @@
+2004-05-26  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	some name refactoring
+	sadly,no much time to hack for the moment :(
+	* src/net/Makefile.am:
+	* src/net/client.c: (network_client_set_handler),
+	(network_client_get_handler), (recv_xml_message),
+	(client_connection_closed):
+	* src/net/client.h:
+	* src/net/game-manager.c: (network_game_manager_add_client),
+	(send_game_joined), (send_game_list_to_client),
+	(send_start_game_to_client), (start_game),
+	(client_connection_closed):
+	* src/net/game.c: (client_disconnected), (init_client):
+	* src/net/main.c: (main):
+	* src/net/message-handler.c: (network_message_handler_new),
+	(network_message_handler_connect),
+	(network_message_handler_finalize),
+	(network_message_handler_instance_init),
+	(network_message_handler_class_init),
+	(network_message_handler_get_type), (parse_message),
+	(parse_xml_message), (handler_loop),
+	(network_message_handler_disconnect),
+	(network_message_handler_start_listening), (write_chunk),
+	(read_chunk), (network_message_handler_send_message),
+	(network_message_handler_send_xml_message),
+	(network_message_handler_join),
+	(network_message_handler_send_waiting_added),
+	(parse_waiting_added), (calculate_size),
+	(network_message_handler_send_bubble_array), (parse_bubble_array),
+	(network_message_handler_send_add_bubble), (parse_add_bubble),
+	(network_message_handler_send_shoot), (parse_shoot),
+	(network_message_handler_send_winlost), (parse_winlost),
+	(network_message_handler_send_start):
+	* src/net/message-handler.h:
+	* src/net/mn-game-manager.c:
+	* src/net/mn-game-manager.h:
+	* src/net/monkey-message-handler.c:
+	* src/net/monkey-message-handler.h:
+	* src/net/monkey-network-game.c:
+	* src/net/monkey-network-game.h:
+	* src/net/simple-server.c: (network_simple_server_stop),
+	(client_connection_closed), (add_handler), (remove_handler),
+	(recv_xml_message), (send_init_reply), (create_client),
+	(connect_client):
+	* src/ui/game-network-player-manager.c:
+	(game_network_player_manager_new), (recv_add_bubble), (recv_start),
+	(recv_bubble_array):
+	* src/ui/game-network-player-manager.h:
+	* src/ui/game-network-player.c: (recv_add_bubble), (recv_winlost),
+	(recv_waiting_added), (game_network_player_bubble_shot),
+	(game_network_player_new):
+	* src/ui/game-network-player.h:
+	* src/ui/network-game-launcher.c: (send_disconnect),
+	(quit_server_signal), (send_ready_state), (send_start),
+	(send_init), (recv_network_xml_message), (connection_closed),
+	(connect_server):
+	* src/ui/network-server-launcher.c: (network_server_launcher_new),
+	(send_disconnect), (quit_server_signal), (send_ready_state),
+	(send_start), (send_init), (start_game_idle),
+	(recv_network_xml_message), (connect_server):
+
 2004-04-19  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	big refactor in the network code

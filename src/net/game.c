@@ -63,11 +63,11 @@ struct Client {
 
 
 static void init_clients(NetworkGame * self);
-static void client_disconnected(MonkeyMessageHandler * handler,
+static void client_disconnected(NetworkMessageHandler * handler,
 				struct Client * client);
 
 static void 
-client_disconnected(MonkeyMessageHandler * handler,
+client_disconnected(NetworkMessageHandler * handler,
 		    struct Client * client)
 {
 
@@ -153,7 +153,7 @@ init_client(NetworkGame * self,struct Client * client,
         board_init( playground_get_board( monkey_get_playground( m )),
                     bubbles,count);
         
-        monkey_message_handler_send_bubble_array(network_client_get_handler(client->client),
+        network_message_handler_send_bubble_array(network_client_get_handler(client->client),
                                                  network_client_get_id( client->client),
                                                  INIT_BUBBLES_COUNT,
                                                  colors);

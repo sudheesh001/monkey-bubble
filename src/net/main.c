@@ -17,7 +17,6 @@
  * Boston, MA 02111-1307, USA.
  */
  
-#include "mn-game-manager.h"
 #include "simple-server.h"
 
 #include <stdio.h>
@@ -25,9 +24,9 @@
 #include <stdlib.h>
 #include <signal.h>
 
+#include <gtk/gtk.h>
 
 int main(int argc, char **argv) {
-	 //	MnGameManager * manager;
 	 NetworkSimpleServer * server;
 
     g_type_init();
@@ -37,10 +36,6 @@ int main(int argc, char **argv) {
 
 	 network_simple_server_start(server);
 
-	 //    manager = mn_game_manager_new();
-
-	 //    mn_game_manager_start_server(manager);
-	 //    mn_game_manager_join(manager);
 	 gtk_main();
     return(0);
 }

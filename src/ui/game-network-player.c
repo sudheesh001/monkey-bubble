@@ -61,14 +61,14 @@ struct GameNetworkPlayerPrivate {
     guint shoot_key;
     GdkModifierType shoot_key_modifier;
 
-    MonkeyMessageHandler * handler;
+    NetworkMessageHandler * handler;
     gint notify_id;
 
     int monkey_id;
 };
 
 
-static void recv_winlost(MonkeyMessageHandler * handler,
+static void recv_winlost(NetworkMessageHandler * handler,
                          int monkey_id,
                          gboolean winlost,
                          GameNetworkPlayer * game);
@@ -243,7 +243,7 @@ gboolean add_bubble(gpointer ud) {
 }
 
 
-static void recv_add_bubble(MonkeyMessageHandler * handler,
+static void recv_add_bubble(NetworkMessageHandler * handler,
 			    int monkey_id,
 			    Color color,
 			    GameNetworkPlayer * game) {
@@ -270,7 +270,7 @@ static gboolean idle_draw_win(gpointer data) {
         return FALSE;
 }
 
-static void recv_winlost(MonkeyMessageHandler * handler,
+static void recv_winlost(NetworkMessageHandler * handler,
                          int monkey_id,
                          gboolean winlost,
 			    GameNetworkPlayer * game) {
@@ -294,7 +294,7 @@ static void recv_winlost(MonkeyMessageHandler * handler,
   
 }
 
-static void recv_waiting_added(MonkeyMessageHandler * handler,
+static void recv_waiting_added(NetworkMessageHandler * handler,
                                int monkey_id,
                                int bubbles_count,
                                Color * colors,
@@ -322,7 +322,7 @@ static void game_network_player_bubble_shot( Monkey * monkey,
 
     g_assert( IS_GAME_NETWORK_PLAYER(game));
 		
-    monkey_message_handler_send_shoot(PRIVATE(game)->handler,
+    network_message_handler_send_shoot(PRIVATE(game)->handler,
 				      PRIVATE(game)->monkey_id,
 				      get_time(game),
 				      shooter_get_angle(monkey_get_shooter(monkey)));
@@ -330,7 +330,7 @@ static void game_network_player_bubble_shot( Monkey * monkey,
 
 
 GameNetworkPlayer * game_network_player_new(GtkWidget * window,MonkeyCanvas * canvas,Monkey * m,
-					    MonkeyMessageHandler * handler,int monkey_id) {
+					    NetworkMessageHandler * handler,int monkey_id) {
     GameNetworkPlayer * game;
 
 

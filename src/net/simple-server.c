@@ -40,7 +40,7 @@
 #include <glib.h>
 
 #include "simple-server.h"
-#include "monkey-message-handler.h"
+#include "message-handler.h"
 #include "game-manager.h"
 #include "client.h"
 #include "player.h"
@@ -56,12 +56,12 @@ static void close_socket(NetworkSimpleServer * self);
 static void * accept_loop(NetworkSimpleServer * self);
 
 static void remove_handler(NetworkSimpleServer * self,
-			   MonkeyMessageHandler * hander);
+			   NetworkMessageHandler * hander);
 static void add_handler(NetworkSimpleServer * self,
-			MonkeyMessageHandler * hander);
+			NetworkMessageHandler * hander);
 
 static void create_client(NetworkSimpleServer * self,
-			  MonkeyMessageHandler * handler,
+			  NetworkMessageHandler * handler,
 			  guint32 client_id,
 			  const char * name);
 
@@ -122,6 +122,11 @@ network_simple_server_start(NetworkSimpleServer * self)
 	}
 }
 
+void
+network_simple_server_stop(NetworkSimpleServer * server) 
+{
+}
+
 static gboolean
 bind_socket(NetworkSimpleServer * self) 
 {
@@ -173,7 +178,7 @@ close_socket(NetworkSimpleServer * self)
 }
 
 static void
-client_connection_closed(MonkeyMessageHandler * handler,
+client_connection_closed(NetworkMessageHandler * handler,
 			 NetworkSimpleServer * self) {
 
 
@@ -184,7 +189,7 @@ client_connection_closed(MonkeyMessageHandler * handler,
 }
 
 static void add_handler(NetworkSimpleServer * self,
-			MonkeyMessageHandler * handler) 
+			NetworkMessageHandler * handler) 
 {
 	g_mutex_lock( PRIVATE( self)->handlers_lock);
 	PRIVATE(self)->handlers = g_list_append( PRIVATE(self)->handlers,
@@ -195,7 +200,7 @@ static void add_handler(NetworkSimpleServer * self,
 }
 
 static void remove_handler(NetworkSimpleServer * self,
-			MonkeyMessageHandler * handler) 
+			NetworkMessageHandler * handler) 
 {
 	g_mutex_lock( PRIVATE( self)->handlers_lock);
 	PRIVATE(self)->handlers = g_list_remove( PRIVATE(self)->handlers,
@@ -207,7 +212,7 @@ static void remove_handler(NetworkSimpleServer * self,
 }
 
 static void
-recv_xml_message(MonkeyMessageHandler * handler,
+recv_xml_message(NetworkMessageHandler * handler,
 		 guint32 client_id,
 		 xmlDoc * doc,
 		 NetworkSimpleServer * self) {
@@ -253,7 +258,7 @@ send_init_reply(NetworkSimpleServer * server,
         
         xmlAddChild(root,text);
 
-        monkey_message_handler_send_xml_message(network_client_get_handler(client),
+        network_message_handler_send_xml_message(network_client_get_handler(client),
 						network_client_get_id(client),
                                                 doc);
         
@@ -262,7 +267,7 @@ send_init_reply(NetworkSimpleServer * server,
 
 static void
 create_client(NetworkSimpleServer * self,
-	      MonkeyMessageHandler * handler,
+	      NetworkMessageHandler * handler,
 	      guint32 client_id,
 	      const char * name)
 {
@@ -293,12 +298,12 @@ create_client(NetworkSimpleServer * self,
 static void
 connect_client(NetworkSimpleServer * self,gint sock) 
 {
-	MonkeyMessageHandler * handler;
+	NetworkMessageHandler * handler;
 	guint32 client_id;
         xmlDoc * doc;
         xmlNode * root;
 
-	handler = monkey_message_handler_new( sock);
+	handler = network_message_handler_new( sock);
         
         g_signal_connect( G_OBJECT(handler),
                           "connection-closed",
@@ -326,14 +331,14 @@ connect_client(NetworkSimpleServer * self,gint sock)
 
         xmlNewProp(root,"name","init_request");
 
-        monkey_message_handler_send_xml_message( handler, 
+        network_message_handler_send_xml_message( handler, 
                                                  client_id,
                                                  doc);
 
 
         xmlFreeDoc(doc);
 
-        monkey_message_handler_start_listening( handler);
+        network_message_handler_start_listening( handler);
 
 }
 
