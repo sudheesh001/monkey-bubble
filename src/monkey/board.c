@@ -1,20 +1,25 @@
-/* board.c
- * Copyright (C) 2002 Laurent Belmonte
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+/* this file is part of monkey bubble a gnome game
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * AUTHORS
+ *       Laurent Belmonte        <laurent.belmonte@aliacom.fr>
  *
- * This library is distributed in the hope that it will be useful,
+ * Copyright (C) 2004 Laurent Belmonte
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+ * USA
  */
 #include "board.h"
 #include "point.h"
@@ -32,14 +37,14 @@
 static GObjectClass *parent_class = NULL;
 
 enum
-{
-	BUBBLES_EXPLODED,
-	BUBBLES_ADDED,
-	BUBBLE_STICKED,
-	BUBBLES_INSERTED,
-	DOWN,
-	LAST_SIGNAL
-};
+	{
+		BUBBLES_EXPLODED,
+		BUBBLES_ADDED,
+		BUBBLE_STICKED,
+		BUBBLES_INSERTED,
+		DOWN,
+		LAST_SIGNAL
+	};
 
 static guint32 signals[LAST_SIGNAL];
 
@@ -106,21 +111,21 @@ board_finalize (GObject * object)
 	Board *board = BOARD (object);
 
 	for (i = 0; i < ROW_COUNT * COLUMN_COUNT; i++)
-	{
-
-		if (PRIVATE (board)->bubble_array[i] != NULL)
 		{
-			g_object_unref (PRIVATE (board)->bubble_array[i]);
+
+			if (PRIVATE (board)->bubble_array[i] != NULL)
+				{
+					g_object_unref (PRIVATE (board)->bubble_array[i]);
+				}
 		}
-	}
 
 	g_free (PRIVATE (board)->bubble_array);
 	g_free (PRIVATE (board));
 
 	if (G_OBJECT_CLASS (parent_class)->finalize)
-	{
-		(*G_OBJECT_CLASS (parent_class)->finalize) (object);
-	}
+		{
+			(*G_OBJECT_CLASS (parent_class)->finalize) (object);
+		}
 }
 
 
@@ -143,19 +148,19 @@ board_new (gdouble y_min, const gchar * level_filename, gint level)
 	PRIVATE (b)->y_center = y_min;
 
 	for (i = 0; i < COLORS_COUNT; i++)
-	{
-		PRIVATE (b)->colors[i] = 0;
-	}
+		{
+			PRIVATE (b)->colors[i] = 0;
+		}
 
 	for (i = 0; i < ROW_COUNT * COLUMN_COUNT; i++)
-	{
-		PRIVATE (b)->bubble_array[i] = NULL;
-	}
+		{
+			PRIVATE (b)->bubble_array[i] = NULL;
+		}
 
 	if (level_filename != NULL)
-	{
-		board_load_from_file (b, level_filename, level);
-	}
+		{
+			board_load_from_file (b, level_filename, level);
+		}
 
 	return b;
 }
@@ -178,62 +183,62 @@ board_load_from_file (Board * board, const char *filename, gint level)
 	n = 0;
 
 	while (level > 0)
-	{
-
-		g_io_channel_read_line (channel, &line, &length, NULL,
-					&error);
-
-		while (length > 2)
 		{
 
-			g_free (line);
 			g_io_channel_read_line (channel, &line, &length, NULL,
 						&error);
 
-		}
+			while (length > 2)
+				{
 
-		level--;
-	}
+					g_free (line);
+					g_io_channel_read_line (channel, &line, &length, NULL,
+								&error);
+
+				}
+
+			level--;
+		}
 
 	g_io_channel_read_line (channel, &line, &length, NULL, &error);
 
 	n = 0;
 	while (length > 2)
-	{
-
-		for (i = 0; i < (8 - (n % 2)); i++)
 		{
-			if (line[i * 4 + (n % 2) * 2] != '-')
-			{
-				board_get_bubble_position (board, i, n,
-							   &point);
 
-				bubble = bubble_new ((Color)
-						     line[i * 4 +
-							  (n % 2) * 2] - '0',
-						     point.x, point.y);
-				board_bubble_added (board, bubble);
-				PRIVATE (board)->bubble_array[i +
-							      n *
-							      COLUMN_COUNT] =
-					bubble;
-			}
-			else
-			{
-			}
+			for (i = 0; i < (8 - (n % 2)); i++)
+				{
+					if (line[i * 4 + (n % 2) * 2] != '-')
+						{
+							board_get_bubble_position (board, i, n,
+										   &point);
+
+							bubble = bubble_new ((Color)
+									     line[i * 4 +
+										  (n % 2) * 2] - '0',
+									     point.x, point.y);
+							board_bubble_added (board, bubble);
+							PRIVATE (board)->bubble_array[i +
+										      n *
+										      COLUMN_COUNT] =
+								bubble;
+						}
+					else
+						{
+						}
+				}
+
+			g_free (line);
+			g_io_channel_read_line (channel, &line, &length, NULL,
+						&error);
+			n++;
+
 		}
 
-		g_free (line);
-		g_io_channel_read_line (channel, &line, &length, NULL,
-					&error);
-		n++;
-
-	}
-
 	if (line != NULL)
-	{
-		g_free (line);
-	}
+		{
+			g_free (line);
+		}
 
 	g_io_channel_shutdown (channel, TRUE, &error);
 	g_io_channel_unref (channel);
@@ -253,7 +258,7 @@ board_get_y_min (Board * board)
 gboolean
 board_get_odd(Board * board)
 {
-  return (PRIVATE(board)->odd % 2);
+	return (PRIVATE(board)->odd % 2);
 }
 
 Bubble **
@@ -301,13 +306,13 @@ board_get_bubble_at (Board * board, gint x, gint y)
 	g_assert (IS_BOARD (board));
 
 	if ((x >= 0) && (x < COLUMN_COUNT) && (y >= 0) && (y < ROW_COUNT))
-	{
-		return PRIVATE (board)->bubble_array[x + y * COLUMN_COUNT];
-	}
+		{
+			return PRIVATE (board)->bubble_array[x + y * COLUMN_COUNT];
+		}
 	else
-	{
-		return NULL;
-	}
+		{
+			return NULL;
+		}
 
 }
 
@@ -372,38 +377,38 @@ board_stick_bubble (Board * board, Bubble * bubble, gint time)
 	exploded = board_get_exploded (board, cell.x, cell.y);
 
 	if (exploded != NULL)
-	{
-		fallen = board_get_fallen (board);
-	}
+		{
+			fallen = board_get_fallen (board);
+		}
 	else
-	{
-		fallen = NULL;
-	}
+		{
+			fallen = NULL;
+		}
 
 
 	if (exploded != NULL)
-	{
-		board_notify_bubbles_exploded (board, exploded, fallen);
-
-		next = exploded;
-		while (next != NULL)
 		{
-			bubble = BUBBLE (next->data);
-			g_object_unref (bubble);
-			next = g_list_next (next);
-		}
+			board_notify_bubbles_exploded (board, exploded, fallen);
 
-		next = fallen;
-		while (next != NULL)
-		{
-			bubble = BUBBLE (next->data);
-			g_object_unref (bubble);
-			next = g_list_next (next);
-		}
+			next = exploded;
+			while (next != NULL)
+				{
+					bubble = BUBBLE (next->data);
+					g_object_unref (bubble);
+					next = g_list_next (next);
+				}
 
-		g_list_free (exploded);
-		g_list_free (fallen);
-	}
+			next = fallen;
+			while (next != NULL)
+				{
+					bubble = BUBBLE (next->data);
+					g_object_unref (bubble);
+					next = g_list_next (next);
+				}
+
+			g_list_free (exploded);
+			g_list_free (fallen);
+		}
 
 	board_notify_bubble_sticked (board, bubble, time);
 
@@ -418,35 +423,35 @@ board_get_fallen (Board * board)
 
 	// clear tag array
 	for (i = 0; i < COLUMN_COUNT * ROW_COUNT; i++)
-	{
-		PRIVATE (board)->tag_array[i] = 0;
-	}
+		{
+			PRIVATE (board)->tag_array[i] = 0;
+		}
 
 	for (i = 0; i < COLUMN_COUNT; i++)
-	{
-		recursive_tag_fallen (board, i, PRIVATE (board)->min_row);
-	}
+		{
+			recursive_tag_fallen (board, i, PRIVATE (board)->min_row);
+		}
 
 	fallen_list = NULL;
 
 	for (i = 0; i < COLUMN_COUNT * ROW_COUNT; i++)
-	{
-		if ((PRIVATE (board)->tag_array[i] == 0) &&
-		    (PRIVATE (board)->bubble_array[i] != NULL))
 		{
+			if ((PRIVATE (board)->tag_array[i] == 0) &&
+			    (PRIVATE (board)->bubble_array[i] != NULL))
+				{
 
-			fallen_list =
-				g_list_append (fallen_list,
-					       PRIVATE (board)->
-					       bubble_array[i]);
+					fallen_list =
+						g_list_append (fallen_list,
+							       PRIVATE (board)->
+							       bubble_array[i]);
 
-			board_bubble_removed (board,
-					      PRIVATE (board)->
-					      bubble_array[i]);
-			PRIVATE (board)->bubble_array[i] = NULL;
+					board_bubble_removed (board,
+							      PRIVATE (board)->
+							      bubble_array[i]);
+					PRIVATE (board)->bubble_array[i] = NULL;
 
+				}
 		}
-	}
 
 	return fallen_list;
 }
@@ -462,31 +467,31 @@ board_down (Board * board)
 
 	PRIVATE (board)->odd++;
 	for (j = ROW_COUNT - 2; j >= 0; j--)
-	{
-
-		for (i = 0; i < COLUMN_COUNT; i++)
 		{
 
-			b = PRIVATE (board)->bubble_array[i +
-							  (j * COLUMN_COUNT)];
-			PRIVATE (board)->bubble_array[i +
-						      (j * COLUMN_COUNT)] =
-				NULL;
+			for (i = 0; i < COLUMN_COUNT; i++)
+				{
 
-			PRIVATE (board)->bubble_array[i +
-						      ((j +
-							1) * COLUMN_COUNT)] =
-				b;
+					b = PRIVATE (board)->bubble_array[i +
+									  (j * COLUMN_COUNT)];
+					PRIVATE (board)->bubble_array[i +
+								      (j * COLUMN_COUNT)] =
+						NULL;
 
-			if (b != NULL)
-			{
-				board_get_bubble_position (board, i, j + 1,
-							   &p);
-				bubble_set_position (b, p.x, p.y);
-			}
+					PRIVATE (board)->bubble_array[i +
+								      ((j +
+									1) * COLUMN_COUNT)] =
+						b;
+
+					if (b != NULL)
+						{
+							board_get_bubble_position (board, i, j + 1,
+										   &p);
+							bubble_set_position (b, p.x, p.y);
+						}
+				}
+
 		}
-
-	}
 
 	PRIVATE (board)->y_min += ROW_SIZE;
 
@@ -514,36 +519,36 @@ recursive_tag_fallen (Board * board, gint cell_x, gint cell_y)
 
 	if ((bubble != NULL) &&
 	    (PRIVATE (board)->tag_array[cell.x + cell.y * COLUMN_COUNT] == 0))
-	{
-
-		PRIVATE (board)->tag_array[cell.x + cell.y * COLUMN_COUNT] =
-			1;
-
-		quadrant = QUADRANT_INITIAL;
-
-		do
 		{
 
-			quadrant = advance_quadrant (board, quadrant, &cell);
+			PRIVATE (board)->tag_array[cell.x + cell.y * COLUMN_COUNT] =
+				1;
 
-			if ((cell.x < COLUMN_COUNT) && (cell.x >= 0) &&
-			    (cell.y < ROW_COUNT) && (cell.y >= 0) &&
-			    (PRIVATE (board)->
-			     tag_array[cell.x + cell.y * COLUMN_COUNT] == 0))
-			{
+			quadrant = QUADRANT_INITIAL;
 
-				recursive_tag_fallen (board, cell.x, cell.y);
-			}
+			do
+				{
+
+					quadrant = advance_quadrant (board, quadrant, &cell);
+
+					if ((cell.x < COLUMN_COUNT) && (cell.x >= 0) &&
+					    (cell.y < ROW_COUNT) && (cell.y >= 0) &&
+					    (PRIVATE (board)->
+					     tag_array[cell.x + cell.y * COLUMN_COUNT] == 0))
+						{
+
+							recursive_tag_fallen (board, cell.x, cell.y);
+						}
+				}
+			while (quadrant < QUADRANT_END);
+
+
 		}
-		while (quadrant < QUADRANT_END);
-
-
-	}
 	else
-	{
-		PRIVATE (board)->tag_array[cell.x + cell.y * COLUMN_COUNT] =
-			1;
-	}
+		{
+			PRIVATE (board)->tag_array[cell.x + cell.y * COLUMN_COUNT] =
+				1;
+		}
 
 
 
@@ -561,9 +566,9 @@ board_get_exploded (Board * board, gint cell_x, gint cell_y)
 	// clear tag array
 	// TODO : make a method to clear the tag array
 	for (i = 0; i < COLUMN_COUNT * ROW_COUNT; i++)
-	{
-		PRIVATE (board)->tag_array[i] = 0;
-	}
+		{
+			PRIVATE (board)->tag_array[i] = 0;
+		}
 
 	color = bubble_get_color (board_get_bubble (board, cell_x, cell_y));
 	exploded_count =
@@ -572,32 +577,32 @@ board_get_exploded (Board * board, gint cell_x, gint cell_y)
 	exploded_list = NULL;
 
 	if (exploded_count >= 3)
-	{
-
-		for (i = 0; i < COLUMN_COUNT * ROW_COUNT; i++)
 		{
-			if (PRIVATE (board)->tag_array[i] == 2)
-			{
-				exploded_list =
-					g_list_append (exploded_list,
-						       PRIVATE (board)->
-						       bubble_array[i]);
 
-				board_bubble_removed (board,
-						      PRIVATE (board)->
-						      bubble_array[i]);
-				PRIVATE (board)->bubble_array[i] = NULL;
+			for (i = 0; i < COLUMN_COUNT * ROW_COUNT; i++)
+				{
+					if (PRIVATE (board)->tag_array[i] == 2)
+						{
+							exploded_list =
+								g_list_append (exploded_list,
+									       PRIVATE (board)->
+									       bubble_array[i]);
 
-			}
+							board_bubble_removed (board,
+									      PRIVATE (board)->
+									      bubble_array[i]);
+							PRIVATE (board)->bubble_array[i] = NULL;
 
+						}
+
+				}
+
+			return exploded_list;
 		}
-
-		return exploded_list;
-	}
 	else
-	{
-		return NULL;
-	}
+		{
+			return NULL;
+		}
 
 }
 
@@ -616,41 +621,41 @@ recursive_tag_exploded (Board * board, gint cell_x, gint cell_y, Color color)
 	bubble = board_get_bubble (board, cell.x, cell.y);
 
 	if ((bubble != NULL) && (color == bubble_get_color (bubble)))
-	{
-
-		PRIVATE (board)->tag_array[cell.x + cell.y * COLUMN_COUNT] =
-			2;
-		count = 1;
-		quadrant = QUADRANT_INITIAL;
-
-		do
 		{
 
-			quadrant = advance_quadrant (board, quadrant, &cell);
+			PRIVATE (board)->tag_array[cell.x + cell.y * COLUMN_COUNT] =
+				2;
+			count = 1;
+			quadrant = QUADRANT_INITIAL;
 
-			if ((cell.x < COLUMN_COUNT) && (cell.x >= 0) &&
-			    (cell.y < ROW_COUNT) && (cell.y >= 0) &&
-			    (PRIVATE (board)->
-			     tag_array[cell.x + cell.y * COLUMN_COUNT] == 0))
-			{
+			do
+				{
 
-				count += recursive_tag_exploded (board,
-								 cell.x,
-								 cell.y,
-								 color);
-			}
+					quadrant = advance_quadrant (board, quadrant, &cell);
+
+					if ((cell.x < COLUMN_COUNT) && (cell.x >= 0) &&
+					    (cell.y < ROW_COUNT) && (cell.y >= 0) &&
+					    (PRIVATE (board)->
+					     tag_array[cell.x + cell.y * COLUMN_COUNT] == 0))
+						{
+
+							count += recursive_tag_exploded (board,
+											 cell.x,
+											 cell.y,
+											 color);
+						}
+				}
+			while (quadrant < QUADRANT_END);
+
+			return count;
+
 		}
-		while (quadrant < QUADRANT_END);
-
-		return count;
-
-	}
 	else
-	{
-		PRIVATE (board)->tag_array[cell.x + cell.y * COLUMN_COUNT] =
-			1;
-		return 0;
-	}
+		{
+			PRIVATE (board)->tag_array[cell.x + cell.y * COLUMN_COUNT] =
+				1;
+			return 0;
+		}
 
 
 
@@ -663,51 +668,51 @@ advance_quadrant (Board * board, gint quadrant, Point * cell)
 	x = cell->x;
 	y = cell->y;
 	switch (quadrant)
-	{
-	case QUADRANT_INITIAL:
-		cell->x++;
-		return 1;
-		break;
-	case 1:
-		if (((1 + y + PRIVATE (board)->odd) % 2) == 0)
 		{
-			cell->x--;
-		}
-
-		cell->y++;
-		return 2;
-		break;
-
-
-	case 2:
-		cell->x--;
-		return 3;
-
-
-	case 3:
-		if (((1 + y + PRIVATE (board)->odd) % 2) == 0)
-		{
-			cell->x--;
-		}
-		cell->y--;
-		return 4;
-		break;
-	case 4:
-		if (((1 + y + PRIVATE (board)->odd) % 2) != 0)
-		{
+		case QUADRANT_INITIAL:
 			cell->x++;
+			return 1;
+			break;
+		case 1:
+			if (((1 + y + PRIVATE (board)->odd) % 2) == 0)
+				{
+					cell->x--;
+				}
+
+			cell->y++;
+			return 2;
+			break;
+
+
+		case 2:
+			cell->x--;
+			return 3;
+
+
+		case 3:
+			if (((1 + y + PRIVATE (board)->odd) % 2) == 0)
+				{
+					cell->x--;
+				}
+			cell->y--;
+			return 4;
+			break;
+		case 4:
+			if (((1 + y + PRIVATE (board)->odd) % 2) != 0)
+				{
+					cell->x++;
+				}
+			cell->y--;
+			return 5;
+			break;
+		case 5:
+			cell->x++;
+			return 6;
+			break;
+		case 6:
+			return QUADRANT_END;
+			break;
 		}
-		cell->y--;
-		return 5;
-		break;
-	case 5:
-		cell->x++;
-		return 6;
-		break;
-	case 6:
-		return QUADRANT_END;
-		break;
-	}
 
 	return QUADRANT_END;
 }
@@ -723,13 +728,13 @@ board_bubbles_count (Board * board)
 	count = 0;
 
 	for (i = 0; i < ROW_COUNT * COLUMN_COUNT; i++)
-	{
-		if (PRIVATE (board)->bubble_array[i] != NULL)
 		{
+			if (PRIVATE (board)->bubble_array[i] != NULL)
+				{
 
-			count++;
+					count++;
+				}
 		}
-	}
 
 	return count;
 }
@@ -740,15 +745,15 @@ board_get_bubble (Board * board, gint cell_x, gint cell_y)
 
 	if ((cell_x < COLUMN_COUNT) && (cell_x >= 0) &&
 	    (cell_y < ROW_COUNT) && (cell_y >= 0))
-	{
+		{
 
-		return PRIVATE (board)->bubble_array[cell_x +
-						     cell_y * COLUMN_COUNT];
-	}
+			return PRIVATE (board)->bubble_array[cell_x +
+							     cell_y * COLUMN_COUNT];
+		}
 	else
-	{
-		return NULL;
-	}
+		{
+			return NULL;
+		}
 }
 
 
@@ -759,34 +764,34 @@ board_set_bubble (Board * board, Bubble * b, gint cell_x, gint cell_y)
 
 	if ((cell_x < COLUMN_COUNT) && (cell_x >= 0) &&
 	    (cell_y < ROW_COUNT) && (cell_y >= 0))
-	{
-
-		if (PRIVATE (board)->
-		    bubble_array[cell_x + cell_y * COLUMN_COUNT] == NULL)
 		{
 
-			board_bubble_added (board, b);
-			PRIVATE (board)->bubble_array[cell_x +
-						      cell_y * COLUMN_COUNT] =
-				b;
-		}
-		else
-		{
-			g_print ("bubble already present .. \n");
-			board_bubble_added (board, b);
-			PRIVATE (board)->bubble_array[cell_x +
-						      cell_y * COLUMN_COUNT] =
-				b;
+			if (PRIVATE (board)->
+			    bubble_array[cell_x + cell_y * COLUMN_COUNT] == NULL)
+				{
 
-			/*
-			 * g_error("bubble already present in %d %d",
-			 * cell_x,cell_y); */
+					board_bubble_added (board, b);
+					PRIVATE (board)->bubble_array[cell_x +
+								      cell_y * COLUMN_COUNT] =
+						b;
+				}
+			else
+				{
+					g_print ("bubble already present .. \n");
+					board_bubble_added (board, b);
+					PRIVATE (board)->bubble_array[cell_x +
+								      cell_y * COLUMN_COUNT] =
+						b;
+
+					/*
+					 * g_error("bubble already present in %d %d",
+					 * cell_x,cell_y); */
+				}
 		}
-	}
 	else
-	{
-		//  g_error(" invalid coordonnate %d,%d",cell_x,cell_y);
-	}
+		{
+			//  g_error(" invalid coordonnate %d,%d",cell_x,cell_y);
+		}
 }
 
 
@@ -814,30 +819,30 @@ board_collide_bubble (Board * board, Bubble * b)
 	quadrant = QUADRANT_INITIAL;
 
 	do
-	{
-		bubble = board_get_bubble (board, cell.x, cell.y);
-
-		if (bubble != NULL)
 		{
-			collide = bubble_collide_bubble (b, bubble);
+			bubble = board_get_bubble (board, cell.x, cell.y);
+
+			if (bubble != NULL)
+				{
+					collide = bubble_collide_bubble (b, bubble);
+				}
+
+
+			quadrant = advance_quadrant (board, quadrant, &cell);
+
 		}
-
-
-		quadrant = advance_quadrant (board, quadrant, &cell);
-
-	}
 	while (!collide && (quadrant < QUADRANT_END));
 
 
 	if ((y < (PRIVATE (board)->y_min + 16)) || collide)
-	{
-		return TRUE;
+		{
+			return TRUE;
 
-	}
+		}
 	else
-	{
-		return FALSE;
-	}
+		{
+			return FALSE;
+		}
 
 }
 
@@ -853,22 +858,22 @@ board_init (Board * board, Bubble ** bubbles, gint count)
 	cell_x = 0;
 	cell_y = 0;
 	for (i = 0; i < count; i++)
-	{
-
-		board_set_bubble (board, bubbles[i], cell_x, cell_y);
-
-		board_get_bubble_position (board, cell_x, cell_y, &p);
-		bubble_set_position (bubbles[i], p.x, p.y);
-
-		cell_x++;
-		if (cell_x >=
-		    (COLUMN_COUNT - (cell_y + PRIVATE (board)->odd + 1) % 2))
 		{
-			cell_y++;
-			cell_x = 0;
-		}
 
-	}
+			board_set_bubble (board, bubbles[i], cell_x, cell_y);
+
+			board_get_bubble_position (board, cell_x, cell_y, &p);
+			bubble_set_position (bubbles[i], p.x, p.y);
+
+			cell_x++;
+			if (cell_x >=
+			    (COLUMN_COUNT - (cell_y + PRIVATE (board)->odd + 1) % 2))
+				{
+					cell_y++;
+					cell_x = 0;
+				}
+
+		}
 
 }
 
@@ -883,15 +888,15 @@ board_is_lost (Board * board)
 	lost = FALSE;
 
 	for (x = 0; (x < COLUMN_COUNT) && (!lost); x++)
-	{
-
-		if (PRIVATE (board)->
-		    bubble_array[x + (ROW_COUNT - 1) * (COLUMN_COUNT)] !=
-		    NULL)
 		{
-			lost = TRUE;
+
+			if (PRIVATE (board)->
+			    bubble_array[x + (ROW_COUNT - 1) * (COLUMN_COUNT)] !=
+			    NULL)
+				{
+					lost = TRUE;
+				}
 		}
-	}
 
 	return lost;
 }
@@ -903,46 +908,46 @@ board_print (Board * board)
 	int j, i;
 
 	for (i = 0; i < COLUMN_COUNT; i++)
-	{
+		{
 
-		g_print ("===");
-	}
+			g_print ("===");
+		}
 
 	g_print ("\n");
 	for (j = 0; j < ROW_COUNT; j++)
-	{
-
-		if (((1 + j + PRIVATE (board)->odd) % 2) != 0)
 		{
-			g_print (" ");
+
+			if (((1 + j + PRIVATE (board)->odd) % 2) != 0)
+				{
+					g_print (" ");
+				}
+
+			for (i = 0; i < COLUMN_COUNT; i++)
+				{
+					Bubble *b;
+					b = PRIVATE (board)->bubble_array[i +
+									  (j * COLUMN_COUNT)];
+
+					if (b != NULL)
+						{
+							g_print (" %d ", bubble_get_color (b));
+
+						}
+					else
+						{
+							g_print ("   ");
+						}
+
+				}
+			g_print ("\n");
 		}
-
-		for (i = 0; i < COLUMN_COUNT; i++)
-		{
-			Bubble *b;
-			b = PRIVATE (board)->bubble_array[i +
-							  (j * COLUMN_COUNT)];
-
-			if (b != NULL)
-			{
-				g_print (" %d ", bubble_get_color (b));
-
-			}
-			else
-			{
-				g_print ("   ");
-			}
-
-		}
-		g_print ("\n");
-	}
 
 
 	for (i = 0; i < COLUMN_COUNT; i++)
-	{
+		{
 
-		g_print ("===");
-	}
+			g_print ("===");
+		}
 
 
 	g_print ("\n");
@@ -963,66 +968,66 @@ board_add_bubbles (Board * board, Bubble ** bubbles)
 
 	bubbles_list = NULL;
 	for (i = 0; i < 7; i++)
-	{
-		if (bubbles[i] != NULL)
 		{
-			column = i;
-			y_cell = ROW_COUNT - 1;
-
-			bubble = bubbles[i];
-			bubbles_list = g_list_append (bubbles_list, bubble);
-			sticked = FALSE;
-
-			do
-			{
-
-				if (PRIVATE (board)->
-				    bubble_array[column +
-						 y_cell * COLUMN_COUNT] !=
-				    NULL)
+			if (bubbles[i] != NULL)
 				{
+					column = i;
+					y_cell = ROW_COUNT - 1;
 
-					y_cell++;
-					board_get_bubble_position (board,
-								   column,
-								   y_cell,
-								   &position);
-					bubble_set_position (bubble,
-							     position.x,
-							     position.y);
-					board_set_bubble (board, bubble,
-							  column, y_cell);
-					sticked = TRUE;
+					bubble = bubbles[i];
+					bubbles_list = g_list_append (bubbles_list, bubble);
+					sticked = FALSE;
+
+					do
+						{
+
+							if (PRIVATE (board)->
+							    bubble_array[column +
+									 y_cell * COLUMN_COUNT] !=
+							    NULL)
+								{
+
+									y_cell++;
+									board_get_bubble_position (board,
+												   column,
+												   y_cell,
+												   &position);
+									bubble_set_position (bubble,
+											     position.x,
+											     position.y);
+									board_set_bubble (board, bubble,
+											  column, y_cell);
+									sticked = TRUE;
+								}
+							else
+								{
+
+									if (y_cell == 0)
+										{
+											board_get_bubble_position
+												(board, column,
+												 y_cell, &position);
+											bubble_set_position (bubble,
+													     position.
+													     x,
+													     position.
+													     y);
+											board_set_bubble (board,
+													  bubble,
+													  column,
+													  y_cell);
+											sticked = TRUE;
+										}
+									else
+										{
+											y_cell--;
+										}
+								}
+
+						}
+					while (!sticked);
 				}
-				else
-				{
-
-					if (y_cell == 0)
-					{
-						board_get_bubble_position
-							(board, column,
-							 y_cell, &position);
-						bubble_set_position (bubble,
-								     position.
-								     x,
-								     position.
-								     y);
-						board_set_bubble (board,
-								  bubble,
-								  column,
-								  y_cell);
-						sticked = TRUE;
-					}
-					else
-					{
-						y_cell--;
-					}
-				}
-
-			}
-			while (!sticked);
 		}
-	}
 
 
 	g_free (bubbles);
@@ -1058,49 +1063,49 @@ board_insert_bubbles (Board * board, Bubble ** bubbles)
 	PRIVATE (board)->odd++;
 
 	for (j = ROW_COUNT - 2; j >= 0; j--)
-	{
-
-		for (i = 0; i < COLUMN_COUNT; i++)
 		{
 
-			b = PRIVATE (board)->bubble_array[i +
-							  (j * COLUMN_COUNT)];
-			PRIVATE (board)->bubble_array[i +
-						      (j * COLUMN_COUNT)] =
-				NULL;
+			for (i = 0; i < COLUMN_COUNT; i++)
+				{
 
-			PRIVATE (board)->bubble_array[i +
-						      ((j +
-							1) * COLUMN_COUNT)] =
-				b;
+					b = PRIVATE (board)->bubble_array[i +
+									  (j * COLUMN_COUNT)];
+					PRIVATE (board)->bubble_array[i +
+								      (j * COLUMN_COUNT)] =
+						NULL;
 
-			if (b != NULL)
-			{
-				board_get_bubble_position (board, i, j + 1,
-							   &p);
-				bubble_set_position (b, p.x, p.y);
-			}
+					PRIVATE (board)->bubble_array[i +
+								      ((j +
+									1) * COLUMN_COUNT)] =
+						b;
+
+					if (b != NULL)
+						{
+							board_get_bubble_position (board, i, j + 1,
+										   &p);
+							bubble_set_position (b, p.x, p.y);
+						}
+				}
+
 		}
 
-	}
-
 	if ((PRIVATE (board)->odd % 2) != 0)
-	{
-		max = 8;
-	}
+		{
+			max = 8;
+		}
 	else
-	{
-		max = 7;
-	}
+		{
+			max = 7;
+		}
 
 	for (i = 0; i < max; i++)
-	{
-		b = bubbles[i];
-		PRIVATE (board)->bubble_array[i] = b;
-		board_bubble_added (board, b);
-		board_get_bubble_position (board, i, 0, &p);
-		bubble_set_position (b, p.x, p.y);
-	}
+		{
+			b = bubbles[i];
+			PRIVATE (board)->bubble_array[i] = b;
+			board_bubble_added (board, b);
+			board_get_bubble_position (board, i, 0, &p);
+			bubble_set_position (b, p.x, p.y);
+		}
 
 	board_notify_bubbles_inserted (board, bubbles, max);
 }
@@ -1231,24 +1236,24 @@ board_get_type (void)
 	static GType board_type = 0;
 
 	if (!board_type)
-	{
-		static const GTypeInfo board_info = {
-			sizeof (BoardClass),
-			NULL,	/* base_init */
-			NULL,	/* base_finalize */
-			(GClassInitFunc) board_class_init,
-			NULL,	/* class_finalize */
-			NULL,	/* class_data */
-			sizeof (Board),
-			1,	/* n_preallocs */
-			(GInstanceInitFunc) board_instance_init,
-		};
+		{
+			static const GTypeInfo board_info = {
+				sizeof (BoardClass),
+				NULL,	/* base_init */
+				NULL,	/* base_finalize */
+				(GClassInitFunc) board_class_init,
+				NULL,	/* class_finalize */
+				NULL,	/* class_data */
+				sizeof (Board),
+				1,	/* n_preallocs */
+				(GInstanceInitFunc) board_instance_init,
+			};
 
 
 
-		board_type = g_type_register_static (G_TYPE_OBJECT,
-						     "Board", &board_info, 0);
-	}
+			board_type = g_type_register_static (G_TYPE_OBJECT,
+							     "Board", &board_info, 0);
+		}
 
 	return board_type;
 }

@@ -1,3 +1,20 @@
+2004-07-16  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	some re-indent :(
+
+	svg remasterization by olivier (powered by inkscape)
+	* pixmaps/layout_1_player.svg:
+	* pixmaps/layout_2_players.svg:
+	* pixmaps/layout_network_player.svg:
+	* pixmaps/pane.svg:
+	* src/monkey/board.c: (board_finalize), (board_new),
+	* src/monkey/board.h:
+	* src/monkey/monkey.c: (monkey_instance_init),
+	* src/monkey/playground.c: (playground_new),
+	* src/monkey/playground.h:
+	* src/monkey/shooter.c: (shooter_new), (shooter_instance_init),
+	* src/monkey/shooter.h:
+
 2004-07-08  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	update contributors and mainwindow icon
