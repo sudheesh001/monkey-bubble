@@ -28,16 +28,18 @@
 static GObjectClass* parent_class = NULL;
 
 struct GameNetworkPlayerManagerPrivate {
-  MonkeyCanvas * canvas;
-  GtkWidget * window;
-  GameNetworkPlayer * current_game;
-  int current_level;
-  gint current_score;
-  NetworkMessageHandler * handler;
-  Monkey * monkey;
+	 MonkeyCanvas * canvas;
+	 GtkWidget * window;
+	 GameNetworkPlayer * current_game;
+	 int current_level;
+	 gint current_score;
+	 NetworkMessageHandler * handler;
+	 Monkey * monkey;
     int client_id;
-
+	 
     gulong add_bubble_handler_id;
+
+	 gboolean playing;
 };
 
 static void game_network_player_manager_state_changed(Game * game,GameNetworkPlayerManager * g);
@@ -109,6 +111,7 @@ GameNetworkPlayerManager * game_network_player_manager_new(GtkWidget * window,Mo
   PRIVATE(game_network_player_manager)->canvas = canvas;
   PRIVATE(game_network_player_manager)->window = window;
   PRIVATE(game_network_player_manager)->current_game = NULL;
+  PRIVATE(game_network_player_manager)->playing = FALSE;
 
   PRIVATE(game_network_player_manager)->handler = handler;
   PRIVATE(game_network_player_manager)->client_id = client_id;
@@ -140,21 +143,14 @@ static void game_network_player_manager_game_manager_iface_init(GameManagerClass
 static void game_network_player_manager_state_changed(Game * game,
 						GameNetworkPlayerManager * manager) {
 
-  UiMain * ui_main =  ui_main_get_instance();
 
   g_print("STATE changed \n");
   if( game_get_state( game ) == GAME_FINISHED ) {
       g_print("GAME finished\n");
       PRIVATE(manager)->current_score = game_network_player_get_score( GAME_NETWORK_PLAYER(game));
 
-      ui_main_set_game(ui_main,NULL);
-      //   g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(manager)->handler ),
-      //					     G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,manager);
+		PRIVATE(manager)->playing = FALSE;
       
-      monkey_canvas_clear(PRIVATE(manager)->canvas);
-
-      g_object_unref(G_OBJECT(PRIVATE(manager)->current_game));
-      PRIVATE(manager)->current_game = NULL;
   }
 				
 }
@@ -169,6 +165,17 @@ gboolean start_timeout(gpointer data) {
 
   UiMain * ui_main =  ui_main_get_instance();
 
+
+  if( PRIVATE(manager)->current_game != NULL) {
+		ui_main_set_game(ui_main,NULL);
+		
+		
+		
+		g_object_unref(G_OBJECT(PRIVATE(manager)->current_game));
+		PRIVATE(manager)->current_game = NULL;
+
+  }
+  
   monkey_canvas_clear( PRIVATE(manager)->canvas);
   monkey_canvas_paint( PRIVATE(manager)->canvas);
 	 
@@ -181,6 +188,8 @@ gboolean start_timeout(gpointer data) {
 																			PRIVATE(manager)->current_score))
 						 );
 
+
+  PRIVATE(manager)->playing = TRUE;
   monkey_canvas_paint( PRIVATE(manager)->canvas);
 
   g_print("GameNetworkPlaeyrManager start timeout \n");
@@ -199,7 +208,7 @@ static void recv_add_bubble(NetworkMessageHandler * handler,
 		     Color bubble,
 		     GameNetworkPlayerManager * manager) {
 
-    if( PRIVATE(manager)->current_game == NULL) {
+    if( PRIVATE(manager)->playing == FALSE) {
 		  shooter_add_bubble(monkey_get_shooter(PRIVATE(manager)->monkey),bubble_new(bubble,0,0));
     }
   

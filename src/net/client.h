@@ -56,6 +56,14 @@ gboolean network_client_get_state(NetworkClient * client);
 
 guint32 network_client_get_id(NetworkClient * client);
 
+
+void network_client_send_number_of_players(NetworkClient * client,
+					  int n);
+
+
+void network_client_send_number_of_games(NetworkClient * client,
+					int n);
+
 GType		network_client_get_type	       (void);
 
 #define NETWORK_TYPE_CLIENT			(network_client_get_type ())
@@ -84,6 +92,9 @@ struct _NetworkClientClass
 	void (* start_request) (NetworkClient * self);
 	void (* game_created_ok) (NetworkClient * self);
 	void (* disconnected) (NetworkClient * self);
+	void (* change_number_of_games) (NetworkClient * self,int n);
+	void (* change_number_of_players) (NetworkClient * self,int n);
+
 };
 
 G_END_DECLS

@@ -32,6 +32,8 @@ static GObjectClass* parent_class = NULL;
 
 struct NetworkGameManagerPrivate 
 {
+	int number_of_games;
+	int number_of_players;
 	GList * clients;
 	GList * waited_clients;
 	GMutex * clients_lock;
@@ -49,6 +51,10 @@ static void client_disconnected(NetworkClient * client,
 				NetworkGameManager * manager);
 
 
+static void send_number_of_games(NetworkGameManager * manager);
+
+static void send_number_of_players(NetworkGameManager * manager);
+
 static void send_game_list(NetworkGameManager * manager);
 
 
@@ -62,6 +68,14 @@ static void client_request_start(NetworkClient * client,
 				 NetworkGameManager * manager);
 
 static void client_request_game_created_ok(NetworkClient * client,
+					   NetworkGameManager * manager);
+
+static void client_request_number_of_games(NetworkClient * client,
+					   int n,
+					   NetworkGameManager * manager);
+
+static void client_request_number_of_players(NetworkClient * client,
+					   int n,
 					   NetworkGameManager * manager);
 
 static void start_game(NetworkGameManager * manager);
@@ -126,6 +140,16 @@ network_game_manager_add_client(NetworkGameManager * manager,
 				  G_CALLBACK(client_request_game_created_ok),
 				  manager);
 
+		g_signal_connect( G_OBJECT(client),
+				  "number-of-games",
+				  G_CALLBACK(client_request_number_of_games),
+				  manager);
+
+
+		g_signal_connect( G_OBJECT(client),
+				  "number-of-players",
+				  G_CALLBACK(client_request_number_of_players),
+				  manager);
 		g_mutex_unlock(PRIVATE(manager)->clients_lock);
 
 		send_game_joined(manager,client);
@@ -206,6 +230,78 @@ network_game_manager_instance_init(NetworkGameManager * self)
 
 	PRIVATE(self)->owner = NULL;
 }
+
+static void
+client_request_number_of_games(NetworkClient * client,
+			       int n,
+			       NetworkGameManager * manager)
+{
+
+	if( client == PRIVATE(manager)->owner && PRIVATE(manager)->started == FALSE) {
+
+		PRIVATE(manager)->number_of_games = n;
+
+		send_number_of_games(manager);
+	}
+
+}
+
+static void 
+client_request_number_of_players(NetworkClient * client,
+				 int n,
+				 NetworkGameManager * manager)
+{
+	if( client == PRIVATE(manager)->owner && PRIVATE(manager)->started == FALSE) {
+
+		PRIVATE(manager)->number_of_players = n;
+
+		send_number_of_players(manager);
+	}
+
+}
+
+
+static void 
+send_number_of_games_to_client(gpointer  data,gpointer user_data) {
+
+	NetworkClient * client;
+	NetworkGameManager * manager;
+
+	client = NETWORK_CLIENT(data);
+	manager = NETWORK_GAME_MANAGER(user_data);
+
+	network_client_send_number_of_games(client, PRIVATE(manager)->number_of_games);
+}
+static void
+send_number_of_games(NetworkGameManager * manager) 
+{
+
+        g_list_foreach(PRIVATE(manager)->clients,send_number_of_games_to_client,
+                       manager);
+	
+}
+
+static void 
+send_number_of_players_to_client(gpointer data,gpointer user_data) {
+
+	NetworkClient * client;
+	NetworkGameManager * manager;
+
+	client = NETWORK_CLIENT(data);
+	manager = NETWORK_GAME_MANAGER(user_data);
+
+	network_client_send_number_of_players(client, PRIVATE(manager)->number_of_players);
+}
+
+static void 
+send_number_of_players(NetworkGameManager * manager) {
+	g_list_foreach(PRIVATE(manager)->clients,send_number_of_players_to_client,
+                       manager);
+	
+}
+
+
+
 
 static void
 send_game_joined(NetworkGameManager * manager,

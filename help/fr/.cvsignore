@@ -1,2 +1,4 @@
+omf_timestamp
+*.out
 Makefile
 Makefile.in

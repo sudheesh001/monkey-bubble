@@ -523,7 +523,10 @@ gboolean start_game_idle(gpointer data) {
 
         launcher = NETWORK_GAME_LAUNCHER(data);
 
+
+        g_print("network-game-laucnehr destroy widget\n");
         gtk_widget_destroy( PRIVATE(launcher)->window);
+
         g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(launcher)->handler ),
                                                G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,launcher);
               

@@ -36,6 +36,8 @@ enum {
 	START_REQUEST,
 	DISCONNECTED,
 	GAME_CREATED_OK,
+	NUMBER_OF_GAMES,
+	NUMBER_OF_PLAYERS,
 	LAST_SIGNAL
 };
 
@@ -164,10 +166,75 @@ recv_xml_message(NetworkMessageHandler * mmh,
 		g_signal_emit( G_OBJECT(client),signals[START_REQUEST],0);
         } else if( g_str_equal(message_name,"game_created_ok")) {
 		g_signal_emit( G_OBJECT(client),signals[GAME_CREATED_OK],0);
+	} else if( g_str_equal(message_name,"number_of_players")) {
+		int number;
+            
+		sscanf(root->children->content,"%d",&number);
+		g_signal_emit( G_OBJECT(client),signals[NUMBER_OF_PLAYERS],0,number);
+	} else if( g_str_equal(message_name,"number_of_games")) {
+		int number;
+            
+		sscanf(root->children->content,"%d",&number);
+		g_signal_emit( G_OBJECT(client),signals[NUMBER_OF_GAMES],0,number);
 	}
 
 
+
 	
+}
+
+void 
+network_client_send_number_of_players(NetworkClient * client,
+				     int n)
+{
+        xmlDoc * doc;
+        xmlNode * root;
+        xmlNode * text;
+        
+        doc = xmlNewDoc("1.0");
+        root = xmlNewNode(NULL,
+                          "message");
+        xmlDocSetRootElement(doc, root);
+        
+        xmlNewProp(root,"name","number_of_players");
+        
+        text = xmlNewText(g_strdup_printf("%d",n));
+        
+        xmlAddChild(root,text);
+	
+        network_message_handler_send_xml_message(PRIVATE(client)->handler,
+						 PRIVATE(client)->client_id,
+						 doc);
+
+        xmlFreeDoc(doc);
+
+}
+
+
+void 
+network_client_send_number_of_games(NetworkClient * client,
+				   int n) 
+{
+        xmlDoc * doc;
+        xmlNode * root;
+        xmlNode * text;
+        
+        doc = xmlNewDoc("1.0");
+        root = xmlNewNode(NULL,
+                          "message");
+        xmlDocSetRootElement(doc, root);
+        
+        xmlNewProp(root,"name","number_of_games");
+        
+        text = xmlNewText(g_strdup_printf("%d",n));
+        
+        xmlAddChild(root,text);
+	
+        network_message_handler_send_xml_message(PRIVATE(client)->handler,
+						 PRIVATE(client)->client_id,
+						 doc);
+
+        xmlFreeDoc(doc);
 }
 
 static void client_connection_closed(NetworkMessageHandler * mmh,
@@ -270,6 +337,29 @@ network_client_class_init (NetworkClientClass	* network_client_class)
 			      g_cclosure_marshal_VOID__VOID,
 			      G_TYPE_NONE,
 			      0,NULL);
+
+
+	signals[NUMBER_OF_GAMES]= g_signal_new ("number-of-games",
+						G_TYPE_FROM_CLASS (network_client_class),
+						G_SIGNAL_RUN_FIRST |
+						G_SIGNAL_NO_RECURSE,
+						G_STRUCT_OFFSET (NetworkClientClass,change_number_of_games),
+						NULL, NULL,
+						g_cclosure_marshal_VOID__INT,
+						G_TYPE_NONE,
+						1, G_TYPE_INT);
+
+
+	signals[NUMBER_OF_PLAYERS]= g_signal_new ("number-of-players",
+						  G_TYPE_FROM_CLASS (network_client_class),
+						  G_SIGNAL_RUN_FIRST |
+						  G_SIGNAL_NO_RECURSE,
+						  G_STRUCT_OFFSET (NetworkClientClass,change_number_of_players),
+						  NULL, NULL,
+						  g_cclosure_marshal_VOID__INT,
+						  G_TYPE_NONE,
+						  1, G_TYPE_INT);
+
 
 	signals[DISCONNECTED]= 
 		g_signal_new ("disconnected",

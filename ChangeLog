@@ -1,3 +1,52 @@
+2004-06-15  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	new newtwork stuff to test
+	* .cvsignore:
+	* data/.cvsignore:
+	* data/netserver.glade:
+	* help/C/.cvsignore:
+	* help/fr/.cvsignore:
+	* src/input/.cvsignore:
+	* src/net/Makefile.am:
+	* src/net/client.c: (recv_xml_message),
+	(network_client_send_number_of_players),
+	(network_client_send_number_of_games), (network_client_class_init):
+	* src/net/client.h:
+	* src/net/game-manager-proxy.c: (net_game_manager_proxy_new),
+	(net_game_manager_proxy_instance_init),
+	(net_game_manager_proxy_finalize), (free_client),
+	(recv_players_list), (recv_xml_message),
+	(net_game_manager_proxy_get_players),
+	(net_game_manager_proxy_get_number_of_players),
+	(net_game_manager_proxy_get_number_of_games),
+	(net_game_manager_proxy_send_ready_state),
+	(net_game_manager_proxy_send_start),
+	(net_game_manager_proxy_class_init),
+	(net_game_manager_proxy_get_type):
+	* src/net/game-manager-proxy.h:
+	* src/net/game-manager.c: (network_game_manager_add_client),
+	(client_request_number_of_games),
+	(client_request_number_of_players),
+	(send_number_of_games_to_client), (send_number_of_games),
+	(send_number_of_players_to_client), (send_number_of_players):
+	* src/net/game.c: (client_disconnected), (add_client),
+	(recv_shoot), (game_lost), (send_start):
+	* src/ui/game-network-player-manager.c:
+	(game_network_player_manager_new),
+	(game_network_player_manager_state_changed), (start_timeout),
+	(recv_add_bubble):
+	* src/ui/game-network-player.c:
+	(game_network_player_instance_init),
+	(game_network_player_finalize), (recv_add_bubble), (recv_winlost),
+	(recv_waiting_added), (pressed), (released),
+	(game_network_player_timeout):
+	* src/ui/network-game-launcher.c: (start_game_idle):
+	* src/ui/network-server-launcher.c: (network_server_launcher_new),
+	(number_of_players_changed), (quit_server_signal), (ready_signal),
+	(start_signal), (update_players_list_idle), (start_game_idle),
+	(players_list_updated), (game_created), (recv_network_xml_message),
+	(set_number_of_games), (set_number_of_players), (connect_server):
+
 2004-06-09  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	more network stuff

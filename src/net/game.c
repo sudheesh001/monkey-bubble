@@ -63,6 +63,7 @@ struct Client {
 	NetworkClient * client;
 	NetworkGame * game;
         GMutex * monkey_lock;
+	gboolean playing;
 	guint disconnected_handler_id;
 };
 
@@ -83,7 +84,9 @@ client_disconnected(NetworkMessageHandler * handler,
 	self = client->game;
 
 	g_mutex_lock(PRIVATE(self)->clients_lock);
-	PRIVATE(self)->clients =
+
+	remove_client( client->game,client);
+/*	PRIVATE(self)->clients =
 		g_list_remove( PRIVATE(self)->clients,
 			       client);
 
@@ -95,9 +98,9 @@ client_disconnected(NetworkMessageHandler * handler,
 	g_mutex_free( client->monkey_lock);
 	g_object_unref( client->client);
 
-	g_free( client);
+	g_free( client);*/
 
-	g_mutex_unlock(PRIVATE(self)->clients_lock);
+		g_mutex_unlock(PRIVATE(self)->clients_lock);
 
 }
 
@@ -114,7 +117,7 @@ add_client(gpointer data,gpointer user_data)
 
 	c = g_malloc( sizeof(struct Client));
 
-
+	c->playing = FALSE;
 	c->client = client;
 	
 	g_object_ref( G_OBJECT(client));
@@ -171,13 +174,14 @@ recv_shoot(NetworkMessageHandler * handler,
 	
 	
         g_mutex_lock(c->monkey_lock);
-        shooter_set_angle(monkey_get_shooter(c->monkey),
-                          angle);
-	
-        monkey_update(c->monkey,time);
-        monkey_shoot( c->monkey,time);
-	add_bubble(c);
-	
+	if( c->playing == TRUE) {
+		shooter_set_angle(monkey_get_shooter(c->monkey),
+				  angle);
+		
+		monkey_update(c->monkey,time);
+		monkey_shoot( c->monkey,time);
+		add_bubble(c);
+	}
         g_mutex_unlock(c->monkey_lock);
 }
 
@@ -286,11 +290,12 @@ game_lost(Monkey * m,
 	g_mutex_lock(PRIVATE(game)->lost_clients_lock);
         
 	network_message_handler_send_winlost( network_client_get_handler(c->client),
-                                             network_client_get_id(c->client),
+					      network_client_get_id(c->client),
                                              1);
-
+	
+	c->playing = FALSE;
         PRIVATE(game)->lost_clients = g_list_append( PRIVATE(game)->lost_clients,
-                                                 c);
+						     c);
 
         g_mutex_unlock(PRIVATE(game)->lost_clients_lock);
 
@@ -463,7 +468,7 @@ send_start(gpointer data,gpointer user_data)
 	struct Client * client;
 
 	client = data;
-
+	client->playing = TRUE;
 	network_message_handler_send_start(network_client_get_handler(client->client));
 	g_print("network-game : send_start\n");
 }

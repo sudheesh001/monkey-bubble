@@ -1,3 +1,10 @@
+install-sh
+compile
+depcomp
+install-sh
+intltool-modules
+missing
+mkinstalldirs
 Makefile
 Makefile.in
 aclocal.m4

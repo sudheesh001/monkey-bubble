@@ -45,6 +45,7 @@ struct GameNetworkPlayerPrivate {
         GameState state;
         Clock * clock;
 
+        GMutex * lock;
         gboolean lost;
 
         gint score;
@@ -105,7 +106,8 @@ static void time_init(GameNetworkPlayer * game);
 
 
 static void game_network_player_instance_init(GameNetworkPlayer * game) {
-        game->private =g_new0 (GameNetworkPlayerPrivate, 1);		
+        game->private =g_new0 (GameNetworkPlayerPrivate, 1);
+        PRIVATE(game)->lock = g_mutex_new();
 }
 
 static void game_network_player_finalize(GObject* object) {
@@ -133,7 +135,8 @@ static void game_network_player_finalize(GObject* object) {
         g_object_unref( PRIVATE(game)->clock);
         g_object_unref( PRIVATE(game)->display );
 
-
+        g_mutex_lock( PRIVATE(game)->lock);
+        g_mutex_unlock(PRIVATE(game)->lock);
         g_object_unref( PRIVATE(game)->monkey);
         g_free(game->private);
   
@@ -221,8 +224,10 @@ static void recv_add_bubble(NetworkMessageHandler * handler,
         g_assert( IS_GAME_NETWORK_PLAYER(game));
 
         if( PRIVATE(game)->state == GAME_PLAYING) {
+                g_mutex_lock(PRIVATE(game)->lock);
                 monkey = PRIVATE(game)->monkey;
                 shooter_add_bubble(monkey_get_shooter(monkey),bubble_new(color,0,0));
+                g_mutex_unlock(PRIVATE(game)->lock);
         }
 }
 
@@ -234,6 +239,7 @@ static void recv_winlost(NetworkMessageHandler * handler,
         g_assert( IS_GAME_NETWORK_PLAYER(game));
 
         g_print("GameNetworkPlayer: winlost %d\n",winlost);
+        g_mutex_lock(PRIVATE(game)->lock);
         if( winlost == FALSE) {
       
                 PRIVATE(game)->state = GAME_FINISHED;
@@ -255,6 +261,7 @@ static void recv_winlost(NetworkMessageHandler * handler,
                 game_network_player_fire_changed(game);	
     
         }
+        g_mutex_unlock(PRIVATE(game)->lock);
 	   
   
 }
@@ -271,9 +278,9 @@ static void recv_waiting_added(NetworkMessageHandler * handler,
         g_assert( IS_GAME_NETWORK_PLAYER(game));
         
         monkey = PRIVATE(game)->monkey;
-        
+        g_mutex_lock(PRIVATE(game)->lock);
         monkey_add_bubbles_at(monkey,bubbles_count,colors,columns);
-  
+        g_mutex_unlock(PRIVATE(game)->lock);
 }
 
 
@@ -394,7 +401,7 @@ pressed(MbPlayerInput * i,
 
         if( PRIVATE(game)->state == GAME_PLAYING) {
                 monkey = PRIVATE(game)->monkey;
-    
+                g_mutex_lock(PRIVATE(game)->lock);
                 if( key == LEFT_KEY) {
                         monkey_left_changed( monkey,TRUE,get_time(game));
                 } else if( key == RIGHT_KEY ) {
@@ -402,6 +409,7 @@ pressed(MbPlayerInput * i,
                 } else if( key == SHOOT_KEY) {
                         monkey_shoot( monkey,get_time(game));
                 }
+                g_mutex_unlock(PRIVATE(game)->lock);                
         }
     
         return FALSE;
@@ -419,12 +427,13 @@ released(MbPlayerInput * i,
 
         if( PRIVATE(game)->state == GAME_PLAYING) {
                 monkey = PRIVATE(game)->monkey;
-    
+                g_mutex_lock(PRIVATE(game)->lock);    
                 if( key == LEFT_KEY) {
                         monkey_left_changed( monkey,FALSE,get_time(game));
                 } else if( key == RIGHT_KEY ) {
                         monkey_right_changed( monkey,FALSE,get_time(game));
                 }
+                g_mutex_unlock(PRIVATE(game)->lock);
         }
     
         return FALSE;
@@ -443,14 +452,15 @@ static gint game_network_player_timeout (gpointer data)
         monkey = PRIVATE(game)->monkey;
 
         time = get_time(game);
-
         if( PRIVATE(game)->state == GAME_PLAYING ) {
   
+                g_mutex_lock(PRIVATE(game)->lock);
   
     
                 monkey_update( monkey,
                                time );
     
+                g_mutex_unlock(PRIVATE(game)->lock);
     
     
         }
@@ -459,7 +469,6 @@ static gint game_network_player_timeout (gpointer data)
                             time);
 
         monkey_canvas_paint(PRIVATE(game)->canvas);
- 
         return TRUE;
 }
 

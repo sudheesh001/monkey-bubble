@@ -39,6 +39,7 @@ libmonkeynet_a_SOURCES = \
 	message-handler.c message-handler.h \
 	simple-server.h simple-server.c \
 	client.h client.c \
+	game-manager-proxy.h game-manager-proxy.c \
 	player.h player.c \
 	game.h game.c \
 	game-manager.h game-manager.c \
