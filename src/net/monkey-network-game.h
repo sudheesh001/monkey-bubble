@@ -20,6 +20,7 @@
 #define _MONKEY_NETWORK_GAME_H_
 
 #include <glib-object.h>
+#include "monkey-message-handler.h"
 
 G_BEGIN_DECLS
 
@@ -44,9 +45,29 @@ typedef struct {
   GObjectClass parent_class;
 } MonkeyNetworkGameClass;
 
+typedef struct NetworkGame NetworkGame;
+
+
+typedef struct NetworkClient {
+        guint          client_id;
+        gchar *        client_name;
+        gboolean       ready;
+        MonkeyMessageHandler * handler;
+	 NetworkGame * game;
+} NetworkClient;
+
+
+
+
+struct NetworkGame {
+        guint                 game_id;
+        MonkeyNetworkGame *   game;
+        GList *               clients;
+        NetworkClient *       game_owner;
+};
 
 GType monkey_network_game_get_type(void);
-MonkeyNetworkGame * monkey_network_game_new(void);
+MonkeyNetworkGame * monkey_network_game_new(NetworkGame * ng);
 
 G_END_DECLS
 

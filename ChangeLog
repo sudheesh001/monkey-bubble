@@ -1,3 +1,85 @@
+2004-03-05  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	some new network code
+	+ some code clean up et reindent
+	* data/Makefile.am:
+	* src/net/mn-game-manager.c: (disconnect_client),
+	(send_client_join_game), (add_client_to_game), (send_init_reply),
+	(recv_init_message), (recv_xml_message), (send_game_list),
+	(send_start_game_to_client), (send_start_game), (start_game),
+	(create_client):
+	* src/net/monkey-network-game.c: (start_new_game),
+	(monkey_network_game_new):
+	* src/net/monkey-network-game.h:
+	* src/ui/Makefile.am:
+	* src/ui/game-2-player.c: (game_2_player_instance_init),
+	(game_2_player_finalize), (game_2_player_class_init),
+	(game_2_player_get_type), (game_2_player_config_notify),
+	(game_2_player_new), (game_2_player_conf_keyboard),
+	(game_2_player_key_pressed), (game_2_player_key_released),
+	(game_2_player_timeout), (get_time), (time_paused),
+	(time_unpaused), (time_init), (game_2_player_start),
+	(game_2_player_stop), (game_2_player_connect_input),
+	(game_2_player_disconnect_input), (game_2_player_pause),
+	(game_2_player_get_state), (game_2_player_game_lost),
+	(game_2_player_bubbles_exploded), (game_2_player_add_bubble),
+	(game_2_player_bubble_shot), (game_2_player_bubble_sticked),
+	(game_2_player_fire_changed):
+	* src/ui/game-network-player-manager.c:
+	(game_network_player_manager_instance_init),
+	(game_network_player_manager_class_init),
+	(game_network_player_manager_get_type),
+	(game_network_player_manager_new), (startnew_function),
+	(restart_function), (game_network_player_manager_finalize),
+	(game_network_player_manager_game_manager_iface_init),
+	(game_network_player_manager_state_changed),
+	(game_network_player_manager_start_level),
+	(game_network_player_manager_start),
+	(game_network_player_manager_stop):
+	* src/ui/game-network-player-manager.h:
+	* src/ui/game-network-player.c:
+	(game_network_player_instance_init),
+	(game_network_player_finalize), (game_network_player_class_init),
+	(game_network_player_get_type),
+	(game_network_player_bubble_sticked),
+	(game_network_player_config_notify), (game_network_player_new),
+	(game_network_player_conf_keyboard),
+	(game_network_player_key_pressed),
+	(game_network_player_key_released), (game_network_player_timeout),
+	(get_time), (time_paused), (time_unpaused), (time_init),
+	(game_network_player_start), (game_network_player_stop),
+	(game_network_player_is_lost), (game_network_player_get_score),
+	(game_network_player_pause), (game_network_player_get_state),
+	(game_network_player_game_lost),
+	(game_network_player_bubbles_exploded),
+	(game_network_player_add_to_score),
+	(game_network_player_add_bubble),
+	(game_network_player_bubble_shot),
+	(game_network_player_fire_changed):
+	* src/ui/game-network-player.h:
+	* src/ui/network-game-launcher.c: (network_game_launcher_new),
+	(connect_server_signal), (send_disconnect), (quit_server_signal),
+	(send_ready_state), (ready_signal), (send_start), (start_signal),
+	(send_init), (update_players_list_idle), (recv_player_list),
+	(start_game_idle), (start_game), (recv_network_xml_message),
+	(connect_server):
+	* src/ui/network-game.c:
+	* src/ui/network-game.h:
+	* src/ui/network-ui.c:
+	* src/ui/network-ui.h:
+	* src/ui/ui-main.c: (ui_main_get_type), (ui_main_get_instance),
+	(ui_main_new), (ui_main_draw_main), (ui_main_get_canvas),
+	(ui_main_get_window), (ui_main_finalize), (ui_main_class_init),
+	(ui_main_init), (ui_main_new_1_player_game),
+	(ui_main_new_2_player_game), (ui_main_set_game_manager),
+	(ui_main_enabled_games_item), (new_1_player_game),
+	(new_2_player_game), (quit_program), (pause_game),
+	(ui_main_stop_game), (stop_game), (ui_main_get_main_image),
+	(ui_main_set_game), (ui_main_game_changed), (new_network_game),
+	(show_preferences_dialog), (about), (show_help_content),
+	(show_error_dialog):
+	* src/ui/ui-main.h:
+
 2004-03-01  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	some update to the network code.

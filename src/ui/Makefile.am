@@ -26,10 +26,12 @@ EGGFILES=			\
 monkey_bubble_SOURCES = \
 	game.c game.h \
 	game-1-player.c game-1-player.h \
+	game-network-player.c game-network-player.h \
 	game-2-player.c game-2-player.h \
 	game-manager.c game-manager.h \
 	game-1-player-manager.c game-1-player-manager.h \
 	game-2-player-manager.c game-2-player-manager.h \
+	game-network-player-manager.c game-network-player-manager.h \
 	main.c \
 	keyboard-properties.c keyboard-properties.h \
 	network-game-launcher.c network-game-launcher.h \

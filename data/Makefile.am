@@ -8,7 +8,7 @@ level_DATA = \
 
 gladexmldir = $(datadir)/monkey-bubble/glade
 gladexml_DATA = \
-	monkey-bubble.glade keybinding.glade
+	monkey-bubble.glade keybinding.glade netgame.glade
 
 schemasdir   = $(GCONF_SCHEMA_FILE_DIR)
 schemas_in_files = monkey-bubble.schemas.in

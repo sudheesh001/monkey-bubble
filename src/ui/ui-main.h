@@ -22,6 +22,7 @@
 #include <gtk/gtk.h>
 #include "monkey-canvas.h"
 #include "game.h"
+#include "game-manager.h"
 
 #define UI_TYPE_MAIN                 (ui_main_get_type ())
 #define UI_MAIN(obj)                 (G_TYPE_CHECK_INSTANCE_CAST ((obj), UI_TYPE_MAIN, UiMain))
@@ -53,5 +54,7 @@ MonkeyCanvas * ui_main_get_canvas(UiMain * ui_main);
 GtkWidget * ui_main_get_window(UiMain * ui_main);
 Block * ui_main_get_main_image(UiMain * ui_main);
 void ui_main_set_game(UiMain *ui_main, Game *game);
+void ui_main_set_game_manager(UiMain * ui_main,GameManager * manager);
+
 void ui_main_enabled_games_item(UiMain * ui_main ,gboolean enabled);
 #endif /* __UI_MAIN_H__ */

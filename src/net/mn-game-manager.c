@@ -40,23 +40,6 @@
 
 #define SERVER_PORT 6666
 
-typedef struct NetworkClient NetworkClient;
-typedef struct NetworkGame NetworkGame;
-
-struct NetworkClient {
-        guint          client_id;
-        gchar *        client_name;
-        MonkeyMessageHandler * handler;
-        NetworkGame * game;
-};
-
-struct NetworkGame {
-        guint                 game_id;
-        MonkeyNetworkGame *   game;
-        GList *               clients;
-        NetworkClient *       game_owner;
-};
-
 struct MnGameManagerPrivate {
         GHashTable *    pending_clients;
         GHashTable *    clients_by_name;
@@ -86,12 +69,9 @@ gboolean connect_client(MnGameManager * manager,
 void disconnect_client(MnGameManager * manager,
                        NetworkClient * client);
 
-void init_client(MonkeyMessageHandler * mmh,
-                 guint32 client_id,
-                 gchar * message,
-                 MnGameManager * manager);
-
 void send_game_list(MnGameManager * manager);
+
+void start_game(MnGameManager * manager,NetworkGame * game);
 
 gboolean init_server_socket(MnGameManager * manager);
 
@@ -161,7 +141,7 @@ void disconnect_client(MnGameManager * manager,
                 g_hash_table_remove( PRIVATE(manager)->clients_by_id,
                                      (gpointer)&(client->client_id));
                 
-                
+                 
 
         }
 
@@ -207,6 +187,33 @@ static gboolean is_unique_client_name(MnGameManager * manager,
         return TRUE;
 }
 
+void send_client_join_game(MnGameManager * manager,
+                           NetworkGame * ng,
+                           NetworkClient * nc) {
+        
+        
+        xmlDoc * doc;
+        xmlNode * text, * root;
+        
+        doc = xmlNewDoc("1.0");
+        root = xmlNewNode(NULL,
+                          "message");
+        xmlDocSetRootElement(doc, root);
+        
+        xmlNewProp(root,"name","game_joined");
+        
+        // id of the game : one game, one id
+        text = xmlNewText("1");
+        
+        xmlAddChild(root,text);
+
+        monkey_message_handler_send_xml_message(nc->handler,
+                                                nc->client_id,
+                                                doc);
+        
+        xmlFreeDoc(doc);        
+}
+
 static void add_client_to_game(MnGameManager * manager,
                                NetworkGame * ng,
                                NetworkClient * client) {
@@ -214,11 +221,12 @@ static void add_client_to_game(MnGameManager * manager,
         ng->clients = g_list_append(ng->clients,
                                     client);
 
-        client->game = ng;
+
         if( ng->game_owner == NULL ) {
                 ng->game_owner = client;
         }
 
+        send_client_join_game(manager,ng,client);
         send_game_list(manager);
 }
 
@@ -250,83 +258,133 @@ static NetworkClient * get_network_client_by_client_id(MnGameManager * manager,i
 }
 
 
-void init_client(MonkeyMessageHandler * mmh,
-                 guint32 client_id,
-                 gchar * message,
-                 MnGameManager * manager) {
+void send_init_reply(MnGameManager * manager,
+                     NetworkClient * nc,
+                     const char * status) {
 
+
+        xmlDoc * doc;
+        xmlNode * text, * root;
+        
+        doc = xmlNewDoc("1.0");
+        root = xmlNewNode(NULL,
+                          "message");
+        xmlDocSetRootElement(doc, root);
+        
+        xmlNewProp(root,"name","init_reply");
+        
+        
+        text = xmlNewText(status);
+        
+        xmlAddChild(root,text);
+
+        monkey_message_handler_send_xml_message(nc->handler,
+                                                nc->client_id,
+                                                doc);
+        
+        xmlFreeDoc(doc);        
+}
+
+void recv_init_message(MnGameManager * manager,
+                       NetworkClient * nc,
+                       xmlDoc * doc) {
+
+
+        
+        xmlNode * root;
+
+        NetworkGame * ng;
+                        
+        char * client_name;
+
+        root = doc->children;
+        
+        client_name = root->children->children->content;
+        
+        
+        nc->client_name = client_name;
+        
+        ng = PRIVATE(manager)->ng;
+                                
+        if( connect_client(manager,nc) ) {
+                
+                send_init_reply(manager,nc,"ok");
+                add_client_to_game(manager,ng,nc);                                        
+        } else {
+                send_init_reply(manager,nc,"not ok");
+                disconnect_client(manager,nc);
+        }
+                        
+
+}
+
+void recv_xml_message(MonkeyMessageHandler * mmh,
+                      guint32 client_id,
+                      xmlDoc * doc,
+                      MnGameManager * manager) {
+
+        
+        xmlNode * root;
+        char * message_name;
         NetworkClient * nc;
+        
 
-        g_print("Message client %d, message :\n%s\n",client_id,message);
-
-        if( g_str_has_prefix(message,"INIT_MESSAGE") ) {
+        root = doc->children;
+        
+        g_assert( g_str_equal(root->name,"message"));
+        
+        
+        message_name = xmlGetProp(root,"name");
+        g_print("message name %s",message_name);
+        if( g_str_equal( message_name,"init") ){
                 nc = (NetworkClient *) g_hash_table_lookup(PRIVATE(manager)->pending_clients,
                                                            &client_id);
-                
-                
-                
+        
                 if( nc == NULL) {
                         g_print("Bad client %d\n",client_id);
-                } else {
-                        char ** s = g_strsplit(message,"=",2);
-                        if( s[0] != NULL && s[1] != NULL) {
-                                NetworkGame * ng;
-                                char * client_name;
-                                g_assert(client_id == nc->client_id);
-                                client_name = g_strdup(s[1]);
-                                nc->client_name = client_name;
-                                
-                                ng = PRIVATE(manager)->ng;
-                                g_print("client name =%s\n",client_name);
-                                
-                                if( is_unique_client_name(manager,client_name) ) {
-                                        
-                                        
-                                        monkey_message_handler_send_message( mmh, 
-                                                                             nc->client_id,
-                                                                             "INIT_OK",
-                                                                             strlen("INIT_OK"));
-                                        
-                                        if( connect_client(manager,nc) ) {
-                                                
-                                                add_client_to_game(manager,ng,nc);
-                                        } else {
-                                                monkey_message_handler_send_message( mmh, 
-                                                                                     nc->client_id,
-                                                                                     "INIT_NOT_OK:BAD_NAME",
-                                                                                     strlen("INIT_NOT_OK:BAD_NAME"));
-                                                
-                                                disconnect_client(manager,nc);
-                                        }
-
-                                } else {
-                                        
-                                        monkey_message_handler_send_message( mmh, 
-                                                                             nc->client_id,
-                                                                             "INIT_NOT_OK:BAD_NAME",
-                                                                             strlen("INIT_NOT_OK:BAD_NAME"));
-                                        
-                                        disconnect_client(manager,nc);
-                                }
-                                
-                                
-                        }
-                        g_strfreev(s);
+                        return;
                 }
-        } else if( g_str_equal(message,"DISCONNECT") ) { 
-                NetworkClient * nc;
-                g_print("disconnect %d",client_id);
+                
+                recv_init_message(manager,nc,doc);
+        } else if( g_str_equal( message_name,"ready_state") ) {
                 nc = get_network_client_by_client_id(manager,client_id);
                 if( nc != NULL ) {
-                        disconnect_client(manager,nc);
+                        if( g_str_equal(doc->children->children->content,"true")) {
+                                nc->ready = TRUE;
+                                send_game_list(manager);
+                        } else {
+                                nc->ready = FALSE;
+                                send_game_list(manager);
+                        }
+                } else {
+                        g_print("nc is NULL !! ? \n");
+                }
+                
+        } else if( g_str_equal( message_name,"disconnect") ) {
+                nc = get_network_client_by_client_id(manager,client_id);
+                if( nc != NULL ) {
+                        disconnect_client(manager,nc);                        
+                } else {
+                        g_print("nc is NULL !! ? \n");
+                }
+
+        } else if( g_str_equal(message_name,"start_game")) {
+                int game_id;
+                nc = get_network_client_by_client_id(manager,client_id);
+                sscanf(root->children->content,"%d",&game_id);
+                g_print("start game id %d\n",game_id);
+                if( nc != NULL ) {
+                        start_game(manager,PRIVATE(manager)->ng);
                 } else {
                         g_print("nc is NULL !! ? \n");
                 }
 
         }
 
+
         
 }
+
 
 void send_game_list_to_client(gpointer data,
                               gpointer user_data) {
@@ -349,10 +407,12 @@ void send_game_list(MnGameManager * manager) {
         GList * next;
         doc = xmlNewDoc("1.0");
         root = xmlNewNode(NULL,
-                          "root");
+                          "message");
 
         xmlDocSetRootElement(doc, root);
          
+
+        xmlNewProp(root,"name","game_player_list");
 
         ng = PRIVATE(manager)->ng;
 
@@ -370,6 +430,7 @@ void send_game_list(MnGameManager * manager) {
                         xmlNewProp(current,"owner","true");
                 }
 
+                xmlNewProp(current,"ready", ( client->ready ? "true" : "false"));
                 text = xmlNewText(client->client_name);
 
                 xmlAddChild(current,text);
@@ -379,6 +440,56 @@ void send_game_list(MnGameManager * manager) {
 
         g_list_foreach(ng->clients,send_game_list_to_client,
                        doc);
+
+
+        xmlFreeDoc(doc);
+}
+
+
+void send_start_game_to_client(gpointer data,
+                              gpointer user_data) {
+        NetworkClient * nc;
+        xmlDoc * doc;
+        
+        nc = (NetworkClient *)data;
+        doc =(xmlDoc *)user_data;
+        monkey_message_handler_send_xml_message(nc->handler,
+                                                nc->client_id,
+                                                doc);
+        
+}
+
+void send_start_game(MnGameManager * manager,
+                NetworkGame * game) {
+        xmlDoc * doc;
+        xmlNode * text, * root;
+
+        doc = xmlNewDoc("1.0");
+        root = xmlNewNode(NULL,
+                          "message");
+
+        xmlDocSetRootElement(doc, root);
+         
+
+        xmlNewProp(root,"name","game_started");
+
+        text = xmlNewText("1");
+        xmlAddChild(root,text);
+
+
+
+        g_list_foreach(game->clients,send_start_game_to_client,
+                       doc);
+
+        xmlFreeDoc(doc);
+        
+}
+
+void start_game(MnGameManager * manager,
+                NetworkGame * game) {
+
+        send_start_game(manager,game);
+        game->game = monkey_network_game_new(game);
 }
 
 guint32 get_next_client_id(MnGameManager * manager) {
@@ -460,6 +571,8 @@ gboolean init_server_socket(MnGameManager * manager) {
 
 void create_client(MnGameManager * manager,int sock) {
         MonkeyMessageHandler * handler;
+        xmlDoc * doc;
+        xmlNode * root;
 
         NetworkClient * nc = g_malloc( sizeof( NetworkClient) );
         
@@ -474,16 +587,27 @@ void create_client(MnGameManager * manager,int sock) {
         nc->handler = handler;
         nc->game = NULL;
         g_signal_connect( G_OBJECT(handler),
-                          "recv-message",
-                          G_CALLBACK( init_client ),
+                          "recv-xml-message",
+                          G_CALLBACK( recv_xml_message ),
                           manager);
 
         nc->client_id = get_next_client_id(manager);
+        nc->ready = FALSE;
 
-        monkey_message_handler_send_message( handler, 
-                                             nc->client_id,
-                                             "INIT",5);
+        
+        doc = xmlNewDoc("1.0");
+        root = xmlNewNode(NULL,
+                          "message");
+        xmlDocSetRootElement(doc, root);
 
+        xmlNewProp(root,"name","init_request");
+        
+        monkey_message_handler_send_xml_message( handler, 
+                                                 nc->client_id,
+                                                 doc);
+
+
+        xmlFreeDoc(doc);
 
         g_hash_table_insert( PRIVATE(manager)->pending_clients,
                              (gpointer )&(nc->client_id),

@@ -23,33 +23,13 @@
 #include "monkey-message-handler.h"
 #include "monkey-network-game.h"
 
-enum GameState {
-        PLAYING = 1,
-        WAITING_NEW_CLIENT = 2,
-        STARTING = 3,
-        NO_STATE = 4
-};
 
-struct NetworkMonkey {
-        guint       monkey_id;
-        Monkey *    monkey;
-        GMutex *    mutex;
-        gchar *     name;
-};
-
-struct MonkeyClient {
-        MonkeyMessageHandler * handler;
-        GList *                listen_monkeys;
-        gchar *                name;
-};
-
+#define FRAME_DELAY 10
+#define INIT_BUBBLES_COUNT 8+7+8+7
 
 struct MonkeyNetworkGamePrivate {
-        GList *         network_monkeys;
-        GList *         clients;
-        
-        enum GameState       state;
-
+        GList * monkeys;
+        GList * clients;
 };
 
 #define PRIVATE( MonkeyNetworkGame ) (MonkeyNetworkGame->private)
@@ -59,15 +39,31 @@ static GObjectClass* parent_class = NULL;
 void monkey_network_game_finalize(GObject *);
 
 
-void start_waiting_connect_loop(MonkeyNetworkGame * mng) {
+void start_new_game(MonkeyNetworkGame * g) {
+        GList * next;
+        Bubble * bubbles[INIT_BUBBLES_COUNT];
+        int i;
 
-        // START THE THREAD
+	 for(i = 0; i < INIT_BUBBLES_COUNT; i++ ) {
+                 bubbles[i] = bubble_new(rand()%COLORS_COUNT,0,0);
+         }
+
+        next = PRIVATE(g)->clients;
         
-        PRIVATE(mng)->state = WAITING_NEW_CLIENT;
-
+        while( next != NULL) {
+                NetworkClient * nc;
+                Monkey * m;
+                nc = (NetworkClient *)next->data;
+                m = monkey_new();
+                board_init( playground_get_board( monkey_get_playground( m )),
+                            bubbles,INIT_BUBBLES_COUNT);
+                
+                next = g_list_next(next);
+        }
+               
 }
 
-MonkeyNetworkGame *monkey_network_game_new() {
+MonkeyNetworkGame *monkey_network_game_new(NetworkGame * game) {
         MonkeyNetworkGame * mng;
         
         mng = 
@@ -75,12 +71,12 @@ MonkeyNetworkGame *monkey_network_game_new() {
                                                     , NULL));
 
 
-        PRIVATE(mng)->clients = NULL;
-        PRIVATE(mng)->network_monkeys = NULL;
+        // listen all players
+        PRIVATE(mng)->clients = game->clients;
 
-        PRIVATE(mng)->state = NO_STATE;
+        start_new_game(mng);
+        // create all monkeys
 
-        start_waiting_connect_loop(mng);
         return mng;
         
 }
