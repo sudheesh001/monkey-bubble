@@ -51,7 +51,9 @@ static guint32 signals[LAST_SIGNAL];
 struct NetworkGamePrivate 
 {
 	GList * clients;
+	GList * lost_clients;
 	GMutex * clients_lock;
+	GMutex * lost_clients_lock;
 	Clock * clock;
 };
 
@@ -279,18 +281,18 @@ game_lost(Monkey * m,
 
         game = c->game;
         g_print("network-game : lost ,player id %d\n",network_client_get_id(c->client));
-	/*
-        g_mutex_lock(PRIVATE(game)->lostMutex);
-        monkey_message_handler_send_winlost( c->handler,
-                                             c->monkey_id,
+	
+	g_mutex_lock(PRIVATE(game)->lost_clients_lock);
+        
+	network_message_handler_send_winlost( network_client_get_handler(c->client),
+                                             network_client_get_id(c->client),
                                              1);
 
-        PRIVATE(game)->lostList = g_list_append( PRIVATE(game)->lostList,
+        PRIVATE(game)->lost_clients = g_list_append( PRIVATE(game)->lost_clients,
                                                  c);
 
-        g_mutex_unlock(PRIVATE(game)->lostMutex);
+        g_mutex_unlock(PRIVATE(game)->lost_clients_lock);
 
-	*/
         
 }
 
@@ -487,23 +489,74 @@ update_client(gpointer data,gpointer user_data) {
 }
 
 static gboolean 
+update_lost(NetworkGame * game) {
+
+	GList * next;
+	gboolean finished;
+
+
+	g_mutex_lock( PRIVATE(game)->lost_clients_lock);
+
+
+	finished = FALSE;
+	next = PRIVATE(game)->lost_clients;
+
+	while( next != NULL) {
+		struct Client * c;
+
+		c = (struct Client *) next->data;
+
+		PRIVATE(game)->clients = g_list_remove( PRIVATE(game)->clients,c);
+        
+		PRIVATE(game)->lost_clients =
+			g_list_remove( PRIVATE(game)->lost_clients,c);
+        
+		
+		next = g_list_next( next);
+	}
+
+	if( g_list_length( PRIVATE(game)->clients) == 1 ) {
+		struct Client * client;
+
+		// the client has won the game !
+		client =(struct Client *) PRIVATE(game)->clients->data;
+
+		network_message_handler_send_winlost( network_client_get_handler(client->client),
+						      network_client_get_id(client->client),
+						      0);
+		PRIVATE(game)->clients = g_list_remove( PRIVATE(game)->clients,client);
+		
+		finished = TRUE;
+	}
+
+
+
+	g_mutex_unlock( PRIVATE(game)->lost_clients_lock);
+
+	return finished;
+}
+
+static gboolean 
 update_idle(gpointer d) 
 {
 
 	NetworkGame * game;
-
+	gboolean game_finished;
 	
 	game = NETWORK_GAME(d);
 
-
-
 	g_mutex_lock( PRIVATE(game)->clients_lock);
+
+
+	game_finished = update_lost(game);
+	
+	//	g_print("update \n");
 	g_list_foreach(PRIVATE(game)->clients,
 		       update_client,
 		       game);
 
-
 	g_mutex_unlock( PRIVATE(game)->clients_lock);
+
 
 	return TRUE;
 }
@@ -530,6 +583,8 @@ network_game_instance_init(NetworkGame * self)
 	PRIVATE(self) = g_new0 (NetworkGamePrivate, 1);			
 	PRIVATE(self)->clients = NULL;
 	PRIVATE(self)->clients_lock = g_mutex_new();
+	PRIVATE(self)->lost_clients = NULL;
+	PRIVATE(self)->lost_clients_lock = g_mutex_new();
 	PRIVATE(self)->clock = clock_new();
 }
 

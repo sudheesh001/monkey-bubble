@@ -120,7 +120,7 @@ network_message_handler_connect(NetworkMessageHandler * handler,
         struct sockaddr_in sock_client;
         struct hostent *src_host;
         
-        g_print("connect sever \n");
+        g_print("network-message-handler : connect sever \n");
         sock =  socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
   
  
@@ -135,7 +135,7 @@ network_message_handler_connect(NetworkMessageHandler * handler,
         sock_client.sin_port = (unsigned short) htons(port);
         src_host = (struct hostent *) gethostbyname(host);	
         if (!src_host) {
-                fprintf(stderr, "Not a valid Server IP...\n");
+                fprintf(stderr, "network-message-handler :Not a valid Server IP...\n");
                 return FALSE;
         }
         

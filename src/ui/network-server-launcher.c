@@ -552,7 +552,6 @@ static void recv_network_xml_message(NetworkMessageHandler * mmh,
                 
         } else if( g_str_equal(message_name,"init_request") ) {
                 
-                g_print("INIT REQUIEST");
                 
                 PRIVATE(launcher)->client_id = client_id;
                 
@@ -566,10 +565,10 @@ static void recv_network_xml_message(NetworkMessageHandler * mmh,
         } else if(g_str_equal(message_name,"init_reply") ){
                           
                 if( g_str_equal(root->children->content,"ok")) {
-                        g_print("init ok!!");
+                        g_print("network-server-launcher : init ok\n");
                         
                 } else {
-                        g_print("init not ok!!");
+                        g_print("network-server-launcer : init not ok\n");
                         
                 }
         } else if(g_str_equal(message_name,"game_joined")) {
@@ -582,7 +581,7 @@ static void recv_network_xml_message(NetworkMessageHandler * mmh,
                 int game_id;
                 
                 sscanf(root->children->content,"%d",&game_id);
-                g_print("ui server-launcher : game created %d \n",game_id);                
+                g_print("network-server-launcher : game created %d \n",game_id);                
 
                 start_game(launcher);
 

@@ -1,3 +1,14 @@
+2004-06-04  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	more network stuff
+	* src/net/game.c: (game_lost), (update_lost), (update_idle),
+	(network_game_instance_init):
+	* src/net/message-handler.c: (network_message_handler_connect):
+	* src/net/simple-server.c: (client_connection_closed),
+	(recv_xml_message):
+	* src/ui/game-network-player.c: (idle_draw_win), (recv_winlost):
+	* src/ui/network-server-launcher.c: (recv_network_xml_message):
+
 2004-06-03  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	fix compilation

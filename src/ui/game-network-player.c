@@ -258,7 +258,8 @@ static gboolean idle_draw_win(gpointer data) {
         GameNetworkPlayer * game;
 
         game = GAME_NETWORK_PLAYER(data);
-        monkey_view_draw_win( PRIVATE(game)->display );
+        
+        monkey_canvas_paint( PRIVATE(game)->canvas);
 
         return FALSE;
 }
@@ -270,10 +271,12 @@ static void recv_winlost(NetworkMessageHandler * handler,
 
     g_assert( IS_GAME_NETWORK_PLAYER(game));
 
+    g_print("GameNetworkPlayer: winlost %d\n",winlost);
     if( winlost == FALSE) {
       
             PRIVATE(game)->state = GAME_STOPPED;
-    
+            monkey_view_draw_win( PRIVATE(game)->display );
+        
             g_idle_add( idle_draw_win,game);
     
             game_network_player_stop(GAME(game));

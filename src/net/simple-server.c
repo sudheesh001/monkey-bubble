@@ -183,7 +183,7 @@ client_connection_closed(NetworkMessageHandler * handler,
 
 
         
-	g_print("client connection closed \n");
+	g_print("network-simple-server : client connection closed \n");
 	remove_handler( self, handler);
         
 }
@@ -230,7 +230,7 @@ recv_xml_message(NetworkMessageHandler * handler,
         g_print("NetworkSimpleServer: message name %s\n",message_name);
 
 	if( g_str_equal( message_name,"init") ){		
-		g_print("connected %d\n",client_id);
+		g_print("NetworkSimpleServer : connected %d\n",client_id);
 		create_client(self,handler,client_id,
 			      root->children->children->content);
 	}
