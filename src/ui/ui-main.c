@@ -285,7 +285,7 @@ static UiMain* ui_main_new(void) {
                                       DATADIR"/monkey-bubble/sounds/splash.ogg");
 
         gtk_window_set_icon_from_file(GTK_WINDOW (PRIVATE(ui_main)->window),
-                                      DATADIR"/monkey-bubble/gfx/monkey-bubble-icon.xpm",NULL);
+                                      DATADIR"/pixmaps/monkey-bubble-icon.png",NULL);
         return ui_main;
 }
 
@@ -314,8 +314,6 @@ GtkWidget* ui_main_get_window(UiMain * ui_main) {
 
 
 static void ui_main_finalize(GObject* object) {
-        //UiMain* ui_main = UI_MAIN(object);
-
 
 
         if (G_OBJECT_CLASS (parent_class)->finalize) {
@@ -601,8 +599,9 @@ static void about (gpointer    callback_data,
                    GtkWidget  *widget) {
 
         const gchar* authors[] = {
-                "Laurent Belmonte <lolo3d@tuxfamily.org>",
+                "Laurent Belmonte <laurent.belmonte@aliacom.fr>",
                 "Sven Herzberg <herzi@gnome-de.org>",
+                "Thomas Cataldo <thomas.cataldo@aliacom.fr>",
                 NULL
         };
         const gchar* documenters [] = {
@@ -616,7 +615,7 @@ static void about (gpointer    callback_data,
                          gnome_about_new (
                                           PACKAGE,
                                           VERSION,
-                                          "Copyright (C) 2003 - Laurent Belmonte",
+                                          "Copyright (C) 2003 - Laurent Belmonte <laurent.belmonte@aliacom.fr>",
                                           "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply remove all Bubbles by the creation of unicolor triplets.",
                                           authors,
                                           documenters,

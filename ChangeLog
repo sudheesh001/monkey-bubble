@@ -1,3 +1,8 @@
+2004-07-08  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	update contributors and mainwindow icon
+	* src/ui/ui-main.c: (ui_main_new), (ui_main_finalize), (about):
+
 2004-07-07  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	add observer notion so in the future users could spy game
