@@ -22,7 +22,7 @@
  
 #include "monkey-message-handler.h"
 #include "monkey-network-game.h"
-
+#include "clock.h"
 
 #define FRAME_DELAY 10
 #define INIT_BUBBLES_COUNT 8+7+8+7
@@ -31,6 +31,15 @@ struct MonkeyNetworkGamePrivate {
         GList * monkeys;
         GList * clients;
         NetworkClient * owner;
+        Clock * clock;
+};
+
+struct Client {
+        Monkey * monkey;
+        MonkeyNetworkGame * game;
+        MonkeyMessageHandler * handler;
+        int monkey_id;
+        GMutex * mutex;
 };
 
 #define PRIVATE( MonkeyNetworkGame ) (MonkeyNetworkGame->private)
@@ -40,16 +49,255 @@ static GObjectClass* parent_class = NULL;
 void monkey_network_game_finalize(GObject *);
 
 
+
+static void add_bubble(struct Client * c) {
+  gint * colors_count;
+  gint rnd,count;
+  Monkey * monkey;
+
+
+  monkey = c->monkey;
+  colors_count = board_get_colors_count(playground_get_board(monkey_get_playground(monkey)));
+
+  rnd = rand()%COLORS_COUNT;
+  count = 0;
+  while( rnd >= 0 ) {
+    count++;
+    count %= COLORS_COUNT;
+
+    while(colors_count[count] == 0) {
+      count++;
+      count %= COLORS_COUNT;
+    }
+    rnd--;
+  }
+  
+  shooter_add_bubble(monkey_get_shooter(monkey),bubble_new(count,0,0));
+
+}
+
+
 static void recv_shoot(MonkeyMessageHandler * handler,
                        guint32 monkey_id,
                        guint32 time,
-                       gfloat angle) {
+                       gfloat angle,
+                       struct Client * c) {
         g_print("RECV SHOOT angle %f *******************\n\n*********\n",angle);
 
-        monkey_message_handler_send_add_bubble(handler,
-                                               0,
-                                               1);
+        g_mutex_lock(c->mutex);
+        shooter_set_angle(monkey_get_shooter(c->monkey),
+                          angle);
 
+        monkey_update(c->monkey,time);
+        monkey_shoot( c->monkey,time);
+        add_bubble(c);
+
+        g_print("bubble added\n");
+        g_mutex_unlock(c->mutex);
+}
+
+void bubble_added(Shooter * s,
+                  Bubble * b,
+                  struct Client * c) {
+        
+        monkey_message_handler_send_add_bubble(c->handler,
+                                               c->monkey_id,
+                                               bubble_get_color(b));
+        
+        
+        
+
+}
+
+void bubble_sticked(Monkey * monkey,Bubble * b,
+                    struct Client * c) {
+
+
+
+        if( ( monkey_get_shot_count(monkey) % 8 ) == 0 ) {
+                            g_print("go down");
+
+                monkey_set_board_down( monkey);
+        }        
+
+}
+
+void game_lost(Monkey * m,
+               struct Client * c) {
+        g_print("lost \n");
+}
+
+void bubbles_exploded(  Monkey * monkey,
+                   GList * exploded,
+                   GList * fallen,
+                   struct Client * c) {
+
+        
+        int i;
+        int to_go;
+	GList * next;
+
+        to_go = MAX(0,-3 + g_list_length(exploded)  + g_list_length(fallen)*1.5);
+
+        if( to_go != 0) {
+
+                Color * colors;
+        
+                colors = g_malloc( sizeof(Color)*to_go );
+
+                for( i = 0 ; i < to_go ; i++ ) {
+                        colors[i] = rand()%COLORS_COUNT;
+                }
+
+
+                next = PRIVATE( c->game )->clients;
+
+                while( next != NULL) {
+                        struct Client * client;
+                        Monkey * other;
+                        guint8 * columns;
+
+                        client = (struct Client *) next->data;
+
+                        if( client != c ) {
+                        g_mutex_lock(client->mutex);
+                        g_print("lock \n");
+                        other = client->monkey;
+                        
+
+                        columns = monkey_add_bubbles( other, 
+                                                      to_go,
+                                                      colors); 
+                        
+                        
+                        monkey_message_handler_send_waiting_added(client->handler,
+                                                                  client->monkey_id, 
+                                                                  to_go,
+                                                                  colors,
+                                                                  columns);
+
+                        g_print("unlock \n");
+                        g_mutex_unlock(client->mutex);
+                        g_print("unlocked \n");
+                        
+                        g_free(columns); 
+                        }
+                        next = g_list_next(next);
+                }
+                
+                g_free(colors);
+         
+        }
+                
+        g_print("exploeded %d\n",g_list_length(exploded));
+}
+
+
+static void bubble_shot( Monkey * monkey,
+                         Bubble * bubble,
+                         struct Client * c) {
+}
+
+void create_monkey(MonkeyNetworkGame * g,
+                   struct Client * client,
+                   Color * colors,
+                   int count) {
+
+        Monkey * m;
+        Shooter * s;
+
+        Bubble  ** bubbles;
+        int i;
+
+        bubbles = g_malloc( sizeof(Bubble *) * count);
+	 for(i = 0; i < count; i++ ) {
+                 bubbles[i] = bubble_new(colors[i],0,0);
+         }
+        m = monkey_new(TRUE);
+
+        board_init( playground_get_board( monkey_get_playground( m )),
+                    bubbles,count);
+        
+        monkey_message_handler_send_bubble_array(client->handler,
+                                                 client->monkey_id,
+                                                 INIT_BUBBLES_COUNT,
+                                                 colors);
+                
+        s = monkey_get_shooter(m);
+
+        client->monkey =m;
+
+        client->mutex = g_mutex_new();
+        g_signal_connect( G_OBJECT( s),
+                          "bubble-added",
+                          G_CALLBACK(bubble_added),
+                          client);
+
+
+
+        g_signal_connect( G_OBJECT( m),
+                          "bubble-sticked",
+                          G_CALLBACK(bubble_sticked),
+                          client);
+
+        g_signal_connect( G_OBJECT(m),
+                          "game-lost",
+                          G_CALLBACK(game_lost),
+                          client);
+        
+        g_signal_connect( G_OBJECT( m),
+                          "bubbles-exploded",
+                          G_CALLBACK(bubbles_exploded),
+                          client);
+
+        g_signal_connect( G_OBJECT( m),
+                          "bubble-shot",
+                          G_CALLBACK(bubble_shot),
+                          client);
+
+
+        shooter_add_bubble(s,bubble_new(1,0,0));
+        shooter_add_bubble(s,bubble_new(1,0,0));
+        g_signal_connect( G_OBJECT(client->handler),
+                          "recv-shoot",
+                          G_CALLBACK( recv_shoot ),
+                          client);
+        
+        
+}
+
+void update_client(gpointer d,gpointer ud) {
+        struct Client * client;
+        
+        client = (struct Client *) d;
+        MonkeyNetworkGame * g;
+
+        g = MONKEY_NETWORK_GAME(ud);
+
+        g_mutex_lock(client->mutex);
+
+        
+        monkey_update(client->monkey,clock_get_time(PRIVATE(g)->clock));
+
+
+        g_mutex_unlock(client->mutex);        
+
+}
+
+gboolean update_idle(gpointer d) {
+        MonkeyNetworkGame * g;
+
+        g = MONKEY_NETWORK_GAME(d);
+        g_list_foreach( PRIVATE(g)->clients,
+                        update_client,
+                        g);
+
+
+        return TRUE;
+}
+
+void start_update_thread(MonkeyNetworkGame * g) {
+        g_timeout_add(10,update_idle,g);
 }
 
 void start_new_game(MonkeyNetworkGame * g) {
@@ -67,33 +315,10 @@ void start_new_game(MonkeyNetworkGame * g) {
         next = PRIVATE(g)->clients;
         
         while( next != NULL) {
-                NetworkClient * nc;
-                Monkey * m;
-                nc = (NetworkClient *)next->data;
-                m = monkey_new();
-                board_init( playground_get_board( monkey_get_playground( m )),
-                            bubbles,INIT_BUBBLES_COUNT);
+                struct Client * client;
                 
-                monkey_message_handler_send_bubble_array(nc->handler,
-                                                         nc->client_id,
-                                                         INIT_BUBBLES_COUNT,
-                                                         colors);
-
-                monkey_message_handler_send_add_bubble(nc->handler,
-                                                       nc->client_id,
-                                                       1);
-
-
-                monkey_message_handler_send_add_bubble(nc->handler,
-                                                       nc->client_id,
-                                                       1);
-
-
-                g_signal_connect( G_OBJECT(nc->handler),
-                                  "recv-shoot",
-                                  G_CALLBACK( recv_shoot ),
-                                  m);
-
+                client = (struct Client *)next->data;
+                create_monkey(g,client,colors,INIT_BUBBLES_COUNT);
                 next = g_list_next(next);
 
         }
@@ -102,26 +327,50 @@ void start_new_game(MonkeyNetworkGame * g) {
         next = PRIVATE(g)->clients;
         
         while( next != NULL) {
-                NetworkClient * nc;
-                nc = (NetworkClient *)next->data;
+                struct Client * nc;
+                nc = (struct Client *)next->data;
 
                 monkey_message_handler_send_start(nc->handler);
                 next = g_list_next(next);
 
         }
-               
+
+        g_print("started \n");
+        clock_start(PRIVATE(g)->clock);
+        start_update_thread(g);
 }
 
 MonkeyNetworkGame *monkey_network_game_new(NetworkGame * game) {
         MonkeyNetworkGame * mng;
-        
+        GList * next;
         mng = 
                 MONKEY_NETWORK_GAME(g_object_new(TYPE_MONKEY_NETWORK_GAME
                                                     , NULL));
 
 
-        // listen all players
-        PRIVATE(mng)->clients = game->clients;
+        PRIVATE(mng)->clock = clock_new();
+        PRIVATE(mng)->clients = NULL;
+        next = game->clients;
+
+        while(next != NULL) {
+                NetworkClient * nc;
+                struct Client * client;
+
+                nc = (NetworkClient *) next->data;
+                client = g_malloc( sizeof(struct Client));
+
+                client->monkey = NULL;
+                client->handler = nc->handler;
+                client->game = mng;
+                client->monkey_id = nc->client_id;
+
+                PRIVATE(mng)->clients = 
+                        g_list_append( PRIVATE(mng)->clients,
+                                       client);
+
+                next = g_list_next(next);
+        }
+
         PRIVATE(mng)->owner = game->game_owner;
         start_new_game(mng);
         // create all monkeys

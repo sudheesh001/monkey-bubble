@@ -253,8 +253,8 @@ Game2Player * game_2_player_new(GtkWidget * window,MonkeyCanvas * canvas,int sco
     monkey_canvas_clear(canvas);
 	 PRIVATE(game)->clock = clock_new();
 
-	 PRIVATE(game)->monkey_left = monkey_new();  
-	 PRIVATE(game)->monkey_right = monkey_new();
+	 PRIVATE(game)->monkey_left = monkey_new(FALSE);  
+	 PRIVATE(game)->monkey_right = monkey_new(FALSE);
 
 	 for(i = 0; i < INIT_BUBBLES_COUNT; i++ ) {
 		  b_left = bubble_new(rand()%COLORS_COUNT,0,0);
@@ -745,11 +745,11 @@ static void game_2_player_game_lost(Monkey * monkey,Game2Player * g) {
 }
 
 static void game_2_player_bubbles_exploded(Monkey * monkey,
-														 GList * exploded,
-														 GList * fallen,
-														 Game2Player * p) {
+                                           GList * exploded,
+                                           GList * fallen,
+                                           Game2Player * p) {
 	 int i;
-	 int * columns;
+	 guint8 * columns;
 	 int to_go;
 	 MonkeyView * view;
 	 Monkey * other;

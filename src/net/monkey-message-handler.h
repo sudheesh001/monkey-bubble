@@ -37,41 +37,48 @@ G_BEGIN_DECLS
 typedef struct MonkeyMessageHandlerPrivate MonkeyMessageHandlerPrivate;
 
 typedef struct {
-  GObject parent_instance;
-  MonkeyMessageHandlerPrivate * private;
+        GObject parent_instance;
+        MonkeyMessageHandlerPrivate * private;
 } MonkeyMessageHandler;
 
 typedef struct {
-  GObjectClass parent_class;
-  void (* recv_shoot)         (MonkeyMessageHandler * mmh,
-			       guint32 monkey_id,
-			       guint32 time,
-			       gfloat angle);
+        GObjectClass parent_class;
+        void (* recv_shoot)         (MonkeyMessageHandler * mmh,
+                                     guint32 monkey_id,
+                                     guint32 time,
+                                     gfloat angle);
 
-  void (* recv_add_bubble)    (MonkeyMessageHandler * mmh,
-			       guint32 monkey_id,
-			       Color color);
+        void (* recv_add_bubble)    (MonkeyMessageHandler * mmh,
+                                     guint32 monkey_id,
+                                     Color color);
 
-  void (* recv_winlost)       (MonkeyMessageHandler * mmh,
-			       guint32 monkey_id,
-			       guint8 win_lost);
 
-  void (* recv_start)         (MonkeyMessageHandler * mmh);
+        void (* recv_waiting_added) (MonkeyMessageHandler * mmh,
+                                     guint32 monkey_id,
+                                     guint32 bubbles_count,
+                                     Color * lines,
+                                     guint8 * columns);
 
-	 void (*recv_bubble_array) (MonkeyMessageHandler * mmh,
-										 guint32 monkey_id,
-										 guint32 bubble_count,
-										 Color * bubbles);
+        void (* recv_winlost)       (MonkeyMessageHandler * mmh,
+                                     guint32 monkey_id,
+                                     guint8 win_lost);
 
-  void (* recv_message)          (MonkeyMessageHandler * mmh,
-				  guint32 client_id,
-				  gchar * message);
+        void (* recv_start)         (MonkeyMessageHandler * mmh);
 
-  void (* recv_xml_message)          (MonkeyMessageHandler * mmh,
-				  guint32 client_id,
-				  xmlDoc * doc);
+        void (*recv_bubble_array) (MonkeyMessageHandler * mmh,
+                                   guint32 monkey_id,
+                                   guint32 bubble_count,
+                                   Color * bubbles);
 
-  void (* connection_closed)         (MonkeyMessageHandler * mmh);
+        void (* recv_message)          (MonkeyMessageHandler * mmh,
+                                        guint32 client_id,
+                                        gchar * message);
+
+        void (* recv_xml_message)          (MonkeyMessageHandler * mmh,
+                                            guint32 client_id,
+                                            xmlDoc * doc);
+
+        void (* connection_closed)         (MonkeyMessageHandler * mmh);
 
 } MonkeyMessageHandlerClass;
 
@@ -89,6 +96,13 @@ void monkey_message_handler_send_message (MonkeyMessageHandler * mmh,
 					  const gchar * message,
 					  guint size);
 
+void monkey_message_handler_send_waiting_added (MonkeyMessageHandler * mmh,
+                                                guint32 monkey_id,
+                                                guint8 bubbles_count,
+                                                Color * lines,
+                                                guint8 * columns);
+
+
 void monkey_message_handler_send_add_bubble  (MonkeyMessageHandler * mmh,
 					      guint32 monkey_id,
 					      Color color);
@@ -99,9 +113,9 @@ void monkey_message_handler_send_shoot       (MonkeyMessageHandler * mmh,
 					      gfloat angle);
 
 void monkey_message_handler_send_bubble_array( MonkeyMessageHandler * mmh,
-															  guint32 monkey_id,
-															  guint8  bubbles_count,
-															  Color * bubbles);
+                                               guint32 monkey_id,
+                                               guint8  bubbles_count,
+                                               Color * bubbles);
 
 void monkey_message_handler_send_winlost     (MonkeyMessageHandler * mmh,
 					      guint32 monkey_id,

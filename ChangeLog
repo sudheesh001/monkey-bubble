@@ -1,3 +1,52 @@
+2004-03-11  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	more network code
+	board patch
+	removed unused files
+	* src/monkey/board.c: (board_stick_bubble):
+	* src/monkey/monkey.c: (monkey_new_level_from_file), (monkey_new),
+	(monkey_update), (monkey_add_bubbles), (monkey_add_bubbles_at):
+	* src/monkey/monkey.h:
+	* src/monkey/shooter.c: (shooter_set_angle):
+	* src/net/iclient-handler-observer.c:
+	* src/net/main.c: (main):
+	* src/net/monkey-marshal.list:
+	* src/net/monkey-message-handler.c:
+	(monkey_message_handler_class_init), (parse_message), (read_chunk),
+	(monkey_message_handler_send_waiting_added), (parse_waiting_added),
+	(monkey_message_handler_send_bubble_array), (parse_bubble_array),
+	(monkey_message_handler_send_winlost), (parse_winlost):
+	* src/net/monkey-message-handler.h:
+	* src/net/monkey-network-game.c: (add_bubble), (recv_shoot),
+	(bubble_added), (bubble_sticked), (game_lost), (bubbles_exploded),
+	(bubble_shot), (create_monkey), (update_client), (update_idle),
+	(start_update_thread), (start_new_game), (monkey_network_game_new):
+	* src/net/monkey-network.h:
+	* src/net/monkey-server.c:
+	* src/net/monkey-server.h:
+	* src/ui/game-2-player.c: (game_2_player_new),
+	(game_2_player_bubbles_exploded):
+	* src/ui/game-network-player-manager.c: (start_timeout),
+	(recv_add_bubble), (recv_bubble_array):
+	* src/ui/game-network-player.c:
+	(game_network_player_instance_init),
+	(game_network_player_finalize), (game_network_player_get_type),
+	(game_network_player_bubble_sticked),
+	(game_network_player_config_notify), (add_bubble),
+	(recv_add_bubble), (recv_waiting_added),
+	(game_network_player_bubble_shot), (game_network_player_new),
+	(game_network_player_conf_keyboard),
+	(game_network_player_key_pressed),
+	(game_network_player_key_released), (game_network_player_timeout),
+	(get_time), (time_paused), (time_unpaused), (time_init),
+	(game_network_player_start), (game_network_player_stop),
+	(game_network_player_is_lost), (game_network_player_get_score),
+	(game_network_player_pause), (game_network_player_get_state),
+	(game_network_player_game_lost),
+	(game_network_player_bubbles_exploded),
+	(game_network_player_add_to_score),
+	(game_network_player_fire_changed):
+
 2004-03-10  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	remove network test client

@@ -220,9 +220,12 @@ gdouble shooter_get_angle(Shooter * s) {
 
 
 void shooter_set_angle(Shooter *s,gdouble angle) {
-
-  g_assert(IS_SHOOTER(s));
+	 gint test;
+	 g_assert(IS_SHOOTER(s));
   
+	 test = (gint32)rint(  angle*100000 );
+
+		  angle = ((gfloat)test)/100000;
   if( angle > PRIVATE(s)->max_angle ) {
     angle  = PRIVATE(s)->max_angle;
   }

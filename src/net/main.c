@@ -33,6 +33,7 @@ int main(int argc, char **argv) {
     manager = mn_game_manager_new();
 
     mn_game_manager_start_server(manager);
-    mn_game_manager_join(manager);
+	 //    mn_game_manager_join(manager);
+	 gtk_main();
     return(0);
 }

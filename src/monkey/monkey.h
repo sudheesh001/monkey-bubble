@@ -73,7 +73,7 @@ typedef struct {
 GType monkey_get_type(void);
 
 /* constructor */
-Monkey * monkey_new(void);
+Monkey * monkey_new(gboolean network);
 Monkey * monkey_new_level_from_file(const gchar * filename,gint level);
 
 void monkey_left_changed( Monkey * monkey,gboolean pressed,
@@ -95,17 +95,17 @@ void monkey_set_board_down(Monkey * monkey);
 /* 
  * @return array with column coordonate of the bubbles
  */
-int * monkey_add_bubbles (
-			  Monkey * monkey,
-			  int  bubble_count,
-			  Color * bubbles_colors);
+guint8 * monkey_add_bubbles (
+									 Monkey * monkey,
+									 int  bubble_count,
+									 Color * bubbles_colors);
 
 
 void monkey_add_bubbles_at (
 			    Monkey * monkey,
 			    int bubble_count,
 			    Color * bubbles_colors,
-			    int * bubbles_column /* waiting column for bubbles */
+			    guint8 * bubbles_column /* waiting column for bubbles */
 			    );
 
 gint monkey_get_shot_count(Monkey * monkey);

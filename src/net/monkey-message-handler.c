@@ -44,12 +44,14 @@
 #define SEND_ADD_BUBBLE 4
 #define SEND_START 5
 #define SEND_SHOOT 6
-
+#define SEND_WAITING_ADDED 7
+#define SEND_WINLOST 8
 enum {
         CONNECTION_CLOSED,
         RECV_SHOOT,
         RECV_ADD_BUBBLE,
         RECV_WINLOST,
+        RECV_WAITING_ADDED,
         RECV_START,
         RECV_BUBBLE_ARRAY,
         RECV_MESSAGE,
@@ -81,6 +83,11 @@ void parse_bubble_array(MonkeyMessageHandler * mmh,
 void parse_add_bubble(MonkeyMessageHandler * mmh,
                       guint8 * message);
 
+void parse_winlost(MonkeyMessageHandler * mmh,
+                   guint8 * message);
+
+void parse_waiting_added(MonkeyMessageHandler * mmh,
+                         guint8 * message);
 
 void parse_shoot(MonkeyMessageHandler * mmh,
                  guint8 * message);
@@ -158,7 +165,16 @@ monkey_message_handler_class_init (MonkeyMessageHandlerClass *klass) {
                                               G_TYPE_NONE,
                                               2,G_TYPE_UINT,G_TYPE_BOOLEAN);
         
- 
+        signals[RECV_WAITING_ADDED] = g_signal_new ("recv-waiting-added",
+                                              G_TYPE_FROM_CLASS (klass),
+                                              G_SIGNAL_RUN_FIRST |
+                                              G_SIGNAL_NO_RECURSE,
+                                              G_STRUCT_OFFSET (MonkeyMessageHandlerClass, recv_waiting_added),
+                                              NULL, NULL,
+                                              monkey_net_marshal_VOID__UINT_UINT_POINTER_POINTER,
+                                              G_TYPE_NONE,
+                                              4,G_TYPE_UINT,G_TYPE_UINT,G_TYPE_POINTER,G_TYPE_POINTER);
+        
         
         
         signals[RECV_START]= g_signal_new ("recv-start",
@@ -266,12 +282,18 @@ void parse_message(MonkeyMessageHandler * mmh,
         case SEND_BUBBLE_ARRAY :
                 parse_bubble_array(mmh,
                                    message);
+        case SEND_WAITING_ADDED :
+                parse_waiting_added(mmh,
+                                    message);
                 break;
         case SEND_ADD_BUBBLE :
                 parse_add_bubble(mmh,message);
                 break;
         case SEND_SHOOT :
                 parse_shoot(mmh,message);
+                break;
+        case SEND_WINLOST :
+                parse_winlost(mmh,message);
                 break;
         case SEND_START :
                 g_signal_emit( G_OBJECT(mmh),signals[RECV_START],0);
@@ -395,8 +417,8 @@ void write_chunk(MonkeyMessageHandler * mmh,
 }
 
 gboolean read_chunk(MonkeyMessageHandler * mmh,
-                guint8 * data) {
-
+                    guint8 * data) {
+        
         guint size,p;
         guint readed;
         size = CHUNK_SIZE;
@@ -499,6 +521,135 @@ void monkey_message_handler_join(MonkeyMessageHandler * mmh) {
         g_thread_join( PRIVATE(mmh)->main_thread);
 }
 
+void monkey_message_handler_send_waiting_added (MonkeyMessageHandler * mmh,
+                                                guint32 monkey_id,
+                                                guint8 bubbles_count,
+                                                Color * colors,
+                                                guint8 * columns) {
+
+        guint8 message[CHUNK_SIZE];
+        int i,j;
+
+        struct Test {
+                guint8 message_type;
+                guint32 monkey_id;
+                guint8 bubbles_count;
+        };
+
+        struct Test * t;
+
+
+        t = (struct Test *)  message;
+        memset(t,0,CHUNK_SIZE);
+        
+        t->message_type = SEND_WAITING_ADDED;
+        
+        t->monkey_id = htonl( monkey_id);
+        t->bubbles_count = bubbles_count;
+
+        j = sizeof(struct Test);
+
+        for(i = 0 ; i < bubbles_count; i++ ){
+                if(j >= CHUNK_SIZE) {
+                        write_chunk(mmh,message,1);
+                        j = 0;
+                        memset(message,0,CHUNK_SIZE);                        
+                }
+
+                g_print("colors[%d] = %d\n",i,colors[i]);
+                message[j] = colors[i];
+                j++;
+
+        }
+
+        
+                        
+        for(i = 0 ; i < bubbles_count; i++ ){
+                if(j >= CHUNK_SIZE) {
+                        write_chunk(mmh,message,1);
+                        j = 0;
+                        memset(message,0,CHUNK_SIZE);                        
+                }
+
+                
+                g_print("columns[%d] = %d\n",i,columns[i]);
+                message[j] = columns[i];
+                j++;
+
+        }
+
+        write_chunk(mmh,message,1);
+
+}
+
+
+void parse_waiting_added(MonkeyMessageHandler * mmh,
+                         guint8 * message) {
+
+        int i,j;
+        Color * bubbles;
+        guint8 * columns;
+        guint32 monkey_id;
+        guint8 bubble_count;
+
+        struct Test {
+                guint8 message_type;
+                guint32 monkey_id;
+                guint8 bubble_count;
+        };
+
+        struct Test * t;
+  
+        t = (struct Test *)  message;
+        g_print("bubble count %d\n",t->bubble_count);
+        bubbles = g_malloc( t->bubble_count);
+
+        columns = g_malloc( t->bubble_count);
+
+        monkey_id = g_ntohl( t->monkey_id);
+        bubble_count = t->bubble_count;
+        j = sizeof(struct Test);
+        
+        for(i = 0;  i < bubble_count ; i++) {
+                
+                g_print("colors[%d] = %d\n",i,message[j]);
+
+                bubbles[i] = message[j];
+
+                j++;
+                if( j >= CHUNK_SIZE) {
+                        g_print("read chunck\n");
+                        read_chunk(mmh,message);
+                        j = 0;
+                        
+                }
+
+        }
+
+        for(i = 0;  i < bubble_count ; i++) {
+
+                g_print("columns[%d] = %d\n",i,message[j]);
+
+                columns[i] = message[j];
+
+                j++;
+                if( j >= CHUNK_SIZE) {
+                        g_print("read chunck\n");
+                        read_chunk(mmh,message);
+                        j = 0;
+                        
+                }
+
+        }
+
+        g_signal_emit( G_OBJECT(mmh),signals[RECV_WAITING_ADDED],0,
+                       monkey_id,
+                       bubble_count,
+                       bubbles,
+                       columns);   
+        
+}
+
 void monkey_message_handler_send_bubble_array( MonkeyMessageHandler * mmh,
                                                guint32 monkey_id,
                                                guint8  bubbles_count,
@@ -526,12 +677,14 @@ void monkey_message_handler_send_bubble_array( MonkeyMessageHandler * mmh,
         j = sizeof(struct Test);
 
         for(i = 0 ; i < bubbles_count; i++ ){
-                if(j > CHUNK_SIZE) {
+                if(j >= CHUNK_SIZE) {
+                        g_print("chunk wirted\n");
                         write_chunk(mmh,message,1);
                         j = 0;
                         memset(message,0,CHUNK_SIZE);                        
                 }
 
+                g_print("color[%d]=%d\n",i,bubbles[i]);
                 message[j] = bubbles[i];
                 j++;
 
@@ -566,6 +719,11 @@ void parse_bubble_array(MonkeyMessageHandler * mmh,
         j = sizeof(struct Test);
 
         for(i = 0;  i < bubble_count ; i++) {
+
+                bubbles[i] = message[j];
+
+                g_print("color[%d] %d\n",i,bubbles[i]);
+                j++;
                 if( j >= CHUNK_SIZE) {
                         g_print("read chunck\n");
                         read_chunk(mmh,message);
@@ -574,10 +732,6 @@ void parse_bubble_array(MonkeyMessageHandler * mmh,
                         g_print("readed chunck\n");
                 }
 
-                bubbles[i] = message[j];
-
-                g_print("color[%d] %d\n",i,bubbles[i]);
-                j++;
         }
 
         g_signal_emit( G_OBJECT(mmh),signals[RECV_BUBBLE_ARRAY],0,
@@ -690,8 +844,49 @@ void parse_shoot(MonkeyMessageHandler * mmh,
 void monkey_message_handler_send_winlost     (MonkeyMessageHandler * mmh,
 					      guint32 monkey_id,
 					      guint8 win_lost) {
+        guint8 message[CHUNK_SIZE];
+
+        struct Test {
+                guint8 message_type;
+                guint32 monkey_id;
+                guint8  win_lost;
+        };
+        struct Test * t;
+        
+        t = (struct Test *)  message;
+        
+        memset(t,0,CHUNK_SIZE);
+        
+        t->message_type = SEND_WINLOST;
+        t->monkey_id =  htonl( monkey_id);
+        t->win_lost = win_lost;
+
+        write_chunk(mmh,message,1);
+
 }
 
+
+
+void parse_winlost(MonkeyMessageHandler * mmh,
+                      guint8 * message) {
+
+
+        struct Test {
+                guint8 message_type;
+                guint32 monkey_id;
+                guint8 winlost;
+        };
+        struct Test * t;
+  
+        t = (struct Test *)  message;
+
+        t->monkey_id = g_ntohl( t->monkey_id);
+
+        g_signal_emit( G_OBJECT(mmh),signals[RECV_WINLOST],0,
+                       t->monkey_id,
+                       t->winlost);     
+ 
+}
 
 void monkey_message_handler_send_start       (MonkeyMessageHandler * mmh) {
 

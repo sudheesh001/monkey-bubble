@@ -55,6 +55,7 @@ struct MonkeyPrivate {
   gint shot_count;
   GList * to_add;
   gboolean hurry_up;
+    gboolean network;
 };
 
 static void monkey_finalize(GObject* object);
@@ -247,7 +248,7 @@ Monkey * monkey_new_level_from_file(const gchar * filename,int level) {
 
   PRIVATE(monkey)->last_stiked = 0;
 
-  
+  PRIVATE(monkey)->network = FALSE;
 
   PRIVATE(monkey)->to_add = NULL;
 
@@ -268,9 +269,11 @@ Monkey * monkey_new_level_from_file(const gchar * filename,int level) {
   return monkey;
 }
 
-Monkey * monkey_new(void) {
-
-  return monkey_new_level_from_file(NULL,-1);
+Monkey * monkey_new(gboolean network) {
+    Monkey * m;
+    m = monkey_new_level_from_file(NULL,-1);
+    PRIVATE(m)->network = network;
+    return m;
 }
 
 
@@ -435,11 +438,10 @@ void monkey_update( Monkey * monkey,gint time ) {
 
 
   
-    
   while ( ( time - PRIVATE( monkey )->time ) != 0 ) {
 
 
-    if( ( time - PRIVATE( monkey )->time ) > MAX_UPDATE_TIME ) {
+		if( ( time - PRIVATE( monkey )->time ) > MAX_UPDATE_TIME ) {
       playground_update( PRIVATE( monkey )->playground,
 			 MAX_UPDATE_TIME );
     
@@ -459,10 +461,12 @@ void monkey_update( Monkey * monkey,gint time ) {
 
     
 
-   if( (time - PRIVATE(monkey)->last_stiked) > 10000) { 
-     monkey_shoot(monkey,time);
-   } else if( ( time - PRIVATE(monkey)->last_stiked) > 7000 &&
-	PRIVATE(monkey)->hurry_up ) {
+  if( (time - PRIVATE(monkey)->last_stiked) > 10000) { 
+      if( ! PRIVATE(monkey)->network) {
+	  monkey_shoot(monkey,time);
+      }
+  } else if( ( time - PRIVATE(monkey)->last_stiked) > 7000 &&
+	     PRIVATE(monkey)->hurry_up ) {
       g_signal_emit( G_OBJECT(monkey),signals[HURRY_UP],0);
       PRIVATE(monkey)->hurry_up = FALSE;
    }
@@ -599,14 +603,14 @@ Bubble ** monkey_get_current_free_columns(Monkey * m) {
 
 }
 
-int * monkey_add_bubbles( 
+guint8 * monkey_add_bubbles( 
 			 Monkey * monkey,
 			 int bubbles_count,
 			 Color * bubbles_colors ) {
 
 
-  int * columns;
-  int empty_column_count,c,i,index;
+	 guint8 * columns;
+	 int empty_column_count,c,i,index;
   Bubble ** bubbles;
   
 
@@ -615,7 +619,7 @@ int * monkey_add_bubbles(
   bubbles = monkey_get_current_free_columns(monkey);
 
   
-  columns = g_malloc( sizeof(int)*bubbles_count);
+  columns = g_malloc( sizeof(guint8)*bubbles_count);
   
   /* count the empty columns */
   empty_column_count = 0;
@@ -668,20 +672,29 @@ void monkey_add_bubbles_at (
 			    Monkey * monkey,
 			    int bubbles_count,
 			    Color * bubbles_colors,
-			    int * bubbles_column )  {
+			    guint8 * bubbles_column )  {
 
   Bubble ** bubbles;
-  GList * last;
   int i;
   g_assert( IS_MONKEY( monkey ));
 
-  last = g_list_last( PRIVATE(monkey)->to_add);
-    
-  bubbles = (Bubble **) last->data;
+
+  g_print("bubbles count %d",bubbles_count);
+
+  bubbles = monkey_get_current_free_columns(monkey);
+
+  if( bubbles == NULL) {
+        monkey_add_new_waiting_row(monkey);
+		  bubbles = monkey_get_current_free_columns(monkey);		  
+  }
 
   for( i = 0; i < bubbles_count; i++ ) {
-    if(bubbles[ bubbles_column[i]] != NULL)  
-      monkey_add_new_waiting_row(monkey);
+		if(bubbles[ bubbles_column[i]] != NULL) {
+			 
+			 monkey_add_new_waiting_row(monkey);
+			 bubbles = monkey_get_current_free_columns(monkey);
+
+		}
     bubbles[ bubbles_column[i] ] = bubble_new( bubbles_colors[i],0,0 );
   }
 

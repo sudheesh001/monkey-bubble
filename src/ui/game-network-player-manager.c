@@ -231,9 +231,9 @@ gboolean start_timeout(gpointer data) {
 
   game_start( GAME(game) );
   
-  g_signal_handler_disconnect( G_OBJECT( PRIVATE(manager)->handler),
+/*  g_signal_handler_disconnect( G_OBJECT( PRIVATE(manager)->handler),
 			       PRIVATE(manager)->add_bubble_handler_id);
-
+*/
   g_signal_connect( G_OBJECT(game), "state-changed",
 		    G_CALLBACK(game_network_player_manager_state_changed),manager);
   PRIVATE(manager)->current_game = game;
@@ -246,8 +246,10 @@ static void recv_add_bubble(MonkeyMessageHandler * handler,
 		     guint32 monkey_id,
 		     Color bubble,
 		     GameNetworkPlayerManager * manager) {
+    if( PRIVATE(manager)->current_game == NULL) {
   g_print("add bubble %d\n",bubble);
   shooter_add_bubble(monkey_get_shooter(PRIVATE(manager)->monkey),bubble_new(bubble,0,0));
+    }
   
 }
 
@@ -269,7 +271,7 @@ void recv_bubble_array(MonkeyMessageHandler * handler,
   int i;
   g_print("recv bubble array %d,%d\n",monkey_id,bubble_count);
   
-  m = monkey_new();
+  m = monkey_new(TRUE);
   bubbles = g_malloc(bubble_count*( sizeof(Bubble *)));
   
   for(i = 0 ; i < bubble_count; i++) {
