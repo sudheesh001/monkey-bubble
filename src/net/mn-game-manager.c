@@ -73,6 +73,10 @@ void send_game_list(MnGameManager * manager);
 
 void start_game(MnGameManager * manager,NetworkGame * game);
 
+static void recv_ready_state(MnGameManager *,NetworkClient * client,xmlDoc * doc);
+
+static void recv_start_game(MnGameManager *,NetworkClient * client,xmlDoc * doc);
+
 gboolean init_server_socket(MnGameManager * manager);
 
 
@@ -319,6 +323,28 @@ void recv_init_message(MnGameManager * manager,
 
 }
 
+static void recv_ready_state(MnGameManager * manager,NetworkClient * nc,xmlDoc * doc) {
+
+
+        if( g_str_equal(doc->children->children->content,"true")) {
+                nc->ready = TRUE;
+                send_game_list(manager);
+        } else {
+                nc->ready = FALSE;
+                send_game_list(manager);
+        }        
+
+}
+
+static void recv_start_game(MnGameManager * manager,NetworkClient * nc,xmlDoc * doc) {
+        int game_id;
+        
+        
+        sscanf(doc->children->children->content,"%d",&game_id);
+        
+        start_game(manager,PRIVATE(manager)->ng);        
+}
+
 void recv_xml_message(MonkeyMessageHandler * mmh,
                       guint32 client_id,
                       xmlDoc * doc,
@@ -337,49 +363,32 @@ void recv_xml_message(MonkeyMessageHandler * mmh,
         
         message_name = xmlGetProp(root,"name");
         g_print("message name %s",message_name);
-        if( g_str_equal( message_name,"init") ){
-                nc = (NetworkClient *) g_hash_table_lookup(PRIVATE(manager)->pending_clients,
-                                                           &client_id);
-        
-                if( nc == NULL) {
-                        g_print("Bad client %d\n",client_id);
-                        return;
-                }
+        nc = (NetworkClient *) g_hash_table_lookup(PRIVATE(manager)->pending_clients,
+                                                   &client_id);
                 
-                recv_init_message(manager,nc,doc);
-        } else if( g_str_equal( message_name,"ready_state") ) {
+        if( nc == NULL ) {
                 nc = get_network_client_by_client_id(manager,client_id);
-                if( nc != NULL ) {
-                        if( g_str_equal(doc->children->children->content,"true")) {
-                                nc->ready = TRUE;
-                                send_game_list(manager);
-                        } else {
-                                nc->ready = FALSE;
-                                send_game_list(manager);
-                        }
-                } else {
-                        g_print("nc is NULL !! ? \n");
-                }
+        }
+
+        
+        if( nc == NULL) {
+                g_print("Bad client %d\n",client_id);
+                return;
+        }
+
+        if( g_str_equal( message_name,"init") ){
+                recv_init_message(manager,nc,doc);
+
+        } else if( g_str_equal( message_name,"ready_state") ) {
+
+                recv_ready_state( manager,nc,doc);
                 
         } else if( g_str_equal( message_name,"disconnect") ) {
-                nc = get_network_client_by_client_id(manager,client_id);
-                if( nc != NULL ) {
-                        disconnect_client(manager,nc);                        
-                } else {
-                        g_print("nc is NULL !! ? \n");
-                }
+
+                disconnect_client(manager,nc);                        
 
         } else if( g_str_equal(message_name,"start_game")) {
-                int game_id;
-                nc = get_network_client_by_client_id(manager,client_id);
-                sscanf(root->children->content,"%d",&game_id);
-                g_print("start game id %d\n",game_id);
-                if( nc != NULL ) {
-                        start_game(manager,PRIVATE(manager)->ng);
-                } else {
-                        g_print("nc is NULL !! ? \n");
-                }
-
+                recv_start_game(manager,nc,doc);
         }
 
 

@@ -617,7 +617,7 @@ void parse_waiting_added(MonkeyMessageHandler * mmh,
                 bubbles[i] = message[j];
 
                 j++;
-                if( j >= CHUNK_SIZE) {
+                if( j >= CHUNK_SIZE && i < bubble_count) {
                         g_print("read chunck\n");
                         read_chunk(mmh,message);
                         j = 0;
@@ -633,7 +633,7 @@ void parse_waiting_added(MonkeyMessageHandler * mmh,
                 columns[i] = message[j];
 
                 j++;
-                if( j >= CHUNK_SIZE) {
+                if( j >= CHUNK_SIZE && i < bubble_count) {
                         g_print("read chunck\n");
                         read_chunk(mmh,message);
                         j = 0;

@@ -1,3 +1,14 @@
+2004-03-12  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	more network code
+	* src/net/mn-game-manager.c: (recv_ready_state), (recv_start_game),
+	(recv_xml_message):
+	* src/net/monkey-message-handler.c: (parse_waiting_added):
+	* src/net/monkey-network-game.c: (game_lost), (bubbles_exploded),
+	(update_idle), (monkey_network_game_new):
+	* src/ui/network-game-launcher.c: (start_signal),
+	(start_game_idle):
+
 2004-03-11  Gustavo Maciel Dias Vieira  <gdvieira@zaz.com.br>
 
 	* configure.in: Added pt_BR to ALL_LINGUAS.

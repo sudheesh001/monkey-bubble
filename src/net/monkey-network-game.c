@@ -30,6 +30,9 @@
 struct MonkeyNetworkGamePrivate {
         GList * monkeys;
         GList * clients;
+        GList * lostList;
+        GMutex * listMutex;
+        GMutex * lostMutex;
         NetworkClient * owner;
         Clock * clock;
 };
@@ -124,7 +127,22 @@ void bubble_sticked(Monkey * monkey,Bubble * b,
 
 void game_lost(Monkey * m,
                struct Client * c) {
+
+        MonkeyNetworkGame * game;
+
+        game = c->game;
         g_print("lost \n");
+
+        g_mutex_lock(PRIVATE(game)->lostMutex);
+        monkey_message_handler_send_winlost( c->handler,
+                                             c->monkey_id,
+                                             1);
+
+        PRIVATE(game)->lostList = g_list_append( PRIVATE(game)->lostList,
+                                                 c);
+
+
+        
 }
 
 void bubbles_exploded(  Monkey * monkey,
@@ -150,6 +168,7 @@ void bubbles_exploded(  Monkey * monkey,
                 }
 
 
+                g_mutex_lock( PRIVATE( c->game )->listMutex);
                 next = PRIVATE( c->game )->clients;
 
                 while( next != NULL) {
@@ -185,6 +204,8 @@ void bubbles_exploded(  Monkey * monkey,
                         next = g_list_next(next);
                 }
                 
+                g_mutex_unlock( PRIVATE( c->game )->listMutex);
+
                 g_free(colors);
          
         }
@@ -286,14 +307,57 @@ void update_client(gpointer d,gpointer ud) {
 
 gboolean update_idle(gpointer d) {
         MonkeyNetworkGame * g;
+        gboolean stop_game;
 
+        stop_game = FALSE;
         g = MONKEY_NETWORK_GAME(d);
+        g_mutex_lock( PRIVATE(g)->listMutex);
+
+        g_mutex_lock( PRIVATE(g)->lostMutex);
+        
+        if( PRIVATE(g)->lostList != NULL) {
+                GList * next;
+                
+                next = PRIVATE(g )->lostList;
+
+                while( next != NULL ) {
+                        struct Client * client;
+                        
+                        client = (struct Client *) next->data;
+                        PRIVATE(g)->clients = g_list_remove( PRIVATE(g)->clients,client);
+        
+                        PRIVATE(g)->lostList = g_list_remove( PRIVATE(g)->lostList,client);
+        
+                        if( g_list_length( PRIVATE(g)->clients) == 1 ) {
+                        
+                                client =(struct Client *) PRIVATE(g)->clients->data;
+                                monkey_message_handler_send_winlost( client->handler,
+                                                                     client->monkey_id,
+                                                                     0);
+                                PRIVATE(g)->clients = g_list_remove( PRIVATE(g)->clients,client);
+                        
+                                stop_game = TRUE;
+                        }
+
+                        next = PRIVATE(g)->lostList;
+                }
+                
+        }
+
+        g_mutex_unlock( PRIVATE(g)->lostMutex);
+
+        if( stop_game == TRUE) {
+                g_print("stop the game \n");
+        }
+
+        
         g_list_foreach( PRIVATE(g)->clients,
                         update_client,
                         g);
 
+        g_mutex_unlock( PRIVATE(g)->listMutex);
 
-        return TRUE;
+        return !stop_game;
 }
 
 void start_update_thread(MonkeyNetworkGame * g) {
@@ -350,7 +414,11 @@ MonkeyNetworkGame *monkey_network_game_new(NetworkGame * game) {
 
         PRIVATE(mng)->clock = clock_new();
         PRIVATE(mng)->clients = NULL;
+        PRIVATE(mng)->lostList = NULL;
         next = game->clients;
+
+        PRIVATE(mng)->listMutex = g_mutex_new();
+        PRIVATE(mng)->lostMutex = g_mutex_new();
 
         while(next != NULL) {
                 NetworkClient * nc;

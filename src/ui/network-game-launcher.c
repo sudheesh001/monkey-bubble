@@ -404,6 +404,12 @@ static void start_signal(gpointer    callback_data,
         set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
                                              , "start_button"),FALSE); 
 
+        set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
+                                             , "quit_button"),FALSE); 
+
+        set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
+                                             , "ready_button"),FALSE); 
+
 }
 
 
@@ -544,6 +550,7 @@ gboolean start_game_idle(gpointer data) {
 
         launcher = NETWORK_GAME_LAUNCHER(data);
 
+        gtk_widget_destroy( PRIVATE(launcher)->window);
         ui = ui_main_get_instance();
         manager = game_network_player_manager_new(ui_main_get_window(ui),
                                                   ui_main_get_canvas(ui),
