@@ -1,5 +1,12 @@
 2004-06-03  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
+	fix compilation
+	update gstreamer dependencies
+	* configure.in:
+	* src/net/Makefile.am:
+
+2004-06-03  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
 	more network stuff
 	* src/net/game.c: (recv_shoot), (bubble_sticked),
 	(bubbles_exploded), (game_lost), (idle_stopped), (update_client),

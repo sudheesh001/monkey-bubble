@@ -33,7 +33,7 @@ monkey_srv_LDADD = \
 	../monkey/libmonkey.a \
 	../util/libmonkeyutil.a 
 
-$(monkey_srv_OBJECTS): $(marshal_sources)
+$(libmonkeynet_a_OBJECTS): $(marshal_sources)
 
 libmonkeynet_a_SOURCES = \
 	message-handler.c message-handler.h \
