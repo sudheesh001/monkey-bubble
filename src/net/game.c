@@ -611,10 +611,10 @@ update_idle (gpointer d)
 	g_mutex_lock (PRIVATE (game)->clients_lock);
 
 
-	game_finished = update_lost (game);
 
 	g_list_foreach (PRIVATE (game)->clients, update_client, game);
 
+	game_finished = update_lost (game);
 	g_mutex_unlock (PRIVATE (game)->clients_lock);
 
 

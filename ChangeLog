@@ -1,3 +1,12 @@
+2004-06-29  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	sound work but not finished ..
+
+	maybe network fix, to try
+	* src/audio/sound-manager.c: (stop_play), (iterate),
+	(oggdemux_new_pad), (start_play), (sound_manager_play_music_file):
+	* src/net/game.c: (update_idle):
+
 2004-06-28  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	a bug fix to new add bubbles to top
