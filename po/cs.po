@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: monkey-buble VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-03 04:39+0100\n"
-"PO-Revision-Date: 2004-02-03 17:44+0100\n"
+"POT-Creation-Date: 2004-02-06 04:30+0100\n"
+"PO-Revision-Date: 2004-02-06 17:57+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgstr "Nová pro jednoho hráče"
 msgid "New 2 players"
 msgstr "Nová pro dva hráče"
 
-#: data/monkey-bubble.glade.h:4 src/ui/ui-main.c:382 src/ui/ui-main.c:512
+#: data/monkey-bubble.glade.h:4 src/ui/ui-main.c:393 src/ui/ui-main.c:523
 msgid "Pause game"
 msgstr "Pozastavit hru"
 
@@ -144,6 +144,38 @@ msgstr "klávesa střílení pro hráče jedna"
 msgid "shoot key for player two"
 msgstr "klávesa střílení pro hráče dva"
 
+#: data/netgame.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: data/netgame.glade.h:2
+msgid "Network game"
+msgstr "Síťová hra"
+
+#: data/netgame.glade.h:3
+msgid "Players"
+msgstr "Hráči"
+
+#: data/netgame.glade.h:4 src/ui/keyboard-properties.c:87
+msgid "Quit game"
+msgstr "Ukončit hru"
+
+#: data/netgame.glade.h:5
+msgid "Ready"
+msgstr "Připraven"
+
+#: data/netgame.glade.h:6
+msgid "Start Game"
+msgstr "Spustit hru"
+
+#: data/netgame.glade.h:7
+msgid "_Go"
+msgstr "_Spustit"
+
+#: data/netgame.glade.h:8
+msgid "_Server"
+msgstr "_Server"
+
 #: monkey-bubble.desktop.in.h:2
 msgid "Monkey Bubble Arcade Game"
 msgstr "Akční hra Monkey Bubble"
@@ -170,7 +202,8 @@ msgstr "Zakázáno"
 
 #: src/ui/eggcellrendererkeys.c:330 src/ui/eggcellrendererkeys.c:568
 msgid "Type a new accelerator, or press Backspace to clear"
-msgstr "Stiskněte novou klávesovou zkratku nebo ji vymažte stisknutím Backspace"
+msgstr ""
+"Stiskněte novou klávesovou zkratku nebo ji vymažte stisknutím Backspace"
 
 #: src/ui/eggcellrendererkeys.c:571
 msgid "Type a new accelerator"
@@ -187,10 +220,6 @@ msgstr "Nová hra pro dva hráče"
 #: src/ui/keyboard-properties.c:83
 msgid "Pause/Resume"
 msgstr "Pozastavit/obnovit"
-
-#: src/ui/keyboard-properties.c:87
-msgid "Quit game"
-msgstr "Ukončit hru"
 
 #: src/ui/keyboard-properties.c:93
 msgid "Full Screen"
@@ -238,7 +267,9 @@ msgstr "Při načítání nastavení z %s došlo k chybě. (%s)\n"
 msgid ""
 "There was an error subscribing to notification of terminal keybinding "
 "changes. (%s)\n"
-msgstr "Při přihlašování se k upozornění na změnu klávesových zkratek terminálu došlo k chybě. (%s)\n"
+msgstr ""
+"Při přihlašování se k upozornění na změnu klávesových zkratek terminálu "
+"došlo k chybě. (%s)\n"
 
 #: src/ui/keyboard-properties.c:394
 #, c-format
@@ -255,28 +286,36 @@ msgstr "Hodnota klíče nastavení %s není platná; hodnota je \"%s\"\n"
 msgid ""
 "There was an error loading config value for whether to use menubar access "
 "keys. (%s)\n"
-msgstr "Při načítání hodnoty nastavení, jestli používat klávesy přístupu k menu, došlo k chybě. (%s)\n"
+msgstr ""
+"Při načítání hodnoty nastavení, jestli používat klávesy přístupu k menu, "
+"došlo k chybě. (%s)\n"
 
 #: src/ui/keyboard-properties.c:447
 #, c-format
 msgid ""
 "There was an error subscribing to notification on changes on whether to use "
 "menubar access keys (%s)\n"
-msgstr "Při přihlašování se k upozornění na změnu toho, jestli používat klávesy přístupu k menu, došlo k chybě. (%s)\n"
+msgstr ""
+"Při přihlašování se k upozornění na změnu toho, jestli používat klávesy "
+"přístupu k menu, došlo k chybě. (%s)\n"
 
 #: src/ui/keyboard-properties.c:458
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menu "
 "accelerators. (%s)\n"
-msgstr "Při načítání hodnoty nastavení, jestli používat klávesové zkratky menu, došlo k chybě. (%s)\n"
+msgstr ""
+"Při načítání hodnoty nastavení, jestli používat klávesové zkratky menu, "
+"došlo k chybě. (%s)\n"
 
 #: src/ui/keyboard-properties.c:474
 #, c-format
 msgid ""
 "There was an error subscribing to notification for use_menu_accelerators (%"
 "s)\n"
-msgstr "Při přihlašování se k upozornění na změnu use_menu_accelerators došlo k chybě. (%s)\n"
+msgstr ""
+"Při přihlašování se k upozornění na změnu use_menu_accelerators došlo k "
+"chybě. (%s)\n"
 
 #: src/ui/keyboard-properties.c:824
 #, c-format
@@ -286,7 +325,8 @@ msgstr "Chyba při ukládání změny klávesové zkratky do databáze nastaven�
 #: src/ui/keyboard-properties.c:993
 #, c-format
 msgid "Error setting new accelerator in configuration database: %s\n"
-msgstr "Chyba při nastavování nové klávesové zkratky do databáze nastavení: %s\n"
+msgstr ""
+"Chyba při nastavování nové klávesové zkratky do databáze nastavení: %s\n"
 
 #: src/ui/keyboard-properties.c:1092
 msgid "_Action"
@@ -296,15 +336,15 @@ msgstr "_Akce"
 msgid "Shortcut _Key"
 msgstr "_Klávesová zkratka"
 
-#: src/ui/ui-main.c:505
+#: src/ui/ui-main.c:516
 msgid "Resume game"
 msgstr "Obnovit hru"
 
-#: src/ui/ui-main.c:551
+#: src/ui/ui-main.c:570
 msgid "translator_credits"
 msgstr "Miloslav Trmač <mitr@volny.cz>"
 
-#: src/ui/ui-main.c:580
+#: src/ui/ui-main.c:599
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Při zobrazování nápovědy došlo k chybě: %s"
