@@ -12,7 +12,7 @@ INCLUDES = \
 # -g -O2 -Wall -Wstrict-prototypes -Wmissing-prototypes -Werror -D_REENTRANT  -D_TIME_DEBUG_ -D_DEBUG_
 
 
-bin_PROGRAMS = monkey-srv test
+bin_PROGRAMS = monkey-srv
 
 noinst_LIBRARIES = libmonkeynet.a
 
@@ -37,25 +37,6 @@ monkey_srv_LDADD = \
 	../util/libmonkeyutil.a
 
 $(monkey_srv_OBJECTS): $(marshal_sources)
-
-
-test_SOURCES = \
-	mn-game-manager.c mn-game-manager.h \
-	monkey-message-handler.c monkey-message-handler.h \
-	monkey-network-game.c monkey-network-game.h \
-	test-client.c \
-	$(marshal_sources) \
-	$(NULL)
-
-test_LDFLAGS =
-
-test_LDADD = \
-	$(MONKEY_SRV_LIBS) \
-	../monkey/libmonkey.a \
-	../util/libmonkeyutil.a
-
-$(test_OBJECTS): $(marshal_sources)
-
 
 libmonkeynet_a_SOURCES = \
 	mn-game-manager.c mn-game-manager.h \

@@ -1,5 +1,11 @@
 2004-03-10  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
+	remove network test client
+	* src/net/Makefile.am:
+	* src/net/test-client.c:
+
+2004-03-10  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
 	added debian directory maintened by 
 	tom <thomas.cataldo@aliacom.fr>
 
