@@ -618,6 +618,7 @@ static void recv_network_xml_message(NetworkMessageHandler * mmh,
                 ui_main_set_game_manager(ui,
                                          GAME_MANAGER(manager));
 
+                g_object_unref(manager);
         } else if( g_str_equal(message_name,"number_of_games")) {
 		int number;
             

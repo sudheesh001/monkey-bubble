@@ -86,22 +86,9 @@ client_disconnected(NetworkMessageHandler * handler,
 	g_mutex_lock(PRIVATE(self)->clients_lock);
 
 	remove_client( client->game,client);
-/*	PRIVATE(self)->clients =
-		g_list_remove( PRIVATE(self)->clients,
-			       client);
 
-	g_object_unref( client->monkey);
-
-
-	g_signal_handler_disconnect( client->client, client->disconnected_handler_id);
-
-	g_mutex_free( client->monkey_lock);
-	g_object_unref( client->client);
-
-	g_free( client);*/
-
-		g_mutex_unlock(PRIVATE(self)->clients_lock);
-
+	g_mutex_unlock(PRIVATE(self)->clients_lock);
+		
 }
 
 static void 
@@ -630,6 +617,8 @@ remove_client(NetworkGame * self,struct Client * client) {
 						      G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,client);
 		
 	g_object_unref( client->monkey);
+
+	g_object_unref( client->client);
 	
 	g_mutex_free(client->monkey_lock);
 	g_free(client);

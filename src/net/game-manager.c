@@ -90,12 +90,12 @@ network_game_manager_new  (void)
 	return self;
 }
 
-void 
+gboolean
 network_game_manager_add_client(NetworkGameManager * manager,
 				NetworkClient * client) 
 {
 	NetworkMessageHandler * handler;
-
+	gboolean joined;
 	g_mutex_lock( PRIVATE(manager)->started_lock);
 
 	if( PRIVATE(manager)->started == FALSE) {
@@ -104,8 +104,9 @@ network_game_manager_add_client(NetworkGameManager * manager,
 
 		g_mutex_lock(PRIVATE(manager)->clients_lock);
 
+
 		g_signal_connect( G_OBJECT(client),
-				  "disconnect-request",
+				  "disconnected",
 				  G_CALLBACK(client_disconnected),
 				  manager);
 
@@ -156,6 +157,7 @@ network_game_manager_add_client(NetworkGameManager * manager,
 		network_client_send_number_of_games(client,PRIVATE(manager)->number_of_games);
 		send_game_joined(manager,client);
 		send_game_list(manager);
+		joined = TRUE;
 	} else {
 		xmlDoc * doc;
 		xmlNode * root;
@@ -174,17 +176,19 @@ network_game_manager_add_client(NetworkGameManager * manager,
 							doc);
 		
 		xmlFreeDoc(doc);
+		joined = FALSE;
 		
 	}
 	
 	
 	g_mutex_unlock( PRIVATE(manager)->started_lock);
+	return joined;
 }
 
 
 void 
 network_game_manager_remove_client(NetworkGameManager * manager,
-				NetworkClient * client) 
+				   NetworkClient * client) 
 {
 	NetworkMessageHandler * handler;
 
@@ -448,34 +452,32 @@ static void
 start_game(NetworkGameManager * manager) 
 {
 
+
+		xmlDoc * doc;
+		xmlNode * text, * root;
+		
+		doc = xmlNewDoc("1.0");
+		root = xmlNewNode(NULL,
+				  "message");
+		
+		xmlDocSetRootElement(doc, root);
+		
+		
+		xmlNewProp(root,"name","game_created");
+		
+		text = xmlNewText("1");
+		xmlAddChild(root,text);
+		
+		
+		PRIVATE(manager)->waited_clients = g_list_copy( PRIVATE(manager)->clients);
+		
+		g_list_foreach(PRIVATE(manager)->clients,
+			       send_start_game_to_client,
+			       doc);
 	
-        xmlDoc * doc;
-        xmlNode * text, * root;
-
-        doc = xmlNewDoc("1.0");
-        root = xmlNewNode(NULL,
-                          "message");
-
-        xmlDocSetRootElement(doc, root);
-         
-
-        xmlNewProp(root,"name","game_created");
-	
-        text = xmlNewText("1");
-        xmlAddChild(root,text);
-	
-	
-	PRIVATE(manager)->waited_clients = g_list_copy( PRIVATE(manager)->clients);
-	
-        g_list_foreach(PRIVATE(manager)->clients,
-		       send_start_game_to_client,
-                       doc);
-
-        xmlFreeDoc(doc);
-
-	// now we have to wait the game_created_confirmation from clients
-
-
+		xmlFreeDoc(doc);
+       
+		PRIVATE(manager)->started = TRUE;
         
 
 }
@@ -524,13 +526,17 @@ static void game_stopped(NetworkGame * game,
                       
 
 
-
 	g_object_unref( G_OBJECT(PRIVATE(manager)->game));
 	PRIVATE(manager)->game = NULL;
 
-	// restart after 3 seconde !
-	// if the number of winned game < number_of_games
-	g_timeout_add(3000,start_timeout,manager);
+	PRIVATE(manager)->started = FALSE;
+
+	if( PRIVATE(manager)->started == FALSE && g_list_length( PRIVATE(manager)->clients) > 1 ) {
+		g_print("length %d\n", g_list_length(PRIVATE(manager)->clients));
+		// restart after 3 seconde !
+		// if the number of winned game < number_of_games
+		g_timeout_add(3000,start_timeout,manager);
+	}
 }
 
 static void 

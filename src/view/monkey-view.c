@@ -755,6 +755,12 @@ static void monkey_view_finalize(GObject* object) {
                                   monkey_view->private->win);
         monkey_canvas_unref_block(monkey_view->private->canvas,
                                   monkey_view->private->hurry_up_block);
+
+        if (monkey_view->private->background != NULL) {
+                monkey_canvas_unref_block(monkey_view->private->canvas,
+                                          monkey_view->private->background);
+        }
+
         //  monkey_canvas_clear( PRIVATE(monkey_view)->canvas);
         //  g_object_unref( PRIVATE(monkey_view)-> canvas);
         g_free(monkey_view->private);

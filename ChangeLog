@@ -1,3 +1,28 @@
+2004-06-24  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	some code cleanup
+	leak fix made by tom
+	
+	* debian/changelog:
+	* src/net/game-manager.c: (network_game_manager_add_client),
+	(network_game_manager_remove_client), (start_game), (game_stopped):
+	* src/net/game-manager.h:
+	* src/net/game.c: (client_disconnected), (remove_client):
+	* src/ui/game-1-player.c: (game_1_player_finalize):
+	* src/ui/game-2-player.c: (game_2_player_finalize):
+	* src/ui/game-network-player-manager.c:
+	(game_network_player_manager_new), (finalize), (iface_init),
+	(state_changed), (start_timeout), (recv_add_bubble), (recv_start),
+	(recv_bubble_array), (game_created_ok), (recv_xml_message),
+	(game_network_player_manager_start),
+	(game_network_player_manager_stop), (instance_init), (class_init),
+	(game_network_player_manager_get_type):
+	* src/ui/ui-main.c: (ui_main_set_game_manager),
+	(ui_main_stop_game):
+	* src/ui/ui-network-client.c: (recv_network_xml_message):
+	* src/ui/ui-network-server.c: (recv_network_xml_message):
+	* src/view/monkey-view.c: (monkey_view_finalize):
+
 2004-06-22  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	fix leak made by tom

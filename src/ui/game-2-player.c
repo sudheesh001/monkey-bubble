@@ -149,6 +149,8 @@ game_2_player_finalize(GObject* object)
 
         g_object_unref( PRIVATE(game)->monkey_right);
 
+        monkey_canvas_unref_block(game->private->canvas, 
+                                  game->private->paused_block);
 
         g_free(game->private);
 

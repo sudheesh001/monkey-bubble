@@ -652,8 +652,16 @@ void recv_network_xml_message(NetworkMessageHandler * mmh,
                 ui_main_set_game_manager(ui,
                                          GAME_MANAGER(manager));
 
+                g_object_unref( manager);
 
-        } 
+        } else if( g_str_equal( message_name,"cant_join_game")) {
+                set_status_message(self, "Can't join the game");
+                set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
+                                                             , "connect_hbox"),TRUE); 
+                        
+                
+        }
+
 
         xmlFree(message_name);
         

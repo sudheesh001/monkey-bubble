@@ -380,6 +380,7 @@ void ui_main_set_game_manager(UiMain * ui_main,GameManager * manager) {
 	 
         PRIVATE(ui_main)->manager = manager;
 
+        g_object_ref( manager);
         game_manager_start(manager);
 	 
 	 
@@ -460,9 +461,11 @@ static void pause_game(gpointer    callback_data,
 static void ui_main_stop_game(UiMain * ui_main) {
       
         game_manager_stop(PRIVATE(ui_main)->manager);
-        g_object_unref( PRIVATE(ui_main)->manager );
 
+
+        g_object_unref( PRIVATE(ui_main)->manager );
         PRIVATE(ui_main)->manager = NULL;
+
         monkey_canvas_clear(PRIVATE(ui_main)->canvas);
 
         sound_manager_play_music_file(

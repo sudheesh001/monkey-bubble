@@ -35,8 +35,8 @@ typedef struct _NetworkGameManager NetworkGameManager;
 typedef struct _NetworkGameManagerClass NetworkGameManagerClass;
 
 NetworkGameManager *     network_game_manager_new                 (void);
-void network_game_manager_add_client(NetworkGameManager * manager,
-				     NetworkClient * client);
+gboolean network_game_manager_add_client(NetworkGameManager * manager,
+					 NetworkClient * client);
 
 GType		network_game_manager_get_type	       (void);
 

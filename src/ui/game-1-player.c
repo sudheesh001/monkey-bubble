@@ -121,6 +121,10 @@ static void game_1_player_finalize(GObject* object) {
 
 
         g_object_unref( PRIVATE(game)->monkey);
+
+        monkey_canvas_unref_block(game->private->canvas, 
+                                  game->private->paused_block);
+
         g_free(game->private);
   
         if (G_OBJECT_CLASS (parent_class)->finalize) {
