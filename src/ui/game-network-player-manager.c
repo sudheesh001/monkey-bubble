@@ -115,7 +115,7 @@ state_changed(Game * game,
 	g_print("GAME finished\n");
 	PRIVATE(manager)->current_score = game_network_player_get_score( GAME_NETWORK_PLAYER(game));
 
-	PRIVATE(manager)->playing = FALSE;
+	//	PRIVATE(manager)->playing = FALSE;
       
     }
 				
@@ -133,14 +133,8 @@ gboolean start_timeout(gpointer data) {
 
     PRIVATE(manager)->playing = TRUE;
 
-    if( PRIVATE(manager)->current_game != NULL) {
-	ui_main_set_game(ui_main,NULL);
-	g_object_unref(G_OBJECT(PRIVATE(manager)->current_game));
-	PRIVATE(manager)->current_game = NULL;
-
-    }
   
-
+    g_print("start_timeout\n");
 
     monkey_canvas_clear( PRIVATE(manager)->canvas);
     monkey_canvas_paint( PRIVATE(manager)->canvas);
@@ -218,12 +212,21 @@ recv_bubble_array(NetworkMessageHandler * handler,
 
 
 
-static void 
+static gboolean 
 game_created_ok(GameNetworkPlayerManager * manager) 
 {
     xmlDoc * doc;
     xmlNode * text, * root;
-	
+    UiMain * ui_main;
+
+    ui_main =  ui_main_get_instance();
+
+    if( PRIVATE(manager)->current_game != NULL) {
+	ui_main_set_game(ui_main,NULL);
+	g_object_unref(G_OBJECT(PRIVATE(manager)->current_game));
+	PRIVATE(manager)->current_game = NULL;
+
+    }
 
 
     PRIVATE(manager)->monkey = monkey_new(TRUE);
@@ -248,6 +251,8 @@ game_created_ok(GameNetworkPlayerManager * manager)
 					     doc);
 	 
     xmlFreeDoc(doc);
+
+    return FALSE;
 }
 
 
@@ -273,11 +278,12 @@ recv_xml_message(NetworkMessageHandler * handler,
     if(g_str_equal(message_name,"game_created") ) {
 				
 	int game_id;
-        
+        PRIVATE(manager)->playing = FALSE;
 	sscanf(root->children->content,"%d",&game_id);
 	g_print("game-network-player-manager.c : game started %d \n",game_id);                
 	
-	game_created_ok(manager);
+	g_idle_add((GSourceFunc)game_created_ok,manager);
+
     }
 
 

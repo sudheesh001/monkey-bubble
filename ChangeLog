@@ -1,3 +1,13 @@
+2004-07-07  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	add observer notion so in the future users could spy game
+	* src/net/game.c: (observer_disconnected), (add_observer),
+	(notify_observers), (network_game_new),
+	(network_game_instance_init), (remove_observer):
+	* src/ui/game-network-player-manager.c: (state_changed),
+	(start_timeout), (game_created_ok), (recv_xml_message):
+	* src/ui/game-network-player.c: (recv_bubble_array):
+
 2004-07-06  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	show other players bubbles color

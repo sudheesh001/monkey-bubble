@@ -330,19 +330,16 @@ recv_bubble_array(NetworkMessageHandler * handler,
 		  GameNetworkPlayer * game)
 {
 
-        if (PRIVATE (game)->state == GAME_PLAYING)
-                {
-	
-                        g_mutex_lock (PRIVATE (game)->lock);
-                        
-                        if( monkey_id >= 1 && monkey_id <= 4 ) {
-                                mb_mini_view_update(PRIVATE(game)->mini_views[monkey_id -1],
-                                                    colors,odd);
-                        }
-                        g_mutex_unlock (PRIVATE (game)->lock);
+    
+        g_mutex_lock (PRIVATE (game)->lock);
+        
+        if( monkey_id >= 1 && monkey_id <= 4 ) {
+                mb_mini_view_update(PRIVATE(game)->mini_views[monkey_id -1],
+                                    colors,odd);
+        }
+        g_mutex_unlock (PRIVATE (game)->lock);
 
-                }
-
+    
 }
 
 

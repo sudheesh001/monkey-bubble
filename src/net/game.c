@@ -52,8 +52,13 @@ static guint32 signals[LAST_SIGNAL];
 struct NetworkGamePrivate
 {
 	GList *clients;
+
+	GList * observers;
+
 	GList *lost_clients;
 	GMutex *clients_lock;
+
+	GMutex *observers_lock;
 	GMutex *lost_clients_lock;
 	Clock *clock;
 };
@@ -76,7 +81,9 @@ static void client_disconnected (NetworkClient * c, struct Client *client);
 
 static void remove_client (NetworkGame * self, struct Client *client);
 
+static void remove_observer(NetworkGame * self, NetworkClient * observer);
 static void notify_observers (NetworkGame * self, struct Client *client);
+
 
 static void
 client_disconnected (NetworkClient * c, struct Client *client)
@@ -91,6 +98,20 @@ client_disconnected (NetworkClient * c, struct Client *client)
 	g_assert (NETWORK_IS_CLIENT (c));
 	g_assert (NETWORK_IS_CLIENT (client->client));
 	remove_client (client->game, client);
+
+	g_mutex_unlock (PRIVATE (self)->clients_lock);
+
+}
+
+
+static void
+observer_disconnected (NetworkClient * c,NetworkGame * self)
+{
+
+
+	g_mutex_lock (PRIVATE (self)->observers_lock);
+
+	remove_observer (self, c);
 
 	g_mutex_unlock (PRIVATE (self)->clients_lock);
 
@@ -130,6 +151,31 @@ add_client (gpointer data, gpointer user_data)
 
 
 }
+
+static void
+add_observer (gpointer data, gpointer user_data)
+{
+
+	NetworkClient *client;
+	NetworkGame *game;
+
+	client = NETWORK_CLIENT (data);
+	game = NETWORK_GAME (user_data);
+
+
+	g_object_ref (G_OBJECT (client));
+
+
+	g_signal_connect (G_OBJECT (client), "disconnected",
+			  G_CALLBACK (observer_disconnected), game);
+
+
+	PRIVATE (game)->observers = g_list_append (PRIVATE (game)->observers,client);
+
+
+
+}
+
 
 static void
 add_bubble (struct Client *c)
@@ -289,15 +335,16 @@ notify_observers (NetworkGame * self, struct Client *client)
 		}
 	}
 
-	next = PRIVATE (self)->clients;
+	g_mutex_lock( PRIVATE(self)->observers_lock);
+	next = PRIVATE (self)->observers;
 
 	while (next != NULL)
 	{
-		struct Client *t_client;
+		NetworkClient * nc;
 
-		t_client = (struct Client * ) next->data;
+		nc = NETWORK_CLIENT(next->data);
 		network_message_handler_send_bubble_array
-			(network_client_get_handler (t_client->client),
+			(network_client_get_handler (nc),
 			 network_client_get_id (client->client),
 			 8 * 13,
 			 colors,
@@ -305,6 +352,9 @@ notify_observers (NetworkGame * self, struct Client *client)
 
 		next = g_list_next (next);
 	}
+
+
+	g_mutex_unlock( PRIVATE(self)->observers_lock);
 
 }
 
@@ -549,6 +599,7 @@ network_game_new (GList * clients)
 
 	g_list_foreach (clients, add_client, self);
 
+	g_list_foreach(clients,add_observer,self);
 	init_clients (self);
 	return self;
 }
@@ -699,11 +750,31 @@ network_game_instance_init (NetworkGame * self)
 	PRIVATE (self) = g_new0 (NetworkGamePrivate, 1);
 	PRIVATE (self)->clients = NULL;
 	PRIVATE (self)->clients_lock = g_mutex_new ();
+
+
+	PRIVATE (self)->observers = NULL;
+	PRIVATE (self)->observers_lock = g_mutex_new ();
+
 	PRIVATE (self)->lost_clients = NULL;
 	PRIVATE (self)->lost_clients_lock = g_mutex_new ();
 	PRIVATE (self)->clock = clock_new ();
 }
 
+static void
+remove_observer(NetworkGame * self, NetworkClient * observer)
+{
+
+
+
+	PRIVATE (self)->observers =
+		g_list_remove (PRIVATE (self)->observers, observer);
+
+	g_signal_handlers_disconnect_matched (network_client_get_handler (observer),
+					      G_SIGNAL_MATCH_DATA, 0, 0, NULL,
+					      NULL, self);
+
+
+}
 
 static void
 remove_client (NetworkGame * self, struct Client *client)
