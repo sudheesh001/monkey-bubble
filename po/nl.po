@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNOME 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-12 16:53+0100\n"
+"POT-Creation-Date: 2004-02-24 05:27+0100\n"
 "PO-Revision-Date: 2004-02-12 18:45+0100\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <verltaling@nl.linux.org>\n"
@@ -43,9 +43,10 @@ msgstr "Spel pauzeren"
 msgid "Stop game"
 msgstr "Stoppen"
 
+#. GRUT modified this item
 #: data/monkey-bubble.glade.h:6
 msgid "_About"
-msgstr "_Info"
+msgstr "In_fo"
 
 #: data/monkey-bubble.glade.h:7
 msgid "_Contents"
@@ -59,9 +60,10 @@ msgstr "_Spel"
 msgid "_Help"
 msgstr "_Hulp"
 
+#. GRUT modified this item
 #: data/monkey-bubble.glade.h:10
 msgid "_Settings"
-msgstr "In_stellingen"
+msgstr "_Instellingen"
 
 #: data/monkey-bubble.schemas.in.h:1
 msgid "1 player game"
@@ -103,9 +105,10 @@ msgstr "Rechts"
 msgid "Stop the game"
 msgstr "Het spel stoppen"
 
+#. GRUT modified this item
 #: data/monkey-bubble.schemas.in.h:11
 msgid "Up"
-msgstr "Boven"
+msgstr "Omhoog"
 
 #: data/monkey-bubble.schemas.in.h:12
 msgid "d"
@@ -195,10 +198,11 @@ msgstr "Sneltoets modus"
 msgid "The type of accelerator."
 msgstr "Het soort sneltoets."
 
+#. GRUT modified this item
 # ongebruikt, niet gebruikt
 #: src/ui/eggcellrendererkeys.c:219 src/ui/keyboard-properties.c:764
 msgid "Disabled"
-msgstr "Uitgezet"
+msgstr "Uitgeschakeld"
 
 #: src/ui/eggcellrendererkeys.c:330 src/ui/eggcellrendererkeys.c:568
 msgid "Type a new accelerator, or press Backspace to clear"
@@ -343,7 +347,9 @@ msgstr "Spel hervatten"
 msgid "translator_credits"
 msgstr "Tino Meinen <a.t.meinen@chello.nl>"
 
+#. GRUT modified this item
 #: src/ui/ui-main.c:599
 #, c-format
 msgid "There was an error displaying help: %s"
-msgstr "Er was een fout bij het weergeven van de hulp: %s"
+msgstr "Er is een fout opgetreden bij de hulpweergave: %s"
+
