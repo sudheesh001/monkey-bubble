@@ -84,6 +84,7 @@ void monkey_right_changed( Monkey * monkey,gboolean pressed,
 
 void monkey_update( Monkey * monkey,gint time );
 
+void monkey_add_waiting_row(Monkey * self);
 Shooter * monkey_get_shooter(Monkey * monkey);
 Playground * monkey_get_playground(Monkey * monkey);
 

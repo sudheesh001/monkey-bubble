@@ -55,6 +55,7 @@ struct GameNetworkPlayerPrivate
 	Block *paused_block;
 	Layer *paused_layer;
 
+        guint last_shoot;
 	NetworkMessageHandler *handler;
         MbMiniView * mini_views[4];
 	int monkey_id;
@@ -301,6 +302,7 @@ recv_winlost (NetworkMessageHandler * handler,
 static void
 recv_waiting_added (NetworkMessageHandler * handler,
 		    int monkey_id,
+                    int time,
 		    int bubbles_count,
 		    Color * colors,
 		    guint8 * columns, GameNetworkPlayer * game)
@@ -312,7 +314,12 @@ recv_waiting_added (NetworkMessageHandler * handler,
 
 	monkey = PRIVATE (game)->monkey;
 	g_mutex_lock (PRIVATE (game)->lock);
+        g_print("recv waiting added time %d",time);
 	monkey_add_bubbles_at (monkey, bubbles_count, colors, columns);
+
+        if( time < PRIVATE(game)->last_shoot) {
+                monkey_add_waiting_row(monkey);
+        }
 	g_mutex_unlock (PRIVATE (game)->lock);
 
 	g_free (columns);
@@ -379,6 +386,7 @@ game_network_player_bubble_shot (Monkey * monkey,
 	if (PRIVATE (game)->state == GAME_PLAYING)
 	{
 
+                PRIVATE(game)->last_shoot = get_time(game);
 		network_message_handler_send_shoot (PRIVATE (game)->handler,
 						    PRIVATE (game)->monkey_id,
 						    get_time (game),

@@ -48,8 +48,9 @@ void network_message_handler_send_message (NetworkMessageHandler * mmh,
 
 void network_message_handler_send_waiting_added (NetworkMessageHandler * mmh,
                                                 guint32 monkey_id,
+                                                 guint32 time,
                                                 guint8 bubbles_count,
-                                                Color * lines,
+                                                 Color * lines,
                                                 guint8 * columns);
 
 
@@ -119,6 +120,7 @@ struct _NetworkMessageHandlerClass
 
         void (* recv_waiting_added) (NetworkMessageHandler * mmh,
                                      guint32 monkey_id,
+                                     guint32 time,
                                      guint32 bubbles_count,
                                      Color * lines,
                                      guint8 * columns);

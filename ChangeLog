@@ -1,3 +1,17 @@
+2004-12-24  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	quick fix for network game. not tested
+	* src/monkey/monkey.c:
+	* src/monkey/monkey.h:
+	* src/net/game.c: (bubbles_exploded):
+	* src/net/message-handler.c: (network_message_handler_class_init),
+	(network_message_handler_send_waiting_added),
+	(parse_waiting_added):
+	* src/net/message-handler.h:
+	* src/net/monkey-marshal.list:
+	* src/ui/game-network-player.c: (recv_waiting_added),
+	(game_network_player_bubble_shot):
+
 2004-12-03  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	audio stuff 

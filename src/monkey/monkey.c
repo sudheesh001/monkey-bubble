@@ -66,7 +66,6 @@ struct MonkeyPrivate {
 static void monkey_finalize(GObject* object);
 
 static void monkey_update_shooter(Monkey * self,gint time);
-static void monkey_add_waiting_row(Monkey * self);
 
 
 static void monkey_bubble_sticked ( Board *board,Bubble * bubble,
@@ -655,7 +654,7 @@ monkey_add_new_waiting_row(Monkey * self)
 	 
 }
 
-static void 
+void 
 monkey_add_waiting_row(Monkey * self) 
 {
 

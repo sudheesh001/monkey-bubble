@@ -409,9 +409,10 @@ bubbles_exploded (Monkey * monkey,
 
 				network_message_handler_send_waiting_added
 					(network_client_get_handler
-					 (client->client),
+					 (client->client),					 
 					 network_client_get_id (client->
 								client),
+					 mb_clock_get_time (PRIVATE (c->game)->clock),
 					 to_go, colors, columns);
 				g_mutex_unlock (client->monkey_lock);
 

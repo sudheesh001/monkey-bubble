@@ -246,9 +246,9 @@ network_message_handler_class_init (NetworkMessageHandlerClass * klass)
 						    (NetworkMessageHandlerClass,
 						     recv_waiting_added),
 						    NULL, NULL,
-						    monkey_net_marshal_VOID__UINT_UINT_POINTER_POINTER,
-						    G_TYPE_NONE, 4,
-						    G_TYPE_UINT, G_TYPE_UINT,
+						    monkey_net_marshal_VOID__UINT_UINT_UINT_POINTER_POINTER,
+						    G_TYPE_NONE, 5,
+						    G_TYPE_UINT, G_TYPE_UINT, G_TYPE_UINT,
 						    G_TYPE_POINTER,
 						    G_TYPE_POINTER);
 
@@ -672,6 +672,7 @@ network_message_handler_join (NetworkMessageHandler * mmh)
 void
 network_message_handler_send_waiting_added (NetworkMessageHandler * mmh,
 					    guint32 monkey_id,
+                                            guint32 time,
 					    guint8 bubbles_count,
 					    Color * colors, guint8 * columns)
 {
@@ -683,6 +684,7 @@ network_message_handler_send_waiting_added (NetworkMessageHandler * mmh,
 	{
 		guint8 message_type;
 		guint32 monkey_id;
+                guint32 time;
 		guint8 bubbles_count;
 	};
 
@@ -695,6 +697,7 @@ network_message_handler_send_waiting_added (NetworkMessageHandler * mmh,
 	t->message_type = SEND_WAITING_ADDED;
 
 	t->monkey_id = htonl (monkey_id);
+	t->time = htonl (time);
 	t->bubbles_count = bubbles_count;
 
 	j = sizeof (struct Test);
@@ -745,11 +748,12 @@ parse_waiting_added (NetworkMessageHandler * mmh, guint8 * message)
 	guint8 *columns;
 	guint32 monkey_id;
 	guint8 bubble_count;
-
+        guint32 time;
 	struct Test
 	{
 		guint8 message_type;
 		guint32 monkey_id;
+                guint32 time;
 		guint8 bubble_count;
 	};
 
@@ -761,6 +765,7 @@ parse_waiting_added (NetworkMessageHandler * mmh, guint8 * message)
 	columns = g_malloc (t->bubble_count);
 
 	monkey_id = g_ntohl (t->monkey_id);
+        time = g_ntohl (t->time);
 	bubble_count = t->bubble_count;
 	j = sizeof (struct Test);
 
@@ -800,7 +805,7 @@ parse_waiting_added (NetworkMessageHandler * mmh, guint8 * message)
 	g_print ("waiting added %d\n", bubble_count);
 #endif
 	g_signal_emit (G_OBJECT (mmh), signals[RECV_WAITING_ADDED], 0,
-		       monkey_id, bubble_count, bubbles, columns);
+		       monkey_id,time, bubble_count, bubbles, columns);
 
 }
 
