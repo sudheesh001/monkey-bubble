@@ -41,6 +41,7 @@ struct NetworkGameManagerPrivate
 	gboolean started;
 	GMutex * started_lock;
 
+	gboolean can_join;
 	NetworkGame * game;
 
 	NetworkClient * owner;
@@ -98,8 +99,7 @@ network_game_manager_add_client(NetworkGameManager * manager,
 	gboolean joined;
 	g_mutex_lock( PRIVATE(manager)->started_lock);
 
-	if( PRIVATE(manager)->started == FALSE) {
-
+	if( PRIVATE(manager)->can_join == TRUE) {
 		handler = network_client_get_handler(client);
 
 		g_mutex_lock(PRIVATE(manager)->clients_lock);
@@ -232,6 +232,7 @@ network_game_manager_instance_init(NetworkGameManager * self)
 
 	PRIVATE(self)->clients_lock = g_mutex_new();
 	PRIVATE(self)->started = FALSE;
+	PRIVATE(self)->can_join = TRUE;
 	PRIVATE(self)->started_lock = g_mutex_new();
 	PRIVATE(self)->number_of_games = 10;
 	PRIVATE(self)->number_of_players = 2;
@@ -478,8 +479,8 @@ start_game(NetworkGameManager * manager)
 			       doc);
 	
 		xmlFreeDoc(doc);
-       
 		PRIVATE(manager)->started = TRUE;
+		PRIVATE(manager)->can_join = FALSE;
         
 
 }

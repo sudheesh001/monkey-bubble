@@ -1,5 +1,55 @@
 2004-06-25  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
+	indent with anjuta ....
+
+	add bubbles to top instead of down the board
+	* src/net/game-manager.c: (network_game_manager_add_client),
+	(network_game_manager_instance_init), (start_game):
+	* src/net/game.c: (client_disconnected), (add_client),
+	(add_bubble), (recv_shoot), (bubble_added), (add_range_to_client),
+	(bubble_sticked), (bubbles_exploded), (game_lost), (init_client),
+	(what_color), (init_clients), (network_game_new), (idle_stopped),
+	(send_start), (update_client), (update_lost), (update_idle),
+	(network_game_start), (network_game_instance_init),
+	(remove_client), (network_game_finalize),
+	(network_game_class_init), (network_game_get_type):
+	* src/net/message-handler.c: (network_message_handler_new),
+	(network_message_handler_connect),
+	(network_message_handler_finalize),
+	(network_message_handler_instance_init),
+	(network_message_handler_class_init),
+	(network_message_handler_get_type), (parse_message),
+	(parse_xml_message), (handler_loop),
+	(network_message_handler_disconnect),
+	(network_message_handler_start_listening), (write_chunk),
+	(read_chunk), (network_message_handler_send_message),
+	(network_message_handler_send_xml_message),
+	(network_message_handler_join),
+	(network_message_handler_send_waiting_added),
+	(parse_waiting_added), (calculate_size),
+	(network_message_handler_send_bubble_array), (parse_bubble_array),
+	(network_message_handler_send_add_bubble), (parse_add_bubble),
+	(parse_next_range), (network_message_handler_send_next_range),
+	(network_message_handler_send_shoot), (parse_shoot),
+	(network_message_handler_send_winlost), (parse_winlost),
+	(network_message_handler_send_start):
+	* src/ui/game-network-player.c:
+	(game_network_player_instance_init),
+	(game_network_player_finalize), (game_network_player_class_init),
+	(game_network_player_get_type),
+	(game_network_player_bubble_sticked), (add_bubble),
+	(recv_add_bubble), (recv_winlost), (recv_waiting_added),
+	(recv_next_range), (game_network_player_bubble_shot),
+	(game_network_player_new), (pressed), (released),
+	(game_network_player_timeout), (get_time), (time_paused),
+	(time_unpaused), (time_init), (game_network_player_start),
+	(game_network_player_stop), (game_network_player_is_lost),
+	(game_network_player_get_score), (game_network_player_pause),
+	(game_network_player_get_state), (game_network_player_game_lost),
+	(game_network_player_fire_changed):
+
+2004-06-25  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
 	fix bubbles svg
 
 	bump version to 0.3.1 !
