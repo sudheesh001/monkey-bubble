@@ -117,7 +117,7 @@ AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE",[The package name, for gettext])
 
 dnl Please keep this in alphabetical order
-ALL_LINGUAS="cs de en_CA en_GB es eu fr hr hu ja ms nl pt pt_BR ru sr sr@Latn sv tr uk zh_CN zh_TW"
+ALL_LINGUAS="cs de en_CA en_GB es eu fr hr hu ja ms nl pt pt_BR ru rw sr sr@Latn sv tr uk zh_CN zh_TW"
 
 AM_GLIB_GNU_GETTEXT
 
