@@ -381,7 +381,7 @@ msgstr "Resume game"
 
 #: src/ui/ui-main.c:611
 msgid "translator_credits"
-msgstr "Adam Weinberger <adamw@FreeBSD.org>"
+msgstr "Adam Weinberger <adamw@gnome.org>"
 
 #: src/ui/ui-main.c:619
 msgid ""
