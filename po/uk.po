@@ -1,0 +1,357 @@
+# Ukrainian translation of monkey-bubble.
+# Copyright (C) 2004 THE monkey-bubbles's COPYRIGHT HOLDER
+# This file is distributed under the same license as the monkey-bubbles package.
+# Ihor Piddubnjak <ip@psoft.net>, 2004.
+msgid ""
+msgstr ""
+"Project-Id-Version: monkey-bubble\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-04-08 14:25+0300\n"
+"PO-Revision-Date: 2004-04-08 14:25+0300\n"
+"Last-Translator: Yuriy Syrota <rasta@cvs.gnome.org>\n"
+"Language-Team: Ukrainian <linux@linux.org.ua>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/keybinding.glade.h:1
+msgid "Keyboard Shortcuts"
+msgstr "Швидкі клавіші"
+
+#: data/keybinding.glade.h:2
+msgid "_Shortcut Keys:"
+msgstr "_Швидка клавіша:"
+
+#: data/monkey-bubble.glade.h:1
+msgid "Create network game"
+msgstr "Створити мережну гру"
+
+#: data/monkey-bubble.glade.h:2
+msgid "Join _network game"
+msgstr "Приєднатись до _мережної гри"
+
+#: data/monkey-bubble.glade.h:3 monkey-bubble.desktop.in.h:1
+msgid "Monkey Bubble"
+msgstr "Мавпи з кульками"
+
+#: data/monkey-bubble.glade.h:4
+msgid "New 1 player"
+msgstr "Нова гра для одного"
+
+#: data/monkey-bubble.glade.h:5
+msgid "New 2 players"
+msgstr "Нова гра для двох"
+
+#: data/monkey-bubble.glade.h:6 src/ui/ui-main.c:391 src/ui/ui-main.c:521
+msgid "Pause game"
+msgstr "Призупинити гру"
+
+#: data/monkey-bubble.glade.h:7 src/ui/keyboard-properties.c:85
+msgid "Stop game"
+msgstr "Припинити гру"
+
+#: data/monkey-bubble.glade.h:8
+msgid "_About"
+msgstr "_Про"
+
+#: data/monkey-bubble.glade.h:9
+msgid "_Contents"
+msgstr "_Зміст"
+
+#: data/monkey-bubble.glade.h:10
+msgid "_Game"
+msgstr "_Гра"
+
+#: data/monkey-bubble.glade.h:11
+msgid "_Help"
+msgstr "_Довідка"
+
+#: data/monkey-bubble.glade.h:12
+msgid "_Settings"
+msgstr "_Настройки"
+
+#: data/monkey-bubble.schemas.in.h:1
+msgid "1 player game"
+msgstr "Гра для одного"
+
+#: data/monkey-bubble.schemas.in.h:2
+msgid "2 players game"
+msgstr "Гра для двох"
+
+#: data/monkey-bubble.schemas.in.h:3
+msgid "F1"
+msgstr "F1"
+
+#: data/monkey-bubble.schemas.in.h:4
+msgid "F2"
+msgstr "F2"
+
+#: data/monkey-bubble.schemas.in.h:5
+msgid "Left"
+msgstr "Ліворуч"
+
+#: data/monkey-bubble.schemas.in.h:6
+msgid "Pause"
+msgstr "Пауза"
+
+#: data/monkey-bubble.schemas.in.h:7
+msgid "Pause the game"
+msgstr "Призупинити гру"
+
+#: data/monkey-bubble.schemas.in.h:8
+msgid "Quit the game"
+msgstr "Вийти з гри"
+
+#: data/monkey-bubble.schemas.in.h:9
+msgid "Right"
+msgstr "Праворуч"
+
+#: data/monkey-bubble.schemas.in.h:10
+msgid "Stop the game"
+msgstr "Припинити гру"
+
+#: data/monkey-bubble.schemas.in.h:11
+msgid "Up"
+msgstr "Вгору"
+
+#: data/monkey-bubble.schemas.in.h:12
+msgid "d"
+msgstr "d"
+
+#: data/monkey-bubble.schemas.in.h:13
+msgid "f"
+msgstr "f"
+
+#: data/monkey-bubble.schemas.in.h:14
+msgid "left key for player one"
+msgstr "Клавіша руху ліворуч для першого гравця"
+
+#: data/monkey-bubble.schemas.in.h:15
+msgid "left key for player two"
+msgstr "Клавіша руху ліворуч для другого гравця"
+
+#: data/monkey-bubble.schemas.in.h:16
+msgid "right key for player one"
+msgstr "Клавіша руху праворуч для першого гравця"
+
+#: data/monkey-bubble.schemas.in.h:17
+msgid "right key for player two"
+msgstr "Клавіша руху праворуч для другого гравця"
+
+#: data/monkey-bubble.schemas.in.h:18
+msgid "s"
+msgstr "s"
+
+#: data/monkey-bubble.schemas.in.h:19
+msgid "shoot key for player one"
+msgstr "Клавіша пострілу для першого гравця"
+
+#: data/monkey-bubble.schemas.in.h:20
+msgid "shoot key for player two"
+msgstr "Клавіша пострілу для другого гравця"
+
+#: data/netgame.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: data/netgame.glade.h:2
+msgid "Network game"
+msgstr "Мережна гра"
+
+#: data/netgame.glade.h:3
+msgid "Players"
+msgstr "Гравці"
+
+#: data/netgame.glade.h:4 src/ui/keyboard-properties.c:87
+msgid "Quit game"
+msgstr "Вийти з гри"
+
+#: data/netgame.glade.h:5
+msgid "Ready"
+msgstr "Готовий"
+
+#: data/netgame.glade.h:6
+msgid "Start Game"
+msgstr "Розпочати гру"
+
+#: data/netgame.glade.h:7
+msgid "_Go"
+msgstr "_Розпочати"
+
+#: data/netgame.glade.h:8
+msgid "_Server"
+msgstr "_Сервер"
+
+#: monkey-bubble.desktop.in.h:2
+msgid "Monkey Bubble Arcade Game"
+msgstr "Гра \"Мавпи з кульками\""
+
+#: src/ui/eggcellrendererkeys.c:160 src/ui/eggcellrendererkeys.c:161
+msgid "Accelerator key"
+msgstr "Швидка клавіша"
+
+#: src/ui/eggcellrendererkeys.c:170 src/ui/eggcellrendererkeys.c:171
+msgid "Accelerator modifiers"
+msgstr "Модифікатори швидкої клавіші"
+
+#: src/ui/eggcellrendererkeys.c:180
+msgid "Accelerator Mode"
+msgstr "Режим швидкої клавіші"
+
+#: src/ui/eggcellrendererkeys.c:181
+msgid "The type of accelerator."
+msgstr "Тип швидкої клавіші."
+
+#: src/ui/eggcellrendererkeys.c:219 src/ui/keyboard-properties.c:764
+msgid "Disabled"
+msgstr "Заборонено"
+
+#: src/ui/eggcellrendererkeys.c:330 src/ui/eggcellrendererkeys.c:568
+msgid "Type a new accelerator, or press Backspace to clear"
+msgstr "Введіть нову швидку клавішу, або Backspace, щоб стерти наявну"
+
+#: src/ui/eggcellrendererkeys.c:571
+msgid "Type a new accelerator"
+msgstr "Введіть нову швидку клавішу"
+
+#: src/ui/keyboard-properties.c:79
+msgid "New game 1 player"
+msgstr "Нова гра для одного"
+
+#: src/ui/keyboard-properties.c:81
+msgid "New game 2 player"
+msgstr "Нова гра для двох"
+
+#: src/ui/keyboard-properties.c:83
+msgid "Pause/Resume"
+msgstr "Призупинити або продовжити"
+
+#: src/ui/keyboard-properties.c:93
+msgid "Full Screen"
+msgstr "На весь екран"
+
+#: src/ui/keyboard-properties.c:95
+msgid "Normal Size"
+msgstr "Звичайний розмір"
+
+#: src/ui/keyboard-properties.c:100 src/ui/keyboard-properties.c:110
+msgid "aim left"
+msgstr "ліворуч"
+
+#: src/ui/keyboard-properties.c:102 src/ui/keyboard-properties.c:112
+msgid "aim right"
+msgstr "праворуч"
+
+#: src/ui/keyboard-properties.c:104 src/ui/keyboard-properties.c:114
+msgid "shoot"
+msgstr "постріл"
+
+#: src/ui/keyboard-properties.c:121
+msgid "Player 1"
+msgstr "Перший гравець"
+
+#: src/ui/keyboard-properties.c:122
+msgid "Player 2"
+msgstr "Другий гравець"
+
+#: src/ui/keyboard-properties.c:123
+msgid "Game"
+msgstr "Гра"
+
+#: src/ui/keyboard-properties.c:124
+msgid "View"
+msgstr "Переглянути"
+
+#: src/ui/keyboard-properties.c:337
+#, c-format
+msgid "There was an error loading config from %s. (%s)\n"
+msgstr "Трапилась помилка під час завантаження конфігурації з %s. (%s)\n"
+
+#: src/ui/keyboard-properties.c:351
+#, c-format
+msgid ""
+"There was an error subscribing to notification of terminal keybinding "
+"changes. (%s)\n"
+msgstr ""
+"Трапилась помилка під час запиту на отримання сповіщення про зміну "
+"термінальних комбінацій клавіш. (%s)\n"
+
+#: src/ui/keyboard-properties.c:394
+#, c-format
+msgid "There was an error loading a terminal keybinding. (%s)\n"
+msgstr "Трапилась помилка на завантаженні комбінації клавіш. (%s)\n"
+
+#: src/ui/keyboard-properties.c:410
+#, c-format
+msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
+msgstr "Значення конфігураційного ключа %s неправильне, значення: \"%s\"\n"
+
+#: src/ui/keyboard-properties.c:433
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menubar access "
+"keys. (%s)\n"
+msgstr ""
+"Трапилась помилка на завантаженні значення змінної, що визначає, чи потрібно "
+"задіювати клавіші доступу до панелі меню. (%s)\n"
+
+#: src/ui/keyboard-properties.c:447
+#, c-format
+msgid ""
+"There was an error subscribing to notification on changes on whether to use "
+"menubar access keys (%s)\n"
+msgstr ""
+"Трапилась помилка під час запиту на отримання сповіщення про зміну значення "
+"змінної, що визначає, чи потрібно задіювати клавіші доступу до панелі меню. "
+"(%s)\n"
+
+#: src/ui/keyboard-properties.c:458
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menu "
+"accelerators. (%s)\n"
+msgstr ""
+"Трапилась помилка на завантаженні значення змінної, що визначає, чи потрібно "
+"задіювати швидкі клавіші меню. (%s)\n"
+
+#: src/ui/keyboard-properties.c:474
+#, c-format
+msgid ""
+"There was an error subscribing to notification for use_menu_accelerators (%"
+"s)\n"
+msgstr ""
+"Трапилась помилка під час запиту на отримання сповіщення про зміну значення "
+"змінної, що визначає, чи потрібно задіювати швидкі клавіші меню. (%s)\n"
+
+#: src/ui/keyboard-properties.c:824
+#, c-format
+msgid "Error propagating accelerator change to configuration database: %s\n"
+msgstr ""
+"Помилка на збереженні зміни швидкої клавіші у конфігураційну базу: %s\n"
+
+#: src/ui/keyboard-properties.c:993
+#, c-format
+msgid "Error setting new accelerator in configuration database: %s\n"
+msgstr ""
+"Помилка на встановленні нової швидкої клавіші у конфігураційній базі :%s\n"
+
+#: src/ui/keyboard-properties.c:1092
+msgid "_Action"
+msgstr "_Дія"
+
+#: src/ui/keyboard-properties.c:1114
+msgid "Shortcut _Key"
+msgstr "Швидка _клавіша"
+
+#: src/ui/ui-main.c:514
+msgid "Resume game"
+msgstr "Продовжити Гру"
+
+#: src/ui/ui-main.c:568
+msgid "translator_credits"
+msgstr "Ігор Піддубняк"
+
+#: src/ui/ui-main.c:597
+#, c-format
+msgid "There was an error displaying help: %s"
+msgstr "Трапилась помилка на відображенні довідки: %s"
