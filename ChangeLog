@@ -1,5 +1,10 @@
 2004-12-02  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
+	update my email address
+	* AUTHORS:
+
+2004-12-02  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
 	patch from Ronald S. Bultje for music
 	patch from Christian Fredrik Kalager Schaller for app-icon
 	* src/audio/sound-manager.c: (restart_play), (eos), (stop_play),
