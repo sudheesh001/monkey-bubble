@@ -12,7 +12,7 @@ INCLUDES = \
 # -g -O2 -Wall -Wstrict-prototypes -Wmissing-prototypes -Werror -D_REENTRANT  -D_TIME_DEBUG_ -D_DEBUG_
 
 
-noinst_PROGRAMS = monkey-srv test
+bin_PROGRAMS = monkey-srv test
 
 noinst_LIBRARIES = libmonkeynet.a
 

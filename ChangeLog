@@ -1,3 +1,12 @@
+2004-02-17  Laurent belmonte  <bellau@cvs.gnome.org>
+
+	just some little new lines ..
+	* configure.in:
+	* src/net/Makefile.am:
+	* src/net/mn-game-manager.c: (init_client), (create_client):
+	* src/net/monkey-message-handler.c:
+	(monkey_message_handler_send_xml_message):
+
 2004-02-08  Robert Sedak  <robert.sedak@sk.htnet.hr>
  
          * configure.in: Added "hr" (Croatian) to ALL_LINGUAS.

@@ -31,12 +31,14 @@
 #include <glib/gthread.h>
 #include <sys/time.h>
 #include <time.h>
- 
+
+#include <libxml/tree.h> 
 #include "monkey-message-handler.h"
 #include "monkey-net-marshal.h"
 
 #define CHUNK_SIZE 32
 #define SEND_MESSAGE 1
+#define SEND_XML_MESSAGE 2
 
 enum {
         CONNECTION_CLOSED,
@@ -321,6 +323,48 @@ void monkey_message_handler_send_message (MonkeyMessageHandler * mmh,
         write_chunk(mmh,message,1);
 }
 
+
+void monkey_message_handler_send_xml_message(MonkeyMessageHandler * mmh,
+                                             guint32 client_id,
+                                             xmlDoc * doc) {
+
+        xmlChar * mem;
+        int size;
+        guint32 computed_size;
+        guint8 message[CHUNK_SIZE];
+        gpointer * xml_message;
+ 
+        struct Test {
+                guint8 message_type;
+                guint32 client_id;
+                guint32 chunk_count;
+                gchar message[CHUNK_SIZE-(1+4+4)];
+        };
+
+        struct Test * t;
+
+
+        t = (struct Test *)  message;
+        memset(t,0,CHUNK_SIZE);
+        t->message_type = SEND_XML_MESSAGE;
+        
+        t->client_id = htonl( client_id);
+
+        
+        xmlDocDumpMemory(doc,&mem,&size);
+
+        computed_size = size + CHUNK_SIZE;
+        computed_size = (computed_size + computed_size % CHUNK_SIZE) ;
+
+        t->chunk_count = htonl( computed_size / CHUNK_SIZE);
+
+        xml_message = g_malloc( computed_size);
+
+        memset(xml_message,0,computed_size);
+        memcpy(xml_message,t,CHUNK_SIZE);
+        memcpy(xml_message+CHUNK_SIZE,mem,size);
+        write_chunk(mmh,(guint8 *)xml_message,computed_size % CHUNK_SIZE );
+}
 
 void monkey_message_handler_join(MonkeyMessageHandler * mnh) {
         g_thread_join( PRIVATE(mnh)->main_thread);

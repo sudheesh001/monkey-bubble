@@ -71,7 +71,8 @@ static GObjectClass* parent_class = NULL;
 void mn_game_manager_finalize(GObject *);
 void init_client(MonkeyMessageHandler * mmh,
                  guint32 client_id,
-                 gchar * message);
+                 gchar * message,
+                 MnGameManager * manager);
 
 gboolean init_server_socket(MnGameManager * manager);
 
@@ -79,9 +80,44 @@ gboolean init_server_socket(MnGameManager * manager);
 
 void init_client(MonkeyMessageHandler * mmh,
                  guint32 client_id,
-                 gchar * message) {
+                 gchar * message,
+                 MnGameManager * manager) {
+
+        NetworkClient * nc;
 
         g_print("Message client %d, message :\n%s\n",client_id,message);
+        
+        nc = (NetworkClient *) g_hash_table_lookup(PRIVATE(manager)->pending_clients,
+                                                   &client_id);
+
+        
+        if( nc == NULL) {
+                g_print("Bad client %d\n",client_id);
+        } else {
+                char ** s = g_strsplit(message,"=",2);
+                if( s[0] != NULL && s[1] != NULL) {
+                        char * client_name;
+                        g_assert(client_id == nc->client_id);
+                        client_name = g_strdup(s[1]);
+
+                        g_print("client name =%s\n",client_name);
+                        nc->client_name = client_name;
+
+                        g_hash_table_remove( PRIVATE(manager)->pending_clients,
+                                             &client_id);
+
+                        monkey_message_handler_send_message( mmh, 
+                                                             nc->client_id,
+                                                             "INIT_OK",
+                                                             strlen("INIT_OK"));
+
+                        //                        send_game_list(manager,
+                        //nc);
+
+                }
+                g_strfreev(s);
+        }
+        
 }
 
 guint32 get_next_client_id(MnGameManager * manager) {
@@ -170,7 +206,7 @@ void create_client(MnGameManager * manager,int sock) {
 
 
         g_hash_table_insert( PRIVATE(manager)->pending_clients,
-                             &(nc->client_id),
+                             (gpointer )&(nc->client_id),
                              nc);
 
         monkey_message_handler_start_listening( handler);
