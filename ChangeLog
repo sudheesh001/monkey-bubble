@@ -1,3 +1,7 @@
+2005-03-16  Abel Cheung  <maddog@linuxhall.org>
+
+	* configure.in: Added "zh_TW" to ALL_LINGUAS.
+
 2005-01-03  Satoru SATOH <ss@gnome.gr.jp>
 
 	* configure.in: Added 'ja' (Japanese) to ALL_LINGUAS
