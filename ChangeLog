@@ -1,5 +1,11 @@
 2004-03-09  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
+	the glade file with network menu item so everybody
+	can look easily the network code progress
+	* data/monkey-bubble.glade:
+
+2004-03-09  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
 	more new network code .. 
 
 	* src/monkey/color.h:
