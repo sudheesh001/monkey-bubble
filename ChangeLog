@@ -1,3 +1,94 @@
+2004-04-19  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	big refactor in the network code
+	not finished ...
+	* data/Makefile.am:
+	* data/netgame.glade:
+	* data/netserver.glade:
+	* src/net/Makefile.am:
+	* src/net/client.c: (network_client_new),
+	(network_client_set_player), (network_client_get_player),
+	(network_client_get_state), (network_client_set_handler),
+	(network_client_get_handler), (network_client_get_id),
+	(recv_xml_message), (client_connection_closed),
+	(network_client_instance_init), (network_client_finalize),
+	(network_client_class_init), (network_client_get_type):
+	* src/net/client.h:
+	* src/net/game-manager.c: (network_game_manager_new),
+	(network_game_manager_add_client),
+	(network_game_manager_instance_init), (send_game_joined),
+	(client_state_changed), (network_game_manager_finalize),
+	(send_game_list_to_client), (send_game_list), (start_game),
+	(client_request_start), (client_connection_closed),
+	(network_game_manager_class_init), (network_game_manager_get_type):
+	* src/net/game-manager.h:
+	* src/net/game.c: (client_disconnected), (add_client),
+	(init_client), (init_clients), (network_game_new),
+	(network_game_instance_init), (network_game_finalize),
+	(network_game_class_init), (network_game_get_type):
+	* src/net/game.h:
+	* src/net/main.c: (main):
+	* src/net/mn-game-manager.c: (connect_client), (disconnect_client),
+	(restart_game), (game_stopped), (start_game),
+	(mn_game_manager_new), (server_main_loop), (send_disconnect),
+	(shutdown_client), (mn_game_manager_stop_server):
+	* src/net/mn-game-manager.h:
+	* src/net/monkey-message-handler.c: (parse_message), (write_chunk),
+	(read_chunk), (parse_waiting_added), (calculate_size),
+	(monkey_message_handler_send_bubble_array),
+	(monkey_message_handler_send_start):
+	* src/net/monkey-network-game.c: (create_monkey), (idle_stopped),
+	(start_update_thread), (monkey_network_game_class_init):
+	* src/net/monkey-network-game.h:
+	* src/net/player.c: (network_player_new),
+	(network_player_get_name), (network_player_instance_init),
+	(network_player_finalize), (network_player_class_init),
+	(network_player_get_type):
+	* src/net/player.h:
+	* src/net/simple-server.c: (network_simple_server_new),
+	(network_simple_server_start), (bind_socket), (close_socket),
+	(client_connection_closed), (add_handler), (remove_handler),
+	(recv_xml_message), (send_init_reply), (create_client),
+	(connect_client), (accept_loop), (get_next_id),
+	(network_simple_server_instance_init),
+	(network_simple_server_finalize),
+	(network_simple_server_class_init),
+	(network_simple_server_get_type):
+	* src/ui/Makefile.am:
+	* src/ui/game-network-player-manager.c:
+	(game_network_player_manager_state_changed), (recv_add_bubble),
+	(recv_bubble_array):
+	* src/ui/game-network-player.c: (game_network_player_finalize),
+	(recv_winlost), (game_network_player_timeout),
+	(game_network_player_pause), (game_network_player_game_lost),
+	(game_network_player_bubbles_exploded):
+	* src/ui/network-game-launcher.c: (disconnected),
+	(quit_server_signal), (ready_signal), (start_game_idle),
+	(recv_network_xml_message), (connection_closed), (connect_server):
+	* src/ui/network-server-launcher.c: (network_server_launcher_new),
+	(free_network_client), (send_disconnect), (quit_server_signal),
+	(send_ready_state), (ready_signal), (send_start), (start_signal),
+	(send_init), (update_players_list_idle), (update_players_list),
+	(recv_player_list), (start_game_idle), (start_game),
+	(recv_network_xml_message), (set_sensitive_true_idle),
+	(set_sensitive_false_idle), (set_sensitive), (connect_server),
+	(network_server_launcher_finalize),
+	(network_server_launcher_instance_init),
+	(network_server_launcher_class_init),
+	(network_server_launcher_get_type):
+	* src/ui/network-server-launcher.h:
+	* src/ui/ui-main.c: (ui_main_get_type), (ui_main_get_instance),
+	(ui_main_new), (ui_main_draw_main), (ui_main_get_canvas),
+	(ui_main_get_window), (ui_main_finalize), (ui_main_class_init),
+	(ui_main_init), (ui_main_new_1_player_game),
+	(ui_main_new_2_player_game), (ui_main_set_game_manager),
+	(ui_main_enabled_games_item), (new_1_player_game),
+	(new_2_player_game), (quit_program), (pause_game),
+	(ui_main_stop_game), (stop_game), (ui_main_get_main_image),
+	(ui_main_set_game), (ui_main_game_changed), (new_network_game),
+	(new_network_server), (show_preferences_dialog), (about),
+	(show_help_content), (show_error_dialog):
+
 2004-04-10  Baris Cicek <baris@teamforce.name.tr>
 
 	* configure.in: Added tr to ALL_LINGUA
