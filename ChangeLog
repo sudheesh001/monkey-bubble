@@ -1,3 +1,14 @@
+2004-06-03  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	more network stuff
+	* src/net/game.c: (recv_shoot), (bubble_sticked),
+	(bubbles_exploded), (game_lost), (idle_stopped), (update_client),
+	(update_idle), (network_game_start):
+	* src/ui/game-network-player.c: (game_network_player_finalize),
+	(game_network_player_bubble_sticked), (add_bubble),
+	(recv_add_bubble), (recv_winlost), (recv_waiting_added),
+	(game_network_player_bubbles_exploded):
+
 2004-06-01  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	some work done on network

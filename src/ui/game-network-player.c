@@ -142,7 +142,6 @@ static void game_network_player_finalize(GObject* object) {
 					   G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,game);
                       
 
-    g_print("GOGOGOGO\n");
     g_object_unref( PRIVATE(game)->clock);
     g_object_unref( PRIVATE(game)->display );
 
@@ -212,7 +211,7 @@ static void game_network_player_bubble_sticked(Monkey * monkey,Bubble * b,
 
 
     if( ( monkey_get_shot_count( monkey) % 8 ) == 0 ) {
-            g_print("go down");
+            g_print("game-network-player.c :go down\n");
             monkey_set_board_down( monkey);
     }
 
@@ -238,7 +237,6 @@ game_network_player_config_notify (GConfClient *client,
 gboolean add_bubble(gpointer ud) {
     Monkey * monkey;
     monkey = (Monkey*)ud;
-    g_print(" add bubble \n");
     return FALSE;
 }
 
@@ -252,12 +250,7 @@ static void recv_add_bubble(NetworkMessageHandler * handler,
     g_assert( IS_GAME_NETWORK_PLAYER(game));
 
     monkey = PRIVATE(game)->monkey;
-    g_print("recvieve add bubble \n");
     shooter_add_bubble(monkey_get_shooter(monkey),bubble_new(color,0,0));
-
-    //	   g_idle_add( add_bubble,monkey);
-	   
-  
 }
 
 static gboolean idle_draw_win(gpointer data) {
@@ -278,8 +271,7 @@ static void recv_winlost(NetworkMessageHandler * handler,
     g_assert( IS_GAME_NETWORK_PLAYER(game));
 
     if( winlost == FALSE) {
-            g_print("you win\n");
-
+      
             PRIVATE(game)->state = GAME_STOPPED;
     
             g_idle_add( idle_draw_win,game);
@@ -305,7 +297,6 @@ static void recv_waiting_added(NetworkMessageHandler * handler,
         
         g_assert( IS_GAME_NETWORK_PLAYER(game));
         
-        g_print("waiting added id : %d, count %d \n",monkey_id,bubbles_count);
         monkey = PRIVATE(game)->monkey;
         
         monkey_add_bubbles_at(monkey,bubbles_count,colors,columns);
@@ -693,7 +684,6 @@ static void game_network_player_bubbles_exploded(  Monkey * monkey,
     g_assert( IS_GAME_NETWORK_PLAYER(g));	 
 
 
-    g_print("exploded %d\n",g_list_length(exploded));
     /**
      * evaluate score :
      * a exploded bubble = 10 pts

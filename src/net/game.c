@@ -165,7 +165,6 @@ recv_shoot(NetworkMessageHandler * handler,
 	   gfloat angle,
 	   struct Client * c) {
 	
-        g_print("RECV SHOOT angle %f *******************\n\n*********\n",angle);
 	
         g_mutex_lock(c->monkey_lock);
         shooter_set_angle(monkey_get_shooter(c->monkey),
@@ -175,7 +174,6 @@ recv_shoot(NetworkMessageHandler * handler,
         monkey_shoot( c->monkey,time);
 	add_bubble(c);
 	
-        g_print("bubble added\n");
         g_mutex_unlock(c->monkey_lock);
 }
 
@@ -201,7 +199,7 @@ bubble_sticked(Monkey * monkey,Bubble * b,
 	
 
         if( ( monkey_get_shot_count(monkey) % 8 ) == 0 ) {
-		g_print("go down_n");
+		g_print("network-game :go down\n");
 		
                 monkey_set_board_down( monkey);
         }        
@@ -245,7 +243,6 @@ bubbles_exploded(  Monkey * monkey,
 			
                         if( client != c ) {
 				g_mutex_lock(client->monkey_lock);
-				g_print("lock \n");
 				other = client->monkey;
 				
 				
@@ -259,23 +256,18 @@ bubbles_exploded(  Monkey * monkey,
 									  to_go,
 									  colors,
 									  columns);
-
-				g_print("unlock \n");
 				g_mutex_unlock(client->monkey_lock);
-				g_print("unlocked \n");
 				
 				g_free(columns); 
                         }
                         next = g_list_next(next);
                 }
                 
-                //  g_mutex_unlock( PRIVATE( c->game )->listMutex);
 		
                 g_free(colors);
          
         }
                 
-        g_print("exploeded %d\n",g_list_length(exploded));
 }
 
 
@@ -286,7 +278,7 @@ game_lost(Monkey * m,
         NetworkGame * game;
 
         game = c->game;
-        g_print("lost \n");
+        g_print("network-game : lost ,player id %d\n",network_client_get_id(c->client));
 	/*
         g_mutex_lock(PRIVATE(game)->lostMutex);
         monkey_message_handler_send_winlost( c->handler,
@@ -452,6 +444,18 @@ network_game_new  (GList * clients)
 }
 
 static void 
+idle_stopped(gpointer data) 
+{
+
+        NetworkGame * g;
+
+        g = NETWORK_GAME(data);
+
+        g_signal_emit( G_OBJECT(g),signals[GAME_STOPPED],0);
+}
+
+
+static void 
 send_start(gpointer data,gpointer user_data) 
 {
 	struct Client * client;
@@ -463,10 +467,61 @@ send_start(gpointer data,gpointer user_data)
 }
 
 
+static void 
+update_client(gpointer data,gpointer user_data) {
+	NetworkGame * game;
+	struct Client * client;
+
+	client = (struct Client *) data;
+	game = NETWORK_GAME(user_data);
+
+
+        g_mutex_lock(client->monkey_lock);
+
+        
+        monkey_update(client->monkey,clock_get_time(PRIVATE(game)->clock));
+
+
+        g_mutex_unlock(client->monkey_lock);        
+
+}
+
+static gboolean 
+update_idle(gpointer d) 
+{
+
+	NetworkGame * game;
+
+	
+	game = NETWORK_GAME(d);
+
+
+
+	g_mutex_lock( PRIVATE(game)->clients_lock);
+	g_list_foreach(PRIVATE(game)->clients,
+		       update_client,
+		       game);
+
+
+	g_mutex_unlock( PRIVATE(game)->clients_lock);
+
+	return TRUE;
+}
+
+
 void 
 network_game_start(NetworkGame * self) 
 {
 	g_list_foreach( PRIVATE(self)->clients, send_start, self);
+
+	clock_start( PRIVATE(self)->clock);
+
+	g_timeout_add_full(G_PRIORITY_DEFAULT_IDLE,
+                           10,update_idle,self,
+                           idle_stopped);
+
+
+	
 }
 
 static void 
