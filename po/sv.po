@@ -1,0 +1,444 @@
+# Swedish messages for monkey-bubble.
+# Copyright (C) 2004 Free Software Foundation, Inc.
+# Christian Rose <menthos@menthos.com>, 2004.
+#
+# $Id$
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: monkey-bubble\n"
+"POT-Creation-Date: 2004-02-02 01:18+0100\n"
+"PO-Revision-Date: 2004-02-02 01:18+0100\n"
+"Last-Translator: Christian Rose <menthos@menthos.com>\n"
+"Language-Team: Swedish <sv@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: data/keybinding.glade.h:1
+msgid "Keyboard Shortcuts"
+msgstr "Tangentbordsgenvägar"
+
+#: data/keybinding.glade.h:2
+msgid "_Shortcut Keys:"
+msgstr "_Snabbtangenter:"
+
+#: data/monkey-bubble.glade.h:1 monkey-bubble.desktop.in.h:1
+msgid "Monkey Bubble"
+msgstr "Monkey Bubble"
+
+#: data/monkey-bubble.glade.h:2
+msgid "New 1 player"
+msgstr "Nytt enspelarspel"
+
+#: data/monkey-bubble.glade.h:3
+msgid "New 2 players"
+msgstr "Nytt tvåspelarspel"
+
+#: data/monkey-bubble.glade.h:4 src/ui/ui-main.c:382 src/ui/ui-main.c:512
+msgid "Pause game"
+msgstr "Pausa spel"
+
+#: data/monkey-bubble.glade.h:5 src/ui/keyboard-properties.c:85
+msgid "Stop game"
+msgstr "Stoppa spel"
+
+#: data/monkey-bubble.glade.h:6
+msgid "_About"
+msgstr "_Om"
+
+#: data/monkey-bubble.glade.h:7
+msgid "_Contents"
+msgstr "_Innehåll"
+
+#: data/monkey-bubble.glade.h:8
+msgid "_Game"
+msgstr "_Spel"
+
+#: data/monkey-bubble.glade.h:9
+msgid "_Help"
+msgstr "_Hjälp"
+
+#: data/monkey-bubble.glade.h:10
+msgid "_Settings"
+msgstr "_Inställningar"
+
+#: data/monkey-bubble.schemas.in.h:1
+msgid "1 player game"
+msgstr "Ettspelarspel"
+
+#: data/monkey-bubble.schemas.in.h:2
+msgid "2 players game"
+msgstr "Tvåspelarspel"
+
+#: data/monkey-bubble.schemas.in.h:3
+msgid "F1"
+msgstr "F1"
+
+#: data/monkey-bubble.schemas.in.h:4
+msgid "F2"
+msgstr "F2"
+
+#: data/monkey-bubble.schemas.in.h:5
+msgid "Left"
+msgstr "Vänster"
+
+#: data/monkey-bubble.schemas.in.h:6
+msgid "Pause"
+msgstr "Paus"
+
+#: data/monkey-bubble.schemas.in.h:7
+msgid "Pause the game"
+msgstr "Gör paus i spelet"
+
+#: data/monkey-bubble.schemas.in.h:8
+msgid "Quit the game"
+msgstr "Avsluta spelet"
+
+#: data/monkey-bubble.schemas.in.h:9
+msgid "Right"
+msgstr "Höger"
+
+#: data/monkey-bubble.schemas.in.h:10
+msgid "Stop the game"
+msgstr "Stoppa spelet"
+
+#: data/monkey-bubble.schemas.in.h:11
+msgid "Up"
+msgstr "Upp"
+
+#: data/monkey-bubble.schemas.in.h:12
+msgid "d"
+msgstr "d"
+
+#: data/monkey-bubble.schemas.in.h:13
+msgid "f"
+msgstr "f"
+
+#: data/monkey-bubble.schemas.in.h:14
+msgid "left key for player one"
+msgstr "vänstertangent för spelare ett"
+
+#: data/monkey-bubble.schemas.in.h:15
+msgid "left key for player two"
+msgstr "vänstertangent för spelare två"
+
+#: data/monkey-bubble.schemas.in.h:16
+msgid "right key for player one"
+msgstr "högertangent för spelare ett"
+
+#: data/monkey-bubble.schemas.in.h:17
+msgid "right key for player two"
+msgstr "högertangent för spelare två"
+
+#: data/monkey-bubble.schemas.in.h:18
+msgid "s"
+msgstr "s"
+
+#: data/monkey-bubble.schemas.in.h:19
+msgid "shoot key for player one"
+msgstr "skjuttangent för spelare ett"
+
+#: data/monkey-bubble.schemas.in.h:20
+msgid "shoot key for player two"
+msgstr "skjuttangent för spelare två"
+
+#: monkey-bubble.desktop.in.h:2
+msgid "Monkey Bubble Arcade Game"
+msgstr "Arkadspelet Monkey Bubble"
+
+#: src/ui/eggcellrendererkeys.c:160 src/ui/eggcellrendererkeys.c:161
+msgid "Accelerator key"
+msgstr "Snabbtangent"
+
+#: src/ui/eggcellrendererkeys.c:170 src/ui/eggcellrendererkeys.c:171
+msgid "Accelerator modifiers"
+msgstr ""
+
+#: src/ui/eggcellrendererkeys.c:180
+msgid "Accelerator Mode"
+msgstr "Snabbtangentsläge"
+
+#: src/ui/eggcellrendererkeys.c:181
+msgid "The type of accelerator."
+msgstr "Typen av snabbtangent."
+
+#: src/ui/eggcellrendererkeys.c:219 src/ui/keyboard-properties.c:764
+msgid "Disabled"
+msgstr "Inaktiverad"
+
+#: src/ui/eggcellrendererkeys.c:330 src/ui/eggcellrendererkeys.c:568
+msgid "Type a new accelerator, or press Backspace to clear"
+msgstr ""
+
+#: src/ui/eggcellrendererkeys.c:571
+msgid "Type a new accelerator"
+msgstr ""
+
+#: src/ui/keyboard-properties.c:79
+msgid "New game 1 player"
+msgstr "Nytt spel för en spelare"
+
+#: src/ui/keyboard-properties.c:81
+msgid "New game 2 player"
+msgstr "Nytt spel för två spelare"
+
+#: src/ui/keyboard-properties.c:83
+msgid "Pause/Resume"
+msgstr "Pausa/Återuppta"
+
+#: src/ui/keyboard-properties.c:87
+msgid "Quit game"
+msgstr "Avsluta spelet"
+
+#: src/ui/keyboard-properties.c:93
+msgid "Full Screen"
+msgstr "Helskärmsläge"
+
+#: src/ui/keyboard-properties.c:95
+msgid "Normal Size"
+msgstr "Normal storlek"
+
+#: src/ui/keyboard-properties.c:100 src/ui/keyboard-properties.c:110
+msgid "aim left"
+msgstr "sikta vänster"
+
+#: src/ui/keyboard-properties.c:102 src/ui/keyboard-properties.c:112
+msgid "aim right"
+msgstr "sikta höger"
+
+#: src/ui/keyboard-properties.c:104 src/ui/keyboard-properties.c:114
+msgid "shoot"
+msgstr "skjut"
+
+#: src/ui/keyboard-properties.c:121
+msgid "Player 1"
+msgstr "Spelare 1"
+
+#: src/ui/keyboard-properties.c:122
+msgid "Player 2"
+msgstr "Spelare 2"
+
+#: src/ui/keyboard-properties.c:123
+msgid "Game"
+msgstr "Spel"
+
+#: src/ui/keyboard-properties.c:124
+msgid "View"
+msgstr "Visa"
+
+#: src/ui/keyboard-properties.c:337
+#, c-format
+msgid "There was an error loading config from %s. (%s)\n"
+msgstr "Ett fel uppstod vid inläsning av konfiguration från %s. (%s)\n"
+
+#: src/ui/keyboard-properties.c:351
+#, c-format
+msgid ""
+"There was an error subscribing to notification of terminal keybinding "
+"changes. (%s)\n"
+msgstr ""
+
+#: src/ui/keyboard-properties.c:394
+#, c-format
+msgid "There was an error loading a terminal keybinding. (%s)\n"
+msgstr "Ett fel uppstod vid inläsning av terminaltangentbindning. (%s)\n"
+
+#: src/ui/keyboard-properties.c:410
+#, c-format
+msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
+msgstr ""
+
+#: src/ui/keyboard-properties.c:433
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menubar access "
+"keys. (%s)\n"
+msgstr ""
+
+#: src/ui/keyboard-properties.c:447
+#, c-format
+msgid ""
+"There was an error subscribing to notification on changes on whether to use "
+"menubar access keys (%s)\n"
+msgstr ""
+
+#: src/ui/keyboard-properties.c:458
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menu "
+"accelerators. (%s)\n"
+msgstr ""
+
+#: src/ui/keyboard-properties.c:474
+#, c-format
+msgid ""
+"There was an error subscribing to notification for use_menu_accelerators (%"
+"s)\n"
+msgstr ""
+
+#: src/ui/keyboard-properties.c:824
+#, c-format
+msgid "Error propagating accelerator change to configuration database: %s\n"
+msgstr ""
+
+#: src/ui/keyboard-properties.c:993
+#, c-format
+msgid "Error setting new accelerator in configuration database: %s\n"
+msgstr ""
+
+#: src/ui/keyboard-properties.c:1092
+msgid "_Action"
+msgstr "_Åtgärd"
+
+#: src/ui/keyboard-properties.c:1114
+msgid "Shortcut _Key"
+msgstr "Snabb_tangent"
+
+#: src/ui/ui-main.c:505
+msgid "Resume game"
+msgstr "Återuppta spel"
+
+#: src/ui/ui-main.c:551
+msgid "translator_credits"
+msgstr ""
+"Christian Rose\n"
+"Skicka synpunkter på översättningen till sv@li.org"
+
+#: src/ui/ui-main.c:580
+#, c-format
+msgid "There was an error displaying help: %s"
+msgstr "Ett fel uppstod vid visning av hjälpen: %s"
+
+#~ msgid "Aim left"
+#~ msgstr "Sikta vänster"
+
+#~ msgid "Aim right"
+#~ msgstr "Sikta höger"
+
+#~ msgid "Shoot"
+#~ msgstr "Skjut"
+
+#~ msgid "_View"
+#~ msgstr "_Visa"
+
+#~ msgid "Action"
+#~ msgstr "Åtgärd"
+
+#~ msgid "New"
+#~ msgstr "Nytt"
+
+#~ msgid "Help"
+#~ msgstr "Hjälp"
+
+#~ msgid "_Preferences"
+#~ msgstr "_Inställningar"
+
+#~ msgid "Left key for player one"
+#~ msgstr "Vänstertangent för spelare ett"
+
+#~ msgid "Left key for player two"
+#~ msgstr "Vänstertangent för spelare två"
+
+#~ msgid "Right key for player one"
+#~ msgstr "Högertangent för spelare ett"
+
+#~ msgid "Right key for player two"
+#~ msgstr "Högertangent för spelare två"
+
+#~ msgid "Shoot key for player one"
+#~ msgstr "Skjuttangent för spelare ett"
+
+#~ msgid "Shoot key for player two"
+#~ msgstr "Skjuttangent för spelare två"
+
+#~ msgid "Congratulations."
+#~ msgstr "Gratulerar."
+
+#~ msgid "You won!!!"
+#~ msgstr "Du vann!"
+
+#~ msgid "Game over."
+#~ msgstr "Spelet är över."
+
+#~ msgid "New Game"
+#~ msgstr "Nytt spel"
+
+#~ msgid "Select Game"
+#~ msgstr "Välj spel"
+
+#~ msgid "Seed"
+#~ msgstr "Slumptalsfrö"
+
+#~ msgid "Rules"
+#~ msgstr "Regler"
+
+#~ msgid "Game _options..."
+#~ msgstr "Spel_alternativ..."
+
+#~ msgid "Modify the options for this game"
+#~ msgstr "Ändra alternativen för det här spelet"
+
+#~ msgid "_Toolbar"
+#~ msgstr "_Verktygsrad"
+
+#~ msgid "Show or hide the toolbar"
+#~ msgstr "Visa eller dölj verktygsraden"
+
+#~ msgid "_Select..."
+#~ msgstr "_Välj..."
+
+#~ msgid "Select a different game"
+#~ msgstr "Välj ett annat spel"
+
+#~ msgid "Start a new game"
+#~ msgstr "Starta ett nytt spel"
+
+#~ msgid "Restart"
+#~ msgstr "Starta om"
+
+#~ msgid "Restart the game"
+#~ msgstr "Starta om spelet"
+
+#~ msgid "Select"
+#~ msgstr "Välj"
+
+#~ msgid "Undo"
+#~ msgstr "Ångra"
+
+#~ msgid "Undo the last move"
+#~ msgstr "Ångrar det senaste draget"
+
+#~ msgid "Redo"
+#~ msgstr "Gör om"
+
+#~ msgid "Redo the undone move"
+#~ msgstr "Gör om det ångrade draget"
+
+#~ msgid "Hint"
+#~ msgstr "Tips"
+
+#~ msgid "Get a hint for your next move"
+#~ msgstr "Få tips angående ditt nästa drag"
+
+#~ msgid "Score:"
+#~ msgstr "Poäng:"
+
+#~ msgid "Time:"
+#~ msgstr "Tid:"
+
+#~ msgid "Variation on game rules"
+#~ msgstr "Variant av spelreglerna"
+
+#~ msgid "NAME"
+#~ msgstr "NAMN"
+
+#~ msgid "Initializing scheme..."
+#~ msgstr "Initierar scheme..."
+
+#~ msgid "_Rules"
+#~ msgstr "_Regler"
+
+#~ msgid "Name"
+#~ msgstr "Namn"

@@ -1,5 +1,9 @@
-monkey-bubble.desktop.in
-data/monkey-bubble.glade
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
 data/keybinding.glade
+data/monkey-bubble.glade
 data/monkey-bubble.schemas.in
+monkey-bubble.desktop.in
+src/ui/eggcellrendererkeys.c
+src/ui/keyboard-properties.c
 src/ui/ui-main.c

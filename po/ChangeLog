@@ -1,3 +1,9 @@
+2004-02-02  Christian Rose  <menthos@menthos.com>
+
+	* .cvsignore: Added and sorted entries.
+	* POTFILES.in: Added and sorted entries.
+	* sv.po: Added Swedish translation.
+
 2003-10-13  Laurent Belmonte  <lolo3d@tuxfamily.org>
 	
 	* fr.po: translation fix
