@@ -1,0 +1,337 @@
+# MONKEY-BUBBLE
+# Copyright (C)  2004  Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# Li Shaojie <storm-119@163.com>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2004-05-14 20:35+0200\n"
+"PO-Revision-Date: 2004-05-12 14:49+0800\n"
+"Last-Translator: storm <storm-119@163.com>\n"
+"Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
+
+#: data/keybinding.glade.h:1
+msgid "Keyboard Shortcuts"
+msgstr "键盘快捷键"
+
+#: data/keybinding.glade.h:2
+msgid "_Shortcut Keys:"
+msgstr "快捷键(_S)："
+
+#: data/monkey-bubble.glade.h:1
+msgid "Create network game"
+msgstr "创建网络游戏"
+
+#: data/monkey-bubble.glade.h:2
+msgid "Join _network game"
+msgstr "加入网络游戏(_N)"
+
+#: data/monkey-bubble.glade.h:3 monkey-bubble.desktop.in.h:1
+msgid "Monkey Bubble"
+msgstr "Monkey Bubble"
+
+#: data/monkey-bubble.glade.h:4
+msgid "New 1 player"
+msgstr "新玩家 1"
+
+#: data/monkey-bubble.glade.h:5
+msgid "New 2 players"
+msgstr "新玩家 2"
+
+#: data/monkey-bubble.glade.h:6 src/ui/ui-main.c:400 src/ui/ui-main.c:530
+msgid "Pause game"
+msgstr "暂停游戏"
+
+#: data/monkey-bubble.glade.h:7 src/ui/keyboard-properties.c:85
+msgid "Stop game"
+msgstr "终止游戏"
+
+#: data/monkey-bubble.glade.h:8
+msgid "_About"
+msgstr "关于(_A)"
+
+#: data/monkey-bubble.glade.h:9
+msgid "_Contents"
+msgstr "目录(_C)"
+
+#: data/monkey-bubble.glade.h:10
+msgid "_Game"
+msgstr "游戏(_G)"
+
+#: data/monkey-bubble.glade.h:11
+msgid "_Help"
+msgstr "帮助(_H)"
+
+#: data/monkey-bubble.glade.h:12
+msgid "_Settings"
+msgstr "设置(_S)"
+
+#: data/monkey-bubble.schemas.in.h:1
+msgid "1 player game"
+msgstr "一人游戏"
+
+#: data/monkey-bubble.schemas.in.h:2
+msgid "2 players game"
+msgstr "二人游戏"
+
+#: data/monkey-bubble.schemas.in.h:3
+msgid "F1"
+msgstr "F1"
+
+#: data/monkey-bubble.schemas.in.h:4
+msgid "F2"
+msgstr "F2"
+
+#: data/monkey-bubble.schemas.in.h:5
+msgid "Left"
+msgstr "左"
+
+#: data/monkey-bubble.schemas.in.h:6
+msgid "Pause"
+msgstr "暂停"
+
+#: data/monkey-bubble.schemas.in.h:7
+msgid "Pause the game"
+msgstr "暂停游戏"
+
+#: data/monkey-bubble.schemas.in.h:8
+msgid "Quit the game"
+msgstr "退出游戏"
+
+#: data/monkey-bubble.schemas.in.h:9
+msgid "Right"
+msgstr "右"
+
+#: data/monkey-bubble.schemas.in.h:10
+msgid "Stop the game"
+msgstr "终止游戏"
+
+#: data/monkey-bubble.schemas.in.h:11
+msgid "Up"
+msgstr "上"
+
+#: data/monkey-bubble.schemas.in.h:12
+msgid "d"
+msgstr "d"
+
+#: data/monkey-bubble.schemas.in.h:13
+msgid "f"
+msgstr "f"
+
+#: data/monkey-bubble.schemas.in.h:14
+msgid "left key for player one"
+msgstr "玩家 1 的左向键"
+
+#: data/monkey-bubble.schemas.in.h:15
+msgid "left key for player two"
+msgstr "玩家 2 的左向键"
+
+#: data/monkey-bubble.schemas.in.h:16
+msgid "right key for player one"
+msgstr "玩家 1 的右向键"
+
+#: data/monkey-bubble.schemas.in.h:17
+msgid "right key for player two"
+msgstr "玩家 2 的右向键"
+
+#: data/monkey-bubble.schemas.in.h:18
+msgid "s"
+msgstr "s"
+
+#: data/monkey-bubble.schemas.in.h:19
+msgid "shoot key for player one"
+msgstr "玩家 1 的射击键"
+
+#: data/monkey-bubble.schemas.in.h:20
+msgid "shoot key for player two"
+msgstr "玩家 2 的射击键"
+
+#: data/netgame.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: data/netgame.glade.h:2
+msgid "Network game"
+msgstr "网络游戏"
+
+#: data/netgame.glade.h:3 src/ui/keyboard-properties.c:87
+msgid "Quit game"
+msgstr "退出游戏"
+
+#: data/netgame.glade.h:4
+msgid "Ready"
+msgstr "准备"
+
+#: data/netgame.glade.h:5
+msgid "_Go"
+msgstr "开始(_G)"
+
+#: data/netgame.glade.h:6
+msgid "_Server"
+msgstr "服务器(_S)"
+
+#: monkey-bubble.desktop.in.h:2
+msgid "Monkey Bubble Arcade Game"
+msgstr "Monkey Bubble Arcade 游戏"
+
+#: src/ui/eggcellrendererkeys.c:160 src/ui/eggcellrendererkeys.c:161
+msgid "Accelerator key"
+msgstr "加速键键"
+
+#: src/ui/eggcellrendererkeys.c:170 src/ui/eggcellrendererkeys.c:171
+msgid "Accelerator modifiers"
+msgstr "加速键修改器"
+
+#: src/ui/eggcellrendererkeys.c:180
+msgid "Accelerator Mode"
+msgstr "加速键模式"
+
+#: src/ui/eggcellrendererkeys.c:181
+msgid "The type of accelerator."
+msgstr "加速键类型。"
+
+#: src/ui/eggcellrendererkeys.c:219 src/ui/keyboard-properties.c:764
+msgid "Disabled"
+msgstr "禁用"
+
+#: src/ui/eggcellrendererkeys.c:330 src/ui/eggcellrendererkeys.c:568
+msgid "Type a new accelerator, or press Backspace to clear"
+msgstr "输入一个新加速键，或者按 Backspace 清除"
+
+#: src/ui/eggcellrendererkeys.c:571
+msgid "Type a new accelerator"
+msgstr "输入一个新加速键"
+
+#: src/ui/keyboard-properties.c:79
+msgid "New game 1 player"
+msgstr "新游戏的玩家 1"
+
+#: src/ui/keyboard-properties.c:81
+msgid "New game 2 player"
+msgstr "新游戏的玩家 2"
+
+#: src/ui/keyboard-properties.c:83
+msgid "Pause/Resume"
+msgstr "暂停/恢复"
+
+#: src/ui/keyboard-properties.c:93
+msgid "Full Screen"
+msgstr "全屏"
+
+#: src/ui/keyboard-properties.c:95
+msgid "Normal Size"
+msgstr "正常大小"
+
+#: src/ui/keyboard-properties.c:100 src/ui/keyboard-properties.c:110
+msgid "aim left"
+msgstr "瞄准左"
+
+#: src/ui/keyboard-properties.c:102 src/ui/keyboard-properties.c:112
+msgid "aim right"
+msgstr "瞄准右"
+
+#: src/ui/keyboard-properties.c:104 src/ui/keyboard-properties.c:114
+msgid "shoot"
+msgstr "射击"
+
+#: src/ui/keyboard-properties.c:121
+msgid "Player 1"
+msgstr "玩家 1"
+
+#: src/ui/keyboard-properties.c:122
+msgid "Player 2"
+msgstr "玩家 2"
+
+#: src/ui/keyboard-properties.c:123
+msgid "Game"
+msgstr "游戏"
+
+#: src/ui/keyboard-properties.c:124
+msgid "View"
+msgstr "查看"
+
+#: src/ui/keyboard-properties.c:337
+#, c-format
+msgid "There was an error loading config from %s. (%s)\n"
+msgstr "从 %s 装入时出错。(%s)\n"
+
+#: src/ui/keyboard-properties.c:351
+#, c-format
+msgid ""
+"There was an error subscribing to notification of terminal keybinding "
+"changes. (%s)\n"
+msgstr "订阅终端按键绑定更改的通知时出错。(%s)\n"
+
+#: src/ui/keyboard-properties.c:394
+#, c-format
+msgid "There was an error loading a terminal keybinding. (%s)\n"
+msgstr "加载终端键绑定发生错误。(%s)\n"
+
+#: src/ui/keyboard-properties.c:410
+#, c-format
+msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
+msgstr "键值 %s 配置无效；值为“%s”\n"
+
+#: src/ui/keyboard-properties.c:433
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menubar access "
+"keys. (%s)\n"
+msgstr "装入是否使用菜单栏访问键的配置值时出错。(%s)\n"
+
+#: src/ui/keyboard-properties.c:447
+#, c-format
+msgid ""
+"There was an error subscribing to notification on changes on whether to use "
+"menubar access keys (%s)\n"
+msgstr "订阅是否使用菜单栏访问键的更改通知时出错(%s)\n"
+
+#: src/ui/keyboard-properties.c:458
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menu "
+"accelerators. (%s)\n"
+msgstr "装入是否使用菜单加速键的配置值时出错。(%s)\n"
+
+#: src/ui/keyboard-properties.c:474
+#, c-format
+msgid ""
+"There was an error subscribing to notification for use_menu_accelerators (%"
+"s)\n"
+msgstr "订阅 use_menu_accelerators 通知时出错(%s)\n"
+
+#: src/ui/keyboard-properties.c:824
+#, c-format
+msgid "Error propagating accelerator change to configuration database: %s\n"
+msgstr "更改配置数据库时传送加速键时出错：%s\n"
+
+#: src/ui/keyboard-properties.c:993
+#, c-format
+msgid "Error setting new accelerator in configuration database: %s\n"
+msgstr "设置配置数据库中的新加速键时出错：%s\n"
+
+#: src/ui/keyboard-properties.c:1092
+msgid "_Action"
+msgstr "动作(_A)"
+
+#: src/ui/keyboard-properties.c:1114
+msgid "Shortcut _Key"
+msgstr "快捷键(_K)"
+
+#: src/ui/ui-main.c:523
+msgid "Resume game"
+msgstr "回到游戏"
+
+#: src/ui/ui-main.c:586
+msgid "translator_credits"
+msgstr "开源软件国际化之简体中文组 http://i18n.linux.net.cn"
+
+#: src/ui/ui-main.c:615
+#, c-format
+msgid "There was an error displaying help: %s"
+msgstr "显示帮助时发生错误：%s"
