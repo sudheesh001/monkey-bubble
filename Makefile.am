@@ -7,7 +7,6 @@ SUBDIRS = 	\
         src     \
         po      \
         help    \
-        debian 	\
 	$(NULL)
 
 applications_in_files = monkey-bubble.desktop.in

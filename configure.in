@@ -131,7 +131,6 @@ dnl  --------
 
 AC_OUTPUT([
   Makefile
-  debian/Makefile
   data/Makefile
   pixmaps/Makefile
   pixmaps/bubbles/Makefile
