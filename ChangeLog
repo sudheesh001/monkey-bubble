@@ -1,3 +1,13 @@
+2004-07-02  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	music is looping !
+	0.3.2
+	* pixmaps/layout_network_player.svg:
+	* src/audio/sound-manager.c: (restart_play), (eos), (stop_play),
+	(loop), (oggdemux_new_pad), (start_play),
+	(sound_manager_play_music_file):
+	* src/ui/main.c: (main):
+
 2004-07-01  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	add new mini view for network game
