@@ -3,6 +3,7 @@
 data/keybinding.glade
 data/monkey-bubble.glade
 data/monkey-bubble.schemas.in
+data/netgame.glade
 monkey-bubble.desktop.in
 src/ui/eggcellrendererkeys.c
 src/ui/keyboard-properties.c

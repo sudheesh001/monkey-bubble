@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: monkey-bubble\n"
-"POT-Creation-Date: 2004-02-02 01:18+0100\n"
-"PO-Revision-Date: 2004-02-02 01:18+0100\n"
+"POT-Creation-Date: 2004-02-05 10:27+0100\n"
+"PO-Revision-Date: 2004-02-05 10:28+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgstr "Nytt enspelarspel"
 msgid "New 2 players"
 msgstr "Nytt tvåspelarspel"
 
-#: data/monkey-bubble.glade.h:4 src/ui/ui-main.c:382 src/ui/ui-main.c:512
+#: data/monkey-bubble.glade.h:4 src/ui/ui-main.c:393 src/ui/ui-main.c:523
 msgid "Pause game"
 msgstr "Pausa spel"
 
@@ -144,6 +144,38 @@ msgstr "skjuttangent för spelare ett"
 msgid "shoot key for player two"
 msgstr "skjuttangent för spelare två"
 
+#: data/netgame.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: data/netgame.glade.h:2
+msgid "Network game"
+msgstr "Nätverksspel"
+
+#: data/netgame.glade.h:3
+msgid "Players"
+msgstr "Spelare"
+
+#: data/netgame.glade.h:4 src/ui/keyboard-properties.c:87
+msgid "Quit game"
+msgstr "Avsluta spelet"
+
+#: data/netgame.glade.h:5
+msgid "Ready"
+msgstr "Redo"
+
+#: data/netgame.glade.h:6
+msgid "Start Game"
+msgstr "Starta spel"
+
+#: data/netgame.glade.h:7
+msgid "_Go"
+msgstr "_Gå"
+
+#: data/netgame.glade.h:8
+msgid "_Server"
+msgstr "_Server"
+
 #: monkey-bubble.desktop.in.h:2
 msgid "Monkey Bubble Arcade Game"
 msgstr "Arkadspelet Monkey Bubble"
@@ -187,10 +219,6 @@ msgstr "Nytt spel för två spelare"
 #: src/ui/keyboard-properties.c:83
 msgid "Pause/Resume"
 msgstr "Pausa/Återuppta"
-
-#: src/ui/keyboard-properties.c:87
-msgid "Quit game"
-msgstr "Avsluta spelet"
 
 #: src/ui/keyboard-properties.c:93
 msgid "Full Screen"
@@ -296,20 +324,29 @@ msgstr "_Åtgärd"
 msgid "Shortcut _Key"
 msgstr "Snabb_tangent"
 
-#: src/ui/ui-main.c:505
+#: src/ui/ui-main.c:516
 msgid "Resume game"
 msgstr "Återuppta spel"
 
-#: src/ui/ui-main.c:551
+#: src/ui/ui-main.c:570
 msgid "translator_credits"
 msgstr ""
 "Christian Rose\n"
 "Skicka synpunkter på översättningen till sv@li.org"
 
-#: src/ui/ui-main.c:580
+#: src/ui/ui-main.c:599
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Ett fel uppstod vid visning av hjälpen: %s"
+
+#~ msgid "Network"
+#~ msgstr "Nätverk"
+
+#~ msgid "Go"
+#~ msgstr "Gå"
+
+#~ msgid "Server"
+#~ msgstr "Server"
 
 #~ msgid "Aim left"
 #~ msgstr "Sikta vänster"
@@ -362,9 +399,6 @@ msgstr "Ett fel uppstod vid visning av hjälpen: %s"
 #~ msgid "Game over."
 #~ msgstr "Spelet är över."
 
-#~ msgid "New Game"
-#~ msgstr "Nytt spel"
-
 #~ msgid "Select Game"
 #~ msgstr "Välj spel"
 
@@ -392,9 +426,6 @@ msgstr "Ett fel uppstod vid visning av hjälpen: %s"
 #~ msgid "Select a different game"
 #~ msgstr "Välj ett annat spel"
 
-#~ msgid "Start a new game"
-#~ msgstr "Starta ett nytt spel"
-
 #~ msgid "Restart"
 #~ msgstr "Starta om"
 
@@ -409,9 +440,6 @@ msgstr "Ett fel uppstod vid visning av hjälpen: %s"
 
 #~ msgid "Undo the last move"
 #~ msgstr "Ångrar det senaste draget"
-
-#~ msgid "Redo"
-#~ msgstr "Gör om"
 
 #~ msgid "Redo the undone move"
 #~ msgstr "Gör om det ångrade draget"
