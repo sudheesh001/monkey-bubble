@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: monkey-buble VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-17 04:29+0200\n"
-"PO-Revision-Date: 2004-06-17 09:09+0200\n"
+"POT-Creation-Date: 2004-06-18 04:22+0200\n"
+"PO-Revision-Date: 2004-06-18 20:04+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,50 +25,70 @@ msgid "_Shortcut Keys:"
 msgstr "_Klávesové zkratky:"
 
 #: data/monkey-bubble.glade.h:1
+msgid ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Can't create server !\n"
+"</span>\n"
+"</markup>"
+msgstr ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Nemohu vytvořit server!\n"
+"</span>\n"
+"</markup>"
+
+#: data/monkey-bubble.glade.h:7
 msgid "Create network game"
 msgstr "Vytvořit síťovou hru"
 
-#: data/monkey-bubble.glade.h:2
+#: data/monkey-bubble.glade.h:8
 msgid "Join _network game"
 msgstr "Přidat se k _síťové hře"
 
-#: data/monkey-bubble.glade.h:3 monkey-bubble.desktop.in.h:1
+#: data/monkey-bubble.glade.h:9 monkey-bubble.desktop.in.h:1
 msgid "Monkey Bubble"
 msgstr "Monkey Bubble"
 
-#: data/monkey-bubble.glade.h:4
+#: data/monkey-bubble.glade.h:10
 msgid "New 1 player"
 msgstr "Nová pro jednoho hráče"
 
-#: data/monkey-bubble.glade.h:5
+#: data/monkey-bubble.glade.h:11
 msgid "New 2 players"
 msgstr "Nová pro dva hráče"
 
-#: data/monkey-bubble.glade.h:6 src/ui/ui-main.c:400 src/ui/ui-main.c:530
+#: data/monkey-bubble.glade.h:12 src/ui/ui-main.c:401 src/ui/ui-main.c:531
 msgid "Pause game"
 msgstr "Pozastavit hru"
 
-#: data/monkey-bubble.glade.h:7 src/ui/keyboard-properties.c:85
+#: data/monkey-bubble.glade.h:13 src/ui/keyboard-properties.c:85
 msgid "Stop game"
 msgstr "Zastavit hru"
 
-#: data/monkey-bubble.glade.h:8
+#: data/monkey-bubble.glade.h:14
+msgid "Warning"
+msgstr "Varování"
+
+#: data/monkey-bubble.glade.h:15
 msgid "_About"
 msgstr "O _aplikaci"
 
-#: data/monkey-bubble.glade.h:9
+#: data/monkey-bubble.glade.h:16
 msgid "_Contents"
 msgstr "_Obsah"
 
-#: data/monkey-bubble.glade.h:10
+#: data/monkey-bubble.glade.h:17
 msgid "_Game"
 msgstr "_Hra"
 
-#: data/monkey-bubble.glade.h:11
+#: data/monkey-bubble.glade.h:18
 msgid "_Help"
 msgstr "Nápo_věda"
 
-#: data/monkey-bubble.glade.h:12
+#: data/monkey-bubble.glade.h:19
 msgid "_Settings"
 msgstr "_Nastavení"
 
@@ -344,15 +364,15 @@ msgstr "_Akce"
 msgid "Shortcut _Key"
 msgstr "_Klávesová zkratka"
 
-#: src/ui/ui-main.c:523
+#: src/ui/ui-main.c:524
 msgid "Resume game"
 msgstr "Obnovit hru"
 
-#: src/ui/ui-main.c:586
+#: src/ui/ui-main.c:608
 msgid "translator_credits"
 msgstr "Miloslav Trmač <mitr@volny.cz>"
 
-#: src/ui/ui-main.c:615
+#: src/ui/ui-main.c:637
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Při zobrazování nápovědy došlo k chybě: %s"
