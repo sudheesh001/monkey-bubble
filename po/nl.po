@@ -7,13 +7,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNOME 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-24 05:27+0100\n"
-"PO-Revision-Date: 2004-02-12 18:45+0100\n"
+"POT-Creation-Date: 2004-03-14 04:20+0100\n"
+"PO-Revision-Date: 2004-03-14 15:08+0100\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <verltaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: data/keybinding.glade.h:1
 msgid "Keyboard Shortcuts"
@@ -23,45 +23,51 @@ msgstr "Sneltoetsen"
 msgid "_Shortcut Keys:"
 msgstr "_Sneltoetsen:"
 
-#: data/monkey-bubble.glade.h:1 monkey-bubble.desktop.in.h:1
+#: data/monkey-bubble.glade.h:1
+msgid "Create network game"
+msgstr "Netwerkspel aanmaken"
+
+#: data/monkey-bubble.glade.h:2
+msgid "Join _network game"
+msgstr "Meedoen met _netwerkspel"
+
+#: data/monkey-bubble.glade.h:3 monkey-bubble.desktop.in.h:1
 msgid "Monkey Bubble"
 msgstr "Monkey Bubble"
 
-#: data/monkey-bubble.glade.h:2
+#: data/monkey-bubble.glade.h:4
 msgid "New 1 player"
 msgstr "Nieuw 1 speler"
 
-#: data/monkey-bubble.glade.h:3
+#: data/monkey-bubble.glade.h:5
 msgid "New 2 players"
 msgstr "Nieuw 2 spelers"
 
-#: data/monkey-bubble.glade.h:4 src/ui/ui-main.c:393 src/ui/ui-main.c:523
+#: data/monkey-bubble.glade.h:6 src/ui/ui-main.c:391 src/ui/ui-main.c:521
 msgid "Pause game"
 msgstr "Spel pauzeren"
 
-#: data/monkey-bubble.glade.h:5 src/ui/keyboard-properties.c:85
+#: data/monkey-bubble.glade.h:7 src/ui/keyboard-properties.c:85
 msgid "Stop game"
 msgstr "Stoppen"
 
-#. GRUT modified this item
-#: data/monkey-bubble.glade.h:6
+#: data/monkey-bubble.glade.h:8
 msgid "_About"
 msgstr "In_fo"
 
-#: data/monkey-bubble.glade.h:7
+#: data/monkey-bubble.glade.h:9
 msgid "_Contents"
 msgstr "_Inhoud"
 
-#: data/monkey-bubble.glade.h:8
+#: data/monkey-bubble.glade.h:10
 msgid "_Game"
 msgstr "_Spel"
 
-#: data/monkey-bubble.glade.h:9
+#: data/monkey-bubble.glade.h:11
 msgid "_Help"
 msgstr "_Hulp"
 
-#. GRUT modified this item
-#: data/monkey-bubble.glade.h:10
+#: data/monkey-bubble.glade.h:12
 msgid "_Settings"
 msgstr "_Instellingen"
 
@@ -105,7 +111,6 @@ msgstr "Rechts"
 msgid "Stop the game"
 msgstr "Het spel stoppen"
 
-#. GRUT modified this item
 #: data/monkey-bubble.schemas.in.h:11
 msgid "Up"
 msgstr "Omhoog"
@@ -198,7 +203,6 @@ msgstr "Sneltoets modus"
 msgid "The type of accelerator."
 msgstr "Het soort sneltoets."
 
-#. GRUT modified this item
 # ongebruikt, niet gebruikt
 #: src/ui/eggcellrendererkeys.c:219 src/ui/keyboard-properties.c:764
 msgid "Disabled"
@@ -339,16 +343,15 @@ msgstr "_Actie"
 msgid "Shortcut _Key"
 msgstr "Snel_toets"
 
-#: src/ui/ui-main.c:516
+#: src/ui/ui-main.c:514
 msgid "Resume game"
 msgstr "Spel hervatten"
 
-#: src/ui/ui-main.c:570
+#: src/ui/ui-main.c:568
 msgid "translator_credits"
 msgstr "Tino Meinen <a.t.meinen@chello.nl>"
 
-#. GRUT modified this item
-#: src/ui/ui-main.c:599
+#: src/ui/ui-main.c:597
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Er is een fout opgetreden bij de hulpweergave: %s"
