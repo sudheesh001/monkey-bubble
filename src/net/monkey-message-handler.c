@@ -40,6 +40,9 @@
 #define CHUNK_SIZE 32
 #define SEND_MESSAGE 1
 #define SEND_XML_MESSAGE 2
+#define SEND_BUBBLE_ARRAY 3
+#define SEND_ADD_BUBBLE 4
+#define SEND_START 5
 
 enum {
         CONNECTION_CLOSED,
@@ -47,6 +50,7 @@ enum {
         RECV_ADD_BUBBLE,
         RECV_WINLOST,
         RECV_START,
+        RECV_BUBBLE_ARRAY,
         RECV_MESSAGE,
         RECV_XML_MESSAGE,
         LAST_SIGNAL
@@ -67,8 +71,14 @@ static GObjectClass* parent_class = NULL;
 void monkey_message_handler_finalize(GObject *);
 
 
-void parse_xml_message(MonkeyMessageHandler * mnh,
+void parse_xml_message(MonkeyMessageHandler * mmh,
                        guint8 * message);
+
+void parse_bubble_array(MonkeyMessageHandler * mmh,
+                        guint8 * message);
+
+void parse_add_bubble(MonkeyMessageHandler * mmh,
+                      guint8 * message);
 
 gboolean read_chunk(MonkeyMessageHandler * mmh,
                 guint8 * data);
@@ -177,6 +187,15 @@ monkey_message_handler_class_init (MonkeyMessageHandlerClass *klass) {
                                                  G_TYPE_NONE,
                                                  2,G_TYPE_UINT,G_TYPE_POINTER);
         
+        signals[RECV_BUBBLE_ARRAY]= g_signal_new ("recv-bubble-array",
+                                             G_TYPE_FROM_CLASS (klass),
+                                             G_SIGNAL_RUN_FIRST |
+                                             G_SIGNAL_NO_RECURSE,
+                                             G_STRUCT_OFFSET (MonkeyMessageHandlerClass, recv_bubble_array),
+                                             NULL, NULL,
+                                             monkey_net_marshal_VOID__UINT_UINT_POINTER,
+                                             G_TYPE_NONE,
+                                             3,G_TYPE_UINT,G_TYPE_UINT,G_TYPE_POINTER);
         
         signals[CONNECTION_CLOSED]= g_signal_new ("connection-closed",
                                                   G_TYPE_FROM_CLASS (klass),
@@ -216,7 +235,7 @@ GType monkey_message_handler_get_type(void) {
         return monkey_message_handler_type;
 }
 
-void parse_message(MonkeyMessageHandler * mnh,
+void parse_message(MonkeyMessageHandler * mmh,
                    guint8 * message) {
 
         struct Test {
@@ -231,14 +250,25 @@ void parse_message(MonkeyMessageHandler * mnh,
 
         switch( t->message_type ) {
         case SEND_MESSAGE :
-                g_signal_emit( G_OBJECT(mnh),signals[RECV_MESSAGE],0,
+                g_signal_emit( G_OBJECT(mmh),signals[RECV_MESSAGE],0,
                                g_ntohl(t->client_id),
                                t->message);               
                 break;
         case SEND_XML_MESSAGE :
-                parse_xml_message( mnh,
+                parse_xml_message( mmh,
                                    message);
-                break;             
+                break;
+        case SEND_BUBBLE_ARRAY :
+                parse_bubble_array(mmh,
+                                   message);
+                break;
+        case SEND_ADD_BUBBLE :
+                parse_add_bubble(mmh,message);
+                break;
+        case SEND_START :
+                g_signal_emit( G_OBJECT(mmh),signals[RECV_START],0);
+                break;
+
         default :
                 break;
         }
@@ -246,7 +276,7 @@ void parse_message(MonkeyMessageHandler * mnh,
 
 }
 
-void parse_xml_message(MonkeyMessageHandler * mnh,
+void parse_xml_message(MonkeyMessageHandler * mmh,
                        guint8 * message) {
 
         guint8 message2[CHUNK_SIZE];
@@ -277,7 +307,7 @@ void parse_xml_message(MonkeyMessageHandler * mnh,
         count = 0;
         while( count < (t->chunk_count -1 )) {
                 
-                read_chunk(mnh,message2);
+                read_chunk(mmh,message2);
                 memcpy((xml_message+(CHUNK_SIZE*count)),message2,CHUNK_SIZE);
                 count++;
         }
@@ -295,18 +325,17 @@ void parse_xml_message(MonkeyMessageHandler * mnh,
                              NULL,NULL,0);
         
         
-        g_signal_emit( G_OBJECT(mnh),signals[RECV_XML_MESSAGE],0,
+        g_signal_emit( G_OBJECT(mmh),signals[RECV_XML_MESSAGE],0,
                        g_ntohl(t->client_id),
                        doc);               
         
 }
 
 void * handler_loop(MonkeyMessageHandler * mmh) {
-        guint8  message[32];
+        guint8  message[CHUNK_SIZE];
         
         while( PRIVATE(mmh)->is_running) {
-                g_log(G_LOG_DOMAIN,G_LOG_LEVEL_DEBUG,"Waiting for incoming data\n");
-                memset(message,0,32);
+                memset(message,0,CHUNK_SIZE);
                 if(read_chunk(mmh,message) ) {
                         parse_message(mmh,message);
                 }
@@ -458,6 +487,168 @@ void monkey_message_handler_send_xml_message(MonkeyMessageHandler * mmh,
         
 }
 
-void monkey_message_handler_join(MonkeyMessageHandler * mnh) {
-        g_thread_join( PRIVATE(mnh)->main_thread);
+void monkey_message_handler_join(MonkeyMessageHandler * mmh) {
+        g_thread_join( PRIVATE(mmh)->main_thread);
 }
+
+void monkey_message_handler_send_bubble_array( MonkeyMessageHandler * mmh,
+                                               guint32 monkey_id,
+                                               guint8  bubbles_count,
+                                               Color * bubbles) {
+
+        guint8 message[CHUNK_SIZE];
+        int i,j;
+
+        struct Test {
+                guint8 message_type;
+                guint32 monkey_id;
+                guint8 bubbles_count;
+        };
+
+        struct Test * t;
+
+
+        t = (struct Test *)  message;
+        memset(t,0,CHUNK_SIZE);
+        
+        t->message_type = SEND_BUBBLE_ARRAY;
+        
+        t->monkey_id = htonl( monkey_id);
+        t->bubbles_count = bubbles_count;
+        j = sizeof(struct Test);
+
+        for(i = 0 ; i < bubbles_count; i++ ){
+                if(j > CHUNK_SIZE) {
+                        write_chunk(mmh,message,1);
+                        j = 0;
+                        memset(message,0,CHUNK_SIZE);                        
+                }
+
+                message[j] = bubbles[i];
+                j++;
+
+        }
+
+        write_chunk(mmh,message,1);
+
+}
+
+void parse_bubble_array(MonkeyMessageHandler * mmh,
+                        guint8 * message) {
+
+        int i,j;
+        Color * bubbles;
+        guint32 monkey_id;
+        guint8 bubble_count;
+
+        struct Test {
+                guint8 message_type;
+                guint32 monkey_id;
+                guint8 bubble_count;
+        };
+
+        struct Test * t;
+  
+        t = (struct Test *)  message;
+        g_print("bubble count %d\n",t->bubble_count);
+        bubbles = g_malloc( t->bubble_count);
+
+        monkey_id = g_ntohl( t->monkey_id);
+        bubble_count = t->bubble_count;
+        j = sizeof(struct Test);
+
+        for(i = 0;  i < bubble_count ; i++) {
+                if( j >= CHUNK_SIZE) {
+                        g_print("read chunck\n");
+                        read_chunk(mmh,message);
+                        j = 0;
+                        
+                        g_print("readed chunck\n");
+                }
+
+                bubbles[i] = message[j];
+
+                g_print("color[%d] %d\n",i,bubbles[i]);
+                j++;
+        }
+
+        g_signal_emit( G_OBJECT(mmh),signals[RECV_BUBBLE_ARRAY],0,
+                       monkey_id,
+                       bubble_count,
+                       bubbles);       
+        
+}
+                     
+void monkey_message_handler_send_add_bubble  (MonkeyMessageHandler * mmh,
+					      guint32 monkey_id,
+					      Color color) {
+
+        guint8 message[CHUNK_SIZE];
+
+        struct Test {
+                guint8 message_type;
+                guint32 monkey_id;
+                Color bubble;
+        };
+
+        struct Test * t;
+
+
+        t = (struct Test *)  message;
+        memset(t,0,CHUNK_SIZE);
+        
+        t->message_type = SEND_ADD_BUBBLE;
+        
+        t->monkey_id = htonl( monkey_id);
+        t->bubble = color;
+        write_chunk(mmh,message,1);
+
+}
+
+void parse_add_bubble(MonkeyMessageHandler * mmh,
+                      guint8 * message) {
+        struct Test {
+                guint8 message_type;
+                guint32 monkey_id;
+                guint8 bubble;
+        };
+
+        struct Test * t;
+  
+        t = (struct Test *)  message;
+
+        t->monkey_id = g_ntohl( t->monkey_id);
+        
+        g_signal_emit( G_OBJECT(mmh),signals[RECV_ADD_BUBBLE],0,
+                       t->monkey_id,
+                       t->bubble);     
+ 
+}
+
+void monkey_message_handler_send_shoot       (MonkeyMessageHandler * mmh,
+					      guint32 monkey_id,
+					      guint32 time,
+                                              gfloat angle) {
+        g_print("send shoot %f \n",angle);
+}
+
+
+void monkey_message_handler_send_winlost     (MonkeyMessageHandler * mmh,
+					      guint32 monkey_id,
+					      guint8 win_lost) {
+}
+
+
+void monkey_message_handler_send_start       (MonkeyMessageHandler * mmh) {
+
+        guint8 message[CHUNK_SIZE];
+
+
+
+        memset(message,0,CHUNK_SIZE);
+        message[0] = SEND_START;
+        write_chunk(mmh,message,1);
+
+}
+
+

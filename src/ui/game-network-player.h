@@ -24,6 +24,7 @@
 #include "game.h"
 #include "monkey-canvas.h"
 #include "monkey.h"
+#include "monkey-message-handler.h"
 G_BEGIN_DECLS
 
 #define TYPE_GAME_NETWORK_PLAYER            (game_network_player_get_type())
@@ -50,7 +51,11 @@ typedef struct {
 
 GType game_network_player_get_type(void);
 
-GameNetworkPlayer * game_network_player_new(GtkWidget * window,MonkeyCanvas * canvas,int level,gint score);
+GameNetworkPlayer * game_network_player_new(GtkWidget * window,
+														  MonkeyCanvas * canvas,
+														  Monkey * m,
+														  MonkeyMessageHandler * handler,
+														  int monkey_id);
 
 gint game_network_player_get_score(GameNetworkPlayer * g);
 gboolean game_network_player_is_lost(GameNetworkPlayer * g);

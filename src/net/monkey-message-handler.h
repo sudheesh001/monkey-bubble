@@ -1,3 +1,4 @@
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
 /* monkey-message-handler.h - 
  * Copyright (C) 2004 Laurent Belmonte <lolo3d@tuxfamily.org>
  *
@@ -57,6 +58,11 @@ typedef struct {
 
   void (* recv_start)         (MonkeyMessageHandler * mmh);
 
+	 void (*recv_bubble_array) (MonkeyMessageHandler * mmh,
+										 guint32 monkey_id,
+										 guint32 bubble_count,
+										 Color * bubbles);
+
   void (* recv_message)          (MonkeyMessageHandler * mmh,
 				  guint32 client_id,
 				  gchar * message);
@@ -91,6 +97,11 @@ void monkey_message_handler_send_shoot       (MonkeyMessageHandler * mmh,
 					      guint32 monkey_id,
 					      guint32 time,
 					      gfloat angle);
+
+void monkey_message_handler_send_bubble_array( MonkeyMessageHandler * mmh,
+															  guint32 monkey_id,
+															  guint8  bubbles_count,
+															  Color * bubbles);
 
 void monkey_message_handler_send_winlost     (MonkeyMessageHandler * mmh,
 					      guint32 monkey_id,

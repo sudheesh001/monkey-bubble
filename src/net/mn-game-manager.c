@@ -222,6 +222,7 @@ static void add_client_to_game(MnGameManager * manager,
                                     client);
 
 
+        client->game = ng;
         if( ng->game_owner == NULL ) {
                 ng->game_owner = client;
         }

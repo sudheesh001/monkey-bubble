@@ -30,6 +30,7 @@
 struct MonkeyNetworkGamePrivate {
         GList * monkeys;
         GList * clients;
+        NetworkClient * owner;
 };
 
 #define PRIVATE( MonkeyNetworkGame ) (MonkeyNetworkGame->private)
@@ -41,11 +42,14 @@ void monkey_network_game_finalize(GObject *);
 
 void start_new_game(MonkeyNetworkGame * g) {
         GList * next;
-        Bubble * bubbles[INIT_BUBBLES_COUNT];
+        Bubble  * bubbles[INIT_BUBBLES_COUNT];
+        Color  colors[INIT_BUBBLES_COUNT];
         int i;
 
 	 for(i = 0; i < INIT_BUBBLES_COUNT; i++ ) {
-                 bubbles[i] = bubble_new(rand()%COLORS_COUNT,0,0);
+                 Color c = rand()%COLORS_COUNT;
+                 colors[i] = c;
+                 bubbles[i] = bubble_new(c,0,0);
          }
 
         next = PRIVATE(g)->clients;
@@ -58,7 +62,33 @@ void start_new_game(MonkeyNetworkGame * g) {
                 board_init( playground_get_board( monkey_get_playground( m )),
                             bubbles,INIT_BUBBLES_COUNT);
                 
+                monkey_message_handler_send_bubble_array(nc->handler,
+                                                         nc->client_id,
+                                                         INIT_BUBBLES_COUNT,
+                                                         colors);
+
+                monkey_message_handler_send_add_bubble(nc->handler,
+                                                       nc->client_id,
+                                                       1);
+
+
+                monkey_message_handler_send_add_bubble(nc->handler,
+                                                       nc->client_id,
+                                                       1);
                 next = g_list_next(next);
+
+        }
+
+
+        next = PRIVATE(g)->clients;
+        
+        while( next != NULL) {
+                NetworkClient * nc;
+                nc = (NetworkClient *)next->data;
+
+                monkey_message_handler_send_start(nc->handler);
+                next = g_list_next(next);
+
         }
                
 }
@@ -73,7 +103,7 @@ MonkeyNetworkGame *monkey_network_game_new(NetworkGame * game) {
 
         // listen all players
         PRIVATE(mng)->clients = game->clients;
-
+        PRIVATE(mng)->owner = game->game_owner;
         start_new_game(mng);
         // create all monkeys
 

@@ -52,10 +52,9 @@ typedef struct NetworkClient {
         guint          client_id;
         gchar *        client_name;
         gboolean       ready;
-        MonkeyMessageHandler * handler;
-	 NetworkGame * game;
+  MonkeyMessageHandler * handler;
+  NetworkGame * game;
 } NetworkClient;
-
 
 
 
@@ -65,6 +64,7 @@ struct NetworkGame {
         GList *               clients;
         NetworkClient *       game_owner;
 };
+
 
 GType monkey_network_game_get_type(void);
 MonkeyNetworkGame * monkey_network_game_new(NetworkGame * ng);

@@ -60,7 +60,10 @@ struct GameNetworkPlayerPrivate {
     guint shoot_key;
     GdkModifierType shoot_key_modifier;
 
+  MonkeyMessageHandler * handler;
     gint notify_id;
+
+	 int monkey_id;
 };
 
 static void game_network_player_add_to_score(GameNetworkPlayer * g,gint points);
@@ -78,7 +81,6 @@ static void game_network_player_bubble_shot(Monkey * monkey,
 				      Bubble * bubble,
 				      GameNetworkPlayer * game);
 
-static void game_network_player_add_bubble(GameNetworkPlayer * game);
 
 static void game_network_player_start(Game * game);
 static void game_network_player_stop(Game * game);
@@ -223,7 +225,36 @@ game_network_player_config_notify (GConfClient *client,
 }
 
 
-GameNetworkPlayer * game_network_player_new(GtkWidget * window,MonkeyCanvas * canvas, int level,gint score) {
+void recv_add_bubble(MonkeyMessageHandler * handler,
+							Color color,
+							GameNetworkPlayer * game) {
+	   Monkey * monkey;
+
+
+		monkey = PRIVATE(game)->monkey;
+
+		shooter_add_bubble(monkey_get_shooter(monkey),bubble_new(color,0,0));
+  
+}
+
+static void game_network_player_bubble_shot( Monkey * monkey,
+															Bubble * bubble,
+															GameNetworkPlayer * game) {
+
+
+
+
+  g_assert( IS_GAME_NETWORK_PLAYER(game));
+		
+  monkey_message_handler_send_shoot(PRIVATE(game)->handler,
+												PRIVATE(game)->monkey_id,
+												get_time(game),
+												shooter_get_angle(monkey_get_shooter(monkey)));
+}
+
+
+GameNetworkPlayer * game_network_player_new(GtkWidget * window,MonkeyCanvas * canvas,Monkey * m,
+														  MonkeyMessageHandler * handler,int monkey_id) {
   GameNetworkPlayer * game;
 
 
@@ -236,17 +267,19 @@ GameNetworkPlayer * game_network_player_new(GtkWidget * window,MonkeyCanvas * ca
                         GCONF_CLIENT_PRELOAD_NONE, NULL);
 
   monkey_canvas_clear(canvas);
-  PRIVATE(game)->monkey = 
-    monkey_new_level_from_file(DATADIR"/monkey-bubble/levels",
-			       level);
+  PRIVATE(game)->monkey =  m;
   PRIVATE(game)->display = 
     monkey_view_new(canvas, 
-		 PRIVATE(game)->monkey,0,0,TRUE);
+		    PRIVATE(game)->monkey,0,0,TRUE);
   
   PRIVATE(game)->canvas = canvas;
   PRIVATE(game)->window = window;
-  
-  monkey_view_set_score(PRIVATE(game)->display,level+1);
+  PRIVATE(game)->handler = handler;
+
+  g_signal_connect( G_OBJECT( handler), "recv-add-bubble",
+		    G_CALLBACK(recv_add_bubble),game);
+
+  monkey_view_set_score(PRIVATE(game)->display,1);
   g_signal_connect( G_OBJECT( window) ,"key-press-event",
 		    GTK_SIGNAL_FUNC (game_network_player_key_pressed),game);
   
@@ -264,6 +297,7 @@ GameNetworkPlayer * game_network_player_new(GtkWidget * window,MonkeyCanvas * ca
   PRIVATE(game)->paused_layer =
     monkey_canvas_append_layer(canvas,0,0);
 
+  PRIVATE(game)->monkey_id = monkey_id;
 
   PRIVATE(game)->clock = clock_new();
   PRIVATE(game)->timeout_id = 
@@ -274,9 +308,9 @@ GameNetworkPlayer * game_network_player_new(GtkWidget * window,MonkeyCanvas * ca
 
   PRIVATE(game)->lost = FALSE;
   
-  PRIVATE(game)->score = score;
+  PRIVATE(game)->score = 1;
 
-  monkey_view_set_points( PRIVATE(game)->display,score);
+  monkey_view_set_points( PRIVATE(game)->display,1);
 
   g_signal_connect( G_OBJECT( PRIVATE(game)->monkey),
 		    "bubble-sticked",
@@ -299,9 +333,6 @@ GameNetworkPlayer * game_network_player_new(GtkWidget * window,MonkeyCanvas * ca
 		    game);
 
 
-  game_network_player_add_bubble(game);
-
-  game_network_player_add_bubble(game);
 
 
   game_network_player_conf_keyboard(game);
@@ -611,41 +642,6 @@ static void game_network_player_add_to_score(GameNetworkPlayer * g,gint points) 
   monkey_view_set_points(PRIVATE(g)->display,PRIVATE(g)->score);  
 }
 
-static void game_network_player_add_bubble(GameNetworkPlayer * game) {
-  gint * colors_count;
-  gint rnd,count;
-  Monkey * monkey;
-
-  g_assert( IS_GAME_NETWORK_PLAYER(game));
-
-  monkey = PRIVATE(game)->monkey;
-  colors_count = board_get_colors_count(playground_get_board(monkey_get_playground(monkey)));
-
-  rnd = rand()%COLORS_COUNT;
-  count = 0;
-  while( rnd >= 0 ) {
-    count++;
-    count %= COLORS_COUNT;
-
-    while(colors_count[count] == 0) {
-      count++;
-      count %= COLORS_COUNT;
-    }
-    rnd--;
-  }
-  
-  shooter_add_bubble(monkey_get_shooter(monkey),bubble_new(count,0,0));
-
-}
-static void game_network_player_bubble_shot( Monkey * monkey,
-				      Bubble * bubble,
-				       GameNetworkPlayer * game) {
-
-
-  g_assert( IS_GAME_NETWORK_PLAYER(game));
-
-  game_network_player_add_bubble(GAME_NETWORK_PLAYER(game));
-}
 
 void game_network_player_fire_changed(GameNetworkPlayer * game) {	
   game_notify_changed( GAME(game));

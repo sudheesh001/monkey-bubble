@@ -33,6 +33,9 @@ struct GameNetworkPlayerManagerPrivate {
   GameNetworkPlayer * current_game;
   int current_level;
   gint current_score;
+  MonkeyMessageHandler * handler;
+  Monkey * monkey;
+	 int client_id;
 };
 
 static void game_network_player_manager_state_changed(Game * game,GameNetworkPlayerManager * g);
@@ -97,7 +100,7 @@ GType game_network_player_manager_get_type(void) {
 
 
 GameNetworkPlayerManager * game_network_player_manager_new(GtkWidget * window,MonkeyCanvas * canvas,
-																			  MonkeyMessageHandler * handler) {
+																			  MonkeyMessageHandler * handler,int client_id) {
 
   GameNetworkPlayerManager * game_network_player_manager;
   game_network_player_manager = GAME_NETWORK_PLAYER_MANAGER (g_object_new (TYPE_GAME_NETWORK_PLAYER_MANAGER, NULL));
@@ -105,7 +108,9 @@ GameNetworkPlayerManager * game_network_player_manager_new(GtkWidget * window,Mo
   PRIVATE(game_network_player_manager)->canvas = canvas;
   PRIVATE(game_network_player_manager)->window = window;
   PRIVATE(game_network_player_manager)->current_game = NULL;
-  
+
+  PRIVATE(game_network_player_manager)->handler = handler;
+  PRIVATE(game_network_player_manager)->client_id = client_id;
   return game_network_player_manager;
 }
 
@@ -200,18 +205,26 @@ static void game_network_player_manager_state_changed(Game * game,
 }
 
 static void game_network_player_manager_start_level(GameNetworkPlayerManager * g) {
-  GameNetworkPlayer * game;
+
+}
+
+gboolean start_timeout(gpointer data) {
   GameNetworkPlayerManager * manager;
+  GameNetworkPlayer * game;
+
+  manager = GAME_NETWORK_PLAYER_MANAGER(data);
+
+
   UiMain * ui_main =  ui_main_get_instance();
 
-  manager = GAME_NETWORK_PLAYER_MANAGER(g);
 
   ui_main_set_game(ui_main,
 		   GAME( game = game_network_player_new( PRIVATE(manager)->window,
-						   PRIVATE(manager)->canvas,
-						   PRIVATE(manager)->current_level,
-						   PRIVATE(manager)->current_score)									 
-			 ));
+							 PRIVATE(manager)->canvas,
+							 PRIVATE(manager)->monkey,
+															  PRIVATE(manager)->handler,
+															  PRIVATE(manager)->client_id))
+		   );
 
 
   game_start( GAME(game) );
@@ -221,7 +234,52 @@ static void game_network_player_manager_start_level(GameNetworkPlayerManager * g
   PRIVATE(manager)->current_game = game;
   monkey_canvas_paint( PRIVATE(manager)->canvas);
 
+  return FALSE;
 }
+
+static void recv_add_bubble(MonkeyMessageHandler * handler,
+		     guint32 monkey_id,
+		     Color bubble,
+		     GameNetworkPlayerManager * manager) {
+  g_print("add bubble %d\n",bubble);
+  shooter_add_bubble(monkey_get_shooter(PRIVATE(manager)->monkey),bubble_new(bubble,0,0));
+  
+}
+
+void recv_start(MonkeyMessageHandler * handler,
+		GameNetworkPlayerManager * manager) {
+  g_print("recv start \n");
+
+  g_idle_add(start_timeout,manager);
+}
+void recv_bubble_array(MonkeyMessageHandler * handler,
+		       guint32 monkey_id,
+		       guint8 bubble_count,
+		       Color * colors,
+		       GameNetworkPlayerManager * manager) {
+
+  Monkey * m;
+  Bubble ** bubbles;
+
+  int i;
+  g_print("recv bubble array %d,%d\n",monkey_id,bubble_count);
+  
+  m = monkey_new();
+  bubbles = g_malloc(bubble_count*( sizeof(Bubble *)));
+  
+  for(i = 0 ; i < bubble_count; i++) {
+    bubbles[i] = bubble_new(colors[i],0,0);
+    g_print("bubble %d\n",colors[i]);
+  }
+
+  board_init( playground_get_board( monkey_get_playground( m )),
+	      bubbles,bubble_count);
+
+  PRIVATE(manager)->monkey = m;
+
+
+}
+
 
 void game_network_player_manager_start(GameManager * g) {
 	 
@@ -231,7 +289,16 @@ void game_network_player_manager_start(GameManager * g) {
 
   PRIVATE(manager)->current_level = 0;
   PRIVATE(manager)->current_score = 0;
-  game_network_player_manager_start_level(manager);
+  //  game_network_player_manager_start_level(manager);
+  
+  g_signal_connect( G_OBJECT( PRIVATE(manager)->handler), "recv-bubble-array",
+		    G_CALLBACK(recv_bubble_array),manager);
+
+  g_signal_connect( G_OBJECT( PRIVATE(manager)->handler), "recv-add-bubble",
+		    G_CALLBACK(recv_add_bubble),manager);
+
+  g_signal_connect( G_OBJECT( PRIVATE(manager)->handler), "recv-start",
+		    G_CALLBACK(recv_start),manager);
 
 }
 

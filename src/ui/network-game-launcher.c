@@ -547,7 +547,8 @@ gboolean start_game_idle(gpointer data) {
         ui = ui_main_get_instance();
         manager = game_network_player_manager_new(ui_main_get_window(ui),
                                                   ui_main_get_canvas(ui),
-                                                  PRIVATE(launcher)->handler);
+                                                  PRIVATE(launcher)->handler,
+                                                  PRIVATE(launcher)->client_id);
         ui_main_set_game_manager(ui,
                                  GAME_MANAGER(manager));
         return FALSE;

@@ -1,3 +1,33 @@
+2004-03-09  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	more new network code .. 
+
+	* src/monkey/color.h:
+	* src/net/mn-game-manager.c: (add_client_to_game):
+	* src/net/monkey-marshal.list:
+	* src/net/monkey-message-handler.c:
+	(monkey_message_handler_class_init), (parse_message),
+	(parse_xml_message), (handler_loop), (monkey_message_handler_join),
+	(monkey_message_handler_send_bubble_array), (parse_bubble_array),
+	(monkey_message_handler_send_add_bubble), (parse_add_bubble),
+	(monkey_message_handler_send_shoot),
+	(monkey_message_handler_send_winlost),
+	(monkey_message_handler_send_start):
+	* src/net/monkey-message-handler.h:
+	* src/net/monkey-network-game.c: (start_new_game),
+	(monkey_network_game_new):
+	* src/net/monkey-network-game.h:
+	* src/ui/game-network-player-manager.c:
+	(game_network_player_manager_new),
+	(game_network_player_manager_start_level), (start_timeout),
+	(recv_add_bubble), (recv_start), (recv_bubble_array),
+	(game_network_player_manager_start):
+	* src/ui/game-network-player-manager.h:
+	* src/ui/game-network-player.c: (recv_add_bubble),
+	(game_network_player_bubble_shot), (game_network_player_new):
+	* src/ui/game-network-player.h:
+	* src/ui/network-game-launcher.c: (start_game_idle):
+
 2004-03-05  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	some new network code
