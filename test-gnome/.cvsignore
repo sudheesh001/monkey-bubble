@@ -1,7 +1,0 @@
-.deps
-.libs
-*.o
-test-gnome
-test-druid
-Makefile
-Makefile.in
