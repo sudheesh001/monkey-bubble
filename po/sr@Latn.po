@@ -1,0 +1,3894 @@
+# Serbian translation of monkey-bubble
+# Courtesy of Prevod.org team (http://prevod.org/) -- 2004.
+#
+# This file is distributed under the same license as the monkey-bubble package.
+#
+# Maintainer: Danilo Šegan <dsegan@gmx.net>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: monkey-bubble\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-02-22 05:36+0100\n"
+"PO-Revision-Date: 2004-02-22 07:47+0100\n"
+"Last-Translator: Danilo Šegan <danilo@prevod.org>\n"
+"Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3;    plural=n%10==1 && n%100!=11 ? 0 :    n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#: data/keybinding.glade.h:1
+msgid "Keyboard Shortcuts"
+msgstr "Prečice sa tastature"
+
+#: data/keybinding.glade.h:2
+msgid "_Shortcut Keys:"
+msgstr "_Prečice:"
+
+#: data/monkey-bubble.glade.h:1 monkey-bubble.desktop.in.h:1
+msgid "Monkey Bubble"
+msgstr "Majmun sa klikerima"
+
+#: data/monkey-bubble.glade.h:2
+msgid "New 1 player"
+msgstr "Nova, 1 igrač"
+
+#: data/monkey-bubble.glade.h:3
+msgid "New 2 players"
+msgstr "Nova, 2 igrača"
+
+#: data/monkey-bubble.glade.h:4 src/ui/ui-main.c:393 src/ui/ui-main.c:523
+msgid "Pause game"
+msgstr "Pauziraj igru"
+
+#: data/monkey-bubble.glade.h:5 src/ui/keyboard-properties.c:85
+msgid "Stop game"
+msgstr "Zaustavi igru"
+
+#: data/monkey-bubble.glade.h:6
+msgid "_About"
+msgstr "_O programu"
+
+#: data/monkey-bubble.glade.h:7
+msgid "_Contents"
+msgstr "_Sadržaj"
+
+#: data/monkey-bubble.glade.h:8
+msgid "_Game"
+msgstr "_Igra"
+
+#: data/monkey-bubble.glade.h:9
+msgid "_Help"
+msgstr "_Pomoć"
+
+#: data/monkey-bubble.glade.h:10
+msgid "_Settings"
+msgstr "P_odešavanja"
+
+#: data/monkey-bubble.schemas.in.h:1
+msgid "1 player game"
+msgstr "Igra za 1 igrača"
+
+#: data/monkey-bubble.schemas.in.h:2
+msgid "2 players game"
+msgstr "Igra za 2 igrača"
+
+#: data/monkey-bubble.schemas.in.h:3
+msgid "F1"
+msgstr "F1"
+
+#: data/monkey-bubble.schemas.in.h:4
+msgid "F2"
+msgstr "F2"
+
+#: data/monkey-bubble.schemas.in.h:5
+msgid "Left"
+msgstr "Levo"
+
+#: data/monkey-bubble.schemas.in.h:6
+msgid "Pause"
+msgstr "Pauza"
+
+#: data/monkey-bubble.schemas.in.h:7
+msgid "Pause the game"
+msgstr "Pauziraj igru"
+
+#: data/monkey-bubble.schemas.in.h:8
+msgid "Quit the game"
+msgstr "Završi igru"
+
+#: data/monkey-bubble.schemas.in.h:9
+msgid "Right"
+msgstr "Desno"
+
+#: data/monkey-bubble.schemas.in.h:10
+msgid "Stop the game"
+msgstr "Zaustavi igru"
+
+#: data/monkey-bubble.schemas.in.h:11
+msgid "Up"
+msgstr "Gore"
+
+#: data/monkey-bubble.schemas.in.h:12
+msgid "d"
+msgstr "d"
+
+#: data/monkey-bubble.schemas.in.h:13
+msgid "f"
+msgstr "f"
+
+#: data/monkey-bubble.schemas.in.h:14
+msgid "left key for player one"
+msgstr "levi taster za prvog igrača"
+
+#: data/monkey-bubble.schemas.in.h:15
+msgid "left key for player two"
+msgstr "levi taster za drugog igrača"
+
+#: data/monkey-bubble.schemas.in.h:16
+msgid "right key for player one"
+msgstr "desni taster za prvog igrača"
+
+#: data/monkey-bubble.schemas.in.h:17
+msgid "right key for player two"
+msgstr "desni taster za drugog igrača"
+
+#: data/monkey-bubble.schemas.in.h:18
+msgid "s"
+msgstr "s"
+
+#: data/monkey-bubble.schemas.in.h:19
+msgid "shoot key for player one"
+msgstr "taster za paljbu za prvog igrača"
+
+#: data/monkey-bubble.schemas.in.h:20
+msgid "shoot key for player two"
+msgstr "taster za paljbu za drugog igrača"
+
+#: data/netgame.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: data/netgame.glade.h:2
+msgid "Network game"
+msgstr "Mrežna igra"
+
+#: data/netgame.glade.h:3
+msgid "Players"
+msgstr "Igrači"
+
+#: data/netgame.glade.h:4 src/ui/keyboard-properties.c:87
+msgid "Quit game"
+msgstr "Završi igru"
+
+#: data/netgame.glade.h:5
+msgid "Ready"
+msgstr "Spreman"
+
+#: data/netgame.glade.h:6
+msgid "Start Game"
+msgstr "Počni igru"
+
+#: data/netgame.glade.h:7
+msgid "_Go"
+msgstr "_Idi"
+
+#: data/netgame.glade.h:8
+msgid "_Server"
+msgstr "_Server"
+
+#: monkey-bubble.desktop.in.h:2
+msgid "Monkey Bubble Arcade Game"
+msgstr "Arkadna igra Majmun s klikerima"
+
+#: src/ui/eggcellrendererkeys.c:160 src/ui/eggcellrendererkeys.c:161
+msgid "Accelerator key"
+msgstr "Taster prečice"
+
+#: src/ui/eggcellrendererkeys.c:170 src/ui/eggcellrendererkeys.c:171
+msgid "Accelerator modifiers"
+msgstr "Izmenjivači prečice"
+
+#: src/ui/eggcellrendererkeys.c:180
+msgid "Accelerator Mode"
+msgstr "Režim prečice"
+
+#: src/ui/eggcellrendererkeys.c:181
+msgid "The type of accelerator."
+msgstr "Vrsta prečice."
+
+#: src/ui/eggcellrendererkeys.c:219 src/ui/keyboard-properties.c:764
+msgid "Disabled"
+msgstr "Isključeno"
+
+#: src/ui/eggcellrendererkeys.c:330 src/ui/eggcellrendererkeys.c:568
+msgid "Type a new accelerator, or press Backspace to clear"
+msgstr "Ukucajte novu prečicu, ili pritisnite „Backspace“ da uklonite postojeću"
+
+#: src/ui/eggcellrendererkeys.c:571
+msgid "Type a new accelerator"
+msgstr "Ukucajte novu prečicu"
+
+#: src/ui/keyboard-properties.c:79
+msgid "New game 1 player"
+msgstr "Nova igra za 1 igrača"
+
+#: src/ui/keyboard-properties.c:81
+msgid "New game 2 player"
+msgstr "Nova igra za 2 igrača"
+
+#: src/ui/keyboard-properties.c:83
+msgid "Pause/Resume"
+msgstr "Pauziraj/nastavi"
+
+#: src/ui/keyboard-properties.c:93
+msgid "Full Screen"
+msgstr "Ceo ekran"
+
+#: src/ui/keyboard-properties.c:95
+msgid "Normal Size"
+msgstr "Obična veličina"
+
+#: src/ui/keyboard-properties.c:100 src/ui/keyboard-properties.c:110
+msgid "aim left"
+msgstr "nišani levo"
+
+#: src/ui/keyboard-properties.c:102 src/ui/keyboard-properties.c:112
+msgid "aim right"
+msgstr "nišani desno"
+
+#: src/ui/keyboard-properties.c:104 src/ui/keyboard-properties.c:114
+msgid "shoot"
+msgstr "pali"
+
+#: src/ui/keyboard-properties.c:121
+msgid "Player 1"
+msgstr "1. igrač"
+
+#: src/ui/keyboard-properties.c:122
+msgid "Player 2"
+msgstr "2. igrač"
+
+#: src/ui/keyboard-properties.c:123
+msgid "Game"
+msgstr "Igra"
+
+#: src/ui/keyboard-properties.c:124
+msgid "View"
+msgstr "Pregled"
+
+#: src/ui/keyboard-properties.c:337
+#, c-format
+msgid "There was an error loading config from %s. (%s)\n"
+msgstr "Došlo je do greške pri učitavanju podešavanja iz %s. (%s)\n"
+
+#: src/ui/keyboard-properties.c:351
+#, c-format
+msgid ""
+"There was an error subscribing to notification of terminal keybinding "
+"changes. (%s)\n"
+msgstr "Došlo je do greške pri pretplaćivanju na obaveštenja o izmeni prečica terminala. (%s)\n"
+
+#: src/ui/keyboard-properties.c:394
+#, c-format
+msgid "There was an error loading a terminal keybinding. (%s)\n"
+msgstr "Došlo je do greške pri učitavanju prečica terminala. (%s)\n"
+
+#: src/ui/keyboard-properties.c:410
+#, c-format
+msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
+msgstr "Vrednost ključa podešavanja %s nije ispravna; vrednost je „%s“\n"
+
+#: src/ui/keyboard-properties.c:433
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menubar access "
+"keys. (%s)\n"
+msgstr "Došlo je do greške pri učitavanju vrednosti podešavanja o korišćenju prečica u meniju. (%s)\n"
+
+#: src/ui/keyboard-properties.c:447
+#, c-format
+msgid ""
+"There was an error subscribing to notification on changes on whether to use "
+"menubar access keys (%s)\n"
+msgstr "Došlo je do greške pri pretplaćivanju na obaveštenja o izmeni da li se koriste prečice menija. (%s)\n"
+
+#: src/ui/keyboard-properties.c:458
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menu "
+"accelerators. (%s)\n"
+msgstr "Došlo je do greške pri učitavanju vrednosti podešavanja o korišćenju slovnih prečica u meniju. (%s)\n"
+
+#: src/ui/keyboard-properties.c:474
+#, c-format
+msgid ""
+"There was an error subscribing to notification for use_menu_accelerators (%"
+"s)\n"
+msgstr "Došlo je do greške pri pretplaćivanju na obaveštenja o use_menu_accelerators (%s)\n"
+
+#: src/ui/keyboard-properties.c:824
+#, c-format
+msgid "Error propagating accelerator change to configuration database: %s\n"
+msgstr "Greška pri rasprostiranju izmene prečica u bazu sa podešavanjima: %s\n"
+
+#: src/ui/keyboard-properties.c:993
+#, c-format
+msgid "Error setting new accelerator in configuration database: %s\n"
+msgstr "Greška pri postavljanju nove prečice u bazi sa podešavanjima: %s\n"
+
+#: src/ui/keyboard-properties.c:1092
+msgid "_Action"
+msgstr "_Akcije"
+
+#: src/ui/keyboard-properties.c:1114
+msgid "Shortcut _Key"
+msgstr "_Taster prečice"
+
+#: src/ui/ui-main.c:516
+msgid "Resume game"
+msgstr "Nastavi igru"
+
+#: src/ui/ui-main.c:570
+msgid "translator_credits"
+msgstr ""
+"Danilo Šegan <danilo@prevod.org>\n"
+"\n"
+"Prevod.org — prevod na srpski jezik."
+
+#: src/ui/ui-main.c:599
+#, c-format
+msgid "There was an error displaying help: %s"
+msgstr "Javila se greška pri prikazu pomoći: %s"
+
+#~ msgid "Base Card: "
+#~ msgstr "Osnovna karta:  "
+
+#~ msgid "Base Card: Ace"
+#~ msgstr "Osnovna karta: Kec"
+
+#~ msgid "Base Card: Jack"
+#~ msgstr "Osnovna karta: Žandarm"
+
+#~ msgid "Base Card: King"
+#~ msgstr "Osnovna karta: Kralj"
+
+#~ msgid "Base Card: Queen"
+#~ msgstr "Osnovna karta: Kraljica"
+
+#~ msgid "Deal more cards"
+#~ msgstr "Podeli još karata"
+
+#~ msgid "Stock left:"
+#~ msgstr "Preostalo na gomili:  "
+
+#~ msgid "Stock left: 0"
+#~ msgstr "Preostalo na gomili:  0"
+
+#~ msgid "Try rearranging the cards"
+#~ msgstr "Probajte da preuredite raspored karata"
+
+#~ msgid "an empty foundation pile"
+#~ msgstr "prazna gomila na `temelju`"
+
+#~ msgid ""
+#~ "A list of strings that come in the form of a quintuple: name, wins, total "
+#~ "games played, best time (in seconds) and worst time (also in seconds). "
+#~ "Unplayed games do not need to be represented."
+#~ msgstr ""
+#~ "Spisak niski u obliku petorke: ime, pobeda, ukupno odigranih igara, "
+#~ "najbolje vreme (u sekundama) i najgore vreme (isto u sekundama). "
+#~ "Neodigrane igre se ne moraju uključiti."
+
+#~ msgid ""
+#~ "A string containing a list of files to use to describe the cards. The "
+#~ "format is obscure and defined by the gdk-card-image library"
+#~ msgstr ""
+#~ "Niz koji sadrži listu fajlova koji se upotrebljavaju pri opisu karata. "
+#~ "Format je nejasan i definisan od strane gdk-card-image biblioteke."
+
+#~ msgid "Statistics of games played"
+#~ msgstr "Statistika odigranih igara"
+
+#~ msgid "The game file to use"
+#~ msgstr "Datoteka igre koja će se koristiti"
+
+#~ msgid "The name of the scheme file containing the solitaire game to play."
+#~ msgstr "Ime fajla koji sadrži opis vrste pasijansa koji će se igrati."
+
+#~ msgid "What card style to use"
+#~ msgstr "Koji stil karata upotrebljavati"
+
+#~ msgid "Whether or not to show the toolbar"
+#~ msgstr "Da li prikazivati liniju sa alatima."
+
+#~ msgid "Whether or not to show the toolbar."
+#~ msgstr "Da li prikazivati liniju sa alatima."
+
+#~ msgid "Deal another round"
+#~ msgstr "Podeli još jednu ruku"
+
+#~ msgid "an empty foundation"
+#~ msgstr "Prazan `temelj`"
+
+#~ msgid "Move something on to an empty reserve"
+#~ msgstr "Postavite nešto u prazno mesto"
+
+#~ msgid "an empty Foundation"
+#~ msgstr "Prazan `temelj`"
+
+#~ msgid "an empty Tableau"
+#~ msgstr "prazna Talon gomila"
+
+#~ msgid "an empty Foundation pile"
+#~ msgstr "prazna gomila na `temelju`"
+
+#~ msgid "Deal a new card from the deck"
+#~ msgstr "Podeli novu kartu sa talona"
+
+#~ msgid "an empty bottom slot"
+#~ msgstr "Prazno polje na dnu"
+
+#~ msgid "an empty corner slot"
+#~ msgstr "Prazno polje u uglu"
+
+#~ msgid "an empty left slot"
+#~ msgstr "Prazno levo polje"
+
+#~ msgid "an empty right slot"
+#~ msgstr "Prazno desno polje"
+
+#~ msgid "an empty slot"
+#~ msgstr "Prazno polje"
+
+#~ msgid "an empty top slot"
+#~ msgstr "prazno gornje polje"
+
+#~ msgid "itself"
+#~ msgstr "samom sebi"
+
+#~ msgid "Move waste back to stock"
+#~ msgstr "Vrati `otpad` nazad na kup."
+
+#~ msgid "Redeals left:"
+#~ msgstr "Broj preostalih deljenja:  "
+
+#~ msgid "Reserve left:"
+#~ msgstr "Broj preostalih zamena:  "
+
+#~ msgid "empty slot on foundation"
+#~ msgstr "prazno polje na `temelju`"
+
+#~ msgid "empty space on tableau"
+#~ msgstr "prazan prostor na talonu"
+
+#~ msgid ""
+#~ "AisleRiot could not load its deck images.\n"
+#~ "\n"
+#~ "AisleRiot will now exit."
+#~ msgstr ""
+#~ "Pasijans nije mogao da učita slike za špil.\n"
+#~ "\n"
+#~ "Pasijans se sada zatvara."
+
+#~ msgid "Move a card to the Foundation"
+#~ msgstr "Razmislite o pomeranju karata sa `temelja`"
+
+#~ msgid "Move something into the empty Tableau slot"
+#~ msgstr "Postavite nešto u prazno mesto"
+
+#~ msgid "Consistency is key"
+#~ msgstr "Doslednost je ključna"
+
+#~ msgid "Fishing wire makes bad dental floss"
+#~ msgstr "Najlon za pecanje je loša zamena za konac za zube"
+
+#~ msgid "Have you read the help file?"
+#~ msgstr "Da li ste pročitali uputstvo?"
+
+#~ msgid "I could sure use a backrub right about now..."
+#~ msgstr "Baš bi mi trebala četka za trljanje leđa..."
+
+#~ msgid "If you're ever lost and alone in the woods, hug a tree"
+#~ msgstr "Ako se ikada zateknete sami i izgubljeni u šumi, zagrlite drvo"
+
+#~ msgid ""
+#~ "Just because a crosswalk looks like a hopscotch board doesn't mean it is "
+#~ "one"
+#~ msgstr "Pešački prelaz nije prostor za igranje školica,iako liči na njega"
+
+#~ msgid "Look both ways before you cross the street"
+#~ msgstr "Gledaj na obe strane pre nego pređeš ulicu"
+
+#~ msgid "Monitors won't give you Vitamin D -- but sunlight will..."
+#~ msgstr "Monitori vas neće snadbeti vitaminom D -- sunčeva svetlos hoće..."
+
+#~ msgid "Never blow in a dog's ear"
+#~ msgstr "Nikad ne duvaj u uho psa"
+
+#~ msgid "Odessa is a better game.  Really."
+#~ msgstr "Odesa je bolja igra. Stvarno."
+
+#~ msgid "Tourniquets are not recommended unless in the direst emergency"
+#~ msgstr "Steznici se ne preporučuju sem u najvećoj nevolji"
+
+#~ msgid "When without a stapler, a staple and a ruler will work"
+#~ msgstr "Kada ste bez alata za heftanje, heftalica i lenjir mogu poslužiti"
+
+#~ msgid "Congratulations."
+#~ msgstr "Čestitamo, pobedili ste!"
+
+#~ msgid "You won!!!"
+#~ msgstr "Vi ste pobedili!"
+
+#~ msgid "Game over."
+#~ msgstr "Igra je završena"
+
+#~ msgid "New Game"
+#~ msgstr "Nova Igra"
+
+#~ msgid "Select Game"
+#~ msgstr "Izaberite Igru"
+
+#~ msgid "Seed"
+#~ msgstr "Svrstaj"
+
+#~ msgid "Rules"
+#~ msgstr "Pravila"
+
+#~ msgid ""
+#~ "The game is over.\n"
+#~ "No hints are available"
+#~ msgstr ""
+#~ "Igra je završena.\n"
+#~ "Nema više dostupnih saveta"
+
+#~ msgid "This game does not have hint support yet."
+#~ msgstr "Ova igra još uvek nema podršku za savete."
+
+#~ msgid "Move %s onto %s."
+#~ msgstr "Prebaci %s na %s."
+
+#~ msgid "Move %s %s."
+#~ msgstr "Prebaci %s %s."
+
+#~ msgid ""
+#~ "This game uses a deprecated hint method (case 3).\n"
+#~ "Please file a bug at http://bugzilla.gnome.org including this message "
+#~ "and\n"
+#~ "the name of the game you where playing (look in the title bar if you \n"
+#~ "aren't sure)."
+#~ msgstr ""
+#~ "Ova igra koristi sada zanemaren način davanja saveta (slučaj 3).\n"
+#~ "Molimo ubeležite ovu grešku na http://bugzilla.gnome.org uključujući i "
+#~ "ovu\n"
+#~ "poruku kao i ime igre koju ste igrali (pogledajte u naslovnu liniju "
+#~ "ukoliko\n"
+#~ "niste sigurni)."
+
+#~ msgid "You are searching for a %s."
+#~ msgstr "Tražite %s."
+
+#~ msgid "This game is unable to provide a hint."
+#~ msgstr "Ova igra nije u mogućnosti da daje savete."
+
+#~ msgid "AisleRiot Cards"
+#~ msgstr "Karte za pasijans"
+
+#~ msgid "Card Style"
+#~ msgstr "Stil karata"
+
+#~ msgid "the foundation pile"
+#~ msgstr "prazna gomila na `temelju`"
+
+#~ msgid "Deal a card"
+#~ msgstr "Podeli kartu"
+
+#~ msgid "Move ~a to an empty foundation"
+#~ msgstr "na prazan `temelj`"
+
+#~ msgid "an empty slot on tableau"
+#~ msgstr "prazno polje na talonu"
+
+#~ msgid "Move a King on to the empty Tableau slot"
+#~ msgstr "Pomeri Kralja na prazno Talon polje"
+
+#~ msgid "I'm not sure"
+#~ msgstr "Nisam siguran"
+
+#~ msgid "Remove the aces"
+#~ msgstr "Ukloni asove"
+
+#~ msgid "Remove the eights"
+#~ msgstr "Ukloni osmice"
+
+#~ msgid "Remove the fives"
+#~ msgstr "Ukloni petice"
+
+#~ msgid "Remove the fours"
+#~ msgstr "Ukloni četvorke"
+
+#~ msgid "Remove the jacks"
+#~ msgstr "Ukloni žandare"
+
+#~ msgid "Remove the kings"
+#~ msgstr "Ukloni kraljeve"
+
+#~ msgid "Remove the nines"
+#~ msgstr "Ukloni devetke"
+
+#~ msgid "Remove the queens"
+#~ msgstr "Ukloni kraljice "
+
+#~ msgid "Remove the sevens"
+#~ msgstr "Ukloni sedmice"
+
+#~ msgid "Remove the sixes"
+#~ msgstr "Ukloni šestice"
+
+#~ msgid "Remove the tens"
+#~ msgstr "Ukloni desetke "
+
+#~ msgid "Remove the threes"
+#~ msgstr "Ukloni trojke "
+
+#~ msgid "Remove the twos"
+#~ msgstr "Ukloni dvojke "
+
+#~ msgid "Return cards to Stock"
+#~ msgstr "Vrati karte na gomilu"
+
+#~ msgid "Consider moving something into an empty slot"
+#~ msgstr "Razmislite o tome da nešto prebazite u prazno polje"
+
+#~ msgid "Move ~a off the board"
+#~ msgstr "Pomeri ~a sa table"
+
+#~ msgid "FreeCell Solitaire"
+#~ msgstr "Igra Oslobađanja polja"
+
+#~ msgid "Play the popular FreeCell card game"
+#~ msgstr "Igraj popularnu kartašku igru, Oslobađanja polja."
+
+#~ msgid "Move a card from the reserve on to the empty tableau slot"
+#~ msgstr "Prebaci kartu iz rezerve u prazno polje na talonu"
+
+#~ msgid "Select a card from the reserve for first foundation pile"
+#~ msgstr "Izaberi kartu iz rezerve za temelj gomile"
+
+#~ msgid "on to the empty tableau slot"
+#~ msgstr " na prazno Talon polje"
+
+#~ msgid "Deal another card"
+#~ msgstr "Podeli još jednu kartu"
+
+#~ msgid "bdc\n"
+#~ msgstr "bdc\n"
+
+#~ msgid "Deal another hand"
+#~ msgstr "Podeli još jednu ruku"
+
+#~ msgid "Move a card or build of cards on to the empty slot"
+#~ msgstr "Pomeri kartu ili niz karata na prazno polje"
+
+#~ msgid "Move card from Waste"
+#~ msgstr "Ukloni kartu iz `Otpada`"
+
+#~ msgid "Move waste to stock"
+#~ msgstr "Vrati `otpad` nazad na kup."
+
+#~ msgid "an empty tableau slot"
+#~ msgstr "prazno Talon polje"
+
+#~ msgid "an empty Tableau slot"
+#~ msgstr "prazno Talon polje"
+
+#~ msgid "No hint available right now"
+#~ msgstr "Trenutno nema saveta"
+
+#~ msgid "Three card deals"
+#~ msgstr "Deljenje po tri karte"
+
+#~ msgid "Try moving cards down from the foundation"
+#~ msgstr "Razmislite o pomeranju karata sa `temelja`"
+
+#~ msgid "Base Card:"
+#~ msgstr "Osnovna karta:  "
+
+#~ msgid ""
+#~ "Aim to place the suits in the order which fits the current layout most "
+#~ "naturally."
+#~ msgstr ""
+#~ "Naciljaj da namestiš boje u poretku koji najprirodnije odgovara "
+#~ "trenutnom \n"
+#~ "rasporedu."
+
+#~ msgid "Main game:"
+#~ msgstr "Glavna igra:"
+
+#~ msgid "Card games:"
+#~ msgstr "Igre kartama:"
+
+#~ msgid "AisleRiot"
+#~ msgstr "Pasijans"
+
+#~ msgid ""
+#~ "AisleRiot provides a rule-based solitaire card engine that allows many "
+#~ "different games to be played."
+#~ msgstr ""
+#~ "Pasijans je sistem koji omoguđava igranje veliki broj različitih \n"
+#~ "pasijans igara"
+
+#~ msgid "Game _options..."
+#~ msgstr "_Podešavanja igre..."
+
+#~ msgid "Modify the options for this game"
+#~ msgstr "Promeni podešavanja za ovu igru"
+
+#~ msgid "_Toolbar"
+#~ msgstr "Prikaži _Liniju sa alatima"
+
+#~ msgid "Show or hide the toolbar"
+#~ msgstr "Prikaži ili sakrij liniju sa alatima"
+
+#~ msgid "_Cards..."
+#~ msgstr "_Karte..."
+
+#~ msgid "Change the appearance of the cards"
+#~ msgstr "Promenite izgled karti"
+
+#~ msgid "_Select..."
+#~ msgstr "_Izaberi..."
+
+#~ msgid "Select a different game"
+#~ msgstr "Biraj novu igru"
+
+#~ msgid "S_tatistics..."
+#~ msgstr "_Rezultati..."
+
+#~ msgid "Get statistics on the current game"
+#~ msgstr "Saznaj rezultate za tekuću igru"
+
+#~ msgid "New"
+#~ msgstr "Novi"
+
+#~ msgid "Start a new game"
+#~ msgstr "Započni novu igru"
+
+#~ msgid "Restart"
+#~ msgstr "Počni iznova"
+
+#~ msgid "Select"
+#~ msgstr "Biraj"
+
+#~ msgid "Undo"
+#~ msgstr "Vrati potez"
+
+#~ msgid "Undo the last move"
+#~ msgstr "Vrati potez unazad"
+
+#~ msgid "Redo"
+#~ msgstr "Potez unapred"
+
+#~ msgid "Redo the undone move"
+#~ msgstr "Potez unapred"
+
+#~ msgid "Hint"
+#~ msgstr "Savet"
+
+#~ msgid "Get a hint for your next move"
+#~ msgstr "Traži savet za svoj sledeći potez"
+
+#~ msgid "something"
+#~ msgstr "nešto"
+
+#~ msgid "Move ~a to an empty field"
+#~ msgstr "Premesti ~a u prazno polje"
+
+#~ msgid "Place cards on to the Tableau to form poker hands"
+#~ msgstr "Postavi karte na talon da formiraju poker"
+
+#~ msgid "an empty Tableau pile"
+#~ msgstr "prazna Talon gomila"
+
+#~ msgid "Deal the cards"
+#~ msgstr "Podeli karte"
+
+#~ msgid "Reshuffle cards"
+#~ msgstr "Promešaj karte"
+
+#~ msgid "Move waste on to a reserve slot"
+#~ msgstr "Pomeri otpad na rezervno polje."
+
+#~ msgid "empty foundation"
+#~ msgstr "Prazan `temelj`"
+
+#~ msgid "AisleRiot: %s (%d)"
+#~ msgstr "Pasijans: %s (%d)"
+
+#~ msgid ""
+#~ "Aisleriot can't load the file: \n"
+#~ "%s\n"
+#~ "\n"
+#~ "Please check your Aisleriot installation"
+#~ msgstr ""
+#~ "Ajslriot nemože da učita fajl: \n"
+#~ "%s\n"
+#~ "\n"
+#~ "Proverite vašu instalaciju Ajslriota"
+
+#~ msgid "Aisleriot"
+#~ msgstr "Ajslriot"
+
+#~ msgid "Score:"
+#~ msgstr "Razultat:"
+
+#~ msgid "Time:"
+#~ msgstr "Vreme:"
+
+#~ msgid "Variation on game rules"
+#~ msgstr "Varijacije pravila igre"
+
+#~ msgid "NAME"
+#~ msgstr "IME"
+
+#~ msgid "AisleRiot Solitaire"
+#~ msgstr "Pasijans"
+
+#~ msgid "Play many different solitaire games"
+#~ msgstr "Igraj više različitih varijanti pasijansa"
+
+#~ msgid "Unknown color"
+#~ msgstr "Nepoznata boja"
+
+#~ msgid "Unknown suit"
+#~ msgstr "Nepoznat znak"
+
+#~ msgid "Unknown value"
+#~ msgstr "Nepoznata vrednost"
+
+#~ msgid "ace"
+#~ msgstr "Kec"
+
+#~ msgid "black joker"
+#~ msgstr "crni džoker"
+
+#~ msgid "clubs"
+#~ msgstr "klubovi"
+
+#~ msgid "diamonds"
+#~ msgstr "dijamanti"
+
+#~ msgid "eight"
+#~ msgstr "osam"
+
+#~ msgid "five"
+#~ msgstr "pet"
+
+#~ msgid "four"
+#~ msgstr "četiri"
+
+#~ msgid "hearts"
+#~ msgstr "srca"
+
+#~ msgid "jack"
+#~ msgstr "džek"
+
+#~ msgid "king"
+#~ msgstr "kralj"
+
+#~ msgid "nine"
+#~ msgstr "devet"
+
+#~ msgid "queen"
+#~ msgstr "kraljica"
+
+#~ msgid "red joker"
+#~ msgstr "crveni džoker"
+
+#~ msgid "seven"
+#~ msgstr "sedam"
+
+#~ msgid "six"
+#~ msgstr "šest"
+
+#~ msgid "spades"
+#~ msgstr "pikovi"
+
+#~ msgid "ten"
+#~ msgstr "deset"
+
+#~ msgid "the ace of clubs"
+#~ msgstr "Tref as"
+
+#~ msgid "the ace of diamonds"
+#~ msgstr "Karo as"
+
+#~ msgid "the ace of hearts"
+#~ msgstr "Herc as"
+
+#~ msgid "the ace of spades"
+#~ msgstr "Pik as"
+
+#~ msgid "the eight of clubs"
+#~ msgstr "Osmica tref"
+
+#~ msgid "the eight of diamonds"
+#~ msgstr "Osmica karo"
+
+#~ msgid "the eight of hearts"
+#~ msgstr "Osmica herc"
+
+#~ msgid "the eight of spades"
+#~ msgstr "Osmica pik"
+
+#~ msgid "the five of clubs"
+#~ msgstr "Petica tref"
+
+#~ msgid "the five of diamonds"
+#~ msgstr "Petica karo"
+
+#~ msgid "the five of hearts"
+#~ msgstr "Petica herc"
+
+#~ msgid "the five of spades"
+#~ msgstr "Petica pik"
+
+#~ msgid "the four of clubs"
+#~ msgstr "Četvorka tref"
+
+#~ msgid "the four of diamonds"
+#~ msgstr "Četvorka karo"
+
+#~ msgid "the four of hearts"
+#~ msgstr "Četvorka herc"
+
+#~ msgid "the four of spades"
+#~ msgstr "Četvorka pik"
+
+#~ msgid "the jack of clubs"
+#~ msgstr "Žandar tref"
+
+#~ msgid "the jack of diamonds"
+#~ msgstr "Šandar karo"
+
+#~ msgid "the jack of hearts"
+#~ msgstr "Žandar herc"
+
+#~ msgid "the jack of spades"
+#~ msgstr "Žandar pik"
+
+#~ msgid "the king of clubs"
+#~ msgstr "Kralj tref"
+
+#~ msgid "the king of diamonds"
+#~ msgstr "Kralj karo"
+
+#~ msgid "the king of hearts"
+#~ msgstr "Kralj herc"
+
+#~ msgid "the king of spades"
+#~ msgstr "Kralj pik"
+
+#~ msgid "the nine of clubs"
+#~ msgstr "devetka tref"
+
+#~ msgid "the nine of diamonds"
+#~ msgstr "devetka karo"
+
+#~ msgid "the nine of hearts"
+#~ msgstr "devetka herc"
+
+#~ msgid "the nine of spades"
+#~ msgstr "devetka pik"
+
+#~ msgid "the queen of clubs"
+#~ msgstr "Kraljica tref"
+
+#~ msgid "the queen of diamonds"
+#~ msgstr "Kraljica karo"
+
+#~ msgid "the queen of hearts"
+#~ msgstr "Kraljica herc"
+
+#~ msgid "the queen of spades"
+#~ msgstr "Kraljica pik"
+
+#~ msgid "the seven of clubs"
+#~ msgstr "Sedmica tref"
+
+#~ msgid "the seven of diamonds"
+#~ msgstr "Sedmica karo"
+
+#~ msgid "the seven of hearts"
+#~ msgstr "Sedmica herc"
+
+#~ msgid "the seven of spades"
+#~ msgstr "Sedmica pik"
+
+#~ msgid "the six of clubs"
+#~ msgstr "Šestica tref"
+
+#~ msgid "the six of diamonds"
+#~ msgstr "Sedmica karo"
+
+#~ msgid "the six of hearts"
+#~ msgstr "Šestica herc"
+
+#~ msgid "the six of spades"
+#~ msgstr "Šestica pik"
+
+#~ msgid "the ten of clubs"
+#~ msgstr "Desetka tref"
+
+#~ msgid "the ten of diamonds"
+#~ msgstr "Desetka karo"
+
+#~ msgid "the ten of hearts"
+#~ msgstr "Desetka herc"
+
+#~ msgid "the ten of spades"
+#~ msgstr "Desetka pik"
+
+#~ msgid "the three of clubs"
+#~ msgstr "Trojka tref"
+
+#~ msgid "the three of diamonds"
+#~ msgstr "Trojka karo"
+
+#~ msgid "the three of hearts"
+#~ msgstr "Trojka herc"
+
+#~ msgid "the three of spades"
+#~ msgstr "Trojka pik"
+
+#~ msgid "the two of clubs"
+#~ msgstr "Dvojka tref"
+
+#~ msgid "the two of diamonds"
+#~ msgstr "Dvojka karo"
+
+#~ msgid "the two of hearts"
+#~ msgstr "Dvojka herc"
+
+#~ msgid "the two of spades"
+#~ msgstr "Dvojka pik"
+
+#~ msgid "the unknown card"
+#~ msgstr "Nepoznata karta"
+
+#~ msgid "three"
+#~ msgstr "tri"
+
+#~ msgid "two"
+#~ msgstr "dva"
+
+#~ msgid "Place something on empty slot"
+#~ msgstr "Postavite nešto u prazno mesto"
+
+#~ msgid "Please fill in empty pile first."
+#~ msgstr "Popunite prvo ispražnjenu gomilu."
+
+#~ msgid "Try moving card piles around"
+#~ msgstr "Razmislite o pomeranju karata okolo"
+
+#~ msgid "Place something on to the empty Tableau slot"
+#~ msgstr "Postavite nešto na prazan talon"
+
+# Ne Važi?
+#~ msgid "N/A"
+#~ msgstr "N/V"
+
+#~ msgid "%d:%02d"
+#~ msgstr "%d:%02d"
+
+#~ msgid "<b>Time</b>"
+#~ msgstr "<b>Vreme</b>"
+
+#~ msgid "<b>Wins</b>"
+#~ msgstr "<b>Pobeda</b>"
+
+#~ msgid "Best:"
+#~ msgstr "Najbolji:"
+
+# Mislim da je ovde tačno ovo i želja
+#~ msgid "Do not translate this"
+#~ msgstr "Do not translate this"
+
+#~ msgid "Percentage:"
+#~ msgstr "Postotak:"
+
+#~ msgid "Statistics"
+#~ msgstr "Rezultati"
+
+#~ msgid "Total:"
+#~ msgstr "Ukupno:"
+
+#~ msgid "Wins:"
+#~ msgstr "Pobeda:"
+
+#~ msgid "Worst:"
+#~ msgstr "Najgori:"
+
+#~ msgid "_Reset"
+#~ msgstr "_Vrati"
+
+#~ msgid "Allow temporary spots use"
+#~ msgstr "Dozvoljena upotreba privremenih polja"
+
+#~ msgid "Move a card to an empty temporary slot"
+#~ msgstr "Premesti kartu na prazno privremeno polje"
+
+#~ msgid "No hint available"
+#~ msgstr "Saveti nisu dostupni"
+
+#~ msgid "and all cards below it"
+#~ msgstr "i sve karte ispod nje"
+
+#~ msgid "empty slot(s)"
+#~ msgstr "Prazno polje"
+
+#~ msgid "Deal a card from the deck"
+#~ msgstr "Podeli kartu sa talona"
+
+#~ msgid "Agnes"
+#~ msgstr "Agnes"
+
+#~ msgid "Auld lang syne"
+#~ msgstr "Auld lang sajn"
+
+#~ msgid "Bakers dozen"
+#~ msgstr "Trinaestica"
+
+#~ msgid "Beleaguered castle"
+#~ msgstr "Opkoljeni zamak"
+
+#~ msgid "Block ten"
+#~ msgstr "Blokiraj desetku"
+
+#~ msgid "Bristol"
+#~ msgstr "Bristol"
+
+#~ msgid "Camelot"
+#~ msgstr "Kamelot"
+
+#~ msgid "Canfield"
+#~ msgstr "Kenfild"
+
+#~ msgid "Chessboard"
+#~ msgstr "Šahovska tabla"
+
+#~ msgid "Clock"
+#~ msgstr "Sat"
+
+#~ msgid "Cover"
+#~ msgstr "Zaklon"
+
+#~ msgid "Diamond mine"
+#~ msgstr "Dijamantska mina"
+
+#~ msgid "Doublets"
+#~ msgstr "Dublovi"
+
+#~ msgid "Eagle wing"
+#~ msgstr "Orlovo krilo"
+
+#~ msgid "Easthaven"
+#~ msgstr "Istočna Luka"
+
+#~ msgid "Eight off"
+#~ msgstr "Osmica"
+
+#~ msgid "Elevator"
+#~ msgstr "Lift"
+
+#~ msgid "Escalator"
+#~ msgstr "Pokretne Stepenice"
+
+#~ msgid "First law"
+#~ msgstr "Prvi zakon"
+
+#~ msgid "Fortress"
+#~ msgstr "Utvrđenje"
+
+#~ msgid "Fortunes"
+#~ msgstr "Sudbina"
+
+#~ msgid "Fourteen"
+#~ msgstr "Četrnaestica"
+
+#~ msgid "Freecell"
+#~ msgstr "Oslobodilac polja"
+
+#~ msgid "Gay gordons"
+#~ msgstr "Gordon homoseksualac"
+
+#~ msgid "Glenwood"
+#~ msgstr "Glenvud"
+
+#~ msgid "Golf"
+#~ msgstr "Golf"
+
+#~ msgid "Gypsy"
+#~ msgstr "Ciga"
+
+#~ msgid "Helsinki"
+#~ msgstr "Helsinki"
+
+#~ msgid "Hopscotch"
+#~ msgstr "Hopskoč"
+
+#~ msgid "Isabel"
+#~ msgstr "Izabela"
+
+#~ msgid "Jamestown"
+#~ msgstr "DŽejmstaun"
+
+#~ msgid "Jumbo"
+#~ msgstr "DŽambo"
+
+#~ msgid "Kansas"
+#~ msgstr "Kanzas"
+
+#~ msgid "King albert"
+#~ msgstr "Kralj Albert"
+
+#~ msgid "Klondike"
+#~ msgstr "Klondik"
+
+#~ msgid "Labyrinth"
+#~ msgstr "Lavirint"
+
+#~ msgid "Lady jane"
+#~ msgstr "Gospođica DŽejn"
+
+#~ msgid "Maze"
+#~ msgstr "Lavirinti"
+
+#~ msgid "Monte carlo"
+#~ msgstr "Monte Karlo"
+
+#~ msgid "Neighbor"
+#~ msgstr "Komšija"
+
+#~ msgid "Odessa"
+#~ msgstr "Odesa"
+
+#~ msgid "Osmosis"
+#~ msgstr "Osmoza"
+
+#~ msgid "Peek"
+#~ msgstr "Vrh"
+
+#~ msgid "Pileon"
+#~ msgstr "Pajlon"
+
+#~ msgid "Plait"
+#~ msgstr "Plejt"
+
+#~ msgid "Poker"
+#~ msgstr "Poker"
+
+#~ msgid "Quatorze"
+#~ msgstr "Kvatorz"
+
+#~ msgid "Royal east"
+#~ msgstr "Kraljevski istok"
+
+#~ msgid "Scorpion"
+#~ msgstr "Škorpija"
+
+#~ msgid "Scuffle"
+#~ msgstr "Skafl"
+
+#~ msgid "Seahaven"
+#~ msgstr "Morska Luka"
+
+#~ msgid "Sir tommy"
+#~ msgstr "Ser Tomi"
+
+#~ msgid "Sol"
+#~ msgstr "Sol"
+
+#~ msgid "Spiderette"
+#~ msgstr "Paukovnjača"
+
+#~ msgid "Spider"
+#~ msgstr "Pauk"
+
+#~ msgid "Straight up"
+#~ msgstr "Vertikale"
+
+#~ msgid "Streets and alleys"
+#~ msgstr "Ulice i aleje"
+
+#~ msgid "Template"
+#~ msgstr "Šablon"
+
+#~ msgid "Ten across"
+#~ msgstr "Deset popreko"
+
+#~ msgid "Thieves"
+#~ msgstr "Lopovi"
+
+#~ msgid "Thirteen"
+#~ msgstr "Trinaestica"
+
+#~ msgid "Thumb and pouch"
+#~ msgstr "Palac i torba"
+
+#~ msgid "Treize"
+#~ msgstr "Trejz"
+
+#~ msgid "Union square"
+#~ msgstr "Ujedinjeni kvadrati"
+
+#~ msgid "Valentine"
+#~ msgstr "Valentin"
+
+#~ msgid "Westhaven"
+#~ msgstr "Zapadna Luka"
+
+#~ msgid "Whitehead"
+#~ msgstr "Bela Glava"
+
+#~ msgid "Will o the wisp"
+#~ msgstr "Bludna vatra"
+
+#~ msgid "Yield"
+#~ msgstr "Rod"
+
+#~ msgid "Yukon"
+#~ msgstr "Jukon"
+
+#~ msgid "Zebra"
+#~ msgstr "Zebra"
+
+#~ msgid "appropriate Foundation pile"
+#~ msgstr "odgovarajuća `temelj` gomila"
+
+#~ msgid "Move a build of cards on to the empty Tableau slot"
+#~ msgstr "Pomeri niz karata na prazno polje na talonu"
+
+#~ msgid "the appropriate Foundation pile"
+#~ msgstr "odgovarajuća `temelj` gomila"
+
+#~ msgid "Blackjack"
+#~ msgstr "Blekdžek"
+
+#~ msgid "Play the casino card game Blackjack"
+#~ msgstr "Igraj kazino kartašku igru Blekdžek"
+
+#~ msgid "Display probabilities"
+#~ msgstr "Prikazuj mogućnosti"
+
+#~ msgid ""
+#~ "Display the probabilities of each dealer hand outcome and the expected "
+#~ "value of your hand."
+#~ msgstr ""
+#~ "Prikazuj mogućnosti ruke svakog deljenja i očekivane vrednosti vaše ruke."
+
+#~ msgid "The amount of money in your bank"
+#~ msgstr "Svota novca u vašoj banci"
+
+#~ msgid "The amount of money in your bank."
+#~ msgstr "Svota novca u vašoj banci."
+
+#~ msgid ""
+#~ "The name of the rules file containing the variation of the rules to play."
+#~ msgstr "Ime fajla sa pravilima koji sadrži varijacije pravila igre."
+
+#~ msgid "The variation of the rules file to use"
+#~ msgstr "Fajl sa varijacijama pravila koja će se koristiti"
+
+#~ msgid "Use a quick deal"
+#~ msgstr "Koristi brzo deljenje"
+
+#~ msgid "Use a quick deal with no delay between each card."
+#~ msgstr "Koristi brzo deljenje bez ikakve pauze između dve karte."
+
+#~ msgid "Blackjack: %s (%d)"
+#~ msgstr "Blekdžek: %s (%d)"
+
+#~ msgid "Place your wager or deal a hand"
+#~ msgstr "Položi svoju opkladu ili podeli ruku"
+
+#~ msgid "Wager:"
+#~ msgstr "Ulog:"
+
+#~ msgid "Balance:"
+#~ msgstr "Rezultat:"
+
+#~ msgid "Could not load the card deck images."
+#~ msgstr "Ne mogu da učitam slike za špil karata."
+
+#~ msgid "Blackjack will now exit."
+#~ msgstr "Blekdžek će sada završiti."
+
+#~ msgid "Would you like insurance?"
+#~ msgstr "Da li želiš osiguranje?"
+
+#~ msgid "Set your wager and click in the white outline to deal a new hand."
+#~ msgstr "Položi svoj ulog i klikni na belu ivicu da podeliš novu ruku."
+
+#~ msgid "Set your wager or click on the cards to deal a new hand."
+#~ msgstr "Položi svoj ulog i klikni na karte da podeliš novu ruku."
+
+#~ msgid "Blackjack Preferences"
+#~ msgstr "Blekdžek Postavke"
+
+#~ msgid "Display hand probabilities"
+#~ msgstr "Prikazuj mogućnost ruke"
+
+#~ msgid "Quick deals (no delay between each card)"
+#~ msgstr "Brzo deljenje (bez pauzi između svake karte)"
+
+#~ msgid "_Rules"
+#~ msgstr "_Pravila"
+
+#~ msgid "Name"
+#~ msgstr "Ime"
+
+#~ msgid "Decks"
+#~ msgstr "špilovi"
+
+#~ msgid "Hit Soft 17"
+#~ msgstr "Pogodi Meku 17"
+
+#~ msgid "Double Any Total"
+#~ msgstr "Dupliraj Svaki Zbir"
+
+#~ msgid "Double 9"
+#~ msgstr "Dupla 9"
+
+#~ msgid "Double Soft"
+#~ msgstr "Duplo meko"
+
+#~ msgid "Double After Hit"
+#~ msgstr "Dupliraj posle pogotka"
+
+#~ msgid "Double After Split"
+#~ msgstr "Dupliraj posle polovljenja"
+
+#~ msgid "Resplit"
+#~ msgstr "Ponovo preseci"
+
+#~ msgid "Resplit Aces"
+#~ msgstr "Razdvoji asove"
+
+#~ msgid "Surrender"
+#~ msgstr "Predaj se"
+
+#~ msgid "Dealer Speed"
+#~ msgstr "Brzina deljenja"
+
+#~ msgid "Card _Deck"
+#~ msgstr "_Špil karata"
+
+#~ msgid "Click to deal another card; drag card to split pair"
+#~ msgstr "Klikni da podeliš još jednu kartu; vuci kartu da razdvojiš par"
+
+#~ msgid "Click to deal another card"
+#~ msgstr "Podeli još jednu kartu"
+
+#~ msgid "Click to finish adding cards to your hand"
+#~ msgstr "Klikni da okončaš dodavanje karata u tvoju ruku"
+
+#~ msgid "Click to deal a new hand"
+#~ msgstr "Klikni za deljenje nove ruke"
+
+#~ msgid "Click to double your wager"
+#~ msgstr "Klikni da dupliraš ulog"
+
+#~ msgid "Double click to increase your wager by %.2f"
+#~ msgstr "Dvoklikni da uvećaš svoj ulog za %.2f"
+
+#~ msgid "Double click to decrease your wager by %.2f"
+#~ msgstr "Dvoklikni da umanjiš svoj ulog za %.2f"
+
+#~ msgid "Blackjack can't load the requested file"
+#~ msgstr "Blekdžek nemože da učita zahtevani fajl"
+
+#~ msgid "Please check your Blackjack installation"
+#~ msgstr "Proverite vašu instalaciju Blekdžeka"
+
+#~ msgid "The best option is to stand"
+#~ msgstr "Najbolja opcija je da čekate"
+
+#~ msgid "The best option is to hit"
+#~ msgstr "Najbolja opcija je da bacite"
+
+#~ msgid "The best option is to double down"
+#~ msgstr "Najbolja opcija je da prepolovite"
+
+#~ msgid "The best option is to split"
+#~ msgstr "Najbolja opcija je da razdvojite"
+
+#~ msgid "The best option is to surrender"
+#~ msgstr "Najbolja opcija je da predate"
+
+#~ msgid "Blackjack provides a casino-style blackjack card game."
+#~ msgstr "Blekdžek je kazino kartaška igra."
+
+#~ msgid "Deal a new game"
+#~ msgstr "Otpočni novu igru"
+
+#~ msgid "Start this game over"
+#~ msgstr "Počni igru iznova"
+
+#~ msgid "Suggest a move"
+#~ msgstr "Predloži potez"
+
+#~ msgid "Computing basic strategy..."
+#~ msgstr "Računam osnovnu strategiju..."
+
+#~ msgid "Bust"
+#~ msgstr "Hapšenje"
+
+#~ msgid "Blackjack!"
+#~ msgstr "Blekdžek!"
+
+#~ msgid "Soft"
+#~ msgstr "Meko"
+
+#~ msgid "Win"
+#~ msgstr "Pobeda"
+
+#~ msgid "Push"
+#~ msgstr "Pritisni"
+
+#~ msgid "Lose"
+#~ msgstr "Poraz"
+
+#~ msgid "Player expected values"
+#~ msgstr "Igrač očekuje vrednosti"
+
+#~ msgid "Stand"
+#~ msgstr "Čekaj"
+
+#~ msgid "Hit"
+#~ msgstr "Baci"
+
+#~ msgid "Double"
+#~ msgstr "Dupliraj"
+
+#~ msgid "Split"
+#~ msgstr "Podeli"
+
+#~ msgid "Dealer hand probabilities"
+#~ msgstr "Verovatnoće ruke"
+
+#~ msgid "Dark's move"
+#~ msgstr "Crni je na potezu"
+
+#~ msgid "Light's move"
+#~ msgstr "Beli je na potezu"
+
+#~ msgid "Dark player wins!"
+#~ msgstr "Crni je pobedio!"
+
+#~ msgid "The game was a draw."
+#~ msgstr "Nerešeno."
+
+#~ msgid "Light must pass, Dark's move"
+#~ msgstr "Beli preskače potez,Crni je na potezu"
+
+#~ msgid "Dark must pass, Light's move"
+#~ msgstr "Crni preskače potez, Beli je na potezu"
+
+#~ msgid "gataxx"
+#~ msgstr "gataks"
+
+#~ msgid ""
+#~ "gataxx is a GNOME port of the old game ataxx. It is derived from Ian "
+#~ "Peters' iagno code."
+#~ msgstr "gataks je GNOM izvedba stare igre ataks."
+
+#~ msgid "Could not find '%s' pixmap file for gataxx\n"
+#~ msgstr "Nisam mogao da nađem „%s“ sličicu za gataks\n"
+
+#~ msgid "Ataxx"
+#~ msgstr "Ataks"
+
+#~ msgid "Dark:"
+#~ msgstr "Crni:"
+
+#~ msgid "Light:"
+#~ msgstr "Beli:"
+
+#~ msgid "Welcome to gataxx!"
+#~ msgstr "Dobrodošli u gataks!"
+
+#~ msgid "%.2d"
+#~ msgstr "%.2d"
+
+#~ msgid "Compete to dominate the board in a Reversi-like game"
+#~ msgstr "Pokušajte da dominirate tablom u igri popu Reversija"
+
+#~ msgid "Animate"
+#~ msgstr "Animirano"
+
+#~ msgid "Flip final results"
+#~ msgstr "Okreni konačni rezultat"
+
+#~ msgid "Level of black player"
+#~ msgstr "Nivo crnog igrača"
+
+#~ msgid "Level of white player"
+#~ msgstr "Nivo belog igrača"
+
+#~ msgid "Quick moves"
+#~ msgstr "Brzi potezi"
+
+#~ msgid "Tileset"
+#~ msgstr "Špil"
+
+#~ msgid "Tileset to use."
+#~ msgstr "Izaberite špil"
+
+#~ msgid "Whether or not to flip final results."
+#~ msgstr "Da li da okrećem konačni rezultat."
+
+#~ msgid "Whether or not to use quick moves."
+#~ msgstr "Da li da brzi potezi budu u upotrebi."
+
+#~ msgid ""
+#~ "Zero corresponds to no animations, one is partial animations, two is "
+#~ "complete animations."
+#~ msgstr ""
+#~ "Nula je bez animacija, jedan sa delimičnim animacijama, dva je sa "
+#~ "putpunim animacijama."
+
+#~ msgid ""
+#~ "Zero is human; one through three correspond to the level of the computer "
+#~ "player."
+#~ msgstr "Nula je čovek. a od jedan do tri nivo kompjuterskog protivnika."
+
+#~ msgid "Game over"
+#~ msgstr "Igra je završena"
+
+#~ msgid "Piece flipping"
+#~ msgstr "Zamena figura"
+
+#~ msgid "Gataxx Preferences"
+#~ msgstr "Gataks postavke"
+
+#~ msgid "_Players"
+#~ msgstr "_Igrači"
+
+#~ msgid "Quick Moves (cut computer delay in half)"
+#~ msgstr "Brzi potezi (prepolovi vreme za računar)"
+
+#~ msgid "Dark"
+#~ msgstr "Crni"
+
+#~ msgid "Human"
+#~ msgstr "Čovek"
+
+#~ msgid "Level one"
+#~ msgstr "Prvi nivo"
+
+#~ msgid "Level two"
+#~ msgstr "Drugi nivo"
+
+#~ msgid "Level three"
+#~ msgstr "Treći nivo"
+
+#~ msgid "Light"
+#~ msgstr "Beli"
+
+#~ msgid "_Appearance"
+#~ msgstr "_Izgled"
+
+#~ msgid "None"
+#~ msgstr "Nikakve"
+
+#~ msgid "Partial"
+#~ msgstr "Delimične"
+
+#~ msgid "Complete"
+#~ msgstr "Kompletne"
+
+#~ msgid "Options"
+#~ msgstr "Postavke"
+
+#~ msgid "Tile set:"
+#~ msgstr "Špil"
+
+#~ msgid "Default"
+#~ msgstr "Podrazumevani"
+
+#~ msgid "Dondorf"
+#~ msgstr "Dondorf"
+
+#~ msgid "Dondorf Red"
+#~ msgstr "Crveni dondorf"
+
+#~ msgid "Gray"
+#~ msgstr "Siva"
+
+#~ msgid "xpat"
+#~ msgstr "xpat"
+
+#~ msgid "Card back:"
+#~ msgstr "Pozadina karte:"
+
+#~ msgid "Honor pictures:"
+#~ msgstr "Časne slike:"
+
+#~ msgid "Joker icon:"
+#~ msgstr "DŽoker ikonica:"
+
+#~ msgid "Rank font:"
+#~ msgstr "Font stanja:"
+
+#~ msgid "Suit font (small):"
+#~ msgstr "Font (mali):"
+
+#~ msgid "Suit font (medium):"
+#~ msgstr "Font (srednji):"
+
+#~ msgid "Suit font (large):"
+#~ msgstr "Font (veliki):"
+
+#~ msgid ""
+#~ "Glines couldn't find image file:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Please check your Glines installation"
+#~ msgstr ""
+#~ "Glinije nije mogao da nađe fajl sa slikom:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Proverite svoju instalaciju glinija"
+
+#~ msgid "Match five balls of the same color in a row to score!"
+#~ msgstr "Povežite pet kuglica iste boje u liniju da bi osvojili poene!"
+
+#~ msgid "Glines"
+#~ msgstr "Glinije"
+
+#~ msgid "Game Over!"
+#~ msgstr "Igra je gotova!"
+
+#~ msgid "Can't move there!"
+#~ msgstr "Nemoguć potez!"
+
+#~ msgid "GNOME port of the once-popular Color Lines game"
+#~ msgstr "GNOM izvedba nekad popularne igre Linije"
+
+#~ msgid "Glines Preferences"
+#~ msgstr "Glinije postavke"
+
+#~ msgid "Themes"
+#~ msgstr "Izgled"
+
+#~ msgid "Ball image"
+#~ msgstr "Slika lopte"
+
+#~ msgid "Background color"
+#~ msgstr "Pozadina:"
+
+#~ msgid "General"
+#~ msgstr "Osnovno"
+
+#~ msgid "Use fast moves"
+#~ msgstr "Brzi potezi"
+
+#~ msgid "Lines"
+#~ msgstr "Linije "
+
+#~ msgid "Welcome to Glines!"
+#~ msgstr "Dobrodošli u Glinije!"
+
+#~ msgid "Next Balls:"
+#~ msgstr "Sledeće lopte:"
+
+#~ msgid "Remove colored balls from the board by forming lines"
+#~ msgstr "Uklanjajte obojene lopte sa table formirajući linije"
+
+#~ msgid "Background color. The hex specification of the background color."
+#~ msgstr "Boja pozadine. Heks vrednost."
+
+#~ msgid "Ball style"
+#~ msgstr "Stil lopte"
+
+#~ msgid "Ball style. The filename of the images to use for the balls."
+#~ msgstr "Stil lopte. Ime fajla sa slikama koje koristiti za lopte."
+
+#~ msgid "Game field"
+#~ msgstr "Polje za igru"
+
+#~ msgid "Game field from last saved session."
+#~ msgstr "Tabla iz zadnje sačuvane igre."
+
+#~ msgid "Game preview"
+#~ msgstr "Pregled igre"
+
+#~ msgid "Game preview from last saved session."
+#~ msgstr "Pregled igre iz zadnje sačuvane igre."
+
+#~ msgid "Game score"
+#~ msgstr "Rezultat igre"
+
+#~ msgid "Game score from last saved session."
+#~ msgstr "Rezultat iz zadnje sačuvane igre"
+
+#~ msgid "The height of the main window."
+#~ msgstr "Visina glavnog prozora."
+
+#~ msgid "The width of the main window."
+#~ msgstr "Širina glavnog prozora."
+
+#~ msgid "Time between moves"
+#~ msgstr "Pravi pauzu između bacanja"
+
+#~ msgid "Time between moves in milliseconds."
+#~ msgstr "Vreme između poteza u milisekundama."
+
+#~ msgid "Window height"
+#~ msgstr "Visina prozora"
+
+#~ msgid "Window width"
+#~ msgstr "Širina prozora"
+
+#~ msgid "Compete to make lines of the same color"
+#~ msgstr "Takmičite se u formiranju linije istih boja"
+
+#~ msgid "Four-in-a-row"
+#~ msgstr "Igra Četiri u redu"
+
+#~ msgid "A number specifying the preferred theme."
+#~ msgstr "Broj koji označava željeni izgled."
+
+#~ msgid "Drop marble"
+#~ msgstr "Pusti kliker"
+
+#~ msgid "Key press to drop a marble."
+#~ msgstr "Taster za puštanje klikera"
+
+#~ msgid "Key press to move left."
+#~ msgstr "Taster za kretanje ulevo."
+
+#~ msgid "Key press to move right."
+#~ msgstr "Taster za kretanje udesno."
+
+#~ msgid "Move left"
+#~ msgstr "Idi ulevo"
+
+#~ msgid "Show tool bar"
+#~ msgstr "Prikazuj liniju sa alatima"
+
+#~ msgid "Sound"
+#~ msgstr "Zvuk"
+
+#~ msgid "Theme ID"
+#~ msgstr "IB izgleda"
+
+#~ msgid "Whether or not to play event sounds."
+#~ msgstr "Da li ispuštati zvuke pri događajima."
+
+#~ msgid "Whether or not to show the tool bar."
+#~ msgstr "Da li prikazivati liniju sa alatima."
+
+#~ msgid "Whether or not to use animation."
+#~ msgstr "Da li prikazivati animacije."
+
+#~ msgid "A counter drops"
+#~ msgstr "Brojač opada"
+
+#~ msgid "Drawn game!"
+#~ msgstr "Nerešeno!"
+
+#~ msgid "Gnect"
+#~ msgstr "Gvez"
+
+#~ msgid "I win!"
+#~ msgstr "Moja pobeda!"
+
+#~ msgid "Player wins!"
+#~ msgstr "Igrač je pobedio!"
+
+#~ msgid "Sorry, full column"
+#~ msgstr "Puna kolona"
+
+#~ msgid "You win!"
+#~ msgstr "Vi ste pobedili!"
+
+#~ msgid ""
+#~ "Unable to load image:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Ne mogu da učitam sliku:\n"
+#~ "%s"
+
+#~ msgid "It's a draw!"
+#~ msgstr "Nerešeno je!"
+
+#~ msgid "Your move..."
+#~ msgstr " Vaš potez..."
+
+#~ msgid "Thinking..."
+#~ msgstr "Razmišljam..."
+
+#~ msgid "%s wins!"
+#~ msgstr " %s je pobedio!"
+
+#~ msgid "%s..."
+#~ msgstr "%s..."
+
+#~ msgid "Hint: Column %d"
+#~ msgstr "Savet: Kolona %d"
+
+#~ msgid "You"
+#~ msgstr "Vi"
+
+#~ msgid "Me"
+#~ msgstr "Ja"
+
+#~ msgid "Scores"
+#~ msgstr "Rezultati"
+
+#~ msgid "Drawn"
+#~ msgstr "Nerešeno"
+
+#~ msgid ""
+#~ "\"Four in a row\" for GNOME, with a computer player driven by Giuliano "
+#~ "Bertoletti's Velena Engine."
+#~ msgstr ""
+#~ "„Četiri u redu“ za GNOM, gde računarom kao igračem upravlja Đulijano "
+#~ "Bartoletijeva Velena Mašina"
+
+#~ msgid "Select \"New game\" from the \"Game\" menu to begin."
+#~ msgstr "Izaberite „Nova Igra“ iz „Igra“ menija za početak."
+
+#~ msgid "Show or hide the tool bar"
+#~ msgstr "Prikaži ili sakrij traku sa alatkama"
+
+#~ msgid "Enable _sound"
+#~ msgstr "Uključi _zvuk"
+
+#~ msgid "Enable or disable sound"
+#~ msgstr "Uključi ili isključi zvuk"
+
+#~ msgid "New game"
+#~ msgstr "Nova igra"
+
+#~ msgid "Welcome to Gnect!"
+#~ msgstr "Dobrodošli u Gvez!"
+
+#~ msgid ""
+#~ "Player One:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Prvi igrač:\n"
+#~ "%s"
+
+#~ msgid ""
+#~ "Player Two:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Drugi igrač:\n"
+#~ "%s"
+
+#~ msgid "Four-in-a-row Preferences"
+#~ msgstr "Igra Četiri u redu"
+
+#~ msgid "Appearance"
+#~ msgstr "Izgled"
+
+#~ msgid "_Theme:"
+#~ msgstr "Iz_gled:"
+
+#~ msgid "Enable _animation"
+#~ msgstr "Uključi _animacije"
+
+#~ msgid "Controls"
+#~ msgstr "Kontrole"
+
+#~ msgid "Keyboard control"
+#~ msgstr "Kontrola sa tastature"
+
+#~ msgid "Move _Left"
+#~ msgstr "Idi u_levo"
+
+#~ msgid "Move _Right"
+#~ msgstr "Idi u_desno"
+
+#~ msgid "_Drop"
+#~ msgstr "_Pusti"
+
+#~ msgid "Classic"
+#~ msgstr "Klasični"
+
+#~ msgid "Yellow"
+#~ msgstr "Žuti"
+
+#~ msgid "High Contrast"
+#~ msgstr "Veliki kontrast"
+
+#~ msgid "Marbles"
+#~ msgstr "Mermerni"
+
+#~ msgid "Blue"
+#~ msgstr "Plavi"
+
+#~ msgid "More Marbles"
+#~ msgstr "Mermerniji"
+
+#~ msgid "Nightfall"
+#~ msgstr "Suton"
+
+#~ msgid "Blocks"
+#~ msgstr "Blokovski"
+
+#~ msgid "Orange"
+#~ msgstr "Narandžasti"
+
+#~ msgid ""
+#~ "Gnibbles couldn't find pixmap file:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Please check your Gnibbles installation"
+#~ msgstr ""
+#~ "Igra Zmije nije mogla da nađe fajl sa slikom:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Proverite svoju instalaciju Zmija"
+
+#~ msgid ""
+#~ "Gnibbles Couldn't find pixmap file:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Please check your Gnibbles instalation"
+#~ msgstr ""
+#~ "Igra Zmije nije mogla da nađe fajl sa slikom:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Proverite svoju instalaciju Zmija"
+
+#~ msgid ""
+#~ "Gnibbles couldn't load level file:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Please check your Gnibbles installation"
+#~ msgstr ""
+#~ "Igra Zmije nije mogla da učita nivo-fajl:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Proverite svoji instalaciju Zmija"
+
+#~ msgid "Guide a worm around a maze"
+#~ msgstr "Vodi crva kroz lavirint"
+
+#~ msgid "Nibbles"
+#~ msgstr "Zmije"
+
+#~ msgid "Color to use for worm"
+#~ msgstr "Boja crva"
+
+#~ msgid "Color to use for worm."
+#~ msgstr "Boja crva."
+
+#~ msgid "Enable fake bonuses"
+#~ msgstr "Lažni bonusi"
+
+#~ msgid "Enable fake bonuses."
+#~ msgstr "Lažni bonusi"
+
+#~ msgid "Enable sounds"
+#~ msgstr "Uključi _zvuk"
+
+#~ msgid "Enable sounds."
+#~ msgstr "Uključi _zvuk"
+
+#~ msgid "Game level to start on"
+#~ msgstr "Početni nivo."
+
+#~ msgid "Game level to start on."
+#~ msgstr "Početni nivo."
+
+#~ msgid "Game speed"
+#~ msgstr "Brzina igre:"
+
+#~ msgid "Game speed (1=fast, 4=slow)."
+#~ msgstr "Brzina igre (1=brzo, 4=sporo)."
+
+#~ msgid "Key to use for motion down"
+#~ msgstr "Taster za kretanje ulevo"
+
+#~ msgid "Key to use for motion down."
+#~ msgstr "Taster za kretanje nadole."
+
+#~ msgid "Key to use for motion left"
+#~ msgstr "Taster za kretanje ulevo."
+
+#~ msgid "Key to use for motion left."
+#~ msgstr "Taster za kretanje ulevo."
+
+#~ msgid "Key to use for motion right"
+#~ msgstr "Taster za kretanje udesno."
+
+#~ msgid "Key to use for motion right."
+#~ msgstr "Taster za kretanje udesno."
+
+#~ msgid "Key to use for motion up"
+#~ msgstr "Taster za kretanje gore"
+
+#~ msgid "Key to use for motion up."
+#~ msgstr "Taster za kretanje gore."
+
+#~ msgid "Number of players."
+#~ msgstr "Broj igrača:"
+
+#~ msgid "Play levels in random order"
+#~ msgstr "Nivoi u nasumičnom poretku"
+
+#~ msgid "Play levels in random order."
+#~ msgstr "Nivoi u nasumičnom poretku"
+
+#~ msgid "Size of game tiles"
+#~ msgstr "Veličina polja"
+
+#~ msgid "Size of game tiles."
+#~ msgstr "Veličina polja"
+
+#~ msgid "Use relative movement"
+#~ msgstr "Relativno kretanje"
+
+#~ msgid "Use relative movement (ie. left or right only)."
+#~ msgstr "Koristi relativno kretanje (npr. samo levo i desno)."
+
+#~ msgid "Bonus"
+#~ msgstr "Bonus"
+
+#~ msgid "Bonus Appears"
+#~ msgstr "Bonus se pojavio"
+
+#~ msgid "Eat Bonus"
+#~ msgstr "Pojedi bonus"
+
+#~ msgid "Extra Life"
+#~ msgstr "Dodatni život"
+
+#~ msgid "Game Over"
+#~ msgstr "Igra završena"
+
+#~ msgid "Gnibbles"
+#~ msgstr "Zmije"
+
+#~ msgid "Worm Death"
+#~ msgstr "Smrt Crva"
+
+#~ msgid "Worm Reverse"
+#~ msgstr "Obrnuti Crv"
+
+#~ msgid "Worm Teleport"
+#~ msgstr "Teleport crv"
+
+#~ msgid "A worm game for GNOME."
+#~ msgstr "GNOM Crvi"
+
+#~ msgid "Gnibbles Preferences"
+#~ msgstr "Osobine Zmija"
+
+#~ msgid "Speed"
+#~ msgstr "Brzina"
+
+#~ msgid "Nibbles newbie"
+#~ msgstr "Početnik u zmijama"
+
+#~ msgid "My second day"
+#~ msgstr "Drugi dan igranja"
+
+#~ msgid "Not too shabby"
+#~ msgstr "Ne previše lako"
+
+#~ msgid "Finger-twitching good"
+#~ msgstr "Dobro grčenje mišića prstiju"
+
+#~ msgid "Starting level:"
+#~ msgstr "Početni nivo: "
+
+#~ msgid "Number of players:"
+#~ msgstr "Broj igrača:"
+
+#~ msgid "Board size"
+#~ msgstr "Veličina Table"
+
+#~ msgid "Tiny  (184 x 132)"
+#~ msgstr "Sićušna (184x132)"
+
+#~ msgid "Small  (368 x 264)"
+#~ msgstr "Mala (368x264)"
+
+#~ msgid "Medium  (460 x 330)"
+#~ msgstr "Srednja (460x330)"
+
+#~ msgid "Large  (736 x 528)"
+#~ msgstr "Velika (736x528)"
+
+#~ msgid "Extra large  (920 x 660)"
+#~ msgstr "Vrlo velika (920x660)"
+
+#~ msgid "Huge  (1840 x 1320)"
+#~ msgstr "Ogromna (1840x1320)"
+
+#~ msgid "Worm"
+#~ msgstr "Crv"
+
+#~ msgid "Down"
+#~ msgstr "_Dole"
+
+#~ msgid "Worm color:"
+#~ msgstr "Boja crva:"
+
+#~ msgid "Green"
+#~ msgstr "Zeleni"
+
+#~ msgid "Cyan"
+#~ msgstr "Cijan-plava"
+
+#~ msgid "Purple"
+#~ msgstr "Purpurni"
+
+#~ msgid "Worm %d:"
+#~ msgstr "Crv %d:"
+
+#~ msgid "'%s' with super-safe moves"
+#~ msgstr "„%s“ sa super-pažljivim pokretima"
+
+#~ msgid "'%s' with safe moves"
+#~ msgstr "„%s“ sa pažljivim pokretima"
+
+#~ msgid ""
+#~ "Congratulations, You Have Defeated the Robots!! \n"
+#~ "But Can You do it Again?"
+#~ msgstr ""
+#~ "Čestitamo, Pobedili ste robote!! \n"
+#~ "Ali da li možete opet?"
+
+#~ msgid "There are no teleport locations left!!"
+#~ msgstr "Nema više teleport lokacija!"
+
+#~ msgid "There are no safe locations to teleport to!!"
+#~ msgstr "Nema više bezbednih lokacija sa teleportovanje!!"
+
+#~ msgid "Set game scenario"
+#~ msgstr "Izaberi scenario igre"
+
+#~ msgid "Set game configuration"
+#~ msgstr "Izaberi podešavanja igre"
+
+#~ msgid "X"
+#~ msgstr "X"
+
+#~ msgid "Y"
+#~ msgstr "Y"
+
+#~ msgid "GNOME Robots"
+#~ msgstr "GNOM Roboti"
+
+#~ msgid "No game data could be found."
+#~ msgstr "Ne može da pronađe podatke o igri."
+
+#~ msgid ""
+#~ "The program GNOME Robots was unable to find any valid game configuration "
+#~ "files. Please check that the program is installed correctly."
+#~ msgstr ""
+#~ "Program Gnom roboti nije uspeo da pronađe nijednu datoteku sa ispravnim "
+#~ "podešavanjima igre. Molim proverite da li je program ispravno instaliran."
+
+#~ msgid "Avoid the robots and make them crash into each other"
+#~ msgstr "Izbegavaj robote i potrudite se da se sudare"
+
+#~ msgid "Robots"
+#~ msgstr "roboti"
+
+#~ msgid "Enable game sounds"
+#~ msgstr "Uključi _zvuk"
+
+#~ msgid ""
+#~ "Enable game sounds. Play sounds for various events throughout the game."
+#~ msgstr "Uključi zvuk."
+
+#~ msgid "Enable splats"
+#~ msgstr "Uključi prskanja"
+
+#~ msgid "Enable splats. Play a sound and show a \"Splat!\" on the screen."
+#~ msgstr "Omogući prskanje."
+
+#~ msgid "Game type"
+#~ msgstr "Tip igre:"
+
+#~ msgid "Game type. The name of the game variation to use."
+#~ msgstr "Tip igre. Ime varijacije igre koja će se igrati."
+
+#~ msgid "Key to hold"
+#~ msgstr "Držati taster"
+
+#~ msgid "Key to move E"
+#~ msgstr "Taster za kretanje istočno"
+
+#~ msgid "Key to move N"
+#~ msgstr "Taster za kretanje severno"
+
+#~ msgid "Key to move NE"
+#~ msgstr "Taster za kretanje severoistočno"
+
+#~ msgid "Key to move NW"
+#~ msgstr "Taster za kretanje severozapadno"
+
+#~ msgid "Key to move S"
+#~ msgstr "Taster za kretanje južno"
+
+#~ msgid "Key to move SE"
+#~ msgstr "Taster za kretanje jugoistočno"
+
+#~ msgid "Key to move SW"
+#~ msgstr "Taster za kretanje jugozapadno"
+
+#~ msgid "Key to move W"
+#~ msgstr "Taster za kretanje zapadno"
+
+#~ msgid "Key to teleport"
+#~ msgstr "Taster za teleportaciju"
+
+#~ msgid "Key to teleport randomly"
+#~ msgstr "Taster za slučajnu teleportaciju"
+
+#~ msgid "Key to wait"
+#~ msgstr "Taster za čekanje"
+
+#~ msgid "Robot image theme"
+#~ msgstr "Izgled robota"
+
+#~ msgid "Robot image theme. The theme of the images to use for the robots."
+#~ msgstr "Izgled robota."
+
+#~ msgid ""
+#~ "The name of the key used to hold still. The name is a standard X key name."
+#~ msgstr "Ime tastera kojim se miruje. Ime je obično ime Iks tastera."
+
+#~ msgid ""
+#~ "The name of the key used to move east. The name is a standard X key name."
+#~ msgstr "Ime tastera kojim se kreće istočno. Ime je obično ime Iks tastera."
+
+#~ msgid ""
+#~ "The name of the key used to move north-east. The name is a standard X key "
+#~ "name."
+#~ msgstr ""
+#~ "Ime tastera kojim se kreće severoistočno. Ime je obično ime Iks tastera."
+
+#~ msgid ""
+#~ "The name of the key used to move north-west. The name is a standard X key "
+#~ "name."
+#~ msgstr ""
+#~ "Ime tastera kojim se kreće severozapadno. Ime je obično ime Iks tastera."
+
+#~ msgid ""
+#~ "The name of the key used to move north. The name is a standard X key name."
+#~ msgstr "Ime tastera kojim se kreće severno. Ime je obično ime Iks tastera."
+
+#~ msgid ""
+#~ "The name of the key used to move south-east. The name is a standard X key "
+#~ "name."
+#~ msgstr ""
+#~ "Ime tastera kojim se kreće jugoistočno. Ime je obično ime Iks tastera."
+
+#~ msgid ""
+#~ "The name of the key used to move south-west. The name is a standard X key "
+#~ "name."
+#~ msgstr ""
+#~ "Ime tastera kojim se kreće jugozapadno. Ime je obično ime Iks tastera."
+
+#~ msgid ""
+#~ "The name of the key used to move south. The name is a standard X key name."
+#~ msgstr "Ime tastera kojim se kreće južno. Ime je obično ime Iks tastera."
+
+#~ msgid ""
+#~ "The name of the key used to move west. The name is a standard X key name."
+#~ msgstr "Ime tastera kojim se kreće zapadno. Ime je obično ime Iks tastera."
+
+#~ msgid ""
+#~ "The name of the key used to teleport randomly. The name is a standard X "
+#~ "key name."
+#~ msgstr ""
+#~ "Ime tastera kojim se slučajno teleportuje. Ime je obično ime Iks tastera."
+
+#~ msgid ""
+#~ "The name of the key used to teleport safely (if possible). The name is a "
+#~ "standard X key name."
+#~ msgstr ""
+#~ "Ime tastera kojim se bezbedno teleportuje (ako je moguće). Ime je obično "
+#~ "ime Iks tastera."
+
+#~ msgid "The name of the key used to wait. The name is a standard X key name."
+#~ msgstr "Ime tastera kojim se čeka. Ime je obično ime Iks tastera."
+
+#~ msgid "Use safe moves"
+#~ msgstr "Koristi bezbedne poteze"
+
+#~ msgid ""
+#~ "Use safe moves. The safe moves option will help you to avoid being killed "
+#~ "due to a mistake. If you try to make a move that would lead to your death "
+#~ "when there is a safe move available you will not be allowed to proceed."
+#~ msgstr ""
+#~ "Koristi bezbedne poteze. Ova opcija će vam pomoći da izbegnete smrt usled "
+#~ "greške. Ukoliko je ova opcija uključena i pokušate da napravite potez koji "
+#~ "će dovesti do vaše smrti nećete moći da ga izvršite."
+
+#~ msgid "Use super safe moves"
+#~ msgstr "Koristi super bezbedne poteze"
+
+#~ msgid ""
+#~ "Use super safe moves. The player is alerted when there is no safe move "
+#~ "and the only option is to teleport out."
+#~ msgstr ""
+#~ "Koristi supr bezbedne poteze. Igrač se obaveštava kad nema više bezbednih "
+#~ "poteza i kada je jedina mogućnosti teleportovanje."
+
+#~ msgid "Bad Move"
+#~ msgstr "Loš potez"
+
+#~ msgid "GNOME Robots II"
+#~ msgstr "GNOM Roboti II"
+
+#~ msgid "Level Complete"
+#~ msgstr "Nivo završen"
+
+#~ msgid "Player Dead"
+#~ msgstr "Igrač Mrtav"
+
+#~ msgid "Player Teleport"
+#~ msgstr "Igrač Teleportovan"
+
+#~ msgid "Robot has been Splatted!"
+#~ msgstr "Robot je isprskan!"
+
+#~ msgid "Victory!!"
+#~ msgstr "Pobeda!!"
+
+#~ msgid "Could not find '%s' image file for GNOME Robots\n"
+#~ msgstr "Slika „%s“ za GNOM Robote nije pronađena\n"
+
+#~ msgid "GNOME Robots Game"
+#~ msgstr "Igra GNOM Robota"
+
+#~ msgid "Initial Number of Type 1 Robots"
+#~ msgstr "Početni broj Robota tipa 1"
+
+#~ msgid "Initial Number of Robots"
+#~ msgstr "Početni broj robota"
+
+#~ msgid "Initial Number of Type 2 Robots"
+#~ msgstr "Početni broj Robota tipa 2"
+
+#~ msgid "Increasing Number of Type 1 Robots per Level"
+#~ msgstr "Povećavanje broja robota tipa 1 u zavisnosti od nivoa"
+
+#~ msgid "Increasing Number of Robots per Level"
+#~ msgstr "Povećavanje broja robota u zavisnosti od nivoa"
+
+#~ msgid "Increasing Number of Type 2 Robots per Level"
+#~ msgstr "Povećanje broja robota tipa 2 u zavisnosti od nivoa"
+
+#~ msgid "Maximum Number of Type 1 Robots"
+#~ msgstr "Najveći broj robota tipa 1"
+
+#~ msgid "Maximum Number of Robots"
+#~ msgstr "Najveći broj robota"
+
+#~ msgid "Maximum Number of Type 2 Robots"
+#~ msgstr "Najveći broj robota tipa 2"
+
+#~ msgid "Type 1 Robot Score"
+#~ msgstr "Rezultat robota tipa 1"
+
+#~ msgid "Robot Score"
+#~ msgstr "Rezultat robota"
+
+#~ msgid "Type 2 Robot Score"
+#~ msgstr "Rezultat robota tipa 2"
+
+#~ msgid "Type 1 Robot Score When Waiting"
+#~ msgstr "Roboti tipa 1 poentiraju kada čekaju"
+
+#~ msgid "Robot Score When Waiting"
+#~ msgstr "Roboti poentiraju kada čekaju"
+
+#~ msgid "Type 2 Robot Score When Waiting"
+#~ msgstr "Roboti tipa 2 poentiraju kada čekaju"
+
+#~ msgid "Type 1 Robot Score When Splatted"
+#~ msgstr "Roboti tipa 1 poentiraju kada su isprskani"
+
+#~ msgid "Robot Score When Splatted"
+#~ msgstr "Roboti poentiraju kada su isprskani"
+
+#~ msgid "Type 2 Robot Score When Splatted"
+#~ msgstr "Roboti tipa 2 poentiraju kada su isprskani"
+
+#~ msgid "Initial Number of Safe Teleports"
+#~ msgstr "Početni broj bezbednih teleportova"
+
+#~ msgid "Number of Free Safe Teleports per Level"
+#~ msgstr "Broj slobodnih bezbednih teleportova po nivou"
+
+#~ msgid "Kills Required While Waiting to Get A Safe Teleport"
+#~ msgstr "Ubistva neophodna dok se čeka na bezbedni teleport"
+
+#~ msgid "Score Required To Get A Safe Teleport"
+#~ msgstr "Rezultat neophodan da bi se dobio bezbedan teleport"
+
+#~ msgid "Maximum Number of Safe Teleports"
+#~ msgstr "Najveći broj bezbednih teleportova"
+
+#~ msgid "Moveable Junkheaps"
+#~ msgstr "Pokretne hrpe smeća"
+
+#~ msgid "Yes"
+#~ msgstr "Da"
+
+#~ msgid "No"
+#~ msgstr "Ne"
+
+#~ msgid "classic robots"
+#~ msgstr "Klasični roboti"
+
+#~ msgid "robots2"
+#~ msgstr "Roboti2"
+
+#~ msgid "robots2 easy"
+#~ msgstr "Roboti2 laki"
+
+#~ msgid "robots with safe teleport"
+#~ msgstr "Roboti sa bezbednim teleportima"
+
+#~ msgid "nightmare"
+#~ msgstr "Noćna mora"
+
+#~ msgid "robots"
+#~ msgstr "roboti"
+
+#~ msgid "cows"
+#~ msgstr "krave"
+
+#~ msgid "eggs"
+#~ msgstr "jaja"
+
+#~ msgid "gnomes"
+#~ msgstr "gnomovi"
+
+#~ msgid "mice"
+#~ msgstr "miševi"
+
+#~ msgid "windows"
+#~ msgstr "prozori"
+
+#~ msgid "GNOME Robots Preferences"
+#~ msgstr "Osobine GNOM robota"
+
+#~ msgid "Game Type"
+#~ msgstr "Tip igre:"
+
+#~ msgid "Property"
+#~ msgstr "Osobine"
+
+#~ msgid "Value"
+#~ msgstr "Vrednost"
+
+#~ msgid "Prevent some dangerous moves"
+#~ msgstr "Spreči neke opasne poteze"
+
+#~ msgid "Prevent accidental moves that result in getting killed."
+#~ msgstr "Spreči nenamerne poteze koji mogu dovesti do pogibije."
+
+#~ msgid "Prevent all dangerous moves"
+#~ msgstr "Spreči sve opasne poteze"
+
+#~ msgid "Prevents all moves that result in getting killed."
+#~ msgstr "Spreči sve poteze koji mogu dovesti do pogibije."
+
+#~ msgid "Play sounds for major events"
+#~ msgstr "Pusti zvuke za važne događaje"
+
+#~ msgid "Play sounds for events like winning a level and dying."
+#~ msgstr "Pusti zvuke za događaje kao što je osvajanje nivoa ili pogibija."
+
+#~ msgid "Play a sound when two robots collide"
+#~ msgstr "Pusti zvuk pri sudaru dva robota"
+
+#~ msgid "Play the most common, and potentially the most annoying, sound."
+#~ msgstr "Pusti najčešći i možda dosadni zvuk."
+
+#~ msgid "You Cannot Change the Game Type When Playing"
+#~ msgstr "Ne možete menjati vrstu igre dok traje igra"
+
+#~ msgid "Graphics Theme"
+#~ msgstr "Grafika"
+
+#~ msgid "Image theme:"
+#~ msgstr "Izaberi izgled"
+
+#~ msgid "Background color:"
+#~ msgstr "Boja pozadine:"
+
+#~ msgid "Keyboard Controls"
+#~ msgstr "Kontrola sa tastature:"
+
+#~ msgid "Teleport"
+#~ msgstr "Teleport"
+
+#~ msgid "Random Teleport"
+#~ msgstr "Slučajni teleport"
+
+#~ msgid "Wait"
+#~ msgstr "Čekanje"
+
+#~ msgid "Use the Keypad"
+#~ msgstr "Koristi numeričku tastaturu"
+
+#~ msgid "Use Left Hand Keys"
+#~ msgstr "Koristi tastere za levu ruku"
+
+#~ msgid "Use Original Robots Keys"
+#~ msgstr "Koristi uobičajene tastere za robota"
+
+#~ msgid "Keyboard"
+#~ msgstr "Tastatura"
+
+#~ msgid "Safe Teleports:"
+#~ msgstr "Bezbedna teleportacija:"
+
+#~ msgid "Level:"
+#~ msgstr "Nivo:"
+
+#~ msgid "Remaining:"
+#~ msgstr "Preostalo:"
+
+#~ msgid "Collect all diamonds and find exit"
+#~ msgstr "Pokupi sve dijamanta i nađi izlaz"
+
+#~ msgid "Congratulations!!! You have won!"
+#~ msgstr "Čestitamo!!! Pobedili ste!"
+
+#~ msgid "Original Atari caves"
+#~ msgstr "Originalne pećine sa atarija"
+
+#~ msgid "gnome-stones:empty"
+#~ msgstr "gnom-kamenje:prazno"
+
+#~ msgid "Default caves"
+#~ msgstr "Standardne pećine"
+
+#~ msgid "Collect diamonds while avoiding falling boulders"
+#~ msgstr "Pokupi sve dijamante i nađi izlaz"
+
+#~ msgid "Stones"
+#~ msgstr "GNOM Kamenje"
+
+#~ msgid "Cave number to start"
+#~ msgstr "Broj pećine"
+
+#~ msgid "Cave number to start."
+#~ msgstr "Broj pećine."
+
+#~ msgid "Device to use for joystick control."
+#~ msgstr "Uređaj koji korististi za kontrolu džojstikom."
+
+#~ msgid "Enable sound support"
+#~ msgstr "Uključi _zvuk"
+
+#~ msgid "Enable sound support."
+#~ msgstr "Uključi _zvuk"
+
+#~ msgid "Game name"
+#~ msgstr "Ime igre"
+
+#~ msgid "Joystick device"
+#~ msgstr "Uređaj upravljačke palice"
+
+#~ msgid "Joystick switch level"
+#~ msgstr "Stepen pokretljivosti džojstika"
+
+#~ msgid "Scroll method"
+#~ msgstr "Način skrolovanja"
+
+#~ msgid "The full path and filename of game to load."
+#~ msgstr "Puna putanja i ime igre koju treba učitati."
+
+#~ msgid ""
+#~ "The level an analog joystick must reach to be considered \"on\" when "
+#~ "emulating a digital joystick. This takes a value between 0.0 and 1.0."
+#~ msgstr ""
+#~ "Nivo koji analogni džojstik mora da dostigne da bi se smatrao „uključenim“ "
+#~ "kada oponaša digitalni džojstik. Ovo uzima vrednost između 0.0 i 1.0."
+
+#~ msgid ""
+#~ "The scroll method, valid values are \"atari_scroll\", \"smooth_scroll\" "
+#~ "and \"center_scroll\"."
+#~ msgstr ""
+#~ "Način skrolovanja, moguće vrednosti su „atari_scroll“, „smooth_scroll“ i "
+#~ "„center_scroll“."
+
+#~ msgid "Gnomekoban"
+#~ msgstr "GNOM Sokoban"
+
+#~ msgid "gnomekoban:empty,0"
+#~ msgstr "gnom sokobar:prazno,0"
+
+#~ msgid "The cave you are trying to load it to big for this game."
+#~ msgstr "Pećina koju pokušavate da učitate je prevelika za ovu igru."
+
+#~ msgid "The cave is corrupted: %s is missing."
+#~ msgstr "Pećina je oštećena: %s nedostaje."
+
+#~ msgid ""
+#~ "The cave you are trying to load includes an object, that wasn't declared."
+#~ msgstr ""
+#~ "Pećina koju pokušavate da učitate sadrži objekat koji nije prijavljen."
+
+#~ msgid "This is GNOME Stones"
+#~ msgstr "GNOM Kamenje"
+
+#~ msgid "Game to play"
+#~ msgstr "Vrsta igre"
+
+#~ msgid "FILENAME"
+#~ msgstr "Ime fajla"
+
+#~ msgid ""
+#~ "An error occured while loading the image file \"%s\".\n"
+#~ "Please make sure, that GNOME Stones is correctly installed!"
+#~ msgstr ""
+#~ "Greška se javila pri učitavanju slike „%s“.\n"
+#~ "Molimo vas da proverite vašu instalaciju GNOM kamenja"
+
+#~ msgid "GNOME Stones"
+#~ msgstr "GNOM Kamenje"
+
+#~ msgid "Game title"
+#~ msgstr "Naslov igre"
+
+#~ msgid "Congratulations, you win!"
+#~ msgstr "Čestitamo, pobedili ste!"
+
+#~ msgid "Game over!"
+#~ msgstr "Igra završena!"
+
+#~ msgid "Sokoban levels:"
+#~ msgstr "Sokoban nivoi: "
+
+#~ msgid "Mine through dirt and collect gems."
+#~ msgstr "Kopaj po blatu i pronalazi dragulje."
+
+#~ msgid "_Restart level"
+#~ msgstr "Ponovo pokreni nivo"
+
+#~ msgid "Restart the current level"
+#~ msgstr "Ponovo pokreni isti nivo"
+
+#~ msgid "Scanning private object directory..."
+#~ msgstr "Razmatram direktorijum sa privatnim objektima..."
+
+#~ msgid "Scanning public object directory..."
+#~ msgstr "Razmatram direktorijum sa javnim objektima..."
+
+#~ msgid "Filling game widget..."
+#~ msgstr "Popunjavam prozor igre..."
+
+#~ msgid "Scanning private game directory..."
+#~ msgstr "Razmatram privatni direktorijum igre..."
+
+#~ msgid "Scanning public game directory..."
+#~ msgstr "Razmatram javni direktorijum igre..."
+
+#~ msgid "Restoring preferences..."
+#~ msgstr "Vraćam postavke na stare vrednosti..."
+
+#~ msgid "You gained an extra life!"
+#~ msgstr "Dobili ste dodatni život!"
+
+#~ msgid "Seconds left: %d"
+#~ msgstr "Preostalo sekundi: %d"
+
+#~ msgid "Neither your chosen game nor the default game could be loaded."
+#~ msgstr ""
+#~ "Ni igra koju ste izabrali, ni standardna igra nije mogla da se učita."
+
+#~ msgid "Please make sure that GNOME Stones is correctly installed."
+#~ msgstr "Molimo vas da proverite vašu instalaciju GNOM kamenja"
+
+#~ msgid ""
+#~ "You may be able to select a different game from the preferences dialog."
+#~ msgstr "Možete izabrati neku drugu igru iz dijaloga sa postavkama."
+
+#~ msgid "GNOME Stones Preferences"
+#~ msgstr "GNOM Kamenje Postavke"
+
+#~ msgid "Caves"
+#~ msgstr "Pećine"
+
+#~ msgid "Device"
+#~ msgstr "Uređaj"
+
+#~ msgid "Joystick device:"
+#~ msgstr "Uređaj upravljačke palice"
+
+#~ msgid "Digital joystick emulation"
+#~ msgstr "Imitacija digitalne upravljačke palice"
+
+#~ msgid "Switch level:"
+#~ msgstr "Preći u nivo:"
+
+#~ msgid "_Joystick"
+#~ msgstr "Upravljačka palica"
+
+#~ msgid "Enable sound"
+#~ msgstr "Uključi _zvuk"
+
+#~ msgid "_Sound"
+#~ msgstr "_Zvuk"
+
+#~ msgid "Atari like scrolling"
+#~ msgstr "Atari tip skrolovanja"
+
+#~ msgid "Smooth scrolling"
+#~ msgstr "Glatko skrolovanje"
+
+#~ msgid "Always in the center"
+#~ msgstr "Uvek u centru"
+
+#~ msgid "_Misc."
+#~ msgstr "Razno"
+
+#~ msgid "Diamonds:"
+#~ msgstr "Dijamanti:"
+
+#~ msgid "Cave:"
+#~ msgstr "Pećina:"
+
+#~ msgid "Lives:"
+#~ msgstr "Života:"
+
+#~ msgid "Tutorial caves"
+#~ msgstr "Pećine za učenje"
+
+#~ msgid "Fit falling blocks together"
+#~ msgstr "Sastavljaj padajuće blokove"
+
+#~ msgid "Gnometris"
+#~ msgstr "GNOM tetris"
+
+#~ msgid "Image to use as background"
+#~ msgstr "Slika za pozadinu."
+
+#~ msgid "Image to use as background."
+#~ msgstr "Slika za pozadinu."
+
+#~ msgid "Image to use for drawing blocks"
+#~ msgstr "Slika koju koristiti za blokove"
+
+#~ msgid "Image to use for drawing blocks."
+#~ msgstr "Slika koju koristiti za blokove"
+
+#~ msgid "Level to start with"
+#~ msgstr "Početni nivo."
+
+#~ msgid "Level to start with."
+#~ msgstr "Početni nivo."
+
+#~ msgid ""
+#~ "The density of blocks in rows filled at the start of the game. The value "
+#~ "is between 0 (for no blocks) and 10 (for a completely filled row)."
+#~ msgstr ""
+#~ "Gustina blokova u redovima koji su već popunjeni na početku igre. Vrednost "
+#~ "je između 0 (bez blokova) i 10 (za potpuno popunjeni red)."
+
+#~ msgid "The density of filled rows"
+#~ msgstr "Koncetracija blokova u unapred popunjenim redovima:"
+
+#~ msgid ""
+#~ "The number of rows that are filled with random blocks at the start of the "
+#~ "game."
+#~ msgstr "Broj redova koji su popunjeni nasumičnim blokovima na početku igre."
+
+#~ msgid "The number of rows to fill"
+#~ msgstr "Broj popunjenih redova"
+
+#~ msgid "Whether to give blocks random colors"
+#~ msgstr "Da li da blokovi budu nasumičnih boja."
+
+#~ msgid "Whether to give blocks random colors."
+#~ msgstr "Da li da blokovi budu nasumičnih boja."
+
+#~ msgid "Whether to preview the next block"
+#~ msgstr "Da li imati uvid u sledeći blok."
+
+#~ msgid "Whether to preview the next block."
+#~ msgstr "Da li imati uvid u sledeći blok."
+
+#~ msgid "Whether to rotate counter clock wise"
+#~ msgstr "Da li blokove rotirati u pravcu suprotnom od kazaljke na satu."
+
+#~ msgid "Whether to rotate counter clock wise."
+#~ msgstr "Da li blokove rotirati u pravcu suprotnom od kazaljke na satu."
+
+#~ msgid "Set starting level (1-10)"
+#~ msgstr "Podesi početni nivo (1-10)"
+
+#~ msgid "LEVEL"
+#~ msgstr "NIVO"
+
+#~ msgid "Lines:"
+#~ msgstr "Linija: "
+
+#~ msgid "Paused"
+#~ msgstr "Pauza"
+
+#~ msgid ""
+#~ "Could not find the theme: \n"
+#~ "%s\n"
+#~ "\n"
+#~ "Please check your gnome-games installation"
+#~ msgstr ""
+#~ "Nemogu da nađem temu: \n"
+#~ "%s\n"
+#~ "\n"
+#~ "Proverite vašu instalaciju GNOM igara"
+
+#~ msgid ""
+#~ "Can't load the image: \n"
+#~ "%s\n"
+#~ "\n"
+#~ "Please check your gnome-games installation"
+#~ msgstr ""
+#~ "Nemogu da učitam sliku: \n"
+#~ "%s\n"
+#~ "\n"
+#~ "Proverite vašu instalaciju GNOM igara"
+
+#~ msgid "<none>"
+#~ msgstr "<ništa>"
+
+#~ msgid "Gnometris preferences"
+#~ msgstr "GNOM tetris postavke"
+
+#~ msgid "Setup"
+#~ msgstr "Podešavanja"
+
+#~ msgid "Number of pre-filled rows:"
+#~ msgstr "Broj unapred popunjenih redova:"
+
+#~ msgid "Density of blocks in a pre-filled row:"
+#~ msgstr "Koncetracija blokova u unapred popunjenim redovima:"
+
+#~ msgid "Starting Level:"
+#~ msgstr "Početni nivo:"
+
+#~ msgid "Operation"
+#~ msgstr "Proizvodim"
+
+#~ msgid "Preview next block"
+#~ msgstr "Prikazivanje sledećeg bloka"
+
+#~ msgid "Use random block colors"
+#~ msgstr "Nasumične boje blokova"
+
+#~ msgid "Rotate blocks counterclockwise"
+#~ msgstr "Okreći suprotno smeru kazaljke na satu"
+
+#~ msgid "Theme"
+#~ msgstr "Izgled"
+
+#~ msgid "Block image:"
+#~ msgstr "Slika na bloku: "
+
+#~ msgid "Background image:"
+#~ msgstr "Slika za pozadinu: "
+
+#~ msgid ""
+#~ "Written for my wife, Matylda\n"
+#~ "Send comments and bug reports to: janusz.gorycki@intel.com"
+#~ msgstr ""
+#~ "Napisano za moju ženu, Matildu\n"
+#~ "Komentare i prijave grešaka šaljite na: janusz.gorycki@intel.com"
+
+#~ msgid "Small"
+#~ msgstr "Malo"
+
+#~ msgid "Medium"
+#~ msgstr "Srednje"
+
+#~ msgid "Large"
+#~ msgstr "Veliko"
+
+#~ msgid "Custom"
+#~ msgstr "Nestandardno"
+
+#~ msgid "GNOME Mines"
+#~ msgstr "GNOM Mine"
+
+#~ msgid "Click a square, any square"
+#~ msgstr "Kliknite na kvadrat, bilo koji kvadrat"
+
+#~ msgid "Maybe they're all mines ..."
+#~ msgstr "Možda su sve mine..."
+
+#~ msgid "Faces:"
+#~ msgstr "Face:"
+
+#~ msgid "A Minesweeper clone."
+#~ msgstr "Izvedba Mina"
+
+#~ msgid "Field size"
+#~ msgstr "Veličina polja"
+
+#~ msgid "Custom size"
+#~ msgstr "Nestandardna Veličina"
+
+#~ msgid "Number of mines:"
+#~ msgstr "Broj mina:"
+
+#~ msgid "Horizontal:"
+#~ msgstr "Vodoravno:"
+
+#~ msgid "Vertical:"
+#~ msgstr "Uspravno:"
+
+#~ msgid "Use \"I'm not sure\" flags."
+#~ msgstr "Koristi „Nisam siguran“ zastavice."
+
+#~ msgid "GNOME Mines Preferences"
+#~ msgstr "Postavke GNOM Mina"
+
+#~ msgid "Width of grid"
+#~ msgstr "Širina mreže"
+
+#~ msgid "Height of grid"
+#~ msgstr "Dužina mreže"
+
+#~ msgid "Number of mines"
+#~ msgstr "Broj mina"
+
+#~ msgid "NUMBER"
+#~ msgstr "Broj"
+
+#~ msgid "Size of the board (1=small, 3=large)"
+#~ msgstr "Veličina table (1=mala, 3=velika)"
+
+#~ msgid "X location of window"
+#~ msgstr "X pozicija prozora"
+
+#~ msgid "Y location of window"
+#~ msgstr "Y pozicija prozora"
+
+#~ msgid "Flags:"
+#~ msgstr "Zastavice:"
+
+#~ msgid "Clear mines from a minefield"
+#~ msgstr "Ukloni mine sa minskog polja"
+
+#~ msgid "Mines"
+#~ msgstr "Mine"
+
+#~ msgid "Set to true to be able to mark squares as unknown."
+#~ msgstr "Uključi da bi mogao da označavaš polja kao nepoznata"
+
+#~ msgid "Use the unknown flag"
+#~ msgstr "Koristi zastavicu za nepoznato"
+
+#~ msgid "Sol_ve"
+#~ msgstr "Re_ši"
+
+#~ msgid "_2×2"
+#~ msgstr "_2x2"
+
+#~ msgid "Play on a 2×2 board"
+#~ msgstr "Igraj na 2x2 tabli"
+
+#~ msgid "_3×3"
+#~ msgstr "_3x3"
+
+#~ msgid "Play on a 3×3 board"
+#~ msgstr "Igraj na 3x3 tabli"
+
+#~ msgid "_4×4"
+#~ msgstr "_4x4"
+
+#~ msgid "Play on a 4×4 board"
+#~ msgstr "Igraj na 4x4 tabli"
+
+#~ msgid "_5×5"
+#~ msgstr "_5x5"
+
+#~ msgid "Play on a 5×5 board"
+#~ msgstr "Igraj na 5x5 tabli"
+
+#~ msgid "_6×6"
+#~ msgstr "_6x6"
+
+#~ msgid "Play on a 6×6 board"
+#~ msgstr "Igraj na 6x6 tabli"
+
+#~ msgid "_Up"
+#~ msgstr "_Gore"
+
+#~ msgid "Move the pieces up"
+#~ msgstr "Pomeri izabranu figuru gore"
+
+#~ msgid "_Left"
+#~ msgstr "_Levo"
+
+#~ msgid "Move the pieces left"
+#~ msgstr "Pomeri izabranu figuru levo"
+
+#~ msgid "_Right"
+#~ msgstr "De_sno"
+
+#~ msgid "Move the pieces right"
+#~ msgstr "Pomeri izabranu figuru desno"
+
+#~ msgid "_Down"
+#~ msgstr "_Dole"
+
+#~ msgid "Move the pieces down"
+#~ msgstr "Pomeri izabranu figuru dole"
+
+#~ msgid "_Move"
+#~ msgstr "_Pomeri"
+
+#~ msgid "Size of board (2-6)"
+#~ msgstr "Veličina table (2-6)"
+
+#~ msgid "SIZE"
+#~ msgstr "Veličina"
+
+#~ msgid "Puzzle solved! Well done!"
+#~ msgstr "Slagalica rešena! Svaka čast!"
+
+#~ msgid "Puzzle solved!"
+#~ msgstr "Slagalica rešena!"
+
+#~ msgid "Game paused"
+#~ msgstr "... Igra je pauzirana ..."
+
+#~ msgid "Playing %d×%d board"
+#~ msgstr "Igra se na %dx%d tabli"
+
+#~ msgid "A Tetravex clone."
+#~ msgstr "Tetraveks"
+
+#~ msgid "Play a puzzle game matching tiles together"
+#~ msgstr "Igraj slagalicu"
+
+#~ msgid "Tetravex"
+#~ msgstr "Tetraveks"
+
+#~ msgid ""
+#~ "The height of the playing window in pixels. At minimum it should be 240."
+#~ msgstr "Visina prozora za igru u tačkama. Mora da bude bar 240."
+
+#~ msgid "The height of the window"
+#~ msgstr "Visina prozora"
+
+#~ msgid "The size of the playing grid"
+#~ msgstr "Broj polja za igru"
+
+#~ msgid ""
+#~ "The value of this key is used to decide the size of the playing grid. The "
+#~ "valid values are 2 to 8, anything else gets set to 3."
+#~ msgstr ""
+#~ "Vrednost ovog parametra se koristi da se odluči o veličini mreže za igru. "
+#~ "Moguće postavke su od 2 do 8, sve drugo se postavlja na 3 automatski."
+
+#~ msgid ""
+#~ "The width of the playing window in pixels. At minimum it should be 320."
+#~ msgstr "Širina prozora za igru u tačkama. Mora da bude bar 320."
+
+#~ msgid "The width of the window"
+#~ msgstr "Širina prozora"
+
+#~ msgid "3"
+#~ msgstr "3"
+
+#~ msgid "4"
+#~ msgstr "4"
+
+#~ msgid "5"
+#~ msgstr "5"
+
+#~ msgid "6"
+#~ msgstr "6"
+
+#~ msgid "7"
+#~ msgstr "7"
+
+#~ msgid "_Novice"
+#~ msgstr "_Početni"
+
+#~ msgid "_Medium"
+#~ msgstr "_Srednji"
+
+#~ msgid "_Advanced"
+#~ msgstr "_Napredni"
+
+#~ msgid "Level completed. Well done."
+#~ msgstr "Nivo završen. Svaka čast."
+
+#~ msgid "Moves:"
+#~ msgstr "Potezi:"
+
+#~ msgid "Could not find '%s' pixmap file\n"
+#~ msgstr "Slika „%s“ nije pronađena\n"
+
+#~ msgid "Welcome to GNOME Klotski"
+#~ msgstr "Dobrodošli u GNOM Klotski"
+
+#~ msgid "Playing level %s"
+#~ msgstr "Igrate nivo %s"
+
+#~ msgid "A Klotski clone"
+#~ msgstr "Igra Klotski"
+
+#~ msgid "Klotski"
+#~ msgstr "Igra Klotski"
+
+#~ msgid "Solve puzzles by sliding blocks"
+#~ msgstr "Rešavaj slagalice pomeranjem blokova"
+
+#~ msgid "Already used! Where do you want to put that?"
+#~ msgstr "Već iskorišćeno! Gde želite da ga postavite?"
+
+#~ msgid "Play a poker-style dice game"
+#~ msgstr "Igraj igru kockama u fazonu pokera"
+
+#~ msgid "Tali"
+#~ msgstr "Jamb"
+
+#~ msgid ""
+#~ "Choose whether or not to insert a delay between the computer's dice rolls "
+#~ "so the player can follow what it is doing."
+#~ msgstr ""
+#~ "Izaberite da li se ili ne čeka između bacanja kockica računara kako bi "
+#~ "igrač mogao da prati šta računar radi."
+
+#~ msgid "Delay between rolls"
+#~ msgstr "Pravi pauzu između bacanja"
+
+#~ msgid "Display the computer's thoughts"
+#~ msgstr "Prikazuj razmišljanja računara"
+
+#~ msgid ""
+#~ "If set to true, a dump of the AI's working will be done to standard "
+#~ "output."
+#~ msgstr ""
+#~ "Ukoliko je postavljeno, prikaz kako radi AI će biti ispisan na standardni "
+#~ "izlaz."
+
+#~ msgid "[Human,Wilber,Bill,Monica,Kenneth,Janet]"
+#~ msgstr "[Čovek,Miljenko,Gojnik,Savudin,Vukašin,Goran]"
+
+#~ msgid "GNOME Tali"
+#~ msgstr "GNOM Jamb"
+
+#~ msgid "%s wins the game with %d point"
+#~ msgid_plural "%s wins the game with %d points"
+#~ msgstr[0] "%s je pobedio sa %d poenom"
+#~ msgstr[1] "%s je pobedio sa %d poena"
+#~ msgstr[2] "%s je pobedio sa %d poena"
+
+#~ msgid "Computer playing for %s"
+#~ msgstr "Računar igra kao %s"
+
+#~ msgid "%s! -- You're up."
+#~ msgstr "%s! -- Vaš red."
+
+#~ msgid "You're only allowed three rolls! Select a score box."
+#~ msgstr "Samo vam je tri bacanja dozvoljeno! Izaberite polje za upis."
+
+#~ msgid "GNOME version (1998):"
+#~ msgstr "Izdanje za Gnoma (1998):"
+
+#~ msgid "Curses version (1992):"
+#~ msgstr "Izdanje za curses (1992):"
+
+#~ msgid "A sort of poker with dice and less money."
+#~ msgstr "Vrsta pokera sa kockicom i manje novca"
+
+#~ msgid "Cheater! Any high scores will not be recorded."
+#~ msgstr "Varalice! Vaš rezultat se neće beležiti."
+
+#~ msgid "Select dice to re-roll, press Roll!, or select score slot."
+#~ msgstr ""
+#~ "Izaberite kockice koje hoćete ponovo da bacate, i pritisnite Bacaj!, ili "
+#~ "izaberite polje za upis."
+
+#~ msgid "Roll!"
+#~ msgstr "Bacaj ! "
+
+#~ msgid "Calculate random die throws (debug)"
+#~ msgstr "Izračunaj nasumična smrtna bacanja"
+
+#~ msgid "Delay computer moves"
+#~ msgstr "Pravi pauze između poteza računara"
+
+#~ msgid "Show high scores and exit"
+#~ msgstr "Prikaži najbolje rezultate i izađi"
+
+#~ msgid "Display computer thoughts"
+#~ msgstr "Prikazuj razmišljanja računara"
+
+#~ msgid "Number of computer opponents"
+#~ msgstr "Broj računar-protivnika"
+
+#~ msgid "Number of human opponents"
+#~ msgstr "Broj ljudskih protivnika"
+
+#~ msgid "Current game will complete with original number of players."
+#~ msgstr ""
+#~ "Igra koje trenutno traje će biti završena sa prvobitnim brojem igrača."
+
+#~ msgid "GTali Preferences"
+#~ msgstr "Jamb postavke"
+
+#~ msgid "Human Players"
+#~ msgstr "Ljudi igrači"
+
+#~ msgid "Computer Opponents"
+#~ msgstr "Računar-protivnici"
+
+#~ msgid "Number of opponents:"
+#~ msgstr "Broj protivnika:"
+
+#~ msgid "1s [total of 1s]"
+#~ msgstr "Jedinice"
+
+#~ msgid "2s [total of 2s]"
+#~ msgstr "Dvojke"
+
+#~ msgid "3s [total of 3s]"
+#~ msgstr "Trojke"
+
+#~ msgid "4s [total of 4s]"
+#~ msgstr "Četvorke"
+
+#~ msgid "5s [total of 5s]"
+#~ msgstr "Petice"
+
+#~ msgid "6s [total of 6s]"
+#~ msgstr "Šestice"
+
+#~ msgid "3 of a Kind [total]"
+#~ msgstr "Tri iste"
+
+#~ msgid "4 of a Kind [total]"
+#~ msgstr "Poker"
+
+#~ msgid "Full House [25]"
+#~ msgstr "Ful Haus"
+
+#~ msgid "Small Straight [30]"
+#~ msgstr "Mali niz [30]"
+
+#~ msgid "Large Straight [40]"
+#~ msgstr "Veliki niz [40]"
+
+#~ msgid "Yahtzee [50]"
+#~ msgstr "Jamb"
+
+#~ msgid "Chance [total]"
+#~ msgstr "Šansa [ukupno]"
+
+#~ msgid "Lower Total"
+#~ msgstr "Donji zbir"
+
+#~ msgid "Grand Total"
+#~ msgstr "Veliki zbir"
+
+#~ msgid "Upper total"
+#~ msgstr "Gornji zbir"
+
+#~ msgid "Bonus if >62"
+#~ msgstr "Bonus ukoliko je >62"
+
+#~ msgid "How many times do you wish to roll?"
+#~ msgstr "Koliko puta želite da bacate? "
+
+#~ msgid "Generating ..."
+#~ msgstr "Proizvodim..."
+
+#~ msgid "Results"
+#~ msgstr "Rezultati"
+
+#~ msgid "Num Rolls"
+#~ msgstr "Broj Bacanja"
+
+#~ msgid "Total"
+#~ msgstr "Ukupno"
+
+#~ msgid "Iagno server to use"
+#~ msgstr "Jagno server koji treba koristiti"
+
+#~ msgid "Iagno"
+#~ msgstr "Jagno"
+
+#~ msgid "GNOME version of the popular Othello disk flipping game."
+#~ msgstr "Gnom verzija popularne igre Otelo"
+
+#~ msgid "Could not find '%s' pixmap file for Iagno\n"
+#~ msgstr "Nisam mogao da nađem sliku „%s“ za Jagno\n"
+
+#~ msgid "Welcome to Iagno!"
+#~ msgstr "Dobrodošli u Jagno!"
+
+#~ msgid "Play a game of Reversi"
+#~ msgstr "Igraj Reversi"
+
+#~ msgid "Network initialization complete."
+#~ msgstr "Pokretanje mreže završeno."
+
+#~ msgid "Network shutdown in progress."
+#~ msgstr "Gašenje mreže je u toku."
+
+#~ msgid "The remote player disconnected"
+#~ msgstr "Udaljeni igrač se isključio"
+
+#~ msgid "Error occurred during connect attempt."
+#~ msgstr "Greška pri pokušaju povezivanja."
+
+#~ msgid "Connection succeeded, waiting for opponent"
+#~ msgstr "Povezivanje uspelo, čekam protivnika"
+
+#~ msgid "Error occurred during write."
+#~ msgstr "Greška pri upisu."
+
+#~ msgid "Invalid move attempted"
+#~ msgstr "Pokušaj nepostojećeg poteza"
+
+#~ msgid "Invalid game data (set_peer)"
+#~ msgstr "Nepostojeći podatak (set_peer)"
+
+#~ msgid "Peer introduction complete"
+#~ msgstr "Upoznavanje strana završeno"
+
+#~ msgid "Invalid game data (move)"
+#~ msgstr "Nepostojeći podatak (move)"
+
+#~ msgid "Cleaning up connection"
+#~ msgstr "Čistim konekciju"
+
+#~ msgid "Connection in progress..."
+#~ msgstr "Povezivanje je u toku..."
+
+#~ msgid "Connection failed"
+#~ msgstr "Povezivanje nije uspelo"
+
+#~ msgid "No game server defined"
+#~ msgstr "Nijedan server za igru nije naznačen"
+
+#~ msgid "Iagno Preferences"
+#~ msgstr "Jagno postavke"
+
+#~ msgid "Use quick moves"
+#~ msgstr "Brzi potezi"
+
+#~ msgid "Stagger flips"
+#~ msgstr "Nesigurno okretanje"
+
+#~ msgid "Show grid"
+#~ msgstr "Prikazuj mrežu"
+
+#~ msgid "The default configuration values could not be retrieved correctly."
+#~ msgstr "Standardne vrednosti podešavanja nisu mogle da se pravilno podese"
+
+#~ msgid ""
+#~ "Please check your GConf configuration, specifically that the schemas have "
+#~ "been installed correctly."
+#~ msgstr ""
+#~ "Prvobitne vrednosti podešavanja nisu mogle biti dobijene ispravno. "
+#~ "Proverite svoja podešavanja Gonfiguratora, posebno da li su šeme "
+#~ "instalirano ispravno."
+
+#~ msgid "Easy"
+#~ msgstr "Lako"
+
+#~ msgid "Difficult"
+#~ msgstr "Teško"
+
+#~ msgid "Confounding Cross"
+#~ msgstr "Zbunjujući krst"
+
+#~ msgid "Pyramid's Walls"
+#~ msgstr "Zidovi pirmaide"
+
+#~ msgid "Tic-Tac-Toe"
+#~ msgstr "Iks-oks"
+
+#~ msgid "Cloud"
+#~ msgstr "Oblak"
+
+#~ msgid "Red Dragon"
+#~ msgstr "Crveni zmaj"
+
+#~ msgid "Four Bridges"
+#~ msgstr "Četiri mosta"
+
+#~ msgid "New game with _seed..."
+#~ msgstr "Nova igra sa poetnom _vrednošću..."
+
+#~ msgid "Start a new game giving a seed number..."
+#~ msgstr "Počinje novu igru sa zadatom početnom vrednošću..."
+
+#~ msgid "Shu_ffle tiles"
+#~ msgstr "Me_šanje špilova"
+
+#~ msgid "Shuffle tiles"
+#~ msgstr "Mešanje špilova"
+
+#~ msgid "Undo previous move"
+#~ msgstr "Vrati potez"
+
+#~ msgid "Get a hint"
+#~ msgstr "Traži savet"
+
+#~ msgid "Shuffle"
+#~ msgstr "Mešaj"
+
+#~ msgid ""
+#~ "This new mapset will take effect when you start a new game, or when "
+#~ "Mahjongg is restarted."
+#~ msgstr ""
+#~ "Nova mapa će imati učinka kada započnete novu igru, ili kada restartujete "
+#~ "mahjong"
+
+#~ msgid "These tiles don't match."
+#~ msgstr "Ovi špilovi se ne poklapaju."
+
+#~ msgid "There are no more moves."
+#~ msgstr "Nema više poteza."
+
+#~ msgid "Preferences"
+#~ msgstr "Osobine"
+
+#~ msgid "Tiles"
+#~ msgstr "Slike"
+
+#~ msgid "Tile Set"
+#~ msgstr "Špil"
+
+#~ msgid "Maps"
+#~ msgstr "Mape"
+
+#~ msgid "Select Map"
+#~ msgstr "Biraj Mapu:"
+
+#~ msgid "Colors"
+#~ msgstr "Boje"
+
+#~ msgid "Background Color"
+#~ msgstr "Pozadina:"
+
+#~ msgid "Warnings"
+#~ msgstr "Upozorenja"
+
+#~ msgid "Warn when tiles don't match"
+#~ msgstr "Upozori kada se slike ne poklapaju"
+
+#~ msgid "Tiles:"
+#~ msgstr "Slike"
+
+#~ msgid "GNOME Mahjongg"
+#~ msgstr "GNOM Mahjong"
+
+#~ msgid "GNOME version of the Eastern tile game, Mahjongg."
+#~ msgstr "Gnom verzija Istočnjačke igre, Mahjong."
+
+#~ msgid "... Game paused ..."
+#~ msgstr "... Igra je pauzirana ..."
+
+#~ msgid "Game Number:"
+#~ msgstr "Igra broj:"
+
+#~ msgid "Mahjongg"
+#~ msgstr "Mahjong"
+
+#~ msgid "Sorry, I was unable to find a playable configuration."
+#~ msgstr "Žao nam je, ali nemožemo da nađemo igriva podešavanja."
+
+#~ msgid "Tiles Left:"
+#~ msgstr "Figura preostalo: "
+
+#~ msgid "Moves Left:"
+#~ msgstr "Poteza preostalo: "
+
+#~ msgid "Welcome to GNOME Mahjongg!"
+#~ msgstr "Dobrodošli u GNOM Mahjong!"
+
+#~ msgid "Disassemble a pile of tiles by removing matching pairs"
+#~ msgstr "Raskloni gomilu pločica uklanjanjem odgovarajućih parova"
+
+#~ msgid ""
+#~ "The requested height of the main window in pixels. Note that the widgets "
+#~ "the window contains are at least 200 pixels high."
+#~ msgstr ""
+#~ "Zahtevana visina glavnog prozora kao broj tačaka. Primetite da su "
+#~ "elementi koje sadrži prozor visine najmanje 200 tačaka."
+
+#~ msgid ""
+#~ "The requested width of the main window in pixels. Note that the widgets "
+#~ "the window contains are at least 320 pixels wide."
+#~ msgstr ""
+#~ "Zahtevana širina glavnog prozora kao broj tačaka. Primetite da su "
+#~ "elementi koje sadrži prozor širin najmanje 320 tačaka."
+
+#~ msgid "%d stone selected"
+#~ msgid_plural "%d stones selected"
+#~ msgstr[0] "izabran je %d kamen"
+#~ msgstr[1] "izabrano je %d kamena"
+#~ msgstr[2] "izabrano je %d kamena"
+
+#~ msgid "No stones selected"
+#~ msgstr "Nema izabranog kamenja"
+
+#~ msgid "The Same GNOME"
+#~ msgstr "GNOM Isto-isto"
+
+#~ msgid ""
+#~ "Could not find the theme:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Please check your Same GNOME installation."
+#~ msgstr ""
+#~ "Nemogu da nađem temu:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Proverite vašu GNOM Isto-isto instalaciju."
+
+#~ msgid ""
+#~ "Same GNOME can't load the image file:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Please check your Same GNOME installation"
+#~ msgstr ""
+#~ "GNOM Isto-isto nemoža da učita sliku:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Proverite vašu GNOM Isto-isto instalaciju"
+
+#~ msgid "Same GNOME Preferences"
+#~ msgstr "Postavke GNOM Isto-Isto"
+
+#~ msgid "Same GNOME"
+#~ msgstr "GNOM Isto-isto"
+
+#~ msgid "Original idea from KDE's same game program."
+#~ msgstr "Ideja dolazi od KDE-ove isto-isto igre."
+
+#~ msgid "Welcome to Same GNOME!"
+#~ msgstr "Dobrodošli u GNOM Isto-isto!"
+
+#~ msgid "Remove groups of balls to try and clear the screen"
+#~ msgstr "Uklanjaj grupe loptica kako bi očistio ceo ekran"
+
+#~ msgid "Background Color:"
+#~ msgstr "Pozadina:"
+
+#~ msgid "<b>Game Name</b>"
+#~ msgstr "<b>Ime igre</b>"
+
+#~ msgid "Loading images..."
+#~ msgstr "Učitavanje slika..."
+
+#~ msgid "Dealing game..."
+#~ msgstr "Delim karte..."
+
+#~ msgid "Initializing scheme..."
+#~ msgstr "Postavljam šemu..."
+
+#~ msgid "Draw grid"
+#~ msgstr "Nacrtaj mrežu"
+
+#~ msgid "Name of the theme file to use."
+#~ msgstr "Ime teme koja će se koristiti."
+
+#~ msgid "One corresponds to speaker beeps, two to audio files."
+#~ msgstr "Jedan odgovara pištanje zvučnika, a dva zvučne fajlove."
+
+#~ msgid "Sound type"
+#~ msgstr "Tip zvuka"
+
+#~ msgid "Theme file"
+#~ msgstr "Ime fajla sa temom"
+
+#~ msgid "Whether or not to display grid lines on the game board."
+#~ msgstr "Da li prikazivati mrežu linija na tabli za igru."
+
+#~ msgid "Who starts"
+#~ msgstr "Ko počinje"
+
+#~ msgid ""
+#~ "Zero is Player One, one is Player Two and two corresponds to players "
+#~ "taking turns."
+#~ msgstr ""
+#~ "Nula je prvi igrač, jedan drugi igrač, a dva je da se igrači smenjuju."
+
+#~ msgid ""
+#~ "Zero is human; one through four correspond to the level of the computer "
+#~ "player."
+#~ msgstr "Nula je čovek.a od jedan do četiri su nivoi računara kao protivnika"
+
+#~ msgid "Gnect Scores"
+#~ msgstr "Rezultati"
+
+#~ msgid "Draw _grid"
+#~ msgstr "Prikaži mrežu"
+
+#~ msgid "Show or hide the grid"
+#~ msgstr "Prikaži ili sakrij mrežu"
+
+#~ msgid "Initial window placement"
+#~ msgstr "Početne pozicije prozora"
+
+#~ msgid "GEOMETRY"
+#~ msgstr "Geometrija"
+
+#~ msgid "Random number seed"
+#~ msgstr "Proizvoljna početna vrednost"
+
+#~ msgid "SEED"
+#~ msgstr "Početna Vrednost"
+
+#~ msgid "Initial theme file (excluding path)"
+#~ msgstr "Početni fajl teme"
+
+#~ msgid "Debugging level (4 for random seed)"
+#~ msgstr "Stepen pronalaženja grešaka (4 za proizvoljnu vrednost)"
+
+#~ msgid "%s: no themes available\n"
+#~ msgstr "%s: tema nije dostupna\n"
+
+#~ msgid ""
+#~ "Applying this change to Player Selection\n"
+#~ "will end the current game"
+#~ msgstr "Izvršavanje ovih izmena podešavanja igrača okončaće trenutnu igru."
+
+#~ msgid "Error loading theme"
+#~ msgstr "Greška pri učitavanju teme"
+
+#~ msgid "Non-Velena / Simple"
+#~ msgstr "Bez-Velene / Jednostavno"
+
+#~ msgid "Velena / Weak"
+#~ msgstr "Velena / Slabo"
+
+#~ msgid "Velena / Medium"
+#~ msgstr "Velena / Srednje"
+
+#~ msgid "Velena / Strong"
+#~ msgstr "Velena / Jako"
+
+#~ msgid "Always Player 1"
+#~ msgstr "Uvek Igrač 1"
+
+#~ msgid "Always Player 2"
+#~ msgstr "Uvek Igrač 2"
+
+#~ msgid "Take turns"
+#~ msgstr "Smenjivanje"
+
+#~ msgid "_Player Selection"
+#~ msgstr "Izbor igrača"
+
+#~ msgid "Who starts?"
+#~ msgstr "Ko počinje?"
+
+#~ msgid "Appearance and Behaviour"
+#~ msgstr "Izgled i ponašanje"
+
+#~ msgid "Theme Selection:"
+#~ msgstr "Izbor teme:"
+
+#~ msgid "Sound Type"
+#~ msgstr "Tip zvuka"
+
+#~ msgid "Speaker beep"
+#~ msgstr "Pištanje"
+
+#~ msgid "GNOME sound"
+#~ msgstr "GNOM zvuk"
+
+#~ msgid "This can be set up using the GNOME Control Center"
+#~ msgstr "Ovo se može podesiti korišćenjem GNOM Centra za kontrolu"
+
+#~ msgid "Keyboard Control"
+#~ msgstr "Kontrola sa tastature:"
+
+#~ msgid "Drop counter"
+#~ msgstr "Resetuj brojač"
+
+#~ msgid "Black"
+#~ msgstr "Crni"
+
+#~ msgid "White"
+#~ msgstr "Beli"
+
+#~ msgid "Grey"
+#~ msgstr "Sivi"
+
+#~ msgid "Pink"
+#~ msgstr "Roze"
+
+#~ msgid "Brown"
+#~ msgstr "Braon"
+
+#~ msgid "AisleRiot Preferences"
+#~ msgstr "Postavke Pasijansa"
+
+#~ msgid "Game Status"
+#~ msgstr "Stanje igre"
+
+#~ msgid "Toggle sound"
+#~ msgstr "Uključi/Isključi zvuk"
+
+#~ msgid "Tile Background"
+#~ msgstr "Pozadinska slika:"
+
+#~ msgid "Could not find file %s"
+#~ msgstr "Nemogu da nađem fajl %s"
+
+#~ msgid "NW"
+#~ msgstr "SZ"
+
+#~ msgid "N"
+#~ msgstr "S"
+
+#~ msgid "NE"
+#~ msgstr "SI"
+
+#~ msgid "W"
+#~ msgstr "Z"
+
+#~ msgid "E"
+#~ msgstr "I"
+
+#~ msgid "SW"
+#~ msgstr "JZ"
+
+#~ msgid "S"
+#~ msgstr "J"
+
+#~ msgid "SE"
+#~ msgstr "SI"
+
+#~ msgid "Predefined Set 1"
+#~ msgstr "Unapred podešeni tip 1"
+
+#~ msgid "Predefined Set 2"
+#~ msgstr "Unapred podešeni tip 2"
+
+#~ msgid ""
+#~ "The side length of an individual game tile. The minimum is 40, the "
+#~ "maximum is set depending on screen height. The correct way to set this is "
+#~ "by resizing the window."
+#~ msgstr ""
+#~ "Strana pojedinačnog dela slagalice. Najmanje je 40, a najviše zavisi od "
+#~ "veličine ekrana. Najpodesniji način za podešavanje istog je menjanje "
+#~ "veličine prozora."
+
+#~ msgid "The size of a tile"
+#~ msgstr "Veličina pločice"
+
+#~ msgid "Show thoughts during turn"
+#~ msgstr "Prikazuj razmišljanja tokom reda"
+
+#~ msgid "Optional Rules"
+#~ msgstr "Neobavezna pravila"
+
+#~ msgid "Extra Yahtzee Bonus"
+#~ msgstr "Dodatni Jamb bonus"
+
+#~ msgid "Enforce Joker Rules"
+#~ msgstr "Naznači DŽoker Pravila"
