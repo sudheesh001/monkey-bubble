@@ -1,0 +1,54 @@
+2001-04-21  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* configure.in: Added nn and no to ALL_LINGUAS.
+	
+2001-04-19  Michael Meeks  <michael@ximian.com>
+
+	* *.[ch]:
+
+	s/\#include[ \t]*<libgnomebase\/gnome-defs.h>//;
+	s/BEGIN_GNOME_DECLS/G_BEGIN_DECLS/g;
+	s/END_GNOME_DECLS/G_END_DECLS/g;
+	
+2001-04-19  Michael Meeks  <michael@ximian.com>
+
+	* configure.in: add GTK_VERSION.
+
+2001-04-11  Martin Baulig  <baulig@suse.de>
+
+	* docs/: New directory.
+
+2001-04-11  Martin Baulig  <baulig@suse.de>
+
+	* libgnomeui/: This has now been copied over in CVS. There's a
+	GNOME_LIBS_MODULE_SPLIT tag which refers to the latest version
+	in gnome-libs.
+
+	* images/: New directory. Copied here from gnome-libs. There's a
+	GNOME_LIBS_MODULE_SPLIT tag which refers to the latest version
+	in gnome-libs.
+
+2001-03-24  Martin Baulig  <baulig@suse.de>
+
+	* configure.in: Removed the REBUILD alias.
+
+	* configure.in (GNOME_MAKETYPES, GNOME_MAKEENUMS): Check
+	for the `gnome-maketypes.awk' and `gnome-makeenums.pl'
+	scripts which are installed by libgnome-2 and AC_SUBST them.
+
+	* demos/: New directory. This was copied here from
+	gnome-libs/demos with the full CVS history.
+
+	* Makefile.am (SUBDIRS): Added demos.
+
+2001-03-24  Martin Baulig  <baulig@suse.de>
+
+	* configure.in: Set package name to `libgnomeui-2'.
+
+2001-03-05  Martin Baulig  <baulig@suse.de>
+
+	* configure.in: Depend on libgnomecanvas and libxml.
+
+	* configure.in: Set package name to `libgnomeui-2-martin' and
+	version number to 1.96.0.
+

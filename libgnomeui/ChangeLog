@@ -1,0 +1,3308 @@
+2001-04-26  Martin Baulig  <baulig@suse.de>
+
+	* gnome-app-util.[ch], gnome-dialog-util.[ch], gnome-dialog.[ch],
+	gnome-messagebox.[ch], gnome-propertybox.[ch], gnome-scores.[ch]:
+	Removed; they are already in libcompat, but now all code which was
+	still using them is fixed.
+
+2001-04-26  Martin Baulig  <baulig@suse.de>
+
+	* libgnomeui.h: Don't Include gnome-app-helper.h,
+	gnome-dialog.h, gnome-dialog-util.h, gnome-messagebox.h,
+	gnome-propertybox.h and gnome-scores.h.
+
+2001-04-26  Martin Baulig  <baulig@suse.de>
+
+	* gnome-stock.c: Comment out everything which was using code from
+	gnome-messagebox.[ch] and gnome-propertybox.[ch].
+
+2001-04-25  Martin Baulig  <baulig@suse.de>
+
+	* gnome-about.[ch]: Use GtkDialog, not GnomeDialog.
+	(GnomeAbout, GnomeAbout): Derive from GtkDialog, not GnomeDialog.
+
+	* gnome-client.[ch]: Likewise.
+	(gnome_client_save_any_dialog, gnome_client_save_error_dialog): Take
+	a GtkDialog as argument, not a GnomeDialog.
+
+	* gnome-helpsys.c, gnome-href.c, gnome-icon-entry.c, gnome_segv.c: Use
+	GtkDialog, not GnomeDialog.
+
+	* gnome-window.c (gnome_window_set_icon, gnome_window_set_icon_from_file):
+	Moved here from gnome-app-util.c.
+
+2001-04-25  Martin Baulig  <baulig@suse.de>
+
+	* gnome-app-helper.[ch], gnome-app-util.[ch], gnome-cursors.[ch],
+	gnome-dialog-util.[ch], gnome-dialog.[ch], gnome-dock*.[ch],
+	gnome-messagebox.[ch], gnome-preferences.[ch], gnome-propertybox.[ch],
+	gnome-scores.[ch], gnome-stock.[ch], gtkpixmapmenuitem.[ch]:
+	Copied all these files to libcompat/libgnomeui/; they're still here for
+	a while so that we won't break compilation here.
+
+2001-04-25  Martin Baulig  <baulig@suse.de>
+
+	* gnome-dock*.[ch]: Attention! These files have been moved to libbonoboui
+	and renamed to bonobo-dock*.[ch]. We'll provide a compatibility wrapper with
+	#defines in libgnomecompat soon, but at the moment I don't want to break the
+	build here since libbonoboui doesn't work yet.
+	If you do any changes in these files here, your work will be lost !
+
+2001-04-24  Martin Baulig  <baulig@suse.de>
+
+	* gnome-dock-item.c, gnome-dock-layout.c: Don't use gnome-macros.h.
+
+	* gnome-dock-item.c (gnome_dock_item_grab_pointer): Use gdk_cursor_new().
+	instead of gnome_stock_cursor_new().
+
+2001-04-24  Martin Baulig  <baulig@suse.de>
+
+	* gnome-init.c: Reflect latests GnomeProgram API changes.
+
+2001-04-19  Michael Meeks  <michael@ximian.com>
+
+	* gnome-init.c (libgnomeui_constructor): setup the properties to
+	be the same as the code that sets them - using the defines.
+
+2001-04-19  Michael Meeks  <michael@ximian.com>
+
+	* libgnomeui.h: add gnome-canvas-init.h
+
+	* gnome-canvas-init.h: add.
+
+	* Makefile.am: add gnome-canvas-init.[ch]
+
+2001-04-18  Martin Baulig  <baulig@suse.de>
+
+	* gnome-init.c (libbonoboui_module_init): Added libbonoboui initialization here;
+	no "real" code here yet.
+	(libgnomeui_module_requirements): Added libbonobo.
+
+2001-04-18  Martin Baulig  <baulig@suse.de>
+
+	* gnome-icon-entry.c: Comment out gnome_uri_list_extract_filenames() to make
+	it compile [FIXME].
+
+2001-04-17  Martin Baulig  <baulig@suse.de>
+
+	* gnome-init.c: Started to use GnomeProgram properties.
+
+2001-04-17  Martin Baulig  <baulig@suse.de>
+
+	* Makefile.am: Don't compile gnome-gconf.c and oafgnome.c.
+
+	* gnome-app-helper.c (gnome_gconf_get_gnome_libs_settings_relative):
+	#define this to NULL (FIXME).
+
+	* gnome-gconf.h (gnome_gconf_module_info): Removed external declaration; this
+	is in libgnome now.
+	(GNOME_GCONF_INIT): Removed.
+	(gnome_get_gconf_client): Made this a macro which uses
+	gnome_program_get_gconf_client (gnome_program_get ()).
+
+2001-04-15  Martin Baulig  <baulig@suse.de>
+
+	* libgnomeuiP.h (gnome_i18n_get_language_list, gnome_i18n_get_preferred_language):
+	Provide external declarations for these functions here [FIXME: broken].
+
+2001-04-15  Martin Baulig  <baulig@suse.de>
+
+	* gnome-i18nP.h: Removed; #include <libgnomebase/gnome-i18n.h> instead.
+
+2001-04-14  Martin Baulig  <baulig@suse.de>
+
+	* gnome-init.h (gtk_module_info): Removed external declaration.
+	(LIBGNOMEUI_INIT): Removed #define.
+
+	* gnome-init.c (libgnome_module_requires): Added libgnomecanvas_module_info.
+	(gtk_module_info): Removed GTK+ init code; this is already in libgnomecanvas.
+	(BUILD_UNUSED_LEGACY_CODE): Removed all code which was #ifdef'ed out by this.
+
+2001-04-11  Martin Baulig  <baulig@suse.de>
+
+	* gnome-helpsys.c (gnome_help_view_find_help_id): Use
+	gnome_program_locate_file() instead of gnome_datadir_file().
+	(gnome_help_path_resolve, gnome_help_app_topics): Use
+	gnome_program_locate_file() instead of gnome_help_file().
+
+	* gnome-init.c (libgnomeui_rc_parse): Use gnome_program_locate_file()
+	instead of gnome_datadir_file().
+
+	* gnome-icon-selector.c (gnome_icon_selector_add_defaults): Use
+	gnome_program_locate_file() to get a list of all pixmap dirs.
+
+	* gnome-about.c (gnome_about_load_logo): Use
+	gnome_program_locate_file() instead of gnome_pixmap_file().
+	* gnome-app-helper.c (create_pixmap): Likewise.
+	* gnome-app-util.c (gnome_window_set_icon_from_file): Likewise.
+	* gnome-stock.c (gnome_stock_pixmap_entry_get_gdk_pixbuf): Likewise.
+
+2001-04-11  Martin Baulig  <baulig@suse.de>
+
+	* gnome-messagebox.c: For images which we install in ../images/,
+	use an absolute filename using GNOMEUIPIXMAPDIR.
+
+Sun Mar 25 15:26:29 2001  George Lebl <jirka@5z.com>
+
+	* gnome-icon-item.c: use the editable interface to get the values
+	  instead of grabbing it directly of the structure, however added
+	  FIXME's since that needs to be tested and verified
+
+Sun Mar 25 03:04:13 2001  George Lebl <jirka@5z.com>
+
+	* gnome-app-helper.c, gnome-file-saver.c, gnome-gconf.c,
+	  gnome-recently-used.c, gnome-selector.c:  GConfClient
+	  is no longer a GtkObject, so use g_object_* methods on
+	  it and not gtk_object_
+
+Sun Mar 25 02:13:43 2001  George Lebl <jirka@5z.com>
+
+	* gnome-app-helper.c: gconf_client is now a GObject, not GtkObject
+
+	* gnome-dock-band.c, gnome-dock-item.c, gnome-dock.c,
+	  gnome-druid-page.c, gnome-druid.c: synthesizing GDK_EXPOSE events
+	  apparently no longer works, what's more all this expose stuff is
+	  now handled by GtkContainer itself, so remove the redundant code
+	  and call the parent handler from expose functions that are left
+
+	* gnome-dock-item.c:  First check if "is_floating" property exists
+	  before settings it
+
+	* gnome-init.c:  the gtk module require libgnome module, the
+	  libgnomeui module requires the client and gconf modules
+
+Sat Mar 24 23:55:06 2001  George Lebl <jirka@5z.com>
+
+	* gnome-animator.c: include string.h to fix 64bitness
+
+	* wap-textfu.c: fix a couple of uninitialized warnings
+
+2001-03-24  Martin Baulig  <baulig@suse.de>
+
+	* gnome-boxed.defs (GnomeCanvasPoints): Removed.
+	(GnomeSelectorAsyncHandle): This is refcounted and has
+	no init function.
+
+2001-03-24  Martin Baulig  <baulig@suse.de>
+
+	* maketypes.awk, makeenums.pl: Removed, we now use
+	gnome-maketypes.awk and gnome-makeenums.pl which gets
+	installed by libgnome-2.
+
+2001-03-24  Martin Baulig  <baulig@suse.de>
+
+	* gnome-app-helper.c (setup_uline_accel): Commented out
+	for the moment [FIXME: fix this].
+
+	* gnome-i18nP.h: New file. Copied from libgnome-2.
+	[FIXME: We really need to find a solution for this; glib has
+	its own, gtk+ has its own, ....]
+
+2001-03-21  Martin Baulig  <baulig@suse.de>
+
+	The canvas is now in its own libgnomecanvas-2 top-level module.
+
+	* gnome-canvas*.[ch]: Removed, moved to the new libgnomecanvas-2
+	module.
+
+2001-03-20  Martin Baulig  <baulig@suse.de>
+
+	* libgnomeui.h (GNOMEUI_INIT): Don't #define this here.
+
+	* gnome-init.c (GNOMEUI_INIT): Moved #define here and don't
+	#include "libgnomeui.h".
+
+2001-03-14  Martin Baulig  <baulig@suse.de>
+
+	* libgnomeui.h: #include "libgnomeui/gnome-icon-selector.h" instead
+	of gnome-icon-sel.h.
+
+	* gnome-icon-sel.[ch]: Moved to libcompat.
+
+2001-02-26  Martin Baulig  <baulig@suse.de>
+
+	* gnome-icon-entry.c (PROP_IS_PIXMAP_ENTRY): New boolean construction
+	only property. If this is true, the widget will have the look&feel of
+	the old GnomePixmapEntry.
+
+2001-02-26  Martin Baulig  <baulig@suse.de>
+
+	* gnome-selector.c (PROP_WANT_DEFAULT_BEHAVIOUR): New boolean property.
+	If it's set, then each of the GnomeSelector subclasses will show its
+	default behaviour, ie. whether it'll have a "Browse" button etc.
+	The default for this property is TRUE so that you can now do a
+	g_object_new (GNOME_TYPE_ICON_ENTRY, ....) and get an object which
+	actually looks like a GnomeIconEntry.
+
+	If you want to set any of PROP_ENTRY_WIDGET, PROP_SELECTOR_WIDGET,
+	PROP_BROWSE_DIALOG, PROP_USE_DEFAULT_ENTRY_WIDGET,
+	PROP_USE_DEFAULT_SELECTOR_WIDGET, PROP_USE_DEFAULT_BROWSE_DIALOG,
+	PROP_WANT_BROWSE_BUTTON, PROP_WANT_CLEAR_BUTTON or
+	PROP_WANT_DEFAULT_BUTTON in g_object_new(), you need to set
+	PROP_WANT_DEFAULT_BEHAVIOUR to FALSE to have this take effect.
+
+2001-02-26  Martin Baulig  <baulig@suse.de>
+
+	For GnomeSelector and its subclasses, you can now use g_object_new()
+	to create a new instance.
+
+	* gnome-selector.h (GnomeSelectorClass): Added `do_construct' method.
+	(gnome_selector_construct): Removed.
+	(gnome_selector_do_construct): New function, only for subclasses.
+
+	* gnome-selector.c (PROP_ENTRY_WIDGET, PROP_SELECTOR_WIDGET,
+	PROP_BROWSE_DIALOG, PROP_USE_DEFAULT_ENTRY_WIDGET,
+	PROP_USE_DEFAULT_SELECTOR_WIDGET, PROP_USE_DEFAULT_BROWSE_DIALOG,
+	PROP_WANT_BROWSE_BUTTON, PROP_WANT_CLEAR_BUTTON,
+	PROP_WANT_DEFAULT_BUTTON, PROP_AUTO_SAVE_HISTORY, PROP_AUTO_SAVE_ALL):
+	New construction only properties.
+	(PROP_DIALOG_TITLE, PROP_HISTORY_ID): Made these construction, but not
+	construction only properties.
+	(gnome_selector_class_init): Connect gnome_selector_constructor() to
+	the GObject's `constructor' method and do_construct_handler() to the
+	GnomeSelector's `do_construct' method.
+
+	* gnome-entry.h (gnome_entry_new_flags): Removed.
+	(gnome_entry_construct, gnome_entry_construct_full): Removed.
+
+	* gnome-file-selector.h (gnome_file_selector_new): Removed `flags'
+	argument.
+	(gnome_file_selector_new_custom, gnome_file_selector_construct):
+	Removed.
+
+	* gnome-icon-selector.h (gnome_icon_selector_new): Removed `flags'
+	argument.
+	(gnome_icon_selector_new_custom, gnome_icon_selector_construct):
+	Removed.
+
+	* gnome-icon-entry.h (gnome_icon_entry_construct): Removed.
+	(gnome_icon_entry_construct_full): Removed.
+
+2001-02-26  Martin Baulig  <baulig@suse.de>
+
+	* gnome-stock.c: Back to the API described below.
+
+	* gnome-stock.h
+	(GnomeStockPixmapEntryWidget, GnomeStockPixmapEntryGPixmap): Removed.
+	(GnomeStockPixmapEntryImlib): Renamed to GnomeStockPixmapEntryPixbuf.
+	(GnomeStockPixmapEntryImlibScaled): Renamed
+	to GnomeStockPixmapEntryPixbufScaled.
+
+	(GnomeStockPixmapEntryAny): Removed `width' and `height' fields;
+	added `ref_count' and `pixbuf'.
+
+	(gnome_stock_pixmap_register, gnome_stock_pixmap_change,
+	gnome_stock_pixmap_checkfor, gnome_stock_transparent_window,
+	gnome_stock_pixmap_gdk): Replaced `const char *subtype' argument
+	with `GtkStateType state'.
+
+	* gnome-stock.h: Put this back to the API of GNOME 1.x.
+	- reverted to the state of gnome-libs stable.
+	- removed USE_NEW_GNOME_STOCK conditional; only use the
+	USE_NEW_GNOME_STOCK code.
+
+	* gnome-stock.[ch]: Tagged them as `before-martin-reverted-it'.
+
+2001-02-25  Martin Baulig  <baulig@suse.de>
+
+	* gnome-entry.[ch]: Move all deprecated functions to libcompat.
+	* gnome-icon-entry.[ch]: Likewise.
+	* gnome-appbar.[ch]: Likewise.
+
+2001-02-23  Martin Baulig  <baulig@suse.de>
+
+	* gnome-entry.c (gnome_entry_set_text, gnome_entry_get_text):
+	New convenience functions; we need to add them to gnome-libs stable
+	shortly after GNOME 1.4 as well so that people can start to smoothly
+	migrate their apps to the new API.
+
+2001-02-23  Martin Baulig  <baulig@suse.de>
+
+	* libgnomeui-2.0.pc.in: New file.
+	* Makefile.am: Install pkg-config file.
+
+2001-02-23  Martin Baulig  <baulig@suse.de>
+
+	* gnome-calculator.[ch], gnome-number-entry.[ch]: Moved to
+	libcompat for the moment. This should be anywhere, but not in
+	libgnomeui; GnomeCalculator should be a Bonobo component.
+
+2001-02-23  Martin Baulig  <baulig@suse.de>
+
+	* gnome-pixmap-entry.[ch]: Moved to libcompat. This has been
+	obsoleted by GnomeIconEntry.
+
+2001-02-23  Martin Baulig  <baulig@suse.de>
+
+	* gnome-icon-entry.c (gnome_icon_entry_set_preview_size):
+	New function; inspired by gnome_pixmap_entry_set_preview_size().
+	Added "preview_x" and "preview_y" properties.
+
+2001-02-23  Martin Baulig  <baulig@suse.de>
+
+	* gnome-file-entry.[ch]: Moved to libcompat. This has been replaced
+	by GnomeFileSelector.
+
+	* gnome-gconf.c (gnome_file_entry_get/set): Removed.
+	(gnome_icon_entry_get/set): Removed.
+	(gnome_pixmap_entry_get/set): Removed.
+	(gnome_entry_get/set): Removed.
+
+2001-02-23  Martin Baulig  <baulig@suse.de>
+
+	* gnome-canvas.h (GnomeCanvas): Removed `cc' field, GdkColorContext
+	no longer exists in GTK+.
+
+	* gnome-canvas.c (gnome_canvas_get_color): Use gdk_rgb_find_color()
+	instead of gdk_color_context_get_pixels().
+	(gnome_canvas_get_color_pixel): Likewise.
+
+	* gnome-canvas-line.c (gnome_canvas_line_get/set_property):
+	Use gdk_rgb_find_color() instead of gdk_color_context_query_color().
+
+	* gnome-canvas-polygon.c (gnome_canvas_polygon_get/set_property):
+	Use gdk_rgb_find_color() instead of gdk_color_context_query_color().
+	(get_color_value): Likewise.
+
+	* gnome-canvas-rect-ellipse.c (gnome_canvas_re_get/set_property):
+	Use gdk_rgb_find_color() instead of gdk_color_context_query_color().
+	(get_color_value): Likewise.
+
+	* gnome-canvas-text.c (gnome_canvas_text_get/set_property):
+	Use gdk_rgb_find_color() instead of gdk_color_context_query_color().
+
+2001-02-23  Martin Baulig  <baulig@suse.de>
+
+	* Makefile.am (INCLUDES): Added $(PANGO_CFLAGS).
+	(libgnomeui_2_la_LDFLAGS, LDADD): Added $(PANGO_LIBS).
+
+	* gnome-init.c (gtk_pre_args_parse): Comment out setting
+	of `gtk_debug_flags' which has gone from GTK+.
+
+2001-01-15  Darin Adler  <darin@eazel.com>
+
+	* gnome-canvas.h: Fixed comment that was "improved" back
+	in June 1999 to say the coordinates are world coordinates, when they
+	are actually canvas coordinates (code and Havoc's book both say so).
+
+	* gnome-init.c: (gnome_register_options):
+	Mark names of sections of the popt table with _() for translation.
+	(gnome_init_with_popt_table): Use a _("%s options") template for
+	the main option section by default. This is better than what we had
+	before, translation-wise, bug not perfect. A real fix should change
+	the API of gnome_init_with_popt_table so that the entire
+	"xxx options" string would be localized in the main program.
+
+2001-02-06  Alexander Larsson  <alexl@redhat.com>
+
+	* gnome-canvas-text.[ch]:
+	Pango port of gnome-canvas-text. Death to SuckFont, use the pango
+	freetype module instead.
+
+2001-02-15  Darin Adler  <darin@eazel.com>
+
+	* gnome-init.c: (gnome_register_options): Use N_, not
+	_, for the popt table names. 
+	(gnome_init_with_popt_table): Remove g_free that screws up the
+	popt option section.
+
+2001-01-29  John Harper  <jsh@eazel.com>
+
+	* gnome-client.c (client_save_yourself_callback): commented out
+	the code that sets client->save_successfull (sic) to false if
+	the "save_yourself" signal wasn't emitted.
+
+	Since the KDE session manager actually cares about the
+	`success' field of the SaveYourselfDone message (unlike
+	gnome-session, which totally ignores it), the original logic
+	had the effect of making KDE unable to shutdown when any GNOME
+	apps that haven't connected to the "save_yourself" signal are
+	running.
+
+	Perhaps a better fix would be to set success = False only if
+	"save_session" wasn't emitted _and_ there are functions
+	connected to this signal. But since it makes no difference to
+	gnome-session I'll leave it for now..
+
+2001-01-05  John Harper  <jsh@eazel.com>
+
+	* gnome-canvas.c (gnome_canvas_focus_in,
+	gnome_canvas_focus_out): added code to set and unset the
+	HAS_FOCUS flag (which all focusable widgets should do). Without
+	this patch the canvas (and thus the focused canvas item) will
+	not receive focus out events
+
+2000-12-29  Jaka Mocnik  <jaka@gnu.org>
+
+	* gnome-mdi.[ch] (gnome_mdi_get_children, gnome_mdi_get_windows):
+	new public functions for retrieving the list of children/windows.
+	(gnome_mdi_get_*): constified return arguments where deemed
+	appropriate.
+
+2000-12-28  Martin Baulig  <baulig@suse.de>
+
+	* gnome-selector.h (gnome_selector_get_history_id): New function.
+	(gnome_selector_set_history_id): New function.
+	(GnomeSelector): Added "get_selection_mode" signal.
+	
+	* gnome-selector.c (PROP_DIALOG_TITLE, PROP_HISTORY_ID,
+	PROP_SELECTION_MODE): New properties.
+
+	* gnome-icon-list.c (gnome_icon_list_get_selection_mode):
+	New function.
+
+2000-12-28  Martin Baulig  <baulig@suse.de>
+
+	* gnome-color-picker.c: GtkArg -> GParam.
+
+	* gnome-icon-item.c (ItiPrivate): Removed
+	"use_broken_event_handling".
+
+	* gnome-icon-list.c (gil_set_arg, gil_get_arg): Removed; this
+	was unused.
+
+2000-12-20  Martin Baulig  <baulig@suse.de>
+
+	* gnome-canvas-rect-ellipse.c: GtkArg -> GParam.
+
+	* gnome-canvas-polygon.c: GtkArg -> GParam.
+
+	* gnome-canvas-lines.c: GtkArg -> GParam.
+
+2000-12-20  Martin Baulig  <baulig@suse.de>
+
+	* gnome-canvas-image.[ch]: Removed.  This has been obsolated by
+	gnome-canvas-pixbuf.c and wasn't even compiled for a longer time.
+
+Sun Dec 17 14:28:05 2000  George Lebl <jirka@5z.com>
+
+	* gnome-calculator.c: attach INV button in the same way as other
+	  buttons
+
+2000-12-15  Martin Baulig  <baulig@suse.de>
+
+	* gnome-canvas.c (gnome_canvas_item_class_init): Added "parent"
+	property to the GnomeCanvasItem.
+
+2000-12-15  Martin Baulig  <baulig@suse.de>
+
+	The big "while it is raining outside" cleanup to make it
+	work with the latest glib/gtk+ API:
+
+	- moved GtkArg to GParam.
+	- removed all calls to gtk_object_class_add_signals().
+	- reflect latest GtkNotebook changes.
+
+	* gnome-animator.c, gnome-app.c, gnome-appbar.c,
+	gnome-calculator.c, gnome-canvas-pixbuf.c, gnome-canvas-text.c,
+	gnome-canvas-widget.c, gnome-canvas.c, gnome-client.c,
+	gnome-color-picker.c, gnome-dateedit.c, gnome-dialog.c,
+	gnome-ditem-edit.c, gnome-dock-band.c, gnome-dock-item.c,
+	gnome-dock.c, gnome-druid-page.c, gnome-druid.c, gnome-entry.c,
+	gnome-file-entry.c, gnome-font-picker.c, gnome-helpsys.c,
+	gnome-href.c, gnome-icon-item.c, gnome-icon-list.c, gnome-mdi.c,
+	gnome-paper-selector.c, gnome-pixmap.c, gnome-pouch.c,
+	gnome-propertybox.c, gnome-recently-used.c, gnome-roo.c,
+	gnome-selector.c, gnome-textfu.c, wap-textfu.c: here.
+
+	* gnome-canvas.h (gnome_canvas_newv): Removed.
+	(gnome_canvas_constructv): Removed.
+
+2000-12-13  Martin Baulig  <baulig@suse.de>
+
+	* gnome-selector.h (GnomeSelector): Merged the "clear" and
+	"clear_default" signals into one "clear" signal with a `list_id'
+	argument; added `list_id' argument to the "update_uri_list"
+	signal; changed the `defaulpt' argument of the "get_uri_list"
+	signal to a `list_id' argument; added new "add_uri_list" signal;
+	merged the "add_file" and "add_file_default" signals into one
+	"add_file" signal with a `list_id' argument; did the same for the
+	"add_directory" and "add_uri" signals.
+	(gnome_selector_add_file): Changed the `gboolean defaultp' argument
+	into `guint list_id'.
+	(gnome_selector_add_directory): Likewise.
+	(gnome_selector_add_uri): Likewise.
+	(gnome_selector_get_uri_list): Likewise.
+	(gnome_selector_clear): Likewise.
+	(gnome_selector_update_uri_list): Added `guint list_id' argument.
+	(gnome_selector_add_uri_list): New function.
+	(gnome_selector_set_uri_list): Removed.
+	(gnome_selector_set_to_defaults): Removed.
+
+	* gnome-selectorP.h (_gnome_selector_register_list): New function.
+        (_gnome_selector_unregister_list): New function.
+	(_gnome_selector_get_list_by_id): New function.
+	(_gnome_selector_deep_copy_slist): New function.
+	(_gnome_selector_deep_free_slist): New function.
+
+	* gnome-selector.c: All handling with the lists now takes place here
+	and not in the subclasses.
+
+2000-12-08  Martin Baulig  <baulig@suse.de>
+
+	* animator_demo.c, dock_demo.c, mdi_demo.c, stock_demo.c,
+	selector_demo.c, winhints_demo.c: Moved to ../demos/.
+
+	* test-file-saver.c, test-recently-used.c: Moved to
+	../demos/.
+
+2000-12-08  Martin Baulig  <baulig@suse.de>
+
+	* gnome-selectorP.h: Move everything but the prototypes of the
+	functions which are useful for subclasses into gnome-selector.c.
+	This mean that gnome-selectorP.h is now a semi-private header file;
+	you may need to include it if you want to write your own
+	GnomeSelector subclass.
+
+2000-12-08  Martin Baulig  <baulig@suse.de>
+
+	* gnome-selector.h (GnomeSelector): The argument of the
+	"set_selection_mode" signal is a GtkSelectionMode, not a gint.
+
+	* gnome-selector.h (GnomeSelector): Renamed "get_filename" signal
+	to "get_uri" and "set_filename" signal to "set_uri".
+	(gnome_selector_get_filename): Renamed to gnome_selector_get_uri().
+	(gnome_selector_set_filename): Renamed to gnome_selector_set_uri().
+
+	* gnome-selector.h (GnomeSelector): Renamed "update_file_list" signal
+	to "update_uri_list"; removed `directory_listp' argument from the
+	"get_file_list" signal and renamed it to "get_uri_list".
+	(gnome_selector_get_file_list): Removed `directory_listp' and renamed
+	to gnome_selector_get_uri_list().
+	(gnome_selector_set_file_list): Removed `directory_listp' and renamed
+	to gnome_selector_set_uri_list().
+	(gnome_selector_update_file_list): Renamed to
+	gnome_selector_update_uri_list().
+
+	* gnome-selectorP.h (GnomeSelectorPrivate): Removed
+	`gconf_dir_list_key', `gconf_file_list_key', `default_dir_list',
+	`default_file_list', `dir_list', `file_list' and added
+	`gconf_uri_list_key', `gconf_default_uri_list_key',
+	`default_uri_list', `uri_list'.
+
+Wed Dec 06 22:16:29 2000  George Lebl <jirka@5z.com>
+
+	* gnome-app-helper.c, gnome-gconf.c, gnome-mdi-child.c: Cleanup,
+	  setup the gconf client data for the dockitems so that we don't crash
+	  on destroy.  I've realized there are severe problems in the
+	  GnomeUIInfo code wrt the new signal stuff and some unexplained
+	  crashes.  Fun.
+
+Wed Dec 06 20:35:48 2000  George Lebl <jirka@5z.com>
+
+	* gnome-mdi.[ch], gnome-mdi-child.[ch], gnome-mdiP.h,
+	  gnome-mdi-generic-child.[ch]:  fix yesterday's braindamages and
+	  make signals actually work on the MDI, us ehte boilerplate on these
+	  and some cleanup.  The virtual pointers in the child are now not
+	  defined by the generic child typedef, since the pointers in the
+	  class structure should NOT include the data pointers.  Plus it is
+	  a style issue that they should be explicit types rather then
+	  typedefs.
+
+2000-12-06  Martin Baulig  <baulig@suse.de>
+
+	* gnome-selector.h (GnomeSelector): Added "add_uri" and
+	"add_uri_default" signals.
+	(gnome_selector_add_uri): New function.
+
+	* gnome-vfs-util.c (file_read_callback): If result == GNOME_VFS_OK,
+	but bytes_read == 0, we're at the end of the file.
+
+2000-12-06  Martin Baulig  <baulig@suse.de>
+
+	* gnome-selector.c: Asyncify the "set_filename" signal and the
+	gnome_selector_set_filename() function.
+
+	* gnome-entry.c (set_entry_text_handler): `gentry->_priv->entry'
+	may be NULL if we don't have the default entry widget.
+
+2000-12-06  Martin Baulig  <baulig@suse.de>
+
+	* gnome-canvas.c (gnome_canvas_get_color): The 7th argument of
+	gdk_color_context_get_pixels() is now a gulong.
+	(gnome_canvas_get_color_pixel): Likewise.
+
+	* wap-textfu.h: #include <libxml/parser.h> instead of
+	<gnome-xml/parser.h>
+
+Wed Dec 06 04:49:27 2000  George Lebl <jirka@5z.com>
+
+	* gnome-mdi.c: correctly get default return values for emitting
+	  signals by using g_signal_emitv directly.  Also fix a precondition
+	  on remove_view.
+
+Wed Dec 06 02:57:06 2000  George Lebl <jirka@5z.com>
+
+	* gnome-animator.c: check for nulls.  If no current frame draw black.
+
+Wed Dec 06 01:55:24 2000  George Lebl <jirka@5z.com>
+
+	* gnome-animamtor.c, gnome-canvas.c, gnome-dock-band.c, 
+	  gnome-dock-item.c, gnome-dock.c, gnome-druid-page.c,
+	  gnome-druid.c, gnome-roo.c, gnome-textfu.c, gtkpixmapmenuitem.c,
+	  wap-textfu.c:  There is no draw signal/method anymore, it's
+	  all handled by exposes now so all the draw stuff is now gone.
+
+2000-12-05  Martin Baulig  <baulig@suse.de>
+
+	* gnome-selectorP.h (_gnome_selector_async_handle_removed): Renamed
+	to _gnome_selector_async_handle_destroy().
+	(_gnome_selector_async_handle_removed): New internal function, does
+	the opposite of _gnome_selector_async_handle_add().
+	(_gnome_selector_async_handle_completed): Don't call the callback
+	function here, only mark the async handler as completed and call
+	_gnome_selector_async_handle_destroy() if there are no pending sub-
+	operations.
+
+2000-12-04  Martin Baulig  <baulig@suse.de>
+
+	Started to make GnomeSelector fully asynchronous.
+
+	* gnome-boxed.defs (GnomeSelectorAsyncHandle): Added.
+
+	* gnome-selector.h (GnomeSelectorAsyncHandle): New type.
+	(GnomeSelectorAsyncType, GnomeSelectorAsyncFunc): New types.
+	(GnomeSelector): Changed the return type of the "check_filename"
+	and "check_directory" signals to void; added additional
+	GnomeSelectorAsyncHandle parameter to the "check_filename",
+	"check_directory", "add_file" and "add_file_default", "add_directory"
+	and "add_directory_default" signals; removed the "do_add_*" signals.
+	(gnome_selector_check_filename, gnome_selector_check_directory,
+	gnome_selector_add_file, gnome_selector_add_directory): Changed return
+	type to void; added three new arguments for async handling.
+	(gnome_selector_prepend_file, gnome_selector_append_file,
+	gnome_selector_prepend_director, gnome_selector_append_directory):
+	Removed.
+	(gnome_selector_cancel_async_operation): New global function.
+	(gnome_selector_async_handle_ref, gnome_selector_async_handle_unref):
+	New global functions.
+
+	* gnome-selectorP.h (GnomeSelectorPrivate): Added `async_ops' field.
+	(_gnome_selector_async_handle_get, _gnome_selector_async_handle_add):
+	New internal functions.
+	(_gnome_selector_async_handle_completed): New internal function.
+	(_gnome_selector_async_handle_remove): Likewise.
+	(_gnome_selector_async_handle_set_error): Likewise.
+
+	* gnome-icon-entry.c (set_filename_handler): Comment out call to
+	gnome_selector_check_filename [FIXME].
+
+	* gnome-vfs-util.c (file_read_callback): Ignore GNOME_VFS_OK since
+	this may be called multiple times; on GNOME_VFS_ERROR_EOF, get the
+	pixbuf and call load_done(GNOME_VFS_OK).
+
+Sun Dec 03 16:37:42 2000  George Lebl <jirka@5z.com>
+
+	* gnome-calculator.c:  Add a bunch of xcalc like shortcuts
+
+2000-12-03  Martin Baulig  <baulig@suse.de>
+
+	* Makefile.am (INCLUDES): Added $(WARN_CFLAGS).
+
+	* libgnomeuiP.h (gnome_type_init): Added external declaration.
+
+2000-12-01  Martin Baulig  <baulig@suse.de>
+
+	A bunch of changes to make if work with the latest libraries
+	again; some of them contain FIXMEs so if someone is feeling boring
+	sometimes ....
+
+	* gnomemarshal.list, gnomemarshal-main.c: New files.
+	* libgnomeuiP.h: New file.
+
+	- removed all signal marshalling functions and use the new
+	glib-genmarshal tool to autogen them.
+
+	- gdk_pixbuf_new_from_file() now takes an additional GError **
+	argument [FIXME: We should find a good way to deal with such
+	error conditions].
+
+	- the GObject's "set_param" signal has a changed prototype; it now
+	takes a `const GConfValue *' instead of a `GConfValue *'.
+
+	- gnome_client_notify_add() - the prototype of the callback function
+	has changed.
+
+	- GtkEditable has changed a lot; I #ifdef'ed most of this stuff out,
+	someone with a clue must have a look at this.
+
+	* gnome-boxed.defs (GdkImlibImage): Removed.
+	(GnomeCanvasPoints): Added copy/free functions.
+
+	* maketypes.awk, gnometypes.c: Merged the boxed stuff from GTK+.
+
+Sat Nov 04 22:14:02 2000  George Lebl <jirka@5z.com>
+
+	* merge some patches from stable, here are the entries:
+	2000-10-12  Ettore Perazzoli  <ettore@helixcode.com>
+
+		* gnome-dock-item.c: New args "preferred_width" and
+		  "preferred_height".
+		(gnome_dock_item_class_init): Set them up.
+		(gnome_dock_item_get_arg): Handle them.
+		(check_guint_arg): New helper function.
+		(get_preferred_width): New helper function.
+		(get_preferred_height): New helper function.
+
+		* gnome-dock-band.c (check_guint_arg): New helper function
+		  to get a guint arg only if it exists.
+		(gnome_dock_band_size_request): Calculate the
+		  max_preferred_width by checking the "preferred_width" or
+		  "preferred_height" arg through `check_guint_arg'.
+		(size_allocate_small): Changed the policy a bit so that we
+		  allocate the max_preferred_width if possible.
+
+	2000-09-24  Jody Goldberg <jgoldberg@home.com>
+
+		* gnome-dock-item.c (gnome_dock_item_set_floating) : New
+		  function.  set the is_floating argument of the child
+		  if the child supports it.
+		(gnome_dock_item_detach) : Use it here.
+		(gnome_dock_item_attach) : Use it here.
+		(gnome_dock_item_remove) : Use it here.
+
+	2000-09-23  Jody Goldberg <jgoldberg@home.com>
+
+		* gnome-dock-item.c (gnome_dock_item_set_orientation) : Do
+		  not hard code the use of gtktoolbar. any widget that has
+		  an 'orientation' argument will do.
+		(gnome_dock_item_add) : Ditto.
+
+2000-10-15  Chema Celorio  <chema@celorio.com>
+ 
+ 	* gnome-window.c (gnome_window_toplevel_set_title): new file &
+ 	function. apps should use it to set the tile, so that we can
+ 	have a unform way of setting the window properties (only the
+ 	title for now)
+ 	* gnome-window.h: new file
+ 
+2000-10-15  Martin Baulig  <baulig@suse.de>
+
+	* gnome-gconf.c: Reflect latest GConf API changes.
+	* gnome-app-helper.c: Likewise.
+	* gnome-selector.c: Likewise.
+
+2000-10-03  Martin Baulig  <baulig@suse.de>
+
+	* gnome-ditem-edit.c (fill_easy_page): Connect to the "changed" signal
+	of the GnomeSelector rather than using the no longer existant
+	gnome_icon_entry_gtk_entry().
+
+2000-10-03  Martin Baulig  <baulig@suse.de>
+
+	* gnome-icon-entry.h (GnomeIconEntry): Derive from GnomeFileSelector.
+	(gnome_icon_entry_construct_full): New function.
+	(gnome_icon_entry_get_icon_selector): New function.
+	(gnome_icon_entry_get_filename): This function is now deprecated; use
+	the GnomeSelector functions instead.
+	(gnome_icon_entry_set_filename): Likewise.
+	(gnome_icon_entry_set_pixmap_subdir): This function is now deprecated.
+	(gnome_icon_entry_set_browse_dialog_title): Removed.
+	(gnome_icon_entry_set_history_id): Removed.
+	(gnome_icon_entry_pick_dialog): Removed.
+ 	(gnome_icon_entry_set_icon): Removed.
+	(gnome_icon_entry_gnome_file_entry): Removed.
+	(gnome_icon_entry_gnome_entry): Removed.
+	(gnome_icon_entry_gtk_entry): Removed.
+
+	* gnome-icon-entry.c: Totally rewrote this file from scratch.
+	(ientry_directory_filter_func): This checks whether it's a valid
+	image file [NOTE: when this is invoked from "add_file" signal handler,
+	we already have the GnomeVFSFileInfo so this won't block; that's why
+	it's better to set a filter on the GnomeFileSelector instead of
+	overriding the "check_filename" handle.]
+	(gnome_icon_entry_construct_full): Create a GnomeVFSDirectoryFilter
+	which uses the ientry_directory_filter_func() and call
+	gnome_file_selector_add_filter() on it.
+
+2000-10-03  Martin Baulig  <baulig@suse.de>
+
+	* gnome-entry.h (GnomeEntry): Derive this from GnomeSelector and
+	exclude all deprecated functions is GNOME_EXCLUDE_DEPRECATED is
+	defined.
+	(gnome_entry_gtk_entry): This function is now deprecated.
+	(gnome_entry_set_history_id): Likewise.
+	(gnome_entry_get_history_id): Likewise.
+	(gnome_entry_prepend_history): Deprecated; use the corresponding
+	GnomeSelector function instead.
+	(gnome_entry_append_history): Likewise.
+	(gnome_entry_load_history): Likewise.
+	(gnome_entry_clear_history): Likewise.
+	(gnome_entry_save_history): Likewise.
+
+	* gnome-entry.c (gnome_entry_new_flags): New function.
+	(gnome_entry_construct_full): New function.
+
+2000-09-30  Martin Baulig  <baulig@suse.de>
+
+	* gnome-stock.c: Switch to inline pixbufs.
+	(default_entries_data): Removed "width" and "height".
+	(stock_pixmaps): Use gdk_pixbuf_new_from_inline() with the
+	inline pixbufs from pixmaps/gnome-stock-pixbufs.h.
+
+	* pixmaps/copyright.txt: New file. This will be inserted at
+	the head of the generated gnome-stock-pixbufs.h.
+	* pixmaps/Makefile.am: Create gnome-stock-pixbufs.h from the
+	PNG images using GTK+ 2.0's make-inline-pixbuf script.
+
+2000-09-28  Martin Baulig  <baulig@suse.de>
+
+	* gnome-font-selector.[ch]: Moved to libcompat.
+
+Thu Sep 28 03:35:44 2000  George Lebl <jirka@5z.com>
+
+	* gnome-client.c, gnome-init.c, gnome_segv.c: use g_getenv
+	  instead of getenv.
+
+2000-09-25  Iain Holmes  <iain@helixcode.com>
+
+	* gnome-propertybox.c (dialog_clicked_cb): Check all the pages for a 
+	change, as opposed to just the current one.
+	Use the GNOME_CLASS_BOILERPLATE macro for the type creation.
+
+2000-09-24  Iain Holmes  <iain@helixcode.com>
+
+	* gnome-recently-used.c: fix glaring compile errors/warnings :)
+
+	* test-recently-used.c (item_changed): Change gnome_recent_document_get
+	to gnome_recent_document_peek.
+	(add_to_menu): Same.
+
+Sun Sep 24 04:24:34 2000  George Lebl <jirka@5z.com>
+
+	* gnome-canvas-pixmap.c: fix glaring compile errors/warnings
+
+	* gnome-recently-used.c: Use GParam.  Separate the construction
+	  into neccessary and lazy part.  The lazy part is the actual
+	  loading of data.  This way we can do the parameter setting
+	  in a minorly saner way, thus fixing problems with
+	  improperly made objects, AND the ability to change app_specific
+	  later (or twice) without leaks (though that's not really useful).
+
+2000-09-24  Iain Holmes  <iain@helixcode.com>
+
+	* gnome-canvas-pixbuf.c: Add an ANCHOR argument, like GnomeCanvasImage
+	has.
+
+Sat Sep 23 17:34:17 2000  George Lebl <jirka@5z.com>
+
+	* gnome-calculator.c: use the gnome_i18n_push/pop_c_numeric_locale
+
+	* gnome-font-picker.c, gnome-popup-help.c: include gnome-i18nP.h
+	  and not gnome-i18n.h
+
+Mon Sep 18 20:16:45 2000  George Lebl <jirka@5z.com>
+
+	* gnome-recently-used.[ch]: use boilerplates, minor cleanup,
+	  some precondition checks.  Add the maximum number of documents,
+	  implemented simplistically, when adding check if there is more
+	  then the <key-prefix>/MaximumSize (or 30 by default), and remove
+	  the oldest entries until there is this.  This really doesn't
+	  need to be perfect, a simple solution is better here I think.
+	  Also rename gnome_recent_document_get to gnome_recent_document_peek
+
+Mon Sep 18 19:02:34 2000  George Lebl <jirka@5z.com>
+
+	* gnome-dateedit.c: use the boilerplate macros and switch to GParam
+
+2000-09-16  Martin Baulig  <baulig@suse.de>
+
+	* gnome-gconf.c: Very quick hack just to make it compile.
+
+2000-09-16  Martin Baulig  <baulig@suse.de>
+
+	* gnome-selector.h (GnomeSelector):
+	- renamed the "do_add" signal to "do_add_file".
+	- added "do_add_file_default", "do_add_directory" and
+	"do_add_directory_default" signals.
+	- added "get_file_list" signal.
+
+	* gnome-selector.c:
+	(add_file_handler): Renamed to `do_add_file_handler' and use
+	the "do_add_file" signal instead of the "add_file" one.
+	(add_file_default_handler): Likewise.
+	(add_directory_handler): Likewise.
+	(add_directory_default_handler): Likewise.
+	(update_file_list_handler): Removed.
+	(get_file_list_handler): New; implemnt "get_file_list" handler.
+
+	* gnome-selectorP.h (GnomeSelectorPrivate): Removed `total_list'
+	and `default_total_list' fields.
+
+	* gnome-file-selector.c (update_file_list_handler): Removed.
+	(add_directory_async_handler): Call the parent handler of the
+	"do_add_directory" signal.
+
+2000-09-16  Martin Baulig  <baulig@suse.de>
+
+	* gnome-file-selector.c: Use the boilerplate macros.
+
+2000-09-16  Martin Baulig  <baulig@suse.de>
+
+	* gnome-file-selector.c: Started to asyncify this file.
+	(gnome_file_selector_add_filter): New function; this lets you
+	specify a GnomeVFSDirectoryFilter which is used when adding
+	files etc.
+	(gnome_file_selector_clear_filter): New function; removes the
+	filter again.
+	(add_file_handler): Implement handler for the "add_file" signal
+	of the GnomeFileSelector; call gnome_vfs_async_get_file_info()
+	with `add_file_async_cb' as async callback function.
+	(add_file_async_cb): New static function;
+	- if the URI is a directory, gnome_selector_add_directory() it.
+	- otherwise, apply the filter to it and, if it passes, emit the
+	"do_add" signal.
+	(add_directory_handler): Implement handler for the "add_directory"
+	signal; call gnome_vfs_async_load_directory_uri() on it with
+	`add_directory_async_cb' as async callback function.
+	(add_directory_async_cb): New static function; apply the filter
+	to each of the files and emit the "add_file" signal for those who
+	pass it [FIXME: at this point we already have the GnomeVFSFileInfo
+	for the files, so basically we can filter here and emit "do_add"
+	directly  ....?].
+	(activate_entry_handler): Just call gnome_selector_add_file();
+	this should "do the right thing" even if it's actually a directory
+	[FIXME: should we better async get the file info here and then
+	distinguish between files and directories?].
+	(check_filename_handler): If a filter is set, use it. Note
+	that this is still a synchronous operation (because of the
+	return value) and may block.
+	(check_directory_handler): This is a synchronous operation
+	as well and thus may block.
+
+2000-09-11  Martin Baulig  <baulig@suse.de>
+
+	* gnome-file-selector.h (GnomeFileSelector): Derive from GnomeEntry.
+
+	* gnome-file-selector.c (GnomeFileSelectorPrivate): Removed the
+	`combo' and `entry' fields.
+	(get_entry_text_handler, set_entry_text_handler): Removed.
+	(history_changed_handler): Removed.
+	(entry_activated_cb): Moved all its functionality into the
+	`activate_entry_handler' and then removed this function.
+	(gnome_file_selector_construct): Don't create the entry widget here
+	but pass GNOME_SELECTOR_DEFAULT_ENTRY_WIDGET down to the parent class.
+
+2000-09-16  Martin Baulig  <baulig@suse.de>
+
+	* gnome-selector.h (GnomeSelector):
+	- Added `position' argument to the "add", "add_default",
+	"add_directory" and "add_directory_default" signals; this is
+	0 for the start of the list, -1 for the end of it or any position
+	in the middle.
+	- Added "do_load" and "stop_loading" signals which are supposed
+	to invoke asynchronous operations.
+	(gnome_selector_add_file, gnome_selector_add_directory): New
+	functions which allow you to insert a file or directory at an
+	arbitrary position.
+	(gnome_selector_prepend_file,gnome_selector_append_file): Call
+	gnome_selector_add_file() with apropriate arguments.
+	(gnome_selector_prepend_directory,gnome_selector_append_directory):
+	Call gnome_selector_add_directory() with apropriate arguments.
+	(gnome_selector_add_file): Just emit the ADD_FILE/
+	ADD_FILE_DEFAULT signal here.
+	(gnome_selector_add_directory): Just emit the ADD_DIRECTORY/
+	ADD_DIRECTORY_DEFAULT signal here.
+
+Fri Sep 15 18:49:34 2000  George Lebl <jirka@5z.com>
+
+	* gnome-animator.c, gnome-helpsys.c, gnome-selector.c: don't set
+	  parent_class again, it's set in get_type in the boilerplates
+
+	* gnome-ditem-edit.c: use boilerplates, remove PanelApplet type
+	  from the default set of types.  1) it's not supported natively
+	  by gnome-libs, and 2) it may go away in 2.0 panel, depending
+	  on how these things will be handled
+
+Thu Sep 14 19:44:26 2000  George Lebl <jirka@5z.com>
+
+	* gnome-app.c: use GParam
+
+	* gnome-helpsys.c: use g_object_set/new since we now use GParam here
+
+Thu Sep 14 18:45:54 2000  George Lebl <jirka@5z.com>
+
+	* gnome-file-entry.c, gnome-icon-entry.c, gnome-textfu.c: use
+	  g_path_get_dirname instead of g_dirname
+
+2000-09-14  Martin Baulig  <baulig@suse.de>
+
+	* gnome-vfs-util.h (GnomeGdkPixbufLoadHandle): Renamed to
+	GnomeGdkPixbufAsyncHandle.
+	(GnomeGdkPixbufLoadCallback): Added GnomeGdkPixbufAsyncHandle
+	argument.
+	(GnomeGdkPixbufDoneCallback): New callback typedef.
+	(gnome_gdk_pixbuf_new_from_uri_async): Added
+	GnomeGdkPixbufDoneCallback callback function argument which
+	is called when we're done reading the pixbuf.
+
+Wed Sep 13 21:42:25 2000  George Lebl <jirka@5z.com>
+
+	* gnome-helpsys.c: make it compile
+
+Wed Sep 13 00:45:34 2000  George Lebl <jirka@5z.com>
+
+	* gnome-helpsys.c: Switch to GParam, some reformatting, a hack
+	  for getting style/priority right with the GParam (they need to
+	  be set in unison).  Also used the boilerplate macros
+
+2000-09-12  Martin Baulig  <baulig@suse.de>
+
+	* gnome-selector.c: Switch to GParam and use the boilerplate
+	macros.
+
+2000-09-12  Martin Baulig  <baulig@suse.de>
+
+	* selector-demo.c: Added GnomeIconEntry.
+
+2000-09-12  Martin Baulig  <baulig@suse.de>
+
+	* gnome-selector.h (GnomeSelector): Added "get_filename" signal.
+	(gnome_selector_get_filename): New function.
+	(gnome_selector_set_filename): Allow the filename to be NULL.
+
+	* gnome-selector.c (gnome_selector_class_init): Added the missing
+	"changed" signal.
+	(get_filename_handler): Default is to use "get_entry_text".
+	(set_filename_handler): Allow the filename to be NULL.
+
+2000-09-11  Martin Baulig  <baulig@suse.de>
+
+	* gnome-icon-selector.c (icon_selected_cb): New callback function;
+	emits the "selection_changed" signal on the GnomeSelector.
+	(gnome_icon_selector_construct): Connect the `icon_selected_cb' to
+	the "select_icon" and "unselect_icon" signals of the GnomeIconList.
+
+	* gnome-selector.h (GnomeSelector): Added "selection_changed" signal.
+
+Sun Sep 10 19:47:07 2000  George Lebl <jirka@5z.com>
+
+	* gnome-href.[ch]: Switch to GParam, and bunches of reformatting
+	  to more match standard gnome style.
+
+	* gnome-animator.c: use PARAM_ instead of ARG_ for the enum and
+	  match up the names and remove an unused enum value.
+
+Sun Sep 10 03:29:56 2000  George Lebl <jirka@5z.com>
+
+	* gnome-dateedit.c:  Make sure that input to gtkcalendar is legal
+	  to avoid warnings.  Also use gtk_widget_size_request for the
+	  calendar to make sure that the size is always querried.
+
+	* gnome-druid.c:  When going to the next page find the next
+	  visible page, rather then just any old next page.
+
+2000-09-06  Martin Baulig  <baulig@suse.de>
+
+	* gnome-selector.c: Removed all references to actual files and
+	directories; both the file and directory lists may contain arbitrary
+	text entries which don't need to be actual file or directory names.
+	This is very important to allow us to subclass GnomeSelector for things
+	which aren't files or directories; for instance a GnomeNumberSelector.
+	(check_filename_handler, check_directory_handler): Always return TRUE.
+	(set_filename_handler): Call gnome_selector_check_filename() rather than
+	actually checking whether it's a regular file.
+	(add_file_handler, add_file_default_handler): Likewise.
+	(_add_directory_handler): Removed; such things belong into
+	gnome-file-selector.c.
+	(add_directory_handler, add_directory_default_handler): Call
+	gnome_selector_check_directory() and add it to the directory list on
+	success; don't attempt to actually readdir() the directory.
+
+	* gnome-file-selector.c: This now contains the gnome-vfs code to
+	deal with files and directories.
+	(add_directory_handler, add_directory_default_handler): Added; call
+	_add_directory_handler() with appropriate `defaultp' argument.
+	(_add_directory_handler): Added.
+
+	* gnome-icon-selector.c (append_an_icon): Use
+	gnome_gdk_pixbuf_new_from_uri() instead of gdk_pixbuf_new_from_file().
+
+2000-09-06  Martin Baulig  <baulig@suse.de>
+
+	* gnome-vfs-util.[ch]: New files.
+	These three functions are shamelessy stolen from Nautilus; they
+	use gnome-vfs to load the pixbuf so the URI doesn't need to be
+	a local file.
+	(gnome_gdk_pixbuf_new_from_uri): New function.
+	(gnome_gdk_pixbuf_new_from_uri_async): New function.
+	(gnome_gdk_pixbuf_new_from_uri_cancel): New function.
+
+2000-09-05  Martin Baulig  <baulig@suse.de>
+
+	* Makefile.am (gnome_headers): Removed duplicate gnome-textfu.h.
+
+2000-09-05  Martin Baulig  <baulig@suse.de>
+
+	* gnome-about.c (gnome_about_get_type): Removed since we now use
+	the boilerplate macros.
+
+Sat Sep 02 02:31:03 2000  Iain Holmes <terrorist@gegl.org>
+
+	* gnome-about.c (gnome_about_init): Allocate the _priv structure.
+	Neatened all the functions up. Fix memory leaks. Removed needs
+	for AboutInfo structure.
+
+	* gnome-animator.c: Added GParams.
+
+	* gtk-clock.c (gtk_clock_new): Calls gtk_clock_construct.
+
+	* stock-demo.c: Help menu not right justified.
+
+	* gnome-app.c (gnome_app_set_help_view_orientation): Something wrong
+	with the callback, so use the dock-items orientation value instead.
+
+	* gnome-helpsys.c: Use wap-textfu instead of textfu.
+	(help_view_select_help_cb): Removed grab, set cursor to WHATISIT,
+	removed sanity check. Fixed a leak too.
+
+	* wap-textfu.[ch]: Replacements for gnome-textfu. Need renamed once
+	they work to gnome-textfu.[ch].
+
+Sat Sep 02 03:25:46 2000  George Lebl <jirka@5z.com>
+
+	* gnome-druid.c: Eek, yet more minor fixes.  close_on_cancel
+	  now works properly.  Also kill the window when the druid
+	  is destroyed so that we don't require the caller to actually
+	  keep an extra pointer around.  This is just sugar, things like
+	  this are allowed.
+
+Sat Sep 02 03:12:20 2000  George Lebl <jirka@5z.com>
+
+	* gnome-druid.c: improve docs for append/prepend/insert
+
+Sat Sep 02 01:57:10 2000  George Lebl <jirka@5z.com>
+
+	* gnome-druid.[ch]: Add some sugar API.  Normally a druid is inside
+	  a window, so there is now a gnome_druid_new_with_window function
+	  which does this and a few other minor things for you.  Also
+	  document the _new function.
+
+	* gnome-helpsys.c: Eek, forgot to commit this earlier.  This uses
+	  GError for the gnome_url functions now.
+
+Fri Sep 01 03:33:09 2000  George Lebl <jirka@5z.com>
+
+	* *.h:  All _get_type functions are now G_GNUC_CONST to make
+	  things just a tad better optimized on gcc.
+
+Fri Sep 01 02:58:58 2000  George Lebl <jirka@5z.com>
+
+	* gnome-animator.c: fix memory leaks, remove old FIXMEs and minor
+	  cleanup
+
+	* gnome-druid.c: Make sure the non-visible button is never the
+	  default one.
+
+Thu Aug 31 15:21:38 2000  George Lebl <jirka@5z.com>
+
+	* gnome-icon-sel.[ch]: use the new gnome-macros stuff and general
+	  minor cleanup
+
+Wed Aug 30 21:59:43 2000  George Lebl <jirka@5z.com>
+
+	* gnome-animator.c, gnome-cursors.c, gnome-textfu.c: make
+	  dependencies more fine grained then <gnome.h>
+
+	* gnome-textfu.c, gnome-animator.c, gnome-app.c: minor cleanups,
+	  use gnome-macros.h
+
+	* gnome-druid-page-edge.[ch], gnome-druid-page-standard.[ch]:
+	  add an argument so that we can add the toplevel watermark like
+	  rp3 has.  Plus a couple of docs added/updated.
+
+2000-08-30  Federico Mena Quintero  <federico@helixcode.com>
+
+	* gnome-dock-item.c (gnome_dock_item_size_allocate): Fix unsigned
+	vs. signed confusion, as always.
+
+Wed Aug 30 04:34:07 2000  George Lebl <jirka@5z.com>
+
+	* gnome-href.[ch]: use the gnome-macros.h macros
+
+Wed Aug 30 04:06:22 2000  George Lebl <jirka@5z.com>
+
+	* gnome-druid-page-edge.c, gnome-druid-page-standard.c:  Be anal
+	  and use (double) instead of gfloat and use it in all the places
+	  where doubles are set on the canvas.  Also never show the logoframe
+	  when no logo is set.
+
+Wed Aug 30 03:51:08 2000  George Lebl <jirka@5z.com>
+
+	* gnome-druid.c: in size_allocate/size_request, use the border_width
+	  of the container as the actual border width.
+
+	* gnome-macros.h, Makefile.am, gnome-about.[ch],
+	  gnome-calculator.[ch], gnome-less.[ch], gnome-druid.c,
+	  gnome-druid-page.c, gnome-druid-page-edge.c,
+	  gnome-druid-page-standard.c:
+	  Steal ideas from nautilus about the standard boilerplate macros,
+	  and use them in a few objects.  These promote consistent
+	  implementation of the _get_type functions, the presence of
+	  parent_class, always checking for implementation of a method before
+	  dereferencing it, and most of all prevent typos.  Just to prove a
+	  point, one such typo/problem was fixed in GnomeLess.  Also while
+	  I was at it I made these files only include the neccessary headers
+	  instead of <gnome.h>, to make more fine grained dependencies to
+	  speed the build up and prevent unneccessary rebuilds.
+
+Fri Aug 25 02:14:34 2000  George Lebl <jirka@5z.com>
+
+	* gnome-druid-page.[ch], gnome-druid-page-standard.[ch],
+	  gnome-druid-page-edge.[ch]:  Remove my brain damanges of last
+	  commit while keeping the fixes.  The canvas moved back into the
+	  widgets, the sidebar_shown thing was eliminated.  The thin blue
+	  lines on standard pages are gone as well.
+
+Thu Aug 24 03:29:46 2000  George Lebl <jirka@5z.com>
+
+	* Makefile.am: a bit of makefile cleanup
+
+Thu Aug 24 02:23:51 2000  George Lebl <jirka@5z.com>
+
+	* gnome-animator.c: fix compile errors
+
+	* gnome-app-helper.c: put in FIXMEs and comment out the gnome_help
+	  stuff as that's now in compatlib and thus not used in libgnomeui
+
+	* gnome-druid-page.[ch], gnome-druid-page-edge.[ch],
+	  gnome-druid-page-standard.[ch]:  Try to unify/clean up code more.
+	  Add an option to hide the sidebar.  Make it possible to make
+	  a page use antialiased canvas optionally.  Move vanvas creation
+	  to GnomeDruidPage.  Other minor cleanups and doc fixes.
+
+	* gnome-druid.c: fix final removing of children
+
+	* gnome-icon-entry.c, gnome-icon-sel.c, gnome_segv.c:
+	  s/g_path_basename/g_path_get_basename/ (/me smacks self)
+
+	* gnome-roo.c, mdi_demo.c: warning fixes
+
+Tue Aug 22 19:15:15 2000  George Lebl <jirka@5z.com>
+
+	* gnome-druid*.[ch]: Minor cleanups, fix memory leaks on pages,
+	  use "fontset" only, add more precondition checks, make text
+	  always be valid.  Probably doesn't compile, I'll fix it up later
+	  or martin will.  (Not that gnome-libs really compiles now anyway)
+
+Sun Aug 13 17:07:15 2000  George Lebl <jirka@5z.com>
+
+	* gnome-animator.c: Add REVERT and RETAIN modes of animation.
+
+2000-08-07  Karl Eichwalder  <ke@suse.de>
+
+	* gnome-ditem-edit.c (fill_dnd_page): Beautify string.
+
+2000-08-06  Martin Baulig  <baulig@suse.de>
+
+	Added a default directory and file list to the GnomeSelector; this
+	has two benefits: first of all, you can have a "Default..." button
+	and when you click on it the file and directory lists are restored
+	to the original. The second thing is that we can save and later load
+	the current file and directory lists (for instance, when you click
+	on "Browse..." and use the browse dialog to add things).
+
+	* gnome-selector.h (GNOME_SELECTOR_AUTO_SAVE_HISTORY): New flag.
+	(GNOME_SELECTOR_AUTO_SAVE_ALL): New flag; if set, both the file
+	and directory list are saved using GConf.
+	(GNOME_SELECTOR_WANT_DEFAULT_BUTTON): New flag; if set, a "Default"
+	button is created which sets file and directory list to the defaults
+	when clicked.
+	(GNOME_SELECTOR_USER_FLAGS): #define this to be a mask of flags which
+	can be set in the _new() functions (G_S_AUTO_SAVE_HISTORY etc.).
+	(GnomeSelectorClass): Added `clear_default', `add_file_default' and
+	`add_directory_default' signals.
+	(gnome_selector_prepend_file): Added `defaultp' argument.
+	(gnome_selector_append_file): Likewise.
+	(gnome_selector_get_file_list): Likewise.
+	(gnome_selector_set_file_list): Likewise.
+	(gnome_selector_clear): Likewise.
+	(gnome_selector_prepend_directory): Likewise.
+	(gnome_selector_append_directory): Likewise.
+	(gnome_selector_get_directory_list): Likewise.
+	(gnome_selector_set_directory_list): Likewise.
+	(gnome_selector_set_to_defaults): New function.
+
+	* gnome-file-selector.h (gnome_file_selector_new): Added `flags'
+	argument.
+	* gnome-icon-selector.h (gnome_icon_selector_new): Likewise.
+
+2000-08-06  Martin Baulig  <baulig@suse.de>
+
+	* gnome-selector.c: Support history loading and saving.
+	(gnome_selector_get_history_id, gnome_selector_set_history_id):
+	Removed; it makes not much sense to change this after the widget
+	has been created.
+
+Fri Aug 04 05:28:14 2000  George Lebl <jirka@5z.com>
+
+	* gnome-helpsys.[ch]:  Add a way to get at the GtkTooltips
+	  object used in gnome_widget_set_tooltip and add some precondition
+	  checks.
+
+Fri Aug 04 05:08:26 2000  George Lebl <jirka@5z.com>
+
+	* gnome-helpsys.[ch]:  In the grand tradition of most probably
+	  non-compiling code, I'll make it compile when I get to my machine.
+	  I added private poiner and moved all the crap in there and done
+	  a tiny bit of cleanup and tried to understand what this beast
+	  does.
+
+2000-08-03  Martin Baulig  <baulig@suse.de>
+
+	You can now use a customize entry widget in the GnomeSelector.
+
+	* gnome-selector.c (gnome_selector_construct): Added `entry_widget'
+	argument and added `GNOME_SELECTOR_DEFAULT_ENTRY_WIDGET' enumeration
+	value to the flags.
+	(GnomeSelectorClass): Added `get_entry_text', `set_entry_text',
+	`activate_entry' and `history_changed' signals.
+	(gnome_selector_get/set_entry_text): New functions.
+	(gnome_selector_activate_entry): New function.
+	(gnome_selector_get/set_history_id): New functions.
+	(gnome_selector_get/set_history_length): New functions.
+	(gnome_selector_append/prepend_history): New functions.
+	(gnome_selector_get/set_history): New functions.
+	(gnome_selector_load/save_history): New functions.
+	(gnome_selector_clear_history): New function.
+
+	* gnome-file-selector.c: Use a GtkCombo as default entry widget.
+
+	* gnome-icon-selector.c: Derive from GnomeFileSelector.
+
+2000-08-02  Martin Baulig  <baulig@suse.de>
+
+	* gnome-icon-list.c (gnome_icon_list_insert_pixbuf): Added
+	`image_filename' argument.
+	(gnome_icon_list_append_pixbuf): Likewise.
+	(gnome_icon_list_get_icon_filename): New function.
+	(gnome_icon_list_find_icon_from_filename): New function.
+
+	* gnome-icon-sel.c: Use gnome_icon_list_get_icon_filename()
+	instead of gnome_icon_list_get/set_icon_data().
+	* gnome-icon-selector.c: Likewise.
+
+2000-08-01  Martin Baulig  <baulig@suse.de>
+
+	Moved all deprecated files (i.e the ones that were linked into
+	libgnomeui-1-compat and not into libgnomeui) into their own
+	subdirectory (../libcompat).
+
+	Hey, new you can do a `ls' here and you won't get confused by all
+	this old crap any longer .... :-)
+
+	* gnome-dentry-edit.c, gnome-dentry-edit.h, gnome-dns.c,
+	gnome-dns.h, gnome-druid-page-finish.c, gnome-druid-page-finish.h,
+	gnome-druid-page-start.c, gnome-druid-page-start.h, gnome-guru.c,
+	gnome-guru.h, gnome-procbar.c, gnome-procbar.h, gnome-properties.c,
+	gnome-properties.h, gnome-property-entries.c, gnome-property-entries.h,
+	gnome-spell.c, gnome-spell.h, gnome-startup.c, gnome-startup.h,
+	gnomeui10-compat.c, gnomeui10-compat.h, gtkcauldron.c, gtkcauldron.h:
+	Moved to ../libcompat/.
+
+2000-08-01  Martin Baulig  <baulig@suse.de>
+
+	* gnome-stock.c (GnomeStockPixmapEntryPixbufScaled): Inserted
+	`ref_count' field so we can cast it to GnomeStockPixmapEntryAny
+	without getting a core dump.
+
+2000-07-31  Martin Baulig  <baulig@suse.de>
+
+	* gnome-icon-selector.c (gnome_icon_selector_add_defaults): New.
+
+	* gnome-icon-list.h (GnomeIconList): Made the `selection' and
+	`icons' fields private and added the necessary accessor functions.
+	(gnome_icon_list_get_num_icons): New function.
+	(gnome_icon_list_get_selection): New function.
+
+	* gnome-icon-list.c (gnome_icon_list_unselect_all): Removed the
+	"for internal use only" arguments.
+
+2000-07-31  Martin Baulig  <baulig@suse.de>
+
+	* gnome-canvas-line.c (gnome_canvas_line_destroy): Destroy may run
+	multiple times nowadays.
+	* gnome-canvas-polygon.c (gnome_canvas_polygon_destroy): Likewise.
+	* gnome-canvas-rect-ellipse.c (gnome_canvas_re_destroy): Likewise.
+	* gnome-canvas-text.c (gnome_canvas_text_destroy): Likewise.
+
+2000-07-31  Martin Baulig  <baulig@suse.de>
+
+	* gnome-icon-list.c (gnome_icon_list_new): Removed the adjustment
+	argument and undeprecated this function.
+	(gnome_icon_list_new_flags): Removed.
+
+2000-07-29  Martin Baulig  <baulig@suse.de>
+
+	* gnome-init.c (libgnomeui_post_args_parse): Call glade_gnome_init().
+
+	* Makefile.am (libgnomeui_2_la_SOURCES): Added gnome-glade.c.
+
+	* gnome-glade.c: Copied here from libglade/glade/glade-gnome.c
+	and modified for gnome-libs HEAD (the file was copied directly
+	in CVS to preserve its histroy, so don't be surprised if there's
+	no log message).
+
+2000-07-27  Martin Baulig  <baulig@suse.de>
+
+	* gnome-canvas.c (gnome_canvas_destroy): Destroy may run
+	multiple times nowadays.
+
+	* gnome-icon-list.c (gnome_icon_list_clear): This needs to
+	mark the icon list as dirty.
+
+2000-07-27  Martin Baulig  <baulig@suse.de>
+
+	* gnome-canvas-pixbuf.c (gnome_canvas_pixbuf_destroy): Destroy
+	may run multiple times nowadays.
+	* gnome-icon-item.c (iti_destroy): Likewise.
+
+2000-07-26  Martin Baulig  <baulig@suse.de>
+
+	* gnome-icon-list.c: Use the normal canvas/layout scrolling
+	methods here. [FIXME: This widget can use some loving.]
+	(gnome_icon_list_set_hadjustment): Removed.
+	(gnome_icon_list_set_vadjustment): Removed.
+
+	* gnome-canvas.c: Fix scrolling for the new GtkLayout.
+	(DISPLAY_X1, DISPLAY_Y1): Removed since it's always zero.
+	(gnome_canvas_size_allocate): Use the layout's adjustments
+	in the call to scroll_to() rather than DISPLAY_X1/Y1.
+	(paint): Use the layout's adjustments to compute draw_x1 and
+	draw_y1 rather than DISPLAY_X1/Y1.
+
+	* gnome-less.c: Reflect latest GtkTextBuffer changes.
+
+2000-07-25  Martin Baulig  <baulig@suse.de>
+
+	* gnome-icon-list.c (gil_place_icon): Correctly halign the
+	icons at the middle of their labels.
+
+2000-07-25  Martin Baulig  <baulig@suse.de>
+
+	Added new GnomeSelector widget. We'll subclass this for
+	files, directories, icons, pixmaps and so on.
+
+	* gnome-icon-selector.[ch]: New files.
+	* gnome-file-selector.[ch]: New files.
+	* gnome-selectorP.h: New file.
+
+	* gnome-selector.[ch]: New files.
+	* selector-demo.c: New demo.
+
+2000-07-25  Martin Baulig  <baulig@suse.de>
+
+	* gnome-entry.[ch]: "privatized" it, added necessary accessor
+	functions for the now hidden members and added GtkArg stuff.
+
+	* gnome-procbar.[ch]: Marked this as deprecated and moved
+	it into the compat library.
+
+2000-07-19  Jaka Mocnik  <jaka.mocnik@kiss.uni-lj.si>
+
+	* gnome-mdi*.[ch]: "privatized" all structures. code cleanup.
+	added necessary accessor functions for the now hidden members.
+	fixed all the code to (hopefully) work with the above changes.
+	* gnome-pouch.[ch]: likewise.
+	* gnome-roo.[ch]: likewise.
+	* gnome-pouchP.h: new file. contains private parts ;) of the
+	GnomePouch and GnomeRoo widgets.
+	* Makefile.am: added gnome-pouchP.h to libgnomeui_2_la_SOURCES.
+	* mdi-demo.c: fixed to use the accessor functions instead of
+	directly accessing the members.
+
+Tue Jul 18 00:46:14 2000  George Lebl <jirka@5z.com>
+
+	* gnome-gconf.c:  don't ref/sink, and use gconf_client_get_default
+	  instead of _new
+
+Mon Jul 17 23:49:58 2000  George Lebl <jirka@5z.com>
+
+	* gnome-less.[ch]:  Port to the new text widget.  deprecate the font
+	  functions and replace them with new ones which are 1) saner 2)
+	  compatible with the new text widget.  Add a way to set width to
+	  a specified amount of columns.  Derive the widget from HBox rather
+	  then VBox to kill one level of wigetry.  Add append versions of all
+	  the show functions.  Make the text widget pointers public.
+
+2000-07-16  Jaka Mocnik  <jaka.mocnik@kiss.uni-lj.si>
+
+	* gnome-appbar.[ch] (gnome_appbar_get_status): new accessor function.
+	* gnome-app-util.c (gnome_app_activate_statusbar): use
+	gnome_appbar_get_status().
+	
+Fri Jul 14 17:10:54 2000  George Lebl <jirka@5z.com>
+
+	* *.c: fixup the destroy/finalize handlers.  Make sure destroy
+	  handlers can be called multiple times and move freeing of
+	  private structure to finalize.  Also all unref stuff is supposed
+	  to be in the destroy handler and not finalize according to gtk
+	  docs.
+
+	* gnome-icon-list.c: Make the typedefs standard and make the
+	  private structure standard.
+
+Fri Jul 14 05:39:40 2000  George Lebl <jirka@5z.com>
+
+	* gnome-messagebox.c: handle a case where no buttons were added.
+	  This makes gnome_segv work again, woohoo!
+
+Fri Jul 14 05:33:16 2000  George Lebl <jirka@5z.com>
+
+	* gnome-about.c, gnome-animator.c, gnome-animator.h, gnome-app.c,
+	  gnome-appbar.c, gnome-calculator.c, gnome-client.c,
+	  gnome-color-picker.c, gnome-dateedit.c, gnome-dentry-edit.c,
+	  gnome-dialog.c, gnome-ditem-edit.c, gnome-dock-band.c,
+	  gnome-dock-item.c, gnome-dock-layout.c, gnome-dock.c,
+	  gnome-druid-page-edge.c, gnome-druid-page-finish.c,
+	  gnome-druid-page-standard.c, gnome-druid-page-start.c,
+	  gnome-druid-page.c, gnome-druid.c, gnome-entry.c:
+	  Move freeing of private structure into finalize, and make sure
+	  the default destroy handler can be called multiple times as
+	  gtk2.0 will do this to us.
+Fri Jul 14 04:14:50 2000  George Lebl <jirka@5z.com>
+
+	* gnome-cursors.c: allocate data for gdk_bitmap_create_from_data
+	  using g_malloc and free it after use to avoid leaks.
+
+Fri Jul 14 01:43:06 2000  George Lebl <jirka@5z.com>
+
+	* gnome-helpsys.h: The url context is a pointer now
+
+	* libgnomeui.h, libgnomeui-compat-1.0.h: more header cleanup
+
+Fri Jul 14 01:00:44 2000  George Lebl <jirka@5z.com>
+
+	* Makefile.am:  Move gnome-canvas-image.[ch] out of the build as it
+	  depends on imlib and imlib appears not to compile with gtk/glib 2.0
+	  anyway.
+
+	* gnome-dialog.[ch]:  doh! I left in the private stuff in the header.
+	  correct for that.  make the buttons list public, it is used outside
+	  of gnome-dialog.  Since this widget will get some GtkDialog action
+	  later, the api doesn't need to be anal for now.
+
+	* gnome-file-saver.[ch]: Add a private structure, and correct the
+	  signal signature, though the signal doesn't seem to get emitted
+	  ever
+
+	* gnome-procbar.[ch]:  Add a private structure and remove the
+	  incredibly ugly single letter defines to make the code more
+	  readable.  Stop leaking colors by allocating, freeing them
+	  correctly.  Add a construct function which does what new_flags
+	  does.  The new/construct functions COPY the colors argument now
+	  instead of just keeping a reference to it (that was ugly).  The
+	  callback pointer has a full prototype now.
+
+	* gnome-propertybox.h: add a gpointer reserved field for a future
+	  possible private pointer.
+
+	* gnome-recently-used.[ch]: add a private structure, return a pointer
+	  from the document ref function
+
+	* gnome-unit-spinner.[ch]:  Add a construct method, and correct
+	  setting the adj_unit
+
+	* libgnomeui-compat-1.0.h, libgnomeui.h:  Move the headers which
+	  are actually in the compat lib to the compat header
+	
+
+Thu Jul 13 19:12:38 2000  George Lebl <jirka@5z.com>
+
+	* gnome-appbar.[ch]:  Add a private pointer and structure and move
+	  privates in there.  Also make _set_progress a deprecated function
+	  and added _set_progress_percentage to make the naming be more correct
+
+	* gnome-date-edit.[ch]:  Add a private structure, use typedefs in the
+	  standard way, add an accessor for initial_time as it's now a
+	  private member, and rename _get_date to _get_time (_get_date is
+	  still there as a part of the deprecated API), do the GtkArg
+	  dance, use gtk_widget_get_child_requisition instead of
+	  gtk_widget_size_request, fix some documentation and add a
+	  _construct method
+
+Wed Jul 12 16:59:10 2000  George Lebl <jirka@5z.com>
+
+	* gnome-file-entry.h, gnome-icon-entry.h: hide deprecated functions
+	  behind #ifndef GNOME_EXCLUDE_DEPRECATED
+
+	* gnome-font-picker.[ch]:  Add accessor for title, use a private
+	  pointer, add GtkArg stuff, plus some cleanup
+
+	* libgnomeui.h: since gnome-properties.h and gnome-property-entries.h
+	  are 1) unmaintained 2) marked deprecated, hide them with
+	  #ifndef GNOME_EXCLUDE_DEPRECATED
+
+Wed Jul 12 15:56:58 2000  George Lebl <jirka@5z.com>
+
+	* gnome-helpsys.c: minor documentation fix
+
+	* gnome-href.h: surround deprecated stuff by #ifndef
+	  GNOME_EXCLUDE_DEPRECATED
+
+	* gnome-icon-item.[ch]:  return const char * when it's
+	  an internal string
+
+	* gnome-paper-selector.[ch]:  Use a private pointer and
+	  a private structure
+
+Wed Jul 12 02:47:22 2000  George Lebl <jirka@5z.com>
+
+	* gnome-app-helper.[ch], gnome-client.[ch], gnome-ditem-edit.c,
+	  gnome-font-picker.[ch], gnome-helpsys.c, gnome-paper-selector.c,
+	  oafgnome.c:  Do the const dance.  Fix warnings caused by const
+	  changes in libgnome.  Add some const returns where appropriate.
+
+2000-07-09  Karl Eichwalder  <ke@suse.de>
+
+	* gnome_segv.c (main): Fix message string typo.
+
+2000-07-07  Chema Celorio  <chema@celorio.com>
+ 
+ 	* gnome_segv.c: add a "DEBUG" button to the segv dialog if the program
+ 	pointed by the enviromental variable "GNOME_DEBUGGER" is
+
+Tue Jul 04 01:44:21 2000  George Lebl <jirka@5z.com>
+
+	* gnome-color-picker.c:  Excorcise imlib reference from a label :)
+
+	* gnome-scores.[ch]:  Add and use a private pointer.  Allow setting
+	  logo multiple times.  Add a _construct method.  Add a
+	  _display_with_pixmap function to use a pixmap logo rather then just
+	  a title.
+
+2000-07-03  Jonathan Blandford  <jrb@redhat.com>
+
+	* gnome-druid-page-standard.c: add finalize function.  Move
+	free()ing to it. 
+
+Tue Jun 27 00:04:35 2000  George Lebl <jirka@5z.com>
+
+	* gnome-druid*.[ch]: Added private pointers to everything and moved
+	  the privates into it
+
+	* gnome-druid-page*.c: Mark the fonts translatable and add -*-*
+	  instead of iso8859-1 encoding
+
+	* gnome-font-picker.c: Mark the default font translatable and add
+	  -*-* instead of iso8859-1 encoding and also mark the default text
+	  for translation
+
+Mon Jun 26 13:31:01 2000  George Lebl <jirka@5z.com>
+
+	* gnome-animator.[ch]:  Remove dependence on knowing internals of
+	  GdkPixbufFrame and merge the fields into our own frame structure.
+	  Also fix the gdk-pixbuf-animation -> gnome-animator loading.
+	  However the GdkPixbufFrameAction still remains to be implemented
+
+Sun Jun 25 23:50:22 2000  George Lebl <jirka@5z.com>
+
+	* gnome-about.[ch]: Add a private structure.  This widget still needs
+	  to be cleaned up
+
+	* gnome-app.c: dup the app id string in the GtkArg get
+
+	* gnome-color-picker.[ch]: Use a private structure for privates. 
+	  Dup the title string on GtkArg get
+
+	* gnome-dialog.[ch]: Use a private structure for privates.
+
+	* gnome-pixmap-entry.c, gnome-file-entry.c, gnome-pixmap.c:
+	  use GTK_TYPE_STRING for string arguments
+
+	* gnome-href.[ch]: dup string on argument get
+
+	* gnome-icon-entry.c: make history_id and browse_dialog_title
+	  readable arguments and use GTK_TYPE_STRING
+
+	* gnome-messagebox.[ch]: use a private structure for privates
+
+Sun Jun 25 18:15:36 2000  George Lebl <jirka@5z.com>
+
+	* gnome-calculator.[ch]: put privates into a private structure.  Add
+	  an accessor for the internal string representation
+
+	* gnome-number-entry.c: use the gnome-calculator accessors instead of
+	  looking directly into the structure
+
+	* gnome-icon-sel.[ch]: put privates into a private structure
+
+	* gnome-less.[ch]: put privates into a private structure, also mark
+	  the fixed font set for translation
+
+	* gnome-number-entry.[ch]: use private structure for private members,
+	  change finalize into destroy
+
+Sun Jun 25 17:35:07 2000  George Lebl <jirka@5z.com>
+
+	* gnome-ditem-entry.[ch]: Put private members into a private
+	  structure
+
+Sun Jun 25 17:16:24 2000  George Lebl <jirka@5z.com>
+
+	* gnome-href.[ch]: use a private structure for privates, also
+	  make returns be (const gchar *) since the return should not
+	  be freed or modified.
+
+Sun Jun 25 17:00:17 2000  George Lebl <jirka@5z.com>
+
+	* gnome-app.[ch], gnome-dock*.[ch]:  Add a private pointer even
+	  though nothing is private yet, this should be done.
+
+	* gnome-dock-layout.c:  In the destroy handler, call the parent
+	  destroy handler for the object.
+
+	* gnome-entry.[ch]:  Move private data into a private structure,
+	  also add an accessor for the max_saved integer
+
+	* gnome-file-entry.[ch]:  Move private data into a private
+	  structure, also add an accessor for the is_modal and
+	  directory_entry bools.  Rename _set_directory to
+	  _set_directory_entry to avoid confusion, but keep the old
+	  method for compatibility.  Change finalize into destroy
+	  and NULL freed data.
+
+	* gnome-gconf.c (gnome_gconf_gtk_range_set) fix warning
+
+	* gnome-mdi.c, gnome-pouch.c, gnome-roo.c:  Don't define
+	  GNOME_ENABLE_DEBUG by hand here.  This is done in configure.
+
+Tue Jun 20 14:11:17 2000  George Lebl <jirka@5z.com>
+
+	* gnome-dock*.[ch]: remove the dock hiding patch as it seems to not
+	  be looked upon favorably (especially by Ettore and it's his widget
+	  thingie).  Thus reverting until discussed further.
+
+Mon Jun 19 22:17:01 2000  George Lebl <jirka@5z.com>
+
+	* gnome-dock-item.[ch]: add a hidden state, add a signal
+	  "dock_toggle_state", write and use wrappers for all the signals.
+	  Actually emit the detach signal.  When a user clicks on the handle
+	  hide the dock item
+
+	* gnome-dock.c: catch the dock_toggle_state and emit layout changed
+	  signal
+
+	* gnome-dock-layout.[ch]: load and save the hidden state
+
+2000-06-15  Jody Goldberg <jgoldberg@home.com>
+
+	* gnome-calculator.c (set_result) : setlocale returns a static buffer.
+	  Copy it to safety.  Set the locale AFTER storing the current
+	  setting.
+	(add_digit) : Ditto.
+	(negate_val) : Ditto.
+
+Mon Jun 12 16:57:50 2000  George Lebl <jirka@5z.com>
+
+	* gnome-dialog-util.c: fix a memory leak.  Free the info structure
+	  by using the destroy notify of the signal connection rather then
+	  in the clicked handler as that is not always called (like when
+	  the dialog is closed by the wm)
+
+Thu Jun 01 02:47:22 2000  George Lebl <jirka@5z.com>
+
+	* gnome-color-picker.[ch]: add accessors for attributes, and add
+	  GtkArg stuff
+
+2000-05-31  Jon K Hellan  <hellan@acm.org>
+
+	* gnome-messagebox.c (gnome_message_box_construct,
+	gnome_message_box_new): Set keyboard focus to default button.
+
+2000-05-27  Julian Missig  <julian@linuxpower.org>
+
+	* gnome-paper-selector.h: SELECTOR, not SELECTER.
+
+2000-05-26  Ian Peters  <itp@gnu.org>
+
+	* gnome-app.h: uncommented GNOME_APP_CLASS and GNOME_IS_APP_CLASS --
+	they should be there
+
+Sat May 27 11:42:02 2000  George Lebl <jirka@5z.com>
+
+	* gnome-href.c: Allow draging the link off the button
+
+Sat May 27 01:13:20 2000  George Lebl <jirka@5z.com>
+
+	* dock_demo.c, gnome-file-saver.c, gnome-helpsys.c
+	  gnome-mdi-child.h, gnome-mdi-generic-child.c, gnome-preferences.[ch],
+	  gnome-roo.c, gnome_segv.c, mdi_demo.c, oafgnome.c,
+	  test-recently-used.c:  Fix warnings.
+
+	* gnome-animator.c:  Fix warnings.  Fix an unitialized value problem.
+
+	* gnome-color-picker.c: Add drag and drop for colors.
+
+Mon May 22  Martijn van Beers  <martijn@earthling.net>
+
+	* gnome-gconf.c (gnome_gconf_color_picker_get): actually save the
+	                                                alpha
+	  (gnome_gconf_gnome_icon_entry_set): don't use the gtk entry
+	                                      anymore, but set the icon
+					      directly, so the icon gets set
+
+Mon May 22  Martijn van Beers  <martijn@earthling.net>
+
+	* gnome-gconf.c (gnome_gconf_*_set): added a value != check
+	  (gnome_gconf_spin_button_get): initialize retval
+	  (gnome_gconf_gtk_radio_button_set): fix ending condition in for loop
+	  (gnome_gconf_gtk_range_*): allow GCONF_VALUE_INT
+	  (gnome_gconf_color_picker_get): save alpha
+	  (gnome_gconf_color_picker_set): implement
+
+Sat May 20 14:50:59 2000  George Lebl <jirka@5z.com>
+
+	* gnome-stock.[ch]: the GdkPixbuf getting routine is renamed to
+	  gnome_stock_entry_get_gdk_pixbuf.  This is 1) because polluting
+	  other namespaces is bad 2) because the function does not create
+	  a new pixbuf, but returns an existing one with the refcount
+	  incremented.
+
+	* gnome-entry.[ch]: implemented gnome_entry_clear_history
+
+Sat May 20  Martijn van Beers  <martijn@earthling.net>
+
+	* (every GtkObject).h: make sure every object has GNOME_TYPE_
+	  and GNOME_IS_*_CLASS macros, and format them consistently
+	  with each other and gtk+
+
+Fri May 19 18:56:48 2000  George Lebl <jirka@5z.com>
+
+	* gnome-stock.[ch]: added refcount to the entries to make wrapping
+	  possible and fix the creation of new pixmaps from the data, so that
+	  the stock pixmaps now actually work.
+
+Thu May 18 20:31:16 2000  George Lebl <jirka@5z.com>
+
+	* gnome-ditem-edit.[ch]: fix api naming.  the child1,child2 are now
+	  functions (should ease wrappers) and there's a child3 accessor.
+	  new_notebook now refs/sinks the object, and when the notebook dies
+	  it unrefs it.  This is much saner behaviour and the notebook thus
+	  basically "takes ownership" of the ditem-edit
+
+Thu May 18  Martijn van Beers  <martijn@earthling.net>
+
+	* Makefile.am:
+	  - use $(LIBART_CFLAGS) instead of @LIBART_CFLAGS@ like everything
+	    else
+	  - ditto for LIBART_LIBS
+	  - use LDADD instead of creating an identical target_LDADD for
+	    all of gnome_segv, test_file_saver, test_recently_used,
+	    stock_demo, winhints_demo, animator_demo, dock_demo and
+	    mdi_demo
+
+	* .cvsignore: add test-recently-used, test-file-saver and mdi_demo
+
+Wed May 17 14:05:14 2000  George Lebl <jirka@5z.com>
+
+	* gnome-href.[ch]: interface sanitation.  Make get/set_label
+	  deprecated and use get/set_text.  label seems to refer to GtkLabel
+	  while text is much more clear.  The old methods are still there but
+	  give a warning.
+
+Wed May 17 12:59:39 2000  George Lebl <jirka@5z.com>
+
+	* gtk-clock.[ch]: add a construct method
+
+Sat May 13 11:56:35 2000  George Lebl <jirka@5z.com>
+
+	* gnome-scores.c (gnome_scores_new): make the strftime buffer 256
+	  chars, stop cutting the last character, also if strftime fails,
+	  we need to reset the buffer to something sane.
+
+2000-05-10  Karl Eichwalder  <ke@suse.de>
+
+	* Makefile.am (gnometypebuiltins.h, gnometypebuiltins_vars.c,
+	gnometypebuiltins_ids.c): Add LC_COLLATE=C to avoid NLS nuisances
+	while calling awk.
+
+Mon May 08 17:21:33 2000  George Lebl <jirka@5z.com>
+
+	* gnome-icon-entry.c: when an absolute path is passed to
+	  set_pixmap_subdir the standard pixmap path will not be prepended
+
+Sun May 07 17:52:27 2000  Iain Holmes <ih@csd.abdn.ac.uk>
+
+	* gnome-font-picker.c (gnome_font_picker_label_set_font_from_label):
+	Apply Patch from Charles Kerr fixing memory leak.
+
+Sat May 06 16:52:27 2000  George Lebl <jirka@5z.com>
+
+	* gnome-calculator.c (set_result) (add_digit) (negate_val):
+	  setlocale to "C" and then back to original whenever we are reading
+	  and writing floats.  this is because we can't deal with strings
+	  of any locale yet.
+
+Fri May 05 19:23:20 2000  George Lebl <jirka@5z.com>
+
+	* gnome-about.c: make an error dialog if gnome_url_show fails
+
+	* gnome-href.c: make an error dialog if gnome_url_show fails also fix
+	  the includes
+
+	* gnome-helpsys.c: minor doc fix and use the new gnome_url_show_full
+	  routine with the error argument.
+
+	* Makefile.am: add @LIBART_LIBS@ for the test and demo programs
+
+Sun Apr 30 02:12:53 2000  George Lebl <jirka@5z.com>
+
+	* animator_demo.c (main): fix warnings
+
+	* gnome-animator.c (prepare_aux_pixmaps) (paint)
+	  (gnome_animator_append_frame_from_pixbuf_)
+	  (gnome_animator_append_frames_from_pixbuf): Make this compile with
+	  newest gdk-pixbuf.  It however can't possibly work due to usage
+	  of unused variables, see all the FIXMEs.
+
+	* gnome-calculator.[ch]:  Fixup Federico's patch.  fix clear/reset
+	  as in gnome-libs-1-0, fix no_func crash.  Add an accessor for
+	  the accelerator group.  Mark all fields in the structure as
+	  private.  Add pointer to the drg button and set it's state
+	  properly on reset.
+
+	* gnome-canvas-pixbuf.c (gnome_canvas_pixbuf_draw)
+	  (gnome_canvas_pixbuf_render):  Make this compile with newest
+	  gdk-pixbuf
+
+	* gnome-cursors.c (build_cursor_table): fix const warning
+
+	* gnome-helpsys.c (gnome_help_view_process_event):  fix warning
+
+	* gnome-recently-used.c:  fix warning
+
+2000-04-28  ERDI Gergo  <cactus@cactus.rulez.org>
+
+	* gnome-about.c (gnome_about_load_logo): Applied Jason Leach's
+	patch to handle absolute filenames for the added logo
+
+2000-04-19  Federico Mena Quintero  <federico@helixcode.com>
+
+	* gnome-calculator.c: Keep around a pixmap and a reference count
+	for the calculator's font.  It is no longer a GnomePixmap, which
+	did not make any sense.
+	(gnome_calculator_init): gc->display is now a drawing area.
+	Create it with the proper visual and colormap.  Also, do not
+	connect to the realize signal of the calculator.  Call ref_font()
+	instead.
+	(gnome_calculator_destroy): Call unref_font().  Now we don't leak
+	the font.  Wheee!
+	(ref_font): New function to load/ref the calculator's font pixmap.
+	(unref_font): New function to unref/destroy the font pixmap.
+	(gnome_calculator_realized): Removed function.
+	(display_expose): New handler for the calculator's display expose
+	event.
+	(do_error): Queue a draw of the display.
+	(set_result): Likewise.
+	(add_digit): Likewise.
+	(negate_val): Likewise.
+	(store_m): Likewise.
+	(sum_m): Likewise.
+
+2000-04-20  ERDI Gergo  <cactus@cactus.rulez.org>
+
+	* gnome-color-picker.c (gnome_color_picker_init): gdk_pixbuf API changes
+
+	* gnome-pixmap.c (saturate_and_pixelate): ditto
+	(paint_with_pixbuf): ditto
+
+2000-04-18  ERDI Gergo  <cactus@cactus.rulez.org>
+
+	* gnome-about.c (gnome_about_load_logo): Determing the size of the
+	logo used some elements of the GdkPixbuf struct directly. Bad
+	Cactus, no cookie!
+	* gnome-icon-sel.c: gdk_pixbuf API changes
+
+	* gnome-canvas-pixbuf.c: ditto
+
+	* gnome-stock.c (stock_pixmaps): ditto, plus included
+	gnome-preferences.h to get rid of a warning
+
+Wed Apr 19 05:29:24 2000  George Lebl <jirka@5z.com>
+
+	* gnome-winhints.c: add preconditions all over the place
+
+Wed Apr 19 05:21:25 2000  George Lebl <jirka@5z.com>
+
+	* gnome-scores.[ch]: gnome_scores_display will return a pointer to
+	  the widget if something was displayed.  Also put the docs from
+	  the header file into the gtk-doc format
+
+Wed Apr 19 05:05:20 2000  George Lebl <jirka@5z.com>
+
+	* gnome-file-entry.[ch]: add _set_filename method, and added a bunch
+	  of extra arguments
+
+Wed Apr 19 04:49:54 2000  George Lebl <jirka@5z.com>
+
+	* gnome-file-entry.c: use GtkArg system, use G_DIR_SEPARATOR, and
+	  minor cleanup
+
+Wed Apr 19 04:36:15 2000  George Lebl <jirka@5z.com>
+
+	* gnome-href.c: use GtkArg system and small doc updates
+
+Tue Mar 28 20:41:46 2000  George Lebl <jirka@5z.com>
+
+	* gnome-number-entry.[ch]: add a _set_number method to complement
+	  the _get_number method.
+
+Thu Mar 23 19:21:39 2000  George Lebl <jirka@5z.com>
+
+	* gnome-pixmap.c: Add gtk-arg
+
+2000-03-17  Jaka Mocnik  <jaka.mocnik@kiss.uni-lj.si>
+
+	* gnome-mdi.c: various small fixes.
+	* gnome-pouch.c, gnome-roo.c: shuffled the way signals get
+	emitted; removed default signal handler for GnomePouch::close-child.
+	* Makefile.am: as mdi_demo source was committed, build it.
+
+Wed, 15 Mar 2000 14:03:46 +0100 Paolo Molaro <lupus@linuxcare.com>
+
+	* gnome-font-picker.c: avoid checking all the memory for '-'.
+	  Is this code going to stay in gnome-libs? It needs a big cleanup.
+
+2000-03-13  Elliot Lee  <sopwith@redhat.com>
+	* gnome-stock.c: Fix gnome_stock_or_ordinary_button for the ordinary button case.
+	* Makefile.am: Until mdi_demo.c is committed, remove usage thereof
+
+2000-03-13  Jaka Mocnik  <jaka.mocnik@kiss.uni-lj.si>
+
+	* gnome-pouch.[ch]: new files; a Window-in-Window style MDI container
+	widget.
+	* gnome-roo.[ch]: new files; a child window for Window-in-Window style
+	MDI. The child window decorations are rather ugly, as I'm a pretty bad
+	designer. Any improvements are very welcome.
+	* gnome-mdi.h: new enum GNOME_MDI_WIW; describes WiW MDI mode.
+	* gnome-mdi.[ch] (gnome_mdi_new): return a GnomeMDI * instead of
+	GtkObject *.
+	(gnome_mdi_get_view_menu_info): new function; return menu GnomeUIInfo
+	of a view if the menu is set.
+	(gnome_mdi_get_view_toolbar_info): new function; return toolbar
+ 	GnomeUIInfo of a view if the toolbar is set.
+	(gnome_mdi_get_child_toolbar_info): new function; return child's
+	toolbar GnomeUIInfo of a given GnomeApp.
+	(*): implemented the WiW mode. I suppose it's still full of bugs
+	that I've overlooked.
+	* gnome-mdi-child.h (GnomeMDIChildConfigFunc): returns a const
+	gchar *.
+	(gnome_mdi_child_add_toolbar): moved to gnome-mdiP.h.
+	* mdi_demo.c: a testing app for GnomeMDI.
+	* Makefile.am: integrated the above.
+
+Sat Mar 04 21:35:08 2000  George Lebl <jirka@5z.com>
+
+	* gnome-pixmap-entry.c: fix destructor to call parent destructor
+
+Sat Mar 04 20:52:26 2000  George Lebl <jirka@5z.com>
+
+	* gnome-ditem-edit.c,gnome-dentry-edit.c: use the new _set_filename
+	  method of the icon entry rather then the old _set_icon.
+
+	* gnome-icon-entry.c: correct destroy binding, set parent_class to
+	  the vbox class not hbox. correct the top of file comment
+
+	* gnome-pixmap-entry.c: argumentize, make private members truly
+	  private and add accessors to preview and preview_sw
+
+2000-03-01  Cody Russell  <bratsche@dfw.net>
+	* gnome-ditem-edit.c: Fixed a couple typos; gtk_entry -> GTK_ENTRY
+
+Fri Feb 25 03:29:15 2000  George Lebl <jirka@5z.com>
+
+	* gnome-icon-entry.[ch]: made the interface sane, made privates
+	  really private by using a private struct, which means we'll be
+	  able to change the ugly "entry" based implementation later.
+	  added gtk argument support, added set_filename and deprecated
+	  set_icon.  Mark the other deprecated methods so.  added
+	  _pick_dialog and "browse" signal.  If a .desktop is dropped on
+	  the thing, it will try to extract a filename from there.
+
+	* gnome-ditem-edit.c: clear the three entires for the languages
+	  entry when setting a new ditem
+
+2000-02-24  ERDI Gergo  <cactus@cactus.rulez.org>
+
+	* gnome-about.c (gnome_about_fill_options): New function to set
+	user-settable values using GConf and gtkrc
+	(gnome_about_item_cb): Since gnome_canvas_item_pixbuf has no
+	fill_color_rgba value, the underline color is passed to the callback
+
+2000-02-19  Jaka Mocnik  <jaka.mocnik@kiss.uni-lj.si>
+
+	* oafgnome.c (rcmd_handle_connecting): use ri->in_buf->str as an
+	argument to strstr() instead of aline: since we'll be doing pointer
+	arithmetics later, this matters.
+	(rcmd_activator): append langs_buf instead of display_buf twice.
+	(rcmd_run): create and free ri->in_buf and set ri->cmd to remote_cmd.
+	* gnome-remote-bootstrap.c (handle_commands): pass g_strsplit()
+	parameters in proper order.
+	(relay_output): fflush() stdout.
+	
+Fri Feb 18 17:30:58 2000  George Lebl <jirka@5z.com>
+
+	* gnome-app-helper.c,gnome-stock.c: use the gnome-properties instead
+	  of a hardcoded gnome_config path, it needs a control-center change
+	  which hopefully jacob is commiting right now
+
+Fri Feb 18 13:07:33 2000  George Lebl <jirka@5z.com>
+
+	* gnome-calculator.c:  applied patch from "W. Adam Foran"
+	  <waforan@pathcom.com> to fix a segfault
+
+2000-02-18  Anders Carlsson  <andersca@gnu.org>
+
+	* gnome-stock.c: Reduce padding for gnome-stock buttons
+	from 7 pixels to 2. Looks much nicer this way.
+
+2000-02-15  Rusty Conover <rconover@zootweb.com>
+
+	* gnome-font-picker.c (gnome_font_picker_set_font_name): Added
+	call to gnome_font_picker_update_font_info() so that if the widget
+	is in GNOME_FONT_PICKER_MODE_FONT_INFO the widget gets properly
+	updated with the current font.  Before you could set the font name
+	it would appear in the dialog but not on the visable widget.
+	
+Sun Feb 13 23:21:19 2000  George Lebl <jirka@5z.com>
+
+	* gnome-calculator.c: apply patch from "W. Adam Foran"
+	  <waforan@pathcom.com> to add precedence to the calculator
+	  widget.
+
+2000-02-09  Iain Holmes  <ih@csd.abdn.ac.uk>
+
+	* gnome-cursors.c: Started adding gconf to support theming things.
+
+2000-02-07  Elliot Lee  <sopwith@redhat.com>
+
+	* gnome-helpsys.[ch]: Add gnome_help_view_set_visibility (to
+	determine whether the widget is shown or not), and some
+	convenience callbacks to allow doing 'help on this' from a menu
+	item.
+
+	* gnome-init.[ch]: Add LIBGNOMEUI_PARAM_DEFAULT_ICON.
+	* gnome-app-util.[ch]: Add gnome_window_set_icon() and gnome_window_set_icon_from_file().
+
+	* gnome-app.c: Use LIBGNOMEUI_PARAM_DEFAULT_ICON if available, to
+	set a default icon for GnomeApp windows.
+
+Sat Feb 05 18:29:26 2000  George Lebl <jirka@5z.com>
+
+	* gnome-file-entry.[ch]: use gboolean in places of int for bools
+
+2000-02-05  Cody Russell  <bratsche@dfw.net>
+	* gnome-animator.[ch]: Rewrote much of GnomeAnimator in order to
+	use GdkPixbuf instead of GdkImlib. Much of this is untested, and
+	I'm still hacking away on it.
+
+	* animator_demo.c: Rewritten.
+
+	* Makefile.am: Re-enable GnomeAnimator and animator_demo.
+
+2000-02-01  Iain Holmes  <ih@csd.abdn.ac.uk>
+
+	* gnome-dateedit.c (select_clicked): Changed to use 
+	gnome_stock_cursor_new.
+
+	* gnome-dock-item.c (gnome_dock_item_grab_pointer): Same.
+
+	* gnome-href.c (gnome_href_realize): Same.
+
+	* gnome-icon-item.c (iti_start_selecting): Same.
+
+	* gnome-mdi.c (book_motion): Same.
+
+2000-01-31  Havoc Pennington  <hp@redhat.com>
+
+	* gnome-gconf.c (gnome_gconf_get_gnome_libs_settings_relative):
+	Function to make a key relative to the
+	/apps/gnome-settings/<appname> directory
+	(gnome_gconf_get_app_settings_relative): make a key relative to
+	/apps/<appname>
+	(gnome_gconf_post_args_parse): add gnome-libs settings dir to our
+	GConfClient
+
+	* gnome-app.c (gnome_app_add_toolbar): Use gnome_app_setup_toolbar
+
+	* gnome-app-helper.c (gnome_app_setup_toolbar): Function to set up
+	toolbar preferences, uses GConf for some preferences now instead
+	of gnome-preferences	
+	
+2000-01-31  Havoc Pennington  <hp@redhat.com>
+
+	* gnome-messagebox.c (gnome_message_box_construct): turn on line
+	wrap for message boxes
+
+	* gnome-gconf.c (gnome_default_gconf_client_error_handler): Set up
+	the default error handler dialog to display GConf errors that
+	aren't explicitly handled.
+
+2000-01-31  Havoc Pennington  <hp@redhat.com>
+
+	* gtkpixmapmenuitem.h (struct _GtkPixmapMenuItemClass): new class
+	fields to track the number of GtkPixmapMenuItem that actually have
+	pixmaps; if none, then we drop the toggle size to that of a
+	standard menu item. Basically this means that now if you turn off
+	pixmaps there isn't a big gap on the left of your menus.
+
+	* gtkpixmapmenuitem.c (gtk_pixmap_menu_item_init): remove
+	pointless set of toggle_size field in menu item instance
+	(gtk_pixmap_menu_item_class_init): don't set the menu item class
+	toggle size until we actually get a pixmap
+	(gtk_pixmap_menu_item_class_init): init new class fields
+
+Sun Jan 30 16:58:54 2000  George Lebl <jirka@5z.com>
+
+	* gnome-dentry-edit.c: properly cast dentry->exec
+
+2000-01-30  Havoc Pennington  <hp@pobox.com>
+
+	* gnome-gconf.c (gnome_gconf_post_args_parse): Add the
+	"/desktop/gnome" gconf dir
+
+	* gnome-app-helper.c (create_pixmap): remove the window argument,
+	since gnome-stock is no longer this lame
+	(create_menu_item): Call setup_pixmap_menu_item
+	(setup_pixmap_menu_item): new function sets up a pixmap menu item
+	to respond appropriately to changes in whether menu icons should
+	be displayed	
+
+	* libgnomeui.h (GNOMEUI_INIT): Add GConf to the default
+	initialization, include gnome-gconf.h	
+	
+Sun Jan 30 15:44:35 2000  George Lebl <jirka@5z.com>
+
+	* gnome-dentry-edit.c: use gnome_config_assemble_vector instead of
+	  g_flatten_vector to fix bug #1372
+
+2000-01-30  Havoc Pennington  <hp@pobox.com>
+
+	* gnome-file-saver.c (gnome_file_saver_init): use
+	gnome_get_gconf_client()
+
+	* gnome-recently-used.c (gnome_recently_used_construct): Use new
+	name gnome_get_gconf_client()
+
+	* gnome-gconf.c (gnome_gconf_client_get): Rename to
+	gnome_get_gconf_client()
+
+2000-01-30  Havoc Pennington  <hp@pobox.com>
+
+	* gnome-dialog.c (gnome_dialog_run_real): Create a new GMainLoop
+	to avoid problems with quitting the wrong mainloop with
+	gtk_main()/gtk_main_quit()
+
+	* gnome-recently-used.c (gnome_recently_used_get_all): Sort the
+	returned list of recently used documents
+
+2000-01-30  Iain Holmes  <ih@csd.abdn.ac.uk>
+
+	* gnome-cursors.[ch]: Added a GNOME_STOCK_CURSOR_XTERM type cursor.
+	Removed all the extra spaces from some cursors.
+
+2000-01-30  Havoc Pennington  <hp@pobox.com>
+
+	* gnome-pixmap.c (clear_provided_state_image): Apply patch 
+	from Peter Wainwright to free the mask as well as the pixbuf,
+	closes bug 5687
+
+2000-01-28  Havoc Pennington  <hp@redhat.com>
+
+	* gtkpixmapmenuitem.c (gtk_pixmap_menu_item_set_pixmap): The
+	mapping/realizing here was a bit wrong.
+
+2000-01-28  Havoc Pennington  <hp@redhat.com>
+
+	* gnome-number-entry.c (browse_clicked): set transient parent, 
+	bug 2497
+
+	* gnome-font-picker.c (gnome_font_picker_clicked): set transient
+	parent, fixes 2497 
+	
+	* gnome-color-picker.c (gnome_color_picker_clicked): Set transient
+	parent, per bug 2497
+
+2000-01-28  Havoc Pennington  <hp@redhat.com>
+
+	* gnome-propertybox.c (dialog_clicked_cb): merge fix to bug 4378
+	from stable branch (handle empty property boxes)
+
+2000-01-26  Iain Holmes  <ih@csd.abdn.ac.uk>
+
+	* gnome-cursors.c: Another new cursor - Pointer with ? beside it.
+
+2000-01-25  Iain Holmes  <ih@csd.abdn.ac.uk>
+
+	* gnome-cursors.[ch]: Added new cursors for resize arrows and the like.
+	Changed the default cursor to something pleasing.
+
+Sun Jan 23 16:54:39 2000  George Lebl <jirka@5z.com>
+
+	* gnome-less.[ch]: mark all fields as private and add an accessor
+	  for the text field.  Also add a bunch of preconditions.  Remove
+	  an unused variable.
+
+Sun Jan 23 14:05:55 2000  George Lebl <jirka@5z.com>
+
+	* gnome-dialog-util.c: add inline docs
+
+Sat Jan 22 16:22:25 2000  George Lebl <jirka@5z.com>
+
+	* gnome-icon-sel.[ch]: marked all fields as private and add accessors
+	  to the two internal widgets. plus a small int->gboolean change
+
+	* gnome-icon-entry.c: don't use private fields of gnome-icon-sel,
+	  and use the accessor to get the icon list.
+
+Sat Jan 22 15:35:29 2000  George Lebl <jirka@5z.com>
+
+	* gnome-href.[ch]: add a constructor method.  Also make the
+	  parameter names consistent with the header by using href instead
+	  of self in the .c file
+
+Sat Jan 22 13:51:51 2000  George Lebl <jirka@5z.com>
+
+	* gnome-messagebox.[ch]: add a _construct method and use it in _new and
+	  _newv.  This fixes some out of sync code.  Also add documentation
+	  for _get_label and mark the label field in the header as
+	  /*< private >*/
+
+	* gnome-entry.[ch]: add a _construct method
+
+	* gnome-icon-entry.[ch]: add a _construct method and use
+	  file_entry_construct inside it
+
+	* gnome-pixmap-entry.c: use file_entry_construct method here which
+	  fixes a problem of history never being loaded here
+
+	* gnome-file-entry.c: call gnome_entry_construct inside it's own
+	  _construct method
+
+	* gnome-dialog.h: s/gint/gboolean/, these were actually already
+	  gboolean in the .c file.
+
+	* gnome-number-entry.[ch]: add a _construct method and fix the
+	  same problem that pixmap-entry had
+
+2000-01-20  ERDI Gergo  <cactus@cactus.rulez.org>
+
+	* gnome-about.c (gnome_about_parse_name): Cleaned parse code to
+	use strchr()
+
+	* stock_demo.c: const char* in _TbItems removes compiler warning
+
+Thu Jan 20 00:08:47 2000  George Lebl <jirka@5z.com>
+
+	* gnome-ditem-edit.c: actually ref the ditem in set_ditem.  When
+	  editting a directory type entry, desensitize the widgets that
+	  make no sense.  The type combo doesn't include directory when
+	  the set ditem file isn't a directory.  If the ditem type isn't
+	  one of the standard types we know, add it to the combo box.
+
+2000-01-18  ERDI Gergo  <cactus@cactus.rulez.org>
+
+	* gnome-about.c (gnome_about_item_cb): Changed URL underlining
+	code to match the the color of the text
+	(gnome_about_fill_info, gnome_about_parse_name): author name
+	parsing to get clickable e-mails (idea by Iain Holmes)
+
+Tue Jan 18 00:56:46 2000  George Lebl <jirka@5z.com>
+
+	* gnome-pixmap-entry.[ch]: fixup the pixmap entry to actually not
+	  even create the preview box if the do_preview is false.  This makes
+	  it not check the file for being a real image if the preview
+	  is off.
+
+2000-01-17  Havoc Pennington  <hp@redhat.com>
+
+	* gnome-stock.c (gnome_stock_pixmap_gdk):
+	s/gdk_pixbuf_render_pixbuf/gdk_pixbuf_render_pixbuf_and_mask
+
+	* gnome-calculator.c (gnome_calculator_realized): ditto
+
+	* gnome-init.c (libgnomeui_pixbuf_image_loader): ditto
+	
+2000-01-16  Iain Holmes  <ih@csd.abdn.ac.uk>
+
+	* gnome-about.c: Draw a line under clickable URLs
+
+2000-01-16  Iain Holmes  <ih@csd.abdn.ac.uk>
+
+	* gnome-cursors.c: Removed the g_print statement.
+
+Mon Jan 17 01:38:21 2000  George Lebl <jirka@5z.com>
+
+	* gnome-calculator.c: don't reduce stack on unary functions, a patch
+	  from "W. Adam Foran" <waforan@pathcom.com>
+
+Sun Jan 16 02:45:10 2000  George Lebl <jirka@5z.com>
+
+	* gnome-ditem-edit.[ch]: update for the new gnome-ditem stuff and make
+	  it store a ref to any ditem is loads so that information not
+	  updated in the gui is not lost.  Also add a whole bunch of
+	  preconditions to public methods, fix the header define, added
+	  accessors for new widgets, and fixed the ordering in the
+	  translations list
+
+2000-01-16  Havoc Pennington  <hp@pobox.com>
+
+	* gnome-pixmap.c (gnome_pixmap_get_draw_vals): new function 
+	to get the draw vals
+
+2000-01-15  ERDI Gergo  <cactus@cactus.rulez.org>
+
+	* Removed numerous compile-time warnings
+
+2000-01-15  Havoc Pennington  <hp@pobox.com>
+
+	* gnome-stock.c (gnome_stock_set_icon): set main pixbuf in
+	addition to the individual states.	
+
+2000-01-15  Havoc Pennington  <hp@pobox.com>
+
+	* gnome-mdi.c (set_active_view): fix printf format warning
+
+	* gnome-dialog.c (gnome_dialog_button_clicked): remove unused
+	variable
+
+	* gnome-pixmap.h: remove the "internal functions" since we no
+	longer use any of them	
+
+	* gnome-stock.c (gnome_stock_pixmap_gdk): gdk_pixbuf_render_pixmap
+
+	* gnome-init.c (libgnomeui_pixbuf_image_loader): 
+	gdk_pixbuf_render_pixmap
+
+	* gnome-calculator.c (gnome_calculator_realized): replace
+	gnome_pixbuf_render with gdk_pixbuf_render_pixmap
+
+	* gnome-stock.c (gnome_stock_set_icon): sync with
+	gnome_pixmap_set_state_pixbufs rename
+
+	* gnome-druid.c (gnome_druid_size_request): add cast to remove
+	warning
+	(gnome_druid_paint): delete prototype, never defined
+
+	* gnome-pixmap.c (gnome_pixmap_set_state_pixbufs): rename from
+	gnome_pixmap_set_pixbufs_at_state for clarity
+
+	* gnome-messagebox.c: include gnomelib-init isntead of
+	gnomelib-init2
+	
+	* gnome-client.c (gnome_client_pre_args_parse): const on the
+	module info
+	(gnome_client_post_args_parse): ditto
+
+	* gnome-pixmap.c: There was massive cut-and-paste fest in here;
+	clean it all up.  Also, remove gnome_pixbuf_render since we have
+	one of these in gdk-pixbuf now.
+	(gnome_pixmap_size_request): implement size request so we can
+	lazily calculate size information instead of updating the 
+	requisition all the darn time
+	(set_pixbuf): don't calculate any pixbufs/masks etc. since 
+	it's all done lazily now
+	(gnome_pixmap_set_draw_vals): queue a redraw if necessary
+
+	* gnome-pixmap.h: split the data members so that generated 
+	images are always clearly separated from non-generated images,
+	this is the only way to get predictable, consistent behavior.
+
+	* gnome-pixmap.c: nuke all the crufty unused code at the bottom
+
+	* gnome-pixmap.h: s/GnomePixmapDraw/GnomePixmapDrawMode/g
+
+	* gnome-pixmap.c (gnome_pixmap_set_pixbuf): if width/height are
+	-1, it's necessary to reset the scaled image
+	(gnome_pixmap_set_pixbufs_at_state): call set_pixbuf_size()
+	instead of manually calculating the requisition
+	
+Sat Jan 15 00:04:00 2000  George Lebl <jirka@5z.com>
+
+	* gnome-helpsys.c: fix gnome_help_view_get_arg by initializing the
+	  help_view pointer
+	  fix a whole bunch of potentially quite dangerous uninitialized
+	  values
+	  add two g_assert_not_reached into places which would have caused
+	  a segfault if reached
+
+	* gnome-init.c: fix an uninitialized local variable problem
+
+	* gnome-textfu.c: fix several potentially quite dangerous 
+	  uninitialized values and assumptions
+
+2000-01-15  Havoc Pennington  <hp@pobox.com>
+
+	* Makefile.am (test_recently_used_LDADD): Test program for
+	recently used object; object itself isn't in the library yet.
+
+2000-01-14  Iain Holmes  <ih@csd.abdn.ac.uk>
+
+	* gnome-about.[ch]: Changed gnome_about_new_url to 
+	gnome_about_new_with_url.
+
+	* gnome-cursors.c: Removed the extra cursors that weren't needed.
+	
+2000-01-14  Iain Holmes  <ih@csd.abdn.ac.uk>
+
+	* gnome-cursors.c: Changed the white value to be full white, changed
+	the background and foreground's round on some of the cursors. Changed 
+	the eggtimers foreground colour to yellow.
+
+2000-01-14  ERDI Gergo  <cactus@cactus.rulez.org>
+
+	* gnome-cursors.c: Changed the cursor foreground/background WHITE
+	color to white instead of yellow (there was an offset bug in the
+	R/G/B values). Corrected height of PointingHand cursor.
+
+2000-01-13  Havoc Pennington  <hp@redhat.com>
+
+	* gnome-gconf.c: fix the version of liboafgnome we require.
+
+        * Makefile.am: add initial file save dialog stuff, not to the 
+	lib but as a test prog. just a prototype; may use James Cape version
+        instead.
+	
+	* libgnomeui.h: emacs magic
+
+	* gnome-gconf.c (gnome_gconf_post_args_parse): ref/sink the global
+	GConfClient. Also, fix indentation.
+
+2000-01-12  Havoc Pennington  <hp@redhat.com>
+
+	* gnome-app-helper.c: delete obsolete comment
+
+2000-01-13  Elliot Lee  <sopwith@redhat.com>
+
+	* gnome-helpsys.c: Make use of textfu, and start work on 'point for popup help'.
+	* gnome-helpsys.h: Change API slightly, plus reorder structure.
+
+	* gnome-textfu.[ch]: Implement a simple text display widget for
+	use in popup help. Still lacking the proper tag set, and for some
+	reason it's not getting the button press/release events.
+
+2000-01-13  ERDI Gergo  <cactus@cactus.rulez.org>
+
+	* gnome-cursors.c (gnome_stock_cursor_new): Fixed the GDK crash
+	when a cursor gets requested several times
+
+Wed Jan 12 15:51:18 2000  ERDI Gergo  <cactus@cactus.rulez.org>
+
+	* gnome-about.h: Added rewrite notice
+
+	* gnome-about.c (gnome_about_draw, gnome_about_calc_size):
+	Compile-time option to show/hide URLs
+
+2000-01-12  Iain Holmes  <ih@csd.abdn.ac.uk>
+
+	* gnome-cursors.c: Fixed a typo that meant cursor zoom-in was being
+	registered twice, instead of zoom-out.
+
+2000-01-12  Havoc Pennington  <hp@pobox.com>
+
+	* gnome-gconf.c (gnome_gconf_client_get): Add a global
+	GConfClient, and init stuff for creating it and setting up 
+	GConf. Not yet added to GNOMEUI_INIT macro; wondering 
+	if we want this stuff for _every_ gnome app. Probably we do.
+
+2000-01-11  Havoc Pennington  <hp@pobox.com>
+
+	* gnome-messagebox.c (gnome_message_box_new): 
+	Format title as "Error (Gnumeric)" rather than 
+	"Error: Gnumeric"
+
+2000-01-12  Martijn van Beers  <martijn@earthling.net>
+
+        * gnome-gconf.[ch]: added get/set functions for
+        Gnome(File|Icon|Pixmap)?Entry
+
+2000-01-11  Jonathan Blandford  <jrb@redhat.com>
+
+	* gnome-gconf.c (gnome_gconf_gnome_color_picker_get): added new
+	function.  Home for food.
+
+2000-01-11  Havoc Pennington  <hp@redhat.com>
+
+	* gnome-messagebox.c (gnome_message_box_new): Use human readable
+	name in the message box title.
+	(gnome_message_box_set_default, gnome_message_box_set_modal): 
+	Removed, now obsolete
+
+2000-01-10  Havoc Pennington  <hp@redhat.com>
+
+	* gnome-ditem-edit.c: Finish this up; it compiles; haven't tried
+	it out.
+
+2000-01-12  Martijn van Beers  <martijn@earthling.net>
+
+        * gnome-gconf.[ch]: added get/set functions for GtkSpinButton
+
+2000-01-11  Jonathan Blandford  <jrb@redhat.com>
+
+	* gnome-gconf.h: added more functions.
+
+2000-01-11  Iain Holmes  <ih@csd.abdn.ac.uk>
+
+	* gnome-about.c: (gnome_about_item_cb): Changed the cursors to use the
+	gnome-cursor stuff, and to return to the default cursor instead of
+	the GDK_LEFT_PTR when you leave the url.
+
+2000-01-10  Jonathan Blandford  <jrb@redhat.com>
+
+	* gnome-gconf.[ch]: New module.  Lets you
+	convert GtkWidget <-> GConfValue.  Will be useful in a number of
+	places.
+
+2000-01-10  ERDI Gergo  <cactus@cactus.rulez.org>
+
+	* gnome-about.c (gnome_about_fill_info): The fonts defined by the
+	current GTK+ style are now honored
+
+2000-01-10  Havoc Pennington  <hp@redhat.com>
+
+	* gnome-about.c (gnome_about_construct): push visual/cmap when
+	creating the canvas so we can render gdkpixbuf to it reliably
+
+2000-01-10  ERDI Gergo  <cactus@cactus.rulez.org>
+
+	* gnome-about.[ch] : Complete rewrite using the GnomeCanvas, a new
+	constructor (gnome_about_new_url) allows the easy inclusion of
+	URLs for both the project and individual authors.
+
+2000-01-07  Jonathan Blandford  <jrb@redhat.com>
+
+	* gnome-pixmap.c: use the new gdk-pixbuf scaling functions.
+	* gnome-pixmap.h: use the new gdk-pixbuf scaling functions.
+	* gnome-stock.c (gdk_pixbuf_new_from_stock_pixmap_entry): use the
+	new gdk-pixbuf scaling functions.
+
+2000-01-07  Jaka Mocnik  <jaka.mocnik@kiss.uni-lj.si>
+
+	* gnome-mdi.c (app_book_delete_event, app_toplevel_delete_event):
+	fixed a bug that kept a deleted empty toplevel in windows list,
+	causing occasional warnings & segfaults.
+	
+2000-01-06  Elliot Lee  <sopwith@redhat.com>
+
+	* gnome-icon-list.[ch]: Port to gdk-pixbuf. Switch from a linked list to an array for storing the icons (faster!)
+	* gnome-icon-entry.[ch], gnome-icon-sel.[ch]: Port to gdk-pixbuf.
+
+	* gnome-canvas-pixbuf.[ch]: Pull updates from gdk-pixbuf module.
+
+	* gnome-druid.c: When going to a new page, unmap the old one unconditionally.
+
+Wed Jan 05 23:41:20 2000  George Lebl <jirka@5z.com>
+
+	* gnome-client.[ch]: the save_yourself signal has a return value but
+	  the gtk_signal_emit wasn't catching it.  So get it and ignore it
+	  to avoid segfaults and warnings.
+
+2000-01-05  ERDI Gergo  <cactus@cactus.rulez.org>
+
+	* gnome-about.c: Removed all the hardcoded layout constants and
+	used #define's instead. Next step is a complete rewrite using
+	GnomeCanvas.
+
+Sat Jan 01 18:58:12 2000  George Lebl <jirka@5z.com>
+
+	* gnome-dentry-edit.c: use LC_MESSAGES category instead of LC_ALL
+	  for the message translations of the dentry fields
+
+Wed Dec 29 16:53:35 1999  George Lebl <jirka@5z.com>
+
+	* oafgnome.c: add include for unistd.h and fcntl.h to make this
+	  actually compile
+
+1999-12-26  Jaka Mocnik  <jaka.mocnik@kiss.uni-lj.si>
+
+	* gnome-mdi-child.[ch] (gnome_mdi_child_set_toolbar_template):
+	new function for setting child's toolbar template.
+	(gnome_mdi_child_set_toolbar_position): set default values for
+	toolbar insertion.
+	(gnome_mdi_child_add_toolbar): adds a toolbar to an app using
+	default values stored in the child.
+	* gnome-mdi.c (gnome_mdi_view_changed): take care of child's
+	toolbar.
+	(book_button_release): a fix to get the [view|child]_changed signal
+	emitted when a page is dropped on the notebook.
+	* gnome-mdiP.h: add a new #define for child's toolbar UIInfo key
+	and its name.
+	* gnome-mdi.h: indentation improvements.
+
+1999-12-25  Ettore Perazzoli  <ettore@gnu.org>
+
+	[From Morten Welinder <terra@diku.dk>]
+	* gnome-app.c (gnome_app_destroy): Unref the dock layout if not
+	NULL.
+
+1999-12-21  Iain Holmes  <ih@csd.abdn.ac.uk>
+
+	* gnome-helpsys.c (gnome_help_app_topics): Removed extra loop 
+	iterator, to prevent a crash.
+	(gnome-help_path_resolve): Same.
+
+1999-12-21  Havoc Pennington  <hp@redhat.com>
+
+	* oafgnome.c (rcmd_activator): make it compile
+
+	* gnome-preferences.h: take load/save custom out of the header
+	(this hasn't compiled for ages, don't know why no one noticed).
+
+	* gnome-stock.h, gnome-stock.c: emacs magic
+
+	* gnome-pixmap.c, gnome-pixmap.h: Add copyright notices and file
+	magic. comment cleanup
+
+	* gnome-ditem-edit.h, gnome-ditem-edit.c: mostly cut-and-paste 
+	from gnome-dentry-edit, not testable until we get the icon list.
+	
+Tue Dec 21 02:06:25 1999  George Lebl <jirka@5z.com>
+
+	* gnome-calculator.[ch]: make the get_result be a function rather
+	  then a macro to make bindings easier
+
+1999-12-20  Elliot Lee  <sopwith@redhat.com>
+	* *.h: Shuffle structure elements around.
+	* gtkpixmapmenuitem.c: Import fix from gnome-libs-1-0
+	* oafgnome.c, gnome-remote-bootstrap.c: Pass $LANG
+
+1999-12-20  Jaka Mocnik  <jaka.mocnik@kiss.uni-lj.si>
+
+	* gnome-mdi.[ch]: major source compatibilty mayhem;
+	(gnome_mdi_remove_view, gnome_mdi_remove_child): drop the force
+	parameter. always respect the return from the corresponding
+	signal handler.
+	(gnome_mdi_new_toplevel): new function.
+	(gnome_mdi_app_create, gnome_mdi_view_changed): new default signal
+	handlers. both these signals now RUN_FIRST.
+	(gnome_mdi_update_child): not public any more.
+	lots of fixes and simplifications of the code;
+	* gnome-mdi-child.c: #include<gnome-mdiP.h> and use the new
+	functions
+	* gnome-mdi-session.c: #include<gnome-mdiP.h>
+	(restore_window_child): show the window _after_ it has been messed
+	with.
+	* gnome-mdiP.h: a private header with stuff shared between all
+	gnome-mdi-* modules.
+	* Makefile.am: put gnome-mdiP.h in libgnomeui_la_SOURCES as this
+	does not install it.
+
+1999-12-15  Jaka Mocnik  <jaka.mocnik@kiss.uni-lj.si>
+
+	* gnome-mdi.c (gnome_mdi_get_child_menu_info): fix a typo in
+	documentation comment.
+
+1999-12-15  Jonathan Blandford  <jrb@redhat.com>
+
+	* gnome-druid.c (gnome_druid_insert_page): only map the page if
+	it's the only page. otherwise, unmap it.  This should let us add
+	pages to an already mapped druid.
+
+1999-12-14  Havoc Pennington  <hp@redhat.com>
+
+	* libgnomeui.schemas: schemas file for UI Preferences.
+
+	* libgnomeui.h: GNOME_EXCLUDE_DEPRECATED on gnome-preferences.h
+
+	* gnome-preferences.h: Comment that says this stuff is deprecated.
+
+	* gnome-preferences.c: Move GnomePreferences struct back into .c
+	file; with GConf, it should not be public.
+
+1999-12-13  Havoc Pennington  <hp@redhat.com>
+
+	* gnome-cursors.c (gnome_stock_cursor_new): support standard X
+	cursors (you can make a stock cursor that specifies their color).
+
+1999-12-13  Havoc Pennington  <hp@redhat.com>
+
+	* gnome-cursors.c: New module, stock cursors from Iain Holmes.
+
+Sun Dec 12 10:57:40 1999  George Lebl <jirka@5z.com>
+
+	* gnome-calculator.c: check for number on stack AFTER we reduce
+	  stack, this fixes a segfault where reduce_stack actually did
+	  reduce the stack. Fixes bug #4330
+
+1999-12-12  James Henstridge  <james@daa.com.au>
+
+	* libgnomeui.h: include gnome-unit-spinner.h.
+
+	* Makefile.am (EXTRA_DIST): added portrait.xpm and landscape.xpm
+	pixmaps for the new gnome-paper-selector.
+	(libgnomeui_la_SOURCES): added gnome-unit-spinner.c
+	(gnome_headers): added gnome-unit-spinner.h
+
+	* portrait.xpm, landscape.xpm: image files for the new paper selector.
+	
+	* gnome-paper-selector.[ch]: new paper selector.  It should be source
+	source compatible with the old one, but you would probably want to
+	modify your code to take advantage of the newer features.
+	
+	* gnome-unit-spinner.[ch]: new widget.  A GtkSpinButton type widget
+	that understands different units.
+
+1999-12-07  Martin Baulig  <martin@home-of-linux.org>
+
+	* Makefile.am: Removed all HistoryDB stuff.
+
+	* libgnomeui.h: Don't include "gnome-compat.h" which does no longer
+	exist.
+
+1999-12-05  Jaka Mocnik  <jaka.mocnik@kiss.uni-lj.si>
+
+	* gnome-dialog.c (gnome_dialog_button_clicked): no need for saving
+	click_closes as gnome_dialog_clicked() takes care of this.
+	* Makefile.am: changed all references to gdk-pixbuf/src to
+	gdk-pixbuf/gdk-pixbuf.
+	
+1999-12-04  Elliot Lee  <sopwith@redhat.com>
+
+	* gtkpixmapmenuitem.c: Fix size_request/size_allocate - was HORRIBLY broken before.
+
+1999-12-01  Havoc Pennington  <hp@pobox.com>
+
+	* gnome-canvas-pixbuf.h, gnome-canvas-pixbuf.c: Copy latest
+	version from gdk-pixbuf.  gdk-pixbuf has the master copy; do not
+	modify this libgnomeui copy.
+
+	* gnome-dialog.c (gnome_dialog_clicked): New function, 
+	emits the "clicked" signal
+
+Mon Nov 29 09:17:02 1999  Dietmar Maurer  <dm@vlsivie.tuwien.ac.at>
+
+	* gnome-app-helper.c: use GNOME_APP_PIXMAP_NONE instead of the
+          blank stock pixmap for configurable items.
+
+1999-11-28  Havoc Pennington  <hp@pobox.com>
+
+	* gnome-pixmap.h: include gdk-pixbuf before gnome-defs, seems to
+	be required for some reason. 
+	
+        The below is all still wrong; if you have a gdk-pixbuf installed
+	it will probably use the wrong one.
+	
+	* gnome-pixmap.c: angle
+
+	* gnome-color-picker.h: angle brackets
+
+	* gnome-icon-entry.c: <gdk-pixbuf/gdk-pixbuf.h>
+
+	* gnome-canvas-pixbuf.c: angle brackets
+
+	* gnome-calculator.c: angle brackets
+
+	* Makefile.am (INCLUDES): Put $(top_srcdir)/gdk-pixbuf at the top
+	of the include list; remove $(top_srcdir)/src from the search path.
+
+	* gnome-pixmap.h: put gdk-pixbuf/gdk-pixbuf.h in angle brackets
+
+1999-11-24  Elliot Lee  <sopwith@redhat.com>
+
+	* gnome-app.c (gnome_app_add_dock_item): emit the "layout_changed" signal even if adding the dock item to app->layout.
+
+1999-11-23  Jonathan Blandford  <jrb@redhat.com>
+
+	* gnome-druid-page-edge.c (gnome_druid_page_edge_new): new
+	widget.  Moved gnome_druid_page_edge_finish/start away, and moved
+	their functionality into a single widget.
+	(gnome_druid_page_edge_prepare): add a GNOME_EDGE_OTHER.
+
+1999-11-22  Jonathan Blandford  <jrb@redhat.com>
+
+	* Makefile.am: add gnome-canvas-pixbuf.  Retool the compat library
+	a bunch.
+
+Thu Nov 18 11:20:01 1999  George Lebl <jirka@5z.com>
+
+	* gnome-entry-edit.c: when syncing display with a dentry, clear
+	  the translations list first. Fixes bug #3652.
+
+1999-11-15  Elliot Lee  <sopwith@redhat.com>
+
+	* gnome-app-helper.[ch]: Const correctness.
+	* gnome-popup-menu.[ch]: Add gnome_popup_menu_append() and gnome_widget_add_popup_items().
+
+1999-11-13  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* gnome_segv.c (main): use g_basename() instead of
+	g_filename_pointer
+
+1999-11-11  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* gnome_segv.c (main): correctly detect if gnome-session
+	crashed when gnome-session was run with a full path (ie from
+	gdm2).   Disable SM on bug-buddy if gnome-session crashed,
+	and pass parameters to bug-buddy via command line options,
+	and not through the environment.
+
+Wed Nov 10 20:15:10 1999  George Lebl <jirka@5z.com>
+
+	* gnome-propertybox.c: use GPOINTER_TO_INT to cast from pointer
+	  to int. in _set_modified method use the same assert checks as in
+	  the _changed method.
+
+1999-11-09  Elliot Lee  <sopwith@redhat.com>
+	* gnome-helpsys.[ch]: gnome_widget_set_tooltip()
+	* gnome-popup-menu.[ch]: It works for all widgets (no_window widgets require extra care & feeding :)
+
+	* gnome-app-helper.[ch]: Add GNOME_APP_UI_INCLUDE type to include another GnomeUIInfo table inline.
+
+	* gnome-init.[ch]: Add LIBGNOMEUI_PARAM_DISPLAY.
+
+	* gnome-dock-item.[ch]: Add an orientation_changed signal.
+	* gnome-helpsys.[ch]: New implementation.
+	* gnome-app-helper.c: Use helpsys API function for reading the topic list and displaying help.
+	* gnome-app.[ch]: Add gnome_app_set_help_view().
+
+1999-11-04  Jonathan Blandford  <jrb@redhat.com>
+
+	* gnome-druid.c (gnome_druid_init): patch from boc to give the
+	next button the focus.
+
+1999-11-04  Federico Mena Quintero  <federico@redhat.com>
+
+	* gnome-app-helper.c: Patch from Eric Gillespie,
+	Jr. (epg@pobox.com).  The About item should not have ellipsis.
+
+1999-11-03  Federico Mena Quintero  <federico@redhat.com>
+
+	* gnome-canvas.c (gnome_canvas_item_get_bounds): Fixed ordering of
+	bounding vertices.  Now we *do* return the correct bounding box.
+
+1999-11-03  Federico Mena Quintero  <federico@redhat.com>
+
+	* gnome-canvas.c (gnome_canvas_init): Fixed long-standing problem
+	with the canvas->pick_event not being properly initialized.  This
+	caused spurious EnterNotify events to be sent to items right after
+	the canvas was created and the mouse had never been inside it.
+
+1999-11-02  Kjartan Maraas  <kmaraas@online.no>
+
+	* gnome-druid-page-standard.c: #include <config.h>
+	* gnome-druid-page-start.c: ditto.
+	* gnome-druid-page-finish.c: ditto.
+	* gnome-druid-page.c: ditto.
+	* gnome-druid.c: ditto.
+	* gnome-stock.c (gnome_pixmap_button): Marked label creation
+	with _() to make buttons translatable.
+
+1999-10-26  Jaka Mocnik  <jaka.mocnik@kiss.uni-lj.si>
+
+	* gnome-mdi.c (gnome_mdi_remove_view): if a registered object exists,
+	destroy an empty GnomeApp even if it is the last one.
+
+1999-10-22  Jonathan Blandford  <jrb@redhat.com>
+
+	* Makefile.am (libgnomeui10compatinclude_HEADERS): add this.
+
+1999-10-21  Federico Mena Quintero  <federico@redhat.com>
+
+	* gnome-canvas.c (gnome_canvas_set_pixels_per_unit): Clear the
+	redraw area to avoid creating enormous microtile arrays when we
+	zoom repeatedly.
+
+1999-10-20  Elliot Lee  <sopwith@redhat.com>
+
+	* gnome-init.c: Fix the memory leak AND avoid the bug from the first fix.
+
+Mon Oct 18 21:51:43 1999  George Lebl  <jirka@5z.com>
+
+	* gnome-app-util.c: use gnome_request_dialog directly instead
+	  of using old deprecated functions
+
+1999-10-18  Jonathan Blandford  <jrb@redhat.com>
+
+	* Makefile.am (libgnomeui10compat_a_SOURCES): beginnings of the
+	compat library.  I'm not 100% sure I set this up correctly,
+	though.
+	* gtk-ted*: Blown away!!!
+
+1999-10-11  Jonathan Blandford  <jrb@redhat.com>
+
+	* gnome-messagebox.c (gnome_message_box_new): add a label field to
+	GnomeMessagebox.  Removed gnome_message_box_set_{modal,default}.
+
+1999-11-18  Jonathan Blandford  <jrb@redhat.com>
+
+	* gnome-pixmap.c (paint_with_pixbuf): now have all the composite
+	stuff done.  Still need to document et al., but the end is in
+	sight.
+	(generate_state): added docs.  Added a DARK_FACTOR to insensitive pixbufs.
+
+1999-11-16  Havoc Pennington  <hp@pobox.com>
+
+	* gnome-pixmap-entry.c (refresh_preview): Fix call to gnome_pixmap_set_pixbuf()
+
+	* gnome-init.c (libgnomeui_pixbuf_image_loader): Fix
+	gnome_pixbuf_render() here. I have the bad feeling this breaks
+	things badly unless we always use the GdkRGB visual/cmap
+
+	* gnome-about.c (gnome_about_construct): fix to match new
+	gnome_pixbuf_render() API
+	(gnome_about_construct): Use GdkRGB visual/cmap for now
+
+	* libgnomeui.h: comment out icon stuff, and druid-page-finish
+
+	* gnome-pixmap.c (gnome_pixmap_set_pixbuf): Ref new pixbuf before clearing.
+
+Thu Nov 11 00:08:14 1999  George Lebl <jirka@5z.com>
+
+	* gnome-calculator.c: support more then 2 accelerators per key
+	  and use ',' for decimal point
+
+	* gnome-icon-entry.c: added a changed signal, I couldn't actually
+	  compile and test this but the change is so minial it should
+	  just work
+
+1999-11-09  Jonathan Blandford  <jrb@redhat.com>
+
+	* gnome-color-picker.c (render): gdk_pixmapified.
+
+	* winhints_demo.c (prepare_app): gdk_pixmapified.
+
+1999-11-09  Havoc Pennington  <hp@pobox.com>
+
+	* gnome-pixmap.c (match_representation_to_mode): New function
+	converts pixbuf->pixmap or vice-versa if you set pixbuf in pixmap
+	mode or vice-versa.
+
+1999-11-08  Havoc Pennington  <hp@pobox.com>
+
+	* gnome-pixmap.c (gnome_pixbuf_scale): fix no-scaling-needed case
+	to work properly. Some other bug fixes
+
+	* gnome-stock.c (stock_pixmaps): specify that the rgb data has no
+	alpha for now (since it doesn't)
+
+	* gnome-init.c (gtk_post_args_parse): gdk_rgb_init()
+
+	* gnome-pixmap.c (resize_to_fit): fix typo, s/PIXMAP/PIXBUF/
+	(paint_with_pixbuf): Um, actually draw the pixbuf.
+
+	* gnome-stock.c (gnome_stock_init): Set the pixmap mode here, not 
+	in specific constructors.
+
+Sat Nov 06 13:12:11 1999  George Lebl <jirka@5z.com>
+
+	* gnome-calculator.c: count active widgets and after we destroy
+	  the last one, kill our font pixmap, also don't use the
+	  unconditional pixmap file routine as we want to check if the
+	  file exists or not
+
+1999-11-05  Havoc Pennington  <hp@pobox.com>
+
+	* gnome-pixmap.c (gnome_pixmap_set_mode): implemented
+
+	* Makefile.am: Comment out property entries, they use the color
+	picker.
+	comment out dentry editor, it uses icon entry.
+
+	* gnome-init.c (libgnomeui_post_args_parse): Don't init imlib
+	(libgnomeui_pixbuf_image_loader): Replaces libgnomeui_imlib_image_loader
+
+	* Makefile.am: Comment color picker out
+	comment out gnome-druid for now too
+	comment out icon list
+	comment out icon selector
+	comment out icon entry
+
+	* gnome-pixmap-entry.c: Port to gdk-pixbuf
+	(setup_preview): port to gdk-pixbuf
+
+	* gnome-pixmap.c (gnome_pixbuf_build_insensitive): init width and
+	height variables
+
+	* gnome-app-helper.c (create_pixmap): fix cast on xpm data to
+	match const char**
+
+	* gnome-pixmap.c (gnome_pixmap_new_from_xpm_d_at_size): const on
+	the xpm_data
+	(gnome_pixmap_new_from_xpm_d): ditto
+
+	* gnome-messagebox.c (gnome_message_box_newv): Port to new GnomePixmap
+	(gnome_message_box_new): Port to new GnomePixmap
+
+	* gnome-pixmap.c (set_pixmaps): Allow pixmaps/masks to be NULL for "unset"
+	(set_pixbufs): Ditto
+	(set_pixbuf): Ditto
+	(gnome_pixmap_clear): New function to clear all pixmaps
+
+	* gnome-druid.c (gnome_druid_init): port to gdk-pixbuf
+
+	* gnome-app-helper.c (create_pixmap): Use
+	gnome_stock_new_with_icon() instead of gnome_stock_pixmap_widget()
+
+	* gnome-icon-entry.c (entry_changed): port to gdk-pixbuf
+
+	* gnome-pixmap.c (gnome_pixbuf_scale): If new w/h are the same as
+	old w/h just use memcpy() instead of scaling.	
+	(gnome_pixmap_set_pixbuf_at_size): New function
+	(gnome_pixmap_set_pixbuf): New function
+	(set_pixbuf): New function, used by set_pixbufs and above two
+	functions. Also implements automatic mask generation.
+
+	* gnome-pixmap.h: add a little comment about not using GnomePixmap
+	as an image loader.
+
+	* gnome-druid.h: include gnome-defs.h
+
+	* gnome-druid-page.h: include gnome-defs.h
+
+	* gnome-druid.c: Don't include gnome.h
+
+	* libgnomeui.h: Comment out animator, canvas image, canvas load
+	headers for now.
+
+	* Makefile.am: Comment out gnome-canvas-load.c
+	(INCLUDES): Remove GDK_IMLIB_CFLAGS
+
+	* gnome-canvas-load.h: Delete header contents; they aren't needed
+	with gdk-pixbuf	
+
+	* Makefile.am: Comment out gnome-canvas-image.c for now
+
+	* gnome-calculator.c (gnome_calculator_realized): port to
+	gdk-pixbuf; was using GnomePixmap just to load an image (please
+	people, could we be ANY MORE BROKEN in a million years? GnomeAbout
+	and GnomeAnimator were doing the same thing)
+	(put_led_font): Port to gdk-pixbuf, and don't draw with the image
+	if we failed to load it.
+
+	Note that GnomeCalculator is still broken because the font pixmap
+	is leaked if you destroy all the outstanding GnomeCalculator
+	widgets. Should probably use a GdkPixbuf as the representation
+	instead of creating a pixmap, and render from client side. Then
+	refcount the GdkPixbuf.
+
+	* Makefile.am: Comment out gnome-animator.c for now
+
+	* gnome-animator.c
+	(gnome_animator_append_frame_from_gnome_pixmap): Deleted this
+	function. It makes no sense, doesn't work with new GnomePixmap,
+	and was marked experimental.
+	(free_all_frames): port to gdk-pixbuf
+	(gnome_animator_append_frame_from_imlib_at_size): Removed
+	(gnome_animator_append_frame_from_imlib): Removed
+	(gnome_animator_append_frames_from_imlib_at_size): Removed
+	(gnome_animator_append_frames_from_imlib): Removed
+
+	* gnome-about.c (gnome_about_construct): port to gdk-pixbuf
+
+	* gnome-pixmap.c (gnome_pixbuf_render): Render a pixbuf to pixmap/mask
+
+	* gnome-stock.c (gnome_pixmap_button): Remove some weird pixmap 
+	registration stuff that no longer works and I don't understand the 
+	purpose of.
+	(gnome_pixmap_button): Unref the pixmap if it isn't placed in the
+	button due to user preferences. Long-standing mem leak.
+	(gnome_stock_pixmap_gdk): Port to gdk-pixbuf
+	(gnome_stock_transparent_window): port to gdk-pixbuf
+
+	* gnome-stock.h: rename gnome_stock_pixmap_checkfor() to
+	gnome_stock_pixmap_lookup()
+
+	* gnome-stock.c: Rewrite the stock pixmap hash. We now store
+	entries for all 5 states, and we do a single lookup to get all
+	five states at once. Also, the GnomeStock widget now simply gets a 
+	reference to the GdkPixbuf stored in the hash. We also free memory
+	associated with unscaled pixbufs, filenames, etc. once we have the
+	final pixbuf cached.
+	(gnome_stock_new): Set GNOME_PIXMAP_KEEP_PIXBUF mode since we are
+	usually using a pixbuf shared with other GnomeStock widgets.	
+	(gnome_stock_set_icon): Implement
+	(gnome_stock_pixmap_register): Don't return success/failure, that
+	makes no sense (it always succeeded anyway)
+	(gnome_stock_pixmap_change): Ditto
+
+	* gnome-stock.h: Replace all "subtype" string arguments with
+	GtkStateType enum arguments. 
+
+1999-11-04  Havoc Pennington  <hp@pobox.com>
+
+	* gnome-stock.c: Remove GnomeStockPixmapEntryWidget and 
+	GnomeStockPixmapEntryGPixmap; these no longer make any sense.
+
+	* gnome-stock.h: GnomeStockPixmapEntry made opaque, all struct
+	contents moved to gnome-stock.c. Added new constructors and
+	destructors for creating a GnomeStockPixmapEntry.
+	
+	* gnome-stock.c: Removed functions I removed from the header last
+	week (deprecated stuff that had been spewing warnings or not
+	compiled at all).
+	
+	* gnome-stock.h: GnomeStockPixmapEntryRGB,
+	GnomeStockPixmapEntryRGBScaled added to replace Imlib versions
+	
+	* gnome-pixmap.c (gnome_pixbuf_scale): Add this here; it's
+	scale_down originally in gnome-stock.c. We no longer handle 
+	the magic alpha color, and we do handle full alpha.
+
+	* gnome-stock.c (gnome_stock_set_icon): Don't return success or
+	failure; if the icon doesn't exist, spew warnings.
+	(gnome_stock_set_icon_at_size): ditto
+	(gnome_stock_new_with_icon): don't check return val from set_icon
+	(gnome_stock_set_icon): Check whether the new icon is the same as
+	the old right at the start of the function.
+	(scale_down): mostly moved to gnome-pixmap.c as gnome_pixbuf_scale()	
+	
+1999-10-25  Havoc Pennington  <hp@pobox.com>
+
+	* gnome-pixmap.c: set parent_class to NULL 
+
+	* gnome-stock.h: Further enhance the gnome-stock header. Remove
+	all functions that spew "don't use me" when used; group things
+	logically; add new _at_size() constructor and mutator for the
+	GnomeStock widget.
+
+	* gnome-pixmap.h, gnome-pixmap.c: Rewrite. Now supports a
+	different pixmap for every state, so we can migrate this
+	functionality out of GnomeStock. Also, uses gdk-pixbuf instead of
+	Imlib, and on Owen's recommendation does not use a shaped window.
+	Also, now derives from GtkMisc so you can set alignment, etc.
+	Compat functions not yet in place. Doesn't compile either,
+	untested and depends on some nonexistent GdkPixbuf stuff.
+	
+	* gnome-stock.c: Delete all the stuff that wasn't being compiled 
+	due to the USE_NEW_GNOME_STOCK #define
+
+	* gnome-stock.h: Don't define USE_NEW_GNOME_STOCK, unconditionally
+	compile the new stuff, delete the old stuff. 
+	Move all GNOME_STOCK_* string constant macros to gnome-stock-ids.h
+	Delete large comment at the top, it was outdated.
+	Delete Imlib entry types (need compat for these)
+	Make xpm_data in the XPM entry type const 
+	Delete all the regular/disabled/focus fields in GnomeStock widget
+	
+	* gnome-stock-ids.h: New file to unclutter gnome-stock.h
+	
+1999-10-10  Havoc Pennington  <hp@pobox.com>
+
+	* gnome-less.c: Remove the stupid popup menu, breaks binary
+	compatibility.
+	(gnome_less_fixed_font): This was deprecated about a year ago, 
+	removed.
+	(gnome_less_set_font): reformat
+
+1999-10-08  Jaka Mocnik  <jaka.mocnik@kiss.uni-lj.si>
+
+	* gnome-mdi-session.c (restore_window): take care of the case when
+	there are no children to restore: merely open a new, empty toplevel
+	window.
+
+1999-10-07  Elliot Lee  <sopwith@redhat.com>
+
+	* animator_demo.c, dock_demo.c, gnome-app-helper.c,
+ 	gnome-client.[ch], gnome-entry.c, gnome-init.[ch]: Use new init
+ 	system
+	* gnome-dateedit.c: Fix warning, include ctype.h for isdigit().
+	* gnome-dentry-edit.c, gnome-icon-entry.c, gnome-icon-sel.c: Avoid using deprecated functions.
+	* makeenums.pl: Skip files with / DEPRECATED / in them.
+	* gnome-dns.h, gnome-font-selector.h, gnome-guru.h, gnome-less.h,
+ 	gnome-preferences.h, gnome-properties.h, gnome-property-entries.h,
+ 	gnome-spell.h, gnome-startup.h, gtk-ted.h, gtkcauldron.h: Add deprecated marking so
+ 	makeenums.pl will skip this
+	* gnometypebuiltins*.[ch]: Rebuild
+	* libgnomeui.h: Exclude all deprecated stuff. Add defines for backwards source compat to new system.
+

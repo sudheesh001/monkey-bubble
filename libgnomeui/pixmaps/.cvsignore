@@ -1,0 +1,5 @@
+Makefile
+Makefile.in
+.deps
+.xvpics
+gnome-stock-pixbufs.h

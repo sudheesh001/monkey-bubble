@@ -1,0 +1,94 @@
+AC_INIT(libgnomeui)
+
+AM_CONFIG_HEADER(config.h)
+AM_INIT_AUTOMAKE(libgnomeui-2, 1.96.0)
+
+AM_MAINTAINER_MODE
+
+if test -z "$CERTIFIED_GNOMIE"; then
+  cat $srcdir/message-of-doom
+  exit 1
+fi
+
+GNOME_COMMON_INIT
+GNOME_PLATFORM_GNOME_2(yes, force)
+
+AC_ISC_POSIX
+AC_PROG_CC
+AC_STDC_HEADERS
+AC_ARG_PROGRAM
+AM_PROG_LIBTOOL
+AM_PROG_LEX
+AC_PROG_YACC
+AC_PATH_PROGS(PATH_TO_XRDB, "xrdb")
+
+GNOME_COMPILE_WARNINGS
+
+dnl utility conditional
+AM_CONDITIONAL(FALSE, test "x" = "y")
+
+ALL_LINGUAS="nn no"
+AM_GNOME2_GETTEXT
+
+AC_SUBST(CFLAGS)
+AC_SUBST(CPPFLAGS)
+AC_SUBST(LDFLAGS)
+
+GNOME_COMPILE_WARNINGS(maximum)
+
+AC_PATH_PROG(GNOME_MAKETYPES, gnome-maketypes.awk)
+AC_PATH_PROG(GNOME_MAKEENUMS, gnome-makeenums.pl)
+if test -z "$GNOME_MAKETYPES" || test -z "$GNOME_MAKEENUMS" ; then
+  AC_MSG_ERROR([
+*** Cannot find the gnome-maketypes.awk and gnome-makeenums.pl scripts
+*** which are installed from libgnome-2
+])
+fi
+
+dnl Utility conditional
+AM_CONDITIONAL(FALSE, test x = y)
+
+dnl
+dnl Start of pkg-config checks
+dnl
+GNOME_PKGCONFIG_CHECK_MODULES(LIBGNOMECANVAS, libgnomecanvas-2.0:1.96.0)
+AC_SUBST(LIBGNOMECANVAS_CFLAGS)
+AC_SUBST(LIBGNOMECANVAS_LIBS)
+
+dnl AC_SUBST GTK+ version
+GTK_VERSION=`$PKG_CONFIG --modversion gtk+`
+AC_SUBST(GTK_VERSION)
+
+dnl GNOME_PKGCONFIG_CHECK_MODULES(LIBBONOBO, libbonobo-2.0:1.96.0)
+dnl AC_SUBST(LIBBONOBO_CFLAGS)
+dnl AC_SUBST(LIBBONOBO_LIBS)
+
+AC_CHECK_LIB(popt, poptStrippedArgv,, AC_MSG_ERROR([popt 1.5 or newer is required to build
+gnome-libs. You can download the latest version from ftp://people.redhat.com/sopwith/popt/]))
+
+AC_CHECK_HEADERS(dlfcn.h dl.h utmp.h locale.h mcheck.h unistd.h)
+
+dnl This is installed from GTK+ 2.0's gdk-pixbuf
+AC_PATH_PROG(MAKE_INLINE_PIXBUF, make-inline-pixbuf)
+test -z "$MAKE_INLINE_PIXBUF" && AC_MSG_ERROR([
+*** You need the make-inline-pixbuf tool which is installed
+*** from GTK+ 2.0's gdk-pixbuf.
+***
+*** Either the location where you installed your GTK+ 2.0 is
+*** not in your PATH or something is screwed up with your
+*** GTK+ 2.0 installation
+])
+
+AC_OUTPUT([
+Makefile
+po/Makefile.in
+intl/Makefile
+libgnomeui/Makefile
+libgnomeui/libgnomeui-2.0.pc
+libgnomeui/pixmaps/Makefile
+images/Makefile
+demos/Makefile
+doc/Makefile
+])
+
+cat $srcdir/message-of-doom
