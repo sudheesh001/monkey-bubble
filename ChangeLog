@@ -1,5 +1,17 @@
 2004-06-04  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
+	disable sound by default (use --enable-sound)
+
+	more network stuff
+	* src/audio/sound-manager.c: (stop_play), (start_play):
+	* src/monkey/board.c: (board_stick_bubble):
+	* src/net/game-manager.c: (game_stopped),
+	(client_request_game_created_ok):
+	* src/net/game.c: (update_idle):
+	* src/ui/main.c: (main):
+
+2004-06-04  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
 	more network stuff
 	* src/net/game.c: (game_lost), (update_lost), (update_idle),
 	(network_game_instance_init):

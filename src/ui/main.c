@@ -42,10 +42,10 @@ int main(int  argc, char **argv)
 		      NULL);
 
   
-  active_sound = TRUE;
+  active_sound = FALSE;
   for( i= 0; i < argc; i++) {
-    if( strcmp( argv[i], "--disable-sound") == 0 ) {
-      active_sound = FALSE;
+    if( strcmp( argv[i], "--enable-sound") == 0 ) {
+      active_sound = TRUE;
       break;
     }
   }

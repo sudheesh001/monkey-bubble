@@ -478,7 +478,6 @@ void board_stick_bubble(Board *board,Bubble *bubble,gint time) {
     g_list_free(fallen);
   }
 
-  g_print("sitcked at %d,%d \n",cell.x,cell.y);
   board_notify_bubble_sticked(board,bubble,time);
 
 }

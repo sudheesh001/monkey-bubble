@@ -558,7 +558,7 @@ update_idle(gpointer d)
 	g_mutex_unlock( PRIVATE(game)->clients_lock);
 
 
-	return TRUE;
+	return !game_finished;
 }
 
 

@@ -356,6 +356,12 @@ client_request_start(NetworkClient * client,
 }
 
 
+static void game_stopped(NetworkGame * game,
+			 NetworkGameManager * manager) 
+{
+	g_print("NetworkGameManager : Game Stopped \n");
+}
+
 static void 
 client_request_game_created_ok(NetworkClient * client,
 			       NetworkGameManager * manager) 
@@ -377,7 +383,12 @@ client_request_game_created_ok(NetworkClient * client,
 
 	if( g_list_length(PRIVATE(manager)->waited_clients) == 0) {
 		PRIVATE(manager)->game = network_game_new(PRIVATE(manager)->clients);
-			
+	
+		g_signal_connect( G_OBJECT( PRIVATE(manager)->game),
+				  "game-stopped",
+				  G_CALLBACK(game_stopped),
+				  manager);
+	
 		network_game_start(PRIVATE(manager)->game);
 	
 

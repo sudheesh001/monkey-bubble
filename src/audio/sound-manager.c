@@ -117,9 +117,11 @@ void stop_play(SoundManager * m) {
 
   if( sound_active) {
     PRIVATE(m)->is_playing = FALSE;
-
+    g_print("stop sound \n");
     gst_element_set_state( PRIVATE(m)->main_bin,GST_STATE_NULL);
+    g_print("stop sound ok\n");
     
+
     g_object_unref( G_OBJECT(PRIVATE(m)->main_bin ));
     
     PRIVATE(m)->output = NULL;
@@ -131,9 +133,9 @@ void stop_play(SoundManager * m) {
 
 void start_play(SoundManager *m, gchar * path) {
   if( sound_active) {
-    PRIVATE(m)->output = gst_element_factory_make("osssink","output");
+    PRIVATE(m)->output = gst_element_factory_make("alsasink","output");
     PRIVATE(m)->main_bin = gst_thread_new("bin");
-    PRIVATE(m)->vorbis_dec = gst_element_factory_make("vorbisfile","ogg_dec");
+    PRIVATE(m)->vorbis_dec = gst_element_factory_make("vorbisdec","ogg_dec");
     PRIVATE(m)->filesrc = gst_element_factory_make("filesrc","filesrc");
     
     g_signal_connect(G_OBJECT(PRIVATE(m)->main_bin),
