@@ -9,13 +9,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: monkey-bubble HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-29 15:55+0200\n"
-"PO-Revision-Date: 2004-06-29 21:52+0100\n"
+"POT-Creation-Date: 2004-10-03 23:48+0100\n"
+"PO-Revision-Date: 2004-10-03 23:48+0100\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: English/GB <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: data/keybinding.glade.h:1
 msgid "Keyboard Shortcuts"
@@ -49,7 +49,8 @@ msgstr "Create network game"
 msgid "Join _network game"
 msgstr "Join _network game"
 
-#: data/monkey-bubble.glade.h:9 monkey-bubble.desktop.in.h:1
+#: data/monkey-bubble.glade.h:9
+#: monkey-bubble.desktop.in.h:1
 msgid "Monkey Bubble"
 msgstr "Monkey Bubble"
 
@@ -61,11 +62,14 @@ msgstr "New 1 player"
 msgid "New 2 players"
 msgstr "New 2 players"
 
-#: data/monkey-bubble.glade.h:12 src/ui/ui-main.c:402 src/ui/ui-main.c:534
+#: data/monkey-bubble.glade.h:12
+#: src/ui/ui-main.c:401
+#: src/ui/ui-main.c:533
 msgid "Pause game"
 msgstr "Pause game"
 
-#: data/monkey-bubble.glade.h:13 src/ui/keyboard-properties.c:85
+#: data/monkey-bubble.glade.h:13
+#: src/ui/keyboard-properties.c:86
 msgid "Stop game"
 msgstr "Stop game"
 
@@ -178,6 +182,7 @@ msgid "*"
 msgstr "*"
 
 #: data/netgame.glade.h:2
+#: data/netserver.glade.h:1
 msgid "Network game"
 msgstr "Network game"
 
@@ -189,11 +194,14 @@ msgstr "Number of games :"
 msgid "Number of players :"
 msgstr "Number of players :"
 
-#: data/netgame.glade.h:5 src/ui/keyboard-properties.c:87
+#: data/netgame.glade.h:5
+#: data/netserver.glade.h:4
+#: src/ui/keyboard-properties.c:88
 msgid "Quit game"
 msgstr "Quit game"
 
 #: data/netgame.glade.h:6
+#: data/netserver.glade.h:5
 msgid "Ready"
 msgstr "Ready"
 
@@ -205,15 +213,29 @@ msgstr "_Go"
 msgid "_Server"
 msgstr "_Server"
 
+#: data/netserver.glade.h:2
+msgid "Number of game"
+msgstr "Number of games"
+
+#: data/netserver.glade.h:3
+msgid "Number of players"
+msgstr "Number of players"
+
+#: data/netserver.glade.h:6
+msgid "Start Game"
+msgstr "Start Game"
+
 #: monkey-bubble.desktop.in.h:2
 msgid "Monkey Bubble Arcade Game"
 msgstr "Monkey Bubble Arcade Game"
 
-#: src/ui/eggcellrendererkeys.c:160 src/ui/eggcellrendererkeys.c:161
+#: src/ui/eggcellrendererkeys.c:160
+#: src/ui/eggcellrendererkeys.c:161
 msgid "Accelerator key"
 msgstr "Accelerator key"
 
-#: src/ui/eggcellrendererkeys.c:170 src/ui/eggcellrendererkeys.c:171
+#: src/ui/eggcellrendererkeys.c:170
+#: src/ui/eggcellrendererkeys.c:171
 msgid "Accelerator modifiers"
 msgstr "Accelerator modifiers"
 
@@ -225,11 +247,13 @@ msgstr "Accelerator Mode"
 msgid "The type of accelerator."
 msgstr "The type of accelerator."
 
-#: src/ui/eggcellrendererkeys.c:219 src/ui/keyboard-properties.c:764
+#: src/ui/eggcellrendererkeys.c:219
+#: src/ui/keyboard-properties.c:765
 msgid "Disabled"
 msgstr "Disabled"
 
-#: src/ui/eggcellrendererkeys.c:330 src/ui/eggcellrendererkeys.c:568
+#: src/ui/eggcellrendererkeys.c:330
+#: src/ui/eggcellrendererkeys.c:568
 msgid "Type a new accelerator, or press Backspace to clear"
 msgstr "Type a new accelerator, or press Backspace to clear"
 
@@ -237,133 +261,116 @@ msgstr "Type a new accelerator, or press Backspace to clear"
 msgid "Type a new accelerator"
 msgstr "Type a new accelerator"
 
-#: src/ui/keyboard-properties.c:79
+#: src/ui/keyboard-properties.c:80
 msgid "New game 1 player"
 msgstr "New game 1 player"
 
-#: src/ui/keyboard-properties.c:81
+#: src/ui/keyboard-properties.c:82
 msgid "New game 2 player"
 msgstr "New game 2 player"
 
-#: src/ui/keyboard-properties.c:83
+#: src/ui/keyboard-properties.c:84
 msgid "Pause/Resume"
 msgstr "Pause/Resume"
 
-#: src/ui/keyboard-properties.c:93
+#: src/ui/keyboard-properties.c:94
 msgid "Full Screen"
 msgstr "Full Screen"
 
-#: src/ui/keyboard-properties.c:95
+#: src/ui/keyboard-properties.c:96
 msgid "Normal Size"
 msgstr "Normal Size"
 
-#: src/ui/keyboard-properties.c:100 src/ui/keyboard-properties.c:110
+#: src/ui/keyboard-properties.c:101
+#: src/ui/keyboard-properties.c:111
 msgid "aim left"
 msgstr "aim left"
 
-#: src/ui/keyboard-properties.c:102 src/ui/keyboard-properties.c:112
+#: src/ui/keyboard-properties.c:103
+#: src/ui/keyboard-properties.c:113
 msgid "aim right"
 msgstr "aim right"
 
-#: src/ui/keyboard-properties.c:104 src/ui/keyboard-properties.c:114
+#: src/ui/keyboard-properties.c:105
+#: src/ui/keyboard-properties.c:115
 msgid "shoot"
 msgstr "shoot"
 
-#: src/ui/keyboard-properties.c:121
+#: src/ui/keyboard-properties.c:122
 msgid "Player 1"
 msgstr "Player 1"
 
-#: src/ui/keyboard-properties.c:122
+#: src/ui/keyboard-properties.c:123
 msgid "Player 2"
 msgstr "Player 2"
 
-#: src/ui/keyboard-properties.c:123
+#: src/ui/keyboard-properties.c:124
 msgid "Game"
 msgstr "Game"
 
-#: src/ui/keyboard-properties.c:124
+#: src/ui/keyboard-properties.c:125
 msgid "View"
 msgstr "View"
 
-#: src/ui/keyboard-properties.c:337
+#: src/ui/keyboard-properties.c:338
 #, c-format
 msgid "There was an error loading config from %s. (%s)\n"
 msgstr "There was an error loading config from %s. (%s)\n"
 
-#: src/ui/keyboard-properties.c:351
+#: src/ui/keyboard-properties.c:352
 #, c-format
-msgid ""
-"There was an error subscribing to notification of terminal keybinding "
-"changes. (%s)\n"
-msgstr ""
-"There was an error subscribing to notification of terminal keybinding "
-"changes. (%s)\n"
+msgid "There was an error subscribing to notification of terminal keybinding changes. (%s)\n"
+msgstr "There was an error subscribing to notification of terminal keybinding changes. (%s)\n"
 
-#: src/ui/keyboard-properties.c:394
+#: src/ui/keyboard-properties.c:395
 #, c-format
 msgid "There was an error loading a terminal keybinding. (%s)\n"
 msgstr "There was an error loading a terminal keybinding. (%s)\n"
 
-#: src/ui/keyboard-properties.c:410
+#: src/ui/keyboard-properties.c:411
 #, c-format
 msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
 msgstr "The value of configuration key %s is not valid; value is \"%s\"\n"
 
-#: src/ui/keyboard-properties.c:433
+#: src/ui/keyboard-properties.c:434
 #, c-format
-msgid ""
-"There was an error loading config value for whether to use menubar access "
-"keys. (%s)\n"
-msgstr ""
-"There was an error loading config value for whether to use menubar access "
-"keys. (%s)\n"
+msgid "There was an error loading config value for whether to use menubar access keys. (%s)\n"
+msgstr "There was an error loading config value for whether to use menubar access keys. (%s)\n"
 
-#: src/ui/keyboard-properties.c:447
+#: src/ui/keyboard-properties.c:448
 #, c-format
-msgid ""
-"There was an error subscribing to notification on changes on whether to use "
-"menubar access keys (%s)\n"
-msgstr ""
-"There was an error subscribing to notification on changes on whether to use "
-"menubar access keys (%s)\n"
+msgid "There was an error subscribing to notification on changes on whether to use menubar access keys (%s)\n"
+msgstr "There was an error subscribing to notification on changes on whether to use menubar access keys (%s)\n"
 
-#: src/ui/keyboard-properties.c:458
+#: src/ui/keyboard-properties.c:459
 #, c-format
-msgid ""
-"There was an error loading config value for whether to use menu "
-"accelerators. (%s)\n"
-msgstr ""
-"There was an error loading config value for whether to use menu "
-"accelerators. (%s)\n"
+msgid "There was an error loading config value for whether to use menu accelerators. (%s)\n"
+msgstr "There was an error loading config value for whether to use menu accelerators. (%s)\n"
 
-#: src/ui/keyboard-properties.c:474
+#: src/ui/keyboard-properties.c:475
 #, c-format
-msgid ""
-"There was an error subscribing to notification for use_menu_accelerators (%"
-"s)\n"
-msgstr ""
-"There was an error subscribing to notification for use_menu_accelerators (%"
-"s)\n"
+msgid "There was an error subscribing to notification for use_menu_accelerators (%s)\n"
+msgstr "There was an error subscribing to notification for use_menu_accelerators (%s)\n"
 
-#: src/ui/keyboard-properties.c:824
+#: src/ui/keyboard-properties.c:825
 #, c-format
 msgid "Error propagating accelerator change to configuration database: %s\n"
 msgstr "Error propagating accelerator change to configuration database: %s\n"
 
-#: src/ui/keyboard-properties.c:993
+#: src/ui/keyboard-properties.c:994
 #, c-format
 msgid "Error setting new accelerator in configuration database: %s\n"
 msgstr "Error setting new accelerator in configuration database: %s\n"
 
-#: src/ui/keyboard-properties.c:1092
+#: src/ui/keyboard-properties.c:1093
 msgid "_Action"
 msgstr "_Action"
 
-#: src/ui/keyboard-properties.c:1114
+#: src/ui/keyboard-properties.c:1115
 msgid "Shortcut _Key"
 msgstr "Shortcut _Key"
 
-#: src/ui/ui-main.c:527
+#: src/ui/ui-main.c:526
 msgid "Resume game"
 msgstr "Resume game"
 
@@ -371,13 +378,27 @@ msgstr "Resume game"
 msgid "translator_credits"
 msgstr "David Lodge <dave@cirt.net>"
 
+#: src/ui/ui-main.c:619
+msgid "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply remove all Bubbles by the creation of unicolor triplets."
+msgstr "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply remove all Bubbles by the creation of unicolour triplets."
+
 #: src/ui/ui-main.c:640
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "There was an error displaying help: %s"
 
-#~ msgid "Players"
-#~ msgstr "Players"
+#: src/ui/ui-network-server.c:159
+#: src/ui/ui-network-client.c:149
+msgid "_Player name"
+msgstr "_Player name"
 
-#~ msgid "Start Game"
-#~ msgstr "Start Game"
+#: src/ui/ui-network-server.c:166
+#: src/ui/ui-network-client.c:156
+msgid "_Owner"
+msgstr "_Owner"
+
+#: src/ui/ui-network-server.c:173
+#: src/ui/ui-network-client.c:163
+msgid "_Ready"
+msgstr "_Ready"
+
