@@ -1,3 +1,7 @@
+2005-01-03  Satoru SATOH <ss@gnome.gr.jp>
+
+	* configure.in: Added 'ja' (Japanese) to ALL_LINGUAS
+
 2004-12-24  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	quick fix for network game. not tested
@@ -69,7 +73,7 @@
 
 2004-11-09  Hasbullah BIn Pit <sebol@my-penguin.org>
 
-        * configure.in: Added 'ms' (Malay) to ALL_LINGUA
+	* configure.in: Added 'ms' (Malay) to ALL_LINGUA
 
 2004-09-27  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
