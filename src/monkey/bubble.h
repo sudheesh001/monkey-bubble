@@ -26,6 +26,7 @@ G_BEGIN_DECLS
 
 
 #define BUBBLE_RADIUS 16
+
 #define TYPE_BUBBLE            (bubble_get_type())
 
 #define BUBBLE(object)         (G_TYPE_CHECK_INSTANCE_CAST ((object), TYPE_BUBBLE,Bubble))

@@ -294,10 +294,11 @@ network_message_handler_class_init (NetworkMessageHandlerClass * klass)
 						   (NetworkMessageHandlerClass,
 						    recv_bubble_array), NULL,
 						   NULL,
-						   monkey_net_marshal_VOID__UINT_UINT_POINTER,
-						   G_TYPE_NONE, 3,
+						   monkey_net_marshal_VOID__UINT_UINT_POINTER_UINT,
+						   G_TYPE_NONE, 4,
 						   G_TYPE_UINT, G_TYPE_UINT,
-						   G_TYPE_POINTER);
+						   G_TYPE_POINTER,
+                                                   G_TYPE_UINT);
 
 	signals[CONNECTION_CLOSED] = g_signal_new ("connection-closed",
 						   G_TYPE_FROM_CLASS (klass),
@@ -805,7 +806,8 @@ void
 network_message_handler_send_bubble_array (NetworkMessageHandler * mmh,
 					   guint32 monkey_id,
 					   guint8 bubbles_count,
-					   Color * bubbles)
+					   Color * bubbles,
+                                           guint32 odd)
 {
 
 	guint8 *message;
@@ -816,6 +818,7 @@ network_message_handler_send_bubble_array (NetworkMessageHandler * mmh,
 		guint8 message_type;
 		guint32 monkey_id;
 		guint8 bubbles_count;
+                guint8 odd;
 	};
 
 	struct Test *t;
@@ -831,6 +834,7 @@ network_message_handler_send_bubble_array (NetworkMessageHandler * mmh,
 
 	t->monkey_id = htonl (monkey_id);
 	t->bubbles_count = bubbles_count;
+        t->odd = odd;
 	j = sizeof (struct Test);
 
 	for (i = 0; i < bubbles_count; i++)
@@ -853,11 +857,14 @@ parse_bubble_array (NetworkMessageHandler * mmh, guint8 * message)
 	guint32 monkey_id;
 	guint8 bubble_count;
 
+        guint8 odd;
+
 	struct Test
 	{
 		guint8 message_type;
 		guint32 monkey_id;
 		guint8 bubble_count;
+                guint8 odd;
 	};
 
 	struct Test *t;
@@ -867,6 +874,7 @@ parse_bubble_array (NetworkMessageHandler * mmh, guint8 * message)
 
 	monkey_id = g_ntohl (t->monkey_id);
 	bubble_count = t->bubble_count;
+        odd = t->odd;
 	j = sizeof (struct Test);
 
 	for (i = 0; i < bubble_count; i++)
@@ -885,7 +893,7 @@ parse_bubble_array (NetworkMessageHandler * mmh, guint8 * message)
 	}
 
 	g_signal_emit (G_OBJECT (mmh), signals[RECV_BUBBLE_ARRAY], 0,
-		       monkey_id, bubble_count, bubbles);
+		       monkey_id, bubble_count, bubbles,(guint32)odd);
 
 }
 

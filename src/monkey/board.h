@@ -33,72 +33,64 @@
 
 typedef struct BoardPrivate BoardPrivate;
 
-typedef struct {
-  GObject parent_instance;
-  BoardPrivate * private;
+typedef struct
+{
+	GObject parent_instance;
+	BoardPrivate *private;
 } Board;
 
-typedef struct {
-  GObjectClass parent_class;
-  void (* bubbles_exploded ) (
-			      Board *board,
-			      GList * exploded,
-			      GList * fallen);
-  
-  void (* bubbles_added) (
-			  Board * board,
-			  GList * bubbles);
-  
-  void (* bubble_sticked)(
-			  Board * board,
-			  Bubble * bubble,
-			  gint stiked);
+typedef struct
+{
+	GObjectClass parent_class;
+	void (*bubbles_exploded) (Board * board, GList * exploded,
+				  GList * fallen);
 
-  
-  void (* bubbles_inserted) (
-			     Board * board,
-			     Bubble ** bubbles,
-			     int count
-			     );
+	void (*bubbles_added) (Board * board, GList * bubbles);
+
+	void (*bubble_sticked) (Board * board, Bubble * bubble, gint stiked);
 
 
-  void (* down ) ( Board * board);
+	void (*bubbles_inserted) (Board * board, Bubble ** bubbles,
+				  int count);
+
+
+	void (*down) (Board * board);
 
 } BoardClass;
 
-GType board_get_type(void);
+GType board_get_type (void);
 
-typedef struct {
-  gint x;
-  gint y;
+typedef struct
+{
+	gint x;
+	gint y;
 } Cell_xy;
 
-Board * board_new(gdouble y_min,const gchar * filename,gint level);
+Board *board_new (gdouble y_min, const gchar * filename, gint level);
 
-void board_init(Board * board,Bubble ** bubbles,gint count);
+void board_init (Board * board, Bubble ** bubbles, gint count);
 
-void board_add_bubbles(Board *board,
-		       Bubble ** bubbles);
+void board_add_bubbles (Board * board, Bubble ** bubbles);
 
-void board_insert_bubbles(Board *board,
-			  Bubble ** bubbles);
+void board_insert_bubbles (Board * board, Bubble ** bubbles);
 
-Bubble * board_get_bubble_at(Board * board,
-			     gint x,gint y);
+Bubble *board_get_bubble_at (Board * board, gint x, gint y);
 
-gint * board_get_colors_count(Board * b);
-gint board_get_row_count(Board * b);
-gint board_get_column_count(Board * b);
+gint *board_get_colors_count (Board * b);
+gint board_get_row_count (Board * b);
+gint board_get_column_count (Board * b);
 
-void board_stick_bubble(Board *board,Bubble *bubble,gint time);
-gboolean board_collide_bubble(Board * board,Bubble *b);
-gboolean board_is_lost(Board * board);
+void board_stick_bubble (Board * board, Bubble * bubble, gint time);
+gboolean board_collide_bubble (Board * board, Bubble * b);
+gboolean board_is_lost (Board * board);
 
-gdouble board_get_y_min(Board * board);
+gdouble board_get_y_min (Board * board);
 
-void board_down( Board * board);
+void board_down (Board * board);
 
-int board_bubbles_count(Board * board);
+gboolean board_get_odd(Board * board);
+int board_bubbles_count (Board * board);
 
-void board_print(Board * board);
+Bubble **board_get_array (Board * board);
+void board_print (Board * board);
 #endif

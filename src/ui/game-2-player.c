@@ -200,12 +200,12 @@ game_2_player_new(GtkWidget * window,MonkeyCanvas * canvas,int score_left,int sc
         PRIVATE(game)->display_left = 
                 monkey_view_new(canvas, 
                                 PRIVATE(game)->monkey_left,
-                                -165,0,FALSE);
+                                -165,0,NULL,FALSE,TRUE);
 
         PRIVATE(game)->display_right = 
                 monkey_view_new(canvas, 
                                 PRIVATE(game)->monkey_right,
-                                165,0,FALSE);
+                                165,0,NULL,FALSE,TRUE);
 
         PRIVATE(game)->canvas = canvas;
 

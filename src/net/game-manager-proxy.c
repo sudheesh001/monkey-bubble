@@ -136,6 +136,8 @@ recv_players_list(NetGameManagerProxy * self,xmlDoc * doc)
                 gboolean ready;
                 xmlChar * prop;
                 Client * client;
+		int id;
+
 		prop = xmlGetProp(current,"owner");
                 
                 if( prop != NULL && strcmp( prop,"true")  == 0) {
@@ -155,6 +157,9 @@ recv_players_list(NetGameManagerProxy * self,xmlDoc * doc)
                 client->name = g_strdup(current->children->content);
                 client->owner = owner; 
                 client->ready = ready;
+
+		sscanf(xmlGetProp(current,"id"),"%d",&id);
+		client->id = id;
                 PRIVATE(self)->clients = g_list_append( PRIVATE(self)->clients,
 							client);
                 current = current->next;

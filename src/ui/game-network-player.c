@@ -23,6 +23,7 @@
 #include "game-network-player.h"
 #include "game.h"
 #include "monkey-view.h"
+#include "mini-view.h"
 #include "clock.h"
 
 
@@ -55,7 +56,7 @@ struct GameNetworkPlayerPrivate
 	Layer *paused_layer;
 
 	NetworkMessageHandler *handler;
-
+        MbMiniView * mini_views[4];
 	int monkey_id;
 
 	MbPlayerInput *input;
@@ -139,6 +140,7 @@ game_network_player_finalize (GObject * object)
 					      G_SIGNAL_MATCH_DATA, 0, 0, NULL,
 					      NULL, game);
 
+        g_print("finalized\n");
 
 	g_object_unref (PRIVATE (game)->clock);
 	g_object_unref (PRIVATE (game)->display);
@@ -218,8 +220,6 @@ game_network_player_bubble_sticked (Monkey * monkey, Bubble * b,
 	g_assert (IS_GAME_NETWORK_PLAYER (game));
 
         
-	monkey_print_board(monkey);
-
 
 	if ((monkey_get_shot_count (monkey) % 8) == 0)
 	{
@@ -319,6 +319,29 @@ recv_waiting_added (NetworkMessageHandler * handler,
 
 
 static void
+recv_bubble_array(NetworkMessageHandler * handler,
+		  guint32 monkey_id,
+		  guint8 bubble_count,
+		  Color * colors,
+                  guint32 odd,
+		  GameNetworkPlayer * game)
+{
+
+        if (PRIVATE (game)->state == GAME_PLAYING)
+                {
+	
+                        g_mutex_lock (PRIVATE (game)->lock);
+                        
+                        mb_mini_view_update(PRIVATE(game)->mini_views[monkey_id -1],
+                                            colors,odd);
+                        g_mutex_unlock (PRIVATE (game)->lock);
+
+                }
+
+}
+
+
+static void
 recv_next_range (NetworkMessageHandler * handler,
 		 int monkey_id, Color * colors, GameNetworkPlayer * game)
 {
@@ -328,7 +351,6 @@ recv_next_range (NetworkMessageHandler * handler,
 
 	g_assert (IS_GAME_NETWORK_PLAYER (game));
 
-	g_print("recieve next range\n");
 	bubbles = g_malloc (sizeof (Bubble *) * 8);
 
 	for (i = 0; i < 8; i++)
@@ -372,6 +394,7 @@ game_network_player_new (GtkWidget * window, MonkeyCanvas * canvas,
 {
 	GameNetworkPlayer *game;
 
+        int i,x,y;
 	MbInputManager *input_manager;
 	game = GAME_NETWORK_PLAYER (g_object_new
 				    (TYPE_GAME_NETWORK_PLAYER, NULL));
@@ -380,7 +403,10 @@ game_network_player_new (GtkWidget * window, MonkeyCanvas * canvas,
 	monkey_canvas_clear (canvas);
 	PRIVATE (game)->monkey = m;
 	PRIVATE (game)->display =
-		monkey_view_new (canvas, PRIVATE (game)->monkey, 0, 0, TRUE);
+		monkey_view_new (canvas, PRIVATE (game)->monkey, -175, 33,
+                                 DATADIR"/monkey-bubble/gfx/layout_network_player.svg",
+                                 TRUE,
+                                 FALSE);
 
 	PRIVATE (game)->canvas = canvas;
 	PRIVATE (game)->window = window;
@@ -394,6 +420,9 @@ game_network_player_new (GtkWidget * window, MonkeyCanvas * canvas,
 
 	g_signal_connect (G_OBJECT (handler), "recv-waiting-added",
 			  G_CALLBACK (recv_waiting_added), game);
+
+        g_signal_connect( G_OBJECT( handler), "recv-bubble-array",
+                          G_CALLBACK(recv_bubble_array),game);
 
 	g_signal_connect (G_OBJECT (handler), "recv-next-range",
 			  G_CALLBACK (recv_next_range), game);
@@ -451,6 +480,30 @@ game_network_player_new (GtkWidget * window, MonkeyCanvas * canvas,
 
 	g_signal_connect (PRIVATE (game)->input, "notify-released",
 			  GTK_SIGNAL_FUNC (released), game);
+
+
+        x=350;
+        y=30;
+        for(i = 0; i < 4; i++) {
+
+                if( i == 1) {
+                        x +=160;
+                }               
+                if( i == 2) {
+                        x -=160;
+                        y+=210;
+                }
+
+                if( i == 3) {
+                        x+=160;
+                }
+
+                PRIVATE(game)->mini_views[i]  =
+                        mb_mini_view_new( canvas,x,y);
+
+
+        }
+
 	return game;
 }
 

@@ -6,6 +6,7 @@ gfx_DATA = \
 	banana.svg \
 	layout_1_player.svg \
 	layout_2_players.svg \
+	layout_network_player.svg \
 	pane.svg pause.svg \
 	left_monkey.svg right_monkey.svg snake-body.svg \
 	harm.svg \

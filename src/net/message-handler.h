@@ -65,7 +65,8 @@ void network_message_handler_send_shoot       (NetworkMessageHandler * mmh,
 void network_message_handler_send_bubble_array( NetworkMessageHandler * mmh,
                                                guint32 monkey_id,
                                                guint8  bubbles_count,
-                                               Color * bubbles);
+                                                Color * bubbles,
+                                                guint32 odd);
 
 
 void network_message_handler_send_next_range( NetworkMessageHandler * mmh,

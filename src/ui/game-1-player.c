@@ -216,7 +216,7 @@ Game1Player * game_1_player_new(GtkWidget * window,MonkeyCanvas * canvas, int le
                                            level);
         PRIVATE(game)->display = 
                 monkey_view_new(canvas, 
-                                PRIVATE(game)->monkey,0,0,TRUE);
+                                PRIVATE(game)->monkey,0,0,DATADIR"/monkey-bubble/gfx/layout_1_player.svg",TRUE,TRUE);
   
         PRIVATE(game)->canvas = canvas;
         PRIVATE(game)->window = window;

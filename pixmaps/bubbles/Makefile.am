@@ -7,6 +7,7 @@ bubbles_DATA = \
 	bubble_05.svg \
 	bubble_06.svg \
 	bubble_07.svg \
-	bubble_08.svg 
+	bubble_08.svg \
+	little_bubble.svg
 
 EXTRA_DIST = $(bubbles_DATA)

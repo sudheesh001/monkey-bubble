@@ -81,7 +81,7 @@ struct MonkeyViewPrivate {
         Block * ready_bubble;
         AnimateBubble * waiting;
 
-
+        gboolean show_points;
         Block  * left_monkey;
         Block * right_monkey;
         Block * snake_body;
@@ -282,8 +282,11 @@ static void hurry_up(Monkey *m,MonkeyView * p) {
 
 
 MonkeyView * monkey_view_new(MonkeyCanvas * canvas,
-		       Monkey * monkey,
-		       gint x_pos,gint y_pos,gboolean back_needed) {
+                             Monkey * monkey,
+                             gint x_pos,gint y_pos,
+                             const gchar * bg_path,
+                             gboolean back_needed,
+                             gboolean show_point) {
         gdouble x,y;
         GError * error;
         Shooter * shooter;
@@ -300,7 +303,7 @@ MonkeyView * monkey_view_new(MonkeyCanvas * canvas,
         g_assert( IS_MONKEY_VIEW( monkey_view ) );
 
         g_object_ref( monkey);
-
+        PRIVATE(monkey_view)->show_points = show_point;
         PRIVATE(monkey_view)->init = TRUE;
         PRIVATE(monkey_view)->monkey = monkey;
 
@@ -335,7 +338,7 @@ MonkeyView * monkey_view_new(MonkeyCanvas * canvas,
 
                 PRIVATE(monkey_view)->background = 
                         monkey_canvas_create_block_from_image( PRIVATE(monkey_view)->canvas,
-                                                            DATADIR"/monkey-bubble/gfx/layout_1_player.svg",
+                                                               bg_path,
                                                             640,480,0,0);
       
                 monkey_canvas_add_block( PRIVATE(monkey_view)->canvas,
@@ -1227,6 +1230,8 @@ void monkey_view_set_points(MonkeyView * d,int score) {
   
     
         g_assert(IS_MONKEY_VIEW(d));
+
+        if( PRIVATE(d)->show_points) {
         monkey_view_clear_points(d);
 
 
@@ -1256,6 +1261,7 @@ void monkey_view_set_points(MonkeyView * d,int score) {
 
                 PRIVATE(d)->points_list = g_list_append( PRIVATE(d)->points_list,block);
 
+        }
         }
 
 }

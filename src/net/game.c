@@ -76,6 +76,8 @@ static void client_disconnected (NetworkClient * c, struct Client *client);
 
 static void remove_client (NetworkGame * self, struct Client *client);
 
+static void notify_observers (NetworkGame * self, struct Client *client);
+
 static void
 client_disconnected (NetworkClient * c, struct Client *client)
 {
@@ -229,15 +231,13 @@ bubble_sticked (Monkey * monkey, Bubble * b, struct Client *c)
 {
 
 
-	g_print("client %d\n", network_client_get_id( c->client));
-	monkey_print_board(monkey);
 
 	if (!monkey_is_empty (monkey))
 	{
 		add_bubble (c);
 	}
 
-	if ( (monkey_get_shot_count (monkey) % 8) == 1)
+	if ((monkey_get_shot_count (monkey) % 8) == 1)
 	{
 		add_range_to_client (c);
 	}
@@ -251,6 +251,59 @@ bubble_sticked (Monkey * monkey, Bubble * b, struct Client *c)
 
 	}
 
+	notify_observers (c->game, c);
+	monkey_print_board (monkey);
+
+}
+
+static void
+notify_observers (NetworkGame * self, struct Client *client)
+{
+
+	Bubble **bubbles;
+	Color *colors;
+	int count, i;
+	gboolean odd;
+	Board * board;
+	GList *next;
+
+	board = playground_get_board(monkey_get_playground (client->monkey));
+	bubbles =
+		board_get_array (board);
+
+	odd = board_get_odd(board);
+	count = 8 * 13;
+	colors = g_malloc (sizeof (Color) * count);
+
+	for (i = 0; i < count; i++)
+	{
+
+		if (bubbles[i] != NULL)
+		{
+			colors[i] = bubble_get_color (bubbles[i]);
+		}
+		else
+		{
+			colors[i] = NO_COLOR;
+		}
+	}
+
+	next = PRIVATE (self)->clients;
+
+	while (next != NULL)
+	{
+		struct Client *t_client;
+
+		t_client = (struct Client * ) next->data;
+		network_message_handler_send_bubble_array
+			(network_client_get_handler (t_client->client),
+			 network_client_get_id (client->client),
+			 8 * 13,
+			 colors,
+			 odd);
+
+		next = g_list_next (next);
+	}
 
 }
 
@@ -377,13 +430,13 @@ init_client (NetworkGame * self, struct Client *client,
 	board_init (playground_get_board (monkey_get_playground (m)),
 		    bubbles, count);
 
-	g_print ("network-game : send bubble array\n");
 	network_message_handler_send_bubble_array (network_client_get_handler
 						   (client->client),
 						   network_client_get_id
 						   (client->client),
 						   INIT_BUBBLES_COUNT,
-						   colors);
+						   colors,
+						   FALSE);
 
 	s = monkey_get_shooter (m);
 

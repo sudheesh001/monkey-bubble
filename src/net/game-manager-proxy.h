@@ -74,7 +74,8 @@ struct _NetGameManagerProxyClass
 typedef struct Client {
 	gchar * name;
 	gboolean ready;
-	gboolean owner;		
+	gboolean owner;
+	gint id;
 } Client;
 
 G_END_DECLS

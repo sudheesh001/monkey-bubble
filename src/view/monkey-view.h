@@ -50,7 +50,9 @@ typedef struct {
 GType monkey_view_get_type(void);
 
 MonkeyView * monkey_view_new(MonkeyCanvas * canvas,Monkey * monkey,
-		       gint x,gint y,gboolean back_needed);
+			     gint x,gint y,const gchar * path,
+			     gboolean back_needed,
+			     gboolean show_point);
 
 void monkey_view_update(MonkeyView * monkey_view,
 		     gint time );

@@ -1,3 +1,57 @@
+2004-07-01  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	add new mini view for network game
+	* pixmaps/Makefile.am:
+	* pixmaps/bubbles/Makefile.am:
+	* pixmaps/bubbles/little_bubble.svg:
+	* pixmaps/layout_network_player.svg:
+	* src/monkey/board.c: (board_finalize), (board_new),
+	(board_load_from_file), (board_get_y_min), (board_get_odd),
+	(board_get_array), (board_get_bubble_position), (board_get_cell),
+	(board_get_bubble_at), (board_get_row_count),
+	(board_get_column_count), (board_bubble_added),
+	(board_bubble_removed), (board_get_colors_count),
+	(board_stick_bubble), (board_get_fallen), (board_down),
+	(recursive_tag_fallen), (board_get_exploded),
+	(recursive_tag_exploded), (advance_quadrant),
+	(board_bubbles_count), (board_get_bubble), (board_set_bubble),
+	(board_collide_bubble), (board_init), (board_is_lost),
+	(board_print), (board_add_bubbles),
+	(board_notify_bubbles_exploded), (board_insert_bubbles),
+	(board_notify_bubble_sticked), (board_notify_bubbles_added),
+	(board_notify_down), (board_notify_bubbles_inserted),
+	(board_instance_init), (board_class_init), (board_get_type):
+	* src/monkey/board.h:
+	* src/monkey/bubble.h:
+	* src/monkey/color.h:
+	* src/net/game-manager-proxy.c: (recv_players_list):
+	* src/net/game-manager-proxy.h:
+	* src/net/game-manager.c: (send_game_list):
+	* src/net/game.c: (bubble_sticked), (notify_observers),
+	(init_client):
+	* src/net/message-handler.c: (network_message_handler_class_init),
+	(network_message_handler_send_bubble_array), (parse_bubble_array):
+	* src/net/message-handler.h:
+	* src/net/monkey-marshal.list:
+	* src/ui/game-1-player.c: (game_1_player_new):
+	* src/ui/game-2-player.c: (game_2_player_new):
+	* src/ui/game-network-player-manager.c: (start_timeout),
+	(recv_bubble_array):
+	* src/ui/game-network-player.c: (game_network_player_finalize),
+	(game_network_player_bubble_sticked), (recv_bubble_array),
+	(recv_next_range), (game_network_player_new):
+	* src/view/Makefile.am:
+	* src/view/mini-view.c: (mb_mini_view_new),
+	(mb_mini_view_instance_init), (mb_mini_view_finalize),
+	(create_bubble), (remove_colorblock), (add_colorblock),
+	(mb_mini_view_update), (mb_mini_view_class_init),
+	(mb_mini_view_get_type):
+	* src/view/mini-view.h:
+	* src/view/monkey-canvas.c: (create_pixbuf_svg):
+	* src/view/monkey-view.c: (monkey_view_new),
+	(monkey_view_set_points):
+	* src/view/monkey-view.h:
+
 2004-06-29  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	sound work but not finished ..

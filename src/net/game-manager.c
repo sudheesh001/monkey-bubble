@@ -414,6 +414,7 @@ void send_game_list(NetworkGameManager * manager) {
 			xmlNewProp(current,"owner","true");
 		}
 
+		xmlNewProp(current,"id", g_strdup_printf("%d",network_client_get_id(client)));
                 xmlNewProp(current,"ready", ( network_client_get_state(client) ? "true" : "false"));
                 text = xmlNewText(network_player_get_name(network_client_get_player(client)));
 

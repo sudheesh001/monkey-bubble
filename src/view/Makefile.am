@@ -13,4 +13,5 @@ noinst_LIBRARIES = libmonkeyview.a
 
 libmonkeyview_a_SOURCES = \
 	monkey-canvas.h monkey-canvas.c \
-	monkey-view.h monkey-view.c
+	monkey-view.h monkey-view.c \
+	mini-view.h mini-view.c

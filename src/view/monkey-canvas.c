@@ -487,7 +487,8 @@ void create_pixbuf_svg(Image * i ) {
     num_locale = NULL;
 
   if( error != NULL ) {
-    g_error("Erreur load scg");
+    
+    g_error("Erreur load svg %s \n,file : %s\n", error->message,i->path);
   }
 }
 

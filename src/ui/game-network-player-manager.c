@@ -131,6 +131,7 @@ gboolean start_timeout(gpointer data) {
 
     UiMain * ui_main =  ui_main_get_instance();
 
+    PRIVATE(manager)->playing = TRUE;
 
     if( PRIVATE(manager)->current_game != NULL) {
 	ui_main_set_game(ui_main,NULL);
@@ -139,6 +140,7 @@ gboolean start_timeout(gpointer data) {
 
     }
   
+
 
     monkey_canvas_clear( PRIVATE(manager)->canvas);
     monkey_canvas_paint( PRIVATE(manager)->canvas);
@@ -152,7 +154,6 @@ gboolean start_timeout(gpointer data) {
     ui_main_set_game(ui_main,GAME( game));
 
 
-    PRIVATE(manager)->playing = TRUE;
     monkey_canvas_paint( PRIVATE(manager)->canvas);
 
     game_start( GAME(game) );
@@ -190,9 +191,11 @@ recv_bubble_array(NetworkMessageHandler * handler,
 		  guint32 monkey_id,
 		  guint8 bubble_count,
 		  Color * colors,
+		  guint32 odd,
 		  GameNetworkPlayerManager * manager)
  {
 
+   if( !PRIVATE(manager)->playing) {
     Monkey * m;
     Bubble ** bubbles;
 
@@ -210,7 +213,7 @@ recv_bubble_array(NetworkMessageHandler * handler,
 		bubbles,bubble_count);
 
     g_free(colors);
-
+   }
 }
 
 
