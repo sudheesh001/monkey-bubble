@@ -170,27 +170,26 @@ gboolean start_timeout(gpointer data) {
   UiMain * ui_main =  ui_main_get_instance();
 
   monkey_canvas_clear( PRIVATE(manager)->canvas);
-
+  monkey_canvas_paint( PRIVATE(manager)->canvas);
+	 
   ui_main_set_game(ui_main,
-		   GAME( game = game_network_player_new( PRIVATE(manager)->window,
-							 PRIVATE(manager)->canvas,
-							 PRIVATE(manager)->monkey,
-							 PRIVATE(manager)->handler,
-							 PRIVATE(manager)->client_id))
-		   );
+						 GAME( game = game_network_player_new( PRIVATE(manager)->window,
+																			PRIVATE(manager)->canvas,
+																			PRIVATE(manager)->monkey,
+																			PRIVATE(manager)->handler,
+																			PRIVATE(manager)->client_id,
+																			PRIVATE(manager)->current_score))
+						 );
 
+  monkey_canvas_paint( PRIVATE(manager)->canvas);
 
   g_print("GameNetworkPlaeyrManager start timeout \n");
   game_start( GAME(game) );
   
-  /*  g_signal_handler_disconnect( G_OBJECT( PRIVATE(manager)->handler),
-		PRIVATE(manager)->add_bubble_handler_id);
-  */
 
   g_signal_connect( G_OBJECT(game), "state-changed",
 		    G_CALLBACK(game_network_player_manager_state_changed),manager);
   PRIVATE(manager)->current_game = game;
-  //  monkey_canvas_paint( PRIVATE(manager)->canvas);
 
   return FALSE;
 }
@@ -200,10 +199,8 @@ static void recv_add_bubble(NetworkMessageHandler * handler,
 		     Color bubble,
 		     GameNetworkPlayerManager * manager) {
 
-    g_print("recv add bubble \n");
     if( PRIVATE(manager)->current_game == NULL) {
-	g_print("and add it!\n");
-	shooter_add_bubble(monkey_get_shooter(PRIVATE(manager)->monkey),bubble_new(bubble,0,0));
+		  shooter_add_bubble(monkey_get_shooter(PRIVATE(manager)->monkey),bubble_new(bubble,0,0));
     }
   
 }
@@ -315,7 +312,6 @@ void game_network_player_manager_start(GameManager * g) {
   PRIVATE(manager)->current_level = 0;
   PRIVATE(manager)->current_score = 0;
 
-  //  game_network_player_manager_start_level(manager);
 
   g_signal_connect( G_OBJECT(PRIVATE(manager)->handler),
 						  "recv-xml-message",
@@ -342,12 +338,10 @@ void game_network_player_manager_stop(GameManager * g) {
   manager = GAME_NETWORK_PLAYER_MANAGER(g);
   game_stop( GAME(PRIVATE(manager)->current_game));
 
-  g_print("manager STOP\n");
   g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(manager)->current_game ),
                                          G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,manager);
 
   g_object_unref( PRIVATE(manager)->current_game);
   PRIVATE(manager)->current_game = NULL;
   ui_main_set_game(ui_main,NULL);
-  //  monkey_canvas_paint( PRIVATE(manager)->canvas);
 }

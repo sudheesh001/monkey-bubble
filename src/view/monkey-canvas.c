@@ -760,6 +760,4 @@ void monkey_canvas_paint(MonkeyCanvas * monkey_canvas){
     
     PRIVATE(monkey_canvas)->region = gdk_region_new();
   }
-  
-  
 }

@@ -49,6 +49,14 @@ PKG_CHECK_MODULES(LIBMONKEY_A,[
 AC_SUBST(LIBMONKEY_A_CFLAGS)
 AC_SUBST(LIBMONKEY_A_LIBS)
 
+PKG_CHECK_MODULES(LIBMBINPUT_A,[
+	gtk+-2.0
+	gthread-2.0
+	gconf-2.0
+	])
+AC_SUBST(LIBMBINPUT_A_CFLAGS)
+AC_SUBST(LIBMBINPUT_A_LIBS)
+
 PKG_CHECK_MODULES(LIBMONKEYVIEW_A,[
 	gtk+-2.0
 	gthread-2.0
@@ -141,6 +149,7 @@ AC_OUTPUT([
   sounds/Makefile
   src/Makefile
   src/util/Makefile
+  src/input/Makefile
   src/monkey/Makefile
   src/view/Makefile
   src/audio/Makefile

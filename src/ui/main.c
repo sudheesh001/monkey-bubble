@@ -9,6 +9,7 @@
 #include "playground.h"
 #include "monkey.h"
 #include "ui-main.h"
+#include "input-manager.h"
 
 #include <esd.h>
 #include <gtk/gtk.h>
@@ -60,7 +61,8 @@ int main(int  argc, char **argv)
   ui_main = ui_main_get_instance();
   
   window = ui_main_get_window(ui_main);
-  
+
+  mb_input_manager_instance_set_window(window);
   gdk_rgb_init ();
 
   gtk_widget_show_all (window);

@@ -12,6 +12,7 @@ INCLUDES = \
 	-I$(top_srcdir)/src/audio			\
 	-I$(top_srcdir)/src/util			\
 	-I$(top_srcdir)/src/net 			\
+	-I$(top_srcdir)/src/input                       \
 	-Wall -Werror
 
 
@@ -54,4 +55,5 @@ monkey_bubble_LDADD =  \
 	../view/libmonkeyview.a \
 	../util/libmonkeyutil.a \
 	../net/libmonkeynet.a \
-	../audio/libmonkeyaudio.a
+	../audio/libmonkeyaudio.a \
+	../input/libmbinput.a

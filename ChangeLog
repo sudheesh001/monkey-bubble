@@ -1,3 +1,71 @@
+2004-06-09  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	more network stuff
+
+	new input manager
+	* configure.in:
+	* src/Makefile.am:
+	* src/input/Makefile.am:
+	* src/input/input-manager.c: (mb_input_manager_new),
+	(mb_input_manager_get_left), (mb_input_manager_get_right),
+	(mb_input_manager_get_instance),
+	(mb_input_manager_instance_set_window),
+	(mb_input_manager_instance_init), (mb_input_manager_finalize),
+	(mb_input_manager_class_init), (mb_input_manager_get_type):
+	* src/input/input-manager.h:
+	* src/input/player-input.c: (mb_player_input_new),
+	(mb_player_input_instance_init), (mb_player_input_finalize),
+	(client_notified), (conf_keyboard), (key_released), (key_pressed),
+	(mb_player_input_class_init), (mb_player_input_get_type):
+	* src/input/player-input.h:
+	* src/net/game.c: (bubble_added), (bubble_sticked), (init_client),
+	(update_idle), (remove_client), (network_game_finalize):
+	* src/ui/Makefile.am:
+	* src/ui/game-1-player.c: (game_1_player_instance_init),
+	(game_1_player_finalize), (game_1_player_class_init),
+	(game_1_player_get_type), (game_1_player_bubble_sticked),
+	(game_1_player_new), (pressed), (released),
+	(game_1_player_timeout), (get_time), (time_paused),
+	(time_unpaused), (time_init), (game_1_player_start),
+	(game_1_player_stop), (game_1_player_is_lost),
+	(game_1_player_get_score), (game_1_player_pause),
+	(game_1_player_get_state), (game_1_player_game_lost),
+	(game_1_player_bubbles_exploded), (game_1_player_add_to_score),
+	(game_1_player_add_bubble), (game_1_player_bubble_shot),
+	(game_1_player_fire_changed):
+	* src/ui/game-2-player.c: (game_2_player_finalize),
+	(game_2_player_new), (pressed), (released),
+	(game_2_player_timeout), (get_time), (time_paused),
+	(time_unpaused), (time_init), (game_2_player_start),
+	(game_2_player_stop), (game_2_player_pause),
+	(game_2_player_get_state), (game_2_player_game_lost),
+	(game_2_player_bubbles_exploded), (game_2_player_add_bubble),
+	(game_2_player_bubble_shot), (game_2_player_bubble_sticked),
+	(game_2_player_get_winner), (game_2_player_fire_changed),
+	(game_2_player_instance_init), (game_2_player_class_init),
+	(game_2_player_get_type):
+	* src/ui/game-network-player-manager.c: (start_timeout),
+	(recv_add_bubble), (game_network_player_manager_start),
+	(game_network_player_manager_stop):
+	* src/ui/game-network-player.c:
+	(game_network_player_instance_init),
+	(game_network_player_finalize), (game_network_player_class_init),
+	(game_network_player_get_type),
+	(game_network_player_bubble_sticked), (add_bubble),
+	(recv_add_bubble), (recv_winlost),
+	(game_network_player_bubble_shot), (game_network_player_new),
+	(pressed), (released), (game_network_player_timeout), (get_time),
+	(time_paused), (time_unpaused), (time_init),
+	(game_network_player_start), (game_network_player_stop),
+	(game_network_player_is_lost), (game_network_player_get_score),
+	(game_network_player_pause), (game_network_player_get_state),
+	(game_network_player_game_lost),
+	(game_network_player_bubbles_exploded),
+	(game_network_player_fire_changed):
+	* src/ui/game-network-player.h:
+	* src/ui/main.c: (main):
+	* src/view/monkey-canvas.c: (monkey_canvas_paint):
+
 2004-06-08  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	nearly playable network game

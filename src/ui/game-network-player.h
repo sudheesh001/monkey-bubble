@@ -56,7 +56,8 @@ GameNetworkPlayer * game_network_player_new(GtkWidget * window,
 					    MonkeyCanvas * canvas,
 					    Monkey * m,
 					    NetworkMessageHandler * handler,
-					    int monkey_id);
+					    int monkey_id,
+                                            int score);
 
 gint game_network_player_get_score(GameNetworkPlayer * g);
 gboolean game_network_player_is_lost(GameNetworkPlayer * g);
