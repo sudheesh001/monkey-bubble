@@ -53,7 +53,7 @@ struct Game2PlayerPrivate {
         Monkey * monkey_right;
         guint timeout_id;
         GameState state;
-        Clock * clock;
+        MbClock * clock;
         int winner;
 
         MbPlayerInput * p1_input;
@@ -180,7 +180,7 @@ game_2_player_new(GtkWidget * window,MonkeyCanvas * canvas,int score_left,int sc
 
 
         monkey_canvas_clear(canvas);
-        PRIVATE(game)->clock = clock_new();
+        PRIVATE(game)->clock = mb_clock_new();
 
         PRIVATE(game)->monkey_left = monkey_new(FALSE);  
         PRIVATE(game)->monkey_right = monkey_new(FALSE);
@@ -428,27 +428,27 @@ game_2_player_timeout (gpointer data)
 static gint
 get_time(Game2Player * game) 
 {
-        return clock_get_time(PRIVATE(game)->clock);
+        return mb_clock_get_time(PRIVATE(game)->clock);
 }
 
 
 static void 
 time_paused(Game2Player * game) 
 {
-        clock_pause( PRIVATE(game)->clock,TRUE);
+        mb_clock_pause( PRIVATE(game)->clock,TRUE);
         
 }
 
 static void 
 time_unpaused(Game2Player * game) 
 {
-        clock_pause( PRIVATE(game)->clock,FALSE);
+        mb_clock_pause( PRIVATE(game)->clock,FALSE);
 }
 
 static void 
 time_init(Game2Player * game) 
 {
-        clock_start( PRIVATE(game)->clock);
+        mb_clock_start( PRIVATE(game)->clock);
 }
 
 static void 

@@ -1,3 +1,23 @@
+2004-09-27  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	update clock to add mb prefix, hope fix the compilation
+	on MacOS X
+	added ru.po made by <zcd043@sectorb.msk.ru>
+
+	* po/ru.po:
+	* src/net/game.c: (update_client), (network_game_start),
+	(network_game_instance_init):
+	* src/ui/game-1-player.c: (game_1_player_new), (get_time),
+	(time_paused), (time_unpaused), (time_init):
+	* src/ui/game-2-player.c: (game_2_player_new), (get_time),
+	(time_paused), (time_unpaused), (time_init):
+	* src/ui/game-network-player.c: (game_network_player_new),
+	(get_time), (time_paused), (time_unpaused), (time_init):
+	* src/util/clock.c: (mb_clock_instance_init), (mb_clock_finalize),
+	(mb_clock_class_init), (mb_clock_get_type), (mb_clock_new),
+	(mb_clock_start), (mb_clock_pause), (mb_clock_get_time):
+	* src/util/clock.h:
+
 2004-09-20  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
         Russian translation updated by <zcd043@sectorb.msk.ru>

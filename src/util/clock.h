@@ -24,35 +24,35 @@
 G_BEGIN_DECLS
 
 
-#define TYPE_CLOCK            (clock_get_type())
+#define TYPE_MB_CLOCK            (mb_clock_get_type())
 
-#define CLOCK(object)         (G_TYPE_CHECK_INSTANCE_CAST ((object), TYPE_CLOCK,Clock))
-#define CLOCK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), TYPE_CLOCK,ClockClass))
-#define IS_CLOCK(object)      (G_TYPE_CHECK_INSTANCE_TYPE ((object), TYPE_CLOCK))
-#define IS_CLOCK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), TYPE_CLOCK))
-#define CLOCK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), TYPE_CLOCK, ClockClass))
+#define MB_CLOCK(object)         (G_TYPE_CHECK_INSTANCE_CAST ((object), TYPE_MB_CLOCK,MbClock))
+#define MB_MB_CLOCK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), TYPE_MB_CLOCK,MbClockClass))
+#define IS_MB_CLOCK(object)      (G_TYPE_CHECK_INSTANCE_TYPE ((object), TYPE_MB_CLOCK))
+#define IS_MB_MB_CLOCK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), TYPE_MB_CLOCK))
+#define MB_MB_CLOCK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), TYPE_MB_CLOCK, MbClockClass))
 
-typedef struct ClockPrivate ClockPrivate;
+typedef struct MbClockPrivate MbClockPrivate;
 
 
 
 typedef struct {
   GObject parent_instance;
-  ClockPrivate * private;
-} Clock;
+  MbClockPrivate * private;
+} MbClock;
 
 typedef struct {
   GObjectClass parent_class;
-} ClockClass;
+} MbClockClass;
 
 
-GType clock_get_type(void);
+GType mb_clock_get_type(void);
 
-Clock * clock_new(void);
+MbClock * mb_clock_new(void);
 
-void clock_start(Clock * clock);
-void clock_pause(Clock * clock,gboolean paused);
-gint clock_get_time(Clock * clock);
+void mb_clock_start(MbClock * clock);
+void mb_clock_pause(MbClock * clock,gboolean paused);
+gint mb_clock_get_time(MbClock * clock);
 
 G_END_DECLS
 

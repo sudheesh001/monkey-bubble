@@ -40,7 +40,7 @@ struct Game1PlayerPrivate {
         Monkey * monkey;
         guint timeout_id;
         GameState state;
-        Clock * clock;
+        MbClock * clock;
     
         gboolean lost;
     
@@ -236,7 +236,7 @@ Game1Player * game_1_player_new(GtkWidget * window,MonkeyCanvas * canvas, int le
                 monkey_canvas_append_layer(canvas,0,0);
 
 
-        PRIVATE(game)->clock = clock_new();
+        PRIVATE(game)->clock = mb_clock_new();
         PRIVATE(game)->timeout_id = 
                 gtk_timeout_add (FRAME_DELAY, game_1_player_timeout, game);
   
@@ -377,20 +377,20 @@ static gint game_1_player_timeout (gpointer data)
 }
 
 static gint get_time(Game1Player * game) {
-        return clock_get_time(PRIVATE(game)->clock);
+        return mb_clock_get_time(PRIVATE(game)->clock);
 }
 
 
 static void time_paused(Game1Player * game) {
-        clock_pause( PRIVATE(game)->clock, TRUE);
+        mb_clock_pause( PRIVATE(game)->clock, TRUE);
 }
 
 static void time_unpaused(Game1Player * game) {
-        clock_pause( PRIVATE(game)->clock, FALSE);
+        mb_clock_pause( PRIVATE(game)->clock, FALSE);
 }
 
 static void time_init(Game1Player * game) {
-        clock_start( PRIVATE(game)->clock);
+        mb_clock_start( PRIVATE(game)->clock);
 }
 
 static void game_1_player_start(Game * game) {

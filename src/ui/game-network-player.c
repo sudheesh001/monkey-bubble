@@ -45,7 +45,7 @@ struct GameNetworkPlayerPrivate
 	Monkey *monkey;
 	guint timeout_id;
 	GameState state;
-	Clock *clock;
+	MbClock *clock;
 
 	GMutex *lock;
 	gboolean lost;
@@ -444,7 +444,7 @@ game_network_player_new (GtkWidget * window, MonkeyCanvas * canvas,
 
 	PRIVATE (game)->monkey_id = monkey_id;
 
-	PRIVATE (game)->clock = clock_new ();
+	PRIVATE (game)->clock = mb_clock_new ();
 	PRIVATE (game)->timeout_id =
 		gtk_timeout_add (FRAME_DELAY, game_network_player_timeout,
 				 game);
@@ -601,26 +601,26 @@ game_network_player_timeout (gpointer data)
 static gint
 get_time (GameNetworkPlayer * game)
 {
-	return clock_get_time (PRIVATE (game)->clock);
+	return mb_clock_get_time (PRIVATE (game)->clock);
 }
 
 
 static void
 time_paused (GameNetworkPlayer * game)
 {
-	clock_pause (PRIVATE (game)->clock, TRUE);
+	mb_clock_pause (PRIVATE (game)->clock, TRUE);
 }
 
 static void
 time_unpaused (GameNetworkPlayer * game)
 {
-	clock_pause (PRIVATE (game)->clock, FALSE);
+	mb_clock_pause (PRIVATE (game)->clock, FALSE);
 }
 
 static void
 time_init (GameNetworkPlayer * game)
 {
-	clock_start (PRIVATE (game)->clock);
+	mb_clock_start (PRIVATE (game)->clock);
 }
 
 static void

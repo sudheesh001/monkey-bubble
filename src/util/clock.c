@@ -23,27 +23,27 @@
 
 typedef enum
 {
-  CLOCK_STOPPED =1,
-  CLOCK_RUNNING = 2,
-  CLOCK_PAUSED = 3
-} ClockState;
+  MB_CLOCK_STOPPED =1,
+  MB_CLOCK_RUNNING = 2,
+  MB_CLOCK_PAUSED = 3
+} MbClockState;
 
 static GObjectClass* parent_class = NULL;
 
-struct ClockPrivate {
+struct MbClockPrivate {
   GTimeVal reference_time;
   GTimeVal pause_time;
-  ClockState state;
+  MbClockState state;
 };
 
 
 
-static void clock_instance_init(Clock * clock) {
-  clock->private =g_new0 (ClockPrivate, 1);			
+static void mb_clock_instance_init(MbClock * clock) {
+  clock->private =g_new0 (MbClockPrivate, 1);			
 }
 
-static void clock_finalize(GObject* object) {
-  Clock * clock = CLOCK(object);
+static void mb_clock_finalize(GObject* object) {
+  MbClock * clock = MB_CLOCK(object);
 
 
   g_free(PRIVATE(clock));
@@ -54,73 +54,73 @@ static void clock_finalize(GObject* object) {
 }
 
 
-static void clock_class_init (ClockClass *klass) {
+static void mb_clock_class_init (MbClockClass *klass) {
     GObjectClass* object_class;
     
     parent_class = g_type_class_peek_parent(klass);
     object_class = G_OBJECT_CLASS(klass);
-    object_class->finalize = clock_finalize;
+    object_class->finalize = mb_clock_finalize;
 }
 
 
-GType clock_get_type(void) {
-    static GType clock_type = 0;
+GType mb_clock_get_type(void) {
+    static GType mb_clock_type = 0;
     
-    if (!clock_type) {
-      static const GTypeInfo clock_info = {
-	sizeof(ClockClass),
+    if (!mb_clock_type) {
+      static const GTypeInfo mb_clock_info = {
+	sizeof(MbClockClass),
 	NULL,           /* base_init */
 	NULL,           /* base_finalize */
-	(GClassInitFunc) clock_class_init,
+	(GClassInitFunc) mb_clock_class_init,
 	NULL,           /* class_finalize */
 	NULL,           /* class_data */
-	sizeof(Clock),
+	sizeof(MbClock),
 	1,              /* n_preallocs */
-	(GInstanceInitFunc) clock_instance_init,
+	(GInstanceInitFunc) mb_clock_instance_init,
       };
 
 
       
-      clock_type = g_type_register_static(G_TYPE_OBJECT,
-						"Clock",
-						&clock_info, 0);
+      mb_clock_type = g_type_register_static(G_TYPE_OBJECT,
+						"MbClock",
+						&mb_clock_info, 0);
     }
     
-    return clock_type;
+    return mb_clock_type;
 }
 
 
 
-Clock * clock_new(void) {
-  Clock * clock;
+MbClock * mb_clock_new(void) {
+  MbClock * clock;
 
-  clock = CLOCK (g_object_new (TYPE_CLOCK, NULL));
+  clock = MB_CLOCK (g_object_new (TYPE_MB_CLOCK, NULL));
 
-  PRIVATE(clock)->state = CLOCK_STOPPED;
+  PRIVATE(clock)->state = MB_CLOCK_STOPPED;
   return clock;
 }
 
-void clock_start(Clock * clock) {  
+void mb_clock_start(MbClock * clock) {  
 
-  g_assert( IS_CLOCK(clock));
+  g_assert( IS_MB_CLOCK(clock));
   g_get_current_time( &(PRIVATE(clock)->reference_time) );
-  PRIVATE(clock)->state = CLOCK_RUNNING;
+  PRIVATE(clock)->state = MB_CLOCK_RUNNING;
 }
 
-void clock_pause(Clock * clock,gboolean paused) {
+void mb_clock_pause(MbClock * clock,gboolean paused) {
   GTimeVal c;
   GTimeVal p;
   GTimeVal r;
 
-  g_assert( IS_CLOCK(clock));
+  g_assert( IS_MB_CLOCK(clock));
 
   if( paused ) {
 
-		//   g_assert( ( PRIVATE(clock)->state == CLOCK_RUNNING));
-    PRIVATE(clock)->state = CLOCK_PAUSED;
+		//   g_assert( ( PRIVATE(clock)->state == MB_CLOCK_RUNNING));
+    PRIVATE(clock)->state = MB_CLOCK_PAUSED;
     g_get_current_time( &(PRIVATE(clock)->pause_time ));
   } else {
-    g_assert( PRIVATE(clock)->state == CLOCK_PAUSED);
+    g_assert( PRIVATE(clock)->state == MB_CLOCK_PAUSED);
     g_get_current_time(&c);
     
     p.tv_sec =PRIVATE(clock)->pause_time.tv_sec;
@@ -138,23 +138,23 @@ void clock_pause(Clock * clock,gboolean paused) {
     
     PRIVATE(clock)->reference_time.tv_sec = r.tv_sec;
     PRIVATE(clock)->reference_time.tv_usec = r.tv_usec;
-    PRIVATE(clock)->state = CLOCK_RUNNING;
+    PRIVATE(clock)->state = MB_CLOCK_RUNNING;
   }
 }
 
-gint clock_get_time(Clock * clock) {
+gint mb_clock_get_time(MbClock * clock) {
   GTimeVal current_time;
 
-  g_assert( IS_CLOCK(clock));
+  g_assert( IS_MB_CLOCK(clock));
   
   switch( PRIVATE(clock)->state ) {
-  case CLOCK_RUNNING : 
+  case MB_CLOCK_RUNNING : 
     g_get_current_time(&current_time);    
     return 
       ( current_time.tv_sec  - PRIVATE(clock)->reference_time.tv_sec)*1000
       + ( current_time.tv_usec - PRIVATE(clock)->reference_time.tv_usec) / 1000;
     break;
-  case CLOCK_PAUSED :
+  case MB_CLOCK_PAUSED :
     g_get_current_time(&current_time);    
     return 
       ( current_time.tv_sec  - PRIVATE(clock)->pause_time.tv_sec)*1000

@@ -60,7 +60,7 @@ struct NetworkGamePrivate
 
 	GMutex *observers_lock;
 	GMutex *lost_clients_lock;
-	Clock *clock;
+	MbClock *clock;
 };
 
 
@@ -645,7 +645,7 @@ update_client (gpointer data, gpointer user_data)
 
 
 	monkey_update (client->monkey,
-		       clock_get_time (PRIVATE (game)->clock));
+		       mb_clock_get_time (PRIVATE (game)->clock));
 
 
 	g_mutex_unlock (client->monkey_lock);
@@ -735,7 +735,7 @@ network_game_start (NetworkGame * self)
 {
 	g_list_foreach (PRIVATE (self)->clients, send_start, self);
 
-	clock_start (PRIVATE (self)->clock);
+	mb_clock_start (PRIVATE (self)->clock);
 
 	g_timeout_add_full (G_PRIORITY_DEFAULT_IDLE,
 			    10, update_idle, self, idle_stopped);
@@ -757,7 +757,7 @@ network_game_instance_init (NetworkGame * self)
 
 	PRIVATE (self)->lost_clients = NULL;
 	PRIVATE (self)->lost_clients_lock = g_mutex_new ();
-	PRIVATE (self)->clock = clock_new ();
+	PRIVATE (self)->clock = mb_clock_new ();
 }
 
 static void
