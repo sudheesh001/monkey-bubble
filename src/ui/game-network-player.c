@@ -140,8 +140,9 @@ game_network_player_finalize (GObject * object)
 					      G_SIGNAL_MATCH_DATA, 0, 0, NULL,
 					      NULL, game);
 
+#ifdef DEBUG
         g_print("finalized\n");
-
+#endif
 	g_object_unref (PRIVATE (game)->clock);
 	g_object_unref (PRIVATE (game)->display);
 
@@ -264,7 +265,9 @@ recv_winlost (NetworkMessageHandler * handler,
 
 	g_assert (IS_GAME_NETWORK_PLAYER (game));
 
+#ifdef DEBUG
 	g_print ("GameNetworkPlayer: winlost %d\n", winlost);
+#endif
 	g_mutex_lock (PRIVATE (game)->lock);
 	if (winlost == FALSE)
 	{
@@ -332,8 +335,10 @@ recv_bubble_array(NetworkMessageHandler * handler,
 	
                         g_mutex_lock (PRIVATE (game)->lock);
                         
-                        mb_mini_view_update(PRIVATE(game)->mini_views[monkey_id -1],
-                                            colors,odd);
+                        if( monkey_id >= 1 && monkey_id <= 4 ) {
+                                mb_mini_view_update(PRIVATE(game)->mini_views[monkey_id -1],
+                                                    colors,odd);
+                        }
                         g_mutex_unlock (PRIVATE (game)->lock);
 
                 }
@@ -487,15 +492,15 @@ game_network_player_new (GtkWidget * window, MonkeyCanvas * canvas,
         for(i = 0; i < 4; i++) {
 
                 if( i == 1) {
-                        x +=160;
+                        x +=155;
                 }               
                 if( i == 2) {
-                        x -=160;
+                        x -=155;
                         y+=210;
                 }
 
                 if( i == 3) {
-                        x+=160;
+                        x+=155;
                 }
 
                 PRIVATE(game)->mini_views[i]  =

@@ -47,6 +47,7 @@ struct MbMiniViewPrivate
 	Color * colors;
 	ColorBlock ** blocks;
 	Layer * layer;
+	gint last_odd;
 };
 
 
@@ -75,6 +76,7 @@ mb_mini_view_new  (MonkeyCanvas * canvas,
 	memset( PRIVATE(self)->colors,
 		NO_COLOR, sizeof(Color) * ROW_COUNT * COLUMN_COUNT);
 
+	PRIVATE(self)->last_odd = 10;
 	return self;
 }
 
@@ -131,10 +133,23 @@ static ColorBlock * create_bubble(MbMiniView * self,
         Block * block;
 	ColorBlock * cb;
 	
+        gchar path[4096];
+        gint str_length;
+
+
+        strcpy( path ,
+                DATADIR"/monkey-bubble/gfx/bubbles/little_bubble_");
+	
+        str_length = strlen(path);
+
+    
+        sprintf(path+str_length ,"0%d.svg",color+1);
+    
+
         
 	
         block = monkey_canvas_create_block_from_image(PRIVATE(self)->canvas,
-						      DATADIR"/monkey-bubble/gfx/bubbles/little_bubble.svg",
+						      path,
 						      16,16,
 						      8,8);
 
@@ -169,8 +184,8 @@ add_colorblock(MbMiniView * self,int i,int x,int y,Color c,int odd)
 {
 	ColorBlock * b;
 	gboolean add_block = TRUE;
-/*	if( PRIVATE(self)->blocks[i] != NULL) {
-
+	if( PRIVATE(self)->blocks[i] != NULL) {
+		
 		if(  PRIVATE(self)->blocks[i]->c != c) {
 			remove_colorblock(self,i);
 		} else {
@@ -178,7 +193,7 @@ add_colorblock(MbMiniView * self,int i,int x,int y,Color c,int odd)
 		}
 		
 		
-		} */
+	} 
 
 
 	if( add_block == TRUE) {
@@ -212,8 +227,10 @@ mb_mini_view_update(MbMiniView * self,
 	for(i = 0 ; i < ROW_COUNT * COLUMN_COUNT; i++) {
 	
 				if( bubbles[i] != NO_COLOR) {
-				
-					remove_colorblock(self,i);
+					
+					if( odd != PRIVATE(self)->last_odd) {
+						remove_colorblock(self,i);
+					}
 					add_colorblock(self,i,x,y,bubbles[i],(odd+y ) %2);
 				} else {
 					remove_colorblock(self,i);
@@ -226,6 +243,8 @@ mb_mini_view_update(MbMiniView * self,
 		}
 
 	}
+
+	PRIVATE(self)->last_odd = odd;
 }
 
 

@@ -41,6 +41,11 @@ typedef struct BubbleAdded {
     
 } BubbleAdded;
 
+typedef struct ExplodedBubble {
+        Block * block;
+        guint time;
+} ExplodedBubble;
+
 typedef struct AnimateBubble{
         Block * block;
         gdouble vx,vy;
@@ -64,6 +69,8 @@ struct MonkeyViewPrivate {
         Layer * snake_layer;
         Layer * star_layer;
         Layer * panel_layer;
+
+        GList * exploded_bubbles;
 
         GHashTable * hash_map;
         Block * shooter_block[SHOOTER_COUNT+1];
@@ -559,8 +566,45 @@ MonkeyView * monkey_view_new(MonkeyCanvas * canvas,
 }
 
 
+static void
+update_exploded_bubbles(MonkeyView * self,
+                        guint dtime)
+{
+        GList * next;
+
+        next = PRIVATE(self)->exploded_bubbles;
+
+        while( next != NULL) {
+                ExplodedBubble * eb;
+                
+                eb = (ExplodedBubble *) next->data;
+                if( eb->time > 100 ) {
+                        next = g_list_previous(next);
+                        PRIVATE(self)->exploded_bubbles = 
+                                g_list_remove( PRIVATE(self)->exploded_bubbles,
+                                               eb);
+                        
+                        monkey_canvas_remove_block( PRIVATE(self)->canvas,
+                                                    eb->block);
+                        
+                        monkey_canvas_unref_block( PRIVATE(self)->canvas,
+                                                   eb->block);
+
+                        g_free(eb);
+
+                } else {
+                        
+                        eb->time += dtime;
+                }
+
+
+                next = g_list_next(next);
+        }
+
+}
+
 void monkey_view_update(MonkeyView * monkey_view,
-		     gint time) {
+                        gint time) {
     
         GList * next;
         Block * block;
@@ -631,6 +675,7 @@ void monkey_view_update(MonkeyView * monkey_view,
                 next = g_list_next( next);
         }
 
+        update_exploded_bubbles(monkey_view,dtime);
         monkey_view_animate_stars(monkey_view,dtime);
         if( PRIVATE(monkey_view)->waiting != NULL) {
                 animate_waiting_bubble(monkey_view,dtime);
@@ -712,8 +757,12 @@ static void monkey_view_animate_stars(MonkeyView * d,gint time) {
         }
 }
 
-static void monkey_view_instance_init(MonkeyView * monkey_view) {
-        monkey_view->private =g_new0 (MonkeyViewPrivate, 1);			
+static void monkey_view_instance_init(MonkeyView * self)
+{
+        self->private =g_new0 (MonkeyViewPrivate, 1);			
+        
+        PRIVATE(self)->exploded_bubbles = NULL;
+
 }
 
 static void monkey_view_finalize(GObject* object) {
@@ -740,7 +789,8 @@ static void monkey_view_finalize(GObject* object) {
                              monkey_view_free_map,
                              monkey_view);
         g_hash_table_destroy(monkey_view->private->hash_map);
-  
+
+        // TODO : free exploded_bubbles;
 
 
         g_object_unref( PRIVATE(monkey_view)->monkey);
@@ -958,10 +1008,24 @@ static void monkey_view_board_down(Board * board,MonkeyView * monkey_view) {
                                board_get_y_min( board )-10);
 }
 
+static void
+add_exploded_bubble( MonkeyView * self,
+                     Block * block)
+{
+        ExplodedBubble * eb;
+
+        eb = (ExplodedBubble *)g_malloc( sizeof( ExplodedBubble));
+        eb->block = block;
+        eb->time = 0;
+
+        PRIVATE(self)->exploded_bubbles = g_list_prepend( PRIVATE(self)->exploded_bubbles,
+                                                          eb);
+}
+
 static void monkey_view_bubbles_exploded(   Board * board,
-                                         GList * exploded,
-                                         GList * fallen,
-                                         MonkeyView * monkey_view) {
+                                            GList * exploded,
+                                            GList * fallen,
+                                            MonkeyView * self) {
 
         GList * next;
         Bubble * bubble;
@@ -972,20 +1036,17 @@ static void monkey_view_bubbles_exploded(   Board * board,
 
         while( next != NULL ) {
                 bubble = next->data;
-                monkey_view_add_explode_stars(monkey_view,bubble);
+                monkey_view_add_explode_stars(self,bubble);
 
-                block = (Block *)g_hash_table_lookup( PRIVATE(monkey_view)->hash_map,
+                block = (Block *)g_hash_table_lookup( PRIVATE(self)->hash_map,
                                                       bubble );			    
-                monkey_canvas_remove_block( PRIVATE(monkey_view)->canvas,
-                                         block);
 
-                monkey_canvas_unref_block( PRIVATE(monkey_view)->canvas,
-                                        block);
-
-                g_hash_table_remove(PRIVATE(monkey_view)->hash_map,
+                g_hash_table_remove(PRIVATE(self)->hash_map,
                                     bubble);
 
-                g_signal_handlers_disconnect_matched( G_OBJECT(bubble),G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,monkey_view);
+
+                add_exploded_bubble(self,block);
+                g_signal_handlers_disconnect_matched( G_OBJECT(bubble),G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,self);
                 next = g_list_next(next);
         }
 
@@ -993,19 +1054,19 @@ static void monkey_view_bubbles_exploded(   Board * board,
         next = fallen;
         while( next != NULL ) {
                 bubble = next->data;
-                PRIVATE(monkey_view)->fallen_list = 
-                        g_list_append(     PRIVATE(monkey_view)->fallen_list,
-                                           (Block *)g_hash_table_lookup( PRIVATE(monkey_view)->hash_map,
+                PRIVATE(self)->fallen_list = 
+                        g_list_append(     PRIVATE(self)->fallen_list,
+                                           (Block *)g_hash_table_lookup( PRIVATE(self)->hash_map,
                                                                          bubble )
 
                                            );
 
 
-                g_hash_table_remove(PRIVATE(monkey_view)->hash_map,
+                g_hash_table_remove(PRIVATE(self)->hash_map,
                                     bubble);
 
 
-                g_signal_handlers_disconnect_matched( G_OBJECT(bubble),G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,monkey_view);
+                g_signal_handlers_disconnect_matched( G_OBJECT(bubble),G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,self);
                 next = g_list_next(next);
         }
 }

@@ -495,7 +495,7 @@ client_request_start(NetworkClient * client,
 	g_mutex_lock( PRIVATE(manager)->started_lock);
 	g_mutex_lock( PRIVATE(manager)->clients_lock);
 
-	if( PRIVATE(manager)->started == FALSE && g_list_length( PRIVATE(manager)->clients) >= 1
+	if( PRIVATE(manager)->started == FALSE && g_list_length( PRIVATE(manager)->clients) > 1
 	    && PRIVATE(manager)->owner == client) {
 		start_game(manager);
 	}

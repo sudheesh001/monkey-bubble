@@ -284,7 +284,8 @@ static UiMain* ui_main_new(void) {
                                       PRIVATE(ui_main)->sm,
                                       DATADIR"/monkey-bubble/sounds/splash.ogg");
 
-        //  gtk_window_set_icon_from_file(GTK_WINDOW (PRIVATE(ui_main)->window),DATADIR"/pixmap/monkey-bubble-icon.xpm",NULL);
+        gtk_window_set_icon_from_file(GTK_WINDOW (PRIVATE(ui_main)->window),
+                                      DATADIR"/monkey-bubble/gfx/monkey-bubble-icon.xpm",NULL);
         return ui_main;
 }
 

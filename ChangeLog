@@ -1,3 +1,38 @@
+2004-07-06  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	show other players bubbles color
+
+	add DEBUG to enable debug message
+
+	fix the network game background image
+	
+	* pixmaps/bubbles/Makefile.am:
+	* pixmaps/bubbles/little_bubble.svg:
+	* pixmaps/bubbles/little_bubble_01.svg:
+	* pixmaps/bubbles/little_bubble_02.svg:
+	* pixmaps/bubbles/little_bubble_03.svg:
+	* pixmaps/bubbles/little_bubble_04.svg:
+	* pixmaps/bubbles/little_bubble_05.svg:
+	* pixmaps/bubbles/little_bubble_06.svg:
+	* pixmaps/bubbles/little_bubble_07.svg:
+	* pixmaps/bubbles/little_bubble_08.svg:
+	* pixmaps/layout_network_player.svg:
+	* src/net/game-manager.c: (client_request_start):
+	* src/net/game.c: (bubble_sticked), (game_lost), (send_start):
+	* src/net/message-handler.c: (network_message_handler_connect),
+	(handler_loop), (network_message_handler_disconnect),
+	(parse_waiting_added):
+	* src/ui/game-network-player-manager.c: (recv_bubble_array):
+	* src/ui/game-network-player.c: (game_network_player_finalize),
+	(recv_winlost), (recv_bubble_array), (game_network_player_new):
+	* src/ui/ui-main.c: (ui_main_new):
+	* src/view/mini-view.c: (mb_mini_view_new), (create_bubble),
+	(add_colorblock), (mb_mini_view_update):
+	* src/view/monkey-view.c: (update_exploded_bubbles),
+	(monkey_view_update), (monkey_view_instance_init),
+	(monkey_view_finalize), (add_exploded_bubble),
+	(monkey_view_bubbles_exploded):
+
 2004-07-05  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	a network fix

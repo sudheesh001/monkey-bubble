@@ -252,8 +252,9 @@ bubble_sticked (Monkey * monkey, Bubble * b, struct Client *c)
 	}
 
 	notify_observers (c->game, c);
+#ifdef DEBUG
 	monkey_print_board (monkey);
-
+#endif
 }
 
 static void
@@ -384,9 +385,10 @@ game_lost (Monkey * m, struct Client *c)
 	NetworkGame *game;
 
 	game = c->game;
+#ifdef DEBUG
 	g_print ("network-game : lost ,player id %d\n",
 		 network_client_get_id (c->client));
-
+#endif
 	g_mutex_lock (PRIVATE (game)->lost_clients_lock);
 
 	network_message_handler_send_winlost (network_client_get_handler
@@ -572,7 +574,9 @@ send_start (gpointer data, gpointer user_data)
 	client->playing = TRUE;
 	network_message_handler_send_start (network_client_get_handler
 					    (client->client));
+#ifdef DEBUG
 	g_print ("network-game : send_start\n");
+#endif
 }
 
 

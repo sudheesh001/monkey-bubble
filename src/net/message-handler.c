@@ -121,7 +121,9 @@ network_message_handler_connect (NetworkMessageHandler * handler,
 	struct sockaddr_in sock_client;
 	struct hostent *src_host;
 
+#ifdef DEBUG
 	g_print ("network-message-handler : connect sever \n");
+#endif
 	sock = socket (AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
 
@@ -477,7 +479,9 @@ handler_loop (NetworkMessageHandler * mmh)
 		memset (message, 0, CHUNK_SIZE);
 		if (read_chunk (mmh, message))
 		{
-			g_print ("\nrecieve message %d\n", message[0]);
+#ifdef DEBUG
+			g_debug ("\nrecieve message %d\n", message[0]);
+#endif
 			parse_message (mmh, message);
 		}
 		// handle the message
@@ -496,7 +500,9 @@ network_message_handler_disconnect (NetworkMessageHandler * mmh)
 {
 	g_assert (IS_NETWORK_MESSAGE_HANDLER (mmh));
 
+#ifdef DEBUG
 	g_print ("call close ...\n");
+#endif
 	shutdown (PRIVATE (mmh)->sock, 2);
 	close (PRIVATE (mmh)->sock);
 
@@ -790,7 +796,9 @@ parse_waiting_added (NetworkMessageHandler * mmh, guint8 * message)
 
 	}
 
+#ifdef DEBUG
 	g_print ("waiting added %d\n", bubble_count);
+#endif
 	g_signal_emit (G_OBJECT (mmh), signals[RECV_WAITING_ADDED], 0,
 		       monkey_id, bubble_count, bubbles, columns);
 

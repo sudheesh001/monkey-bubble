@@ -196,23 +196,23 @@ recv_bubble_array(NetworkMessageHandler * handler,
  {
 
    if( !PRIVATE(manager)->playing) {
-    Monkey * m;
-    Bubble ** bubbles;
-
-    int i;
-    g_print("game-network-player-manager : recv bubble array %d,%d\n",monkey_id,bubble_count);
-  
-    m = PRIVATE(manager)->monkey;
-    bubbles = g_malloc(bubble_count*( sizeof(Bubble *)));
-  
-    for(i = 0 ; i < bubble_count; i++) {
-	bubbles[i] = bubble_new(colors[i],0,0);
-    }
-
-    board_init( playground_get_board( monkey_get_playground( m )),
-		bubbles,bubble_count);
-
-    g_free(colors);
+		 Monkey * m;
+		 Bubble ** bubbles;
+		 
+		 int i;
+		 g_print("game-network-player-manager : recv bubble array %d,%d\n",monkey_id,bubble_count);
+		 
+		 m = PRIVATE(manager)->monkey;
+		 bubbles = g_malloc(bubble_count*( sizeof(Bubble *)));
+		 
+		 for(i = 0 ; i < bubble_count; i++) {
+			  bubbles[i] = bubble_new(colors[i],0,0);
+		 }
+	 
+		 board_init( playground_get_board( monkey_get_playground( m )),
+						 bubbles,bubble_count);
+		 
+		 g_free(colors);
    }
 }
 
