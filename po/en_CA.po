@@ -2,15 +2,14 @@
 # Copyright (C) 2004 Adam Weinberger and the GNOME Foundation
 # This file is distributed under the same license as the monkey-bubble package.
 # Adam Weinberger <adamw@gnome.org>, 2004.
-# , fuzzy
 # 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: monkey-bubble\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-08 18:38-0400\n"
-"PO-Revision-Date: 2004-04-08 18:51-0400\n"
+"POT-Creation-Date: 2004-06-25 17:14-0400\n"
+"PO-Revision-Date: 2004-06-25 17:15-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,50 +25,70 @@ msgid "_Shortcut Keys:"
 msgstr "_Shortcut Keys:"
 
 #: data/monkey-bubble.glade.h:1
+msgid ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Can't create server !\n"
+"</span>\n"
+"</markup>"
+msgstr ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Can't create server !\n"
+"</span>\n"
+"</markup>"
+
+#: data/monkey-bubble.glade.h:7
 msgid "Create network game"
 msgstr "Create network game"
 
-#: data/monkey-bubble.glade.h:2
+#: data/monkey-bubble.glade.h:8
 msgid "Join _network game"
 msgstr "Join _network game"
 
-#: data/monkey-bubble.glade.h:3 monkey-bubble.desktop.in.h:1
+#: data/monkey-bubble.glade.h:9 monkey-bubble.desktop.in.h:1
 msgid "Monkey Bubble"
 msgstr "Monkey Bubble"
 
-#: data/monkey-bubble.glade.h:4
+#: data/monkey-bubble.glade.h:10
 msgid "New 1 player"
 msgstr "New 1 player"
 
-#: data/monkey-bubble.glade.h:5
+#: data/monkey-bubble.glade.h:11
 msgid "New 2 players"
 msgstr "New 2 players"
 
-#: data/monkey-bubble.glade.h:6 src/ui/ui-main.c:391 src/ui/ui-main.c:521
+#: data/monkey-bubble.glade.h:12 src/ui/ui-main.c:402 src/ui/ui-main.c:534
 msgid "Pause game"
 msgstr "Pause game"
 
-#: data/monkey-bubble.glade.h:7 src/ui/keyboard-properties.c:85
+#: data/monkey-bubble.glade.h:13 src/ui/keyboard-properties.c:85
 msgid "Stop game"
 msgstr "Stop game"
 
-#: data/monkey-bubble.glade.h:8
+#: data/monkey-bubble.glade.h:14
+msgid "Warning"
+msgstr "Warning"
+
+#: data/monkey-bubble.glade.h:15
 msgid "_About"
 msgstr "_About"
 
-#: data/monkey-bubble.glade.h:9
+#: data/monkey-bubble.glade.h:16
 msgid "_Contents"
 msgstr "_Contents"
 
-#: data/monkey-bubble.glade.h:10
+#: data/monkey-bubble.glade.h:17
 msgid "_Game"
 msgstr "_Game"
 
-#: data/monkey-bubble.glade.h:11
+#: data/monkey-bubble.glade.h:18
 msgid "_Help"
 msgstr "_Help"
 
-#: data/monkey-bubble.glade.h:12
+#: data/monkey-bubble.glade.h:19
 msgid "_Settings"
 msgstr "_Settings"
 
@@ -162,20 +181,20 @@ msgid "Network game"
 msgstr "Network game"
 
 #: data/netgame.glade.h:3
-msgid "Players"
-msgstr "Players"
+msgid "Number of games :"
+msgstr "Number of games :"
 
-#: data/netgame.glade.h:4 src/ui/keyboard-properties.c:87
+#: data/netgame.glade.h:4
+msgid "Number of players :"
+msgstr "Number of players :"
+
+#: data/netgame.glade.h:5 src/ui/keyboard-properties.c:87
 msgid "Quit game"
 msgstr "Quit game"
 
-#: data/netgame.glade.h:5
+#: data/netgame.glade.h:6
 msgid "Ready"
 msgstr "Ready"
-
-#: data/netgame.glade.h:6
-msgid "Start Game"
-msgstr "Start Game"
 
 #: data/netgame.glade.h:7
 msgid "_Go"
@@ -343,15 +362,15 @@ msgstr "_Action"
 msgid "Shortcut _Key"
 msgstr "Shortcut _Key"
 
-#: src/ui/ui-main.c:514
+#: src/ui/ui-main.c:527
 msgid "Resume game"
 msgstr "Resume game"
 
-#: src/ui/ui-main.c:568
+#: src/ui/ui-main.c:611
 msgid "translator_credits"
 msgstr "Adam Weinberger <adamw@FreeBSD.org>"
 
-#: src/ui/ui-main.c:597
+#: src/ui/ui-main.c:640
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "There was an error displaying help: %s"
