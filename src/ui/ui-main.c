@@ -45,8 +45,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "network-game-launcher.h"
-#include "network-server-launcher.h"
+#include "ui-network-client.h"
+#include "ui-network-server.h"
+#include "simple-server.h"
 
 #define PRIVATE(main) (main->private)
 
@@ -173,7 +174,7 @@ static UiMain* ui_main_new(void) {
     
 
         PRIVATE(ui_main)->glade_xml = glade_xml_new(DATADIR"/monkey-bubble/glade/monkey-bubble.glade","main_window",NULL);
-
+        
         PRIVATE(ui_main)->window = glade_xml_get_widget( PRIVATE(ui_main)->glade_xml, "main_window");
 
         vbox = glade_xml_get_widget( PRIVATE(ui_main)->glade_xml,"main_vbox");
@@ -541,18 +542,39 @@ void ui_main_game_changed(Game * game,
 static void new_network_game(gpointer    callback_data,
                              guint       callback_action,
                              GtkWidget  *widget) {
-        NetworkGameLauncher  * ngl;
+        UiNetworkClient  * ngl;
 
-        ngl = network_game_launcher_new();
+        ngl = ui_network_client_new();
 }
 
 
 static void new_network_server(gpointer    callback_data,
                                guint       callback_action,
                                GtkWidget  *widget) {
-        NetworkServerLauncher  * ngl;
+        UiNetworkServer  * ngl;
+        NetworkSimpleServer * server;
+        UiMain * ui_main;
 
-        ngl = network_server_launcher_new();
+        ui_main = UI_MAIN(callback_data);
+        server = network_simple_server_new();
+
+        if( network_simple_server_start( server ) == TRUE) {
+        
+                ngl = ui_network_server_new(server);
+        
+        } else {
+                GladeXML * gx;
+
+                g_object_unref(server);
+                gx = glade_xml_new(DATADIR"/monkey-bubble/glade/monkey-bubble.glade",
+                                   "create_server_warning",
+                                   NULL);
+                glade_xml_signal_autoconnect(gx);
+                gtk_widget_show( glade_xml_get_widget(gx,"create_server_warning"));
+                g_object_unref(gx);
+        }
+
+        
 }
 
 static void show_preferences_dialog(gpointer    callback_data,

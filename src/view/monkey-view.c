@@ -75,9 +75,13 @@ struct MonkeyViewPrivate {
         
         Block * hurry_up_block;
         gboolean hurry_up_flag;
-        Block * waiting_bubble;
 
+        // shooter bubbles ..
+        Block * waiting_bubble;
+        Block * ready_bubble;
         AnimateBubble * waiting;
+
+
         Block  * left_monkey;
         Block * right_monkey;
         Block * snake_body;
@@ -833,12 +837,13 @@ static void monkey_view_shooter_bubble_added(Shooter * s,
 					  MonkeyView * d) {
         gdouble x,y;
         Block * block;
+        AnimateBubble * ab;
+
         g_assert(IS_MONKEY_VIEW(d) );
 
 
         bubble_get_position(b,&x,&y);
-                AnimateBubble * ab;
-
+        
         block = monkey_view_create_bubble(d,b);
         monkey_canvas_add_block(PRIVATE(d)->canvas,
                              PRIVATE(d)->bubble_layer , 
@@ -847,7 +852,7 @@ static void monkey_view_shooter_bubble_added(Shooter * s,
 
 
 
-
+        
                 ab = (AnimateBubble *) g_malloc( sizeof(AnimateBubble));
                 
                 ab->bubble = shooter_get_current_bubble(s);

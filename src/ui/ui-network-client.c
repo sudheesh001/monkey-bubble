@@ -35,14 +35,14 @@
 
 #include "message-handler.h"
 
-#include "network-game-launcher.h"
+#include "ui-network-client.h"
 #include "game-network-player-manager.h"
 #include "ui-main.h"
 #include "game-manager-proxy.h"
 
 
 
-struct NetworkGameLauncherPrivate {
+struct UiNetworkClientPrivate {
         GladeXML * glade_xml;
         GtkWidget * window;
         gchar * server_name;
@@ -57,53 +57,58 @@ struct NetworkGameLauncherPrivate {
 
 
 
-#define PRIVATE( NetworkGameLauncher ) (NetworkGameLauncher->private)
+#define PRIVATE( UiNetworkClient ) (UiNetworkClient->private)
 
 static GObjectClass* parent_class = NULL;
 
-void network_game_launcher_finalize(GObject *);
+void ui_network_client_finalize(GObject *);
 
 
-static void start_game(NetworkGameLauncher * launcher);
+static void start_game(UiNetworkClient * self);
 
 static void connect_server_signal(gpointer    callback_data,
                            guint       callback_action,
                            GtkWidget  *widget);
 
 
-static void quit_server_signal(gpointer    callback_data,
+static gboolean quit_server_signal(gpointer    callback_data,
                            guint       callback_action,
                            GtkWidget  *widget);
+static gboolean quit_signal(gpointer    callback_data,
+                           guint       callback_action,
+                           GtkWidget  *widget);
+
+
 
 static void ready_signal(gpointer    callback_data,
                          guint       callback_action,
                          GtkWidget  *widget);
 
 
-static gboolean connect_server(NetworkGameLauncher * launcher);
+static gboolean connect_server(UiNetworkClient * self);
 
-static void set_status_message(NetworkGameLauncher * launcher,
+static void set_status_message(UiNetworkClient * self,
                                const gchar * message);
 
 static void set_sensitive(GtkWidget * w,
                           gboolean s);
 
-static void update_players_list(NetworkGameLauncher * launcher);
+static void update_players_list(UiNetworkClient * self);
 
 void recv_network_xml_message(NetworkMessageHandler * mmh,
                               guint32 client_id,
                               xmlDoc * message,
                               gpointer * p);
 
-NetworkGameLauncher *network_game_launcher_new() {
-        NetworkGameLauncher * ngl;
+UiNetworkClient *ui_network_client_new() {
+        UiNetworkClient * ngl;
         GtkWidget * item;
 
         GtkTreeViewColumn * column;
         GtkListStore * list;
 
         ngl = 
-                NETWORK_GAME_LAUNCHER(g_object_new(TYPE_NETWORK_GAME_LAUNCHER
+                UI_NETWORK_CLIENT(g_object_new(TYPE_UI_NETWORK_CLIENT
                                                     , NULL));
 
         PRIVATE(ngl)->server_name = NULL;
@@ -121,6 +126,9 @@ NetworkGameLauncher *network_game_launcher_new() {
 
         item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "quit_button");
         g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(quit_server_signal),ngl);
+
+        item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "network_window");
+        g_signal_connect_swapped( item,"delete_event",GTK_SIGNAL_FUNC(quit_signal),ngl);
 
 
         item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "ready_button");
@@ -167,20 +175,20 @@ NetworkGameLauncher *network_game_launcher_new() {
 
 
 struct StatusJob {
-        NetworkGameLauncher * launcher;
+        UiNetworkClient * self;
         gchar * message;
 } StatusJob;
 
 
 gboolean status_idle(gpointer data) {
         struct StatusJob * j;
-        NetworkGameLauncher  * launcher;
+        UiNetworkClient  * self;
         
         j = (struct StatusJob *) data;
         
-        launcher = j->launcher;
+        self = j->self;
         
-        gtk_label_set_label(PRIVATE(launcher)->connection_label,
+        gtk_label_set_label(PRIVATE(self)->connection_label,
                             j->message);
         
         g_free(j->message);
@@ -190,12 +198,12 @@ gboolean status_idle(gpointer data) {
 
 
 
-static void set_status_message(NetworkGameLauncher * launcher,
+static void set_status_message(UiNetworkClient * self,
                                const gchar * message) {
 
         struct StatusJob * j;
         j = (struct StatusJob *)g_malloc( sizeof(StatusJob));
-        j->launcher = launcher;
+        j->self = self;
         j->message = g_strdup(message);
         g_idle_add(status_idle,j);
 }
@@ -203,34 +211,34 @@ static void set_status_message(NetworkGameLauncher * launcher,
 static void connect_server_signal(gpointer    callback_data,
                            guint       callback_action,
                            GtkWidget  *widget) {
-        NetworkGameLauncher  * launcher;
+        UiNetworkClient  * self;
         GtkWidget * entry;
 
-        launcher = NETWORK_GAME_LAUNCHER(callback_data);
+        self = UI_NETWORK_CLIENT(callback_data);
 
-        entry =  glade_xml_get_widget( PRIVATE(launcher)->glade_xml, "server_name_entry");
-        if( PRIVATE(launcher)->server_name != NULL) {
-                g_free(PRIVATE(launcher)->server_name);
+        entry =  glade_xml_get_widget( PRIVATE(self)->glade_xml, "server_name_entry");
+        if( PRIVATE(self)->server_name != NULL) {
+                g_free(PRIVATE(self)->server_name);
         }
 
-        PRIVATE(launcher)->server_name = 
+        PRIVATE(self)->server_name = 
                 g_strdup( gtk_entry_get_text(GTK_ENTRY(entry)));
 
         
-        set_status_message(launcher,  g_strdup_printf("Connecting %s ...",
-                                                 PRIVATE(launcher)->server_name));
+        set_status_message(self,  g_strdup_printf("Connecting %s ...",
+                                                 PRIVATE(self)->server_name));
 
 
-        set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
+        set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
                                              , "connect_hbox"),FALSE);        
-        if( connect_server(launcher) ) {
+        if( connect_server(self) ) {
 
         } else {
-                set_status_message(launcher,  g_strdup_printf("Can't connect to %s ...",
-                                                              PRIVATE(launcher)->server_name));
+                set_status_message(self,  g_strdup_printf("Can't connect to %s ...",
+                                                              PRIVATE(self)->server_name));
 
 
-                set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
+                set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
                                                      , "connect_hbox"),TRUE);        
 
         }
@@ -239,7 +247,7 @@ static void connect_server_signal(gpointer    callback_data,
 
 
 
-static void send_disconnect(NetworkGameLauncher * launcher) {
+static void send_disconnect(UiNetworkClient * self) {
         xmlDoc * doc;
         xmlNode * root;
         
@@ -250,62 +258,101 @@ static void send_disconnect(NetworkGameLauncher * launcher) {
         
         xmlNewProp(root,"name","disconnect");
         
-        network_message_handler_send_xml_message(PRIVATE(launcher)->handler,
-                                                PRIVATE(launcher)->client_id,
+        network_message_handler_send_xml_message(PRIVATE(self)->handler,
+                                                PRIVATE(self)->client_id,
                                                 doc);
 
         xmlFreeDoc(doc);
 
 }
 
-static void disconnected(NetworkGameLauncher * launcher) {
-
-        g_object_unref( PRIVATE(launcher)->manager_proxy);
+static void disconnected(UiNetworkClient * self) {
+        g_object_unref( PRIVATE(self)->manager_proxy);
         
-        PRIVATE(launcher)->manager_proxy = NULL;
+        PRIVATE(self)->manager_proxy = NULL;
                 
-        update_players_list(launcher);
-        set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
+        update_players_list(self);
+        set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
                                              , "connected_game_hbox"),FALSE);
         
-        set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
+        set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
                                              , "connect_hbox"),TRUE);
-
-        set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
-                                             ,"connected_game_hbox"),TRUE); 
                                 
 }
 
-static void quit_server_signal(gpointer    callback_data,
+
+
+static gboolean quit_signal(gpointer    callback_data,
                            guint       callback_action,
                                GtkWidget  *widget) {
 
-        NetworkGameLauncher * launcher;
+        UiNetworkClient * self;
 
-        launcher = NETWORK_GAME_LAUNCHER(callback_data);
+        self = UI_NETWORK_CLIENT(callback_data);
 
+        if( PRIVATE(self)->manager_proxy != NULL) {
+                g_object_unref( PRIVATE(self)->manager_proxy);
         
-        update_players_list(launcher);
+                PRIVATE(self)->manager_proxy = NULL;
+        }
+        
 
-        if( PRIVATE(launcher)->handler != NULL) {
-                send_disconnect(launcher);
+ 
+        if( PRIVATE(self)->handler != NULL) {
+                send_disconnect(self);
                 
-                network_message_handler_disconnect(PRIVATE(launcher)->handler);
+                network_message_handler_disconnect(PRIVATE(self)->handler);
         
                 
-                g_object_unref( PRIVATE(launcher)->handler);
-                PRIVATE(launcher)->handler = NULL;
+                g_object_unref( PRIVATE(self)->handler);
+                PRIVATE(self)->handler = NULL;
                 
         }
 
+
+
         
-        set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
-                                             , "connect_hbox"),TRUE); 
-                        
-        set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
-                                             , "connect_hbox"),TRUE); 
-                        
+        return FALSE;
+}
+
+
+static gboolean quit_server_signal(gpointer    callback_data,
+                           guint       callback_action,
+                               GtkWidget  *widget) {
+
+        UiNetworkClient * self;
+
+        self = UI_NETWORK_CLIENT(callback_data);
+
+        if( PRIVATE(self)->manager_proxy != NULL) {
+                g_object_unref( PRIVATE(self)->manager_proxy);
         
+                PRIVATE(self)->manager_proxy = NULL;
+        }
+        
+
+        if( PRIVATE(self)->handler != NULL) {
+                send_disconnect(self);
+                
+                network_message_handler_disconnect(PRIVATE(self)->handler);
+        
+                
+                g_object_unref( PRIVATE(self)->handler);
+                PRIVATE(self)->handler = NULL;
+                
+        }
+        
+
+        update_players_list(self);
+        
+        set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
+                                             , "connect_hbox"),TRUE); 
+
+        set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
+                                             , "connected_game_hbox"),FALSE); 
+
+        
+        return FALSE;
 }
 
 
@@ -315,28 +362,28 @@ static void ready_signal(gpointer    callback_data,
                          GtkWidget  *widget) {
 
 
-        NetworkGameLauncher * launcher;
+        UiNetworkClient * self;
         GtkWidget * item;
 
-        launcher = NETWORK_GAME_LAUNCHER(callback_data);
+        self = UI_NETWORK_CLIENT(callback_data);
 
-        item = glade_xml_get_widget( PRIVATE(launcher)->glade_xml, "ready_button");
+        item = glade_xml_get_widget( PRIVATE(self)->glade_xml, "ready_button");
 
-        if( ! PRIVATE(launcher)->ready ) {
-                net_game_manager_proxy_send_ready_state(PRIVATE(launcher)->manager_proxy,
+        if( ! PRIVATE(self)->ready ) {
+                net_game_manager_proxy_send_ready_state(PRIVATE(self)->manager_proxy,
                                                         TRUE);
-                PRIVATE(launcher)->ready = TRUE;
+                PRIVATE(self)->ready = TRUE;
         } else {
 
-                net_game_manager_proxy_send_ready_state(PRIVATE(launcher)->manager_proxy,
+                net_game_manager_proxy_send_ready_state(PRIVATE(self)->manager_proxy,
                                                         FALSE);
                 
-                PRIVATE(launcher)->ready = FALSE;
+                PRIVATE(self)->ready = FALSE;
                 
         }
 }
 
-void send_init(NetworkGameLauncher * launcher) {
+void send_init(UiNetworkClient * self) {
         xmlDoc * doc;
         xmlNode * current, * root;
         xmlNode * text;
@@ -356,8 +403,8 @@ void send_init(NetworkGameLauncher * launcher) {
         xmlAddChild(current,text);
         xmlAddChild(root,current);
 
-        network_message_handler_send_xml_message(PRIVATE(launcher)->handler,
-                                                PRIVATE(launcher)->client_id,
+        network_message_handler_send_xml_message(PRIVATE(self)->handler,
+                                                PRIVATE(self)->client_id,
                                                 doc);
 
         xmlFreeDoc(doc);
@@ -371,15 +418,15 @@ void send_init(NetworkGameLauncher * launcher) {
 
 static gboolean update_players_list_idle(gpointer data) {
 
-        NetworkGameLauncher * launcher;
+        UiNetworkClient * self;
 
         GList * next;
 
-        launcher = NETWORK_GAME_LAUNCHER(data);
-        gtk_list_store_clear( PRIVATE( launcher)->players_list);
+        self = UI_NETWORK_CLIENT(data);
+        gtk_list_store_clear( PRIVATE( self)->players_list);
         
-        if( PRIVATE(launcher)->manager_proxy != NULL) {
-                next = net_game_manager_proxy_get_players( PRIVATE(launcher)->manager_proxy);
+        if( PRIVATE(self)->manager_proxy != NULL) {
+                next = net_game_manager_proxy_get_players( PRIVATE(self)->manager_proxy);
 
                 
                 while(next != NULL) {
@@ -389,7 +436,7 @@ static gboolean update_players_list_idle(gpointer data) {
                         client = (Client *)next->data;
 
                         
-                        tree =  PRIVATE(launcher)->players_list;
+                        tree =  PRIVATE(self)->players_list;
                         
                         gtk_list_store_append (tree, &iter);
                         gtk_list_store_set (tree, &iter,
@@ -406,55 +453,55 @@ static gboolean update_players_list_idle(gpointer data) {
 
 }
 
-static void update_players_list(NetworkGameLauncher * launcher) {
-        g_idle_add(update_players_list_idle,(gpointer)launcher);
+static void update_players_list(UiNetworkClient * self) {
+        g_idle_add(update_players_list_idle,(gpointer)self);
         
 }
 
 gboolean start_game_idle(gpointer data) {
-        NetworkGameLauncher * launcher;
+        UiNetworkClient * self;
 
-        launcher = NETWORK_GAME_LAUNCHER(data);
+        self = UI_NETWORK_CLIENT(data);
 
 
         g_print("network-game-laucnehr destroy widget\n");
-        gtk_widget_destroy( PRIVATE(launcher)->window);
+        gtk_widget_destroy( PRIVATE(self)->window);
 
-        g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(launcher)->handler ),
-                                               G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,launcher);
+        g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(self)->handler ),
+                                               G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,self);
               
 
                       
 
-        g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(launcher)->manager_proxy ),
-                                               G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,launcher);
+        g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(self)->manager_proxy ),
+                                               G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,self);
                       
 
                       
-        g_print("Network-game-launcher : game started\n");
+        g_print("Network-game-self : game started\n");
 
         return FALSE;
 }
 
-void start_game(NetworkGameLauncher * launcher) {
-        g_idle_add(start_game_idle,launcher);
+void start_game(UiNetworkClient * self) {
+        g_idle_add(start_game_idle,self);
         
 }
 
 
 static void 
 players_list_updated(NetGameManagerProxy * proxy,
-                     NetworkGameLauncher * launcher) 
+                     UiNetworkClient * self) 
 {
 
-        update_players_list(launcher);
+        update_players_list(self);
 }
 
 static void 
 game_created(NetGameManagerProxy * proxy,
-             NetworkGameLauncher * launcher) 
+             UiNetworkClient * self) 
 {
-        start_game(launcher);
+        start_game(self);
 }
 
 
@@ -462,28 +509,28 @@ game_created(NetGameManagerProxy * proxy,
 static gboolean
 update_number_of_players_idle(gpointer data) 
 {
-        NetworkGameLauncher * launcher;
+        UiNetworkClient * self;
         GtkWidget * item;
 
-        launcher = NETWORK_GAME_LAUNCHER(data);
-        item = glade_xml_get_widget( PRIVATE(launcher)->glade_xml, "number_of_players");
-        gtk_label_set_label(GTK_LABEL(item),g_strdup_printf("%d", net_game_manager_proxy_get_number_of_players(PRIVATE(launcher)->manager_proxy)));
+        self = UI_NETWORK_CLIENT(data);
+        item = glade_xml_get_widget( PRIVATE(self)->glade_xml, "number_of_players");
+        gtk_label_set_label(GTK_LABEL(item),g_strdup_printf("%d", net_game_manager_proxy_get_number_of_players(PRIVATE(self)->manager_proxy)));
 
         return FALSE;
 }
 
 static void
-update_number_of_players(NetworkGameLauncher * launcher)
+update_number_of_players(UiNetworkClient * self)
 {
-        g_idle_add(update_number_of_players_idle,launcher);
+        g_idle_add(update_number_of_players_idle,self);
         
 }
 
 static void 
 number_of_players_changed(NetGameManagerProxy * proxy,
-                              NetworkGameLauncher * launcher) {
+                              UiNetworkClient * self) {
 
-        update_number_of_players(launcher);
+        update_number_of_players(self);
 }
 
 
@@ -491,28 +538,28 @@ number_of_players_changed(NetGameManagerProxy * proxy,
 static gboolean
 update_number_of_games_idle(gpointer data) 
 {
-        NetworkGameLauncher * launcher;
+        UiNetworkClient * self;
         GtkWidget * item;
 
-        launcher = NETWORK_GAME_LAUNCHER(data);
-        item = glade_xml_get_widget( PRIVATE(launcher)->glade_xml, "number_of_games");
-        gtk_label_set_label(GTK_LABEL(item),g_strdup_printf("%d", net_game_manager_proxy_get_number_of_games(PRIVATE(launcher)->manager_proxy)));
+        self = UI_NETWORK_CLIENT(data);
+        item = glade_xml_get_widget( PRIVATE(self)->glade_xml, "number_of_games");
+        gtk_label_set_label(GTK_LABEL(item),g_strdup_printf("%d", net_game_manager_proxy_get_number_of_games(PRIVATE(self)->manager_proxy)));
 
         return FALSE;
 }
 
 static void
-update_number_of_games(NetworkGameLauncher * launcher)
+update_number_of_games(UiNetworkClient * self)
 {
-        g_idle_add(update_number_of_games_idle,launcher);
+        g_idle_add(update_number_of_games_idle,self);
         
 }
 
 static void 
 number_of_games_changed(NetGameManagerProxy * proxy,
-                              NetworkGameLauncher * launcher) {
+                              UiNetworkClient * self) {
 
-        update_number_of_games(launcher);
+        update_number_of_games(self);
 }
 
 void recv_network_xml_message(NetworkMessageHandler * mmh,
@@ -521,14 +568,14 @@ void recv_network_xml_message(NetworkMessageHandler * mmh,
 		  gpointer * p) {
 
         xmlNode * root;
-        NetworkGameLauncher * launcher;
+        UiNetworkClient * self;
         char * message_name;
         
         root = message->children;
         
         g_assert( g_str_equal(root->name,"message"));
         
-        launcher = NETWORK_GAME_LAUNCHER(p);
+        self = UI_NETWORK_CLIENT(p);
         
         message_name = xmlGetProp(root,"name");
         
@@ -536,14 +583,14 @@ void recv_network_xml_message(NetworkMessageHandler * mmh,
                 
                 g_print("INIT REQUIEST");
                 
-                PRIVATE(launcher)->client_id = client_id;
+                PRIVATE(self)->client_id = client_id;
                 
                 
                 
-                send_init(launcher);
+                send_init(self);
                 
-                set_status_message(launcher, g_strdup_printf("Connected to %s",
-                                                             PRIVATE(launcher)->server_name));
+                set_status_message(self, g_strdup_printf("Connected to %s",
+                                                             PRIVATE(self)->server_name));
                 
                 
                 
@@ -552,37 +599,37 @@ void recv_network_xml_message(NetworkMessageHandler * mmh,
                           
                 if( g_str_equal(root->children->content,"ok")) {
                         g_print("init ok!!");
-                        PRIVATE(launcher)->manager_proxy =
-                                net_game_manager_proxy_new( PRIVATE(launcher)->handler,client_id);
+                        PRIVATE(self)->manager_proxy =
+                                net_game_manager_proxy_new( PRIVATE(self)->handler,client_id);
                         
-                        g_signal_connect( PRIVATE(launcher)->manager_proxy,
+                        g_signal_connect( PRIVATE(self)->manager_proxy,
                                           "players-list-updated",
                                           G_CALLBACK(players_list_updated),
-                                          launcher);
+                                          self);
                         
 
-                        g_signal_connect( PRIVATE(launcher)->manager_proxy,
+                        g_signal_connect( PRIVATE(self)->manager_proxy,
                                           "game-created",
                                           G_CALLBACK(game_created),
-                                          launcher);
+                                          self);
 
-                        g_signal_connect( PRIVATE(launcher)->manager_proxy,
+                        g_signal_connect( PRIVATE(self)->manager_proxy,
                                           "number-of-players-changed",
                                           G_CALLBACK(number_of_players_changed),
-                                          launcher);
+                                          self);
 
-                        g_signal_connect( PRIVATE(launcher)->manager_proxy,
+                        g_signal_connect( PRIVATE(self)->manager_proxy,
                                           "number-of-games-changed",
                                           G_CALLBACK(number_of_games_changed),
-                                          launcher);
+                                          self);
 
                 } else {
                         g_print("init not ok!!");
                         
-                        set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
+                        set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
                                                              , "connect_hbox"),TRUE); 
                         
-                        set_status_message(launcher,"Not ok");
+                        set_status_message(self,"Not ok");
                 }
         } else if(g_str_equal(message_name,"game_joined")) {
                 int game_id;
@@ -591,7 +638,7 @@ void recv_network_xml_message(NetworkMessageHandler * mmh,
                 
                 sscanf(root->children->content,"%d",&game_id);
                 g_print("game id : %d\n",game_id);                
-                set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
+                set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
                                                      ,"connected_game_hbox"),TRUE); 
 
                 sscanf(root->children->content,"%d",&game_id);
@@ -600,8 +647,8 @@ void recv_network_xml_message(NetworkMessageHandler * mmh,
                 ui = ui_main_get_instance();
                 manager = game_network_player_manager_new(ui_main_get_window(ui),
                                                           ui_main_get_canvas(ui),
-                                                          PRIVATE(launcher)->handler,
-                                                          PRIVATE(launcher)->client_id);
+                                                          PRIVATE(self)->handler,
+                                                          PRIVATE(self)->client_id);
                 ui_main_set_game_manager(ui,
                                          GAME_MANAGER(manager));
 
@@ -638,86 +685,86 @@ static void set_sensitive(GtkWidget * w,
  }
 
 static void connection_closed(NetworkMessageHandler * handler,
-                              NetworkGameLauncher * launcher) {
-        disconnected(launcher);
+                              UiNetworkClient * self) {
+        disconnected(self);
 }
 
 
-static gboolean connect_server(NetworkGameLauncher * launcher) {
+static gboolean connect_server(UiNetworkClient * self) {
         
 
-        PRIVATE(launcher)->handler = network_message_handler_new(0);
+        PRIVATE(self)->handler = network_message_handler_new(0);
         
-        if( network_message_handler_connect(PRIVATE(launcher)->handler,PRIVATE(launcher)->server_name,6666) == FALSE) {
-                g_object_unref( G_OBJECT(PRIVATE(launcher)->handler));
-                PRIVATE(launcher)->handler = NULL;
+        if( network_message_handler_connect(PRIVATE(self)->handler,PRIVATE(self)->server_name,6666) == FALSE) {
+                g_object_unref( G_OBJECT(PRIVATE(self)->handler));
+                PRIVATE(self)->handler = NULL;
 
                 return FALSE;
         }
    
 
-        g_signal_connect( G_OBJECT(PRIVATE(launcher)->handler),
+        g_signal_connect( G_OBJECT(PRIVATE(self)->handler),
                           "recv-xml-message",
                           G_CALLBACK( recv_network_xml_message ),
-                          launcher);
+                          self);
 
 
-        g_signal_connect( G_OBJECT(PRIVATE(launcher)->handler),
+        g_signal_connect( G_OBJECT(PRIVATE(self)->handler),
                           "connection-closed",
                           G_CALLBACK( connection_closed ),
-                          launcher);
+                          self);
 
-        network_message_handler_start_listening(PRIVATE(launcher)->handler);
+        network_message_handler_start_listening(PRIVATE(self)->handler);
 
-        PRIVATE(launcher)->ready = FALSE;
+        PRIVATE(self)->ready = FALSE;
         return TRUE;
 }
 
 
-void network_game_launcher_finalize(GObject *object) {
-        NetworkGameLauncher * launcher = (NetworkGameLauncher *) object;
+void ui_network_client_finalize(GObject *object) {
+        UiNetworkClient * self = (UiNetworkClient *) object;
 	
-        g_free(PRIVATE(launcher));
+        g_free(PRIVATE(self));
 
         if (G_OBJECT_CLASS (parent_class)->finalize) {
                 (* G_OBJECT_CLASS (parent_class)->finalize) (object);
         }		
 }
 
-static void network_game_launcher_instance_init(NetworkGameLauncher * launcher) {
-        launcher->private =g_new0 (NetworkGameLauncherPrivate, 1);
+static void ui_network_client_instance_init(UiNetworkClient * self) {
+        self->private =g_new0 (UiNetworkClientPrivate, 1);
 }
 
-static void network_game_launcher_class_init (NetworkGameLauncherClass *klass) {
+static void ui_network_client_class_init (UiNetworkClientClass *klass) {
         GObjectClass* object_class;
         
         parent_class = g_type_class_peek_parent(klass);
         object_class = G_OBJECT_CLASS(klass);
-        object_class->finalize = network_game_launcher_finalize;
+        object_class->finalize = ui_network_client_finalize;
 }
 
-GType network_game_launcher_get_type(void) {
-        static GType network_game_launcher_type = 0;
+GType ui_network_client_get_type(void) {
+        static GType ui_network_client_type = 0;
         
-        if (!network_game_launcher_type) {
-                static const GTypeInfo network_game_launcher_info = {
-                        sizeof(NetworkGameLauncherClass),
+        if (!ui_network_client_type) {
+                static const GTypeInfo ui_network_client_info = {
+                        sizeof(UiNetworkClientClass),
                         NULL,           /* base_init */
                         NULL,           /* base_finalize */
-                        (GClassInitFunc) network_game_launcher_class_init,
+                        (GClassInitFunc) ui_network_client_class_init,
                         NULL,           /* class_finalize */
                         NULL,           /* class_data */
-                        sizeof(NetworkGameLauncher),
+                        sizeof(UiNetworkClient),
                         1,              /* n_preallocs */
-                        (GInstanceInitFunc) network_game_launcher_instance_init,
+                        (GInstanceInitFunc) ui_network_client_instance_init,
                 };
                 
-                network_game_launcher_type = g_type_register_static(G_TYPE_OBJECT,
-                                                                     "NetworkGameLauncher",
-                                                                     &network_game_launcher_info, 0
+                ui_network_client_type = g_type_register_static(G_TYPE_OBJECT,
+                                                                     "UiNetworkClient",
+                                                                     &ui_network_client_info, 0
                                                                      );
 
         }
         
-        return network_game_launcher_type;
+        return ui_network_client_type;
 }

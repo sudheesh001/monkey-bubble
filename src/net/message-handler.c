@@ -67,6 +67,7 @@ struct _NetworkMessageHandlerPrivate {
         int sock;
         GThread * main_thread;
         gboolean is_running;
+        gboolean thread_stopped;
 };
 
 #define PRIVATE( NetworkMessageHandler ) (NetworkMessageHandler->private)
@@ -106,6 +107,7 @@ network_message_handler_new(int sock) {
                                                     , NULL));
         
         PRIVATE(mmh)->sock = sock;
+        PRIVATE(mmh)->thread_stopped  = TRUE;
         return(mmh);
         
 }
@@ -156,8 +158,16 @@ network_message_handler_connect(NetworkMessageHandler * handler,
 
 void 
 network_message_handler_finalize(GObject *object) {
-        NetworkMessageHandler * mmh = (NetworkMessageHandler *) object;
+        NetworkMessageHandler * mmh = NETWORK_MESSAGE_HANDLER(object);
 	
+        if( PRIVATE(mmh)->sock != -1) {
+                network_message_handler_disconnect(mmh);
+        }
+
+        if( PRIVATE(mmh)->thread_stopped == FALSE) {
+                network_message_handler_join(mmh);
+        }
+
         g_free(PRIVATE(mmh));
 
         if (G_OBJECT_CLASS (parent_class)->finalize) {
@@ -417,6 +427,9 @@ void * handler_loop(NetworkMessageHandler * mmh) {
                 // handle the message
 
         }
+
+        PRIVATE(mmh)->thread_stopped = TRUE;
+        network_message_handler_disconnect(mmh);
         g_signal_emit( G_OBJECT(mmh),signals[CONNECTION_CLOSED],0);
         return 0;
 }
@@ -425,8 +438,11 @@ void * handler_loop(NetworkMessageHandler * mmh) {
 void network_message_handler_disconnect(NetworkMessageHandler * mmh) {
         g_assert( IS_NETWORK_MESSAGE_HANDLER(mmh));
 
+        g_print("call close ...\n");
+        shutdown( PRIVATE(mmh)->sock,2);
         close( PRIVATE(mmh)->sock );
 
+        PRIVATE(mmh)->sock = -1;
         PRIVATE(mmh)->is_running = FALSE;
 
 }
@@ -436,6 +452,7 @@ void network_message_handler_start_listening(NetworkMessageHandler * mmh) {
 
         error = NULL;
         PRIVATE(mmh)->is_running = TRUE;
+        PRIVATE(mmh)->thread_stopped = FALSE;
         PRIVATE(mmh)->main_thread =
                 g_thread_create((GThreadFunc) handler_loop,mmh, TRUE, error);
 

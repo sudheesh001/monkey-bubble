@@ -1,3 +1,59 @@
+2004-06-17  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	rename NetworkGameLauncher -> UiNetworkClient
+	rename NetworkServerLauncher -> UiNetworkServer
+
+	some network stuff...
+	* data/monkey-bubble.glade:
+	* data/netgame.glade:
+	* data/netserver.glade:
+	* src/net/game-manager-proxy.c: (net_game_manager_proxy_finalize):
+	* src/net/message-handler.c: (network_message_handler_new),
+	(network_message_handler_finalize), (handler_loop),
+	(network_message_handler_disconnect),
+	(network_message_handler_start_listening):
+	* src/net/simple-server.c: (close_socket), (unref_handler),
+	(network_simple_server_finalize):
+	* src/ui/Makefile.am:
+	* src/ui/network-game-launcher.c:
+	* src/ui/network-game-launcher.h:
+	* src/ui/network-server-launcher.c:
+	* src/ui/network-server-launcher.h:
+	* src/ui/ui-main.c: (ui_main_new), (new_network_game),
+	(new_network_server):
+	* src/ui/ui-network-client.c: (ui_network_client_new),
+	(status_idle), (set_status_message), (connect_server_signal),
+	(send_disconnect), (disconnected), (quit_signal),
+	(quit_server_signal), (ready_signal), (send_init),
+	(update_players_list_idle), (update_players_list),
+	(start_game_idle), (start_game), (players_list_updated),
+	(game_created), (update_number_of_players_idle),
+	(update_number_of_players), (number_of_players_changed),
+	(update_number_of_games_idle), (update_number_of_games),
+	(number_of_games_changed), (recv_network_xml_message),
+	(set_sensitive_true_idle), (set_sensitive_false_idle),
+	(set_sensitive), (connection_closed), (connect_server),
+	(ui_network_client_finalize), (ui_network_client_instance_init),
+	(ui_network_client_class_init), (ui_network_client_get_type):
+	* src/ui/ui-network-client.h:
+	* src/ui/ui-network-server.c: (ui_network_server_new),
+	(number_of_players_changed), (number_of_games_changed),
+	(send_disconnect), (quit_server_signal), (quit_signal),
+	(ready_signal), (start_signal), (send_init),
+	(update_players_list_idle), (update_players_list),
+	(start_game_idle), (players_list_updated),
+	(update_number_of_players_idle), (update_number_of_players),
+	(net_number_of_players_changed), (update_number_of_games_idle),
+	(update_number_of_games), (net_number_of_games_changed),
+	(game_created), (start_game), (recv_network_xml_message),
+	(set_sensitive_true_idle), (set_sensitive_false_idle),
+	(set_sensitive), (set_number_of_games), (set_number_of_players),
+	(connect_server), (ui_network_server_finalize),
+	(ui_network_server_instance_init), (ui_network_server_class_init),
+	(ui_network_server_get_type):
+	* src/ui/ui-network-server.h:
+	* src/view/monkey-view.c: (monkey_view_shooter_bubble_added):
+
 2004-06-16  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	some leak fixes made by tom

@@ -172,8 +172,11 @@ bind_socket(NetworkSimpleServer * self)
 static void
 close_socket(NetworkSimpleServer * self) 
 {
-	g_assert( PRIVATE(self)->main_socket != -1);
-	close(PRIVATE(self)->main_socket);
+	
+	if( PRIVATE(self)->main_socket != -1) {
+		shutdown(PRIVATE(self)->main_socket,2);
+		close(PRIVATE(self)->main_socket);
+	}
 	PRIVATE(self)->main_socket = -1;
 }
 
@@ -385,6 +388,15 @@ network_simple_server_instance_init(NetworkSimpleServer * self)
 
 
 static void
+unref_handler(gpointer data,gpointer user_data)
+{
+	NetworkMessageHandler * handler;
+	handler = NETWORK_MESSAGE_HANDLER(data);
+
+	g_object_unref(handler);
+}
+
+static void
 network_simple_server_finalize (GObject * object) 
 {
 	NetworkSimpleServer * self;
@@ -393,6 +405,10 @@ network_simple_server_finalize (GObject * object)
 	
 	g_mutex_free( PRIVATE(self)->handlers_lock);
 
+	g_list_foreach( PRIVATE(self)->handlers,
+			unref_handler,
+			NULL);
+	g_list_free( PRIVATE(self)->handlers);
 	close_socket(self);
 
 	g_free(PRIVATE(self));

@@ -90,7 +90,7 @@ net_game_manager_proxy_finalize (GObject * object)
 
         g_signal_handlers_disconnect_matched(  PRIVATE(self)->handler ,
 					       G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,self);
-                    
+	
 	g_free(PRIVATE(self));
 	if (G_OBJECT_CLASS (parent_class)->finalize) {
 		(* G_OBJECT_CLASS (parent_class)->finalize) (object);
