@@ -381,7 +381,10 @@ static void ready_signal(gpointer    callback_data,
                 PRIVATE(self)->ready = FALSE;
                 
         }
+        net_game_manager_proxy_send_start( PRIVATE(self)->manager_proxy);
+
 }
+
 
 void send_init(UiNetworkClient * self) {
         xmlDoc * doc;

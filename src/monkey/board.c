@@ -908,6 +908,48 @@ gboolean board_is_lost(Board * board) {
   return lost;
 }
 
+
+void board_print(Board * board) {
+	 int j,i;
+
+	 for(i = 0; i < COLUMN_COUNT; i++) {
+		  
+		  g_print("===");
+	 }
+		
+	 g_print("\n");
+	 for(j = 0; j < ROW_COUNT; j++) {
+		  
+		  if( ( (1+j + PRIVATE(board)->odd) % 2) != 0 ) {
+				g_print(" ");
+		  }
+
+		  for(i = 0; i < COLUMN_COUNT; i++) {
+				Bubble * b;
+				b = PRIVATE(board)->bubble_array[i + ( j* COLUMN_COUNT) ];
+				
+				if( b != NULL ) {
+					 g_print(" %d ",bubble_get_color(b));
+					 
+				} else {
+					 g_print("   ");
+				}
+
+		  }
+		  g_print("\n");
+	 }
+
+
+	 for(i = 0; i < COLUMN_COUNT; i++) {
+		  
+		  g_print("===");
+	 }
+
+
+	 g_print("\n");
+
+}
+
 void board_add_bubbles(Board *board,
 							  Bubble ** bubbles ) {
 

@@ -1,3 +1,18 @@
+2004-06-28  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	a bug fix to new add bubbles to top
+
+	board_print to check the server state
+	* src/monkey/board.c: (board_print):
+	* src/monkey/board.h:
+	* src/monkey/monkey.c: (monkey_print_board):
+	* src/monkey/monkey.h:
+	* src/net/game.c: (bubble_sticked):
+	* src/ui/game-network-player.c:
+	(game_network_player_bubble_sticked):
+	* src/ui/ui-network-client.c: (ready_signal):
+	* src/view/monkey-view.c: (monkey_view_animate_stars):
+
 2004-06-25  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	indent with anjuta ....

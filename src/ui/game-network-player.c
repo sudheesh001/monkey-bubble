@@ -217,6 +217,9 @@ game_network_player_bubble_sticked (Monkey * monkey, Bubble * b,
 
 	g_assert (IS_GAME_NETWORK_PLAYER (game));
 
+        
+	monkey_print_board(monkey);
+
 
 	if ((monkey_get_shot_count (monkey) % 8) == 0)
 	{

@@ -91,6 +91,7 @@ void monkey_shoot(Monkey * monkey,gint time);
 
 void monkey_set_board_down(Monkey * monkey);
 
+void monkey_print_board(Monkey * m);
 
 /* 
  * @return array with column coordonate of the bubbles

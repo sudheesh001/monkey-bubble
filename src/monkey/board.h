@@ -100,4 +100,5 @@ void board_down( Board * board);
 
 int board_bubbles_count(Board * board);
 
+void board_print(Board * board);
 #endif

@@ -229,13 +229,15 @@ bubble_sticked (Monkey * monkey, Bubble * b, struct Client *c)
 {
 
 
+	g_print("client %d\n", network_client_get_id( c->client));
+	monkey_print_board(monkey);
 
 	if (!monkey_is_empty (monkey))
 	{
 		add_bubble (c);
 	}
 
-	if (monkey_get_shot_count (monkey) == 1)
+	if ( (monkey_get_shot_count (monkey) % 8) == 1)
 	{
 		add_range_to_client (c);
 	}
@@ -245,7 +247,7 @@ bubble_sticked (Monkey * monkey, Bubble * b, struct Client *c)
 
 		monkey_insert_bubbles (monkey, c->waiting_bubbles_range);
 		c->waiting_range = NULL;
-		add_range_to_client (c);
+		//add_range_to_client (c);
 
 	}
 

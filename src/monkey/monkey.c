@@ -768,3 +768,7 @@ gboolean monkey_is_empty(Monkey * monkey) {
 
 	 return ( board_bubbles_count(playground_get_board(PRIVATE(monkey)->playground)) == 0 );
 }
+
+void monkey_print_board(Monkey * m) {
+	 board_print( playground_get_board(PRIVATE(m)->playground));
+}

@@ -691,6 +691,20 @@ static void monkey_view_animate_stars(MonkeyView * d,gint time) {
                 */
                 star->vy = star->vy + time/10.0;
                 monkey_canvas_move_block( PRIVATE(d)->canvas, star->block, x,y);
+
+                if( y > 500 ) {
+                        next = g_list_previous(next);
+                        PRIVATE(d)->star_list = g_list_remove( PRIVATE(d)->star_list,
+                                                               star);
+
+                        monkey_canvas_remove_block( PRIVATE(d)->canvas,
+                                                    star->block);
+                        monkey_canvas_unref_block( PRIVATE(d)->canvas,
+                                                   star->block);
+ 
+
+                }
+
                 next = g_list_next( next);
         }
 }
