@@ -608,8 +608,7 @@ void recv_network_xml_message(NetworkMessageHandler * mmh,
 
         } 
 
-        
-        
+        xmlFree(message_name);
         
 }
 

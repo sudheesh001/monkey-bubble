@@ -243,7 +243,7 @@ void recv_bubble_array(NetworkMessageHandler * handler,
   board_init( playground_get_board( monkey_get_playground( m )),
 	      bubbles,bubble_count);
 
-
+  g_free(colors);
 
 }
 

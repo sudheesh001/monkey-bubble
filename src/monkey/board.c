@@ -794,9 +794,14 @@ static void board_set_bubble(Board * board,
       PRIVATE(board)->bubble_array[ cell_x 
 				    + cell_y*COLUMN_COUNT ] = b;
     } else {
-    
+      g_print("bubble already present .. \n");
+      board_bubble_added(board,b);
+      PRIVATE(board)->bubble_array[ cell_x 
+				    + cell_y*COLUMN_COUNT ] = b;
+
+      /*
       g_error("bubble already present in %d %d",
-	      cell_x,cell_y);
+      cell_x,cell_y);*/
     }
   } else {
 		//  g_error(" invalid coordonnate %d,%d",cell_x,cell_y);

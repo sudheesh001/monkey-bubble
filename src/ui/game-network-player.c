@@ -274,8 +274,11 @@ static void recv_waiting_added(NetworkMessageHandler * handler,
         
         monkey = PRIVATE(game)->monkey;
         g_mutex_lock(PRIVATE(game)->lock);
-        monkey_add_bubbles_at(monkey,bubbles_count,colors,columns);
+        monkey_add_bubbles_at(monkey, bubbles_count, colors, columns);
         g_mutex_unlock(PRIVATE(game)->lock);
+
+        g_free(columns);
+        g_free(colors);
 }
 
 

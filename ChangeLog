@@ -1,5 +1,20 @@
 2004-06-16  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
+	some leak fixes made by tom
+	debian package update by tom
+
+	* debian/changelog:
+	* debian/control:
+	* src/monkey/board.c: (board_set_bubble):
+	* src/net/message-handler.c:
+	(network_message_handler_send_xml_message):
+	* src/ui/game-network-player-manager.c: (recv_bubble_array):
+	* src/ui/game-network-player.c: (recv_waiting_added):
+	* src/ui/network-game-launcher.c: (recv_network_xml_message):
+	* src/view/monkey-view.c: (monkey_view_finalize):
+
+2004-06-16  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
 	add game limitation and player limitation
 	* data/netgame.glade:
 	* data/netserver.glade:

@@ -680,6 +680,7 @@ static void monkey_view_instance_init(MonkeyView * monkey_view) {
 static void monkey_view_finalize(GObject* object) {
         Playground * p;
         MonkeyView * monkey_view = MONKEY_VIEW(object);
+        int i;
 
         p = monkey_get_playground( PRIVATE(monkey_view)->monkey);
 
@@ -704,6 +705,10 @@ static void monkey_view_finalize(GObject* object) {
 
         g_object_unref( PRIVATE(monkey_view)->monkey);
   
+        for (i = 0; i <= SHOOTER_COUNT; i++) {
+                monkey_canvas_unref_block(monkey_view->private->canvas,
+                                          monkey_view->private->shooter_block[i]);
+        }
 
         //  monkey_canvas_clear( PRIVATE(monkey_view)->canvas);
         //  g_object_unref( PRIVATE(monkey_view)-> canvas);

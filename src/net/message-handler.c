@@ -559,6 +559,8 @@ void network_message_handler_send_xml_message(NetworkMessageHandler * mmh,
         memcpy(xml_message+CHUNK_SIZE,mem,size);
         write_chunk(mmh,(guint8 *)xml_message,computed_size / CHUNK_SIZE );
 
+        xmlFree(mem);
+
 }
 
 void network_message_handler_join(NetworkMessageHandler * mmh) {
