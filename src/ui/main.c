@@ -26,7 +26,7 @@ int main(int  argc, char **argv)
 { 
   UiMain * ui_main;
   GtkWidget * window;
-  
+  SoundManager * manager;
 #ifdef ENABLE_NLS
   bindtextdomain (PACKAGE, PACKAGE_LOCALE_DIR);
   textdomain (PACKAGE);
@@ -44,8 +44,9 @@ int main(int  argc, char **argv)
   
   
   gst_init(&argc,&argv);  
-  
-  sound_manager_active_sound(TRUE);
+
+  manager = sound_manager_get_instance();
+  sound_manager_init(manager,TRUE);
   
   ui_main = ui_main_get_instance();
   

@@ -1,3 +1,30 @@
+2004-12-03  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	audio stuff 
+	* sounds/Makefile.am:
+	* sounds/destroy_group.wav:
+	* sounds/launch.wav:
+	* sounds/rebound.wav:
+	* sounds/stick.wav:
+	* src/audio/Makefile.am:
+	* src/audio/sound-manager.c: (sound_manager_instance_init),
+	(sound_manager_finalize), (sound_manager_get_instance),
+	(sound_manager_init), (sound_manager_class_init),
+	(sound_manager_get_type), (restart_play), (eos), (error_handler),
+	(sound_manager_new), (stop_play), (oggdemux_new_pad), (start_play),
+	(sound_manager_play_music_file), (sound_manager_play_fx):
+	* src/audio/sound-manager.h:
+	* src/ui/Makefile.am:
+	* src/ui/game-1-player.c: (game_1_player_new):
+	* src/ui/game-sound.c: (mb_game_sound_new), (bubble_sticked),
+	(bubbles_exploded), (bubble_shot), (bubble_wall_collision),
+	(mb_game_sound_connect_monkey), (mb_game_sound_instance_init),
+	(mb_game_sound_dispose), (mb_game_sound_class_init),
+	(mb_game_sound_get_type):
+	* src/ui/game-sound.h:
+	* src/ui/main.c: (main):
+	* src/ui/ui-main.c: (ui_main_new):
+
 2004-12-02  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	update my email address

@@ -26,6 +26,7 @@
 #include "clock.h"
 #include "player-input.h"
 #include "input-manager.h"
+#include "game-sound.h"
 #define FRAME_DELAY 10
 
 #define PRIVATE(game_1_player) (game_1_player->private)
@@ -205,6 +206,7 @@ static void game_1_player_bubble_sticked(Monkey * monkey,Bubble * b,
 Game1Player * game_1_player_new(GtkWidget * window,MonkeyCanvas * canvas, int level,gint score) {
         Game1Player * game;
 
+        MbGameSound * mgs;
         MbInputManager * input_manager;
         game = GAME_1_PLAYER (g_object_new (TYPE_GAME_1_PLAYER, NULL));
 
@@ -275,8 +277,9 @@ Game1Player * game_1_player_new(GtkWidget * window,MonkeyCanvas * canvas, int le
         game_1_player_add_bubble(game);
 
 
-
-  
+        
+        mgs = mb_game_sound_new();
+        mb_game_sound_connect_monkey(mgs,PRIVATE(game)->monkey);
         input_manager = mb_input_manager_get_instance();
         PRIVATE(game)->input = mb_input_manager_get_left(input_manager);
 

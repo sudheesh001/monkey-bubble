@@ -25,6 +25,15 @@
 
 G_BEGIN_DECLS
 
+typedef enum {
+  MB_SAMPLE_REBOUND,
+  MB_SAMPLE_SHOOT,
+  MB_SAMPLE_EXPLODE,
+  MB_SAMPLE_STICK,
+  NO_SAMPLE
+} MbSample;
+
+
 #define TYPE_SOUND_MANAGER      (sound_manager_get_type())
 
 #define SOUND_MANAGER(object)         (G_TYPE_CHECK_INSTANCE_CAST ((object), TYPE_SOUND_MANAGER,SoundManager))
@@ -51,11 +60,13 @@ typedef struct {
 
 GType sound_manager_get_type(void);
 
-SoundManager * sound_manager_new();
 
-void sound_manager_active_sound(gboolean active);
+SoundManager * sound_manager_get_instance();
+
+void sound_manager_init(SoundManager * m,gboolean active);
 void sound_manager_play_music_file(SoundManager *m, gchar * path);
-//void sound_manager_update(SoundManager *m);
+void sound_manager_play_fx(SoundManager *m,MbSample sample);
+
 G_END_DECLS
 
 

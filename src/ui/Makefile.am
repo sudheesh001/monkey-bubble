@@ -34,6 +34,7 @@ monkey_bubble_SOURCES = \
 	game-2-player-manager.c game-2-player-manager.h \
 	game-network-player-manager.c game-network-player-manager.h \
 	main.c \
+	game-sound.c game-sound.h \
 	keyboard-properties.c keyboard-properties.h \
 	ui-network-client.c ui-network-client.h \
 	ui-network-server.c ui-network-server.h \

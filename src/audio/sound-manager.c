@@ -28,141 +28,167 @@ static GObjectClass* parent_class = NULL;
 struct SoundManagerPrivate {
   GstElement * main_bin;
   GstElement * filesrc;
-    GstElement * oggdemux;
+  GstElement * oggdemux;
   GstElement * vorbis_dec;
-    GstElement * audioconvert;
-    GstElement * audioscale;
+  GstElement * audioconvert;
+  GstElement * audioscale;
   GstElement * output;
 
-	 gboolean new_pad_ok;
+  gboolean new_pad_ok;
   gboolean is_playing;
   gint idle_id;
+  gchar ** samples_path;
 
-	 gchar * current_music_path;
+  gchar * current_music_path;
+
+  gboolean active;
 };
 
 
 static void stop_play(SoundManager * m);
 static void start_play(SoundManager *m, gchar * path);
+static SoundManager * sound_manager_new( void );
 
 static void sound_manager_instance_init(SoundManager * sound_manager) {
-    sound_manager->private =g_new0 (SoundManagerPrivate, 1);			
+  sound_manager->private =g_new0 (SoundManagerPrivate, 1);			
 }
 
 static void sound_manager_finalize(GObject* object) {
-    SoundManager * sound_manager = SOUND_MANAGER(object);
+  SoundManager * sound_manager = SOUND_MANAGER(object);
 
-    g_free(sound_manager->private);
+  g_free(sound_manager->private);
 
-    if (G_OBJECT_CLASS (parent_class)->finalize) {
-	(* G_OBJECT_CLASS (parent_class)->finalize) (object);
-    }
+  if (G_OBJECT_CLASS (parent_class)->finalize) {
+    (* G_OBJECT_CLASS (parent_class)->finalize) (object);
+  }
 }
 
 
-static gboolean sound_active = TRUE;
+static SoundManager * instance = NULL;
+SoundManager * sound_manager_get_instance() {
+  if( instance == NULL) {
+    instance = sound_manager_new();
+  }
 
-void sound_manager_active_sound(gboolean active) {
-  sound_active = active;
+  return instance;
 }
+
+void sound_manager_init(SoundManager * m,gboolean active) 
+{
+  PRIVATE(m)->active = active;
+}
+
 
 static void sound_manager_class_init (SoundManagerClass *klass) {
-    GObjectClass* object_class;
+  GObjectClass* object_class;
     
-    parent_class = g_type_class_peek_parent(klass);
-    object_class = G_OBJECT_CLASS(klass);
-    object_class->finalize = sound_manager_finalize;
+  parent_class = g_type_class_peek_parent(klass);
+  object_class = G_OBJECT_CLASS(klass);
+  object_class->finalize = sound_manager_finalize;
 }
 
 
 GType sound_manager_get_type(void) {
-    static GType sound_manager_type = 0;
+  static GType sound_manager_type = 0;
     
-    if (!sound_manager_type) {
-	static const GTypeInfo sound_manager_info = {
-	    sizeof(SoundManagerClass),
-	    NULL,           /* base_init */
-	    NULL,           /* base_finalize */
-	    (GClassInitFunc) sound_manager_class_init,
-	    NULL,           /* class_finalize */
-	    NULL,           /* class_data */
-	    sizeof(SoundManager),
-	    1,              /* n_preallocs */
-	    (GInstanceInitFunc) sound_manager_instance_init,
-	};
+  if (!sound_manager_type) {
+    static const GTypeInfo sound_manager_info = {
+      sizeof(SoundManagerClass),
+      NULL,           /* base_init */
+      NULL,           /* base_finalize */
+      (GClassInitFunc) sound_manager_class_init,
+      NULL,           /* class_finalize */
+      NULL,           /* class_data */
+      sizeof(SoundManager),
+      1,              /* n_preallocs */
+      (GInstanceInitFunc) sound_manager_instance_init,
+    };
 
 
 
-	sound_manager_type = g_type_register_static(G_TYPE_OBJECT,
+    sound_manager_type = g_type_register_static(G_TYPE_OBJECT,
 						"SoundManager",
 						&sound_manager_info,
 						0);
 
 
       
-    }
+  }
     
-    return sound_manager_type;
+  return sound_manager_type;
 }
 
 
 static gboolean
 restart_play(gpointer data)
 {
-	 SoundManager * m;
+  SoundManager * m;
 
-	 m = SOUND_MANAGER(data);
-	 stop_play(m);
+  m = SOUND_MANAGER(data);
+  stop_play(m);
 
-	 start_play(m,PRIVATE(m)->current_music_path);
-	 return FALSE;
+  start_play(m,PRIVATE(m)->current_music_path);
+  return FALSE;
 }
 
 static void eos(GstElement *e ,gpointer user_data) {
-    g_print("end of file..\n");
+  g_print("end of file..\n");
 
- g_idle_add(restart_play,user_data);
+  //  g_idle_add(restart_play,user_data);
 }
 static void error_handler(GstElement * e,GObject * o,gchar * string,gpointer data) {
-    g_print("error : %s\n",string);
+  g_print("error : %s\n",string);
 
 }
 
 
-SoundManager * sound_manager_new( void ) {
-    SoundManager * sound_manager;
-    SoundManagerPrivate * dp= NULL;
+static SoundManager * sound_manager_new( void ) {
+  SoundManager * sound_manager;
+  SoundManagerPrivate * dp= NULL;
 
-    sound_manager = SOUND_MANAGER (g_object_new (TYPE_SOUND_MANAGER, NULL));
+  sound_manager = SOUND_MANAGER (g_object_new (TYPE_SOUND_MANAGER, NULL));
 
-    dp = PRIVATE(sound_manager);
+  dp = PRIVATE(sound_manager);
+  // cache samples here ..
   
-    dp->is_playing = FALSE;			       
-    return sound_manager;
+  dp->samples_path = g_new0(gchar *, NO_SAMPLE);
+  dp->samples_path[ MB_SAMPLE_REBOUND] = 
+    DATADIR"/monkey-bubble/sounds/rebound.wav";
+  dp->samples_path[ MB_SAMPLE_SHOOT] =
+    DATADIR"/monkey-bubble/sounds/launch.wav";
+
+  dp->samples_path[ MB_SAMPLE_EXPLODE] = 
+    DATADIR"/monkey-bubble/sounds/destroy_group.wav";
+
+  dp->samples_path[ MB_SAMPLE_STICK] = 
+    DATADIR"/monkey-bubble/sounds/stick.wav";
+
+  dp->is_playing = FALSE;			       
+  return sound_manager;
 }
 
 
 static void
 stop_play(SoundManager * m) 
 {
-    if( sound_active) {
+  if( PRIVATE(m)->active) {
 
-		  if( PRIVATE(m)->is_playing ) {
+    if( PRIVATE(m)->is_playing ) {
 				
-				PRIVATE(m)->is_playing = FALSE;
+      PRIVATE(m)->is_playing = FALSE;
 
-				gst_element_set_state( PRIVATE(m)->main_bin,GST_STATE_NULL);
-		  }
+      //gst_element_set_state( PRIVATE(m)->main_bin,GST_STATE_PAUSED);
+    }
 		  
 
 		  
-		  g_object_unref( G_OBJECT(PRIVATE(m)->main_bin ));
+    g_object_unref( G_OBJECT(PRIVATE(m)->main_bin ));
 		  
-		  PRIVATE(m)->output = NULL;
-		  PRIVATE(m)->main_bin = NULL;
-		  PRIVATE(m)->vorbis_dec = NULL;
-		  PRIVATE(m)->filesrc = NULL;
-	 }
+    PRIVATE(m)->output = NULL;
+    PRIVATE(m)->main_bin = NULL;
+    PRIVATE(m)->vorbis_dec = NULL;
+    PRIVATE(m)->filesrc = NULL;
+  }
 }
 
 static void 
@@ -170,73 +196,79 @@ oggdemux_new_pad(GstElement *gstelement,
 		 GObject *new_pad,
 		 SoundManager * m)
 {
-    gst_element_set_state (PRIVATE(m)->main_bin, GST_STATE_PAUSED);
+  g_print("new pad \n");
+ 
+  //   gst_element_set_state (PRIVATE(m)->main_bin, GST_STATE_PAUSED);
 
-    gst_bin_add_many(GST_BIN(PRIVATE(m)->main_bin),
-		     PRIVATE(m)->vorbis_dec,
-		     PRIVATE(m)->audioconvert,
-		     PRIVATE(m)->audioscale,
-		     PRIVATE(m)->output,
-		     NULL);
+  g_print("main bin paused \n");
+  gst_bin_add_many(GST_BIN(PRIVATE(m)->main_bin),
+		   PRIVATE(m)->vorbis_dec,
+		   PRIVATE(m)->audioconvert,
+		   PRIVATE(m)->audioscale,
+		   PRIVATE(m)->output,
+		   NULL);
 
   
   gst_element_link_many(
-		     PRIVATE(m)->vorbis_dec,
-		     PRIVATE(m)->audioconvert,
-		     PRIVATE(m)->audioscale,
-		     PRIVATE(m)->output,
+			PRIVATE(m)->vorbis_dec,
+			PRIVATE(m)->audioconvert,
+			PRIVATE(m)->audioscale,
+			PRIVATE(m)->output,
 			NULL);
   
-  GstPad * pad = gst_element_get_pad( GST_ELEMENT(PRIVATE(m)->vorbis_dec),"sink");
+  GstPad * pad = gst_element_get_pad( GST_ELEMENT(PRIVATE(m)->vorbis_dec),
+				      "sink");
 
   gst_pad_link( GST_PAD(new_pad), pad);
   PRIVATE(m)->new_pad_ok = TRUE;
-
-    
-  gst_element_set_state (GST_ELEMENT(PRIVATE(m)->main_bin), GST_STATE_PLAYING); 
+  //gst_bin_sync_children_state
+  //  (GST_BIN(PRIVATE(m)->main_bin));
+  
+  g_print("playing \n");
 }
 
 
 static void 
 start_play(SoundManager *m, gchar * path) 
 {
-  if( sound_active) {
-		PRIVATE(m)->new_pad_ok = FALSE;
-		PRIVATE(m)->main_bin = gst_thread_new("bin");
-		PRIVATE(m)->filesrc = gst_element_factory_make("filesrc","filesrc");
-		PRIVATE(m)->oggdemux = gst_element_factory_make("oggdemux","oggdemux");
-		PRIVATE(m)->vorbis_dec = gst_element_factory_make("vorbisdec","vorbisdec");
-		PRIVATE(m)->audioconvert = gst_element_factory_make("audioconvert","audioconvert");
-		PRIVATE(m)->audioscale = gst_element_factory_make("audioscale", "audioscale");
-		PRIVATE(m)->output =  gst_gconf_get_default_audio_sink();
+  g_print("start play %s\n",path);
+  if( PRIVATE(m)->active) {
+    PRIVATE(m)->new_pad_ok = FALSE;
+    PRIVATE(m)->main_bin = gst_thread_new("bin");
+    PRIVATE(m)->filesrc = gst_element_factory_make("filesrc","filesrc");
+    PRIVATE(m)->oggdemux = gst_element_factory_make("oggdemux","oggdemux");
+    PRIVATE(m)->vorbis_dec = gst_element_factory_make("vorbisdec","vorbisdec");
+    PRIVATE(m)->audioconvert = gst_element_factory_make("audioconvert","audioconvert");
+    PRIVATE(m)->audioscale = gst_element_factory_make("audioscale", "audioscale");
+    PRIVATE(m)->output =  gst_gconf_get_default_audio_sink();
 
-		PRIVATE(m)->current_music_path = g_strdup(path);
+    PRIVATE(m)->current_music_path = g_strdup(path);
 
-		g_signal_connect(G_OBJECT(PRIVATE(m)->main_bin),
-							  "error", GTK_SIGNAL_FUNC(error_handler),NULL);
+    g_signal_connect(G_OBJECT(PRIVATE(m)->main_bin),
+		     "error", GTK_SIGNAL_FUNC(error_handler),NULL);
     
-		g_signal_connect( PRIVATE(m)->oggdemux, "new-pad", G_CALLBACK(oggdemux_new_pad),m);
+    g_signal_connect( PRIVATE(m)->oggdemux, "new-pad", G_CALLBACK(oggdemux_new_pad),m);
 		
-		gst_bin_add_many( GST_BIN( PRIVATE(m)->main_bin),
-								PRIVATE(m)->filesrc,
-								PRIVATE(m)->oggdemux,
-								NULL);
+    gst_bin_add_many( GST_BIN( PRIVATE(m)->main_bin),
+		      PRIVATE(m)->filesrc,
+		      PRIVATE(m)->oggdemux,
+		      NULL);
 		
-		g_object_set( G_OBJECT( PRIVATE(m)->filesrc), "location",path,NULL);
+    g_object_set( G_OBJECT( PRIVATE(m)->filesrc), "location",path,NULL);
 		
-		g_object_set( G_OBJECT( PRIVATE(m)->filesrc), "blocksize",10000,NULL);
+    g_object_set( G_OBJECT( PRIVATE(m)->filesrc), "blocksize",10000,NULL);
 		
-		g_signal_connect(PRIVATE(m)->main_bin,
-							  "eos",
-							  G_CALLBACK(eos),
-							  m);
+    g_signal_connect(PRIVATE(m)->main_bin,
+		     "eos",
+		     G_CALLBACK(eos),
+		     m);
 	 
-		gst_element_link_many( PRIVATE(m)->filesrc, PRIVATE(m)->oggdemux,NULL);
+    gst_element_link_many( PRIVATE(m)->filesrc, PRIVATE(m)->oggdemux,NULL);
 		
+    g_print("waiting for pad \n");
+    gst_element_set_state( PRIVATE(m)->main_bin,GST_STATE_PLAYING);
 		
-		gst_element_set_state( PRIVATE(m)->main_bin,GST_STATE_PLAYING);
-		
-		PRIVATE(m)->is_playing = TRUE;
+    PRIVATE(m)->is_playing = TRUE;
 		
   }
 }
@@ -246,8 +278,14 @@ void sound_manager_play_music_file(SoundManager *m, gchar * path) {
   g_assert(IS_SOUND_MANAGER(m));
 
   if( PRIVATE(m)->is_playing == TRUE) {
-		stop_play(m);		
+    stop_play(m);		
   }
   
   start_play(m,path);
+}
+
+
+void sound_manager_play_fx(SoundManager *m,MbSample sample) 
+{
+  g_print("play sample %d \n",sample);
 }

@@ -280,7 +280,7 @@ static UiMain* ui_main_new(void) {
         gtk_window_set_policy (GTK_WINDOW (PRIVATE(ui_main)->window), TRUE, TRUE, FALSE);
 
 
-        PRIVATE(ui_main)->sm = sound_manager_new();
+        PRIVATE(ui_main)->sm = sound_manager_get_instance();
         sound_manager_play_music_file(
                                       PRIVATE(ui_main)->sm,
                                       DATADIR"/monkey-bubble/sounds/splash.ogg");
