@@ -1,3 +1,12 @@
+monkey-bubble (0.1.9+0.2.0-2) unstable; urgency=low
+
+  * update to latest CVS
+  * Add manpage for monkey-srv
+  * Wrap long desc correctly
+  * Use correct section in menu
+
+ -- Thomas Cataldo <thomas.cataldo@aliacom.fr>  Thu, 11 Mar 2004 00:17:36 +0100
+
 monkey-bubble (0.1.9+0.2.0-1) unstable; urgency=low
 
   * New maintainer

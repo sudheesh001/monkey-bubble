@@ -1,5 +1,18 @@
 2004-03-11  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
+        debian directory update
+	maintened by tom <thomas.cataldo@aliacom.fr> 
+
+	changelog in debian/changelog
+	
+	* debian/changelog:
+	* debian/control:
+	* debian/menu:
+	* debian/monkey-srv.sgml:
+	* debian/rules:
+
+2004-03-11  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
 	more network code
 	board patch
 	removed unused files
