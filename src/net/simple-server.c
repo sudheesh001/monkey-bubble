@@ -206,6 +206,12 @@ static void remove_handler(NetworkSimpleServer * self,
 			NetworkMessageHandler * handler) 
 {
 	g_mutex_lock( PRIVATE( self)->handlers_lock);
+
+	g_signal_handlers_disconnect_matched (handler,
+                                              G_SIGNAL_MATCH_DATA, 0, 0, NULL,
+                                              NULL, self);
+
+
 	PRIVATE(self)->handlers = g_list_remove( PRIVATE(self)->handlers,
 						 handler);
 
@@ -391,7 +397,14 @@ static void
 unref_handler(gpointer data,gpointer user_data)
 {
 	NetworkMessageHandler * handler;
+	NetworkSimpleServer * self;
+
+	self = NETWORK_SIMPLE_SERVER(user_data);
 	handler = NETWORK_MESSAGE_HANDLER(data);
+
+	g_signal_handlers_disconnect_matched (handler,
+                                              G_SIGNAL_MATCH_DATA, 0, 0, NULL,
+                                              NULL, self);
 
 	g_object_unref(handler);
 }
@@ -403,13 +416,14 @@ network_simple_server_finalize (GObject * object)
 
 	self = NETWORK_SIMPLE_SERVER(object);
 	
-	g_mutex_free( PRIVATE(self)->handlers_lock);
 
 	g_list_foreach( PRIVATE(self)->handlers,
 			unref_handler,
-			NULL);
+			self);
 	g_list_free( PRIVATE(self)->handlers);
 	close_socket(self);
+
+	g_mutex_free( PRIVATE(self)->handlers_lock);
 
 	g_free(PRIVATE(self));
 	

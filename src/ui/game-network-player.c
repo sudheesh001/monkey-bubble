@@ -403,7 +403,7 @@ game_network_player_new (GtkWidget * window, MonkeyCanvas * canvas,
 	monkey_canvas_clear (canvas);
 	PRIVATE (game)->monkey = m;
 	PRIVATE (game)->display =
-		monkey_view_new (canvas, PRIVATE (game)->monkey, -175, 33,
+		monkey_view_new (canvas, PRIVATE (game)->monkey, -175, 0,
                                  DATADIR"/monkey-bubble/gfx/layout_network_player.svg",
                                  TRUE,
                                  FALSE);

@@ -1,3 +1,13 @@
+2004-07-05  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	a network fix
+
+	network background fix
+	* pixmaps/layout_network_player.svg:
+	* src/net/simple-server.c: (remove_handler), (unref_handler),
+	(network_simple_server_finalize):
+	* src/ui/game-network-player.c: (game_network_player_new):
+
 2004-07-02  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	music is looping !
