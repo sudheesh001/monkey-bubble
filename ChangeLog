@@ -1,3 +1,30 @@
+2004-06-01  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	some work done on network
+	* src/net/client.c: (recv_xml_message),
+	(network_client_class_init):
+	* src/net/client.h:
+	* src/net/game-manager.c: (network_game_manager_add_client),
+	(send_start_game_to_client), (start_game), (client_request_start),
+	(client_request_game_created_ok):
+	* src/net/game.c: (add_bubble), (recv_shoot), (bubble_added),
+	(bubble_sticked), (bubbles_exploded), (game_lost), (init_client),
+	(what_color), (init_clients), (network_game_new), (send_start),
+	(network_game_start):
+	* src/net/message-handler.c: (parse_xml_message), (write_chunk),
+	(read_chunk), (network_message_handler_send_message),
+	(network_message_handler_send_xml_message),
+	(network_message_handler_send_waiting_added),
+	(parse_waiting_added), (network_message_handler_send_bubble_array),
+	(parse_bubble_array), (network_message_handler_send_start):
+	* src/ui/game-network-player-manager.c: (recv_add_bubble),
+	(recv_start), (recv_bubble_array),
+	(game_network_player_manager_start):
+	* src/ui/network-game-launcher.c: (network_game_launcher_new),
+	(start_game_idle), (recv_network_xml_message):
+	* src/ui/network-server-launcher.c: (start_game_idle),
+	(recv_network_xml_message):
+
 2004-05-26  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	some name refactoring

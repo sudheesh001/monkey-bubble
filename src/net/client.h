@@ -82,6 +82,7 @@ struct _NetworkClientClass
 	void (* state_changed ) (NetworkClient * self);
 	void (* disconnect_request) (NetworkClient * self);
 	void (* start_request) (NetworkClient * self);
+	void (* game_created_ok) (NetworkClient * self);
 	void (* disconnected) (NetworkClient * self);
 };
 

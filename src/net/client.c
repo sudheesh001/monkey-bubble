@@ -35,6 +35,7 @@ enum {
 	DISCONNECT_REQUEST,
 	START_REQUEST,
 	DISCONNECTED,
+	GAME_CREATED_OK,
 	LAST_SIGNAL
 };
 
@@ -161,7 +162,10 @@ recv_xml_message(NetworkMessageHandler * mmh,
 
         } else if( g_str_equal(message_name,"start_game")) {
 		g_signal_emit( G_OBJECT(client),signals[START_REQUEST],0);
-        }
+        } else if( g_str_equal(message_name,"game_created_ok")) {
+		g_signal_emit( G_OBJECT(client),signals[GAME_CREATED_OK],0);
+	}
+
 
 	
 }
@@ -250,6 +254,18 @@ network_client_class_init (NetworkClientClass	* network_client_class)
 			      G_SIGNAL_RUN_FIRST |
 			      G_SIGNAL_NO_RECURSE,
 			      G_STRUCT_OFFSET (NetworkClientClass, start_request),
+			      NULL, NULL,
+			      g_cclosure_marshal_VOID__VOID,
+			      G_TYPE_NONE,
+			      0,NULL);
+
+
+	signals[GAME_CREATED_OK]= 
+		g_signal_new ("game-created-ok",
+			      G_TYPE_FROM_CLASS (network_client_class),
+			      G_SIGNAL_RUN_FIRST |
+			      G_SIGNAL_NO_RECURSE,
+			      G_STRUCT_OFFSET (NetworkClientClass, game_created_ok),
 			      NULL, NULL,
 			      g_cclosure_marshal_VOID__VOID,
 			      G_TYPE_NONE,

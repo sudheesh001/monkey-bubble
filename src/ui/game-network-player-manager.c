@@ -194,7 +194,6 @@ static void recv_add_bubble(NetworkMessageHandler * handler,
 		     Color bubble,
 		     GameNetworkPlayerManager * manager) {
     if( PRIVATE(manager)->current_game == NULL) {
-		  g_print("add bubble %d\n",bubble);
 		  shooter_add_bubble(monkey_get_shooter(PRIVATE(manager)->monkey),bubble_new(bubble,0,0));
     }
   
@@ -202,7 +201,7 @@ static void recv_add_bubble(NetworkMessageHandler * handler,
 
 void recv_start(NetworkMessageHandler * handler,
 		GameNetworkPlayerManager * manager) {
-  g_print("recv start \n");
+  g_print("game-network-player-manager : recv start \n");
 
   g_idle_add(start_timeout,manager);
 }
@@ -217,7 +216,7 @@ void recv_bubble_array(NetworkMessageHandler * handler,
   Bubble ** bubbles;
 
   int i;
-  g_print("recv bubble array %d,%d\n",monkey_id,bubble_count);
+  g_print("game-network-player-manager : recv bubble array %d,%d\n",monkey_id,bubble_count);
   
   m = monkey_new(TRUE);
 
@@ -228,7 +227,6 @@ void recv_bubble_array(NetworkMessageHandler * handler,
   
   for(i = 0 ; i < bubble_count; i++) {
     bubbles[i] = bubble_new(colors[i],0,0);
-    g_print("bubble %d\n",colors[i]);
   }
 
   board_init( playground_get_board( monkey_get_playground( m )),
@@ -247,6 +245,7 @@ void game_network_player_manager_start(GameManager * g) {
 
   PRIVATE(manager)->current_level = 0;
   PRIVATE(manager)->current_score = 0;
+
   //  game_network_player_manager_start_level(manager);
   
   g_signal_connect( G_OBJECT( PRIVATE(manager)->handler), "recv-bubble-array",

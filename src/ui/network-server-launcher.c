@@ -481,6 +481,9 @@ static gboolean start_game_idle(gpointer data) {
         NetworkServerLauncher * launcher;
         GameNetworkPlayerManager * manager;
         UiMain * ui;
+        
+        xmlDoc * doc;
+        xmlNode * text, * root;
 
         launcher = NETWORK_SERVER_LAUNCHER(data);
 
@@ -496,7 +499,28 @@ static gboolean start_game_idle(gpointer data) {
         g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(launcher)->handler ),
                                                G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,launcher);
                       
-        g_print("game stated\n");
+        g_print("Network-server-launcher : game started\n");
+
+
+        doc = xmlNewDoc("1.0");
+        root = xmlNewNode(NULL,
+                          "message");
+
+        xmlDocSetRootElement(doc, root);
+         
+
+        xmlNewProp(root,"name","game_created_ok");
+	
+        text = xmlNewText("1");
+        xmlAddChild(root,text);
+	
+
+        network_message_handler_send_xml_message(PRIVATE(launcher)->handler,
+                                                PRIVATE(launcher)->client_id,
+                                                doc);
+	
+        xmlFreeDoc(doc);
+
         return FALSE;
 }
 
@@ -553,12 +577,12 @@ static void recv_network_xml_message(NetworkMessageHandler * mmh,
                 
                 sscanf(root->children->content,"%d",&game_id);
              
-        } else if(g_str_equal(message_name,"game_started") ) {
+        } else if(g_str_equal(message_name,"game_created") ) {
                 
                 int game_id;
                 
                 sscanf(root->children->content,"%d",&game_id);
-                g_print("game started %d \n",game_id);                
+                g_print("ui server-launcher : game created %d \n",game_id);                
 
                 start_game(launcher);
 

@@ -33,6 +33,7 @@ static GObjectClass* parent_class = NULL;
 struct NetworkGameManagerPrivate 
 {
 	GList * clients;
+	GList * waited_clients;
 	GMutex * clients_lock;
 	GHashTable * id_hash_table;
 	gboolean started;
@@ -57,6 +58,9 @@ static void client_state_changed(NetworkClient * client,
 
 static void client_request_start(NetworkClient * client,
 				 NetworkGameManager * manager);
+
+static void client_request_game_created_ok(NetworkClient * client,
+					   NetworkGameManager * manager);
 
 static void start_game(NetworkGameManager * manager);
 
@@ -106,6 +110,11 @@ network_game_manager_add_client(NetworkGameManager * manager,
 		g_signal_connect( G_OBJECT(client),
 				  "start-request",
 				  G_CALLBACK(client_request_start),
+				  manager);
+
+		g_signal_connect( G_OBJECT(client),
+				  "game-created-ok",
+				  G_CALLBACK(client_request_game_created_ok),
 				  manager);
 
 		g_mutex_unlock(PRIVATE(manager)->clients_lock);
@@ -278,9 +287,13 @@ void send_start_game_to_client(gpointer data,
         
         nc = (NetworkClient *)data;
         doc =(xmlDoc *)user_data;
+
+	g_print("network-game-manager : send game_created message\n");
         network_message_handler_send_xml_message(network_client_get_handler(nc),
                                                 network_client_get_id(nc),
                                                 doc);
+
+	
         
 }
 
@@ -305,6 +318,7 @@ start_game(NetworkGameManager * manager)
         xmlAddChild(root,text);
 	
 	
+	PRIVATE(manager)->waited_clients = g_list_copy( PRIVATE(manager)->clients);
 	
         g_list_foreach(PRIVATE(manager)->clients,
 		       send_start_game_to_client,
@@ -312,9 +326,9 @@ start_game(NetworkGameManager * manager)
 
         xmlFreeDoc(doc);
 
-	PRIVATE(manager)->game = network_game_new(PRIVATE(manager)->clients);
+	// now we have to wait the game_created_confirmation from clients
 
-	
+
         
 
 }
@@ -339,6 +353,36 @@ client_request_start(NetworkClient * client,
 	g_mutex_unlock( PRIVATE(manager)->clients_lock);
 
 	g_mutex_unlock( PRIVATE(manager)->started_lock);
+}
+
+
+static void 
+client_request_game_created_ok(NetworkClient * client,
+			       NetworkGameManager * manager) 
+{
+
+	// TODO test owner ?
+
+	// test game state
+
+	g_mutex_lock( PRIVATE(manager)->started_lock);
+	g_mutex_lock( PRIVATE(manager)->clients_lock);
+
+	PRIVATE(manager)->waited_clients =
+		g_list_remove(PRIVATE(manager)->waited_clients,client);
+
+	g_mutex_unlock( PRIVATE(manager)->clients_lock);
+
+	g_mutex_unlock( PRIVATE(manager)->started_lock);
+
+	if( g_list_length(PRIVATE(manager)->waited_clients) == 0) {
+		PRIVATE(manager)->game = network_game_new(PRIVATE(manager)->clients);
+			
+		network_game_start(PRIVATE(manager)->game);
+	
+
+	}
+
 }
 
 static void 

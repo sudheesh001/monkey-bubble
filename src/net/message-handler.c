@@ -388,7 +388,6 @@ void parse_xml_message(NetworkMessageHandler * mmh,
                 count++;
         }
 
-        g_print("***********************************************\nxml readed\n %s\n*************************************************************\n",(char *)xml_message);
 
         xmlMessage = xmlStrdup((const xmlChar *) ( xml_message ));
 
@@ -459,7 +458,6 @@ void write_chunk(NetworkMessageHandler * mmh,
                 size -= writed;
                 p += writed;
         }
-        g_print("write chunk %d\n",chunk_count);
         
 }
 
@@ -481,7 +479,6 @@ gboolean read_chunk(NetworkMessageHandler * mmh,
                         size -= readed;
                 }
 
-                g_print("read chink\n");
 
         }
 
@@ -515,7 +512,6 @@ void network_message_handler_send_message (NetworkMessageHandler * mmh,
         
         t->client_id = htonl( client_id);
 
-        g_print("*********************************************************\nmessage :\n%s\n*****************************************************************\n",text);
 
         g_strlcat( t->message,text,CHUNK_SIZE -5);
         
@@ -558,12 +554,11 @@ void network_message_handler_send_xml_message(NetworkMessageHandler * mmh,
         t->chunk_count = htonl( computed_size / CHUNK_SIZE);
 
         xml_message = g_malloc( computed_size);
-        g_print("****************************************************\nsend xml message:\n%s\n******************************************************************\n",mem);
         memset(xml_message,0,computed_size);
         memcpy(xml_message,t,CHUNK_SIZE);
         memcpy(xml_message+CHUNK_SIZE,mem,size);
         write_chunk(mmh,(guint8 *)xml_message,computed_size / CHUNK_SIZE );
-        
+
 }
 
 void network_message_handler_join(NetworkMessageHandler * mmh) {
@@ -605,7 +600,6 @@ void network_message_handler_send_waiting_added (NetworkMessageHandler * mmh,
                         memset(message,0,CHUNK_SIZE);                        
                 }
 
-                g_print("colors[%d] = %d\n",i,colors[i]);
                 message[j] = colors[i];
                 j++;
 
@@ -621,7 +615,6 @@ void network_message_handler_send_waiting_added (NetworkMessageHandler * mmh,
                 }
 
                 
-                g_print("columns[%d] = %d\n",i,columns[i]);
                 message[j] = columns[i];
                 j++;
 
@@ -650,8 +643,6 @@ void parse_waiting_added(NetworkMessageHandler * mmh,
         struct Test * t;
   
         t = (struct Test *)  message;
-        g_print("recieve_waiting bubble ?? %d\n",t->message_type);
-        g_print("bubble count %d\n",t->bubble_count);
         bubbles = g_malloc( t->bubble_count);
 
         columns = g_malloc( t->bubble_count);
@@ -662,13 +653,11 @@ void parse_waiting_added(NetworkMessageHandler * mmh,
         
         for(i = 0;  i < bubble_count ; i++) {
                 
-                g_print("colors[%d] = %d\n",i,message[j]);
 
                 bubbles[i] = message[j];
 
                 j++;
                 if( j >= CHUNK_SIZE && i < bubble_count) {
-                        g_print("read chunck\n");
                         read_chunk(mmh,message);
                         j = 0;
                         
@@ -678,13 +667,11 @@ void parse_waiting_added(NetworkMessageHandler * mmh,
 
         for(i = 0;  i < bubble_count ; i++) {
 
-                g_print("columns[%d] = %d\n",i,message[j]);
 
                 columns[i] = message[j];
 
                 j++;
                 if( j >= CHUNK_SIZE && i < bubble_count) {
-                        g_print("read chunck\n");
                         read_chunk(mmh,message);
                         j = 0;
                         
@@ -721,7 +708,6 @@ void network_message_handler_send_bubble_array( NetworkMessageHandler * mmh,
 
         i = sizeof(struct Test) + bubbles_count;
         size = calculate_size(i);
-        g_print("size %d\n\n\n",size);
         message = g_malloc( size);
 
         t = (struct Test *)  message;
@@ -735,14 +721,11 @@ void network_message_handler_send_bubble_array( NetworkMessageHandler * mmh,
 
         for(i = 0 ; i < bubbles_count; i++ ){
 
-                g_print("color[%d]=%d\n",i,bubbles[i]);
                 message[j] = bubbles[i];
                 j++;
 
         }
-        g_print("send bubble array\n");
         write_chunk(mmh,message,size / CHUNK_SIZE);
-        g_print("send bubble array done\n");
 
 }
 
@@ -763,7 +746,6 @@ void parse_bubble_array(NetworkMessageHandler * mmh,
         struct Test * t;
   
         t = (struct Test *)  message;
-        g_print("bubble count %d\n",t->bubble_count);
         bubbles = g_malloc( t->bubble_count);
 
         monkey_id = g_ntohl( t->monkey_id);
@@ -774,14 +756,11 @@ void parse_bubble_array(NetworkMessageHandler * mmh,
 
                 bubbles[i] = message[j];
 
-                g_print("color[%d] %d\n",i,bubbles[i]);
                 j++;
                 if( j >= CHUNK_SIZE) {
-                        g_print("read chunck\n");
                         read_chunk(mmh,message);
                         j = 0;
                         
-                        g_print("readed chunck\n");
                 }
 
         }
@@ -948,9 +927,7 @@ void network_message_handler_send_start       (NetworkMessageHandler * mmh) {
 
         memset(message,0,CHUNK_SIZE);
         message[0] = SEND_START;
-        g_print("send start \n");
         write_chunk(mmh,message,1);
-        g_print("send start done \n");
 
 }
 

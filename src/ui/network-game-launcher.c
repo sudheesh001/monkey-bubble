@@ -88,10 +88,6 @@ static void ready_signal(gpointer    callback_data,
                          GtkWidget  *widget);
 
 
-static void start_signal(gpointer    callback_data,
-                         guint       callback_action,
-                         GtkWidget  *widget);
-
 static gboolean connect_server(NetworkGameLauncher * launcher);
 
 static void set_status_message(NetworkGameLauncher * launcher,
@@ -137,9 +133,6 @@ NetworkGameLauncher *network_game_launcher_new() {
 
         item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "ready_button");
         g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(ready_signal),ngl);
-        
-        item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "start_button");
-        g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(start_signal),ngl);
         
         PRIVATE(ngl)->connection_label = GTK_LABEL(glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "connection_state_label"));
         
@@ -397,27 +390,6 @@ static void send_start(NetworkGameLauncher * launcher) {
 }
 
 
-static void start_signal(gpointer    callback_data,
-                         guint       callback_action,
-                         GtkWidget  *widget) {
-
-
-        NetworkGameLauncher * launcher;
-
-        launcher = NETWORK_GAME_LAUNCHER(callback_data);
-
-        send_start(launcher);
-
-        set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
-                                             , "start_button"),FALSE); 
-
-        set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
-                                             , "quit_button"),FALSE); 
-
-        set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
-                                             , "ready_button"),FALSE); 
-
-}
 
 
 void send_init(NetworkGameLauncher * launcher) {
@@ -554,6 +526,8 @@ gboolean start_game_idle(gpointer data) {
         NetworkGameLauncher * launcher;
         GameNetworkPlayerManager * manager;
         UiMain * ui;
+        xmlDoc * doc;
+        xmlNode * text, * root;
 
         launcher = NETWORK_GAME_LAUNCHER(data);
 
@@ -568,7 +542,32 @@ gboolean start_game_idle(gpointer data) {
 
         g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(launcher)->handler ),
                                                G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,launcher);
+              
+
+
                       
+        g_print("Network-game-launcher : game started\n");
+
+
+        doc = xmlNewDoc("1.0");
+        root = xmlNewNode(NULL,
+                          "message");
+
+        xmlDocSetRootElement(doc, root);
+         
+
+        xmlNewProp(root,"name","game_created_ok");
+	
+        text = xmlNewText("1");
+        xmlAddChild(root,text);
+	
+
+        network_message_handler_send_xml_message(PRIVATE(launcher)->handler,
+                                                PRIVATE(launcher)->client_id,
+                                                doc);
+	
+        xmlFreeDoc(doc);
+        
         return FALSE;
 }
 
@@ -635,12 +634,12 @@ void recv_network_xml_message(NetworkMessageHandler * mmh,
                 set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
                                                      ,"connected_game_hbox"),TRUE); 
 
-        } else if(g_str_equal(message_name,"game_started") ) {
+        } else if(g_str_equal(message_name,"game_created") ) {
                 
                 int game_id;
                 
                 sscanf(root->children->content,"%d",&game_id);
-                g_print("game started %d \n",game_id);                
+                g_print("network-game-launcher.c : game started %d \n",game_id);                
 
                 start_game(launcher);
 
