@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: monkey-buble VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-06 04:30+0100\n"
-"PO-Revision-Date: 2004-02-06 17:57+0100\n"
+"POT-Creation-Date: 2004-03-10 04:20+0100\n"
+"PO-Revision-Date: 2004-03-10 14:15+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,43 +24,51 @@ msgstr "Klávesové zkratky"
 msgid "_Shortcut Keys:"
 msgstr "_Klávesové zkratky:"
 
-#: data/monkey-bubble.glade.h:1 monkey-bubble.desktop.in.h:1
+#: data/monkey-bubble.glade.h:1
+msgid "Create network game"
+msgstr "Vytvořit síťovou hru"
+
+#: data/monkey-bubble.glade.h:2
+msgid "Join _network game"
+msgstr "Přidat se k _síťové hře"
+
+#: data/monkey-bubble.glade.h:3 monkey-bubble.desktop.in.h:1
 msgid "Monkey Bubble"
 msgstr "Monkey Bubble"
 
-#: data/monkey-bubble.glade.h:2
+#: data/monkey-bubble.glade.h:4
 msgid "New 1 player"
 msgstr "Nová pro jednoho hráče"
 
-#: data/monkey-bubble.glade.h:3
+#: data/monkey-bubble.glade.h:5
 msgid "New 2 players"
 msgstr "Nová pro dva hráče"
 
-#: data/monkey-bubble.glade.h:4 src/ui/ui-main.c:393 src/ui/ui-main.c:523
+#: data/monkey-bubble.glade.h:6 src/ui/ui-main.c:391 src/ui/ui-main.c:521
 msgid "Pause game"
 msgstr "Pozastavit hru"
 
-#: data/monkey-bubble.glade.h:5 src/ui/keyboard-properties.c:85
+#: data/monkey-bubble.glade.h:7 src/ui/keyboard-properties.c:85
 msgid "Stop game"
 msgstr "Zastavit hru"
 
-#: data/monkey-bubble.glade.h:6
+#: data/monkey-bubble.glade.h:8
 msgid "_About"
 msgstr "O _aplikaci"
 
-#: data/monkey-bubble.glade.h:7
+#: data/monkey-bubble.glade.h:9
 msgid "_Contents"
 msgstr "_Obsah"
 
-#: data/monkey-bubble.glade.h:8
+#: data/monkey-bubble.glade.h:10
 msgid "_Game"
 msgstr "_Hra"
 
-#: data/monkey-bubble.glade.h:9
+#: data/monkey-bubble.glade.h:11
 msgid "_Help"
 msgstr "Nápo_věda"
 
-#: data/monkey-bubble.glade.h:10
+#: data/monkey-bubble.glade.h:12
 msgid "_Settings"
 msgstr "_Nastavení"
 
@@ -336,15 +344,15 @@ msgstr "_Akce"
 msgid "Shortcut _Key"
 msgstr "_Klávesová zkratka"
 
-#: src/ui/ui-main.c:516
+#: src/ui/ui-main.c:514
 msgid "Resume game"
 msgstr "Obnovit hru"
 
-#: src/ui/ui-main.c:570
+#: src/ui/ui-main.c:568
 msgid "translator_credits"
 msgstr "Miloslav Trmač <mitr@volny.cz>"
 
-#: src/ui/ui-main.c:599
+#: src/ui/ui-main.c:597
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Při zobrazování nápovědy došlo k chybě: %s"
