@@ -1,0 +1,311 @@
+# Dutch translation of Monkey Bubble.
+# Copyright (C) 2004 The Free Software Foundation
+# This file is distributed under the same license as the Monkey-bubble package.
+# Tino Meinen <a.t.meinen@chello.nl>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GNOME 2.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-02-02 04:35+0100\n"
+"PO-Revision-Date: 2004-02-02 14:14+0100\n"
+"Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
+"Language-Team: Dutch <verltaling@nl.linux.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/keybinding.glade.h:1
+msgid "Keyboard Shortcuts"
+msgstr "Sneltoetsen"
+
+#: data/keybinding.glade.h:2
+msgid "_Shortcut Keys:"
+msgstr "_Sneltoetsen:"
+
+#: data/monkey-bubble.glade.h:1 monkey-bubble.desktop.in.h:1
+msgid "Monkey Bubble"
+msgstr "Monkey Bubble"
+
+#: data/monkey-bubble.glade.h:2
+msgid "New 1 player"
+msgstr "Nieuw 1 speler"
+
+#: data/monkey-bubble.glade.h:3
+msgid "New 2 players"
+msgstr "Nieuw 2 spelers"
+
+#: data/monkey-bubble.glade.h:4 src/ui/ui-main.c:382 src/ui/ui-main.c:512
+msgid "Pause game"
+msgstr "Pauzeren"
+
+#: data/monkey-bubble.glade.h:5 src/ui/keyboard-properties.c:85
+msgid "Stop game"
+msgstr "Stoppen"
+
+#: data/monkey-bubble.glade.h:6
+msgid "_About"
+msgstr "_Info"
+
+#: data/monkey-bubble.glade.h:7
+msgid "_Contents"
+msgstr "_Inhoud"
+
+#: data/monkey-bubble.glade.h:8
+msgid "_Game"
+msgstr "_Spel"
+
+#: data/monkey-bubble.glade.h:9
+msgid "_Help"
+msgstr "_Hulp"
+
+#: data/monkey-bubble.glade.h:10
+msgid "_Settings"
+msgstr "In_stellingen"
+
+#: data/monkey-bubble.schemas.in.h:1
+msgid "1 player game"
+msgstr "Spel met 1 speler"
+
+#: data/monkey-bubble.schemas.in.h:2
+msgid "2 players game"
+msgstr "Spel met 2 spelers"
+
+#: data/monkey-bubble.schemas.in.h:3
+msgid "F1"
+msgstr "F1"
+
+#: data/monkey-bubble.schemas.in.h:4
+msgid "F2"
+msgstr "F2"
+
+#: data/monkey-bubble.schemas.in.h:5
+msgid "Left"
+msgstr "Links"
+
+#: data/monkey-bubble.schemas.in.h:6
+msgid "Pause"
+msgstr "Pauzeren"
+
+#: data/monkey-bubble.schemas.in.h:7
+msgid "Pause the game"
+msgstr "Het spel pauzeren"
+
+#: data/monkey-bubble.schemas.in.h:8
+msgid "Quit the game"
+msgstr "Het spel afsluiten"
+
+#: data/monkey-bubble.schemas.in.h:9
+msgid "Right"
+msgstr "Rechts"
+
+#: data/monkey-bubble.schemas.in.h:10
+msgid "Stop the game"
+msgstr "Het spel stoppen"
+
+#: data/monkey-bubble.schemas.in.h:11
+msgid "Up"
+msgstr "Boven"
+
+#: data/monkey-bubble.schemas.in.h:12
+msgid "d"
+msgstr "d"
+
+#: data/monkey-bubble.schemas.in.h:13
+msgid "f"
+msgstr "f"
+
+#: data/monkey-bubble.schemas.in.h:14
+msgid "left key for player one"
+msgstr "linker toets voor speler een"
+
+#: data/monkey-bubble.schemas.in.h:15
+msgid "left key for player two"
+msgstr "linker toets voor speler twee"
+
+#: data/monkey-bubble.schemas.in.h:16
+msgid "right key for player one"
+msgstr "rechter toets voor speler een"
+
+#: data/monkey-bubble.schemas.in.h:17
+msgid "right key for player two"
+msgstr "rechter toets voor speler twee"
+
+#: data/monkey-bubble.schemas.in.h:18
+msgid "s"
+msgstr "s"
+
+#: data/monkey-bubble.schemas.in.h:19
+msgid "shoot key for player one"
+msgstr "toets: schieten voor speler een"
+
+#: data/monkey-bubble.schemas.in.h:20
+msgid "shoot key for player two"
+msgstr "toets: schieten voor speler twee"
+
+#: monkey-bubble.desktop.in.h:2
+msgid "Monkey Bubble Arcade Game"
+msgstr "Monkey Bubble Arcadespel"
+
+#: src/ui/eggcellrendererkeys.c:160 src/ui/eggcellrendererkeys.c:161
+msgid "Accelerator key"
+msgstr "Sneltoets"
+
+#: src/ui/eggcellrendererkeys.c:170 src/ui/eggcellrendererkeys.c:171
+msgid "Accelerator modifiers"
+msgstr "Sneltoets contoletoets"
+
+#: src/ui/eggcellrendererkeys.c:180
+msgid "Accelerator Mode"
+msgstr "Sneltoets modus"
+
+#: src/ui/eggcellrendererkeys.c:181
+msgid "The type of accelerator."
+msgstr "Het soort sneltoets."
+
+# ongebruikt, niet gebruikt
+#: src/ui/eggcellrendererkeys.c:219 src/ui/keyboard-properties.c:764
+msgid "Disabled"
+msgstr "Uitgezet"
+
+#: src/ui/eggcellrendererkeys.c:330 src/ui/eggcellrendererkeys.c:568
+msgid "Type a new accelerator, or press Backspace to clear"
+msgstr "Geef een nieuwe sneltoets, of druk op Backspace om te wissen"
+
+#: src/ui/eggcellrendererkeys.c:571
+msgid "Type a new accelerator"
+msgstr "Geen een nieuwe sneltoets"
+
+#: src/ui/keyboard-properties.c:79
+msgid "New game 1 player"
+msgstr "Nieuw spel speler 1"
+
+#: src/ui/keyboard-properties.c:81
+msgid "New game 2 player"
+msgstr "Nieuw spel speler 2"
+
+#: src/ui/keyboard-properties.c:83
+msgid "Pause/Resume"
+msgstr "Pauzeren/hervatten"
+
+#: src/ui/keyboard-properties.c:87
+msgid "Quit game"
+msgstr "Spel afsluiten"
+
+#: src/ui/keyboard-properties.c:93
+msgid "Full Screen"
+msgstr "Schermvullend"
+
+#: src/ui/keyboard-properties.c:95
+msgid "Normal Size"
+msgstr "Normale grootte"
+
+#: src/ui/keyboard-properties.c:100 src/ui/keyboard-properties.c:110
+msgid "aim left"
+msgstr "links richten"
+
+#: src/ui/keyboard-properties.c:102 src/ui/keyboard-properties.c:112
+msgid "aim right"
+msgstr "rechts richten"
+
+#: src/ui/keyboard-properties.c:104 src/ui/keyboard-properties.c:114
+msgid "shoot"
+msgstr "schieten"
+
+#: src/ui/keyboard-properties.c:121
+msgid "Player 1"
+msgstr "Speler 1"
+
+#: src/ui/keyboard-properties.c:122
+msgid "Player 2"
+msgstr "Speler 2"
+
+#: src/ui/keyboard-properties.c:123
+msgid "Game"
+msgstr "Spel"
+
+#: src/ui/keyboard-properties.c:124
+msgid "View"
+msgstr "Beeld"
+
+#: src/ui/keyboard-properties.c:337
+#, c-format
+msgid "There was an error loading config from %s. (%s)\n"
+msgstr "Er was een fout bij het laden van de configuratie vanaf %s. (%s)\n"
+
+#: src/ui/keyboard-properties.c:351
+#, c-format
+msgid ""
+"There was an error subscribing to notification of terminal keybinding "
+"changes. (%s)\n"
+msgstr "Er was een fout bij het doorgeven van de aanpassingen van de console-toetsbindingen (%s)\n"
+
+#: src/ui/keyboard-properties.c:394
+#, c-format
+msgid "There was an error loading a terminal keybinding. (%s)\n"
+msgstr "Er was een fout bij het laden van een console-toetsbinding. (%s)\n"
+
+#: src/ui/keyboard-properties.c:410
+#, c-format
+msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
+msgstr "De waarde van de configuratietoets %s is ongeldig; waarde is \"%s\"\n"
+
+#: src/ui/keyboard-properties.c:433
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menubar access "
+"keys. (%s)\n"
+msgstr "Er was een fout bij het laden van de configuratiewaarde die bepaalt of menubalk-sneltoetsen worden gebruikt. (%s)\n"
+
+#: src/ui/keyboard-properties.c:447
+#, c-format
+msgid ""
+"There was an error subscribing to notification on changes on whether to use "
+"menubar access keys (%s)\n"
+msgstr "Er was een fout bij het doorgeven van aanpassingen of menubalk sneltoetsen moeten worden gebruikt (%s)\n"
+
+# het doorgeven van de aanpassingen van de console-toetsbindingen (%s)\n"
+#: src/ui/keyboard-properties.c:458
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menu "
+"accelerators. (%s)\n"
+msgstr "Er was een fout bij het laden van de configuratiewaarde of menu-sneltoetsen moeten worden gebruikt. (%s)\n"
+
+#: src/ui/keyboard-properties.c:474
+#, c-format
+msgid ""
+"There was an error subscribing to notification for use_menu_accelerators (%"
+"s)\n"
+msgstr "Er was een fout bij het doorgeven van use_menu_accelerators (%s)\n"
+
+#: src/ui/keyboard-properties.c:824
+#, c-format
+msgid "Error propagating accelerator change to configuration database: %s\n"
+msgstr "Fout bij het doorgeven van de sneltoets aan de configuratie-database: %s\n"
+
+#: src/ui/keyboard-properties.c:993
+#, c-format
+msgid "Error setting new accelerator in configuration database: %s\n"
+msgstr "Fout bij het instellen van nieuwe sneltoets in de configuratie-database: %s\n"
+
+#: src/ui/keyboard-properties.c:1092
+msgid "_Action"
+msgstr "_Actie"
+
+#: src/ui/keyboard-properties.c:1114
+msgid "Shortcut _Key"
+msgstr "Snel_toets"
+
+#: src/ui/ui-main.c:505
+msgid "Resume game"
+msgstr "Spel hervatten"
+
+#: src/ui/ui-main.c:551
+msgid "translator_credits"
+msgstr "Tino Meinen <a.t.meinen@chello.nl>"
+
+#: src/ui/ui-main.c:580
+#, c-format
+msgid "There was an error displaying help: %s"
+msgstr "Er was een fout bij het weergeven van de hulp: %s"
