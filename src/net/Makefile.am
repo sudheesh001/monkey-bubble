@@ -22,19 +22,16 @@ marshal_sources = \
 	$(NULL)
 
 monkey_srv_SOURCES = \
-	mn-game-manager.c mn-game-manager.h \
-	monkey-message-handler.c monkey-message-handler.h \
-	monkey-network-game.c monkey-network-game.h \
-	main.c \
-	$(marshal_sources) \
+	main.c 
 	$(NULL)
 
 monkey_srv_LDFLAGS =
 
 monkey_srv_LDADD = \
 	$(MONKEY_SRV_LIBS) \
+	libmonkeynet.a \
 	../monkey/libmonkey.a \
-	../util/libmonkeyutil.a
+	../util/libmonkeyutil.a 
 
 $(monkey_srv_OBJECTS): $(marshal_sources)
 

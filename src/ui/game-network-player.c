@@ -67,6 +67,11 @@ struct GameNetworkPlayerPrivate {
     int monkey_id;
 };
 
+
+static void recv_winlost(MonkeyMessageHandler * handler,
+                         int monkey_id,
+                         gboolean winlost,
+                         GameNetworkPlayer * game);
 static void game_network_player_add_to_score(GameNetworkPlayer * g,gint points);
 
 static void game_network_player_bubble_sticked(Monkey * monkey,Bubble * b,GameNetworkPlayer * game);
@@ -250,6 +255,38 @@ static void recv_add_bubble(MonkeyMessageHandler * handler,
   
 }
 
+static gboolean idle_draw_win(gpointer data) {
+
+        GameNetworkPlayer * game;
+
+        game = GAME_NETWORK_PLAYER(data);
+        monkey_view_draw_win( PRIVATE(game)->display );
+
+        return FALSE;
+}
+
+static void recv_winlost(MonkeyMessageHandler * handler,
+                         int monkey_id,
+                         gboolean winlost,
+			    GameNetworkPlayer * game) {
+
+    g_assert( IS_GAME_NETWORK_PLAYER(game));
+
+    if( winlost == FALSE) {
+            g_print("you win\n");
+
+            PRIVATE(game)->state = GAME_FINISHED;
+    
+            g_idle_add( idle_draw_win,game);
+    
+            game_network_player_fire_changed(game);	
+            game_network_player_stop(GAME(game));
+    }
+
+    //	   g_idle_add( add_bubble,monkey);
+	   
+  
+}
 
 static void recv_waiting_added(MonkeyMessageHandler * handler,
                                int monkey_id,
@@ -311,6 +348,9 @@ GameNetworkPlayer * game_network_player_new(GtkWidget * window,MonkeyCanvas * ca
 
     g_signal_connect( G_OBJECT( handler), "recv-add-bubble",
 		      G_CALLBACK(recv_add_bubble),game);
+
+    g_signal_connect( G_OBJECT( handler), "recv-winlost",
+		      G_CALLBACK(recv_winlost),game);
 
     g_signal_connect( G_OBJECT( handler), "recv-waiting-added",
 		      G_CALLBACK(recv_waiting_added),game);

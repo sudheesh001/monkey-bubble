@@ -1,3 +1,12 @@
+2004-03-24  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	"testable" code ..
+	* src/net/Makefile.am:
+	* src/net/monkey-network-game.c: (what_bubble), (bubble_sticked),
+	(game_lost), (bubbles_exploded), (create_monkey), (start_new_game):
+	* src/ui/game-network-player.c: (idle_draw_win), (recv_winlost),
+	(game_network_player_new):
+
 2004-03-12  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	more network code
