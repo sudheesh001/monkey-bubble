@@ -43,9 +43,9 @@ int main(int  argc, char **argv)
 
   
   
-  //  gst_init(&argc,&argv);  
+  gst_init(&argc,&argv);  
   
-  sound_manager_active_sound(FALSE);
+  sound_manager_active_sound(TRUE);
   
   ui_main = ui_main_get_instance();
   
