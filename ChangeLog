@@ -1,3 +1,8 @@
+2005-03-29  Sven Herzberg  <herzi@gnome-de.org>
+
+	* src/ui/eggcellrendererkeys.c: included a patch from Robert Day
+	<zarin@dscn.net> to fix compilation with gcc 3.4
+
 2005-03-16  Abel Cheung  <maddog@linuxhall.org>
 
 	* configure.in: Added "zh_TW" to ALL_LINGUAS.
