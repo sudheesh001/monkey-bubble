@@ -1,0 +1,347 @@
+# monkey-bubble's Portuguese translation.
+# Copyright © 2004 monkey-bubble
+# This file is distributed under the same license as the monkey-bubble package.
+# Duarte Loreto <happyguy_pt@hotmail.com>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 2.6\n"
+"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
+"POT-Creation-Date: 2004-02-21 14:00+0000\n"
+"PO-Revision-Date: 2004-02-21 14:10+0000\n"
+"Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
+"Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/keybinding.glade.h:1
+msgid "Keyboard Shortcuts"
+msgstr "Atalhos de Teclado"
+
+#: data/keybinding.glade.h:2
+msgid "_Shortcut Keys:"
+msgstr "Teclas de _Atalho:"
+
+#: data/monkey-bubble.glade.h:1 monkey-bubble.desktop.in.h:1
+msgid "Monkey Bubble"
+msgstr "Monkey Bubble"
+
+#: data/monkey-bubble.glade.h:2
+msgid "New 1 player"
+msgstr "Novo de 1 jogador"
+
+#: data/monkey-bubble.glade.h:3
+msgid "New 2 players"
+msgstr "Novo de 2 jogadores"
+
+#: data/monkey-bubble.glade.h:4 src/ui/ui-main.c:393 src/ui/ui-main.c:523
+msgid "Pause game"
+msgstr "Pausar jogo"
+
+#: data/monkey-bubble.glade.h:5 src/ui/keyboard-properties.c:85
+msgid "Stop game"
+msgstr "Parar jogo"
+
+#: data/monkey-bubble.glade.h:6
+msgid "_About"
+msgstr "_Sobre"
+
+#: data/monkey-bubble.glade.h:7
+msgid "_Contents"
+msgstr "_Conteúdo"
+
+#: data/monkey-bubble.glade.h:8
+msgid "_Game"
+msgstr "_Jogo"
+
+#: data/monkey-bubble.glade.h:9
+msgid "_Help"
+msgstr "_Ajuda"
+
+#: data/monkey-bubble.glade.h:10
+msgid "_Settings"
+msgstr "_Definições"
+
+#: data/monkey-bubble.schemas.in.h:1
+msgid "1 player game"
+msgstr "Jogo de 1 jogador"
+
+#: data/monkey-bubble.schemas.in.h:2
+msgid "2 players game"
+msgstr "Jogo de 2 jogadores"
+
+#: data/monkey-bubble.schemas.in.h:3
+msgid "F1"
+msgstr "F1"
+
+#: data/monkey-bubble.schemas.in.h:4
+msgid "F2"
+msgstr "F2"
+
+#: data/monkey-bubble.schemas.in.h:5
+msgid "Left"
+msgstr "Esquerda"
+
+#: data/monkey-bubble.schemas.in.h:6
+msgid "Pause"
+msgstr "Pausar"
+
+#: data/monkey-bubble.schemas.in.h:7
+msgid "Pause the game"
+msgstr "Pausar o jogo"
+
+#: data/monkey-bubble.schemas.in.h:8
+msgid "Quit the game"
+msgstr "Sair do jogo"
+
+#: data/monkey-bubble.schemas.in.h:9
+msgid "Right"
+msgstr "Direita"
+
+#: data/monkey-bubble.schemas.in.h:10
+msgid "Stop the game"
+msgstr "Parar o jogo"
+
+#: data/monkey-bubble.schemas.in.h:11
+msgid "Up"
+msgstr "Acima"
+
+#: data/monkey-bubble.schemas.in.h:12
+msgid "d"
+msgstr "d"
+
+#: data/monkey-bubble.schemas.in.h:13
+msgid "f"
+msgstr "f"
+
+#: data/monkey-bubble.schemas.in.h:14
+msgid "left key for player one"
+msgstr "tecla de esquerda para o jogador um"
+
+#: data/monkey-bubble.schemas.in.h:15
+msgid "left key for player two"
+msgstr "tecla de esquerda para o jogador dois"
+
+#: data/monkey-bubble.schemas.in.h:16
+msgid "right key for player one"
+msgstr "tecla de direita para o jogador um"
+
+#: data/monkey-bubble.schemas.in.h:17
+msgid "right key for player two"
+msgstr "tecla de direita para o jogador dois"
+
+#: data/monkey-bubble.schemas.in.h:18
+msgid "s"
+msgstr "s"
+
+#: data/monkey-bubble.schemas.in.h:19
+msgid "shoot key for player one"
+msgstr "tecla de disparo para o jogador um"
+
+#: data/monkey-bubble.schemas.in.h:20
+msgid "shoot key for player two"
+msgstr "tecla de disparo para o jogador dois"
+
+#: data/netgame.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: data/netgame.glade.h:2
+msgid "Network game"
+msgstr "Jogo em rede"
+
+#: data/netgame.glade.h:3
+msgid "Players"
+msgstr "Jogadores"
+
+#: data/netgame.glade.h:4 src/ui/keyboard-properties.c:87
+msgid "Quit game"
+msgstr "Sair do jogo"
+
+#: data/netgame.glade.h:5
+msgid "Ready"
+msgstr "Preparado"
+
+#: data/netgame.glade.h:6
+msgid "Start Game"
+msgstr "Iniciar o Jogo"
+
+#: data/netgame.glade.h:7
+msgid "_Go"
+msgstr "_Ir"
+
+#: data/netgame.glade.h:8
+msgid "_Server"
+msgstr "_Servidor"
+
+#: monkey-bubble.desktop.in.h:2
+msgid "Monkey Bubble Arcade Game"
+msgstr "Jogo de Arcada Monkey Bubble"
+
+#: src/ui/eggcellrendererkeys.c:160 src/ui/eggcellrendererkeys.c:161
+msgid "Accelerator key"
+msgstr "Tecla de atalho"
+
+#: src/ui/eggcellrendererkeys.c:170 src/ui/eggcellrendererkeys.c:171
+msgid "Accelerator modifiers"
+msgstr "Modificadores de atalho"
+
+#: src/ui/eggcellrendererkeys.c:180
+msgid "Accelerator Mode"
+msgstr "Modo de Atalho"
+
+#: src/ui/eggcellrendererkeys.c:181
+msgid "The type of accelerator."
+msgstr "O tipo de atalho."
+
+#: src/ui/eggcellrendererkeys.c:219 src/ui/keyboard-properties.c:764
+msgid "Disabled"
+msgstr "Inactivo"
+
+#: src/ui/eggcellrendererkeys.c:330 src/ui/eggcellrendererkeys.c:568
+msgid "Type a new accelerator, or press Backspace to clear"
+msgstr "Insira um novo atalho, ou prima Backspace para limpar"
+
+#: src/ui/eggcellrendererkeys.c:571
+msgid "Type a new accelerator"
+msgstr "Insira um novo atalho"
+
+#: src/ui/keyboard-properties.c:79
+msgid "New game 1 player"
+msgstr "Novo jogo de 1 jogador"
+
+#: src/ui/keyboard-properties.c:81
+msgid "New game 2 player"
+msgstr "Novo jogo de 2 jogadores"
+
+#: src/ui/keyboard-properties.c:83
+msgid "Pause/Resume"
+msgstr "Pausar/Retomar"
+
+#: src/ui/keyboard-properties.c:93
+msgid "Full Screen"
+msgstr "Ecrã Completo"
+
+#: src/ui/keyboard-properties.c:95
+msgid "Normal Size"
+msgstr "Tamanho Normal"
+
+#: src/ui/keyboard-properties.c:100 src/ui/keyboard-properties.c:110
+msgid "aim left"
+msgstr "apontar à esquerda"
+
+#: src/ui/keyboard-properties.c:102 src/ui/keyboard-properties.c:112
+msgid "aim right"
+msgstr "apontar à direita"
+
+#: src/ui/keyboard-properties.c:104 src/ui/keyboard-properties.c:114
+msgid "shoot"
+msgstr "disparar"
+
+#: src/ui/keyboard-properties.c:121
+msgid "Player 1"
+msgstr "Jogador 1"
+
+#: src/ui/keyboard-properties.c:122
+msgid "Player 2"
+msgstr "Jogador 2"
+
+#: src/ui/keyboard-properties.c:123
+msgid "Game"
+msgstr "Jogo"
+
+#: src/ui/keyboard-properties.c:124
+msgid "View"
+msgstr "Ver"
+
+#: src/ui/keyboard-properties.c:337
+#, c-format
+msgid "There was an error loading config from %s. (%s)\n"
+msgstr "Ocorreu um erro ao ler a configuração de %s. (%s)\n"
+
+#: src/ui/keyboard-properties.c:351
+#, c-format
+msgid ""
+"There was an error subscribing to notification of terminal keybinding "
+"changes. (%s)\n"
+msgstr ""
+"Ocorreu um erro ao subscrever notificações de alterações de atalhos de "
+"teclado na consola. (%s)\n"
+
+#: src/ui/keyboard-properties.c:394
+#, c-format
+msgid "There was an error loading a terminal keybinding. (%s)\n"
+msgstr "Ocorreu um erro ao ler um atalho de teclado de consola. (%s)\n"
+
+#: src/ui/keyboard-properties.c:410
+#, c-format
+msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
+msgstr "O valor da chave de configuração %s não é valido; o valor é \"%s\"\n"
+
+#: src/ui/keyboard-properties.c:433
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menubar access "
+"keys. (%s)\n"
+msgstr ""
+"Ocorreu um erro ao ler o valor de configuração sobre se utilizar ou não "
+"atalhos de menu. (%s)\n"
+
+#: src/ui/keyboard-properties.c:447
+#, c-format
+msgid ""
+"There was an error subscribing to notification on changes on whether to use "
+"menubar access keys (%s)\n"
+msgstr ""
+"Ocorreu um erro ao subscrever notificações de alterações de se utilizar ou "
+"não atalhos na barra de menu (%s)\n"
+
+#: src/ui/keyboard-properties.c:458
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menu "
+"accelerators. (%s)\n"
+msgstr ""
+"Ocorreu um erro ao ler o valor de configuração sobre se utilizar ou não "
+"atalhos de menu. (%s)\n"
+
+#: src/ui/keyboard-properties.c:474
+#, c-format
+msgid ""
+"There was an error subscribing to notification for use_menu_accelerators (%"
+"s)\n"
+msgstr ""
+"Ocorreu um erro ao subscrever notificações de use_menu_accelerators (%s)\n"
+
+#: src/ui/keyboard-properties.c:824
+#, c-format
+msgid "Error propagating accelerator change to configuration database: %s\n"
+msgstr ""
+"Erro ao propagar alteração de atalhos na base de dados de configuração: %s\n"
+
+#: src/ui/keyboard-properties.c:993
+#, c-format
+msgid "Error setting new accelerator in configuration database: %s\n"
+msgstr "Erro ao definir novo atalho na base de dados de configuração: %s\n"
+
+#: src/ui/keyboard-properties.c:1092
+msgid "_Action"
+msgstr "_Acção"
+
+#: src/ui/keyboard-properties.c:1114
+msgid "Shortcut _Key"
+msgstr "_Tecla de Atalho"
+
+#: src/ui/ui-main.c:516
+msgid "Resume game"
+msgstr "Retomar o jogo"
+
+#: src/ui/ui-main.c:570
+msgid "translator_credits"
+msgstr "Duarte Loreto <happyguy_pt@hotmail.com>"
+
+#: src/ui/ui-main.c:599
+#, c-format
+msgid "There was an error displaying help: %s"
+msgstr "Ocorreu um erro ao apresentar a ajuda: %s"
