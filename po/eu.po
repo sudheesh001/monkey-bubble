@@ -1,172 +1,412 @@
+# translation of monkey-bubble.HEAD.po to Basque
 # Basque translation of Monkey Bubble.
 # Copyright (C) 2003 THE Monkey Bubble'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the Monkey Bubble package.
 # Mikel Olasagasti <hey_neken@mundurat.net>, 2003.
-# 
-# 
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2004.
+#
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: Monkey Bubble 0.1.7\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-13 15:50+0100\n"
-"PO-Revision-Date: 2003-12-23 16:03+0100\n"
-"Last-Translator: Mikel Olasagasti <hey_neken@mundurat.net>\n"
-"Language-Team: Basque <gnome@euskalgnu.org>\n"
+"Project-Id-Version: monkey-bubble.HEAD\n"
+"POT-Creation-Date: 2004-07-29 17:06+0200\n"
+"PO-Revision-Date: 2004-07-29 08:57+0200\n"
+"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
+"Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-15\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
+"X-Generator: KBabel 1.0.2\n"
 
-#: monkey-bubble.desktop.in.h:1 data/monkey-bubble.glade.h:1
+#: data/keybinding.glade.h:1
+msgid "Keyboard Shortcuts"
+msgstr "Laster-teklak"
+
+#: data/keybinding.glade.h:2
+msgid "_Shortcut Keys:"
+msgstr "_Laster-teklak:"
+
+#: data/monkey-bubble.glade.h:1
+msgid ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Can't create server !\n"
+"</span>\n"
+"</markup>"
+msgstr ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Ezin sortu zerbitzaria!\n"
+"</span>\n"
+"</markup>"
+
+#: data/monkey-bubble.glade.h:7
+msgid "Create network game"
+msgstr "Sortu sareko jokoa"
+
+#: data/monkey-bubble.glade.h:8
+msgid "Join _network game"
+msgstr "Gehitu _sareko jokora"
+
+#: data/monkey-bubble.glade.h:9 monkey-bubble.desktop.in.h:1
 msgid "Monkey Bubble"
 msgstr "Monkey Bubble"
 
-#: monkey-bubble.desktop.in.h:2
-#, fuzzy
-msgid "Monkey Bubble Arcade Game"
-msgstr "Monkey Bubble Arkade Jokoa"
-
-#: data/monkey-bubble.glade.h:2
+#: data/monkey-bubble.glade.h:10
 msgid "New 1 player"
 msgstr "Berria - Jokalari 1"
 
-#: data/monkey-bubble.glade.h:3
+#: data/monkey-bubble.glade.h:11
 msgid "New 2 players"
-msgstr "Berria - 2 Jokalari"
+msgstr "Berria - 2 jokalari"
 
-#: data/monkey-bubble.glade.h:4
+#: data/monkey-bubble.glade.h:12 src/ui/ui-main.c:401 src/ui/ui-main.c:533
 msgid "Pause game"
 msgstr "Pausatu jokua"
 
-#: data/monkey-bubble.glade.h:5
-msgid "Resume game"
-msgstr "Jokua jarraitu"
-
-#: data/monkey-bubble.glade.h:6
+#: data/monkey-bubble.glade.h:13 src/ui/keyboard-properties.c:85
 msgid "Stop game"
 msgstr "Gelditu jokua"
 
-#: data/monkey-bubble.glade.h:7
+#: data/monkey-bubble.glade.h:14
+msgid "Warning"
+msgstr "Oharra"
+
+#: data/monkey-bubble.glade.h:15
 msgid "_About"
 msgstr "_Honi buruz"
 
-#: data/monkey-bubble.glade.h:8
+#: data/monkey-bubble.glade.h:16
 msgid "_Contents"
-msgstr ""
+msgstr "_Edukiak"
 
-#: data/monkey-bubble.glade.h:9
+#: data/monkey-bubble.glade.h:17
 msgid "_Game"
 msgstr "_Jokua"
 
-#: data/monkey-bubble.glade.h:10
+#: data/monkey-bubble.glade.h:18
 msgid "_Help"
 msgstr "_Laguntza"
 
-#: data/monkey-bubble.glade.h:11
+#: data/monkey-bubble.glade.h:19
 msgid "_Settings"
 msgstr "_Ezarpenak"
 
-#: data/keybinding.glade.h:1
-msgid "    Aim Left:"
-msgstr "    Apuntatu ezkerrera:"
-
-#: data/keybinding.glade.h:2
-msgid "    Aim Right:"
-msgstr "    Apuntatu eskuinera:"
-
-#: data/keybinding.glade.h:3
-msgid "    Launch Bubble:"
-msgstr "    Jaurti burbuila:"
-
-#: data/keybinding.glade.h:4
-msgid "*"
-msgstr "*"
-
-#: data/keybinding.glade.h:5
-msgid "<span weight=\"bold\">Player 1 Controls</span>"
-msgstr "<span weight=\"bold\">1 jokalariaren kontrolak</span>"
-
-#: data/keybinding.glade.h:6
-msgid "<span weight=\"bold\">Player 2 Controls</span>"
-msgstr "<span weight=\"bold\">2. jokalariaren kontrolak</span>"
-
-#: data/keybinding.glade.h:7
-msgid "Configure Controls"
-msgstr "Konfiguratu kontrolak"
-
 #: data/monkey-bubble.schemas.in.h:1
+msgid "1 player game"
+msgstr "Jokalari bateko jokua"
+
+#: data/monkey-bubble.schemas.in.h:2
+msgid "2 players game"
+msgstr "Bi jokalariko jokua"
+
+#: data/monkey-bubble.schemas.in.h:3
+msgid "F1"
+msgstr "F1"
+
+#: data/monkey-bubble.schemas.in.h:4
+msgid "F2"
+msgstr "F2"
+
+#: data/monkey-bubble.schemas.in.h:5
+msgid "Left"
+msgstr "Ezkerra"
+
+#: data/monkey-bubble.schemas.in.h:6
+msgid "Pause"
+msgstr "Pausatu"
+
+#: data/monkey-bubble.schemas.in.h:7
+msgid "Pause the game"
+msgstr "Pausatu jokua"
+
+#: data/monkey-bubble.schemas.in.h:8
+msgid "Quit the game"
+msgstr "Irten jokutik"
+
+#: data/monkey-bubble.schemas.in.h:9
+msgid "Right"
+msgstr "Eskuina"
+
+#: data/monkey-bubble.schemas.in.h:10
+msgid "Stop the game"
+msgstr "Gelditu jokua"
+
+#: data/monkey-bubble.schemas.in.h:11
+msgid "Up"
+msgstr "Gora"
+
+#: data/monkey-bubble.schemas.in.h:12
 msgid "d"
 msgstr "d"
 
-#: data/monkey-bubble.schemas.in.h:2
+#: data/monkey-bubble.schemas.in.h:13
 msgid "f"
 msgstr "f"
 
-#: data/monkey-bubble.schemas.in.h:3
-msgid "j"
-msgstr "j"
-
-#: data/monkey-bubble.schemas.in.h:4
-msgid "k"
-msgstr "k"
-
-#: data/monkey-bubble.schemas.in.h:5
-msgid "l"
-msgstr "l"
-
-#: data/monkey-bubble.schemas.in.h:6
+#: data/monkey-bubble.schemas.in.h:14
 msgid "left key for player one"
-msgstr "ezker tekla lehen jokalariarentzat"
+msgstr "ezker tekla (1. jokalaria)"
 
-#: data/monkey-bubble.schemas.in.h:7
+#: data/monkey-bubble.schemas.in.h:15
 msgid "left key for player two"
-msgstr "ezker tekla 2. jokalariarentzat"
+msgstr "ezker tekla (2. jokalaria)"
 
-#: data/monkey-bubble.schemas.in.h:8
+#: data/monkey-bubble.schemas.in.h:16
 msgid "right key for player one"
-msgstr "eskuin tekla lehen jokalariarentzat"
+msgstr "eskuin tekla (1. jokalaria)"
 
-#: data/monkey-bubble.schemas.in.h:9
+#: data/monkey-bubble.schemas.in.h:17
 msgid "right key for player two"
-msgstr "eskuin tekla 2. jokalariarentzat"
+msgstr "eskuin tekla (2. jokalaria)"
 
-#: data/monkey-bubble.schemas.in.h:10
+#: data/monkey-bubble.schemas.in.h:18
 msgid "s"
 msgstr "s"
 
-#: data/monkey-bubble.schemas.in.h:11
+#: data/monkey-bubble.schemas.in.h:19
 msgid "shoot key for player one"
-msgstr "jaurti tekla lehen jokalariarentzat"
+msgstr "jaurti tekla (1. jokalaria)"
 
-#: data/monkey-bubble.schemas.in.h:12
+#: data/monkey-bubble.schemas.in.h:20
 msgid "shoot key for player two"
-msgstr "jaurti tekla 2. jokalariarentzat"
+msgstr "jaurti tekla (2. jokalaria)"
 
-#: src/ui/ui-main.c:575
+#: data/netgame.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: data/netgame.glade.h:2
+msgid "Network game"
+msgstr "Sareko jokua"
+
+#: data/netgame.glade.h:3
+msgid "Number of games :"
+msgstr "Joku kopurua:"
+
+#: data/netgame.glade.h:4
+msgid "Number of players :"
+msgstr "Jokalari kopurua:"
+
+#: data/netgame.glade.h:5 src/ui/keyboard-properties.c:87
+msgid "Quit game"
+msgstr "Irten jokutik"
+
+#: data/netgame.glade.h:6
+msgid "Ready"
+msgstr "Prest"
+
+#: data/netgame.glade.h:7
+msgid "_Go"
+msgstr "_Joan"
+
+#: data/netgame.glade.h:8
+msgid "_Server"
+msgstr "_Zerbitzaria"
+
+#: monkey-bubble.desktop.in.h:2
+msgid "Monkey Bubble Arcade Game"
+msgstr "Monkey Bubble arkade jokoa"
+
+#: src/ui/eggcellrendererkeys.c:160 src/ui/eggcellrendererkeys.c:161
+msgid "Accelerator key"
+msgstr "Azelerazio tekla"
+
+#: src/ui/eggcellrendererkeys.c:170 src/ui/eggcellrendererkeys.c:171
+msgid "Accelerator modifiers"
+msgstr "Azelerazioaren modifikatzaileak"
+
+#: src/ui/eggcellrendererkeys.c:180
+msgid "Accelerator Mode"
+msgstr "Azelerazio modua"
+
+#: src/ui/eggcellrendererkeys.c:181
+msgid "The type of accelerator."
+msgstr "Azelerazio mota."
+
+#: src/ui/eggcellrendererkeys.c:219 src/ui/keyboard-properties.c:764
+msgid "Disabled"
+msgstr "Desgaitua"
+
+#: src/ui/eggcellrendererkeys.c:330 src/ui/eggcellrendererkeys.c:568
+msgid "Type a new accelerator, or press Backspace to clear"
+msgstr "Idatzi azeleratzaile berria, edo sakatu atzera-tekla garbitzeko"
+
+#: src/ui/eggcellrendererkeys.c:571
+msgid "Type a new accelerator"
+msgstr "Idatzi azeleratzaile berria"
+
+#: src/ui/keyboard-properties.c:79
+msgid "New game 1 player"
+msgstr "Joko berria (jokalari 1)"
+
+#: src/ui/keyboard-properties.c:81
+msgid "New game 2 player"
+msgstr "Joko berria (2 jokalari)"
+
+#: src/ui/keyboard-properties.c:83
+msgid "Pause/Resume"
+msgstr "Pausatu/jarraitu"
+
+#: src/ui/keyboard-properties.c:93
+msgid "Full Screen"
+msgstr "Pantaila osoa"
+
+#: src/ui/keyboard-properties.c:95
+msgid "Normal Size"
+msgstr "Tamaina normala"
+
+#: src/ui/keyboard-properties.c:100 src/ui/keyboard-properties.c:110
+msgid "aim left"
+msgstr "apuntatu ezkerrera"
+
+#: src/ui/keyboard-properties.c:102 src/ui/keyboard-properties.c:112
+msgid "aim right"
+msgstr "apuntatu eskuinera:"
+
+#: src/ui/keyboard-properties.c:104 src/ui/keyboard-properties.c:114
+msgid "shoot"
+msgstr "jaurti"
+
+#: src/ui/keyboard-properties.c:121
+msgid "Player 1"
+msgstr "1. Jokalaria"
+
+#: src/ui/keyboard-properties.c:122
+msgid "Player 2"
+msgstr "2. Jokalaria"
+
+#: src/ui/keyboard-properties.c:123
+msgid "Game"
+msgstr "Jokua"
+
+#: src/ui/keyboard-properties.c:124
+msgid "View"
+msgstr "Ikusi"
+
+#: src/ui/keyboard-properties.c:337
+#, c-format
+msgid "There was an error loading config from %s. (%s)\n"
+msgstr "Errore bat gertatu da %stik konfigurazioa kargatzean. (%s)\n"
+
+#: src/ui/keyboard-properties.c:351
+#, c-format
+msgid ""
+"There was an error subscribing to notification of terminal keybinding "
+"changes. (%s)\n"
+msgstr ""
+"Errore bat egon da terminaleko tekla-mapa aldaketen jakinarazpenera "
+"harpidetzean. (%s)\n"
+
+#: src/ui/keyboard-properties.c:394
+#, c-format
+msgid "There was an error loading a terminal keybinding. (%s)\n"
+msgstr "Errorea gertatu da terminaleko tekla-mapa kargatzean. (%s)\n"
+
+#: src/ui/keyboard-properties.c:410
+#, c-format
+msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
+msgstr "%s konfigurazioko gakoaren edukia baliogabea da; \"%s\" balioa dauka\n"
+
+#: src/ui/keyboard-properties.c:433
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menubar access "
+"keys. (%s)\n"
+msgstr ""
+"Errore bat egon da konfigurazioko baloreak kargatzean, menu barrako sarbide-"
+"gakoak noiz erabiltzeko. (%s)\n"
+
+#: src/ui/keyboard-properties.c:447
+#, c-format
+msgid ""
+"There was an error subscribing to notification on changes on whether to use "
+"menubar access keys (%s)\n"
+msgstr ""
+"Errore bat gertatu da jakinarazpenean harpidetzean,menu-barrako sarbide-"
+"gakoak noiz erabili aipatzen duena hain zuzen (%s)\n"
+
+#: src/ui/keyboard-properties.c:458
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menu "
+"accelerators. (%s)\n"
+msgstr ""
+"Errore bat gertatu da menuko azeleratzaileen konfigurazio baloreak "
+"kargatzean. (%s)\n"
+
+#: src/ui/keyboard-properties.c:474
+#, c-format
+msgid ""
+"There was an error subscribing to notification for use_menu_accelerators (%"
+"s)\n"
+msgstr ""
+"Errore bat egon da use_menu_accelerators-entzat jakinarazpenean harpidetzean "
+"(%s)\n"
+
+#: src/ui/keyboard-properties.c:824
+#, c-format
+msgid "Error propagating accelerator change to configuration database: %s\n"
+msgstr ""
+"Errorea azeleratzaile aldaketa konfigurazioko datubasean hedatzean: %s\n"
+
+#: src/ui/keyboard-properties.c:993
+#, c-format
+msgid "Error setting new accelerator in configuration database: %s\n"
+msgstr "Errorea azeleratzaile berria konfigurazioko datubasean ezartzean: %s\n"
+
+#: src/ui/keyboard-properties.c:1092
+msgid "_Action"
+msgstr "_Akzioa"
+
+#: src/ui/keyboard-properties.c:1114
+msgid "Shortcut _Key"
+msgstr "Laster-te_kla"
+
+#: src/ui/ui-main.c:526
+msgid "Resume game"
+msgstr "Jarraitu jokua"
+
+#: src/ui/ui-main.c:611
 msgid "translator_credits"
-msgstr "Mikel Olasagasti <hey_neken@mundurat.net>"
+msgstr ""
+"Mikel Olasagasti <hey_neken@mundurat.net>\n"
+"Iñaki Larrañaga <dooteo@euskalgnu.org>"
 
-#: src/ui/ui-main.c:604
+#: src/ui/ui-main.c:640
 #, c-format
 msgid "There was an error displaying help: %s"
-msgstr ""
+msgstr "Errore bat izan da laguntza bistaratzean: %s"
+
+#~ msgid "    Aim Left:"
+#~ msgstr "    Apuntatu ezkerrera:"
+
+#~ msgid "    Launch Bubble:"
+#~ msgstr "    Jaurti burbuila:"
+
+#~ msgid "<span weight=\"bold\">Player 1 Controls</span>"
+#~ msgstr "<span weight=\"bold\">1 jokalariaren kontrolak</span>"
+
+#~ msgid "<span weight=\"bold\">Player 2 Controls</span>"
+#~ msgstr "<span weight=\"bold\">2. jokalariaren kontrolak</span>"
+
+#~ msgid "Configure Controls"
+#~ msgstr "Konfiguratu kontrolak"
+
+#~ msgid "j"
+#~ msgstr "j"
+
+#~ msgid "k"
+#~ msgstr "k"
+
+#~ msgid "l"
+#~ msgstr "l"
 
 #~ msgid "Bubbles"
 #~ msgstr "Burbuilak"
 
 #~ msgid "Keybinding"
 #~ msgstr "Tekla loturak"
-
-#~ msgid "Left"
-#~ msgstr "Ezkerra"
-
-#~ msgid "Player 1"
-#~ msgstr "1 Jokalaria"
-
-#~ msgid "Player 2"
-#~ msgstr "2. Jokalaria"
-
-#~ msgid "Right"
-#~ msgstr "Eskuina"
-
-#~ msgid "Shoot"
-#~ msgstr "Jaurti"
