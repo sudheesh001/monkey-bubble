@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNOME 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-02 04:35+0100\n"
-"PO-Revision-Date: 2004-02-02 14:14+0100\n"
+"POT-Creation-Date: 2004-02-03 15:53+0100\n"
+"PO-Revision-Date: 2004-02-03 22:11+0100\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <verltaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
@@ -37,7 +37,7 @@ msgstr "Nieuw 2 spelers"
 
 #: data/monkey-bubble.glade.h:4 src/ui/ui-main.c:382 src/ui/ui-main.c:512
 msgid "Pause game"
-msgstr "Pauzeren"
+msgstr "Spel pauzeren"
 
 #: data/monkey-bubble.glade.h:5 src/ui/keyboard-properties.c:85
 msgid "Stop game"
@@ -238,7 +238,9 @@ msgstr "Er was een fout bij het laden van de configuratie vanaf %s. (%s)\n"
 msgid ""
 "There was an error subscribing to notification of terminal keybinding "
 "changes. (%s)\n"
-msgstr "Er was een fout bij het doorgeven van de aanpassingen van de console-toetsbindingen (%s)\n"
+msgstr ""
+"Er was een fout bij het doorgeven van de aanpassingen van de console-"
+"toetsbindingen (%s)\n"
 
 #: src/ui/keyboard-properties.c:394
 #, c-format
@@ -255,14 +257,18 @@ msgstr "De waarde van de configuratietoets %s is ongeldig; waarde is \"%s\"\n"
 msgid ""
 "There was an error loading config value for whether to use menubar access "
 "keys. (%s)\n"
-msgstr "Er was een fout bij het laden van de configuratiewaarde die bepaalt of menubalk-sneltoetsen worden gebruikt. (%s)\n"
+msgstr ""
+"Er was een fout bij het laden van de configuratiewaarde die bepaalt of "
+"menubalk-sneltoetsen worden gebruikt. (%s)\n"
 
 #: src/ui/keyboard-properties.c:447
 #, c-format
 msgid ""
 "There was an error subscribing to notification on changes on whether to use "
 "menubar access keys (%s)\n"
-msgstr "Er was een fout bij het doorgeven van aanpassingen of menubalk sneltoetsen moeten worden gebruikt (%s)\n"
+msgstr ""
+"Er was een fout bij het doorgeven van aanpassingen of menubalk sneltoetsen "
+"moeten worden gebruikt (%s)\n"
 
 # het doorgeven van de aanpassingen van de console-toetsbindingen (%s)\n"
 #: src/ui/keyboard-properties.c:458
@@ -270,7 +276,9 @@ msgstr "Er was een fout bij het doorgeven van aanpassingen of menubalk sneltoets
 msgid ""
 "There was an error loading config value for whether to use menu "
 "accelerators. (%s)\n"
-msgstr "Er was een fout bij het laden van de configuratiewaarde of menu-sneltoetsen moeten worden gebruikt. (%s)\n"
+msgstr ""
+"Er was een fout bij het laden van de configuratiewaarde of menu-sneltoetsen "
+"moeten worden gebruikt. (%s)\n"
 
 #: src/ui/keyboard-properties.c:474
 #, c-format
@@ -282,12 +290,14 @@ msgstr "Er was een fout bij het doorgeven van use_menu_accelerators (%s)\n"
 #: src/ui/keyboard-properties.c:824
 #, c-format
 msgid "Error propagating accelerator change to configuration database: %s\n"
-msgstr "Fout bij het doorgeven van de sneltoets aan de configuratie-database: %s\n"
+msgstr ""
+"Fout bij het doorgeven van de sneltoets aan de configuratie-database: %s\n"
 
 #: src/ui/keyboard-properties.c:993
 #, c-format
 msgid "Error setting new accelerator in configuration database: %s\n"
-msgstr "Fout bij het instellen van nieuwe sneltoets in de configuratie-database: %s\n"
+msgstr ""
+"Fout bij het instellen van nieuwe sneltoets in de configuratie-database: %s\n"
 
 #: src/ui/keyboard-properties.c:1092
 msgid "_Action"
