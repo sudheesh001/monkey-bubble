@@ -1,11 +1,11 @@
 # Translation of monkey-bubble to Croatiann
 # Copyright (C) Croatiann team
-# Translators: Automatski Prijevod <>,
+# Translators: Automatski Prijevod <>,Robert Sedak <robert.sedak@sk.tel.hr>,
 msgid ""
 msgstr ""
 "Project-Id-Version: monkey-bubble 0\n"
-"POT-Creation-Date: 2004-02-08 00:23+0100\n"
-"PO-Revision-Date: 2004-02-08 00:23+CET\n"
+"POT-Creation-Date: 2004-03-20 15:00+0100\n"
+"PO-Revision-Date: 2004-03-20 15:00+CET\n"
 "Last-Translator: auto\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
 "MIME-Version: 1.0\n"
@@ -19,55 +19,63 @@ msgstr "Kratice s tipkovnice"
 
 #: data/keybinding.glade.h:2
 msgid "_Shortcut Keys:"
-msgstr ""
+msgstr "_Tipke kratice:"
 
-#: data/monkey-bubble.glade.h:1 monkey-bubble.desktop.in.h:1
-msgid "Monkey Bubble"
-msgstr ""
+#: data/monkey-bubble.glade.h:1
+msgid "Create network game"
+msgstr "Stvori novu mrežnu igru"
 
 #: data/monkey-bubble.glade.h:2
+msgid "Join _network game"
+msgstr "Pridruži _mrežnu igru"
+
+#: data/monkey-bubble.glade.h:3 monkey-bubble.desktop.in.h:1
+msgid "Monkey Bubble"
+msgstr "Monkey Bubble"
+
+#: data/monkey-bubble.glade.h:4
 msgid "New 1 player"
-msgstr ""
+msgstr "Novi prvi igrač"
 
-#: data/monkey-bubble.glade.h:3
+#: data/monkey-bubble.glade.h:5
 msgid "New 2 players"
-msgstr ""
+msgstr "Novi drugi igrač"
 
-#: data/monkey-bubble.glade.h:4 src/ui/ui-main.c:393 src/ui/ui-main.c:523
+#: data/monkey-bubble.glade.h:6 src/ui/ui-main.c:391 src/ui/ui-main.c:521
 msgid "Pause game"
 msgstr "Pauziraj igru"
 
-#: data/monkey-bubble.glade.h:5 src/ui/keyboard-properties.c:85
+#: data/monkey-bubble.glade.h:7 src/ui/keyboard-properties.c:85
 msgid "Stop game"
-msgstr ""
+msgstr "Zaustavi igru"
 
-#: data/monkey-bubble.glade.h:6
+#: data/monkey-bubble.glade.h:8
 msgid "_About"
 msgstr "_O"
 
-#: data/monkey-bubble.glade.h:7
+#: data/monkey-bubble.glade.h:9
 msgid "_Contents"
 msgstr "_Sadržaj"
 
-#: data/monkey-bubble.glade.h:8
+#: data/monkey-bubble.glade.h:10
 msgid "_Game"
 msgstr "_Igra"
 
-#: data/monkey-bubble.glade.h:9
+#: data/monkey-bubble.glade.h:11
 msgid "_Help"
 msgstr "_Pomoć"
 
-#: data/monkey-bubble.glade.h:10
+#: data/monkey-bubble.glade.h:12
 msgid "_Settings"
 msgstr "_Postavke"
 
 #: data/monkey-bubble.schemas.in.h:1
 msgid "1 player game"
-msgstr ""
+msgstr "Igra za jednog igrača"
 
 #: data/monkey-bubble.schemas.in.h:2
 msgid "2 players game"
-msgstr ""
+msgstr "Igra za dva igrača"
 
 #: data/monkey-bubble.schemas.in.h:3
 msgid "F1"
@@ -87,11 +95,11 @@ msgstr "Pauza"
 
 #: data/monkey-bubble.schemas.in.h:7
 msgid "Pause the game"
-msgstr ""
+msgstr "Pauziraj igru"
 
 #: data/monkey-bubble.schemas.in.h:8
 msgid "Quit the game"
-msgstr ""
+msgstr "Izađi iz igre"
 
 #: data/monkey-bubble.schemas.in.h:9
 msgid "Right"
@@ -99,7 +107,7 @@ msgstr "Desno"
 
 #: data/monkey-bubble.schemas.in.h:10
 msgid "Stop the game"
-msgstr ""
+msgstr "Zaustavi igru"
 
 #: data/monkey-bubble.schemas.in.h:11
 msgid "Up"
@@ -115,19 +123,19 @@ msgstr "f"
 
 #: data/monkey-bubble.schemas.in.h:14
 msgid "left key for player one"
-msgstr ""
+msgstr "lijeva tipka za prvog igrača"
 
 #: data/monkey-bubble.schemas.in.h:15
 msgid "left key for player two"
-msgstr ""
+msgstr "Lijeva tipka za drugog igrača"
 
 #: data/monkey-bubble.schemas.in.h:16
 msgid "right key for player one"
-msgstr ""
+msgstr "desna tipka za prvog igrača"
 
 #: data/monkey-bubble.schemas.in.h:17
 msgid "right key for player two"
-msgstr ""
+msgstr "desna tipka za drugog igrača"
 
 #: data/monkey-bubble.schemas.in.h:18
 msgid "s"
@@ -135,47 +143,47 @@ msgstr "s"
 
 #: data/monkey-bubble.schemas.in.h:19
 msgid "shoot key for player one"
-msgstr ""
+msgstr "tipka za pucanje za prvog igrača"
 
 #: data/monkey-bubble.schemas.in.h:20
 msgid "shoot key for player two"
-msgstr ""
+msgstr "tipka za pucanje za drugog igrača"
 
 #: data/netgame.glade.h:1
 msgid "*"
-msgstr ""
+msgstr "*"
 
 #: data/netgame.glade.h:2
 msgid "Network game"
-msgstr ""
+msgstr "Mrežna igra"
 
 #: data/netgame.glade.h:3
 msgid "Players"
-msgstr ""
+msgstr "Igrači"
 
 #: data/netgame.glade.h:4 src/ui/keyboard-properties.c:87
 msgid "Quit game"
-msgstr ""
+msgstr "Izađi iz igre"
 
 #: data/netgame.glade.h:5
 msgid "Ready"
-msgstr ""
+msgstr "Spreman"
 
 #: data/netgame.glade.h:6
 msgid "Start Game"
-msgstr ""
+msgstr "Pokreni igru"
 
 #: data/netgame.glade.h:7
 msgid "_Go"
-msgstr ""
+msgstr "_Idi"
 
 #: data/netgame.glade.h:8
 msgid "_Server"
-msgstr ""
+msgstr "_Poslužitelj"
 
 #: monkey-bubble.desktop.in.h:2
 msgid "Monkey Bubble Arcade Game"
-msgstr ""
+msgstr "Monkey Bubble arkadna igra"
 
 #: src/ui/eggcellrendererkeys.c:160 src/ui/eggcellrendererkeys.c:161
 msgid "Accelerator key"
@@ -207,15 +215,15 @@ msgstr "Unesi novi akcelerator"
 
 #: src/ui/keyboard-properties.c:79
 msgid "New game 1 player"
-msgstr ""
+msgstr "Nova igra prvi igrač"
 
 #: src/ui/keyboard-properties.c:81
 msgid "New game 2 player"
-msgstr ""
+msgstr "Nova igra drugi igrač"
 
 #: src/ui/keyboard-properties.c:83
 msgid "Pause/Resume"
-msgstr ""
+msgstr "Stanka/Nastavak"
 
 #: src/ui/keyboard-properties.c:93
 msgid "Full Screen"
@@ -227,11 +235,11 @@ msgstr "Normalna Veličina"
 
 #: src/ui/keyboard-properties.c:100 src/ui/keyboard-properties.c:110
 msgid "aim left"
-msgstr ""
+msgstr "ciljaj lijevo"
 
 #: src/ui/keyboard-properties.c:102 src/ui/keyboard-properties.c:112
 msgid "aim right"
-msgstr ""
+msgstr "ciljaj desno"
 
 #: src/ui/keyboard-properties.c:104 src/ui/keyboard-properties.c:114
 msgid "shoot"
@@ -278,18 +286,18 @@ msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
 msgstr "Vrijednost konfiguracijskog ključa %s nije valjana; vrijednost je \"%s\"\n"
 
 #: src/ui/keyboard-properties.c:433
-#, c-format
 msgid ""
 "There was an error loading config value for whether to use menubar access "
 "keys. (%s)\n"
 msgstr ""
+"Došlo je do greške prilikom učitavanja konfiguracijske datoteke oko podatka "
+"treba li koristiti akceleratore. (%s)\n"
 
 #: src/ui/keyboard-properties.c:447
-#, c-format
 msgid ""
 "There was an error subscribing to notification on changes on whether to use "
 "menubar access keys (%s)\n"
-msgstr ""
+msgstr "Došlo je do greške prilikom pretplaćivanja na obavijesti o promjenama, treba li koristiti kratice izbornika (%s)\n"
 
 #: src/ui/keyboard-properties.c:458
 #, c-format
@@ -321,17 +329,17 @@ msgstr "_Akcija"
 
 #: src/ui/keyboard-properties.c:1114
 msgid "Shortcut _Key"
-msgstr ""
+msgstr "Tipka _kratice"
 
-#: src/ui/ui-main.c:516
+#: src/ui/ui-main.c:514
 msgid "Resume game"
-msgstr ""
+msgstr "Nastavi igru"
 
-#: src/ui/ui-main.c:570
+#: src/ui/ui-main.c:568
 msgid "translator_credits"
 msgstr "lokalizacija@linux.hr"
 
-#: src/ui/ui-main.c:599
+#: src/ui/ui-main.c:597
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Došlo je do greške pri prikazivanju pomoći: %s"
