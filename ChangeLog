@@ -1,5 +1,14 @@
 2004-12-02  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
+	patch from Ronald S. Bultje for music
+	patch from Christian Fredrik Kalager Schaller for app-icon
+	* src/audio/sound-manager.c: (restart_play), (eos), (stop_play),
+	(oggdemux_new_pad), (start_play), (sound_manager_play_music_file):
+	* src/ui/main.c: (main):
+	* src/ui/ui-main.c: (ui_main_new):
+
+2004-12-02  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
 	updated monkey canvas, maybe performance gain
 	waiting for feedback ..
 	* src/view/monkey-canvas.c: (monkey_canvas_get_type),

@@ -26,8 +26,7 @@ int main(int  argc, char **argv)
 { 
   UiMain * ui_main;
   GtkWidget * window;
-  int i;
-  gboolean active_sound;
+  
 #ifdef ENABLE_NLS
   bindtextdomain (PACKAGE, PACKAGE_LOCALE_DIR);
   textdomain (PACKAGE);
@@ -43,20 +42,10 @@ int main(int  argc, char **argv)
 		      NULL);
 
   
-  active_sound = TRUE;
-  for( i= 0; i < argc; i++) {
-    if( strcmp( argv[i], "--disable-sound") == 0 ) {
-      active_sound = FALSE;
-      break;
-    }
-  }
   
-  if( active_sound ) {
-    gst_init(&argc,&argv);  
+  //  gst_init(&argc,&argv);  
   
-  }
-
-  sound_manager_active_sound(active_sound);
+  sound_manager_active_sound(FALSE);
   
   ui_main = ui_main_get_instance();
   
