@@ -39,6 +39,11 @@ libmonkeynet_a_SOURCES = \
 	mn-game-manager.c mn-game-manager.h \
 	monkey-message-handler.c monkey-message-handler.h \
 	monkey-network-game.c monkey-network-game.h \
+	simple-server.h simple-server.c \
+	client.h client.c \
+	player.h player.c \
+	game.h game.c \
+	game-manager.h game-manager.c \
 	$(marshal_sources)
 
 monkey-net-marshal.c monkey-net-marshal.h: monkey-marshal.list

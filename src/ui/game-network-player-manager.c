@@ -42,7 +42,6 @@ struct GameNetworkPlayerManagerPrivate {
 
 static void game_network_player_manager_state_changed(Game * game,GameNetworkPlayerManager * g);
 
-static void game_network_player_manager_start_level(GameNetworkPlayerManager * g);
 
 static void game_network_player_manager_game_manager_iface_init(GameManagerClass * i);
 
@@ -117,51 +116,7 @@ GameNetworkPlayerManager * game_network_player_manager_new(GtkWidget * window,Mo
 }
 
 
-static gboolean startnew_function(gpointer data) {
-  GameNetworkPlayerManager * manager;
-  UiMain * ui_main;
 
-  manager = GAME_NETWORK_PLAYER_MANAGER(data);
-
-  ui_main = ui_main_get_instance();
-
-  game_stop( GAME(PRIVATE(manager)->current_game));
-
-  g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(manager)->current_game ),
-                                         G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,manager);
-
-  g_object_unref( PRIVATE(manager)->current_game);
-
-  ui_main_set_game(ui_main,NULL);
-
-
-  PRIVATE(manager)->current_level++;
-
-  game_network_player_manager_start_level(manager);
-  return FALSE;
-}
-
-
-static gboolean restart_function(gpointer data) {
-  GameNetworkPlayerManager * manager;
-  UiMain * ui_main;
-
-  manager = GAME_NETWORK_PLAYER_MANAGER(data);
-
-  ui_main = ui_main_get_instance();
-
-  game_stop( GAME(PRIVATE(manager)->current_game));
-
-  g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(manager)->current_game ),
-                                         G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,manager);
-
-  g_object_unref( PRIVATE(manager)->current_game);
-
-  ui_main_set_game(ui_main,NULL);
-
-  game_network_player_manager_start_level(manager);
-  return FALSE;
-}
 
 static void game_network_player_manager_finalize(GObject* object) {
 
@@ -190,25 +145,17 @@ static void game_network_player_manager_state_changed(Game * game,
 
   if( game_get_state( game ) == GAME_FINISHED ) {
     PRIVATE(manager)->current_score = game_network_player_get_score( GAME_NETWORK_PLAYER(game));
-    if( game_network_player_is_lost( GAME_NETWORK_PLAYER(game) )) {
       ui_main_set_game(ui_main,NULL);	 
-      g_timeout_add(2000,
-		    restart_function,
-		    manager);
-    } else {
-      ui_main_set_game(ui_main,NULL);	 
-      g_timeout_add(2000,
-		    startnew_function,
-		    manager);
-				
-    }
+		g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(manager)->handler ),
+															G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,manager);
+                      
+
+
+		g_object_unref(G_OBJECT(PRIVATE(manager)->current_game));
   }
 				
 }
 
-static void game_network_player_manager_start_level(GameNetworkPlayerManager * g) {
-
-}
 
 gboolean start_timeout(gpointer data) {
   GameNetworkPlayerManager * manager;
@@ -247,8 +194,8 @@ static void recv_add_bubble(MonkeyMessageHandler * handler,
 		     Color bubble,
 		     GameNetworkPlayerManager * manager) {
     if( PRIVATE(manager)->current_game == NULL) {
-  g_print("add bubble %d\n",bubble);
-  shooter_add_bubble(monkey_get_shooter(PRIVATE(manager)->monkey),bubble_new(bubble,0,0));
+		  g_print("add bubble %d\n",bubble);
+		  shooter_add_bubble(monkey_get_shooter(PRIVATE(manager)->monkey),bubble_new(bubble,0,0));
     }
   
 }
@@ -259,6 +206,7 @@ void recv_start(MonkeyMessageHandler * handler,
 
   g_idle_add(start_timeout,manager);
 }
+
 void recv_bubble_array(MonkeyMessageHandler * handler,
 		       guint32 monkey_id,
 		       guint8 bubble_count,
@@ -272,6 +220,10 @@ void recv_bubble_array(MonkeyMessageHandler * handler,
   g_print("recv bubble array %d,%d\n",monkey_id,bubble_count);
   
   m = monkey_new(TRUE);
+
+
+  PRIVATE(manager)->monkey = m;
+
   bubbles = g_malloc(bubble_count*( sizeof(Bubble *)));
   
   for(i = 0 ; i < bubble_count; i++) {
@@ -282,7 +234,6 @@ void recv_bubble_array(MonkeyMessageHandler * handler,
   board_init( playground_get_board( monkey_get_playground( m )),
 	      bubbles,bubble_count);
 
-  PRIVATE(manager)->monkey = m;
 
 
 }

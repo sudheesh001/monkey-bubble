@@ -282,6 +282,7 @@ void parse_message(MonkeyMessageHandler * mmh,
         case SEND_BUBBLE_ARRAY :
                 parse_bubble_array(mmh,
                                    message);
+                break;
         case SEND_WAITING_ADDED :
                 parse_waiting_added(mmh,
                                     message);
@@ -413,6 +414,7 @@ void write_chunk(MonkeyMessageHandler * mmh,
                 size -= writed;
                 p += writed;
         }
+        g_print("write chunk %d\n",chunk_count);
         
 }
 
@@ -433,6 +435,8 @@ gboolean read_chunk(MonkeyMessageHandler * mmh,
                         p += readed;
                         size -= readed;
                 }
+
+                g_print("read chink\n");
 
         }
 
@@ -601,6 +605,7 @@ void parse_waiting_added(MonkeyMessageHandler * mmh,
         struct Test * t;
   
         t = (struct Test *)  message;
+        g_print("recieve_waiting bubble ?? %d\n",t->message_type);
         g_print("bubble count %d\n",t->bubble_count);
         bubbles = g_malloc( t->bubble_count);
 
@@ -650,14 +655,17 @@ void parse_waiting_added(MonkeyMessageHandler * mmh,
         
 }
 
+static int calculate_size(int size) {
+        return (int) ceil((( float)size / CHUNK_SIZE)) * CHUNK_SIZE;
+}
 void monkey_message_handler_send_bubble_array( MonkeyMessageHandler * mmh,
                                                guint32 monkey_id,
                                                guint8  bubbles_count,
                                                Color * bubbles) {
 
-        guint8 message[CHUNK_SIZE];
+        guint8 * message;
         int i,j;
-
+        int size;
         struct Test {
                 guint8 message_type;
                 guint32 monkey_id;
@@ -666,9 +674,13 @@ void monkey_message_handler_send_bubble_array( MonkeyMessageHandler * mmh,
 
         struct Test * t;
 
+        i = sizeof(struct Test) + bubbles_count;
+        size = calculate_size(i);
+        g_print("size %d\n\n\n",size);
+        message = g_malloc( size);
 
         t = (struct Test *)  message;
-        memset(t,0,CHUNK_SIZE);
+        memset(t,0,size);
         
         t->message_type = SEND_BUBBLE_ARRAY;
         
@@ -677,20 +689,15 @@ void monkey_message_handler_send_bubble_array( MonkeyMessageHandler * mmh,
         j = sizeof(struct Test);
 
         for(i = 0 ; i < bubbles_count; i++ ){
-                if(j >= CHUNK_SIZE) {
-                        g_print("chunk wirted\n");
-                        write_chunk(mmh,message,1);
-                        j = 0;
-                        memset(message,0,CHUNK_SIZE);                        
-                }
 
                 g_print("color[%d]=%d\n",i,bubbles[i]);
                 message[j] = bubbles[i];
                 j++;
 
         }
-
-        write_chunk(mmh,message,1);
+        g_print("send bubble array\n");
+        write_chunk(mmh,message,size / CHUNK_SIZE);
+        g_print("send bubble array done\n");
 
 }
 
@@ -896,7 +903,9 @@ void monkey_message_handler_send_start       (MonkeyMessageHandler * mmh) {
 
         memset(message,0,CHUNK_SIZE);
         message[0] = SEND_START;
+        g_print("send start \n");
         write_chunk(mmh,message,1);
+        g_print("send start done \n");
 
 }
 

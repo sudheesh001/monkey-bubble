@@ -138,6 +138,11 @@ static void game_network_player_finalize(GObject* object) {
                                                                                 
 
 
+    g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(game)->handler ),
+					   G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,game);
+                      
+
+    g_print("GOGOGOGO\n");
     g_object_unref( PRIVATE(game)->clock);
     g_object_unref( PRIVATE(game)->display );
 
@@ -275,12 +280,13 @@ static void recv_winlost(MonkeyMessageHandler * handler,
     if( winlost == FALSE) {
             g_print("you win\n");
 
-            PRIVATE(game)->state = GAME_FINISHED;
+            PRIVATE(game)->state = GAME_STOPPED;
     
             g_idle_add( idle_draw_win,game);
     
-            game_network_player_fire_changed(game);	
             game_network_player_stop(GAME(game));
+            game_network_player_fire_changed(game);	
+    } else {
     }
 
     //	   g_idle_add( add_bubble,monkey);
@@ -542,6 +548,7 @@ static gint game_network_player_timeout (gpointer data)
     gint time;
 
     game = GAME_NETWORK_PLAYER(data);
+    if( PRIVATE(game)->state == GAME_STOPPED) return FALSE;
     monkey = PRIVATE(game)->monkey;
 
     time = get_time(game);
@@ -628,7 +635,7 @@ static void game_network_player_pause(Game * game,gboolean pause) {
   
     g = GAME_NETWORK_PLAYER(game);
 
-    if( pause ) {
+   if( pause ) {
 	PRIVATE(g)->state = GAME_PAUSED;
 	time_paused( g);
 
@@ -669,7 +676,7 @@ static void game_network_player_game_lost(Monkey * monkey,GameNetworkPlayer * g)
     game_network_player_stop( GAME(g));
 
 
-    PRIVATE(g)->state = GAME_FINISHED;
+    PRIVATE(g)->state = GAME_STOPPED;
   
     game_network_player_fire_changed(g);
     monkey_canvas_paint(PRIVATE(g)->canvas);
@@ -701,7 +708,7 @@ static void game_network_player_bubbles_exploded(  Monkey * monkey,
   
     if( monkey_is_empty( monkey) ) {
     
-	PRIVATE(g)->state = GAME_FINISHED;
+	PRIVATE(g)->state = GAME_STOPPED;
     
 	monkey_view_draw_win( PRIVATE(g)->display );
     

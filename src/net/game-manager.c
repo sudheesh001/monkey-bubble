@@ -1,0 +1,351 @@
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+/* this file is part of criawips a gnome presentation application
+ *
+ * AUTHORS
+ *       Laurent Belmonte        <laurent.belmonte@aliacom.fr>
+ *
+ * Copyright (C) 2004 Laurent Belmonte
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+ * USA
+ */
+
+#include <glib-object.h>
+#include <glib.h>
+
+#include "game-manager.h"
+#include "game.h"
+
+#define PRIVATE(self) (self->private )
+static GObjectClass* parent_class = NULL;
+
+struct NetworkGameManagerPrivate 
+{
+	GList * clients;
+	GMutex * clients_lock;
+	GHashTable * id_hash_table;
+	gboolean started;
+	GMutex * started_lock;
+
+	NetworkGame * game;
+};
+
+
+static void client_connection_closed(MonkeyMessageHandler * mmh,
+				     NetworkGameManager * manager);
+
+
+static void send_game_list(NetworkGameManager * manager);
+
+
+static void send_game_joined(NetworkGameManager * manager,
+			     NetworkClient * client);
+      
+static void client_state_changed(NetworkClient * client,
+				 NetworkGameManager * manager);
+
+static void client_request_start(NetworkClient * client,
+				 NetworkGameManager * manager);
+
+static void start_game(NetworkGameManager * manager);
+
+NetworkGameManager *
+network_game_manager_new  (void)
+{
+	NetworkGameManager * self;
+
+	self = NETWORK_GAME_MANAGER( g_object_new(NETWORK_TYPE_GAME_MANAGER,NULL) );
+
+	return self;
+}
+
+void 
+network_game_manager_add_client(NetworkGameManager * manager,
+				NetworkClient * client) 
+{
+	MonkeyMessageHandler * handler;
+
+	g_mutex_lock( PRIVATE(manager)->started_lock);
+
+	if( PRIVATE(manager)->started == FALSE) {
+		handler = network_client_get_handler(client);
+
+		g_mutex_lock(PRIVATE(manager)->clients_lock);
+
+		g_signal_connect( G_OBJECT(handler),
+				  "connection-closed",
+				  G_CALLBACK(client_connection_closed),
+				  manager);
+
+		PRIVATE(manager)->clients = g_list_append(PRIVATE(manager)->clients,
+							  client);
+
+		g_hash_table_insert(PRIVATE(manager)->id_hash_table,
+				    (gpointer)&client->id,
+				    client);
+
+
+		g_object_ref( G_OBJECT(client));
+	
+		g_signal_connect( G_OBJECT(client),
+				  "state-changed",
+				  G_CALLBACK(client_state_changed),
+				  manager);
+
+		g_signal_connect( G_OBJECT(client),
+				  "start-request",
+				  G_CALLBACK(client_request_start),
+				  manager);
+
+		g_mutex_unlock(PRIVATE(manager)->clients_lock);
+
+		send_game_joined(manager,client);
+		send_game_list(manager);
+	} else {
+		xmlDoc * doc;
+		xmlNode * root;
+		
+		doc = xmlNewDoc("1.0");
+		root = xmlNewNode(NULL,
+				  "message");
+		xmlDocSetRootElement(doc, root);
+		
+		
+		xmlNewProp(root,"name","cant_join_game");
+		
+		
+		monkey_message_handler_send_xml_message(network_client_get_handler(client),
+							network_client_get_id(client),
+							doc);
+		
+		xmlFreeDoc(doc);
+		
+	}
+	
+	
+	g_mutex_unlock( PRIVATE(manager)->started_lock);
+}
+
+static void 
+network_game_manager_instance_init(NetworkGameManager * self) 
+{
+	PRIVATE(self) = g_new0 (NetworkGameManagerPrivate, 1);			
+	PRIVATE(self)->clients = NULL;
+	PRIVATE(self)->id_hash_table = 
+		g_hash_table_new(g_int_hash,g_int_equal);
+
+	PRIVATE(self)->clients_lock = g_mutex_new();
+	PRIVATE(self)->started = FALSE;
+	PRIVATE(self)->started_lock = g_mutex_new();
+}
+
+static void
+send_game_joined(NetworkGameManager * manager,
+		 NetworkClient * client) {
+        
+        
+        xmlDoc * doc;
+        xmlNode * text, * root;
+        
+        doc = xmlNewDoc("1.0");
+        root = xmlNewNode(NULL,
+                          "message");
+        xmlDocSetRootElement(doc, root);
+        
+        
+	xmlNewProp(root,"name","game_joined");
+        
+        // id of the game : one game, one id
+        text = xmlNewText("1");
+        
+        xmlAddChild(root,text);
+	
+        monkey_message_handler_send_xml_message(network_client_get_handler(client),
+                                                network_client_get_id(client),
+                                                doc);
+        
+        xmlFreeDoc(doc);        
+}
+
+
+static void client_state_changed(NetworkClient * client,
+				 NetworkGameManager * manager) {
+	send_game_list(manager);
+}
+
+static void
+network_game_manager_finalize (GObject * object) 
+{
+	NetworkGameManager * self;
+
+	self = NETWORK_GAME_MANAGER(object);
+
+	g_assert(g_hash_table_size(PRIVATE(self)->id_hash_table) == 0);
+
+	g_assert(PRIVATE(self)->clients == NULL);
+
+	g_mutex_free( PRIVATE(self)->clients_lock);
+	g_mutex_free( PRIVATE(self)->started_lock);
+	g_free(PRIVATE(self));
+
+	if (G_OBJECT_CLASS (parent_class)->finalize) {
+		(* G_OBJECT_CLASS (parent_class)->finalize) (object);
+	}
+
+}
+
+
+void send_game_list_to_client(gpointer data,
+                              gpointer user_data) {
+        NetworkClient * client;
+        xmlDoc * doc;
+
+        client = NETWORK_CLIENT(data);
+        doc =(xmlDoc *)user_data;
+
+        monkey_message_handler_send_xml_message(network_client_get_handler(client),
+                                                network_client_get_id(client),
+                                                doc);
+
+}
+
+
+void send_game_list(NetworkGameManager * manager) {
+
+        xmlDoc * doc;
+        xmlNode * current, * root;
+        GList * next;
+        doc = xmlNewDoc("1.0");
+        root = xmlNewNode(NULL,
+                          "message");
+
+        xmlDocSetRootElement(doc, root);
+         
+
+        xmlNewProp(root,"name","game_player_list");
+
+	g_mutex_lock( PRIVATE(manager)->clients_lock);
+
+        next = PRIVATE(manager)->clients;
+
+
+        while( next != NULL) {
+                xmlNode * text;
+                NetworkClient * client;
+
+                client = (NetworkClient *)next->data;
+                
+		current = xmlNewNode(NULL,
+                                     "player");
+                
+		//   if( client == ng->game_owner) {
+		//            xmlNewProp(current,"owner","true");
+		//  }
+
+                xmlNewProp(current,"ready", ( network_client_get_state(client) ? "true" : "false"));
+                text = xmlNewText(network_player_get_name(network_client_get_player(client)));
+
+                xmlAddChild(current,text);
+                xmlAddChild(root,current);
+
+                next = g_list_next(next);
+        }
+
+        g_list_foreach(PRIVATE(manager)->clients,send_game_list_to_client,
+                       doc);
+	
+
+	g_mutex_unlock( PRIVATE(manager)->clients_lock);
+        xmlFreeDoc(doc);
+}
+
+static void 
+start_game(NetworkGameManager * manager) 
+{
+
+	
+	PRIVATE(manager)->game = network_game_new(PRIVATE(manager)->clients);
+}
+
+static void 
+client_request_start(NetworkClient * client,
+		     NetworkGameManager * manager) 
+{
+
+	// TODO test owner ?
+
+	// test game state
+
+	g_mutex_lock( PRIVATE(manager)->started_lock);
+	g_mutex_lock( PRIVATE(manager)->clients_lock);
+
+	if( PRIVATE(manager)->started == FALSE && g_list_length( PRIVATE(manager)->clients) >= 1) {
+		start_game(manager);
+	}
+
+
+	g_mutex_unlock( PRIVATE(manager)->clients_lock);
+
+	g_mutex_unlock( PRIVATE(manager)->started_lock);
+}
+
+static void 
+client_connection_closed(MonkeyMessageHandler * mmh,
+			 NetworkGameManager * manager) {
+}
+
+static void
+network_game_manager_class_init (NetworkGameManagerClass	* network_game_manager_class)
+{
+	GObjectClass	* g_object_class;
+
+	parent_class = g_type_class_peek_parent(network_game_manager_class);
+
+	g_object_class = G_OBJECT_CLASS(network_game_manager_class);
+	g_object_class->finalize = network_game_manager_finalize;
+
+}
+
+
+GType
+network_game_manager_get_type (void)
+{
+	static GType	type = 0;
+
+	if (!type)
+	{
+		const GTypeInfo info = {
+			sizeof (NetworkGameManagerClass),
+			NULL,	/* base initializer */
+			NULL,	/* base finalizer */
+			(GClassInitFunc)network_game_manager_class_init,
+			NULL,	/* class finalizer */
+			NULL,	/* class data */
+			sizeof (NetworkGameManager),
+			1,
+			(GInstanceInitFunc) network_game_manager_instance_init,
+			0
+		};
+
+		type = g_type_register_static (
+				G_TYPE_OBJECT,
+				"NetworkGameManager",
+				&info,
+				0);
+	}
+
+	return type;
+}
+

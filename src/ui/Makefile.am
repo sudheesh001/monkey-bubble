@@ -35,6 +35,7 @@ monkey_bubble_SOURCES = \
 	main.c \
 	keyboard-properties.c keyboard-properties.h \
 	network-game-launcher.c network-game-launcher.h \
+	network-server-launcher.c network-server-launcher.h \
 	ui-main.c ui-main.h \
 	$(EGGFILES)
 

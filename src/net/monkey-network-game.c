@@ -27,6 +27,15 @@
 #define FRAME_DELAY 10
 #define INIT_BUBBLES_COUNT 8+7+8+7
 
+
+enum {
+        GAME_STOPPED,
+        LAST_SIGNAL
+};
+
+static guint32 signals[LAST_SIGNAL];
+
+
 struct MonkeyNetworkGamePrivate {
         GList * monkeys;
         GList * clients;
@@ -306,6 +315,7 @@ void create_monkey(MonkeyNetworkGame * g,
 
         c = what_bubble( m );
         shooter_add_bubble(s,bubble_new(c,0,0));
+
         g_signal_connect( G_OBJECT(client->handler),
                           "recv-shoot",
                           G_CALLBACK( recv_shoot ),
@@ -387,8 +397,19 @@ gboolean update_idle(gpointer d) {
         return !stop_game;
 }
 
+static void idle_stopped(gpointer data) {
+
+        MonkeyNetworkGame * g;
+
+        g = MONKEY_NETWORK_GAME(data);
+
+        g_signal_emit( G_OBJECT(g),signals[GAME_STOPPED],0);
+}
+
 void start_update_thread(MonkeyNetworkGame * g) {
-        g_timeout_add(10,update_idle,g);
+        g_timeout_add_full(G_PRIORITY_DEFAULT_IDLE,
+                           10,update_idle,g,
+                           idle_stopped);
 }
 
 void start_new_game(MonkeyNetworkGame * g) {
@@ -496,6 +517,19 @@ static void monkey_network_game_class_init (MonkeyNetworkGameClass *klass) {
         parent_class = g_type_class_peek_parent(klass);
         object_class = G_OBJECT_CLASS(klass);
         object_class->finalize = monkey_network_game_finalize;
+
+
+        signals[GAME_STOPPED]= g_signal_new ("game-stopped",
+                                             G_TYPE_FROM_CLASS (klass),
+                                             G_SIGNAL_RUN_FIRST |
+                                             G_SIGNAL_NO_RECURSE,
+                                             G_STRUCT_OFFSET (MonkeyNetworkGameClass, game_stopped),
+                                             NULL, NULL,
+                                             g_cclosure_marshal_VOID__VOID,
+                                             G_TYPE_NONE,
+
+                                             0,NULL);
+        g_print("class initialised \n\n\n");
 }
 
 GType monkey_network_game_get_type(void) {

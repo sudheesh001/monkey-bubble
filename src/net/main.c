@@ -18,6 +18,8 @@
  */
  
 #include "mn-game-manager.h"
+#include "simple-server.h"
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -25,14 +27,19 @@
 
 
 int main(int argc, char **argv) {
-	MnGameManager * manager;
+	 //	MnGameManager * manager;
+	 NetworkSimpleServer * server;
 
     g_type_init();
     g_thread_init(NULL);
 
-    manager = mn_game_manager_new();
+	 server = network_simple_server_new();
 
-    mn_game_manager_start_server(manager);
+	 network_simple_server_start(server);
+
+	 //    manager = mn_game_manager_new();
+
+	 //    mn_game_manager_start_server(manager);
 	 //    mn_game_manager_join(manager);
 	 gtk_main();
     return(0);

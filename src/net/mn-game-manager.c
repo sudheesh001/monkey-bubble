@@ -46,6 +46,8 @@ struct MnGameManagerPrivate {
         GHashTable *    clients_by_id;
         GHashTable *    clients_by_handler;
 
+        GMutex        * clients_mutex;
+        GList         * clients;
         GList *         games;
         GMutex *        global_lock;
         gint            socket;
@@ -100,6 +102,8 @@ gboolean connect_client(MnGameManager * manager,
                     NetworkClient * client) {
 
         if( is_unique_client_name(manager,client->client_name) ) {
+
+                g_mutex_lock( PRIVATE(manager)->clients_mutex);
                 g_hash_table_insert( PRIVATE(manager)->clients_by_handler,
                                      (gpointer)client->handler,
                                      client);
@@ -114,6 +118,12 @@ gboolean connect_client(MnGameManager * manager,
                 
                 g_hash_table_remove( PRIVATE(manager)->pending_clients,
                                      (gpointer)&(client->client_id));
+
+                PRIVATE(manager)->clients =
+                        g_list_append(PRIVATE(manager)->clients,
+                                      client);
+
+                g_mutex_unlock( PRIVATE(manager)->clients_mutex);
                 return TRUE;
         } else {
                 return FALSE;
@@ -123,6 +133,8 @@ gboolean connect_client(MnGameManager * manager,
 void disconnect_client(MnGameManager * manager,
                        NetworkClient * client) {
         
+
+        g_mutex_lock( PRIVATE(manager)->clients_mutex);
         if( g_hash_table_lookup(PRIVATE(manager)->pending_clients,
                                 &(client->client_id)) != NULL) {
 
@@ -145,14 +157,19 @@ void disconnect_client(MnGameManager * manager,
                 g_hash_table_remove( PRIVATE(manager)->clients_by_id,
                                      (gpointer)&(client->client_id));
                 
-                 
+                
 
         }
 
-
+        
+        PRIVATE(manager)->clients = 
+                g_list_remove( PRIVATE(manager)->clients,
+                               client);
 
 
         monkey_message_handler_disconnect(client->handler);
+
+        g_mutex_unlock( PRIVATE(manager)->clients_mutex);
                 
 }
 
@@ -495,11 +512,38 @@ void send_start_game(MnGameManager * manager,
         
 }
 
+static gboolean restart_game(gpointer data) {
+        MnGameManager * manager;
+
+        manager = MN_GAME_MANAGER(data);
+        
+        start_game(manager,PRIVATE(manager)->ng);
+
+        return FALSE;
+}
+
+void game_stopped(MonkeyNetworkGame * g,
+                  MnGameManager * manager) {
+
+        g_object_unref( G_OBJECT(PRIVATE(manager)->ng->game));
+
+        g_print("!!!!!!!!!game stopped !!!!!!!!!\n");
+        g_timeout_add(10000,restart_game,manager);
+
+}
+
 void start_game(MnGameManager * manager,
                 NetworkGame * game) {
 
         send_start_game(manager,game);
         game->game = monkey_network_game_new(game);
+        g_signal_connect(G_OBJECT(game->game),
+                         "game-stopped",
+                         G_CALLBACK(game_stopped),
+                         manager);
+
+        g_print("!!!!!!!!!game started !!!!!!!!!\n");
+
 }
 
 guint32 get_next_client_id(MnGameManager * manager) {
@@ -507,7 +551,9 @@ guint32 get_next_client_id(MnGameManager * manager) {
         return PRIVATE(manager)->current_client_id;
 }
 
-MnGameManager *mn_game_manager_new() {
+MnGameManager *
+mn_game_manager_new() {
+        
         MnGameManager * manager;
         
         manager = 
@@ -524,6 +570,9 @@ MnGameManager *mn_game_manager_new() {
         PRIVATE(manager)->ng->game = NULL;
         PRIVATE(manager)->ng->clients = NULL;
         PRIVATE(manager)->ng->game_owner = NULL;
+
+        PRIVATE(manager)->clients = NULL;
+        PRIVATE(manager)->clients_mutex = g_mutex_new();
 
         PRIVATE(manager)->pending_clients = g_hash_table_new(g_int_hash,g_int_equal);
 
@@ -642,12 +691,12 @@ void * server_main_loop(MnGameManager * manager) {
                 if ((sock = accept(PRIVATE(manager)->socket, (struct sockaddr *) &sock_client, &lg_info)) == -1) {	
                         perror("accept() ");
                         close(sock);
-                        exit(-1);
-                }
+                } else {
 
                 create_client( manager,sock);
                 
                 g_log(G_LOG_DOMAIN,G_LOG_LEVEL_DEBUG,"New client connected, connection accepted from %s\n",inet_ntoa(sock_client.sin_addr));
+                }
         }
         
         return 0;
@@ -680,6 +729,55 @@ gboolean mn_game_manager_start_server(MnGameManager * manager) {
         return TRUE;
 }
 
+static void send_disconnect(MnGameManager * manager,
+                            NetworkClient * client) {
+        xmlDoc * doc;
+        xmlNode * root;
+        
+        doc = xmlNewDoc("1.0");
+        root = xmlNewNode(NULL,
+                          "message");
+        xmlDocSetRootElement(doc, root);
+        
+        xmlNewProp(root,"name","disconnect");
+        
+        monkey_message_handler_send_xml_message(client->handler,
+                                                client->client_id,
+                                                doc);
+
+        xmlFreeDoc(doc);
+
+}
+
+
+void shutdown_client(gpointer data,gpointer user_data) {
+        NetworkClient * client;
+        MnGameManager * manager;
+
+        client = (NetworkClient *)data;
+        manager = MN_GAME_MANAGER(user_data);
+        
+        send_disconnect(manager,client);
+        
+}
+
+void mn_game_manager_stop_server(MnGameManager * manager) {
+        
+        PRIVATE(manager)->is_running = FALSE;
+
+
+
+        g_mutex_lock( PRIVATE(manager)->clients_mutex);
+
+        g_list_foreach(PRIVATE(manager)->clients,
+                       shutdown_client,
+                       manager);
+
+        g_mutex_unlock( PRIVATE(manager)->clients_mutex);
+
+        shutdown( PRIVATE(manager)->socket,2);
+
+}
 
 void mn_game_manager_finalize(GObject *object) {
         MnGameManager * mng = (MnGameManager *) object;

@@ -50,6 +50,8 @@ MnGameManager * mn_game_manager_new(void);
 
 gboolean mn_game_manager_start_server(MnGameManager * manager);
 
+void mn_game_manager_stop_server(MnGameManager * manager);
+
 void mn_game_manager_join(MnGameManager * manager);
 G_END_DECLS
 

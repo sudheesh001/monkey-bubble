@@ -43,6 +43,9 @@ typedef struct {
 
 typedef struct {
   GObjectClass parent_class;
+
+	 /* signals */
+	 void ( * game_stopped) (MonkeyNetworkGame * g);
 } MonkeyNetworkGameClass;
 
 typedef struct NetworkGame NetworkGame;
