@@ -1,3 +1,17 @@
+2004-12-02  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	updated monkey canvas, maybe performance gain
+	waiting for feedback ..
+	* src/view/monkey-canvas.c: (monkey_canvas_get_type),
+	(monkey_canvas_configure), (monkey_canvas_scale_image_ghfunc),
+	(monkey_canvas_expose), (monkey_canvas_create_block_from_image),
+	(monkey_canvas_create_block), (monkey_canvas_load_image_from_path),
+	(create_pixbuf_svg), (monkey_canvas_append_layer),
+	(monkey_canvas_new_layer), (monkey_canvas_add_block),
+	(monkey_canvas_move_block), (monkey_canvas_remove_block),
+	(monkey_canvas_unref_block), (layer_draw), (block_draw),
+	(monkey_canvas_clear), (monkey_canvas_paint):
+
 2004-11-09  Hasbullah BIn Pit <sebol@my-penguin.org>
 
         * configure.in: Added 'ms' (Malay) to ALL_LINGUA

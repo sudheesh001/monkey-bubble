@@ -75,20 +75,23 @@ static void monkey_canvas_scale_images(MonkeyCanvas * canvas);
 void create_pixbuf_svg(Image * i );
 void create_pixbuf_normal(Image * i );
 void  monkey_canvas_scale_image_ghfunc(gpointer key,
-				    gpointer value,
-				    gpointer user_data);
+				       gpointer value,
+				       gpointer user_data);
 
 
 
 gboolean monkey_canvas_configure(GtkWidget * widget,
-			      GdkEventConfigure *event,
-			      gpointer user_data);
+				 GdkEventConfigure *event,
+				 gpointer user_data);
+
 void block_draw(Block * block,
-		GdkPixbuf * pixbuf,
+		GdkDrawable * d,
+		GdkGC *gc,
 		GdkRectangle * rect);
-void layer_draw(Layer* l,
-		GdkPixbuf * pixbuf,
-		GdkRectangle * rect);
+void layer_draw( Layer* l,
+		 GdkDrawable * d,
+		 GdkGC *gc,
+		 GdkRectangle * rect);
 
 void block_set_position(Block * block,
 			gdouble x,
@@ -100,14 +103,14 @@ void block_get_rectangle(Block * block,
 Layer * monkey_canvas_new_layer(gdouble x,gdouble y);
 
 Block * monkey_canvas_create_block(Image * image ,
-				gdouble x_center,
-				gdouble y_center);
+				   gdouble x_center,
+				   gdouble y_center);
 
 void image_create_pixbuf(Image * i,MonkeyCanvas * canvas);
 Image * monkey_canvas_load_image_from_path( MonkeyCanvas * canvas,
-					 const char * path,
-					 gint x_size,
-					 gint y_size);
+					    const char * path,
+					    gint x_size,
+					    gint y_size);
 
 static void monkey_canvas_instance_init(MonkeyCanvas * monkey_canvas) {
   monkey_canvas->private =g_new0 (MonkeyCanvasPrivate, 1);			
@@ -153,9 +156,9 @@ GType monkey_canvas_get_type(void) {
 
       
     monkey_canvas_type = g_type_register_static(gtk_drawing_area_get_type(),
-					     "MonkeyCanvas",
-					     &monkey_canvas_info,
-					     0);
+						"MonkeyCanvas",
+						&monkey_canvas_info,
+						0);
   }
     
   return monkey_canvas_type;
@@ -220,8 +223,8 @@ void block_get_position(Block * block,
 
 
 gboolean monkey_canvas_configure(GtkWidget * widget,
-			      GdkEventConfigure *event,
-			      gpointer user_data) {
+				 GdkEventConfigure *event,
+				 gpointer user_data) {
 
   MonkeyCanvas * monkey_canvas;
   GdkRectangle rect;
@@ -235,8 +238,8 @@ gboolean monkey_canvas_configure(GtkWidget * widget,
   g_object_unref(PRIVATE(monkey_canvas)->buffer);
 
   PRIVATE(monkey_canvas)->buffer = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
-						PRIVATE(monkey_canvas)->real_x_size,
-						PRIVATE(monkey_canvas)->real_y_size);
+						   PRIVATE(monkey_canvas)->real_x_size,
+						   PRIVATE(monkey_canvas)->real_y_size);
 
   PRIVATE(monkey_canvas)->scale_x = 
     (gdouble)PRIVATE(monkey_canvas)->real_x_size /
@@ -262,8 +265,8 @@ gboolean monkey_canvas_configure(GtkWidget * widget,
 
 
 void  monkey_canvas_scale_image_ghfunc(gpointer key,
-				    gpointer value,
-				    gpointer user_data) {
+				       gpointer value,
+				       gpointer user_data) {
 
   MonkeyCanvas * canvas;
   Image * i;
@@ -291,21 +294,47 @@ static void monkey_canvas_scale_images(MonkeyCanvas * canvas) {
 
 gint monkey_canvas_expose(GtkWidget *widget, GdkEventExpose *event, gpointer data)
 {
-  guchar *pixels;
   MonkeyCanvas * monkey_canvas;
-  int rowstride;
+
+  
+
+  int rect_count;
+  int i;
+  
+  GdkRectangle * rects;
+  
+  
+
+  GList * next;
 
   monkey_canvas = MONKEY_CANVAS(data);
+
+  g_assert(IS_MONKEY_CANVAS(  monkey_canvas ) );
   
-  rowstride = gdk_pixbuf_get_rowstride (PRIVATE(monkey_canvas)->buffer);
-  pixels = gdk_pixbuf_get_pixels (PRIVATE(monkey_canvas)->buffer) + rowstride * event->area.y + event->area.x * 4;
-  gdk_draw_rgb_32_image_dithalign (widget->window,
-				   widget->style->black_gc,
-				   event->area.x, event->area.y,
-				   event->area.width, event->area.height,
-				   GDK_RGB_DITHER_NONE,
-				   pixels, rowstride,
-				   event->area.x, event->area.y);
+  if(! gdk_region_empty(event->region ) ) {
+    
+
+    gdk_region_get_rectangles(event->region,&rects,&rect_count);
+    
+
+    for(i=0;i< rect_count;i++) {
+
+      next = PRIVATE(monkey_canvas)->layer_list;
+      while( next != NULL ) {
+	    	    
+	layer_draw( (Layer*) next->data,
+		    widget->window,
+		    widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
+		    &rects[i] );
+	next = g_list_next( next );
+      }
+	
+    }
+    
+    g_free(rects);
+    
+  }
+
   return TRUE;
 }
 
@@ -314,11 +343,11 @@ void monkey_canvas_draw(MonkeyCanvas * di) {
 }
 
 Block * monkey_canvas_create_block_from_image(MonkeyCanvas * canvas,
-					   const char * path,
-					   gint x_size,
-					   gint y_size,
-					   gint x_center,
-					   gint y_center) {
+					      const char * path,
+					      gint x_size,
+					      gint y_size,
+					      gint x_center,
+					      gint y_center) {
 
   Image * image;
   g_assert( IS_MONKEY_CANVAS( canvas) );
@@ -332,9 +361,9 @@ Block * monkey_canvas_create_block_from_image(MonkeyCanvas * canvas,
 
 		  
     image = monkey_canvas_load_image_from_path( canvas,
-					     path ,
-					     x_size,
-					     y_size);
+						path ,
+						x_size,
+						y_size);
     
 		  
     g_hash_table_insert( PRIVATE(canvas)->images_map,
@@ -348,8 +377,8 @@ Block * monkey_canvas_create_block_from_image(MonkeyCanvas * canvas,
 }
 
 Block * monkey_canvas_create_block(Image * image,
-				gdouble x_center,
-				gdouble y_center) {
+				   gdouble x_center,
+				   gdouble y_center) {
 
   Block * b;
 
@@ -365,9 +394,9 @@ Block * monkey_canvas_create_block(Image * image,
 }
 
 Image * monkey_canvas_load_image_from_path( MonkeyCanvas * canvas,
-					 const char * path,
-					 gint x_size,
-					 gint y_size) {
+					    const char * path,
+					    gint x_size,
+					    gint y_size) {
 
   Image * i;
   gchar ** c;
@@ -474,17 +503,17 @@ void create_pixbuf_svg(Image * i ) {
   i->scaled_width = ceil( i->scale_x* (gdouble) i->x_size );
   i->scaled_height = ceil(i->scale_y*(gdouble)i->y_size);
 
-    num_locale = g_strdup (setlocale (LC_NUMERIC, NULL));
-    setlocale (LC_NUMERIC, "C");
+  num_locale = g_strdup (setlocale (LC_NUMERIC, NULL));
+  setlocale (LC_NUMERIC, "C");
 
   i->scaled_pixbuf = rsvg_pixbuf_from_file_at_size   (i->path,
 						      i->scaled_width,
 						      i->scaled_height,
 						      &error);
     
-    setlocale (LC_NUMERIC, num_locale);
-    g_free (num_locale);
-    num_locale = NULL;
+  setlocale (LC_NUMERIC, num_locale);
+  g_free (num_locale);
+  num_locale = NULL;
 
   if( error != NULL ) {
     
@@ -506,8 +535,8 @@ Layer * monkey_canvas_get_root_layer(MonkeyCanvas * canvas) {
 }
 
 Layer * monkey_canvas_append_layer(MonkeyCanvas * canvas,
-				gdouble x,
-				gdouble y) {
+				   gdouble x,
+				   gdouble y) {
   
   
   Layer * l;
@@ -523,7 +552,7 @@ Layer * monkey_canvas_append_layer(MonkeyCanvas * canvas,
 }
 
 Layer * monkey_canvas_new_layer(gdouble x,
-			     gdouble y) {
+				gdouble y) {
   Layer * l;
   l = g_malloc( sizeof(Layer) );
   l->block_list = NULL;
@@ -533,10 +562,10 @@ Layer * monkey_canvas_new_layer(gdouble x,
 }
 
 void monkey_canvas_add_block(MonkeyCanvas * canvas,
-			  Layer * layer,
-			  Block * block,
-			  gdouble x,
-			  gdouble y) {
+			     Layer * layer,
+			     Block * block,
+			     gdouble x,
+			     gdouble y) {
 
   GdkRectangle rect;
   g_assert( IS_MONKEY_CANVAS( canvas ) );
@@ -578,9 +607,9 @@ void block_get_rectangle(Block * block,
 
 }
 void monkey_canvas_move_block(MonkeyCanvas * canvas,
-			   Block * block,
-			   gdouble x,
-			   gdouble y)
+			      Block * block,
+			      gdouble x,
+			      gdouble y)
 {
   GdkRectangle rect;
 
@@ -601,7 +630,7 @@ void monkey_canvas_move_block(MonkeyCanvas * canvas,
 }
 
 void monkey_canvas_remove_block(MonkeyCanvas * canvas,
-			     Block * block){
+				Block * block){
 
   Layer * l;
   GdkRectangle rect;
@@ -621,14 +650,16 @@ void monkey_canvas_remove_block(MonkeyCanvas * canvas,
 
 
 void monkey_canvas_unref_block(MonkeyCanvas * canvas,
-			    Block * b) {
+			       Block * b) {
   g_assert(IS_MONKEY_CANVAS(canvas));
 
   g_free(b);
 }
 
+
 void layer_draw( Layer* l,
-		 GdkPixbuf * pixbuf,
+		 GdkDrawable * d,
+		 GdkGC *gc,
 		 GdkRectangle * rect) {
 
   GList * next;
@@ -637,7 +668,8 @@ void layer_draw( Layer* l,
   while( next != NULL ) {
 
     block_draw( (Block *) next->data,
-		pixbuf,
+		d,
+		gc,
 		rect  );
     next = g_list_next( next );    
 	
@@ -645,8 +677,10 @@ void layer_draw( Layer* l,
 
 }
 
+
 void block_draw(Block * block,
-		GdkPixbuf * buf,
+		GdkDrawable * d,
+		GdkGC *gc,
 		GdkRectangle * rect) {
 
   GdkRectangle irect;
@@ -656,20 +690,22 @@ void block_draw(Block * block,
 
 
   if( gdk_rectangle_intersect( &r,rect,&irect)){
-
-    gdk_pixbuf_composite(block->image->scaled_pixbuf, buf,
-			 irect.x,irect.y,
-			 irect.width,irect.height,
-			 r.x,
-			 r.y,
-			 1,1,
-			 GDK_INTERP_NEAREST,
-			 255);
+    gdk_draw_pixbuf
+      (d,
+       gc,
+       block->image->scaled_pixbuf,
+       irect.x - r.x ,irect.y - r.y,
+       irect.x,
+       irect.y,
+       irect.width,irect.height,
+       GDK_RGB_DITHER_NONE,
+       0,0);
     
     
   }
 
 }
+
 
 static void layer_delete(Layer * l) {
   GList * next;
@@ -700,12 +736,14 @@ void monkey_canvas_clear(MonkeyCanvas * monkey_canvas){
   g_list_free( PRIVATE(monkey_canvas)->layer_list);
 
   PRIVATE(monkey_canvas)->layer_list = g_list_append(NULL,
-						  monkey_canvas_new_layer(0,0));
+						     monkey_canvas_new_layer(0,0));
 
 }
 
 void monkey_canvas_paint(MonkeyCanvas * monkey_canvas){
 
+  GdkRectangle screen_rect;
+  
   int rect_count;
   int i;
   
@@ -713,13 +751,8 @@ void monkey_canvas_paint(MonkeyCanvas * monkey_canvas){
   
   GdkRegion * screen;
 
-  GdkRectangle screen_rect;
   
-
-  GList * next;
-
   g_assert(IS_MONKEY_CANVAS(  monkey_canvas ) );
-  
   
   screen_rect.x=0;
   screen_rect.y=0;
@@ -738,22 +771,12 @@ void monkey_canvas_paint(MonkeyCanvas * monkey_canvas){
     
 
     for(i=0;i< rect_count;i++) {
-
-      next = PRIVATE(monkey_canvas)->layer_list;
-      while( next != NULL ) {
-	    	    
-	layer_draw( (Layer*) next->data,
-		    PRIVATE(monkey_canvas)->buffer,
-		    &rects[i] );
-	next = g_list_next( next );
-      }
+      
 	
-      //	gtk_widget_draw (GTK_WIDGET(monkey_canvas), &rects[i]);
       gtk_widget_queue_draw_area(GTK_WIDGET(monkey_canvas),rects[i].x,rects[i].y,
 				 rects[i].width,rects[i].height);
     }
     
-    //	 gtk_widget_queue_draw(GTK_WIDGET(monkey_canvas));
     g_free(rects);
     
     gdk_region_destroy( PRIVATE(monkey_canvas)->region);
@@ -762,5 +785,5 @@ void monkey_canvas_paint(MonkeyCanvas * monkey_canvas){
   }
 
   gdk_region_destroy( screen);
-
+  
 }
