@@ -1,29 +1,35 @@
+# translation of es.po to Spanish
 # Basque translation of Monkey Bubble.
 # Copyright (C) 2003 THE Monkey Bubble'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the Monkey Bubble package.
 # Mikel Olasagasti <hey_neken@mundurat.net>, 2003.
-# 
-# 
+# Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004.
+#
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: Monkey Bubble 0.1.6\n"
+"Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-13 15:50+0100\n"
-"PO-Revision-Date: 2003-10-07 12:30+0200\n"
-"Last-Translator: Mikel Olasagasti <hey_neken@mundurat.net>\n"
-"Language-Team: Spanish\n"
+"POT-Creation-Date: 2004-02-29 14:08+0100\n"
+"PO-Revision-Date: 2004-02-29 14:12+0100\n"
+"Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
+"Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.0.2\n"
 
-#: monkey-bubble.desktop.in.h:1 data/monkey-bubble.glade.h:1
+#: data/keybinding.glade.h:1
+msgid "Keyboard Shortcuts"
+msgstr "Combinaciones de teclas"
+
+#: data/keybinding.glade.h:2
+msgid "_Shortcut Keys:"
+msgstr "Com_binaciones de teclas:"
+
+#: data/monkey-bubble.glade.h:1 monkey-bubble.desktop.in.h:1
 msgid "Monkey Bubble"
 msgstr "Monkey Bubble"
-
-#: monkey-bubble.desktop.in.h:2
-#, fuzzy
-msgid "Monkey Bubble Arcade Game"
-msgstr "Monkey Bubbles Juego Arcade"
 
 #: data/monkey-bubble.glade.h:2
 msgid "New 1 player"
@@ -33,124 +39,327 @@ msgstr "Nuevo 1 jugador"
 msgid "New 2 players"
 msgstr "Nuevo 2 jugadores"
 
-#: data/monkey-bubble.glade.h:4
-#, fuzzy
+#: data/monkey-bubble.glade.h:4 src/ui/ui-main.c:393 src/ui/ui-main.c:523
 msgid "Pause game"
-msgstr "Continuar juego"
+msgstr "Pausar juego"
 
-#: data/monkey-bubble.glade.h:5
-msgid "Resume game"
-msgstr "Continuar juego"
+#: data/monkey-bubble.glade.h:5 src/ui/keyboard-properties.c:85
+msgid "Stop game"
+msgstr "Detener juego"
 
 #: data/monkey-bubble.glade.h:6
-msgid "Stop game"
-msgstr ""
+msgid "_About"
+msgstr "A_cerca de"
 
 #: data/monkey-bubble.glade.h:7
-#, fuzzy
-msgid "_About"
-msgstr "Acerca de"
+msgid "_Contents"
+msgstr "_Índice"
 
 #: data/monkey-bubble.glade.h:8
-msgid "_Contents"
-msgstr ""
-
-#: data/monkey-bubble.glade.h:9
 msgid "_Game"
 msgstr "_Juego"
 
-#: data/monkey-bubble.glade.h:10
+#: data/monkey-bubble.glade.h:9
 msgid "_Help"
 msgstr "_Ayuda"
 
-#: data/monkey-bubble.glade.h:11
+#: data/monkey-bubble.glade.h:10
 msgid "_Settings"
-msgstr ""
-
-#: data/keybinding.glade.h:1
-msgid "    Aim Left:"
-msgstr ""
-
-#: data/keybinding.glade.h:2
-msgid "    Aim Right:"
-msgstr ""
-
-#: data/keybinding.glade.h:3
-msgid "    Launch Bubble:"
-msgstr ""
-
-#: data/keybinding.glade.h:4
-msgid "*"
-msgstr "*"
-
-#: data/keybinding.glade.h:5
-msgid "<span weight=\"bold\">Player 1 Controls</span>"
-msgstr ""
-
-#: data/keybinding.glade.h:6
-msgid "<span weight=\"bold\">Player 2 Controls</span>"
-msgstr ""
-
-#: data/keybinding.glade.h:7
-msgid "Configure Controls"
-msgstr ""
+msgstr "_Opciones"
 
 #: data/monkey-bubble.schemas.in.h:1
+msgid "1 player game"
+msgstr "Juego de 1 jugador"
+
+#: data/monkey-bubble.schemas.in.h:2
+msgid "2 players game"
+msgstr "Juego de 2 jugadores"
+
+#: data/monkey-bubble.schemas.in.h:3
+msgid "F1"
+msgstr "F1"
+
+#: data/monkey-bubble.schemas.in.h:4
+msgid "F2"
+msgstr "F2"
+
+#: data/monkey-bubble.schemas.in.h:5
+msgid "Left"
+msgstr "Izquierda"
+
+#: data/monkey-bubble.schemas.in.h:6
+msgid "Pause"
+msgstr "Pausa"
+
+#: data/monkey-bubble.schemas.in.h:7
+msgid "Pause the game"
+msgstr "Pausar el juego"
+
+#: data/monkey-bubble.schemas.in.h:8
+msgid "Quit the game"
+msgstr "Salir del juego"
+
+#: data/monkey-bubble.schemas.in.h:9
+msgid "Right"
+msgstr "Derecha"
+
+#: data/monkey-bubble.schemas.in.h:10
+msgid "Stop the game"
+msgstr "Detener el juego"
+
+#: data/monkey-bubble.schemas.in.h:11
+msgid "Up"
+msgstr "Arriba"
+
+#: data/monkey-bubble.schemas.in.h:12
 msgid "d"
 msgstr "d"
 
-#: data/monkey-bubble.schemas.in.h:2
+#: data/monkey-bubble.schemas.in.h:13
 msgid "f"
 msgstr "f"
 
-#: data/monkey-bubble.schemas.in.h:3
-msgid "j"
-msgstr "j"
-
-#: data/monkey-bubble.schemas.in.h:4
-msgid "k"
-msgstr "k"
-
-#: data/monkey-bubble.schemas.in.h:5
-msgid "l"
-msgstr "l"
-
-#: data/monkey-bubble.schemas.in.h:6
+#: data/monkey-bubble.schemas.in.h:14
 msgid "left key for player one"
 msgstr "izquierda para jugador 1"
 
-#: data/monkey-bubble.schemas.in.h:7
+#: data/monkey-bubble.schemas.in.h:15
 msgid "left key for player two"
 msgstr "izquierda para jugador 2"
 
-#: data/monkey-bubble.schemas.in.h:8
+#: data/monkey-bubble.schemas.in.h:16
 msgid "right key for player one"
 msgstr "derecha para jugador 1"
 
-#: data/monkey-bubble.schemas.in.h:9
+#: data/monkey-bubble.schemas.in.h:17
 msgid "right key for player two"
 msgstr "derecha para jugador 2"
 
-#: data/monkey-bubble.schemas.in.h:10
+#: data/monkey-bubble.schemas.in.h:18
 msgid "s"
 msgstr "s"
 
-#: data/monkey-bubble.schemas.in.h:11
+#: data/monkey-bubble.schemas.in.h:19
 msgid "shoot key for player one"
 msgstr "disparo para jugador 1"
 
-#: data/monkey-bubble.schemas.in.h:12
+#: data/monkey-bubble.schemas.in.h:20
 msgid "shoot key for player two"
-msgstr "disparo para jugador 2"
+msgstr "tecla de disparo para jugador 2"
 
-#: src/ui/ui-main.c:575
+#: data/netgame.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: data/netgame.glade.h:2
+msgid "Network game"
+msgstr "Juego en red"
+
+#: data/netgame.glade.h:3
+msgid "Players"
+msgstr "Jugadores"
+
+#: data/netgame.glade.h:4 src/ui/keyboard-properties.c:87
+msgid "Quit game"
+msgstr "Salir del juego"
+
+#: data/netgame.glade.h:5
+msgid "Ready"
+msgstr "Preparado"
+
+#: data/netgame.glade.h:6
+msgid "Start Game"
+msgstr "Iniciar juego"
+
+#: data/netgame.glade.h:7
+msgid "_Go"
+msgstr "_Ir a"
+
+#: data/netgame.glade.h:8
+msgid "_Server"
+msgstr "_Servidor"
+
+#: monkey-bubble.desktop.in.h:2
+msgid "Monkey Bubble Arcade Game"
+msgstr "Monkey Bubble Juego Arcade"
+
+#: src/ui/eggcellrendererkeys.c:160 src/ui/eggcellrendererkeys.c:161
+msgid "Accelerator key"
+msgstr "Combinación de tecla"
+
+#: src/ui/eggcellrendererkeys.c:170 src/ui/eggcellrendererkeys.c:171
+msgid "Accelerator modifiers"
+msgstr "Modificadores de combinación"
+
+#: src/ui/eggcellrendererkeys.c:180
+msgid "Accelerator Mode"
+msgstr "Modo de la combinación de teclas"
+
+#: src/ui/eggcellrendererkeys.c:181
+msgid "The type of accelerator."
+msgstr "El tipo de acelerador."
+
+#: src/ui/eggcellrendererkeys.c:219 src/ui/keyboard-properties.c:764
+msgid "Disabled"
+msgstr "Deshabilitado"
+
+#: src/ui/eggcellrendererkeys.c:330 src/ui/eggcellrendererkeys.c:568
+msgid "Type a new accelerator, or press Backspace to clear"
+msgstr "Escriba una combinación nueva o pulse Retroceso para borrarla"
+
+#: src/ui/eggcellrendererkeys.c:571
+msgid "Type a new accelerator"
+msgstr "Escriba una combinación nueva"
+
+#: src/ui/keyboard-properties.c:79
+msgid "New game 1 player"
+msgstr "Nuevo juego 1 jugador"
+
+#: src/ui/keyboard-properties.c:81
+msgid "New game 2 player"
+msgstr "Nuevo juego 2 jugadores"
+
+#: src/ui/keyboard-properties.c:83
+msgid "Pause/Resume"
+msgstr "Pausa/Continuar"
+
+#: src/ui/keyboard-properties.c:93
+msgid "Full Screen"
+msgstr "Pantalla completa"
+
+#: src/ui/keyboard-properties.c:95
+msgid "Normal Size"
+msgstr "Tamaño normal"
+
+#: src/ui/keyboard-properties.c:100 src/ui/keyboard-properties.c:110
+msgid "aim left"
+msgstr "apuntar a la izquierda"
+
+#: src/ui/keyboard-properties.c:102 src/ui/keyboard-properties.c:112
+msgid "aim right"
+msgstr "apuntar a la derecha"
+
+#: src/ui/keyboard-properties.c:104 src/ui/keyboard-properties.c:114
+msgid "shoot"
+msgstr "disparar"
+
+#: src/ui/keyboard-properties.c:121
+msgid "Player 1"
+msgstr "Jugador 1"
+
+#: src/ui/keyboard-properties.c:122
+msgid "Player 2"
+msgstr "Jugador 2"
+
+#: src/ui/keyboard-properties.c:123
+msgid "Game"
+msgstr "Juego"
+
+#: src/ui/keyboard-properties.c:124
+msgid "View"
+msgstr "Vista"
+
+#: src/ui/keyboard-properties.c:337
+#, c-format
+msgid "There was an error loading config from %s. (%s)\n"
+msgstr "Ha ocurrido un error cargando la configuración desde %s (%s)\n"
+
+#: src/ui/keyboard-properties.c:351
+#, c-format
+msgid ""
+"There was an error subscribing to notification of terminal keybinding "
+"changes. (%s)\n"
+msgstr ""
+"Ha ocurrido un error suscribiendo al aviso sobre los cambios de asignación "
+"de teclas de la terminal (%s)\n"
+
+#: src/ui/keyboard-properties.c:394
+#, c-format
+msgid "There was an error loading a terminal keybinding. (%s)\n"
+msgstr "Ha ocurrido un error cargando una asignación de teclas de terminal. (%s)\n"
+
+#: src/ui/keyboard-properties.c:410
+#, c-format
+msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
+msgstr "El valor de la clave de configuración %s no es válido; el valor es «%s»\n"
+
+#: src/ui/keyboard-properties.c:433
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menubar access "
+"keys. (%s)\n"
+msgstr ""
+"Ha ocurrido un error cargando el valor de configuración para intentar usar "
+"las combinaciones de teclas. (%s)\n"
+
+#: src/ui/keyboard-properties.c:447
+#, c-format
+msgid ""
+"There was an error subscribing to notification on changes on whether to use "
+"menubar access keys (%s)\n"
+msgstr ""
+"Ha ocurrido un error subscribiendo al aviso de cambio en el uso de teclas de "
+"acceso de la barra de menús (%s)\n"
+
+#: src/ui/keyboard-properties.c:458
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menu "
+"accelerators. (%s)\n"
+msgstr ""
+"Ha ocurrido un error cargando el valor de configuración para intentar usar "
+"las combinaciones de teclas. (%s)\n"
+
+#: src/ui/keyboard-properties.c:474
+#, c-format
+msgid ""
+"There was an error subscribing to notification for use_menu_accelerators (%"
+"s)\n"
+msgstr "Ha ocurrido un error subscribiendo al aviso de use_menu_accelerators (%s)\n"
+
+#: src/ui/keyboard-properties.c:824
+#, c-format
+msgid "Error propagating accelerator change to configuration database: %s\n"
+msgstr ""
+"Ocurrió un error al propagar el cambio de la combinación de teclas hacia la "
+"base de datos de configuración: %s\n"
+
+#: src/ui/keyboard-properties.c:993
+#, c-format
+msgid "Error setting new accelerator in configuration database: %s\n"
+msgstr ""
+"Error al definir una nueva combinación en la base de datos de configuración: "
+"%s\n"
+
+#: src/ui/keyboard-properties.c:1092
+msgid "_Action"
+msgstr "_Acción"
+
+#: src/ui/keyboard-properties.c:1114
+msgid "Shortcut _Key"
+msgstr "Co_mbinación de teclas"
+
+#: src/ui/ui-main.c:516
+msgid "Resume game"
+msgstr "Continuar juego"
+
+#: src/ui/ui-main.c:570
 msgid "translator_credits"
 msgstr "creditos de _traduccion"
 
-#: src/ui/ui-main.c:604
+#: src/ui/ui-main.c:599
 #, c-format
 msgid "There was an error displaying help: %s"
-msgstr ""
+msgstr "Hubo un error al mostrar la ayuda: %s"
+
+#~ msgid "j"
+#~ msgstr "j"
+
+#~ msgid "k"
+#~ msgstr "k"
+
+#~ msgid "l"
+#~ msgstr "l"
 
 #~ msgid "Bubbles"
 #~ msgstr "Burbujas"
@@ -158,17 +367,3 @@ msgstr ""
 #~ msgid "Keybinding"
 #~ msgstr "Teclas"
 
-#~ msgid "Left"
-#~ msgstr "Izquierda"
-
-#~ msgid "Player 1"
-#~ msgstr "Jugador 1"
-
-#~ msgid "Player 2"
-#~ msgstr "Jugador 2"
-
-#~ msgid "Right"
-#~ msgstr "Derecha"
-
-#~ msgid "Shoot"
-#~ msgstr "Disparar"
