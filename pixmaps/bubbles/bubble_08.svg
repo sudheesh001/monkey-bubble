@@ -7,8 +7,8 @@
    sodipodi:version="0.33"
    width="256pt"
    height="256pt"
-   sodipodi:docbase="/home/laurentb/cvs/t/monkey-bubble/pixmaps/bubbles/"
-   sodipodi:docname="/home/laurentb/cvs/t/monkey-bubble/pixmaps/bubbles/bubble_08.svg"
+   sodipodi:docbase="/home/laurentb/"
+   sodipodi:docname="/home/laurentb/test.svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -23,7 +23,7 @@
      style="font-size:12.000;fill:#eaeaea;"
      transform="matrix(1.231262,0,0,1.231257,-1090.692,-32.83146)" />
   <path
-     fill="#203E99"
+     fill="#c5c9c9"
      d="M 160.2701 32.83517 L 262.4649 237.2238 L 58.07540 237.2238 "
      id="path601"
      style="font-size:12.000;fill:#c5c9c9;fill-opacity:1.0000;" />

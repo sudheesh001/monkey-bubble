@@ -7,8 +7,8 @@
    sodipodi:version="0.33"
    width="256pt"
    height="256pt"
-   sodipodi:docbase="/home/laurentb/cvs/t/monkey-bubble/pixmaps/bubbles/"
-   sodipodi:docname="/home/laurentb/cvs/t/monkey-bubble/pixmaps/bubbles/bubble_07.svg"
+   sodipodi:docbase="/home/laurentb/"
+   sodipodi:docname="/home/laurentb/test.svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -17,19 +17,19 @@
   <sodipodi:namedview
      id="base" />
   <path
-     fill="#7BA733"
+     fill="#7bc633"
      d="M1960.782,353.896c1.399,1.399,2.749,2.849,4.099,4.298c19.842,21.691,29.737,47.481,29.737,77.419    c0,31.887-11.295,59.126-33.836,81.667s-49.779,33.837-81.667,33.837s-59.126-11.296-81.718-33.837    c-11.146-11.146-19.492-23.44-25.14-36.835c-5.747-13.745-8.646-28.689-8.646-44.832c0-31.888,11.245-59.127,33.786-81.718    c22.592-22.541,49.83-33.787,81.718-33.787S1938.241,331.355,1960.782,353.896z"
      id="path633"
      style="font-size:12.000;fill:#7bc633;"
      transform="matrix(1.231262,0,0,1.231257,-2153.681,-376.3533)" />
   <path
-     fill="#E92323"
+     fill="#41a30e"
      d="M1973.666,473.166h-190v-74h190V473.166z"
      id="path634"
      style="font-size:12.000;fill:#41a30e;fill-opacity:1.0000;"
      transform="matrix(1.231262,0,0,1.231257,-2153.681,-376.3533)" />
   <path
-     fill="#E92323"
+     fill="#41a30e"
      d="M1841.666,531.166v-190h74v190H1841.666z"
      id="path635"
      style="font-size:12.000;fill:#41a30e;fill-opacity:1.0000;"

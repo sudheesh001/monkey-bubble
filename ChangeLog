@@ -1,5 +1,18 @@
 2004-06-25  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
+	fix bubbles svg
+
+	bump version to 0.3.1 !
+	* configure.in:
+	* pixmaps/bubbles/bubble_02.svg:
+	* pixmaps/bubbles/bubble_03.svg:
+	* pixmaps/bubbles/bubble_05.svg:
+	* pixmaps/bubbles/bubble_06.svg:
+	* pixmaps/bubbles/bubble_07.svg:
+	* pixmaps/bubbles/bubble_08.svg:
+
+2004-06-25  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
 	some sound code work...
 	fix bug in network-message-handler 
 	* configure.in:
