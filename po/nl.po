@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNOME 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-03 15:53+0100\n"
-"PO-Revision-Date: 2004-02-03 22:11+0100\n"
+"POT-Creation-Date: 2004-02-12 16:53+0100\n"
+"PO-Revision-Date: 2004-02-12 18:45+0100\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <verltaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
@@ -35,7 +35,7 @@ msgstr "Nieuw 1 speler"
 msgid "New 2 players"
 msgstr "Nieuw 2 spelers"
 
-#: data/monkey-bubble.glade.h:4 src/ui/ui-main.c:382 src/ui/ui-main.c:512
+#: data/monkey-bubble.glade.h:4 src/ui/ui-main.c:393 src/ui/ui-main.c:523
 msgid "Pause game"
 msgstr "Spel pauzeren"
 
@@ -143,6 +143,38 @@ msgstr "toets: schieten voor speler een"
 msgid "shoot key for player two"
 msgstr "toets: schieten voor speler twee"
 
+#: data/netgame.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: data/netgame.glade.h:2
+msgid "Network game"
+msgstr "Netwerkspel"
+
+#: data/netgame.glade.h:3
+msgid "Players"
+msgstr "Spelers"
+
+#: data/netgame.glade.h:4 src/ui/keyboard-properties.c:87
+msgid "Quit game"
+msgstr "Spel afsluiten"
+
+#: data/netgame.glade.h:5
+msgid "Ready"
+msgstr "Klaar"
+
+#: data/netgame.glade.h:6
+msgid "Start Game"
+msgstr "Spel starten"
+
+#: data/netgame.glade.h:7
+msgid "_Go"
+msgstr "_Ga naar"
+
+#: data/netgame.glade.h:8
+msgid "_Server"
+msgstr "_Server"
+
 #: monkey-bubble.desktop.in.h:2
 msgid "Monkey Bubble Arcade Game"
 msgstr "Monkey Bubble Arcadespel"
@@ -187,10 +219,6 @@ msgstr "Nieuw spel speler 2"
 #: src/ui/keyboard-properties.c:83
 msgid "Pause/Resume"
 msgstr "Pauzeren/hervatten"
-
-#: src/ui/keyboard-properties.c:87
-msgid "Quit game"
-msgstr "Spel afsluiten"
 
 #: src/ui/keyboard-properties.c:93
 msgid "Full Screen"
@@ -307,15 +335,15 @@ msgstr "_Actie"
 msgid "Shortcut _Key"
 msgstr "Snel_toets"
 
-#: src/ui/ui-main.c:505
+#: src/ui/ui-main.c:516
 msgid "Resume game"
 msgstr "Spel hervatten"
 
-#: src/ui/ui-main.c:551
+#: src/ui/ui-main.c:570
 msgid "translator_credits"
 msgstr "Tino Meinen <a.t.meinen@chello.nl>"
 
-#: src/ui/ui-main.c:580
+#: src/ui/ui-main.c:599
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Er was een fout bij het weergeven van de hulp: %s"
