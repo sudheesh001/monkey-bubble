@@ -174,7 +174,7 @@ msgstr "Geef een nieuwe sneltoets, of druk op Backspace om te wissen"
 
 #: src/ui/eggcellrendererkeys.c:571
 msgid "Type a new accelerator"
-msgstr "Geen een nieuwe sneltoets"
+msgstr "Geef een nieuwe sneltoets"
 
 #: src/ui/keyboard-properties.c:79
 msgid "New game 1 player"
