@@ -233,16 +233,17 @@ static void quit_server_signal(gpointer    callback_data,
         PRIVATE(launcher)->game->clients = NULL;
         
         update_players_list(launcher);
-        
-        send_disconnect(launcher);
 
-        network_message_handler_disconnect(PRIVATE(launcher)->handler);
+        if( PRIVATE(launcher)->handler != NULL) {
+                send_disconnect(launcher);
+                
+                network_message_handler_disconnect(PRIVATE(launcher)->handler);
         
-        network_message_handler_join(PRIVATE(launcher)->handler);
-        g_object_unref( PRIVATE(launcher)->handler);
-        PRIVATE(launcher)->handler = NULL;
+                g_object_unref( PRIVATE(launcher)->handler);
+                PRIVATE(launcher)->handler = NULL;
 
-        network_simple_server_stop(PRIVATE(launcher)->manager);
+                network_simple_server_stop(PRIVATE(launcher)->manager);
+        }
         gtk_widget_destroy( PRIVATE(launcher)->window);
 
 

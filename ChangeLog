@@ -1,3 +1,16 @@
+2004-06-07  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	more network stuff...
+	* src/net/game-manager.c: (network_game_manager_add_client),
+	(network_game_manager_remove_client),
+	(network_game_manager_instance_init), (send_game_list),
+	(client_request_start), (game_stopped), (client_disconnected):
+	* src/ui/game-network-player.c: (recv_winlost),
+	(game_network_player_game_lost):
+	* src/ui/network-game-launcher.c: (disconnected),
+	(quit_server_signal), (ready_signal):
+	* src/ui/network-server-launcher.c: (quit_server_signal):
+
 2004-06-04  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	disable sound by default (use --enable-sound)

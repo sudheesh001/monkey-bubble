@@ -282,6 +282,15 @@ static void recv_winlost(NetworkMessageHandler * handler,
             game_network_player_stop(GAME(game));
             game_network_player_fire_changed(game);	
     } else {
+    
+            PRIVATE(game)->state = GAME_STOPPED;
+            monkey_view_draw_lost( PRIVATE(game)->display );
+        
+            g_idle_add( idle_draw_win,game);
+    
+            game_network_player_stop(GAME(game));
+            game_network_player_fire_changed(game);	
+    
     }
 
     //	   g_idle_add( add_bubble,monkey);
@@ -665,15 +674,15 @@ static void game_network_player_game_lost(Monkey * monkey,GameNetworkPlayer * g)
 
     PRIVATE(g)->lost = TRUE;
 
-    monkey_view_draw_lost( PRIVATE(g)->display );
+    //    monkey_view_draw_lost( PRIVATE(g)->display );
 
-    game_network_player_stop( GAME(g));
+    //    game_network_player_stop( GAME(g));
 
 
-    PRIVATE(g)->state = GAME_STOPPED;
+    //    PRIVATE(g)->state = GAME_STOPPED;
   
-    game_network_player_fire_changed(g);
-    monkey_canvas_paint(PRIVATE(g)->canvas);
+    //    game_network_player_fire_changed(g);
+    // monkey_canvas_paint(PRIVATE(g)->canvas);
     
 }
 

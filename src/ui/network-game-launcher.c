@@ -70,7 +70,6 @@ static GObjectClass* parent_class = NULL;
 
 void network_game_launcher_finalize(GObject *);
 
-static void send_start(NetworkGameLauncher * launcher);
 
 static void start_game(NetworkGameLauncher * launcher);
 
@@ -289,27 +288,53 @@ static void disconnected(NetworkGameLauncher * launcher) {
                                              , "connected_game_hbox"),FALSE);
         
         set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
-                                             , "connect_hbox"),TRUE);        
+                                             , "connect_hbox"),TRUE);
+
+        set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
+                                             ,"connected_game_hbox"),TRUE); 
+                                
 }
 
 static void quit_server_signal(gpointer    callback_data,
                            guint       callback_action,
                                GtkWidget  *widget) {
-
+        NetworkGame * game;
 
         NetworkGameLauncher * launcher;
 
         launcher = NETWORK_GAME_LAUNCHER(callback_data);
 
-        
-        send_disconnect(launcher);
+        g_list_foreach(PRIVATE(launcher)->game->clients,
+                       free_network_client,
+                       NULL);
+        g_list_free( PRIVATE(launcher)->game->clients);
 
-        network_message_handler_disconnect(PRIVATE(launcher)->handler);
+        PRIVATE(launcher)->game->clients = NULL;
         
-        network_message_handler_join(PRIVATE(launcher)->handler);
-        g_object_unref( PRIVATE(launcher)->handler);
-        PRIVATE(launcher)->handler = NULL;
+        update_players_list(launcher);
 
+        if( PRIVATE(launcher)->handler != NULL) {
+                send_disconnect(launcher);
+                
+                network_message_handler_disconnect(PRIVATE(launcher)->handler);
+        
+                
+                g_object_unref( PRIVATE(launcher)->handler);
+                PRIVATE(launcher)->handler = NULL;
+                
+        }
+
+        game = PRIVATE(launcher)->game;
+        
+        set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
+                                             , "connect_hbox"),TRUE); 
+                        
+        set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
+                                             , "connect_hbox"),TRUE); 
+                        
+        
+
+        //        gtk_widget_destroy( PRIVATE(launcher)->window);
 }
 
 
@@ -361,36 +386,7 @@ static void ready_signal(gpointer    callback_data,
                 PRIVATE(launcher)->ready = FALSE;
                 
         }
-
-        send_start(launcher);
 }
-
-static void send_start(NetworkGameLauncher * launcher) {
-        xmlDoc * doc;
-        xmlNode * root;
-        xmlNode * text;
-        
-        doc = xmlNewDoc("1.0");
-        root = xmlNewNode(NULL,
-                          "message");
-        xmlDocSetRootElement(doc, root);
-        
-        xmlNewProp(root,"name","start_game");
-        
-        text = xmlNewText("1"); // game_id
-        
-        xmlAddChild(root,text);
-
-        network_message_handler_send_xml_message(PRIVATE(launcher)->handler,
-                                                PRIVATE(launcher)->client_id,
-                                                doc);
-
-        xmlFreeDoc(doc);
-
-}
-
-
-
 
 void send_init(NetworkGameLauncher * launcher) {
         xmlDoc * doc;

@@ -40,11 +40,13 @@ struct NetworkGameManagerPrivate
 	GMutex * started_lock;
 
 	NetworkGame * game;
+
+	NetworkClient * owner;
 };
 
 
-static void client_connection_closed(NetworkMessageHandler * mmh,
-				     NetworkGameManager * manager);
+static void client_disconnected(NetworkClient * client,
+				NetworkGameManager * manager);
 
 
 static void send_game_list(NetworkGameManager * manager);
@@ -83,14 +85,19 @@ network_game_manager_add_client(NetworkGameManager * manager,
 	g_mutex_lock( PRIVATE(manager)->started_lock);
 
 	if( PRIVATE(manager)->started == FALSE) {
+
 		handler = network_client_get_handler(client);
 
 		g_mutex_lock(PRIVATE(manager)->clients_lock);
 
-		g_signal_connect( G_OBJECT(handler),
-				  "connection-closed",
-				  G_CALLBACK(client_connection_closed),
+		g_signal_connect( G_OBJECT(client),
+				  "disconnect-request",
+				  G_CALLBACK(client_disconnected),
 				  manager);
+
+		if( PRIVATE(manager)->owner == NULL ) {
+			PRIVATE(manager)->owner = client;
+		}
 
 		PRIVATE(manager)->clients = g_list_append(PRIVATE(manager)->clients,
 							  client);
@@ -98,6 +105,8 @@ network_game_manager_add_client(NetworkGameManager * manager,
 		g_hash_table_insert(PRIVATE(manager)->id_hash_table,
 				    (gpointer)&client->id,
 				    client);
+
+
 
 
 		g_object_ref( G_OBJECT(client));
@@ -146,6 +155,43 @@ network_game_manager_add_client(NetworkGameManager * manager,
 	g_mutex_unlock( PRIVATE(manager)->started_lock);
 }
 
+
+void 
+network_game_manager_remove_client(NetworkGameManager * manager,
+				NetworkClient * client) 
+{
+	NetworkMessageHandler * handler;
+
+	g_mutex_lock( PRIVATE(manager)->started_lock);
+
+	handler = network_client_get_handler(client);
+
+	g_mutex_lock(PRIVATE(manager)->clients_lock);
+
+
+	if( PRIVATE(manager)->owner == client) {
+		PRIVATE(manager)->owner = NULL;
+
+		// maybe stop the game-manager??
+	}
+
+	PRIVATE(manager)->clients = g_list_remove(PRIVATE(manager)->clients,
+						  client);
+
+	g_hash_table_remove(PRIVATE(manager)->id_hash_table,
+			    (gpointer)&client->id);
+
+        g_signal_handlers_disconnect_matched(  G_OBJECT( client ),
+                                               G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,manager);
+
+	g_object_unref( G_OBJECT(client));
+	
+	g_mutex_unlock(PRIVATE(manager)->clients_lock);
+		
+	send_game_list(manager);
+	g_mutex_unlock( PRIVATE(manager)->started_lock);
+}
+
 static void 
 network_game_manager_instance_init(NetworkGameManager * self) 
 {
@@ -157,6 +203,8 @@ network_game_manager_instance_init(NetworkGameManager * self)
 	PRIVATE(self)->clients_lock = g_mutex_new();
 	PRIVATE(self)->started = FALSE;
 	PRIVATE(self)->started_lock = g_mutex_new();
+
+	PRIVATE(self)->owner = NULL;
 }
 
 static void
@@ -258,9 +306,9 @@ void send_game_list(NetworkGameManager * manager) {
 		current = xmlNewNode(NULL,
                                      "player");
                 
-		//   if( client == ng->game_owner) {
-		//            xmlNewProp(current,"owner","true");
-		//  }
+		if( client == PRIVATE(manager)->owner) {
+			xmlNewProp(current,"owner","true");
+		}
 
                 xmlNewProp(current,"ready", ( network_client_get_state(client) ? "true" : "false"));
                 text = xmlNewText(network_player_get_name(network_client_get_player(client)));
@@ -338,14 +386,12 @@ client_request_start(NetworkClient * client,
 		     NetworkGameManager * manager) 
 {
 
-	// TODO test owner ?
-
-	// test game state
 
 	g_mutex_lock( PRIVATE(manager)->started_lock);
 	g_mutex_lock( PRIVATE(manager)->clients_lock);
 
-	if( PRIVATE(manager)->started == FALSE && g_list_length( PRIVATE(manager)->clients) >= 1) {
+	if( PRIVATE(manager)->started == FALSE && g_list_length( PRIVATE(manager)->clients) >= 1
+	    && PRIVATE(manager)->owner == client) {
 		start_game(manager);
 	}
 
@@ -359,6 +405,8 @@ client_request_start(NetworkClient * client,
 static void game_stopped(NetworkGame * game,
 			 NetworkGameManager * manager) 
 {
+
+	// restart after 5 seconde ?
 	g_print("NetworkGameManager : Game Stopped \n");
 }
 
@@ -397,8 +445,12 @@ client_request_game_created_ok(NetworkClient * client,
 }
 
 static void 
-client_connection_closed(NetworkMessageHandler * mmh,
-			 NetworkGameManager * manager) {
+client_disconnected(NetworkClient * client,
+		    NetworkGameManager * manager) {
+
+	network_game_manager_remove_client(manager,
+					   client);
+
 }
 
 static void
