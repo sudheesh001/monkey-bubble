@@ -1,0 +1,29 @@
+2001-03-24  Anders Carlsson  <andersca@gnu.org>
+
+	* configure.in (DB_LIB): It's gnome-vfs-2.0, not gnomevfs-2.0
+
+2001-03-24  Martin Baulig  <baulig@suse.de>
+
+	* configure.in: Require ORBit >= 2.3.90, not 2.5.7.
+
+2001-03-21  Martin Baulig  <baulig@suse.de>
+
+	* configure.in: Set package name to `libgnome2', looks better
+	than `libgnome-2'.
+
+2001-03-21  Martin Baulig  <baulig@suse.de>
+
+	configure.in: Added awk check; use AC_PATH_PROGS in perl check.
+
+	* tools/: New directory.
+
+	* doc/: New directory.
+
+2001-03-05  Martin Baulig  <baulig@suse.de>
+
+	* configure.in: Enable NLS again.
+	* po/POTFILES.in: New file; currently empty.
+
+	* configure.in: Set package name to `libgnome-2-martin' and
+	version number to 1.96.0.
+
