@@ -1,3 +1,7 @@
+2004-11-09  Hasbullah BIn Pit <sebol@my-penguin.org>
+
+        * configure.in: Added 'ms' (Malay) to ALL_LINGUA
+
 2004-09-27  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	update clock to add mb prefix, hope fix the compilation

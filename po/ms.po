@@ -1,0 +1,407 @@
+# Duit PPRT siapa yang kebas????      
+# Copyright (C) 2001 Free Software Foundation, Inc.
+# Hasbullah Bin Pit (sebol) <sebol@ikhlas.com>, 200R31.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ms-longgok\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-10-29 23:36+0800\n"
+"PO-Revision-Date: 2002-02-04 00:07+0800\n"
+"Last-Translator: Hasbullah Bin Pit <sebol@ikhlas.com>\n"
+"Language-Team: Projek Gabai <gabai-penyumbang@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/keybinding.glade.h:1
+msgid "Keyboard Shortcuts"
+msgstr "Pintasan Papan Kekunci"
+
+#: data/keybinding.glade.h:2
+msgid "_Shortcut Keys:"
+msgstr "Kekunci _Pintasan:"
+
+#: data/monkey-bubble.glade.h:1
+msgid ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Can't create server !\n"
+"</span>\n"
+"</markup>"
+msgstr ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Tak dapat mencipta pelayan !\n"
+"</span>\n"
+"</markup>"
+
+#: data/monkey-bubble.glade.h:7
+msgid "Create network game"
+msgstr "Cipta permainan rangkaian"
+
+#: data/monkey-bubble.glade.h:8
+msgid "Join _network game"
+msgstr "Sertai pemainan _rangkaian"
+
+#: data/monkey-bubble.glade.h:9 monkey-bubble.desktop.in.h:1
+msgid "Monkey Bubble"
+msgstr "Monkey Bubble"
+
+#: data/monkey-bubble.glade.h:10
+msgid "New 1 player"
+msgstr "1 Pemain baru"
+
+#: data/monkey-bubble.glade.h:11
+msgid "New 2 players"
+msgstr "2 pemain baru"
+
+#: data/monkey-bubble.glade.h:12 src/ui/ui-main.c:401 src/ui/ui-main.c:533
+msgid "Pause game"
+msgstr "Kaku permainan"
+
+#: data/monkey-bubble.glade.h:13 src/ui/keyboard-properties.c:86
+msgid "Stop game"
+msgstr "Henti permainan"
+
+#: data/monkey-bubble.glade.h:14
+msgid "Warning"
+msgstr "Amaran"
+
+#: data/monkey-bubble.glade.h:15
+msgid "_About"
+msgstr "_Perihal"
+
+#: data/monkey-bubble.glade.h:16
+msgid "_Contents"
+msgstr "_Kandungan"
+
+#: data/monkey-bubble.glade.h:17
+msgid "_Game"
+msgstr "_Permainan"
+
+#: data/monkey-bubble.glade.h:18
+msgid "_Help"
+msgstr "_Bantuan"
+
+#: data/monkey-bubble.glade.h:19
+msgid "_Settings"
+msgstr "_Tetapan"
+
+#: data/monkey-bubble.schemas.in.h:1
+msgid "1 player game"
+msgstr "Pemainan 1 pemain"
+
+#: data/monkey-bubble.schemas.in.h:2
+msgid "2 players game"
+msgstr "Permainan 2 pemain"
+
+#: data/monkey-bubble.schemas.in.h:3
+msgid "F1"
+msgstr "F1"
+
+#: data/monkey-bubble.schemas.in.h:4
+msgid "F2"
+msgstr "F2"
+
+#: data/monkey-bubble.schemas.in.h:5
+msgid "Left"
+msgstr "Kiri"
+
+#: data/monkey-bubble.schemas.in.h:6
+msgid "Pause"
+msgstr "Kaku"
+
+# libgnomeui/gnome-app-helper.c:267
+#: data/monkey-bubble.schemas.in.h:7
+msgid "Pause the game"
+msgstr "Kaku permainan"
+
+#: data/monkey-bubble.schemas.in.h:8
+msgid "Quit the game"
+msgstr "Keluar piermainan"
+
+#: data/monkey-bubble.schemas.in.h:9
+msgid "Right"
+msgstr "Kanan"
+
+#: data/monkey-bubble.schemas.in.h:10
+msgid "Stop the game"
+msgstr "Hentikan permainan"
+
+#: data/monkey-bubble.schemas.in.h:11
+msgid "Up"
+msgstr "Naik"
+
+#: data/monkey-bubble.schemas.in.h:12
+msgid "d"
+msgstr "d"
+
+#: data/monkey-bubble.schemas.in.h:13
+msgid "f"
+msgstr "f"
+
+#: data/monkey-bubble.schemas.in.h:14
+msgid "left key for player one"
+msgstr "kekunci kiri bagi pemain satu"
+
+#: data/monkey-bubble.schemas.in.h:15
+msgid "left key for player two"
+msgstr "kekunci kiri bagi pemain dua"
+
+#: data/monkey-bubble.schemas.in.h:16
+msgid "right key for player one"
+msgstr "kekunci kanan bagi pemain satu"
+
+#: data/monkey-bubble.schemas.in.h:17
+msgid "right key for player two"
+msgstr "kekunci kanan bagi pemain dua"
+
+#: data/monkey-bubble.schemas.in.h:18
+msgid "s"
+msgstr "s"
+
+#: data/monkey-bubble.schemas.in.h:19
+msgid "shoot key for player one"
+msgstr "kekunci tembak bagi pemain satu"
+
+#: data/monkey-bubble.schemas.in.h:20
+msgid "shoot key for player two"
+msgstr "kekunci tembak bagi pemain dua"
+
+#: data/netgame.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: data/netgame.glade.h:2 data/netserver.glade.h:1
+msgid "Network game"
+msgstr "Pemainan rangkaian"
+
+#: data/netgame.glade.h:3
+msgid "Number of games :"
+msgstr "Bilangan permainan :"
+
+#: data/netgame.glade.h:4
+msgid "Number of players :"
+msgstr "Bilangan pemain :"
+
+#: data/netgame.glade.h:5 data/netserver.glade.h:4
+#: src/ui/keyboard-properties.c:88
+msgid "Quit game"
+msgstr "Keluar permainan"
+
+#: data/netgame.glade.h:6 data/netserver.glade.h:5
+msgid "Ready"
+msgstr "Bersedia"
+
+#: data/netgame.glade.h:7
+msgid "_Go"
+msgstr "_Pergi"
+
+#: data/netgame.glade.h:8
+msgid "_Server"
+msgstr "_Pelayan"
+
+#: data/netserver.glade.h:2
+msgid "Number of game"
+msgstr "Bilangan permainan"
+
+#: data/netserver.glade.h:3
+msgid "Number of players"
+msgstr "Bilangan pemain"
+
+#: data/netserver.glade.h:6
+msgid "Start Game"
+msgstr "Mulakan Permainan"
+
+#: monkey-bubble.desktop.in.h:2
+msgid "Monkey Bubble Arcade Game"
+msgstr "Permainan Arked Monkey Bubble"
+
+#: src/ui/eggcellrendererkeys.c:160 src/ui/eggcellrendererkeys.c:161
+msgid "Accelerator key"
+msgstr "Kekunci pemecut"
+
+#: src/ui/eggcellrendererkeys.c:170 src/ui/eggcellrendererkeys.c:171
+msgid "Accelerator modifiers"
+msgstr "Modifier pemecut"
+
+#: src/ui/eggcellrendererkeys.c:180
+msgid "Accelerator Mode"
+msgstr "Mod Pemecut"
+
+#: src/ui/eggcellrendererkeys.c:181
+msgid "The type of accelerator."
+msgstr "Jenis pemecut."
+
+#: src/ui/eggcellrendererkeys.c:219 src/ui/keyboard-properties.c:765
+msgid "Disabled"
+msgstr "Dimatikan"
+
+#: src/ui/eggcellrendererkeys.c:330 src/ui/eggcellrendererkeys.c:568
+msgid "Type a new accelerator, or press Backspace to clear"
+msgstr "Taip pemecut baru, atau tekan Backspace untuk kosongkan"
+
+#: src/ui/eggcellrendererkeys.c:571
+msgid "Type a new accelerator"
+msgstr "Taip pemecut baru"
+
+#: src/ui/keyboard-properties.c:80
+msgid "New game 1 player"
+msgstr "Permainan baru 1 pemain"
+
+#: src/ui/keyboard-properties.c:82
+msgid "New game 2 player"
+msgstr "Permainan baru 2 pemain"
+
+#: src/ui/keyboard-properties.c:84
+msgid "Pause/Resume"
+msgstr "Kaku/Sambung"
+
+#: src/ui/keyboard-properties.c:94
+msgid "Full Screen"
+msgstr "Skrin Penuh"
+
+#: src/ui/keyboard-properties.c:96
+msgid "Normal Size"
+msgstr "Saiz Normal"
+
+#: src/ui/keyboard-properties.c:101 src/ui/keyboard-properties.c:111
+msgid "aim left"
+msgstr "sasar kiri"
+
+#: src/ui/keyboard-properties.c:103 src/ui/keyboard-properties.c:113
+msgid "aim right"
+msgstr "sasar kanan"
+
+#: src/ui/keyboard-properties.c:105 src/ui/keyboard-properties.c:115
+msgid "shoot"
+msgstr "tembak"
+
+#: src/ui/keyboard-properties.c:122
+msgid "Player 1"
+msgstr "Pemain 1"
+
+#: src/ui/keyboard-properties.c:123
+msgid "Player 2"
+msgstr "Pemain 2"
+
+#: src/ui/keyboard-properties.c:124
+msgid "Game"
+msgstr "Permainan"
+
+#: src/ui/keyboard-properties.c:125
+msgid "View"
+msgstr "Lihat"
+
+#: src/ui/keyboard-properties.c:338
+#, c-format
+msgid "There was an error loading config from %s. (%s)\n"
+msgstr "Terdapat ralat memuatkan konfigurasi dari %s. (%s)\n"
+
+#: src/ui/keyboard-properties.c:352
+#, c-format
+msgid ""
+"There was an error subscribing to notification of terminal keybinding "
+"changes. (%s)\n"
+msgstr ""
+"Terdapat ralat melanggan notifikasi bagi perubahan pengikatan kekunci "
+"terminal. (%s)\n"
+
+#: src/ui/keyboard-properties.c:395
+#, c-format
+msgid "There was an error loading a terminal keybinding. (%s)\n"
+msgstr "Terdapat ralat memuatkan konfigurasi dari. (%s)\n"
+
+#: src/ui/keyboard-properties.c:411
+#, c-format
+msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
+msgstr "Nilai kekunci konfigurasi %s adalah tidak sah; nilai ialah \"%s\"\n"
+
+#: src/ui/keyboard-properties.c:434
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menubar access "
+"keys. (%s)\n"
+msgstr ""
+"Terdapat ralat memuatkan nilai konfigurasi samada untuk menggunakan kekunci "
+"akses bar menu. (%s)\n"
+
+#: src/ui/keyboard-properties.c:448
+#, c-format
+msgid ""
+"There was an error subscribing to notification on changes on whether to use "
+"menubar access keys (%s)\n"
+msgstr ""
+"Terdapat ralat melanggan notifikasi perubahan pada samada menggunakan "
+"kekunci akses bar menu (%s)\n"
+
+#: src/ui/keyboard-properties.c:459
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menu "
+"accelerators. (%s)\n"
+msgstr ""
+"Terdapat ralat memuatkan nilai konfigurasi samada untuk menggunakan pemecut "
+"menu. (%s)\n"
+
+#: src/ui/keyboard-properties.c:475
+#, c-format
+msgid ""
+"There was an error subscribing to notification for use_menu_accelerators (%"
+"s)\n"
+msgstr "Terdapat ralat melanggan notifikasi bagi use_menu_accelerators (%s)\n"
+
+#: src/ui/keyboard-properties.c:825
+#, c-format
+msgid "Error propagating accelerator change to configuration database: %s\n"
+msgstr ""
+"Ralat mempropagasi perubahan pemecut ke pangkalan data konfigurasi: %s\n"
+
+#: src/ui/keyboard-properties.c:994
+#, c-format
+msgid "Error setting new accelerator in configuration database: %s\n"
+msgstr "Ralat menetapkan pemecut baru pada pangkalandata konfigurasi: %s\n"
+
+#: src/ui/keyboard-properties.c:1093
+msgid "_Action"
+msgstr "_Aksi"
+
+#: src/ui/keyboard-properties.c:1115
+msgid "Shortcut _Key"
+msgstr "_Kekunci Pintasan"
+
+#: src/ui/ui-main.c:526
+msgid "Resume game"
+msgstr "Sambung permainan"
+
+#: src/ui/ui-main.c:611
+msgid "translator_credits"
+msgstr "Hasbullah Bin Pit <sebol@my-penguin.org>"
+
+#: src/ui/ui-main.c:619
+msgid ""
+"Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
+"remove all Bubbles by the creation of unicolor triplets."
+msgstr ""
+"Monkey Bubble adalah Permainan Arked bagi Persekitaran Desktop GNOME. Hanya "
+"buang semua bebola dengan mencipta gabungan 3 dalam satu warna."
+
+#: src/ui/ui-main.c:640
+#, c-format
+msgid "There was an error displaying help: %s"
+msgstr "Terdapat ralat memapar bantuan: %s"
+
+#: src/ui/ui-network-server.c:159 src/ui/ui-network-client.c:149
+msgid "_Player name"
+msgstr "Nama _Pemain"
+
+#: src/ui/ui-network-server.c:166 src/ui/ui-network-client.c:156
+msgid "_Owner"
+msgstr "Pe_milik"
+
+#: src/ui/ui-network-server.c:173 src/ui/ui-network-client.c:163
+msgid "_Ready"
+msgstr "Ber_sedia"
