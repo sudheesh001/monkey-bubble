@@ -1,3 +1,11 @@
+2004-06-22  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	fix leak made by tom
+	* src/monkey/board.c: (board_load_from_file):
+	* src/view/monkey-canvas.c: (monkey_canvas_paint):
+	* src/view/monkey-view.c: (monkey_view_finalize),
+	(monkey_view_free_map), (monkey_view_shooter_bubble_added):
+
 2004-06-21  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	fix add bubble at the right time

@@ -753,11 +753,13 @@ void monkey_canvas_paint(MonkeyCanvas * monkey_canvas){
     }
     
     //	 gtk_widget_queue_draw(GTK_WIDGET(monkey_canvas));
-    if( rects != NULL) g_free(rects);
+    g_free(rects);
     
     gdk_region_destroy( PRIVATE(monkey_canvas)->region);
-    gdk_region_destroy( screen);
     
     PRIVATE(monkey_canvas)->region = gdk_region_new();
   }
+
+  gdk_region_destroy( screen);
+
 }

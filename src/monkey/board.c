@@ -334,6 +334,10 @@ void board_load_from_file(Board * board,
 
   } 
   
+  if (line != NULL) {
+      g_free(line);
+  }
+
   g_io_channel_shutdown(channel,
 			TRUE,
 			&error);

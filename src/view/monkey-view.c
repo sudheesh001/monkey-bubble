@@ -722,6 +722,7 @@ static void monkey_view_finalize(GObject* object) {
         g_hash_table_foreach(PRIVATE(monkey_view)->hash_map,
                              monkey_view_free_map,
                              monkey_view);
+        g_hash_table_destroy(monkey_view->private->hash_map);
   
 
 
@@ -732,6 +733,28 @@ static void monkey_view_finalize(GObject* object) {
                                           monkey_view->private->shooter_block[i]);
         }
 
+        monkey_canvas_unref_block(monkey_view->private->canvas,
+                                  monkey_view->private->harm_up);
+        monkey_canvas_unref_block(monkey_view->private->canvas,
+                                  monkey_view->private->harm_down);
+        monkey_canvas_unref_block(monkey_view->private->canvas,
+                                  monkey_view->private->harm_center);
+        monkey_canvas_unref_block(monkey_view->private->canvas,
+                                  monkey_view->private->harm_shoot);
+        monkey_canvas_unref_block(monkey_view->private->canvas,
+                                  monkey_view->private->bback);
+        monkey_canvas_unref_block(monkey_view->private->canvas,
+                                  monkey_view->private->right_monkey);
+        monkey_canvas_unref_block(monkey_view->private->canvas,
+                                  monkey_view->private->left_monkey);
+        monkey_canvas_unref_block(monkey_view->private->canvas,
+                                  monkey_view->private->snake_body);
+        monkey_canvas_unref_block(monkey_view->private->canvas,
+                                  monkey_view->private->lost);
+        monkey_canvas_unref_block(monkey_view->private->canvas,
+                                  monkey_view->private->win);
+        monkey_canvas_unref_block(monkey_view->private->canvas,
+                                  monkey_view->private->hurry_up_block);
         //  monkey_canvas_clear( PRIVATE(monkey_view)->canvas);
         //  g_object_unref( PRIVATE(monkey_view)-> canvas);
         g_free(monkey_view->private);
@@ -755,6 +778,7 @@ static void monkey_view_free_map(gpointer key,
 
 
         g_signal_handlers_disconnect_matched( G_OBJECT(b),G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,view);
+        monkey_canvas_unref_block(view->private->canvas, bb);
 
 }
 
@@ -860,6 +884,7 @@ static void monkey_view_shooter_bubble_added(Shooter * s,
 
         bubble_get_position(b,&x,&y);
         
+        /* LEAK */
         block = monkey_view_create_bubble(d,b);
         monkey_canvas_add_block(PRIVATE(d)->canvas,
                              PRIVATE(d)->bubble_layer , 
