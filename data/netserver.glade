@@ -80,7 +80,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkSpinButton" id="spinbutton1">
+	    <widget class="GtkSpinButton" id="number_of_games">
 	      <property name="visible">True</property>
 	      <property name="can_focus">True</property>
 	      <property name="climb_rate">1</property>

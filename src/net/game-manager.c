@@ -152,6 +152,8 @@ network_game_manager_add_client(NetworkGameManager * manager,
 				  manager);
 		g_mutex_unlock(PRIVATE(manager)->clients_lock);
 
+		network_client_send_number_of_players(client,PRIVATE(manager)->number_of_players);
+		network_client_send_number_of_games(client,PRIVATE(manager)->number_of_games);
 		send_game_joined(manager,client);
 		send_game_list(manager);
 	} else {
@@ -227,7 +229,8 @@ network_game_manager_instance_init(NetworkGameManager * self)
 	PRIVATE(self)->clients_lock = g_mutex_new();
 	PRIVATE(self)->started = FALSE;
 	PRIVATE(self)->started_lock = g_mutex_new();
-
+	PRIVATE(self)->number_of_games = 10;
+	PRIVATE(self)->number_of_players = 2;
 	PRIVATE(self)->owner = NULL;
 }
 
@@ -498,11 +501,22 @@ client_request_start(NetworkClient * client,
 }
 
 
+static gboolean
+start_timeout(gpointer data) 
+{
+
+	NetworkGameManager * manager;
+
+	manager = NETWORK_GAME_MANAGER(data);
+	start_game(manager);
+
+	return FALSE;
+}
+
 static void game_stopped(NetworkGame * game,
 			 NetworkGameManager * manager) 
 {
 
-	// restart after 5 seconde ?
 	g_print("NetworkGameManager : Game Stopped \n");
 	
 	g_signal_handlers_disconnect_matched(  game ,
@@ -514,7 +528,9 @@ static void game_stopped(NetworkGame * game,
 	g_object_unref( G_OBJECT(PRIVATE(manager)->game));
 	PRIVATE(manager)->game = NULL;
 
-	start_game(manager);
+	// restart after 3 seconde !
+	// if the number of winned game < number_of_games
+	g_timeout_add(3000,start_timeout,manager);
 }
 
 static void 

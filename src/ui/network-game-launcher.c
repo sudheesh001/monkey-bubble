@@ -38,17 +38,9 @@
 #include "network-game-launcher.h"
 #include "game-network-player-manager.h"
 #include "ui-main.h"
-
-typedef struct NetworkClient {
-        gchar *        client_name;
-        gboolean       game_owner;
-        gboolean       ready;
-} NetworkClient;
+#include "game-manager-proxy.h"
 
 
-typedef struct NetworkGame {
-        GList *               clients;
-} NetworkGame;
 
 struct NetworkGameLauncherPrivate {
         GladeXML * glade_xml;
@@ -59,7 +51,8 @@ struct NetworkGameLauncherPrivate {
         gboolean ready;
         GtkLabel * connection_label;
         GtkListStore * players_list;
-        NetworkGame * game;
+        NetGameManagerProxy * manager_proxy;
+
 };
 
 
@@ -168,9 +161,6 @@ NetworkGameLauncher *network_game_launcher_new() {
         
         PRIVATE(ngl)->players_list = list;
         
-        PRIVATE(ngl)->game = g_malloc(sizeof(NetworkGame));
-
-        PRIVATE(ngl)->game->clients = NULL;
         return ngl;
         
 }
@@ -247,13 +237,6 @@ static void connect_server_signal(gpointer    callback_data,
 
 }
 
-void free_network_client(gpointer data,gpointer user_data) {
-
-        NetworkClient * c = (NetworkClient *) data;
-        g_free(c->client_name);
-        g_free(c);
-
-}
 
 
 static void send_disconnect(NetworkGameLauncher * launcher) {
@@ -276,13 +259,11 @@ static void send_disconnect(NetworkGameLauncher * launcher) {
 }
 
 static void disconnected(NetworkGameLauncher * launcher) {
-        g_list_foreach(PRIVATE(launcher)->game->clients,
-                       free_network_client,
-                       NULL);
-        g_list_free( PRIVATE(launcher)->game->clients);
 
-        PRIVATE(launcher)->game->clients = NULL;
+        g_object_unref( PRIVATE(launcher)->manager_proxy);
         
+        PRIVATE(launcher)->manager_proxy = NULL;
+                
         update_players_list(launcher);
         set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
                                              , "connected_game_hbox"),FALSE);
@@ -298,18 +279,11 @@ static void disconnected(NetworkGameLauncher * launcher) {
 static void quit_server_signal(gpointer    callback_data,
                            guint       callback_action,
                                GtkWidget  *widget) {
-        NetworkGame * game;
 
         NetworkGameLauncher * launcher;
 
         launcher = NETWORK_GAME_LAUNCHER(callback_data);
 
-        g_list_foreach(PRIVATE(launcher)->game->clients,
-                       free_network_client,
-                       NULL);
-        g_list_free( PRIVATE(launcher)->game->clients);
-
-        PRIVATE(launcher)->game->clients = NULL;
         
         update_players_list(launcher);
 
@@ -324,7 +298,6 @@ static void quit_server_signal(gpointer    callback_data,
                 
         }
 
-        game = PRIVATE(launcher)->game;
         
         set_sensitive( glade_xml_get_widget( PRIVATE(launcher)->glade_xml
                                              , "connect_hbox"),TRUE); 
@@ -333,35 +306,9 @@ static void quit_server_signal(gpointer    callback_data,
                                              , "connect_hbox"),TRUE); 
                         
         
-
-        //        gtk_widget_destroy( PRIVATE(launcher)->window);
 }
 
 
-static void send_ready_state(NetworkGameLauncher * launcher,
-                             gboolean state) {
-        xmlDoc * doc;
-        xmlNode * root;
-        xmlNode * text;
-        
-        doc = xmlNewDoc("1.0");
-        root = xmlNewNode(NULL,
-                          "message");
-        xmlDocSetRootElement(doc, root);
-        
-        xmlNewProp(root,"name","ready_state");
-        
-        text = xmlNewText((state ? "true" : "false"));
-        
-        xmlAddChild(root,text);
-
-        network_message_handler_send_xml_message(PRIVATE(launcher)->handler,
-                                                PRIVATE(launcher)->client_id,
-                                                doc);
-
-        xmlFreeDoc(doc);
-
-}
 
 static void ready_signal(gpointer    callback_data,
                          guint       callback_action,
@@ -376,12 +323,13 @@ static void ready_signal(gpointer    callback_data,
         item = glade_xml_get_widget( PRIVATE(launcher)->glade_xml, "ready_button");
 
         if( ! PRIVATE(launcher)->ready ) {
-                send_ready_state(launcher,TRUE);
-                gtk_button_set_label( GTK_BUTTON(item),"not Ready");
+                net_game_manager_proxy_send_ready_state(PRIVATE(launcher)->manager_proxy,
+                                                        TRUE);
                 PRIVATE(launcher)->ready = TRUE;
         } else {
-                send_ready_state(launcher,FALSE);
-                gtk_button_set_label( GTK_BUTTON(item),"Ready");
+
+                net_game_manager_proxy_send_ready_state(PRIVATE(launcher)->manager_proxy,
+                                                        FALSE);
                 
                 PRIVATE(launcher)->ready = FALSE;
                 
@@ -420,7 +368,8 @@ void send_init(NetworkGameLauncher * launcher) {
 
 
 
-gboolean update_players_list_idle(gpointer data) {
+
+static gboolean update_players_list_idle(gpointer data) {
 
         NetworkGameLauncher * launcher;
 
@@ -429,23 +378,24 @@ gboolean update_players_list_idle(gpointer data) {
         launcher = NETWORK_GAME_LAUNCHER(data);
         gtk_list_store_clear( PRIVATE( launcher)->players_list);
         
-        if( PRIVATE(launcher)->game != NULL) {
-                next = PRIVATE(launcher)->game->clients;
+        if( PRIVATE(launcher)->manager_proxy != NULL) {
+                next = net_game_manager_proxy_get_players( PRIVATE(launcher)->manager_proxy);
+
+                
                 while(next != NULL) {
-                        NetworkClient * nc;
                         GtkTreeIter iter;
                         GtkListStore * tree;
-                        
-                        nc = (NetworkClient *)next->data;
+                        Client * client;
+                        client = (Client *)next->data;
 
                         
                         tree =  PRIVATE(launcher)->players_list;
                         
                         gtk_list_store_append (tree, &iter);
                         gtk_list_store_set (tree, &iter,
-                                            0,nc->client_name,
-                                            1,nc->game_owner,
-                                            2,nc->ready,
+                                            0,client->name,
+                                            1,client->owner,
+                                            2,client->ready,
                                             -1);
                         
                         next = g_list_next(next);
@@ -458,63 +408,6 @@ gboolean update_players_list_idle(gpointer data) {
 
 static void update_players_list(NetworkGameLauncher * launcher) {
         g_idle_add(update_players_list_idle,(gpointer)launcher);
-        
-}
-
-static void recv_player_list(NetworkGameLauncher * launcher,xmlDoc * doc) {
-
-        xmlNode * root;
-        xmlNode * current;
-        NetworkGame * game;
-
-        root = doc->children;
-
-        current = root->children;
-
-
-        game = PRIVATE(launcher)->game;
-        
-        
-        if( game->clients != NULL) {
-                g_list_foreach(game->clients,free_network_client,NULL);
-                
-                g_list_free(game->clients);
-                game->clients = NULL;
-        }
-        
-        
-        
-        while(current != NULL) {
-                gboolean owner;
-                gboolean ready;
-                xmlChar * prop;
-                NetworkClient * nc;
-                prop = xmlGetProp(current,"owner");
-                
-                if( prop != NULL && strcmp( prop,"true")  == 0) {
-                        owner = TRUE;
-                } else {
-                        owner = FALSE;
-                }
-                
-                prop = xmlGetProp(current,"ready");                
-                if( prop != NULL && strcmp( prop,"true")  == 0) {
-                        ready = TRUE;
-                } else {
-                        ready = FALSE;
-                }
-                
-                nc = g_malloc(sizeof(NetworkClient));
-                nc->client_name = g_strdup(current->children->content);
-                nc->game_owner = owner; 
-                nc->ready = ready;
-                game->clients = g_list_append( game->clients,
-                                               nc);
-                current = current->next;
-                            
-        }
-
-        update_players_list(launcher);
         
 }
 
@@ -531,6 +424,11 @@ gboolean start_game_idle(gpointer data) {
                                                G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,launcher);
               
 
+                      
+
+        g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(launcher)->manager_proxy ),
+                                               G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,launcher);
+                      
 
                       
         g_print("Network-game-launcher : game started\n");
@@ -541,6 +439,80 @@ gboolean start_game_idle(gpointer data) {
 void start_game(NetworkGameLauncher * launcher) {
         g_idle_add(start_game_idle,launcher);
         
+}
+
+
+static void 
+players_list_updated(NetGameManagerProxy * proxy,
+                     NetworkGameLauncher * launcher) 
+{
+
+        update_players_list(launcher);
+}
+
+static void 
+game_created(NetGameManagerProxy * proxy,
+             NetworkGameLauncher * launcher) 
+{
+        start_game(launcher);
+}
+
+
+
+static gboolean
+update_number_of_players_idle(gpointer data) 
+{
+        NetworkGameLauncher * launcher;
+        GtkWidget * item;
+
+        launcher = NETWORK_GAME_LAUNCHER(data);
+        item = glade_xml_get_widget( PRIVATE(launcher)->glade_xml, "number_of_players");
+        gtk_label_set_label(GTK_LABEL(item),g_strdup_printf("%d", net_game_manager_proxy_get_number_of_players(PRIVATE(launcher)->manager_proxy)));
+
+        return FALSE;
+}
+
+static void
+update_number_of_players(NetworkGameLauncher * launcher)
+{
+        g_idle_add(update_number_of_players_idle,launcher);
+        
+}
+
+static void 
+number_of_players_changed(NetGameManagerProxy * proxy,
+                              NetworkGameLauncher * launcher) {
+
+        update_number_of_players(launcher);
+}
+
+
+
+static gboolean
+update_number_of_games_idle(gpointer data) 
+{
+        NetworkGameLauncher * launcher;
+        GtkWidget * item;
+
+        launcher = NETWORK_GAME_LAUNCHER(data);
+        item = glade_xml_get_widget( PRIVATE(launcher)->glade_xml, "number_of_games");
+        gtk_label_set_label(GTK_LABEL(item),g_strdup_printf("%d", net_game_manager_proxy_get_number_of_games(PRIVATE(launcher)->manager_proxy)));
+
+        return FALSE;
+}
+
+static void
+update_number_of_games(NetworkGameLauncher * launcher)
+{
+        g_idle_add(update_number_of_games_idle,launcher);
+        
+}
+
+static void 
+number_of_games_changed(NetGameManagerProxy * proxy,
+                              NetworkGameLauncher * launcher) {
+
+        update_number_of_games(launcher);
 }
 
 void recv_network_xml_message(NetworkMessageHandler * mmh,
@@ -560,11 +532,7 @@ void recv_network_xml_message(NetworkMessageHandler * mmh,
         
         message_name = xmlGetProp(root,"name");
         
-        if( g_str_equal(message_name,"game_player_list") ) {
-                
-                recv_player_list(launcher,message);
-                
-        } else if( g_str_equal(message_name,"init_request") ) {
+        if( g_str_equal(message_name,"init_request") ) {
                 
                 g_print("INIT REQUIEST");
                 
@@ -584,7 +552,30 @@ void recv_network_xml_message(NetworkMessageHandler * mmh,
                           
                 if( g_str_equal(root->children->content,"ok")) {
                         g_print("init ok!!");
+                        PRIVATE(launcher)->manager_proxy =
+                                net_game_manager_proxy_new( PRIVATE(launcher)->handler,client_id);
                         
+                        g_signal_connect( PRIVATE(launcher)->manager_proxy,
+                                          "players-list-updated",
+                                          G_CALLBACK(players_list_updated),
+                                          launcher);
+                        
+
+                        g_signal_connect( PRIVATE(launcher)->manager_proxy,
+                                          "game-created",
+                                          G_CALLBACK(game_created),
+                                          launcher);
+
+                        g_signal_connect( PRIVATE(launcher)->manager_proxy,
+                                          "number-of-players-changed",
+                                          G_CALLBACK(number_of_players_changed),
+                                          launcher);
+
+                        g_signal_connect( PRIVATE(launcher)->manager_proxy,
+                                          "number-of-games-changed",
+                                          G_CALLBACK(number_of_games_changed),
+                                          launcher);
+
                 } else {
                         g_print("init not ok!!");
                         
@@ -615,18 +606,7 @@ void recv_network_xml_message(NetworkMessageHandler * mmh,
                                          GAME_MANAGER(manager));
 
 
-        } else if(g_str_equal(message_name,"game_created") ) {
-                
-                int game_id;
-                
-                sscanf(root->children->content,"%d",&game_id);
-                g_print("network-game-launcher.c : game started %d \n",game_id);                
-
-                start_game(launcher);
-
-        } else if(g_str_equal(message_name,"disconnect")) {
-        }
-
+        } 
 
         
         

@@ -280,6 +280,57 @@ net_game_manager_proxy_send_start(NetGameManagerProxy * self)
 
 }
 
+void
+net_game_manager_proxy_send_number_of_players(NetGameManagerProxy * self,int n) 
+{
+
+        xmlDoc * doc;
+        xmlNode * root;
+        xmlNode * text;
+        
+        doc = xmlNewDoc("1.0");
+        root = xmlNewNode(NULL,
+                          "message");
+        xmlDocSetRootElement(doc, root);
+        
+        xmlNewProp(root,"name","number_of_players");
+        
+        text = xmlNewText(g_strdup_printf("%d",n));
+        
+        xmlAddChild(root,text);
+
+        network_message_handler_send_xml_message(PRIVATE(self)->handler,
+						 PRIVATE(self)->client_id,
+						 doc);
+
+        xmlFreeDoc(doc);
+}
+
+void
+net_game_manager_proxy_send_number_of_games(NetGameManagerProxy * self,int n)
+{
+        xmlDoc * doc;
+        xmlNode * root;
+        xmlNode * text;
+        
+        doc = xmlNewDoc("1.0");
+        root = xmlNewNode(NULL,
+                          "message");
+        xmlDocSetRootElement(doc, root);
+        
+        xmlNewProp(root,"name","number_of_games");
+        
+        text = xmlNewText(g_strdup_printf("%d",n));
+        
+        xmlAddChild(root,text);
+
+        network_message_handler_send_xml_message(PRIVATE(self)->handler,
+						 PRIVATE(self)->client_id,
+						 doc);
+
+        xmlFreeDoc(doc);
+}
+
 
 static void
 net_game_manager_proxy_class_init (NetGameManagerProxyClass	* net_game_manager_proxy_class)

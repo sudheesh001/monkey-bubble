@@ -69,11 +69,6 @@ static void game_network_player_bubble_sticked(Monkey * monkey,Bubble * b,GameNe
 
 static void game_network_player_game_lost(Monkey * monkey,GameNetworkPlayer * game);
 
-static void game_network_player_bubbles_exploded(Monkey * monkey,
-						 GList * exploded,
-						 GList * fallen,
-						 GameNetworkPlayer * game);
-
 static void game_network_player_bubble_shot(Monkey * monkey,
 					    Bubble * bubble,
 					    GameNetworkPlayer * game);
@@ -293,10 +288,13 @@ static void game_network_player_bubble_shot( Monkey * monkey,
 
         g_assert( IS_GAME_NETWORK_PLAYER(game));
 		
-        network_message_handler_send_shoot(PRIVATE(game)->handler,
-                                           PRIVATE(game)->monkey_id,
-                                           get_time(game),
-                                           shooter_get_angle(monkey_get_shooter(monkey)));
+        if( PRIVATE(game)->state == GAME_PLAYING) {
+        
+                network_message_handler_send_shoot(PRIVATE(game)->handler,
+                                                   PRIVATE(game)->monkey_id,
+                                                   get_time(game),
+                                                   shooter_get_angle(monkey_get_shooter(monkey)));
+        }
 }
 
 
@@ -365,10 +363,6 @@ GameNetworkPlayer * game_network_player_new(GtkWidget * window,MonkeyCanvas * ca
                           G_CALLBACK(game_network_player_game_lost),
                           game);
 
-        g_signal_connect( G_OBJECT( PRIVATE(game)->monkey),
-                          "bubbles-exploded",
-                          G_CALLBACK(game_network_player_bubbles_exploded),
-                          game);
 
         g_signal_connect( G_OBJECT( PRIVATE(game)->monkey),
                           "bubble-shot",
@@ -571,28 +565,6 @@ static void game_network_player_game_lost(Monkey * monkey,GameNetworkPlayer * g)
 
 
         PRIVATE(g)->lost = TRUE;
-
-        //    monkey_view_draw_lost( PRIVATE(g)->display );
-
-        //    game_network_player_stop( GAME(g));
-
-
-        //    PRIVATE(g)->state = GAME_STOPPED;
-  
-        //    game_network_player_fire_changed(g);
-        // monkey_canvas_paint(PRIVATE(g)->canvas);
-    
-}
-
-static void game_network_player_bubbles_exploded(  Monkey * monkey,
-						   GList * exploded,
-						   GList * fallen,
-						   GameNetworkPlayer * g) {
-
-        g_assert( IS_GAME_NETWORK_PLAYER(g));	 
-  
-
-  
 }
 
 

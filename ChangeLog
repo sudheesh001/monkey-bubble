@@ -1,3 +1,33 @@
+2004-06-16  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	add game limitation and player limitation
+	* data/netgame.glade:
+	* data/netserver.glade:
+	* src/net/game-manager-proxy.c:
+	(net_game_manager_proxy_send_number_of_players),
+	(net_game_manager_proxy_send_number_of_games):
+	* src/net/game-manager.c: (network_game_manager_add_client),
+	(network_game_manager_instance_init), (start_timeout),
+	(game_stopped):
+	* src/ui/game-network-player.c: (game_network_player_bubble_shot),
+	(game_network_player_new), (game_network_player_game_lost):
+	* src/ui/network-game-launcher.c: (network_game_launcher_new),
+	(disconnected), (quit_server_signal), (ready_signal),
+	(update_players_list_idle), (start_game_idle),
+	(players_list_updated), (game_created),
+	(update_number_of_players_idle), (update_number_of_players),
+	(number_of_players_changed), (update_number_of_games_idle),
+	(update_number_of_games), (number_of_games_changed),
+	(recv_network_xml_message):
+	* src/ui/network-server-launcher.c: (network_server_launcher_new),
+	(number_of_players_changed), (number_of_games_changed),
+	(quit_server_signal), (update_players_list_idle),
+	(update_number_of_players_idle), (update_number_of_players),
+	(net_number_of_players_changed), (update_number_of_games_idle),
+	(update_number_of_games), (net_number_of_games_changed),
+	(recv_network_xml_message),
+	(network_server_launcher_instance_init):
+
 2004-06-15  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	new newtwork stuff to test

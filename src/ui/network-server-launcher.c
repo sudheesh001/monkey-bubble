@@ -41,12 +41,6 @@
 #include "ui-main.h"
 #include "game-manager-proxy.h"
 
-
-
-typedef struct NetworkGame {
-        GList *               clients;
-} NetworkGame;
-
 struct NetworkServerLauncherPrivate {
         GladeXML * glade_xml;
         GtkWidget * window;
@@ -56,9 +50,10 @@ struct NetworkServerLauncherPrivate {
         gboolean ready;
         GtkLabel * connection_label;
         GtkListStore * players_list;
-        NetworkGame * game;
         NetworkSimpleServer * manager;
         NetGameManagerProxy * manager_proxy;
+        gboolean np_from_server;
+        gboolean ng_from_server;
 };
 
 
@@ -83,6 +78,10 @@ static void ready_signal(gpointer    callback_data,
 
 
 static void number_of_players_changed(NetworkServerLauncher * launcher,
+                                      GtkWidget  *widget);
+
+
+static void number_of_games_changed(NetworkServerLauncher * launcher,
                                       GtkWidget  *widget);
 
 
@@ -171,13 +170,14 @@ NetworkServerLauncher *network_server_launcher_new() {
         item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml,"number_of_players");
         g_signal_connect_swapped( item, "value_changed", GTK_SIGNAL_FUNC(number_of_players_changed),
                                   ngl);
+
+
+        item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml,"number_of_games");
+        g_signal_connect_swapped( item, "value_changed", GTK_SIGNAL_FUNC(number_of_games_changed),
+                                  ngl);
         
         PRIVATE(ngl)->players_list = list;
         
-        PRIVATE(ngl)->game = g_malloc(sizeof(NetworkGame));
-
-        PRIVATE(ngl)->game->clients = NULL;
-
         PRIVATE(ngl)->server_name = "localhost";
 
         PRIVATE(ngl)->manager = network_simple_server_new();
@@ -202,7 +202,28 @@ static void
 number_of_players_changed(NetworkServerLauncher * launcher,
                           GtkWidget  *widget)
 {
-        g_print("number of players %d", gtk_spin_button_get_value_as_int ( GTK_SPIN_BUTTON(widget)));
+
+        if( PRIVATE(launcher)->np_from_server == FALSE ) {
+                net_game_manager_proxy_send_number_of_players(PRIVATE(launcher)->manager_proxy,
+                                                              gtk_spin_button_get_value_as_int ( GTK_SPIN_BUTTON(widget)));
+        }
+
+        
+}
+
+
+
+static void 
+number_of_games_changed(NetworkServerLauncher * launcher,
+                          GtkWidget  *widget)
+{
+
+        if( PRIVATE(launcher)->ng_from_server == FALSE) {
+                net_game_manager_proxy_send_number_of_games(PRIVATE(launcher)->manager_proxy,
+                                                            gtk_spin_button_get_value_as_int ( GTK_SPIN_BUTTON(widget)));
+        }
+
+        
 }
 
 
@@ -238,8 +259,6 @@ static void quit_server_signal(gpointer    callback_data,
         launcher = NETWORK_SERVER_LAUNCHER(callback_data);
 
 
-        PRIVATE(launcher)->game->clients = NULL;
-        
         update_players_list(launcher);
 
         if( PRIVATE(launcher)->handler != NULL) {
@@ -353,7 +372,7 @@ static gboolean update_players_list_idle(gpointer data) {
         launcher = NETWORK_SERVER_LAUNCHER(data);
         gtk_list_store_clear( PRIVATE( launcher)->players_list);
         
-        if( PRIVATE(launcher)->game != NULL) {
+        if( PRIVATE(launcher)->manager_proxy != NULL) {
                 next = net_game_manager_proxy_get_players( PRIVATE(launcher)->manager_proxy);
 
                 
@@ -419,6 +438,72 @@ players_list_updated(NetGameManagerProxy * proxy,
 }
 
 
+
+
+
+
+static gboolean
+update_number_of_players_idle(gpointer data) 
+{
+        NetworkServerLauncher * launcher;
+        GtkWidget * item;
+
+        launcher = NETWORK_SERVER_LAUNCHER(data);
+        item = glade_xml_get_widget( PRIVATE(launcher)->glade_xml, "number_of_players");
+        PRIVATE(launcher)->np_from_server = TRUE;
+        gtk_spin_button_set_value ( GTK_SPIN_BUTTON(item), 
+                                    net_game_manager_proxy_get_number_of_players(PRIVATE(launcher)->manager_proxy));
+
+        PRIVATE(launcher)->np_from_server = FALSE;
+        return FALSE;
+}
+
+static void
+update_number_of_players(NetworkServerLauncher * launcher)
+{
+        g_idle_add(update_number_of_players_idle,launcher);
+        
+}
+
+static void 
+net_number_of_players_changed(NetGameManagerProxy * proxy,
+                          NetworkServerLauncher * launcher) 
+{
+        update_number_of_players(launcher);
+}
+
+
+static gboolean
+update_number_of_games_idle(gpointer data) 
+{
+        NetworkServerLauncher * launcher;
+        GtkWidget * item;
+
+        launcher = NETWORK_SERVER_LAUNCHER(data);
+        item = glade_xml_get_widget( PRIVATE(launcher)->glade_xml, "number_of_games");
+        PRIVATE(launcher)->ng_from_server = TRUE;
+        gtk_spin_button_set_value ( GTK_SPIN_BUTTON(item), 
+                                    net_game_manager_proxy_get_number_of_games(PRIVATE(launcher)->manager_proxy));
+
+        PRIVATE(launcher)->ng_from_server = FALSE;
+        return FALSE;
+}
+
+static void
+update_number_of_games(NetworkServerLauncher * launcher)
+{
+        g_idle_add(update_number_of_games_idle,launcher);
+        
+}
+
+static void 
+net_number_of_games_changed(NetGameManagerProxy * proxy,
+                          NetworkServerLauncher * launcher) 
+{
+        update_number_of_games(launcher);
+}
+
+
 static void 
 game_created(NetGameManagerProxy * proxy,
              NetworkServerLauncher * launcher) 
@@ -473,6 +558,16 @@ static void recv_network_xml_message(NetworkMessageHandler * mmh,
                         g_signal_connect( PRIVATE(launcher)->manager_proxy,
                                           "players-list-updated",
                                           G_CALLBACK(players_list_updated),
+                                          launcher);
+
+                        g_signal_connect( PRIVATE(launcher)->manager_proxy,
+                                          "number-of-players-changed",
+                                          G_CALLBACK(net_number_of_players_changed),
+                                          launcher);
+
+                        g_signal_connect( PRIVATE(launcher)->manager_proxy,
+                                          "number-of-games-changed",
+                                          G_CALLBACK(net_number_of_games_changed),
                                           launcher);
 
 
@@ -598,6 +693,8 @@ void network_server_launcher_finalize(GObject *object) {
 
 static void network_server_launcher_instance_init(NetworkServerLauncher * launcher) {
         launcher->private =g_new0 (NetworkServerLauncherPrivate, 1);
+        PRIVATE(launcher)->np_from_server = FALSE;
+        PRIVATE(launcher)->ng_from_server = FALSE;
 }
 
 static void network_server_launcher_class_init (NetworkServerLauncherClass *klass) {
