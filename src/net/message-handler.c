@@ -48,6 +48,7 @@
 #define SEND_SHOOT 6
 #define SEND_WAITING_ADDED 7
 #define SEND_WINLOST 8
+#define SEND_NEXT_RANGE 9
 enum {
         CONNECTION_CLOSED,
         RECV_SHOOT,
@@ -58,6 +59,7 @@ enum {
         RECV_BUBBLE_ARRAY,
         RECV_MESSAGE,
         RECV_XML_MESSAGE,
+        RECV_NEXT_RANGE,
         LAST_SIGNAL
 };
 
@@ -94,6 +96,9 @@ void parse_waiting_added(NetworkMessageHandler * mmh,
 
 void parse_shoot(NetworkMessageHandler * mmh,
                  guint8 * message);
+
+void parse_next_range(NetworkMessageHandler * mmh,
+                      guint8 * message);
 
 gboolean read_chunk(NetworkMessageHandler * mmh,
                 guint8 * data);
@@ -283,6 +288,16 @@ network_message_handler_class_init (NetworkMessageHandlerClass *klass) {
                                                   G_TYPE_NONE,
                                                   0,NULL);
 
+        signals[RECV_NEXT_RANGE]= g_signal_new ("recv-next-range",
+                                                G_TYPE_FROM_CLASS (klass),
+                                                G_SIGNAL_RUN_FIRST |
+                                                G_SIGNAL_NO_RECURSE,
+                                                G_STRUCT_OFFSET (NetworkMessageHandlerClass, recv_next_range),
+                                                NULL, NULL,
+                                                monkey_net_marshal_VOID__UINT_POINTER,
+                                                G_TYPE_NONE,
+                                                2,G_TYPE_UINT,G_TYPE_POINTER);
+
 }
 
 GType network_message_handler_get_type(void) {
@@ -353,6 +368,9 @@ void parse_message(NetworkMessageHandler * mmh,
                 break;
         case SEND_START :
                 g_signal_emit( G_OBJECT(mmh),signals[RECV_START],0);
+                break;
+        case SEND_NEXT_RANGE :
+                parse_next_range(mmh,message);
                 break;
 
         default :
@@ -835,6 +853,26 @@ void parse_add_bubble(NetworkMessageHandler * mmh,
                        t->monkey_id,
                        t->bubble);     
  
+}
+
+
+void parse_next_range(NetworkMessageHandler * mmh,
+                      guint8 * message) {
+        struct Test {
+                guint8 message_type;
+                guint32 monkey_id;
+                Color colors[8];
+        };
+
+        struct Test * t;
+  
+        t = (struct Test *)  message;
+
+        t->monkey_id = g_ntohl( t->monkey_id);
+        
+        g_signal_emit( G_OBJECT(mmh),signals[RECV_ADD_BUBBLE],0,
+                       t->monkey_id,
+                       t->colors);
 }
 
 void network_message_handler_send_shoot       (NetworkMessageHandler * mmh,

@@ -180,7 +180,6 @@ recv_shoot(NetworkMessageHandler * handler,
 		
 		monkey_update(c->monkey,time);
 		monkey_shoot( c->monkey,time);
-		add_bubble(c);
 	}
         g_mutex_unlock(c->monkey_lock);
 }
@@ -206,10 +205,16 @@ bubble_sticked(Monkey * monkey,Bubble * b,
 	
 	
 
+	if( ! monkey_is_empty( monkey) ) {                
+		add_bubble(c);
+	}
+
+
         if( ( monkey_get_shot_count(monkey) % 8 ) == 0 ) {
 		
                 monkey_set_board_down( monkey);
         }        
+
 
 }
 

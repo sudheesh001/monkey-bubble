@@ -67,6 +67,11 @@ void network_message_handler_send_bubble_array( NetworkMessageHandler * mmh,
                                                guint8  bubbles_count,
                                                Color * bubbles);
 
+
+void network_message_handler_send_next_range( NetworkMessageHandler * mmh,
+                                              guint32 monkey_id,
+                                              Color * bubbles);
+
 void network_message_handler_send_winlost     (NetworkMessageHandler * mmh,
                                                guint32 monkey_id,
                                                guint8 win_lost);
@@ -106,6 +111,10 @@ struct _NetworkMessageHandlerClass
                                      guint32 monkey_id,
                                      Color color);
 
+        // i need a good name ..
+        void (* recv_next_range)    (NetworkMessageHandler * mmh,
+                                     guint32 monkey_id,
+                                     Color * line);
 
         void (* recv_waiting_added) (NetworkMessageHandler * mmh,
                                      guint32 monkey_id,

@@ -622,9 +622,6 @@ static void
 game_2_player_bubble_shot(   Monkey * monkey,
                              Bubble * bubble,
                              Game2Player * g) {
-        
-        
-        game_2_player_add_bubble(g,monkey);
 }
 
 
@@ -638,6 +635,14 @@ game_2_player_bubble_sticked(Monkey * monkey,
         int i;
         
         g_assert( IS_GAME_2_PLAYER(g));
+
+        
+        
+
+
+        if( ! monkey_is_empty( monkey) ) {
+                game_2_player_add_bubble(g,monkey);
+        }
 
  
   

@@ -240,6 +240,27 @@ static void monkey_view_shooter_shoot(Shooter * s,Bubble *b ,MonkeyView * p) {
         PRIVATE(p)->last_shoot = PRIVATE(p)->time;
         monkey_view_set_harm( p,PRIVATE(p)->harm_shoot);
 
+        if( shooter_get_current_bubble(s) != NULL) {
+                AnimateBubble * ab;
+                gdouble x,y;
+                ab = (AnimateBubble *) g_malloc( sizeof(AnimateBubble));
+                
+                ab->bubble = shooter_get_current_bubble(s);
+                shooter_get_position(s,&x,&y);
+
+                
+                
+                ab->block = (Block *)g_hash_table_lookup( PRIVATE(p)->hash_map,
+                                                          ab->bubble );
+                
+                monkey_canvas_move_block( PRIVATE(p)->canvas, ab->block, x - 55,y + 28);
+ 
+                ab->vx = 0.25;
+                ab->vy = -0.5;
+                ab->time = 0;
+                PRIVATE(p)->waiting = ab;
+        }
+
         if( PRIVATE(p)->hurry_up_flag == TRUE) {
                 PRIVATE(p)->hurry_up_flag = FALSE;
                 monkey_canvas_remove_block(PRIVATE(p)->canvas,
@@ -638,10 +659,7 @@ static void animate_waiting_bubble(MonkeyView * d,gint dtime) {
                 bubble_get_position(b->bubble,&x,&y);
         
                 monkey_canvas_move_block( PRIVATE(d)->canvas, b->block, x,y);
-
-                g_hash_table_insert( PRIVATE(d)->hash_map, b->bubble, b->block );
-
-                g_signal_connect(G_OBJECT(b->bubble),"bubble-changed",G_CALLBACK( monkey_view_bubble_changed), d);
+                
                 
                 PRIVATE(d)->waiting = NULL;
                 g_free( b );
@@ -837,8 +855,6 @@ static void monkey_view_shooter_bubble_added(Shooter * s,
 					  MonkeyView * d) {
         gdouble x,y;
         Block * block;
-        AnimateBubble * ab;
-
         g_assert(IS_MONKEY_VIEW(d) );
 
 
@@ -850,20 +866,10 @@ static void monkey_view_shooter_bubble_added(Shooter * s,
                              block,
                              x,y);
 
+        g_hash_table_insert( PRIVATE(d)->hash_map, b, block );
 
-
-        
-                ab = (AnimateBubble *) g_malloc( sizeof(AnimateBubble));
+        g_signal_connect(G_OBJECT(b),"bubble-changed",G_CALLBACK( monkey_view_bubble_changed), d);
                 
-                ab->bubble = shooter_get_current_bubble(s);
-                ab->block = PRIVATE(d)->waiting_bubble;
-                
-                ab->vx = 0.25;
-                ab->vy = -0.5;
-                ab->time = 0;
-                PRIVATE(d)->waiting = ab;
-                PRIVATE(d)->waiting_bubble = block;
-                // TODO
 }
 
 static Block * monkey_view_create_bubble(MonkeyView * view,

@@ -172,18 +172,18 @@ void shooter_add_bubble(Shooter * s,Bubble *b) {
   g_assert(IS_SHOOTER(s));
   g_assert(IS_BUBBLE(b));
 
-  g_assert( PRIVATE(s)->current_bubble == NULL);
 
   shooter_get_position( s, &x,&y );
   
-  if( PRIVATE(s)->waiting_bubble != NULL ) {
-    bubble_set_position( PRIVATE(s)->waiting_bubble, x,y);
+  if( PRIVATE(s)->current_bubble == NULL) {
+      bubble_set_position( b, x,y);
+      PRIVATE(s)->current_bubble = b;
+  } else {
+
+      bubble_set_position( b, x - 55, y + 28 );
+      PRIVATE(s)->waiting_bubble = b;
   }
-  
-  bubble_set_position( b, x - 55, y + 28 );
-  
-  PRIVATE(s)->current_bubble = PRIVATE(s)->waiting_bubble;
-  PRIVATE(s)->waiting_bubble = b;
+
 
   /* fire event */
   shooter_notify_bubble_added(s,b);
@@ -243,16 +243,21 @@ void shooter_set_angle(Shooter *s,gdouble angle) {
 Bubble * shooter_shoot(Shooter * s) {
   Bubble * b;
   gdouble vx,vy;
-
+  gdouble x,y;
 
   g_assert(IS_SHOOTER(s));
   
   g_assert( PRIVATE(s)->current_bubble != NULL ); 
   
   b = PRIVATE(s)->current_bubble;
+
+
+
+  shooter_get_position( s, &x,&y );
+  bubble_set_position( PRIVATE(s)->waiting_bubble, x,y);
   
-  PRIVATE(s)->current_bubble = NULL;
-  
+  PRIVATE(s)->current_bubble = PRIVATE(s)->waiting_bubble;
+  PRIVATE(s)->waiting_bubble = NULL;
   vx = - PRIVATE(s)->shoot_speed * sin( PRIVATE(s)->angle );
   vy = - PRIVATE(s)->shoot_speed * cos( PRIVATE(s)->angle );
 

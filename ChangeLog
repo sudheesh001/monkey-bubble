@@ -1,3 +1,18 @@
+2004-06-21  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
+
+	fix add bubble at the right time
+	* src/monkey/shooter.c: (shooter_add_bubble), (shooter_shoot):
+	* src/net/game.c: (recv_shoot), (bubble_sticked):
+	* src/net/message-handler.c: (network_message_handler_class_init),
+	(parse_message), (parse_add_bubble), (parse_next_range):
+	* src/net/message-handler.h:
+	* src/ui/game-1-player.c: (game_1_player_bubble_sticked),
+	(game_1_player_bubble_shot):
+	* src/ui/game-2-player.c: (game_2_player_bubble_shot),
+	(game_2_player_bubble_sticked):
+	* src/view/monkey-view.c: (monkey_view_shooter_shoot),
+	(animate_waiting_bubble), (monkey_view_shooter_bubble_added):
+
 2004-06-17  Laurent Belmonte  <laurent.belmonte@aliacom.fr>
 
 	rename NetworkGameLauncher -> UiNetworkClient

@@ -183,7 +183,10 @@ static void game_1_player_bubble_sticked(Monkey * monkey,Bubble * b,
 
         g_assert( IS_GAME_1_PLAYER(game));
 
-
+        if( ! monkey_is_empty( monkey) ) {                
+                game_1_player_add_bubble(GAME_1_PLAYER(game));
+        }
+        
         if( ( monkey_get_shot_count( monkey) % 8 ) == 0 ) {
 
                 monkey_set_board_down( monkey);
@@ -556,7 +559,6 @@ static void game_1_player_bubble_shot( Monkey * monkey,
 
         g_assert( IS_GAME_1_PLAYER(game));
 
-        game_1_player_add_bubble(GAME_1_PLAYER(game));
 }
 
 void game_1_player_fire_changed(Game1Player * game) {	
