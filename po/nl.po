@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNOME 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-21 20:26+0200\n"
+"POT-Creation-Date: 2005-10-08 19:39+0200\n"
 "PO-Revision-Date: 2004-09-22 02:36+0200\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <verltaling@nl.linux.org>\n"
@@ -15,15 +15,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/keybinding.glade.h:1
+#: ../data/keybinding.glade.h:1
 msgid "Keyboard Shortcuts"
 msgstr "Sneltoetsen"
 
-#: data/keybinding.glade.h:2
+#: ../data/keybinding.glade.h:2
 msgid "_Shortcut Keys:"
 msgstr "_Sneltoetsen:"
 
-#: data/monkey-bubble.glade.h:1
+#: ../data/monkey-bubble.glade.h:1
 msgid ""
 "<markup>\n"
 "<span weight=\"bold\" size=\"large\"\n"
@@ -39,270 +39,271 @@ msgstr ""
 "</span>\n"
 "</markup>"
 
-#: data/monkey-bubble.glade.h:7
+#: ../data/monkey-bubble.glade.h:7
 msgid "Create network game"
 msgstr "Netwerkspel aanmaken"
 
-#: data/monkey-bubble.glade.h:8
+#: ../data/monkey-bubble.glade.h:8
 msgid "Join _network game"
 msgstr "Meedoen met _netwerkspel"
 
-#: data/monkey-bubble.glade.h:9 monkey-bubble.desktop.in.h:1
+#: ../data/monkey-bubble.glade.h:9 ../monkey-bubble.desktop.in.h:1
 msgid "Monkey Bubble"
 msgstr "Monkey Bubble"
 
-#: data/monkey-bubble.glade.h:10
+#: ../data/monkey-bubble.glade.h:10
 msgid "New 1 player"
 msgstr "Nieuw 1 speler"
 
-#: data/monkey-bubble.glade.h:11
+#: ../data/monkey-bubble.glade.h:11
 msgid "New 2 players"
 msgstr "Nieuw 2 spelers"
 
-#: data/monkey-bubble.glade.h:12 src/ui/ui-main.c:401 src/ui/ui-main.c:533
+#: ../data/monkey-bubble.glade.h:12 ../src/ui/ui-main.c:408
+#: ../src/ui/ui-main.c:540
 msgid "Pause game"
 msgstr "Spel pauzeren"
 
-#: data/monkey-bubble.glade.h:13 src/ui/keyboard-properties.c:86
+#: ../data/monkey-bubble.glade.h:13 ../src/ui/keyboard-properties.c:86
 msgid "Stop game"
 msgstr "Stoppen"
 
-#: data/monkey-bubble.glade.h:14
+#: ../data/monkey-bubble.glade.h:14
 msgid "Warning"
 msgstr "Waarschuwing"
 
-#: data/monkey-bubble.glade.h:15
+#: ../data/monkey-bubble.glade.h:15
 msgid "_About"
 msgstr "In_fo"
 
-#: data/monkey-bubble.glade.h:16
+#: ../data/monkey-bubble.glade.h:16
 msgid "_Contents"
 msgstr "_Inhoud"
 
-#: data/monkey-bubble.glade.h:17
+#: ../data/monkey-bubble.glade.h:17
 msgid "_Game"
 msgstr "_Spel"
 
-#: data/monkey-bubble.glade.h:18
+#: ../data/monkey-bubble.glade.h:18
 msgid "_Help"
 msgstr "_Hulp"
 
-#: data/monkey-bubble.glade.h:19
+#: ../data/monkey-bubble.glade.h:19
 msgid "_Settings"
 msgstr "_Instellingen"
 
-#: data/monkey-bubble.schemas.in.h:1
+#: ../data/monkey-bubble.schemas.in.h:1
 msgid "1 player game"
 msgstr "Spel met 1 speler"
 
-#: data/monkey-bubble.schemas.in.h:2
+#: ../data/monkey-bubble.schemas.in.h:2
 msgid "2 players game"
 msgstr "Spel met 2 spelers"
 
-#: data/monkey-bubble.schemas.in.h:3
+#: ../data/monkey-bubble.schemas.in.h:3
 msgid "F1"
 msgstr "F1"
 
-#: data/monkey-bubble.schemas.in.h:4
+#: ../data/monkey-bubble.schemas.in.h:4
 msgid "F2"
 msgstr "F2"
 
-#: data/monkey-bubble.schemas.in.h:5
+#: ../data/monkey-bubble.schemas.in.h:5
 msgid "Left"
 msgstr "Links"
 
-#: data/monkey-bubble.schemas.in.h:6
+#: ../data/monkey-bubble.schemas.in.h:6
 msgid "Pause"
 msgstr "Pauzeren"
 
-#: data/monkey-bubble.schemas.in.h:7
+#: ../data/monkey-bubble.schemas.in.h:7
 msgid "Pause the game"
 msgstr "Het spel pauzeren"
 
-#: data/monkey-bubble.schemas.in.h:8
+#: ../data/monkey-bubble.schemas.in.h:8
 msgid "Quit the game"
 msgstr "Het spel afsluiten"
 
-#: data/monkey-bubble.schemas.in.h:9
+#: ../data/monkey-bubble.schemas.in.h:9
 msgid "Right"
 msgstr "Rechts"
 
-#: data/monkey-bubble.schemas.in.h:10
+#: ../data/monkey-bubble.schemas.in.h:10
 msgid "Stop the game"
 msgstr "Het spel stoppen"
 
-#: data/monkey-bubble.schemas.in.h:11
+#: ../data/monkey-bubble.schemas.in.h:11
 msgid "Up"
 msgstr "Omhoog"
 
-#: data/monkey-bubble.schemas.in.h:12
+#: ../data/monkey-bubble.schemas.in.h:12
 msgid "d"
 msgstr "d"
 
-#: data/monkey-bubble.schemas.in.h:13
+#: ../data/monkey-bubble.schemas.in.h:13
 msgid "f"
 msgstr "f"
 
-#: data/monkey-bubble.schemas.in.h:14
+#: ../data/monkey-bubble.schemas.in.h:14
 msgid "left key for player one"
 msgstr "linker toets voor speler een"
 
-#: data/monkey-bubble.schemas.in.h:15
+#: ../data/monkey-bubble.schemas.in.h:15
 msgid "left key for player two"
 msgstr "linker toets voor speler twee"
 
-#: data/monkey-bubble.schemas.in.h:16
+#: ../data/monkey-bubble.schemas.in.h:16
 msgid "right key for player one"
 msgstr "rechter toets voor speler een"
 
-#: data/monkey-bubble.schemas.in.h:17
+#: ../data/monkey-bubble.schemas.in.h:17
 msgid "right key for player two"
 msgstr "rechter toets voor speler twee"
 
-#: data/monkey-bubble.schemas.in.h:18
+#: ../data/monkey-bubble.schemas.in.h:18
 msgid "s"
 msgstr "s"
 
-#: data/monkey-bubble.schemas.in.h:19
+#: ../data/monkey-bubble.schemas.in.h:19
 msgid "shoot key for player one"
 msgstr "toets: schieten voor speler een"
 
-#: data/monkey-bubble.schemas.in.h:20
+#: ../data/monkey-bubble.schemas.in.h:20
 msgid "shoot key for player two"
 msgstr "toets: schieten voor speler twee"
 
-#: data/netgame.glade.h:1
+#: ../data/netgame.glade.h:1
 msgid "*"
 msgstr "*"
 
-#: data/netgame.glade.h:2 data/netserver.glade.h:1
+#: ../data/netgame.glade.h:2 ../data/netserver.glade.h:1
 msgid "Network game"
 msgstr "Netwerkspel"
 
-#: data/netgame.glade.h:3
+#: ../data/netgame.glade.h:3
 msgid "Number of games :"
 msgstr "Aantal spelletjes :"
 
-#: data/netgame.glade.h:4
+#: ../data/netgame.glade.h:4
 msgid "Number of players :"
 msgstr "Aantal spelers :"
 
-#: data/netgame.glade.h:5 data/netserver.glade.h:4
-#: src/ui/keyboard-properties.c:88
+#: ../data/netgame.glade.h:5 ../data/netserver.glade.h:4
+#: ../src/ui/keyboard-properties.c:88
 msgid "Quit game"
 msgstr "Spel afsluiten"
 
-#: data/netgame.glade.h:6 data/netserver.glade.h:5
+#: ../data/netgame.glade.h:6 ../data/netserver.glade.h:5
 msgid "Ready"
 msgstr "Klaar"
 
-#: data/netgame.glade.h:7
+#: ../data/netgame.glade.h:7
 msgid "_Go"
 msgstr "_Ga naar"
 
-#: data/netgame.glade.h:8
+#: ../data/netgame.glade.h:8
 msgid "_Server"
 msgstr "_Server"
 
-#: data/netserver.glade.h:2
+#: ../data/netserver.glade.h:2
 msgid "Number of game"
 msgstr "Spelnummer"
 
-#: data/netserver.glade.h:3
+#: ../data/netserver.glade.h:3
 msgid "Number of players"
 msgstr "Aantal spelers"
 
-#: data/netserver.glade.h:6
+#: ../data/netserver.glade.h:6
 msgid "Start Game"
 msgstr "Spel starten"
 
-#: monkey-bubble.desktop.in.h:2
+#: ../monkey-bubble.desktop.in.h:2
 msgid "Monkey Bubble Arcade Game"
 msgstr "Monkey Bubble Arcadespel"
 
-#: src/ui/eggcellrendererkeys.c:160 src/ui/eggcellrendererkeys.c:161
+#: ../src/ui/eggcellrendererkeys.c:160 ../src/ui/eggcellrendererkeys.c:161
 msgid "Accelerator key"
 msgstr "Sneltoets"
 
-#: src/ui/eggcellrendererkeys.c:170 src/ui/eggcellrendererkeys.c:171
+#: ../src/ui/eggcellrendererkeys.c:170 ../src/ui/eggcellrendererkeys.c:171
 msgid "Accelerator modifiers"
 msgstr "Sneltoets contoletoets"
 
-#: src/ui/eggcellrendererkeys.c:180
+#: ../src/ui/eggcellrendererkeys.c:180
 msgid "Accelerator Mode"
 msgstr "Sneltoets modus"
 
-#: src/ui/eggcellrendererkeys.c:181
+#: ../src/ui/eggcellrendererkeys.c:181
 msgid "The type of accelerator."
 msgstr "Het soort sneltoets."
 
 # ongebruikt, niet gebruikt
-#: src/ui/eggcellrendererkeys.c:219 src/ui/keyboard-properties.c:765
+#: ../src/ui/eggcellrendererkeys.c:219 ../src/ui/keyboard-properties.c:765
 msgid "Disabled"
 msgstr "Uitgeschakeld"
 
-#: src/ui/eggcellrendererkeys.c:330 src/ui/eggcellrendererkeys.c:568
+#: ../src/ui/eggcellrendererkeys.c:330 ../src/ui/eggcellrendererkeys.c:568
 msgid "Type a new accelerator, or press Backspace to clear"
 msgstr "Geef een nieuwe sneltoets, of druk op Backspace om te wissen"
 
-#: src/ui/eggcellrendererkeys.c:571
+#: ../src/ui/eggcellrendererkeys.c:571
 msgid "Type a new accelerator"
 msgstr "Geef een nieuwe sneltoets"
 
-#: src/ui/keyboard-properties.c:80
+#: ../src/ui/keyboard-properties.c:80
 msgid "New game 1 player"
 msgstr "Nieuw spel speler 1"
 
-#: src/ui/keyboard-properties.c:82
+#: ../src/ui/keyboard-properties.c:82
 msgid "New game 2 player"
 msgstr "Nieuw spel speler 2"
 
-#: src/ui/keyboard-properties.c:84
+#: ../src/ui/keyboard-properties.c:84
 msgid "Pause/Resume"
 msgstr "Pauzeren/hervatten"
 
-#: src/ui/keyboard-properties.c:94
+#: ../src/ui/keyboard-properties.c:94
 msgid "Full Screen"
 msgstr "Schermvullend"
 
-#: src/ui/keyboard-properties.c:96
+#: ../src/ui/keyboard-properties.c:96
 msgid "Normal Size"
 msgstr "Normale grootte"
 
-#: src/ui/keyboard-properties.c:101 src/ui/keyboard-properties.c:111
+#: ../src/ui/keyboard-properties.c:101 ../src/ui/keyboard-properties.c:111
 msgid "aim left"
 msgstr "links richten"
 
-#: src/ui/keyboard-properties.c:103 src/ui/keyboard-properties.c:113
+#: ../src/ui/keyboard-properties.c:103 ../src/ui/keyboard-properties.c:113
 msgid "aim right"
 msgstr "rechts richten"
 
-#: src/ui/keyboard-properties.c:105 src/ui/keyboard-properties.c:115
+#: ../src/ui/keyboard-properties.c:105 ../src/ui/keyboard-properties.c:115
 msgid "shoot"
 msgstr "schieten"
 
-#: src/ui/keyboard-properties.c:122
+#: ../src/ui/keyboard-properties.c:122
 msgid "Player 1"
 msgstr "Speler 1"
 
-#: src/ui/keyboard-properties.c:123
+#: ../src/ui/keyboard-properties.c:123
 msgid "Player 2"
 msgstr "Speler 2"
 
-#: src/ui/keyboard-properties.c:124
+#: ../src/ui/keyboard-properties.c:124
 msgid "Game"
 msgstr "Spel"
 
-#: src/ui/keyboard-properties.c:125
+#: ../src/ui/keyboard-properties.c:125
 msgid "View"
 msgstr "Beeld"
 
-#: src/ui/keyboard-properties.c:338
+#: ../src/ui/keyboard-properties.c:338
 #, c-format
 msgid "There was an error loading config from %s. (%s)\n"
 msgstr "Er was een fout bij het laden van de configuratie vanaf %s. (%s)\n"
 
-#: src/ui/keyboard-properties.c:352
+#: ../src/ui/keyboard-properties.c:352
 #, c-format
 msgid ""
 "There was an error subscribing to notification of terminal keybinding "
@@ -311,17 +312,17 @@ msgstr ""
 "Er was een fout bij het doorgeven van de aanpassingen van de console-"
 "toetsbindingen (%s)\n"
 
-#: src/ui/keyboard-properties.c:395
+#: ../src/ui/keyboard-properties.c:395
 #, c-format
 msgid "There was an error loading a terminal keybinding. (%s)\n"
 msgstr "Er was een fout bij het laden van een console-toetsbinding. (%s)\n"
 
-#: src/ui/keyboard-properties.c:411
+#: ../src/ui/keyboard-properties.c:411
 #, c-format
 msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
 msgstr "De waarde van de configuratietoets %s is ongeldig; waarde is \"%s\"\n"
 
-#: src/ui/keyboard-properties.c:434
+#: ../src/ui/keyboard-properties.c:434
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menubar access "
@@ -330,7 +331,7 @@ msgstr ""
 "Er was een fout bij het laden van de configuratiewaarde die bepaalt of "
 "menubalk-sneltoetsen worden gebruikt. (%s)\n"
 
-#: src/ui/keyboard-properties.c:448
+#: ../src/ui/keyboard-properties.c:448
 #, c-format
 msgid ""
 "There was an error subscribing to notification on changes on whether to use "
@@ -340,7 +341,7 @@ msgstr ""
 "moeten worden gebruikt (%s)\n"
 
 # het doorgeven van de aanpassingen van de console-toetsbindingen (%s)\n"
-#: src/ui/keyboard-properties.c:459
+#: ../src/ui/keyboard-properties.c:459
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menu "
@@ -349,63 +350,66 @@ msgstr ""
 "Er was een fout bij het laden van de configuratiewaarde of menu-sneltoetsen "
 "moeten worden gebruikt. (%s)\n"
 
-#: src/ui/keyboard-properties.c:475
+#: ../src/ui/keyboard-properties.c:475
 #, c-format
 msgid ""
 "There was an error subscribing to notification for use_menu_accelerators (%"
 "s)\n"
 msgstr "Er was een fout bij het doorgeven van use_menu_accelerators (%s)\n"
 
-#: src/ui/keyboard-properties.c:825
+#: ../src/ui/keyboard-properties.c:825
 #, c-format
 msgid "Error propagating accelerator change to configuration database: %s\n"
 msgstr ""
 "Fout bij het doorgeven van de sneltoets aan de configuratie-database: %s\n"
 
-#: src/ui/keyboard-properties.c:994
+#: ../src/ui/keyboard-properties.c:994
 #, c-format
 msgid "Error setting new accelerator in configuration database: %s\n"
 msgstr ""
 "Fout bij het instellen van nieuwe sneltoets in de configuratie-database: %s\n"
 
-#: src/ui/keyboard-properties.c:1093
+#: ../src/ui/keyboard-properties.c:1093
 msgid "_Action"
 msgstr "_Actie"
 
-#: src/ui/keyboard-properties.c:1115
+#: ../src/ui/keyboard-properties.c:1115
 msgid "Shortcut _Key"
 msgstr "Snel_toets"
 
-#: src/ui/ui-main.c:526
+#: ../src/ui/ui-main.c:533
 msgid "Resume game"
 msgstr "Spel hervatten"
 
-#: src/ui/ui-main.c:611
+#: ../src/ui/ui-main.c:618
 msgid "translator_credits"
-msgstr "Tino Meinen\n"
+msgstr ""
+"Tino Meinen\n"
 "\n"
 "Kijk voor meer info op http://nl.gnome.org/"
 
-#: src/ui/ui-main.c:619
+#: ../src/ui/ui-main.c:626
 msgid ""
 "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
 "remove all Bubbles by the creation of unicolor triplets."
-msgstr "Monkey Bubble is een Arcade-spel vor de GNOME desktop. Haal alle bellen weg door groepjes van drie (of meer) met gelijke kleur te maken."
+msgstr ""
+"Monkey Bubble is een Arcade-spel voor de GNOME werkomgeving. Haal alle bellen weg "
+"door groepjes van minstens drie met gelijke kleur te maken."
 
-#: src/ui/ui-main.c:640
+#: ../src/ui/ui-main.c:647
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Er is een fout opgetreden bij de hulpweergave: %s"
 
-#: src/ui/ui-network-server.c:159 src/ui/ui-network-client.c:149
+#: ../src/ui/ui-network-server.c:159 ../src/ui/ui-network-client.c:149
 msgid "_Player name"
 msgstr "_Spelernaam"
 
-#: src/ui/ui-network-server.c:166 src/ui/ui-network-client.c:156
+#: ../src/ui/ui-network-server.c:166 ../src/ui/ui-network-client.c:156
 msgid "_Owner"
 msgstr "_Eigenaar"
 
-#: src/ui/ui-network-server.c:173 src/ui/ui-network-client.c:163
+#: ../src/ui/ui-network-server.c:173 ../src/ui/ui-network-client.c:163
 msgid "_Ready"
 msgstr "_Klaar"
 
