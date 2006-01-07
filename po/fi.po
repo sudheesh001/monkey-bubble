@@ -1,0 +1,410 @@
+# Finnish messages for monkey-bubble
+# Copyright (C) 2005 Ilkka tuohela
+# Suomennos: http://gnome.fi/
+# Ilkka Tuohela <hile@iki.fi>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: monkey-bubble\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-01-07 12:28+0200\n"
+"PO-Revision-Date: 2006-01-07 12:30+0200\n"
+"Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
+"Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../data/keybinding.glade.h:1
+msgid "Keyboard Shortcuts"
+msgstr "Pikanäppäimet"
+
+#: ../data/keybinding.glade.h:2
+msgid "_Shortcut Keys:"
+msgstr "_Pikanäppäimet:"
+
+#: ../data/monkey-bubble.glade.h:1
+msgid ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Can't create server !\n"
+"</span>\n"
+"</markup>"
+msgstr ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Palvelinta ei voida luoda!\n"
+"</span>\n"
+"</markup>"
+
+#: ../data/monkey-bubble.glade.h:7
+msgid "Create network game"
+msgstr "Aloita _uusi verkkopeli"
+
+#: ../data/monkey-bubble.glade.h:8
+msgid "Join _network game"
+msgstr "Liity _verkkopeliin"
+
+#: ../data/monkey-bubble.glade.h:9 ../monkey-bubble.desktop.in.h:1
+msgid "Monkey Bubble"
+msgstr "Monkey Bubble"
+
+#: ../data/monkey-bubble.glade.h:10
+msgid "New 1 player"
+msgstr "Uusi peli - 1 pelaaja"
+
+#: ../data/monkey-bubble.glade.h:11
+msgid "New 2 players"
+msgstr "Uusi peli - 2 pelaajaa"
+
+#: ../data/monkey-bubble.glade.h:12 ../src/ui/ui-main.c:408
+#: ../src/ui/ui-main.c:540
+msgid "Pause game"
+msgstr "Pysäytä peli"
+
+#: ../data/monkey-bubble.glade.h:13 ../src/ui/keyboard-properties.c:86
+msgid "Stop game"
+msgstr "Keskeytä peli"
+
+#: ../data/monkey-bubble.glade.h:14
+msgid "Warning"
+msgstr "Varoitus"
+
+#: ../data/monkey-bubble.glade.h:15
+msgid "_About"
+msgstr "_Tietoja"
+
+#: ../data/monkey-bubble.glade.h:16
+msgid "_Contents"
+msgstr "_Sisältö"
+
+#: ../data/monkey-bubble.glade.h:17
+msgid "_Game"
+msgstr "_Peli"
+
+#: ../data/monkey-bubble.glade.h:18
+msgid "_Help"
+msgstr "O_hje"
+
+#: ../data/monkey-bubble.glade.h:19
+msgid "_Settings"
+msgstr "_Asetukset"
+
+#: ../data/monkey-bubble.schemas.in.h:1
+msgid "1 player game"
+msgstr "Yhden pelaajan peli"
+
+#: ../data/monkey-bubble.schemas.in.h:2
+msgid "2 players game"
+msgstr "Kahden pelaajan peli"
+
+#: ../data/monkey-bubble.schemas.in.h:3
+msgid "F1"
+msgstr "F1"
+
+#: ../data/monkey-bubble.schemas.in.h:4
+msgid "F2"
+msgstr "F2"
+
+#: ../data/monkey-bubble.schemas.in.h:5
+msgid "Left"
+msgstr "Vasen"
+
+#: ../data/monkey-bubble.schemas.in.h:6
+msgid "Pause"
+msgstr "Pause"
+
+#: ../data/monkey-bubble.schemas.in.h:7
+msgid "Pause the game"
+msgstr "Pysäytä peli"
+
+#: ../data/monkey-bubble.schemas.in.h:8
+msgid "Quit the game"
+msgstr "Lopeta peli"
+
+#: ../data/monkey-bubble.schemas.in.h:9
+msgid "Right"
+msgstr "Oikea"
+
+#: ../data/monkey-bubble.schemas.in.h:10
+msgid "Stop the game"
+msgstr "Keskeytä peli"
+
+#: ../data/monkey-bubble.schemas.in.h:11
+msgid "Up"
+msgstr "Ylös"
+
+#: ../data/monkey-bubble.schemas.in.h:12
+msgid "d"
+msgstr "d"
+
+#: ../data/monkey-bubble.schemas.in.h:13
+msgid "f"
+msgstr "f"
+
+#: ../data/monkey-bubble.schemas.in.h:14
+msgid "left key for player one"
+msgstr "vasen näppäin pelaajalle yksi"
+
+#: ../data/monkey-bubble.schemas.in.h:15
+msgid "left key for player two"
+msgstr "vasen näppäin pelaajalle kaksi"
+
+#: ../data/monkey-bubble.schemas.in.h:16
+msgid "right key for player one"
+msgstr "oikea näppäin pelaajalle yksi"
+
+#: ../data/monkey-bubble.schemas.in.h:17
+msgid "right key for player two"
+msgstr "oikea näppäin pelaajalle kaksi"
+
+#: ../data/monkey-bubble.schemas.in.h:18
+msgid "s"
+msgstr "s"
+
+#: ../data/monkey-bubble.schemas.in.h:19
+msgid "shoot key for player one"
+msgstr "ampumisnäppäin pelaajalle yksi"
+
+#: ../data/monkey-bubble.schemas.in.h:20
+msgid "shoot key for player two"
+msgstr "ampumisnäppäin pelaajalle kaksi"
+
+#: ../data/netgame.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: ../data/netgame.glade.h:2 ../data/netserver.glade.h:1
+msgid "Network game"
+msgstr "Verkkopeli"
+
+#: ../data/netgame.glade.h:3
+msgid "Number of games :"
+msgstr "Pelien lukumäärä:"
+
+#: ../data/netgame.glade.h:4
+msgid "Number of players :"
+msgstr "Pelaajien lukumäärä:"
+
+#: ../data/netgame.glade.h:5 ../data/netserver.glade.h:4
+#: ../src/ui/keyboard-properties.c:88
+msgid "Quit game"
+msgstr "Lopeta peli"
+
+#: ../data/netgame.glade.h:6 ../data/netserver.glade.h:5
+msgid "Ready"
+msgstr "Valmis"
+
+#: ../data/netgame.glade.h:7
+msgid "_Go"
+msgstr "_Aloita"
+
+#: ../data/netgame.glade.h:8
+msgid "_Server"
+msgstr "_Palvelin"
+
+#: ../data/netserver.glade.h:2
+msgid "Number of game"
+msgstr "Pelin numero"
+
+#: ../data/netserver.glade.h:3
+msgid "Number of players"
+msgstr "Pelaajien lukumäärä"
+
+#: ../data/netserver.glade.h:6
+msgid "Start Game"
+msgstr "Aloita peli"
+
+#: ../monkey-bubble.desktop.in.h:2
+msgid "Monkey Bubble Arcade Game"
+msgstr "Monkey Bubble -kuplapeli"
+
+#: ../src/ui/eggcellrendererkeys.c:160 ../src/ui/eggcellrendererkeys.c:161
+msgid "Accelerator key"
+msgstr "Pikanäppäin"
+
+#: ../src/ui/eggcellrendererkeys.c:170 ../src/ui/eggcellrendererkeys.c:171
+msgid "Accelerator modifiers"
+msgstr "Pikanäppäimen vaihtoehdot"
+
+#: ../src/ui/eggcellrendererkeys.c:180
+msgid "Accelerator Mode"
+msgstr "Pikanäppäimen tila"
+
+#: ../src/ui/eggcellrendererkeys.c:181
+msgid "The type of accelerator."
+msgstr "Pikanäppäimen tyyppi."
+
+#: ../src/ui/eggcellrendererkeys.c:219 ../src/ui/keyboard-properties.c:765
+msgid "Disabled"
+msgstr "Ei käytössä"
+
+#: ../src/ui/eggcellrendererkeys.c:330 ../src/ui/eggcellrendererkeys.c:568
+msgid "Type a new accelerator, or press Backspace to clear"
+msgstr "Anna uusi pikanäppäin tai paina Backspacea tyhjentääksesi"
+
+#: ../src/ui/eggcellrendererkeys.c:571
+msgid "Type a new accelerator"
+msgstr "Uuden pikanäppäimen tyyppi"
+
+#: ../src/ui/keyboard-properties.c:80
+msgid "New game 1 player"
+msgstr "Uusi peli - 1 pelaaja"
+
+#: ../src/ui/keyboard-properties.c:82
+msgid "New game 2 player"
+msgstr "Uusi peli - 2 pelaajaa"
+
+#: ../src/ui/keyboard-properties.c:84
+msgid "Pause/Resume"
+msgstr "Pysäytä/Jatka"
+
+#: ../src/ui/keyboard-properties.c:94
+msgid "Full Screen"
+msgstr "Kokoruutu"
+
+#: ../src/ui/keyboard-properties.c:96
+msgid "Normal Size"
+msgstr "Normaali koko"
+
+#: ../src/ui/keyboard-properties.c:101 ../src/ui/keyboard-properties.c:111
+msgid "aim left"
+msgstr "tähtää vasemmalle"
+
+#: ../src/ui/keyboard-properties.c:103 ../src/ui/keyboard-properties.c:113
+msgid "aim right"
+msgstr "tähtää oikealle"
+
+#: ../src/ui/keyboard-properties.c:105 ../src/ui/keyboard-properties.c:115
+msgid "shoot"
+msgstr "ammu"
+
+#: ../src/ui/keyboard-properties.c:122
+msgid "Player 1"
+msgstr "Pelaaja 1"
+
+#: ../src/ui/keyboard-properties.c:123
+msgid "Player 2"
+msgstr "Pelaaja 2"
+
+#: ../src/ui/keyboard-properties.c:124
+msgid "Game"
+msgstr "Peli"
+
+#: ../src/ui/keyboard-properties.c:125
+msgid "View"
+msgstr "Näkymä"
+
+#: ../src/ui/keyboard-properties.c:338
+#, c-format
+msgid "There was an error loading config from %s. (%s)\n"
+msgstr "Virhe ladattaessa asetuksia tiedostosta %s. (%s)\n"
+
+#: ../src/ui/keyboard-properties.c:352
+#, c-format
+msgid ""
+"There was an error subscribing to notification of terminal keybinding "
+"changes. (%s)\n"
+msgstr ""
+"Virhe tilattaessa huomautuksia päätteen näppäinsidosten muutoksista (%s)\n"
+
+#: ../src/ui/keyboard-properties.c:395
+#, c-format
+msgid "There was an error loading a terminal keybinding. (%s)\n"
+msgstr "Virhe ladattaessa päätteen näppäinsidoksia. (%s)\n"
+
+#: ../src/ui/keyboard-properties.c:411
+#, c-format
+msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
+msgstr "Asetusavaimen %s arvo \"%s\" on virheellinen\n"
+
+#: ../src/ui/keyboard-properties.c:434
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menubar access "
+"keys. (%s)\n"
+msgstr ""
+"Virhe ladattaessa arvoa asetukselle \"Valikkopalkin pikanäppäimet\". (%s)\n"
+
+#: ../src/ui/keyboard-properties.c:448
+#, c-format
+msgid ""
+"There was an error subscribing to notification on changes on whether to use "
+"menubar access keys (%s)\n"
+msgstr ""
+"Virhe tilattaessa huomautusta muutoksista asetuksen \"valikkopalkin "
+"pikanäppäimet\" tilassa (%s)\n"
+
+#: ../src/ui/keyboard-properties.c:459
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menu "
+"accelerators. (%s)\n"
+msgstr ""
+"Virhe ladattaessa arvoa asetukselle \"Näytetäänkö valikkonäppäimet\". (%s)\n"
+
+#: ../src/ui/keyboard-properties.c:475
+#, c-format
+msgid ""
+"There was an error subscribing to notification for use_menu_accelerators (%"
+"s)\n"
+msgstr ""
+"Virhe tilattaessa huomautusta muutoksista asetuksen \"Näytetäänkö "
+"Valikkonäppäimet\" tilassa (%s)\n"
+
+#: ../src/ui/keyboard-properties.c:825
+#, c-format
+msgid "Error propagating accelerator change to configuration database: %s\n"
+msgstr "Virhe vietäessä pikanäppäimen tilan muutosta asetustietokantaan: %s\n"
+
+#: ../src/ui/keyboard-properties.c:994
+#, c-format
+msgid "Error setting new accelerator in configuration database: %s\n"
+msgstr "Virhe asetettaessa uutta pikanäppäintä asetustietokantaan: %s\n"
+
+#: ../src/ui/keyboard-properties.c:1093
+msgid "_Action"
+msgstr "_Toiminto"
+
+#: ../src/ui/keyboard-properties.c:1115
+msgid "Shortcut _Key"
+msgstr "Pika_näppäin"
+
+#: ../src/ui/ui-main.c:533
+msgid "Resume game"
+msgstr "Jatka peliä"
+
+#: ../src/ui/ui-main.c:618
+msgid "translator_credits"
+msgstr ""
+"Ilkka Tuohela, 2005\n"
+"\n"
+"http://www.gnome.fi/"
+
+#: ../src/ui/ui-main.c:626
+msgid ""
+"Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
+"remove all Bubbles by the creation of unicolor triplets."
+msgstr ""
+"Monkey Bubble on mukava peli Gnome-työpöytäympäristöön. Pelin ideana on "
+"poistaa kaikki kuplat luomalla vähintään kolmen mittaisia väriketjuja."
+
+#: ../src/ui/ui-main.c:647
+#, c-format
+msgid "There was an error displaying help: %s"
+msgstr "Virhe näytettäessä ohjetta: %s"
+
+#: ../src/ui/ui-network-server.c:159 ../src/ui/ui-network-client.c:149
+msgid "_Player name"
+msgstr "_Pelaajan nimi"
+
+#: ../src/ui/ui-network-server.c:166 ../src/ui/ui-network-client.c:156
+msgid "_Owner"
+msgstr "_Omistaja"
+
+#: ../src/ui/ui-network-server.c:173 ../src/ui/ui-network-client.c:163
+msgid "_Ready"
+msgstr "_Valmis"
