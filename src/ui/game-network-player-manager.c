@@ -228,23 +228,18 @@ game_created_ok(GameNetworkPlayerManager * manager)
 
     }
 
-
     PRIVATE(manager)->monkey = monkey_new(TRUE);
 
-
- 
-    doc = xmlNewDoc("1.0");
-    root = xmlNewNode(NULL,
-		      "message");
+    doc = xmlNewDoc((guchar*)"1.0");
+    root = xmlNewNode(NULL, (guchar*)"message");
 	 
     xmlDocSetRootElement(doc, root);
     
 	 
-    xmlNewProp(root,"name","game_created_ok");
+    xmlNewProp(root,(guchar*)"name",(guchar*)"game_created_ok");
 	 
-    text = xmlNewText("1");
+    text = xmlNewText((guchar*)"1");
     xmlAddChild(root,text);
-	 
 	 
     network_message_handler_send_xml_message(PRIVATE(manager)->handler,
 					     PRIVATE(manager)->client_id,
@@ -266,20 +261,20 @@ recv_xml_message(NetworkMessageHandler * handler,
 
 
     xmlNode * root;
-    char * message_name;
+    guchar * message_name;
         
     root = message->children;
         
-    g_assert( g_str_equal(root->name,"message"));
+    g_assert( g_str_equal(root->name,(guchar*)"message"));
         
         
-    message_name = xmlGetProp(root,"name");
+    message_name = xmlGetProp(root,(guchar*)"name");
         
-    if(g_str_equal(message_name,"game_created") ) {
+    if(g_str_equal(message_name,(guchar*)"game_created") ) {
 				
 	int game_id;
         PRIVATE(manager)->playing = FALSE;
-	sscanf(root->children->content,"%d",&game_id);
+	sscanf((gchar*)root->children->content,"%d",&game_id);
 	g_print("game-network-player-manager.c : game started %d \n",game_id);                
 	
 	g_idle_add((GSourceFunc)game_created_ok,manager);

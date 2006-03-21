@@ -139,14 +139,13 @@ recv_xml_message(NetworkMessageHandler * mmh,
 {
 	
         xmlNode * root;
-        char * message_name;
+        guchar * message_name;
 
         root = doc->children;
         
         g_assert( g_str_equal(root->name,"message"));
         
-        
-        message_name = xmlGetProp(root,"name");
+        message_name = xmlGetProp(root,(guchar*)"name");
 	g_print("NetworkClient : message name %s \n",message_name);
 	if( g_str_equal( message_name,"ready_state") ) {
 		g_print("new message state chaged \n");
@@ -169,12 +168,12 @@ recv_xml_message(NetworkMessageHandler * mmh,
 	} else if( g_str_equal(message_name,"number_of_players")) {
 		int number;
             
-		sscanf(root->children->content,"%d",&number);
+		sscanf((gchar*)root->children->content,"%d",&number);
 		g_signal_emit( G_OBJECT(client),signals[NUMBER_OF_PLAYERS],0,number);
 	} else if( g_str_equal(message_name,"number_of_games")) {
 		int number;
             
-		sscanf(root->children->content,"%d",&number);
+		sscanf((gchar*)root->children->content,"%d",&number);
 		g_signal_emit( G_OBJECT(client),signals[NUMBER_OF_GAMES],0,number);
 	}
 
@@ -191,14 +190,13 @@ network_client_send_number_of_players(NetworkClient * client,
         xmlNode * root;
         xmlNode * text;
         
-        doc = xmlNewDoc("1.0");
-        root = xmlNewNode(NULL,
-                          "message");
+        doc = xmlNewDoc((guchar*)"1.0");
+        root = xmlNewNode(NULL, (guchar*)"message");
         xmlDocSetRootElement(doc, root);
         
-        xmlNewProp(root,"name","number_of_players");
+        xmlNewProp(root, (guchar*)"name", (guchar*)"number_of_players");
         
-        text = xmlNewText(g_strdup_printf("%d",n));
+        text = xmlNewText((guchar*)g_strdup_printf("%d",n));
         
         xmlAddChild(root,text);
 	
@@ -219,14 +217,13 @@ network_client_send_number_of_games(NetworkClient * client,
         xmlNode * root;
         xmlNode * text;
         
-        doc = xmlNewDoc("1.0");
-        root = xmlNewNode(NULL,
-                          "message");
+        doc = xmlNewDoc((guchar*)"1.0");
+        root = xmlNewNode(NULL, (guchar*)"message");
         xmlDocSetRootElement(doc, root);
         
-        xmlNewProp(root,"name","number_of_games");
+        xmlNewProp(root, (guchar*)"name", (guchar*)"number_of_games");
         
-        text = xmlNewText(g_strdup_printf("%d",n));
+        text = xmlNewText((guchar*)g_strdup_printf("%d",n));
         
         xmlAddChild(root,text);
 	

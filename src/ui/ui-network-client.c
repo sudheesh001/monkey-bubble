@@ -253,12 +253,11 @@ static void send_disconnect(UiNetworkClient * self) {
         xmlDoc * doc;
         xmlNode * root;
         
-        doc = xmlNewDoc("1.0");
-        root = xmlNewNode(NULL,
-                          "message");
+        doc = xmlNewDoc((guchar*)"1.0");
+        root = xmlNewNode(NULL, (guchar*)"message");
         xmlDocSetRootElement(doc, root);
         
-        xmlNewProp(root,"name","disconnect");
+        xmlNewProp(root,(guchar*)"name",(guchar*)"disconnect");
         
         network_message_handler_send_xml_message(PRIVATE(self)->handler,
                                                 PRIVATE(self)->client_id,
@@ -393,17 +392,15 @@ void send_init(UiNetworkClient * self) {
         xmlNode * current, * root;
         xmlNode * text;
         
-        doc = xmlNewDoc("1.0");
-        root = xmlNewNode(NULL,
-                          "message");
+        doc = xmlNewDoc((guchar*)"1.0");
+        root = xmlNewNode(NULL, (guchar*)"message");
         xmlDocSetRootElement(doc, root);
         
-        xmlNewProp(root,"name","init");
+        xmlNewProp(root, (guchar*)"name", (guchar*)"init");
         
-        current = xmlNewNode(NULL,
-                             "player");
+        current = xmlNewNode(NULL, (guchar*)"player");
         
-        text = xmlNewText(g_get_user_name());
+        text = xmlNewText((guchar*)g_get_user_name());
         
         xmlAddChild(current,text);
         xmlAddChild(root,current);
@@ -574,7 +571,7 @@ void recv_network_xml_message(NetworkMessageHandler * mmh,
 
         xmlNode * root;
         UiNetworkClient * self;
-        char * message_name;
+        guchar * message_name;
         
         root = message->children;
         
@@ -582,7 +579,7 @@ void recv_network_xml_message(NetworkMessageHandler * mmh,
         
         self = UI_NETWORK_CLIENT(p);
         
-        message_name = xmlGetProp(root,"name");
+        message_name = xmlGetProp(root,(guchar*)"name");
         
         if( g_str_equal(message_name,"init_request") ) {
                 
@@ -641,12 +638,12 @@ void recv_network_xml_message(NetworkMessageHandler * mmh,
                 GameNetworkPlayerManager * manager;
                 UiMain * ui;
                 
-                sscanf(root->children->content,"%d",&game_id);
+                sscanf((gchar*)root->children->content,"%d",&game_id);
                 g_print("game id : %d\n",game_id);                
                 set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
                                                      ,"connected_game_hbox"),TRUE); 
 
-                sscanf(root->children->content,"%d",&game_id);
+                sscanf((gchar*)root->children->content,"%d",&game_id);
              
                 
                 ui = ui_main_get_instance();

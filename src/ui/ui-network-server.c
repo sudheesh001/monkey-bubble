@@ -242,12 +242,11 @@ static void send_disconnect(UiNetworkServer * self) {
         xmlDoc * doc;
         xmlNode * root;
         
-        doc = xmlNewDoc("1.0");
-        root = xmlNewNode(NULL,
-                          "message");
+        doc = xmlNewDoc((guchar*)"1.0");
+        root = xmlNewNode(NULL, (guchar*)"message");
         xmlDocSetRootElement(doc, root);
         
-        xmlNewProp(root,"name","disconnect");
+        xmlNewProp(root,(guchar*)"name",(guchar*)"disconnect");
         
         network_message_handler_send_xml_message(PRIVATE(self)->handler,
                                                 PRIVATE(self)->client_id,
@@ -360,17 +359,15 @@ static void send_init(UiNetworkServer * self) {
         xmlNode * current, * root;
         xmlNode * text;
         
-        doc = xmlNewDoc("1.0");
-        root = xmlNewNode(NULL,
-                          "message");
+        doc = xmlNewDoc((guchar*)"1.0");
+        root = xmlNewNode(NULL, (guchar*)"message");
         xmlDocSetRootElement(doc, root);
         
-        xmlNewProp(root,"name","init");
+        xmlNewProp(root,(guchar*)"name",(guchar*)"init");
         
-        current = xmlNewNode(NULL,
-                             "player");
+        current = xmlNewNode(NULL, (guchar*)"player");
         
-        text = xmlNewText(g_get_user_name());
+        text = xmlNewText((guchar*)g_get_user_name());
         
         xmlAddChild(current,text);
         xmlAddChild(root,current);
@@ -547,7 +544,7 @@ static void recv_network_xml_message(NetworkMessageHandler * mmh,
 
         xmlNode * root;
         UiNetworkServer * self;
-        char * message_name;
+        guchar * message_name;
         
         root = message->children;
         
@@ -555,7 +552,7 @@ static void recv_network_xml_message(NetworkMessageHandler * mmh,
         
         self = UI_NETWORK_SERVER(p);
         
-        message_name = xmlGetProp(root,"name");
+        message_name = xmlGetProp(root,(guchar*)"name");
         
         if( g_str_equal(message_name,"game_player_list") ) {
                 
@@ -609,7 +606,7 @@ static void recv_network_xml_message(NetworkMessageHandler * mmh,
                 GameNetworkPlayerManager * manager;
                 UiMain * ui;
 
-                sscanf(root->children->content,"%d",&game_id);
+                sscanf((gchar*)root->children->content,"%d",&game_id);
              
                 
                 ui = ui_main_get_instance();
@@ -624,12 +621,12 @@ static void recv_network_xml_message(NetworkMessageHandler * mmh,
         } else if( g_str_equal(message_name,"number_of_games")) {
 		int number;
             
-		sscanf(root->children->content,"%d",&number);
+		sscanf((gchar*)root->children->content,"%d",&number);
                 set_number_of_games(self,number);
 	} else if( g_str_equal(message_name,"number_of_players")) {
 		int number;
             
-		sscanf(root->children->content,"%d",&number);
+		sscanf((gchar*)root->children->content,"%d",&number);
                 set_number_of_players(self,number);
 	}
 

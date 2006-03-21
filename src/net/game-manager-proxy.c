@@ -138,27 +138,27 @@ recv_players_list(NetGameManagerProxy * self,xmlDoc * doc)
                 Client * client;
 		int id;
 
-		prop = xmlGetProp(current,"owner");
+	prop = xmlGetProp(current,(guchar*)"owner");
                 
-                if( prop != NULL && strcmp( prop,"true")  == 0) {
+                if( prop != NULL && strcmp( (gchar*)prop,(gchar*)"true")  == 0) {
                         owner = TRUE;
                 } else {
                         owner = FALSE;
                 }
                 
-                prop = xmlGetProp(current,"ready");                
-                if( prop != NULL && strcmp( prop,"true")  == 0) {
+                prop = xmlGetProp(current,(guchar*)"ready");                
+                if( prop != NULL && strcmp( (gchar*)prop,(gchar*)"true")  == 0) {
                         ready = TRUE;
                 } else {
                         ready = FALSE;
                 }
                 
                 client = g_malloc(sizeof(Client));
-                client->name = g_strdup(current->children->content);
+                client->name = g_strdup((gchar*)current->children->content);
                 client->owner = owner; 
                 client->ready = ready;
 
-		sscanf(xmlGetProp(current,"id"),"%d",&id);
+		sscanf((gchar*)xmlGetProp(current,(guchar*)"id"),"%d",&id);
 		client->id = id;
                 PRIVATE(self)->clients = g_list_append( PRIVATE(self)->clients,
 							client);
@@ -177,14 +177,14 @@ recv_xml_message(NetworkMessageHandler * handler,guint32 client_id,
 {
 
         xmlNode * root;
-        char * message_name;
+        guchar * message_name;
         
         root = message->children;
         
         g_assert( g_str_equal(root->name,"message"));
         
         
-        message_name = xmlGetProp(root,"name");
+        message_name = xmlGetProp(root,(guchar*)"name");
         
         if( g_str_equal(message_name,"game_player_list") ) {
                 
@@ -193,14 +193,14 @@ recv_xml_message(NetworkMessageHandler * handler,guint32 client_id,
         } else if( g_str_equal(message_name,"number_of_games")) {
 		int number;
             
-		sscanf(root->children->content,"%d",&number);
+		sscanf((gchar*)root->children->content,"%d",&number);
 		PRIVATE(self)->number_of_games = number;
 		g_signal_emit( G_OBJECT(self),signals[NUMBER_OF_GAMES_CHANGED],0);
 
 	} else if( g_str_equal(message_name,"number_of_players")) {
 		int number;
             
-		sscanf(root->children->content,"%d",&number);
+		sscanf((gchar*)root->children->content,"%d",&number);
 		PRIVATE(self)->number_of_players = number;
 		g_signal_emit( G_OBJECT(self),signals[NUMBER_OF_PLAYERS_CHANGED],0);
 
@@ -208,7 +208,7 @@ recv_xml_message(NetworkMessageHandler * handler,guint32 client_id,
                 
                 int game_id;
                 
-                sscanf(root->children->content,"%d",&game_id);
+                sscanf((gchar*)root->children->content,"%d",&game_id);
                 g_signal_emit( G_OBJECT(self),signals[GAME_CREATED],0);
 
         }
@@ -240,14 +240,13 @@ net_game_manager_proxy_send_ready_state(NetGameManagerProxy * self,gboolean read
         xmlNode * root;
         xmlNode * text;
         
-        doc = xmlNewDoc("1.0");
-        root = xmlNewNode(NULL,
-                          "message");
+        doc = xmlNewDoc((guchar*)"1.0");
+        root = xmlNewNode(NULL, (guchar*)"message");
         xmlDocSetRootElement(doc, root);
         
-        xmlNewProp(root,"name","ready_state");
+        xmlNewProp(root,(guchar*)"name",(guchar*)"ready_state");
         
-        text = xmlNewText((ready ? "true" : "false"));
+        text = xmlNewText((ready ? (guchar*)"true" : (guchar*)"false"));
         
         xmlAddChild(root,text);
 
@@ -266,14 +265,13 @@ net_game_manager_proxy_send_start(NetGameManagerProxy * self)
         xmlNode * root;
         xmlNode * text;
         
-        doc = xmlNewDoc("1.0");
-        root = xmlNewNode(NULL,
-                          "message");
+        doc = xmlNewDoc((guchar*)"1.0");
+        root = xmlNewNode(NULL, (guchar*)"message");
         xmlDocSetRootElement(doc, root);
         
-        xmlNewProp(root,"name","start_game");
+        xmlNewProp(root,(guchar*)"name", (guchar*)"start_game");
         
-        text = xmlNewText("1");
+        text = xmlNewText((guchar*)"1");
         
         xmlAddChild(root,text);
 
@@ -293,14 +291,13 @@ net_game_manager_proxy_send_number_of_players(NetGameManagerProxy * self,int n)
         xmlNode * root;
         xmlNode * text;
         
-        doc = xmlNewDoc("1.0");
-        root = xmlNewNode(NULL,
-                          "message");
+        doc = xmlNewDoc((guchar*)"1.0");
+        root = xmlNewNode(NULL, (guchar*)"message");
         xmlDocSetRootElement(doc, root);
         
-        xmlNewProp(root,"name","number_of_players");
+        xmlNewProp(root,(guchar*)"name",(guchar*)"number_of_players");
         
-        text = xmlNewText(g_strdup_printf("%d",n));
+        text = xmlNewText((guchar*)g_strdup_printf("%d",n));
         
         xmlAddChild(root,text);
 
@@ -318,14 +315,13 @@ net_game_manager_proxy_send_number_of_games(NetGameManagerProxy * self,int n)
         xmlNode * root;
         xmlNode * text;
         
-        doc = xmlNewDoc("1.0");
-        root = xmlNewNode(NULL,
-                          "message");
+        doc = xmlNewDoc((guchar*)"1.0");
+        root = xmlNewNode(NULL, (guchar*)"message");
         xmlDocSetRootElement(doc, root);
         
-        xmlNewProp(root,"name","number_of_games");
+        xmlNewProp(root,(guchar*)"name", (guchar*)"number_of_games");
         
-        text = xmlNewText(g_strdup_printf("%d",n));
+        text = xmlNewText((guchar*)g_strdup_printf("%d",n));
         
         xmlAddChild(root,text);
 

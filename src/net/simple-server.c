@@ -227,21 +227,20 @@ recv_xml_message(NetworkMessageHandler * handler,
 		 NetworkSimpleServer * self) {
 
         xmlNode * root;
-        char * message_name;
+        guchar *message_name;
         
 
         root = doc->children;
         
         g_assert( g_str_equal(root->name,"message"));
         
-        
-        message_name = xmlGetProp(root,"name");
+        message_name = xmlGetProp(root,(guchar*)"name");
         g_print("NetworkSimpleServer: message name %s\n",message_name);
 
 	if( g_str_equal( message_name,"init") ){		
 		g_print("NetworkSimpleServer : connected %d\n",client_id);
 		create_client(self,handler,client_id,
-			      root->children->children->content);
+			      (gchar*)root->children->children->content);
 	}
 	
 }
@@ -255,15 +254,14 @@ send_init_reply(NetworkSimpleServer * server,
         xmlDoc * doc;
         xmlNode * text, * root;
         
-        doc = xmlNewDoc("1.0");
-        root = xmlNewNode(NULL,
-                          "message");
+        doc = xmlNewDoc((guchar*)"1.0");
+        root = xmlNewNode(NULL, (guchar*)"message");
         xmlDocSetRootElement(doc, root);
         
-        xmlNewProp(root,"name","init_reply");
+        xmlNewProp(root,(guchar*)"name",(guchar*)"init_reply");
         
         
-        text = xmlNewText(status);
+        text = xmlNewText((guchar*)status);
         
         xmlAddChild(root,text);
 
@@ -333,12 +331,11 @@ connect_client(NetworkSimpleServer * self,gint sock)
         client_id = get_next_id(self);
         
         
-        doc = xmlNewDoc("1.0");
-        root = xmlNewNode(NULL,
-                          "message");
+        doc = xmlNewDoc((guchar*)"1.0");
+        root = xmlNewNode(NULL, (guchar*)"message");
         xmlDocSetRootElement(doc, root);
 
-        xmlNewProp(root,"name","init_request");
+        xmlNewProp(root, (guchar*)"name", (guchar*)"init_request");
 
         network_message_handler_send_xml_message( handler, 
                                                  client_id,
@@ -357,7 +354,7 @@ accept_loop(NetworkSimpleServer * self)
 	
 	struct sockaddr_in sock_client;
 	int sock;
-	int lg_info;
+	guint lg_info;
 	
 	lg_info = sizeof(sock_client);
 	while( (sock = accept(PRIVATE(self)->main_socket, (struct sockaddr *) &sock_client, &lg_info)) != -1) {

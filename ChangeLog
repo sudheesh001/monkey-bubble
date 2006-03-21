@@ -1,3 +1,14 @@
+2006-03-21  Sven Herzberg  <herzi@gnome-de.org>
+
+	* src/net/client.c,
+	* src/net/game-manager-proxy.c,
+	* src/net/game-manager.c,
+	* src/net/simple-server.c,
+	* src/ui/game-network-player-manager.c,
+	* src/ui/ui-network-client.c,
+	* src/ui/ui-network-server.c: fixed gcc 4 warnings (based upon
+	a patch from Michael Knox)
+
 2006-02-05  Clytie Siddall <clytie@riverland.net.au>
 
 	* vi.po: Updated Vietnamese translation.

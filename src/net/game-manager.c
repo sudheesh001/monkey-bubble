@@ -162,13 +162,11 @@ network_game_manager_add_client(NetworkGameManager * manager,
 		xmlDoc * doc;
 		xmlNode * root;
 		
-		doc = xmlNewDoc("1.0");
-		root = xmlNewNode(NULL,
-				  "message");
+		doc = xmlNewDoc((guchar*)"1.0");
+		root = xmlNewNode(NULL, (guchar*)"message");
 		xmlDocSetRootElement(doc, root);
-		
-		
-		xmlNewProp(root,"name","cant_join_game");
+
+		xmlNewProp(root,(guchar*)"name",(guchar*)"cant_join_game");
 		
 		
 		network_message_handler_send_xml_message(network_client_get_handler(client),
@@ -319,16 +317,15 @@ send_game_joined(NetworkGameManager * manager,
         xmlDoc * doc;
         xmlNode * text, * root;
         
-        doc = xmlNewDoc("1.0");
-        root = xmlNewNode(NULL,
-                          "message");
+        doc = xmlNewDoc((guchar*)"1.0");
+        root = xmlNewNode(NULL, (guchar*)"message");
         xmlDocSetRootElement(doc, root);
         
         
-	xmlNewProp(root,"name","game_joined");
+	xmlNewProp(root,(guchar*)"name",(guchar*)"game_joined");
         
         // id of the game : one game, one id
-        text = xmlNewText("1");
+        text = xmlNewText((guchar*)"1");
         
         xmlAddChild(root,text);
 	
@@ -387,14 +384,12 @@ void send_game_list(NetworkGameManager * manager) {
         xmlDoc * doc;
         xmlNode * current, * root;
         GList * next;
-        doc = xmlNewDoc("1.0");
-        root = xmlNewNode(NULL,
-                          "message");
+        doc = xmlNewDoc((guchar*)"1.0");
+        root = xmlNewNode(NULL,(guchar*)"message");
 
         xmlDocSetRootElement(doc, root);
-         
 
-        xmlNewProp(root,"name","game_player_list");
+        xmlNewProp(root,(guchar*)"name",(guchar*)"game_player_list");
 
 	g_mutex_lock( PRIVATE(manager)->clients_lock);
 
@@ -407,16 +402,15 @@ void send_game_list(NetworkGameManager * manager) {
 
                 client = (NetworkClient *)next->data;
                 
-		current = xmlNewNode(NULL,
-                                     "player");
+		current = xmlNewNode(NULL, (guchar*)"player");
                 
 		if( client == PRIVATE(manager)->owner) {
-			xmlNewProp(current,"owner","true");
+			xmlNewProp(current,(guchar*)"owner",(guchar*)"true");
 		}
 
-		xmlNewProp(current,"id", g_strdup_printf("%d",network_client_get_id(client)));
-                xmlNewProp(current,"ready", ( network_client_get_state(client) ? "true" : "false"));
-                text = xmlNewText(network_player_get_name(network_client_get_player(client)));
+		xmlNewProp(current,(guchar*)"id", (guchar*)g_strdup_printf("%d",network_client_get_id(client)));
+                xmlNewProp(current,(guchar*)"ready", ( network_client_get_state(client) ? (guchar*)"true" : (guchar*)"false"));
+                text = xmlNewText((guchar*)network_player_get_name(network_client_get_player(client)));
 
                 xmlAddChild(current,text);
                 xmlAddChild(root,current);
@@ -460,16 +454,14 @@ start_game(NetworkGameManager * manager)
 		xmlDoc * doc;
 		xmlNode * text, * root;
 		
-		doc = xmlNewDoc("1.0");
-		root = xmlNewNode(NULL,
-				  "message");
+		doc = xmlNewDoc((guchar*)"1.0");
+		root = xmlNewNode(NULL, (guchar*)"message");
 		
 		xmlDocSetRootElement(doc, root);
 		
+		xmlNewProp(root,(guchar*)"name",(guchar*)"game_created");
 		
-		xmlNewProp(root,"name","game_created");
-		
-		text = xmlNewText("1");
+		text = xmlNewText((guchar*)"1");
 		xmlAddChild(root,text);
 		
 		
