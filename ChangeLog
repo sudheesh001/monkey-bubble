@@ -1,3 +1,8 @@
+2006-06-14  Sven Herzberg  <herzi@gnome-de.org>
+
+	* configure.in: depend on GStreamer 0.10
+	* src/audio/sound-manager.c: use GStreamer 0.10
+
 2006-03-21  Sven Herzberg  <herzi@gnome-de.org>
 
 	* src/net/client.c,
