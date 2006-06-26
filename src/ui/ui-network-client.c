@@ -147,21 +147,21 @@ UiNetworkClient *ui_network_client_new() {
        list = gtk_list_store_new(3,G_TYPE_STRING,G_TYPE_BOOLEAN,G_TYPE_BOOLEAN);
 
         column = gtk_tree_view_column_new_with_attributes(_("_Player name"),gtk_cell_renderer_text_new(),
-                                                          "text",0, NULL);
+                                                          "text",0, (char *)NULL);
 
         gtk_tree_view_append_column (GTK_TREE_VIEW (item), column);
 
         column = gtk_tree_view_column_new();
 
         column = gtk_tree_view_column_new_with_attributes(_("_Owner"),gtk_cell_renderer_toggle_new(),
-                                                          "active",1, NULL);
+                                                          "active",1, (char *)NULL);
 
         gtk_tree_view_append_column (GTK_TREE_VIEW (item), column);
 
         column = gtk_tree_view_column_new();
 
         column = gtk_tree_view_column_new_with_attributes(_("_Ready"),gtk_cell_renderer_toggle_new(),
-                                                          "active",2, NULL);
+                                                          "active",2, (char *)NULL);
 
         gtk_tree_view_append_column (GTK_TREE_VIEW (item), column);
 

@@ -519,6 +519,7 @@ egg_cell_renderer_keys_start_editing (GtkCellRenderer      *cell,
   EggCellRendererKeys *keys;
   GtkWidget *label;
   GtkWidget *eventbox;
+  GtkWidget **double_ptr;
   
   celltext = GTK_CELL_RENDERER_TEXT (cell);
   keys = EGG_CELL_RENDERER_KEYS (cell);
@@ -543,6 +544,7 @@ egg_cell_renderer_keys_start_editing (GtkCellRenderer      *cell,
     }
   
   keys->grab_widget = widget;
+  double_ptr = &(keys->edit_widget);
 
   g_signal_connect (G_OBJECT (widget), "key_press_event",
                     G_CALLBACK (grab_key_callback),
@@ -552,7 +554,7 @@ egg_cell_renderer_keys_start_editing (GtkCellRenderer      *cell,
                            NULL);
   keys->edit_widget = eventbox;
   g_object_add_weak_pointer (G_OBJECT (keys->edit_widget),
-                             (void**) &keys->edit_widget);
+                             (void**) double_ptr);
   
   label = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
