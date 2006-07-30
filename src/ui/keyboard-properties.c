@@ -23,8 +23,6 @@
 #include <glade/glade.h>
 #include <bonobo/bonobo-i18n.h>
 #include <gconf/gconf-client.h>
-#include "eggaccelerators.h"
-#include "eggcellrendererkeys.h"
 #include "keyboard-properties.h"
 
 
@@ -693,8 +691,6 @@ binding_from_string (const char      *str,
                      GdkModifierType *accelerator_mods,
 		     gboolean game_key)
 {
-  EggVirtualModifierType virtual;
-  
   g_return_val_if_fail (accelerator_key != NULL, FALSE);
   
   if (str == NULL || (str && strcmp (str, "disabled") == 0))
@@ -704,17 +700,11 @@ binding_from_string (const char      *str,
       return TRUE;
     }
 
-  if (!egg_accelerator_parse_virtual (str, accelerator_key, &virtual)) {
-    return FALSE;
-  }
-  egg_keymap_resolve_virtual_modifiers (gdk_keymap_get_default (),
-                                        virtual,
-                                        accelerator_mods);
+  gtk_accelerator_parse (str, accelerator_key, accelerator_mods);
 
   /* Be sure the GTK accelerator system will be able to handle this
    * accelerator. Be sure to allow no-accelerator accels like F1.
    */
-
 
   if( game_key == FALSE &&  gtk_accelerator_valid( *accelerator_key,
 			     *accelerator_mods) == FALSE)
@@ -857,7 +847,7 @@ accel_set_func (GtkTreeViewColumn *tree_column,
                 gpointer           data)
 {
   KeyEntry *ke;
-  
+
   gtk_tree_model_get (model, iter,
                       KEYVAL_COLUMN, &ke,
                       -1);
@@ -869,8 +859,8 @@ accel_set_func (GtkTreeViewColumn *tree_column,
   else
     g_object_set (G_OBJECT (cell),
 		  "visible", TRUE,
-		  "accel_key", ke->gconf_keyval,
-		  "accel_mask", ke->gconf_mask,
+		  "accel-key", ke->gconf_keyval,
+		  "accel-mods", ke->gconf_mask,
 		  NULL);
 }
 
@@ -976,8 +966,7 @@ accel_edited_callback (GtkCellRendererText *cell,
   gtk_tree_model_get (model, &iter, KEYVAL_COLUMN, &ke, -1);
 
   /* sanity check */
-  if (ke == NULL)
-    return;
+  g_return_if_fail(ke);
 
   str = binding_name (keyval, mask, FALSE);
 
@@ -1098,11 +1087,12 @@ edit_keys_dialog_new (KeyboardProperties *kp,
   gtk_tree_view_column_set_sort_column_id (column, ACTION_COLUMN);
 
   /* Column 2 */
-  cell_renderer = g_object_new (EGG_TYPE_CELL_RENDERER_KEYS,
-				"editable", TRUE,
-				"accel_mode", EGG_CELL_RENDERER_KEYS_MODE_GTK,
-				NULL);
-  g_signal_connect (G_OBJECT (cell_renderer), "keys_edited",
+  cell_renderer = gtk_cell_renderer_accel_new();
+  g_object_set(cell_renderer,
+	       "editable", TRUE,
+	       "accel-mode", GTK_CELL_RENDERER_ACCEL_MODE_OTHER,
+	       NULL);
+  g_signal_connect (G_OBJECT (cell_renderer), "accel-edited",
                     G_CALLBACK (accel_edited_callback),
                     kp);
   
@@ -1115,7 +1105,7 @@ edit_keys_dialog_new (KeyboardProperties *kp,
   gtk_tree_view_column_set_title (column, _("Shortcut _Key"));
   gtk_tree_view_column_pack_start (column, cell_renderer, TRUE);
   gtk_tree_view_column_set_cell_data_func (column, cell_renderer, accel_set_func, NULL, NULL);
-  gtk_tree_view_column_set_sort_column_id (column, KEYVAL_COLUMN);  
+  gtk_tree_view_column_set_sort_column_id (column, KEYVAL_COLUMN);
   gtk_tree_view_append_column (GTK_TREE_VIEW (w), column);
 
   /* Add the data */

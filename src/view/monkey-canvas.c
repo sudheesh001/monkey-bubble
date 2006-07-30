@@ -466,7 +466,7 @@ void create_pixbuf_normal(Image * i ) {
     i->original_pix = gdk_pixbuf_new_from_file(i->path, 
 					       &error); 
     if( error != NULL ) {
-      g_error("Erreur load image");
+      g_error("Error load image");
     }
     if( i->x_size == -1 ) {
       i->x_size = gdk_pixbuf_get_width( i->original_pix );
@@ -517,7 +517,7 @@ void create_pixbuf_svg(Image * i ) {
 
   if( error != NULL ) {
     
-    g_error("Erreur load svg %s \n,file : %s\n", error->message,i->path);
+    g_error("Error load svg %s \n,file : %s\n", error->message,i->path);
   }
 }
 

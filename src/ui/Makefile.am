@@ -18,12 +18,6 @@ INCLUDES = \
 
 bin_PROGRAMS = monkey-bubble
 
-EGGFILES=			\
-	eggaccelerators.c	\
-	eggaccelerators.h	\
-	eggcellrendererkeys.h 	\
-	eggcellrendererkeys.c
-
 monkey_bubble_SOURCES = \
 	game.c game.h \
 	game-1-player.c game-1-player.h \
@@ -39,13 +33,8 @@ monkey_bubble_SOURCES = \
 	ui-network-client.c ui-network-client.h \
 	ui-network-server.c ui-network-server.h \
 	ui-main.c ui-main.h \
-	$(EGGFILES)
+	$(NULL)
 
-
-EGGDIR=$(srcdir)/../../../libegg/libegg
-
-regenerate-built-sources:
-	EGGFILES="$(EGGFILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh
 
 monkey_bubble_LDFLAGS=
 

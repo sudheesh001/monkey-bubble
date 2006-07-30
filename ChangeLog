@@ -1,3 +1,16 @@
+2006-07-30  Sven Herzberg  <herzi@gnome-de.org>
+
+	* configure.in: require GTK+ 2.10
+	* data/monkey-bubble.glade: insert the preferences into the game menu
+	* src/ui/Makefile.am: updated
+	* src/ui/update-from-egg.sh,
+	* src/ui/eggaccelerators.c,
+	* src/ui/eggaccelerators.h,
+	* src/ui/eggcellrendererkeys.c,
+	* src/ui/eggcellrendererkeys.h: removed old libegg code
+	* src/ui/keyboard-properties.c: updated to new GTK+ code
+	* src/view/monkey-canvas.c: fixed error messages (Erreur)
+
 2006-06-26  Sven Herzberg  <herzi@gnome-de.org>
 
 	* src/ui/eggcellrendererkeys.c,

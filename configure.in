@@ -83,7 +83,7 @@ AC_SUBST(MONKEY_SRV_LIBS)
 
 
 PKG_CHECK_MODULES(UI,[
-	gtk+-2.0
+	gtk+-2.0 >= 2.10
 	gthread-2.0
 	librsvg-2.0
 	libgnomeui-2.0
