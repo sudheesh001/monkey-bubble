@@ -1,3 +1,25 @@
+# Version 0.4.0
+
+2006-08-01  Sven Herzberg  <herzi@gnome-de.org>
+
+	* .cvsignore,
+	* po/.cvsignore: updated
+	* Makefile.am,
+	* data/Makefile.am: distcheck fixes
+	* autogen.sh: updated, uses newer automake
+	* configure.in: updated for 0.4.0; added gnome-doc-utils; fix libtool; 
+	* NEWS: updated
+	* help/C/Makefile.am,
+	* help/Makefile.am,
+	* help/fr/Makefile.am,
+	* help/fr/fr.po,
+	* help/fr/monkey-bubble.xml,
+	* help/monkey-bubble.omf.in,
+	* help/omf.make,
+	* help/xmldocs.make: migrated the documentation system to use
+	gnome-doc-utils
+	* po/POTFILES.in: updated
+
 2006-08-01  Laurent Belmonte  <laurent.belmonte@gmail.com>
 
 	* src/audio/sound-manager.c: fix music restart 
@@ -50,7 +72,7 @@
 
 	* configure.in	Added vi in ALL_LINGUAS line.
 	
-	2006-01-07  Ilkka Tuohela  <hile@iki.fi>
+2006-01-07  Ilkka Tuohela  <hile@iki.fi>
 
 	* configure.in: Added fi to ALL_LINGUAS
 

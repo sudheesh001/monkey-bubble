@@ -7,11 +7,17 @@ dnl | autotool initialization |-----------------------------------------------
 dnl  -------------------------
 
 AC_INIT(configure.in)
-AM_INIT_AUTOMAKE(monkey-bubble, 0.3.2)
+AM_INIT_AUTOMAKE(monkey-bubble, 0.4.0)
 AM_CONFIG_HEADER(config.h)
 AM_MAINTAINER_MODE
 
+DISTCHECK_CONFIGURE_FLAGS="--disable-schemas-install --disable-scrollkeeper"
+AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
+
 dnl --------------------------------------------------------------------------
+
+CXX=no
+F77=no
 
 AC_ISC_POSIX
 AC_PROG_CC
@@ -23,6 +29,12 @@ AM_DISABLE_STATIC
 AC_LIBTOOL_WIN32_DLL
 AM_PROG_LIBTOOL
 AC_PROG_INTLTOOL
+
+dnl  ---------------
+dnl | documentation |---------------------------------------------------------
+dnl  ---------------
+
+GNOME_DOC_INIT
 
 dnl  ----------------------
 dnl | library dependencies |--------------------------------------------------
@@ -156,8 +168,6 @@ AC_OUTPUT([
   src/net/Makefile
   src/ui/Makefile
   help/Makefile
-  help/C/Makefile
-  help/fr/Makefile
   po/Makefile.in
 ])
 

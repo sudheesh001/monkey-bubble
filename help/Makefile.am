@@ -1,4 +1,7 @@
-SUBDIRS = C fr
+include $(top_srcdir)/gnome-doc-utils.make
+dist-hook: doc-dist-hook
 
-EXTRA_DIST = xmldocs.make \
-	     omf.make
+DOC_MODULE = monkey-bubble
+DOC_LINGUAS = fr
+DOC_INCLUDE = empty.xml
+

@@ -4,23 +4,17 @@
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
 
+PKG_NAME="monkey-bubble"
+REQUIRED_LIBTOOL_VERSION=1.4.3
+REQUIRED_AUTOMAKE_VERSION=1.9
+#ACLOCAL_FLAGS="-I macros $ACLOCAL_FLAGS"
+
 (test -f $srcdir/configure.in \
-  && test -f $srcdir/autogen.sh \
-  && test -d $srcdir/src/monkey) || {
+  && test -d $srcdir/src) || {
     echo -n "**Error**: Directory "\`$srcdir\'" does not look like the"
-    echo " top-level Monkey bubble directory"
+    echo " top-level $PKG_NAME directory"
     exit 1
 }
-
-if libtool --version >/dev/null 2>&1; then
-    vers=`libtool --version | sed -e "s/^[^0-9]*//" -e "s/ .*$//" | head -n 1 | awk 'BEGIN { FS = "."; } { printf "%d", ($1 * 1000 + $2) * 1000 + $3;}'`
-    if test "$vers" -ge 1003003; then
-        true
-    else
-        echo "Please upgrade your libtool to version 1.3.3 or better." 1>&2
-        exit 1
-    fi
-fi
 
 ifs_save="$IFS"; IFS=":"
 for dir in $PATH ; do
@@ -39,4 +33,6 @@ if test -z "$gnome_autogen" ; then
   exit 1
 fi
 
-GNOME_DATADIR="$gnome_datadir" USE_GNOME2_MACROS=1 . $gnome_autogen
+NOCONFIGURE="yes" GNOME_DATADIR="$gnome_datadir" USE_GNOME2_MACROS=1 . $gnome_autogen
+
+$srcdir/configure --enable-maintainer-mode `/bin/grep ^DISTCHECK configure.in | head -n 1 | sed 's/^DISTCHECK_CONFIGURE_FLAGS="\(.*\)"$/\1/'` $@

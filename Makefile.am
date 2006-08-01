@@ -15,10 +15,18 @@ applicationsdir = $(datadir)/applications
 
 @INTLTOOL_DESKTOP_RULE@
 
-EXTRA_DIST = \
-	$(applications_in_files)	\
+intltool_in_files=\
 	intltool-extract.in		\
 	intltool-merge.in		\
 	intltool-update.in		\
-	po				\
+	$(NULL)
+
+EXTRA_DIST=\
+	$(applications_in_files)	\
+	$(intltool_in_files) \
+	$(NULL)
+
+CLEANFILES=\
+	$(applications_DATA) \
+	$(intltool_in_files:.in=) \
 	$(NULL)

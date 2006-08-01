@@ -23,6 +23,10 @@ install-data-local:
 	fi
 
 EXTRA_DIST = \
-	$(level_DATA)	\
-	$(gladexml_DATA)\
-	$(schemas_in_files)
+	$(level_DATA) \
+	$(gladexml_DATA) \
+	$(schemas_in_files) \
+	$(NULL)
+CLEANFILES=\
+	$(schemas_DATA) \
+	$(NULL)
