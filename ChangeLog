@@ -1,3 +1,7 @@
+2006-08-01  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
+	* src/audio/sound-manager.c: fix music restart 
+
 2006-07-30  Sven Herzberg  <herzi@gnome-de.org>
 
 	* configure.in: require GTK+ 2.10

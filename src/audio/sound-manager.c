@@ -130,9 +130,12 @@ restart_play(gpointer data)
 
 static gboolean
 bus_call(GstBus* bus, GstMessage* msg, gpointer data) {
+  SoundManager * m;
+
+  m = SOUND_MANAGER(data);
 	switch (GST_MESSAGE_TYPE (msg)) {
 	case GST_MESSAGE_EOS:
-		g_timeout_add(100, restart_play, data);
+		restart_play(data);
 		break;
 	case GST_MESSAGE_ERROR: {
 			gchar *debug;
@@ -186,12 +189,11 @@ stop_play(SoundManager * m)
 	}
 
 	if(PRIVATE(m)->main_bin) {
-		gst_element_set_state(PRIVATE(m)->main_bin, GST_STATE_PAUSED);
+		gst_element_set_state(PRIVATE(m)->main_bin, GST_STATE_NULL);
 		g_object_unref(PRIVATE(m)->main_bin);
 		PRIVATE(m)->main_bin = NULL;
 	}
 
-	g_object_unref( G_OBJECT(PRIVATE(m)->main_bin ));
 	  
 	PRIVATE(m)->output = NULL;
 	PRIVATE(m)->main_bin = NULL;
@@ -227,7 +229,6 @@ start_play(SoundManager *m, gchar * path)
 
     g_object_set( G_OBJECT( PRIVATE(m)->filesrc), "location",path,NULL);
 
-    // g_object_set( G_OBJECT( PRIVATE(m)->filesrc), "blocksize",10000,NULL);
     gst_bus_add_watch (gst_pipeline_get_bus (
 			GST_PIPELINE (PRIVATE(m)->main_bin)),
 		    	bus_call, m);
