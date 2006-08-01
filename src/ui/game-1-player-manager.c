@@ -17,6 +17,7 @@
  * Boston, MA 02111-1307, USA.
  */
 #include <gtk/gtk.h>
+#include <libgnome/gnome-score.h>
 #include "game-1-player-manager.h"
 #include "game-1-player.h"
 #include "game.h"
@@ -243,6 +244,8 @@ void game_1_player_manager_stop(GameManager * g) {
 
   g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(manager)->current_game ),
                                          G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,manager);
+
+  gnome_score_log(0.0 + game_1_player_get_score(PRIVATE(manager)->current_game), NULL, TRUE);
 
   g_object_unref( PRIVATE(manager)->current_game);
 

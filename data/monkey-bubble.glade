@@ -65,17 +65,17 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkMenuItem" id="new_network_game">
+		    <widget class="GtkMenuItem" id="new_network_server">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">Join _network game</property>
+		      <property name="label" translatable="yes">New network game</property>
 		      <property name="use_underline">True</property>
 		    </widget>
 		  </child>
 
 		  <child>
-		    <widget class="GtkMenuItem" id="new_network_server">
+		    <widget class="GtkMenuItem" id="new_network_game">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">Create network game</property>
+		      <property name="label" translatable="yes">Join _network game</property>
 		      <property name="use_underline">True</property>
 		    </widget>
 		  </child>
@@ -91,6 +91,27 @@
 		      <property name="visible">True</property>
 		      <property name="label">gtk-preferences</property>
 		      <property name="use_stock">True</property>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkImageMenuItem" id="high_scores1">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">_High Scores</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_high_scores1_activate" last_modification_time="Tue, 01 Aug 2006 21:32:31 GMT"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image2">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-index</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
 		    </widget>
 		  </child>
 
@@ -144,7 +165,7 @@
 		      <property name="use_underline">True</property>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image1">
+			<widget class="GtkImage" id="image3">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-help</property>
 			  <property name="icon_size">1</property>

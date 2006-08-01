@@ -1,3 +1,13 @@
+2006-08-02  Sven Herzberg  <herzi@gnome-de.org>
+
+	* configure.in,
+	* data/Makefile.am,
+	* data/monkey-bubble.glade,
+	* src/ui/game-1-player-manager.c,
+	* src/ui/main.c,
+	* src/ui/ui-main.c: added highscores for single player games (only
+	interesting for distributors)
+
 # Version 0.4.0
 
 2006-08-01  Sven Herzberg  <herzi@gnome-de.org>

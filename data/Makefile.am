@@ -21,6 +21,10 @@ install-data-local:
 			GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/data/$$p; \
 		done \
 	fi
+	$(mkinstalldirs) $(DESTDIR)$(scoredir)
+	-touch $(DESTDIR)$(scoredir)/monkey-bubble.scores
+	-chown $(scores_user):$(scores_group) $(DESTDIR)$(scoredir)/monkey-bubble.scores
+	-chmod 664 $(DESTDIR)$(scoredir)/monkey-bubble.scores
 
 EXTRA_DIST = \
 	$(level_DATA) \

@@ -16,6 +16,7 @@
 #include <gst/gst.h>
 #include <bonobo/bonobo-i18n.h>
 #include <glib/gthread.h>
+#include <libgnome/gnome-score.h>
 #include <libgnomeui/gnome-ui-init.h>
 
 #include <math.h>
@@ -23,7 +24,7 @@
 #include <string.h>
 
 int main(int  argc, char **argv)
-{ 
+{
   UiMain * ui_main;
   GtkWidget * window;
   SoundManager * manager;
@@ -31,18 +32,20 @@ int main(int  argc, char **argv)
   bindtextdomain (PACKAGE, PACKAGE_LOCALE_DIR);
   textdomain (PACKAGE);
 #endif
-  
+
+  if(gnome_score_init(PACKAGE)) {
+	g_message("You'll have to play without highscore support");
+  }
+
   gtk_init (&argc, &argv);
 
   /* to get help working */
-  gnome_program_init (PACKAGE, VERSION, 
-		      LIBGNOMEUI_MODULE, 
+  gnome_program_init (PACKAGE, VERSION,
+		      LIBGNOMEUI_MODULE,
 		      argc, argv,
-		      GNOME_PROGRAM_STANDARD_PROPERTIES, 
+		      GNOME_PROGRAM_STANDARD_PROPERTIES,
 		      NULL);
 
-  
-  
   gst_init(&argc,&argv);  
 
   manager = sound_manager_get_instance();

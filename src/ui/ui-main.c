@@ -22,7 +22,6 @@
 #include <config.h>
 #endif /* HAVE_CONFIG_H */
 
-
 #include "ui-main.h"
 #include "monkey-canvas.h"
 #include "monkey.h"
@@ -35,7 +34,9 @@
 #include "keyboard-properties.h"
 #include "sound-manager.h"
 
+#include <libgnomeui/libgnomeui.h>
 #include <libgnomeui/gnome-about.h>
+#include <libgnome/gnome-score.h>
 #include <libgnome/gnome-sound.h>
 #include <libgnome/gnome-help.h>
 #include <gdk/gdkkeysyms.h>
@@ -70,6 +71,9 @@ static void new_network_server(gpointer    callback_data,
                                guint       callback_action,
                                GtkWidget  *widget);
 
+static void show_high_scores(gpointer callback_data,
+			     guint    callback_action,
+			     GtkWidget* widget);
 
 static void pause_game(gpointer    callback_data,
                        guint       callback_action,
@@ -173,13 +177,11 @@ static UiMain* ui_main_new(void) {
 
         ui_main = UI_MAIN(g_object_new(UI_TYPE_MAIN, NULL));
     
-
         PRIVATE(ui_main)->glade_xml = glade_xml_new(DATADIR"/monkey-bubble/glade/monkey-bubble.glade","main_window",NULL);
         
         PRIVATE(ui_main)->window = glade_xml_get_widget( PRIVATE(ui_main)->glade_xml, "main_window");
 
         vbox = glade_xml_get_widget( PRIVATE(ui_main)->glade_xml,"main_vbox");
-
 
         ui_main_enabled_games_item(ui_main ,TRUE);
 
@@ -228,7 +230,9 @@ static UiMain* ui_main_new(void) {
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"new_network_server");
         g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(new_network_server),ui_main);
 
-
+	item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml, "high_scores1");
+	g_signal_connect_swapped(item, "activate",
+				 G_CALLBACK(show_high_scores), ui_main);
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"pause_game");
         g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(pause_game),ui_main);
@@ -582,8 +586,21 @@ static void new_network_server(gpointer    callback_data,
                 gtk_widget_show( glade_xml_get_widget(gx,"create_server_warning"));
                 g_object_unref(gx);
         }
+}
 
-        
+static void
+show_high_scores(gpointer callback_data, guint callback_action, GtkWidget* widget) {
+	GtkWidget* dialog = NULL;
+	gint       number;
+	gchar    **names;
+	gfloat   * scores;
+	time_t   * times;
+
+	number = gnome_score_get_notable(PACKAGE, NULL,
+					 &names, &scores, &times);
+	dialog = gnome_scores_new(number, names, scores, times, FALSE);
+	gnome_scores_set_logo_pixmap(GNOME_SCORES(dialog), DATADIR "/monkey-bubble/gfx/monkey.png");
+	gtk_widget_show(dialog);
 }
 
 static void show_preferences_dialog(gpointer    callback_data,
