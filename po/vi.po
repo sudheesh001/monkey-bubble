@@ -1,20 +1,20 @@
 # Vietnamese translation for Monkey-Bubble.
-# Copyright © 2005 Gnome i18n Project for Vietnamese.
-# Clytie Siddall <clytie@riverland.net.au>, 2005.
-#
+# Copyright © 2006 Gnome i18n Project for Vietnamese.
+# Clytie Siddall <clytie@riverland.net.au>, 2005-2006.
+# 
 msgid ""
-msgstr ""
-"Project-Id-Version: monkey-bubble Gnome HEAD\n"
+""
+msgstr "Project-Id-Version: monkey-bubble Gnome HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-18 04:22+0000\n"
-"PO-Revision-Date: 2006-02-05 17:22+1030\n"
+"POT-Creation-Date: 2006-08-24 13:56+0200\n"
+"PO-Revision-Date: 2006-08-24 22:43+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: LocFactoryEditor 1.6b36\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: LocFactoryEditor 1.6fc1\n"
 
 #: ../data/keybinding.glade.h:1
 msgid "Keyboard Shortcuts"
@@ -32,40 +32,43 @@ msgid ""
 "Can't create server !\n"
 "</span>\n"
 "</markup>"
-msgstr ""
-"<markup>\n"
+msgstr "<markup>\n"
 "<span weight=\"bold\" size=\"large\"\n"
 "style=\"oblique\">\n"
-"• Không thể tạo trình phục vụ. •\n"
+"Không thể tạo trình phục vụ !\n"
 "</span>\n"
 "</markup>"
 
 #: ../data/monkey-bubble.glade.h:7
-msgid "Create network game"
-msgstr "Tạo lượt chơi mạng"
-
-#: ../data/monkey-bubble.glade.h:8
 msgid "Join _network game"
-msgstr "Vào lượt chơi _mạng"
+msgstr "Vào lượt chơi mạ_ng"
 
-#: ../data/monkey-bubble.glade.h:9 ../monkey-bubble.desktop.in.h:1
+# Name: don't translate / Tên: đừng dịch
+#: ../data/monkey-bubble.glade.h:8
+#: ../monkey-bubble.desktop.in.h:1
 msgid "Monkey Bubble"
 msgstr "Monkey Bubble"
 
-#: ../data/monkey-bubble.glade.h:10
+#: ../data/monkey-bubble.glade.h:9
 msgid "New 1 player"
 msgstr "Lượt chơi người đơn mới"
 
-#: ../data/monkey-bubble.glade.h:11
+#: ../data/monkey-bubble.glade.h:10
 msgid "New 2 players"
 msgstr "Lượt chơi người đôi mới"
 
-#: ../data/monkey-bubble.glade.h:12 ../src/ui/ui-main.c:408
-#: ../src/ui/ui-main.c:540
+#: ../data/monkey-bubble.glade.h:11
+msgid "New network game"
+msgstr "Lượt chơi mạng mới"
+
+#: ../data/monkey-bubble.glade.h:12
+#: ../src/ui/ui-main.c:412
+#: ../src/ui/ui-main.c:544
 msgid "Pause game"
 msgstr "Tạm dừng chơi"
 
-#: ../data/monkey-bubble.glade.h:13 ../src/ui/keyboard-properties.c:86
+#: ../data/monkey-bubble.glade.h:13
+#: ../src/ui/keyboard-properties.c:84
 msgid "Stop game"
 msgstr "Dừng chơi"
 
@@ -79,19 +82,19 @@ msgstr "_Giới thiệu"
 
 #: ../data/monkey-bubble.glade.h:16
 msgid "_Contents"
-msgstr "_Nội dung"
+msgstr "Mục lụ_c"
 
 #: ../data/monkey-bubble.glade.h:17
 msgid "_Game"
-msgstr "Trò _chơi"
+msgstr "T_rò chơi"
 
 #: ../data/monkey-bubble.glade.h:18
 msgid "_Help"
 msgstr "Trợ _giúp"
 
 #: ../data/monkey-bubble.glade.h:19
-msgid "_Settings"
-msgstr "_Thiết lập"
+msgid "_High Scores"
+msgstr "Điểm c_ao"
 
 #: ../data/monkey-bubble.schemas.in.h:1
 msgid "1 player game"
@@ -177,34 +180,37 @@ msgstr "phím bắn cho người chơi Hai"
 msgid "*"
 msgstr "*"
 
-#: ../data/netgame.glade.h:2 ../data/netserver.glade.h:1
+#: ../data/netgame.glade.h:2
+#: ../data/netserver.glade.h:1
 msgid "Network game"
 msgstr "Lượt chơi mạng"
 
 #: ../data/netgame.glade.h:3
 msgid "Number of games :"
-msgstr "Số lưọt chơi :"
+msgstr "Số lượt chơi :"
 
 #: ../data/netgame.glade.h:4
 msgid "Number of players :"
 msgstr "Số người chơi :"
 
-#: ../data/netgame.glade.h:5 ../data/netserver.glade.h:4
-#: ../src/ui/keyboard-properties.c:88
+#: ../data/netgame.glade.h:5
+#: ../data/netserver.glade.h:4
+#: ../src/ui/keyboard-properties.c:86
 msgid "Quit game"
 msgstr "Thoát khỏi lượt chơi"
 
-#: ../data/netgame.glade.h:6 ../data/netserver.glade.h:5
+#: ../data/netgame.glade.h:6
+#: ../data/netserver.glade.h:5
 msgid "Ready"
 msgstr "Sẵn sàng"
 
 #: ../data/netgame.glade.h:7
 msgid "_Go"
-msgstr "Đi"
+msgstr "Tớ_i"
 
 #: ../data/netgame.glade.h:8
 msgid "_Server"
-msgstr "_Máy phục vụ"
+msgstr "Máy _phục vụ"
 
 #: ../data/netserver.glade.h:2
 msgid "Number of game"
@@ -222,184 +228,159 @@ msgstr "Chạy lượt chơi"
 msgid "Monkey Bubble Arcade Game"
 msgstr "Trò chơi kiểu nhà điện tử Monkey Bubble"
 
-#: ../src/ui/eggcellrendererkeys.c:160 ../src/ui/eggcellrendererkeys.c:161
-msgid "Accelerator key"
-msgstr "Phím tắt"
-
-#: ../src/ui/eggcellrendererkeys.c:170 ../src/ui/eggcellrendererkeys.c:171
-msgid "Accelerator modifiers"
-msgstr "Phím bổ trợ"
-
-#: ../src/ui/eggcellrendererkeys.c:180
-msgid "Accelerator Mode"
-msgstr "Chế độ phím tắt"
-
-#: ../src/ui/eggcellrendererkeys.c:181
-msgid "The type of accelerator."
-msgstr "Kiểu phím tắt."
-
-#: ../src/ui/eggcellrendererkeys.c:219 ../src/ui/keyboard-properties.c:765
-msgid "Disabled"
-msgstr "Đã tắt"
-
-#: ../src/ui/eggcellrendererkeys.c:330 ../src/ui/eggcellrendererkeys.c:568
-msgid "Type a new accelerator, or press Backspace to clear"
-msgstr "Gõ một phím tắt mới, hoặc nhấn phím Backspace để xoá"
-
-#: ../src/ui/eggcellrendererkeys.c:571
-msgid "Type a new accelerator"
-msgstr "Gõ phím tắt mới"
-
-#: ../src/ui/keyboard-properties.c:80
+#: ../src/ui/keyboard-properties.c:78
 msgid "New game 1 player"
 msgstr "Lượt chơi người đơn mới"
 
-#: ../src/ui/keyboard-properties.c:82
+#: ../src/ui/keyboard-properties.c:80
 msgid "New game 2 player"
 msgstr "Lượt chơi người đôi mới"
 
-#: ../src/ui/keyboard-properties.c:84
+#: ../src/ui/keyboard-properties.c:82
 msgid "Pause/Resume"
 msgstr "Dừng tạm/Tiếp tục"
 
-#: ../src/ui/keyboard-properties.c:94
+#: ../src/ui/keyboard-properties.c:92
 msgid "Full Screen"
 msgstr "Toàn màn hình"
 
-#: ../src/ui/keyboard-properties.c:96
+#: ../src/ui/keyboard-properties.c:94
 msgid "Normal Size"
-msgstr "Cỡ bình thường"
+msgstr "Cỡ chuẩn"
 
-#: ../src/ui/keyboard-properties.c:101 ../src/ui/keyboard-properties.c:111
+#: ../src/ui/keyboard-properties.c:99
+#: ../src/ui/keyboard-properties.c:109
 msgid "aim left"
 msgstr "nhắm phía trái"
 
-#: ../src/ui/keyboard-properties.c:103 ../src/ui/keyboard-properties.c:113
+#: ../src/ui/keyboard-properties.c:101
+#: ../src/ui/keyboard-properties.c:111
 msgid "aim right"
 msgstr "nhắm phía phải"
 
-#: ../src/ui/keyboard-properties.c:105 ../src/ui/keyboard-properties.c:115
+#: ../src/ui/keyboard-properties.c:103
+#: ../src/ui/keyboard-properties.c:113
 msgid "shoot"
 msgstr "bắn"
 
-#: ../src/ui/keyboard-properties.c:122
+#: ../src/ui/keyboard-properties.c:120
 msgid "Player 1"
 msgstr "Người chơi 1"
 
-#: ../src/ui/keyboard-properties.c:123
+#: ../src/ui/keyboard-properties.c:121
 msgid "Player 2"
 msgstr "Người chơi 2"
 
-#: ../src/ui/keyboard-properties.c:124
+#: ../src/ui/keyboard-properties.c:122
 msgid "Game"
 msgstr "Trò chơi"
 
-#: ../src/ui/keyboard-properties.c:125
+#: ../src/ui/keyboard-properties.c:123
 msgid "View"
 msgstr "Xem"
 
-#: ../src/ui/keyboard-properties.c:338
+#: ../src/ui/keyboard-properties.c:336
 #, c-format
 msgid "There was an error loading config from %s. (%s)\n"
 msgstr "Gặp lỗi khi tải cấu hình từ « %s ». (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:352
+#: ../src/ui/keyboard-properties.c:350
 #, c-format
 msgid ""
 "There was an error subscribing to notification of terminal keybinding "
 "changes. (%s)\n"
-msgstr ""
-"Gặp lỗi khi đăng ký thông báo thay đổi tổ hợp phím thiết bị cuối (%s)\n"
+msgstr "Gặp lỗi khi đăng ký để nhận thông báo thay đổi tổ hợp phím thiết bị cuối (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:395
+#: ../src/ui/keyboard-properties.c:393
 #, c-format
 msgid "There was an error loading a terminal keybinding. (%s)\n"
 msgstr "Gặp lỗi khi tải tổ hợp phím thiết bị cuối. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:411
+#: ../src/ui/keyboard-properties.c:409
 #, c-format
 msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
-msgstr "Giá trị của khóa cấu hình « %s » không hợp lệ; giá trị đó là « %s ».\n"
+msgstr "Giá trị của khóa cấu hình « %s » không có hợp lệ; giá trị đó là « %s »\n"
 
-#: ../src/ui/keyboard-properties.c:434
+#: ../src/ui/keyboard-properties.c:432
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menubar access "
 "keys. (%s)\n"
-msgstr ""
-"Gặp lỗi khi tải giá trị cấu hình có dùng phím tắt truy cập trình đơn hay không. (%s)\n"
+msgstr "Gặp lỗi khi tải giá trị cấu hình có dùng phím tắt truy cập trình đơn hay không. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:448
+#: ../src/ui/keyboard-properties.c:446
 #, c-format
 msgid ""
 "There was an error subscribing to notification on changes on whether to use "
 "menubar access keys (%s)\n"
-msgstr ""
-"Gặp lỗi khi đăng ký thông báo thay đổi có dùng phím tắt truy cập thanh trình đơn hay "
-"không. (%s)\n"
+msgstr "Gặp lỗi khi đăng ký để nhận thông báo thay đổi có dùng phím tắt truy cập thanh trình đơn hay không. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:459
+#: ../src/ui/keyboard-properties.c:457
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menu "
 "accelerators. (%s)\n"
-msgstr ""
-"Gặp lỗi khi tải giá trị cấu hình có dùng phím tắt trình đơn hay không. (%s)\n"
+msgstr "Gặp lỗi khi tải giá trị cấu hình có dùng phím tắt trình đơn hay không. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:475
+#: ../src/ui/keyboard-properties.c:473
 #, c-format
 msgid ""
 "There was an error subscribing to notification for use_menu_accelerators (%"
 "s)\n"
-msgstr ""
-"Gặp lỗi khi đăng ký thông báo « use_menu_accelerators » (dùng phím tắt trình "
-"đơn). (%s)\n"
+msgstr "Gặp lỗi khi đăng ký để nhận thông báo « use_menu_accelerators » (dùng phím tắt trình đơn). (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:825
+#: ../src/ui/keyboard-properties.c:755
+msgid "Disabled"
+msgstr "Đã tắt"
+
+#: ../src/ui/keyboard-properties.c:815
 #, c-format
 msgid "Error propagating accelerator change to configuration database: %s\n"
 msgstr "Lỗi lan truyền thay đổi phím tắt trong cơ sở dữ liệu cấu hình: %s\n"
 
-#: ../src/ui/keyboard-properties.c:994
+#: ../src/ui/keyboard-properties.c:983
 #, c-format
 msgid "Error setting new accelerator in configuration database: %s\n"
-msgstr "Gặp lỗi khi thiết lập phím tắt mới trong cơ sở dữ liệu cấu hình: %s\n"
+msgstr "Gặp lỗi khi đặt phím tắt mới trong cơ sở dữ liệu cấu hình: %s\n"
 
-#: ../src/ui/keyboard-properties.c:1093
+#: ../src/ui/keyboard-properties.c:1082
 msgid "_Action"
 msgstr "_Hành động"
 
-#: ../src/ui/keyboard-properties.c:1115
+#: ../src/ui/keyboard-properties.c:1105
 msgid "Shortcut _Key"
-msgstr "Phím _tắt"
+msgstr "_Phím tắt"
 
-#: ../src/ui/ui-main.c:533
+#: ../src/ui/ui-main.c:537
 msgid "Resume game"
 msgstr "Tiếp tục lại chơi"
 
-#: ../src/ui/ui-main.c:618
+#: ../src/ui/ui-main.c:635
 msgid "translator_credits"
 msgstr "Nhóm Việt hóa Gnome <gnomevi-list@lists.sourceforge.net>"
 
-#: ../src/ui/ui-main.c:626
+#: ../src/ui/ui-main.c:643
 msgid ""
 "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
 "remove all Bubbles by the creation of unicolor triplets."
-msgstr "Monkey Bubble là trò chơi kiểu nhà điện tử cho môi trường bàn làm việc Gnome. Bạn chỉ đơn giản hãy loại bỏ mọi bóng, bằng cách tạo nhóm ba bóng cùng màu."
+msgstr "Monkey Bubble là trò chơi kiểu nhà điện tử cho môi trường bàn làm việc GNOME. Bạn chỉ đơn giản hãy loại bỏ mọi bóng, bằng cách tạo nhóm ba bóng cùng màu."
 
-#: ../src/ui/ui-main.c:647
+#: ../src/ui/ui-main.c:664
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Gặp lỗi khi hiển thị trợ giúp: %s"
 
-#: ../src/ui/ui-network-server.c:159 ../src/ui/ui-network-client.c:149
+#: ../src/ui/ui-network-server.c:159
+#: ../src/ui/ui-network-client.c:149
 msgid "_Player name"
 msgstr "Tên _người chơi"
 
-#: ../src/ui/ui-network-server.c:166 ../src/ui/ui-network-client.c:156
+#: ../src/ui/ui-network-server.c:166
+#: ../src/ui/ui-network-client.c:156
 msgid "_Owner"
-msgstr "_Chủ sở hữu"
+msgstr "_Chủ"
 
-#: ../src/ui/ui-network-server.c:173 ../src/ui/ui-network-client.c:163
+#: ../src/ui/ui-network-server.c:173
+#: ../src/ui/ui-network-client.c:163
 msgid "_Ready"
 msgstr "_Sẵn sàng"
