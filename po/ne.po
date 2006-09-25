@@ -1,30 +1,32 @@
+# translation of monkey-bubble.HEAD.ne.po to Nepali
 # translation of monkey-bubble.HEAD.po to Nepali
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 # Pawan Chitrakar <pawan@mpp.org.np>, 2005.
 # Jaydeep Bhusal <zaydeep@hotmail.com>, 2005.
+# Mahesh subedi <submanesh@hotmail.com>, 2006.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: monkey-bubble.HEAD\n"
+"Project-Id-Version: monkey-bubble.HEAD.ne\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-12 13:02+0545\n"
-"PO-Revision-Date: 2005-06-02 13:05+0545\n"
-"Last-Translator: Jaydeep Bhusal <zaydeep@hotmail.com>\n"
+"POT-Creation-Date: 2006-05-15 12:25+0200\n"
+"PO-Revision-Date: 2006-07-19 17:38+0545\n"
+"Last-Translator: Mahesh subedi <submanesh@hotmail.com>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.9.1\n"
-"Plural-Forms: Nplurals=2;plural=(n!=0)\n"
+"X-Generator: KBabel 1.10.2\n"
+"Plural-Forms: nplurals=2;plural=(n!=1)\n"
 
 #: ../data/keybinding.glade.h:1
 msgid "Keyboard Shortcuts"
-msgstr "कि-बोर्ड सर्टकटहरु"
+msgstr "कुञ्जीपाटी सर्टकटहरू"
 
 #: ../data/keybinding.glade.h:2
 msgid "_Shortcut Keys:"
-msgstr "_सर्टकट कुञ्जिहरु"
+msgstr "सर्टकट कुञ्जीहरू:"
 
 #: ../data/monkey-bubble.glade.h:1
 msgid ""
@@ -38,38 +40,38 @@ msgstr ""
 "<markup>\n"
 "<span weight=\"bold\" size=\"large\"\n"
 "style=\"oblique\">\n"
-"Can't create server !\n"
+"सर्भर सिर्जना गर्न सकिँदैन !\n"
 "</span>\n"
 "</markup>"
 
 #: ../data/monkey-bubble.glade.h:7
 msgid "Create network game"
-msgstr "संजाल खेल सिर्जना गर्नुहोस"
+msgstr "सञ्जाल खेल सिर्जना गर्नुहोस्"
 
 #: ../data/monkey-bubble.glade.h:8
 msgid "Join _network game"
-msgstr "संजाल खेल मा भाग लिनुहोस"
+msgstr "सञ्जाल खेलमा भाग लिनुहोस्"
 
 #: ../data/monkey-bubble.glade.h:9 ../monkey-bubble.desktop.in.h:1
 msgid "Monkey Bubble"
-msgstr "मंकि बबल"
+msgstr "बादर बबल"
 
 #: ../data/monkey-bubble.glade.h:10
 msgid "New 1 player"
-msgstr "नयाँ १ खेलाडि"
+msgstr "नयाँ १ खेलाडी"
 
 #: ../data/monkey-bubble.glade.h:11
 msgid "New 2 players"
-msgstr "नयाँ २ खेलाडिहरु"
+msgstr "नयाँ २ खेलाडीहरू"
 
 #: ../data/monkey-bubble.glade.h:12 ../src/ui/ui-main.c:408
 #: ../src/ui/ui-main.c:540
 msgid "Pause game"
-msgstr "खेललाई पज गर्नुहोस"
+msgstr "खेल पज गर्नुहोस्"
 
 #: ../data/monkey-bubble.glade.h:13 ../src/ui/keyboard-properties.c:86
 msgid "Stop game"
-msgstr "खेल रोक्नुहोस"
+msgstr "खेल रोक्नुहोस्"
 
 #: ../data/monkey-bubble.glade.h:14
 msgid "Warning"
@@ -77,15 +79,15 @@ msgstr "चेतावनी"
 
 #: ../data/monkey-bubble.glade.h:15
 msgid "_About"
-msgstr "_बारेमा"
+msgstr "बारेमा"
 
 #: ../data/monkey-bubble.glade.h:16
 msgid "_Contents"
-msgstr "सामग्रिहरु"
+msgstr "सामग्रिहरू"
 
 #: ../data/monkey-bubble.glade.h:17
 msgid "_Game"
-msgstr "_खेल"
+msgstr "खेल"
 
 #: ../data/monkey-bubble.glade.h:18
 msgid "_Help"
@@ -93,51 +95,51 @@ msgstr "मद्दत"
 
 #: ../data/monkey-bubble.glade.h:19
 msgid "_Settings"
-msgstr "_सेटिंगहरु"
+msgstr "सेटिङ"
 
 #: ../data/monkey-bubble.schemas.in.h:1
 msgid "1 player game"
-msgstr "१ खेलाडि खेल"
+msgstr "१ खेलाडी खेल"
 
 #: ../data/monkey-bubble.schemas.in.h:2
 msgid "2 players game"
-msgstr "२ खेलाडिहरु खेल"
+msgstr "२ खेलाडी खेल"
 
 #: ../data/monkey-bubble.schemas.in.h:3
 msgid "F1"
-msgstr "एफ१"
+msgstr "F1"
 
 #: ../data/monkey-bubble.schemas.in.h:4
 msgid "F2"
-msgstr "एफ२"
+msgstr "F2"
 
 #: ../data/monkey-bubble.schemas.in.h:5
 msgid "Left"
-msgstr "बाँया"
+msgstr "बायाँ"
 
 #: ../data/monkey-bubble.schemas.in.h:6
 msgid "Pause"
-msgstr "पज"
+msgstr "पज गर्नुहोस्"
 
 #: ../data/monkey-bubble.schemas.in.h:7
 msgid "Pause the game"
-msgstr "खेल पज गर्नुहोस"
+msgstr "खेल पज गर्नुहोस्"
 
 #: ../data/monkey-bubble.schemas.in.h:8
 msgid "Quit the game"
-msgstr "खेल अन्त्य गर्नुहोस"
+msgstr "खेल अन्त्य गर्नुहोस्"
 
 #: ../data/monkey-bubble.schemas.in.h:9
 msgid "Right"
-msgstr "दाँया"
+msgstr "दायाँ"
 
 #: ../data/monkey-bubble.schemas.in.h:10
 msgid "Stop the game"
-msgstr "खेल रोक्नुहोस"
+msgstr "खेल रोक्नुहोस्"
 
 #: ../data/monkey-bubble.schemas.in.h:11
 msgid "Up"
-msgstr "माथि॒"
+msgstr "माथि"
 
 #: ../data/monkey-bubble.schemas.in.h:12
 msgid "d"
@@ -149,19 +151,19 @@ msgstr "एफ"
 
 #: ../data/monkey-bubble.schemas.in.h:14
 msgid "left key for player one"
-msgstr "खेलाडि १ को लागि बाँया कुञ्जि"
+msgstr "खेलाडी १ का लागि बायाँ कुञ्जी"
 
 #: ../data/monkey-bubble.schemas.in.h:15
 msgid "left key for player two"
-msgstr "खेलाडि २ को लागि बाँया कुञ्जि"
+msgstr "खेलाडी २ का लागि बायाँ कुञ्जी"
 
 #: ../data/monkey-bubble.schemas.in.h:16
 msgid "right key for player one"
-msgstr "खेलाडि १ को लागि दाँया कुञ्जि"
+msgstr "खेलाडी १ का लागि दायाँ कुञ्जी"
 
 #: ../data/monkey-bubble.schemas.in.h:17
 msgid "right key for player two"
-msgstr "खेलाडि २ को लागि दाँया कुञ्जि"
+msgstr "खेलाडी २ का लागि दायाँ कुञ्जी"
 
 #: ../data/monkey-bubble.schemas.in.h:18
 msgid "s"
@@ -169,11 +171,11 @@ msgstr "एस"
 
 #: ../data/monkey-bubble.schemas.in.h:19
 msgid "shoot key for player one"
-msgstr "खेलाडि १ को लागि शुट कुञ्जि"
+msgstr "खेलाडी १ का लागि शुट कुञ्जी"
 
 #: ../data/monkey-bubble.schemas.in.h:20
 msgid "shoot key for player two"
-msgstr "खेलाडि २ को लागि शुट कुञ्जि"
+msgstr "खेलाडी २ का लागि शुट कुञ्जी"
 
 #: ../data/netgame.glade.h:1
 msgid "*"
@@ -185,16 +187,16 @@ msgstr "सञ्जाल खेल"
 
 #: ../data/netgame.glade.h:3
 msgid "Number of games :"
-msgstr "खेलहरुको संख्या"
+msgstr "खेलहरूको सङ्ख्या :"
 
 #: ../data/netgame.glade.h:4
 msgid "Number of players :"
-msgstr "खेलाडिहरु को संख्या"
+msgstr "खेलाडीहरूको सङ्ख्या :"
 
 #: ../data/netgame.glade.h:5 ../data/netserver.glade.h:4
 #: ../src/ui/keyboard-properties.c:88
 msgid "Quit game"
-msgstr "खेल अन्त्य गर्नुहोस"
+msgstr "खेल अन्त्य गर्नुहोस्"
 
 #: ../data/netgame.glade.h:6 ../data/netserver.glade.h:5
 msgid "Ready"
@@ -202,43 +204,43 @@ msgstr "तयार"
 
 #: ../data/netgame.glade.h:7
 msgid "_Go"
-msgstr "_जाऊ"
+msgstr "जानुहोस्"
 
 #: ../data/netgame.glade.h:8
 msgid "_Server"
-msgstr "_सर्भर"
+msgstr "सर्भर"
 
 #: ../data/netserver.glade.h:2
 msgid "Number of game"
-msgstr "खेलको संख्या"
+msgstr "खेलको सङ्ख्या"
 
 #: ../data/netserver.glade.h:3
 msgid "Number of players"
-msgstr "खेलाडीहरुको संख्या"
+msgstr "खेलाडीहरूको सङ्ख्या"
 
 #: ../data/netserver.glade.h:6
 msgid "Start Game"
-msgstr "खेल शुरु गर्नुहोस"
+msgstr "खेल सुरु गर्नुहोस्"
 
 #: ../monkey-bubble.desktop.in.h:2
 msgid "Monkey Bubble Arcade Game"
-msgstr "मंकि बबल आर्केड खेल"
+msgstr "बादर बबल आर्केड खेल"
 
 #: ../src/ui/eggcellrendererkeys.c:160 ../src/ui/eggcellrendererkeys.c:161
 msgid "Accelerator key"
-msgstr "एक्सिलरेटर कुञ्जि"
+msgstr "गतिबर्धक कुञ्जी"
 
 #: ../src/ui/eggcellrendererkeys.c:170 ../src/ui/eggcellrendererkeys.c:171
 msgid "Accelerator modifiers"
-msgstr "एक्सिलरेटर परिमार्जकहरु"
+msgstr "गरिबर्धक परिमार्जकहरू"
 
 #: ../src/ui/eggcellrendererkeys.c:180
 msgid "Accelerator Mode"
-msgstr "एक्सिलरेटर मोड"
+msgstr "गतिबर्धक मोड"
 
 #: ../src/ui/eggcellrendererkeys.c:181
 msgid "The type of accelerator."
-msgstr "एक्सिलरेटर को प्रकार"
+msgstr "गतिबर्धकको प्रकार"
 
 #: ../src/ui/eggcellrendererkeys.c:219 ../src/ui/keyboard-properties.c:765
 msgid "Disabled"
@@ -246,51 +248,51 @@ msgstr "अक्षम पारिएको"
 
 #: ../src/ui/eggcellrendererkeys.c:330 ../src/ui/eggcellrendererkeys.c:568
 msgid "Type a new accelerator, or press Backspace to clear"
-msgstr "एउटा नयाँ एक्सिलरेटर टाइप गर, वा खालि गर्न ब्याकस्पेस थिच्नुहोस्"
+msgstr "एउटा नयाँ गतिबर्धक टाइप गर्नुहोस्, वा खाली गर्न ब्याकस्पेस थिच्नुहोस्"
 
 #: ../src/ui/eggcellrendererkeys.c:571
 msgid "Type a new accelerator"
-msgstr "नयाँ एक्सिलरेटर लेख्‍नुहोस"
+msgstr "नयाँ गतिबर्धक टाइप गर्नुहोस्"
 
 #: ../src/ui/keyboard-properties.c:80
 msgid "New game 1 player"
-msgstr "नयाँ खेल १ खेलाडि"
+msgstr "नयाँ १ खेलाडी खेल"
 
 #: ../src/ui/keyboard-properties.c:82
 msgid "New game 2 player"
-msgstr "नयाँ खेल २ खेलाडि"
+msgstr "नयाँ २ खेलाडी खेल"
 
 #: ../src/ui/keyboard-properties.c:84
 msgid "Pause/Resume"
-msgstr "पज/पुन:निरन्तरता"
+msgstr "पज गर्नुहोस्/पुन:निरन्तरता दिनुहोस्"
 
 #: ../src/ui/keyboard-properties.c:94
 msgid "Full Screen"
-msgstr "पुरा पर्दा"
+msgstr "पूरा पर्दा"
 
 #: ../src/ui/keyboard-properties.c:96
 msgid "Normal Size"
-msgstr "_साधारण आकार"
+msgstr "सामान्य साइज"
 
 #: ../src/ui/keyboard-properties.c:101 ../src/ui/keyboard-properties.c:111
 msgid "aim left"
-msgstr "बाँया ताक्नुहोस"
+msgstr "बायाँ लक्ष्य"
 
 #: ../src/ui/keyboard-properties.c:103 ../src/ui/keyboard-properties.c:113
 msgid "aim right"
-msgstr "दाँया ताक्नुहोस"
+msgstr "दायाँ लक्ष्य"
 
 #: ../src/ui/keyboard-properties.c:105 ../src/ui/keyboard-properties.c:115
 msgid "shoot"
-msgstr "शुट गर्नुहोस"
+msgstr "शुट गर्नुहोस्"
 
 #: ../src/ui/keyboard-properties.c:122
 msgid "Player 1"
-msgstr "खैलाडी १"
+msgstr "खेलाडी १"
 
 #: ../src/ui/keyboard-properties.c:123
 msgid "Player 2"
-msgstr "खैलाडी २"
+msgstr "खेलाडी २"
 
 #: ../src/ui/keyboard-properties.c:124
 msgid "Game"
@@ -298,38 +300,36 @@ msgstr "खेल"
 
 #: ../src/ui/keyboard-properties.c:125
 msgid "View"
-msgstr "दृष्य"
+msgstr "दृश्य"
 
 #: ../src/ui/keyboard-properties.c:338
 #, c-format
 msgid "There was an error loading config from %s. (%s)\n"
-msgstr "%s. (%s) बाट कन्फिगर लोड गर्दा एउटा त्रुटि भयो\n"
+msgstr "%s बाट कन्फिगर लोड गर्दा त्रुटि (%s)\n"
 
 #: ../src/ui/keyboard-properties.c:352
 #, c-format
 msgid ""
 "There was an error subscribing to notification of terminal keybinding "
 "changes. (%s)\n"
-msgstr "समाप्ति कुञ्जिबन्धन परिवर्तनहरु को सुचना मा सदस्य बनाउंदा एउटा त्रुटि भयो. (%s)\n"
+msgstr "टर्मिनल कुञ्जीबन्धन परिवर्तनहरूको सूचनामा सदस्यता लिदा त्रुटि (%s)\n"
 
 #: ../src/ui/keyboard-properties.c:395
 #, c-format
 msgid "There was an error loading a terminal keybinding. (%s)\n"
-msgstr "समाप्ति कुञ्जिबन्धन लोड गर्दा एउटा त्रुटि भयो. (%s)\n"
+msgstr "टर्मिनल कुञ्जीबन्धन लोड गर्दा त्रुटि (%s)\n"
 
 #: ../src/ui/keyboard-properties.c:411
 #, c-format
 msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
-msgstr "कन्फिगरेसन कुञ्जि  %s को मान मान्य छैन,मान \"%s\" हो\n"
+msgstr "कन्फिगरेसन कुञ्जी %s को मान वैध छैन, मान \"%s\" हो\n"
 
 #: ../src/ui/keyboard-properties.c:434
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menubar access "
 "keys. (%s)\n"
-msgstr ""
-"मेनुबार पहुँच कुञ्जिहरु प्रयोग गर्ने कि नगर्ने भनेर कन्फिगर मान लोड गर्दा एउटा त्रुटि भयो. (%"
-"s)\n"
+msgstr "मेनुपट्टी पहुँच कुञ्जीहरू प्रयोग गर्ने कि नगर्ने भनेर कन्फिगर मान लोड गर्दा त्रुटि। (%s)\n"
 
 #: ../src/ui/keyboard-properties.c:448
 #, c-format
@@ -337,35 +337,32 @@ msgid ""
 "There was an error subscribing to notification on changes on whether to use "
 "menubar access keys (%s)\n"
 msgstr ""
-"मेनुबार पहुँच कुञ्जिहरु प्रयोग गर्ने कि नगर्ने को परिवर्तनहरु को सुचना मा सदस्य बनाउंदा एउटा "
-"त्रुटि भयो. (%s)\n"
+"मेनुपट्टी पहुँच कुञ्जीहरू प्रयोग गर्ने कि नगर्ने भनेर परिवर्तनहरूको सूचनामा सदस्यता लिदा"
+"त्रुटि। (%s)\n"
 
 #: ../src/ui/keyboard-properties.c:459
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menu "
 "accelerators. (%s)\n"
-msgstr ""
-"मेनु एक्सिलरेटरहरु प्रयोग गर्ने कि नगर्ने को लागि कन्फिगर मान लोड गर्दा एउटा त्रुटि भयो. (%"
-"s)\n"
+msgstr "मेनु गतिबर्धकहरू प्रयोग गर्ने कि नगर्ने भनेर कन्फिगर मान लोड गर्दा त्रुटि। (%s)\n"
 
 #: ../src/ui/keyboard-properties.c:475
 #, c-format
 msgid ""
 "There was an error subscribing to notification for use_menu_accelerators (%"
 "s)\n"
-msgstr ""
-"मेनु_एक्सिलरेटर_प्रयोग गर्नुहोस को लागि सुचना मा सदस्य बनाउंदा एउटा त्रुटि भयो. (%s)\n"
+msgstr "use_menu_accelerators का लागि सूचनामा सदस्यता लिदा त्रुटि। (%s)\n"
 
 #: ../src/ui/keyboard-properties.c:825
 #, c-format
 msgid "Error propagating accelerator change to configuration database: %s\n"
-msgstr "डाटाबेस कन्फिगरेसन को लागि त्रुटि विस्तारक एक्सिलरेटर परिवर्तन %s\n"
+msgstr "कन्फिगरेसन डेटाबेसमा गतिबर्धक परिवर्तन उत्पन्न गर्दा त्रुटि: %s\n"
 
 #: ../src/ui/keyboard-properties.c:994
 #, c-format
 msgid "Error setting new accelerator in configuration database: %s\n"
-msgstr "समायोजना डाटावेसमा नयाँ द्रुतचालक मिलाउदा त्रुटि:%s\n"
+msgstr "कन्फिगरेसन डेटाबेसमा नयाँ गतिबर्धक सेटिङ त्रुटि:%s\n"
 
 #: ../src/ui/keyboard-properties.c:1093
 msgid "_Action"
@@ -373,28 +370,30 @@ msgstr "कार्य"
 
 #: ../src/ui/keyboard-properties.c:1115
 msgid "Shortcut _Key"
-msgstr "सर्टकट कुञ्जि"
+msgstr "सर्टकट कुञ्जी"
 
 #: ../src/ui/ui-main.c:533
 msgid "Resume game"
-msgstr "खेल लाइ पुन निरन्तरता दिनुहोस"
+msgstr "खेललाई पुन: निरन्तरता दिनुहोस्"
 
 #: ../src/ui/ui-main.c:618
 msgid "translator_credits"
-msgstr "अनुवादक_क्रेडिटहरु"
+msgstr ""
+"Mahesh Subedi<submanesh@gmail.com.np> "
+"Jaydeep Bhusal <zaydeep@hotmail.com>"
+"Shiva Pokharel<pokharelshiva@hotmail.com>"
+"Shyam Krishna Bal<shyam@mpp.org.np>"
 
 #: ../src/ui/ui-main.c:626
 msgid ""
 "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
 "remove all Bubbles by the creation of unicolor triplets."
-msgstr ""
-"मंकि बबल जिनोम डेस्कटप वातावरण को लागि एउटा आर्केड खेल हो. एकरंग ट्रिपलेटहरु को सिर्जना "
-"बाट सजिलै सबै बबलहरु हटाउनुहोस"
+msgstr "'बादर बबल' जिनोम डेस्कटप परिवेशका लागि एउटा आर्केड खेल हो। एकल रङ ट्रिपलेटहरूको सिर्जना बाट सजिलै सबै बबलहरू हटाउनुहोस्।"
 
 #: ../src/ui/ui-main.c:647
 #, c-format
 msgid "There was an error displaying help: %s"
-msgstr "मद्दत प्रदर्शन गर्दा एउटा त्रुटि भयो: %s"
+msgstr "मद्दत प्रदर्शन गर्दा त्रुटि: %s"
 
 #: ../src/ui/ui-network-server.c:159 ../src/ui/ui-network-client.c:149
 msgid "_Player name"
@@ -407,3 +406,4 @@ msgstr "मालिक"
 #: ../src/ui/ui-network-server.c:173 ../src/ui/ui-network-client.c:163
 msgid "_Ready"
 msgstr "तयार"
+
