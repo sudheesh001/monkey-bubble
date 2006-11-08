@@ -1,3 +1,7 @@
+2006-08-04  Josep Puigdemont i Casamajó  <josep.puigdemont@gmail.com>
+
+	* configure.in: Added "ca" (Catalaon) to ALL_LINGUAS.
+
 2006-08-04  Sven Herzberg  <herzi@gnome-de.org>
 
 	* AUTHORS: updated for Laurent's email address and to mention Michael
