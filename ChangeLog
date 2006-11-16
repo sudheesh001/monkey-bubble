@@ -1,3 +1,8 @@
+2006-11-16  Daniel Nylander <po@danielnylander.se>
+
+	* help/sv/sv.po: Added Swedish translation.
+	* help/Makefile.am: Added sv to DOC_LINGUAS.
+
 2006-08-04  Josep Puigdemont i Casamajó  <josep.puigdemont@gmail.com>
 
 	* configure.in: Added "ca" (Catalaon) to ALL_LINGUAS.
