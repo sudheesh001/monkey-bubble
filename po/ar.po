@@ -1,0 +1,430 @@
+# Arabic translations for PACKAGE package.
+# Copyright (C) 2006 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Automatically generated, 2006.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Project\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-11-17 21:14+0000\n"
+"PO-Revision-Date: 2006-11-18 00:40+0100\n"
+"Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
+"Language-Team: Arabic <doc@arabeyes.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n == 0 ? 0 : n == 1 ? 1 : n == 2 ? 2 : n >= 3 && n <= 10 ? 3 : n >= 11 && n <= 99 ? 4 : 5;\n"
+"X-Poedit-Language: Arabic\n"
+
+#: ../data/keybinding.glade.h:1
+#, fuzzy
+msgid "Keyboard Shortcuts"
+msgstr "اختصارات لوحة المفاتيح"
+
+#: ../data/keybinding.glade.h:2
+#, fuzzy
+msgid "_Shortcut Keys:"
+msgstr " م_فاتيح المختصرات:"
+
+#: ../data/monkey-bubble.glade.h:1
+msgid ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Can't create server !\n"
+"</span>\n"
+"</markup>"
+msgstr ""
+
+#: ../data/monkey-bubble.glade.h:7
+#, fuzzy
+msgid "Join _network game"
+msgstr "لعبة شبكة جديدة"
+
+#: ../data/monkey-bubble.glade.h:8
+#: ../monkey-bubble.desktop.in.h:1
+#, fuzzy
+msgid "Monkey Bubble"
+msgstr "علكة"
+
+#: ../data/monkey-bubble.glade.h:9
+#, fuzzy
+msgid "New 1 player"
+msgstr "<b>مشغل الصوت</b>"
+
+#: ../data/monkey-bubble.glade.h:10
+#, fuzzy
+msgid "New 2 players"
+msgstr "عدد اللاعبين"
+
+#: ../data/monkey-bubble.glade.h:11
+#, fuzzy
+msgid "New network game"
+msgstr "لعبة شبكة جديدة"
+
+#: ../data/monkey-bubble.glade.h:12
+#: ../src/ui/ui-main.c:412
+#: ../src/ui/ui-main.c:544
+#, fuzzy
+msgid "Pause game"
+msgstr "إيقاف اللعبة"
+
+#: ../data/monkey-bubble.glade.h:13
+#: ../src/ui/keyboard-properties.c:84
+#, fuzzy
+msgid "Stop game"
+msgstr "اختر لعبة"
+
+#: ../data/monkey-bubble.glade.h:14
+#, fuzzy
+msgid "Warning"
+msgstr "تحذير"
+
+#: ../data/monkey-bubble.glade.h:15
+#, fuzzy
+msgid "_About"
+msgstr "_حول"
+
+#: ../data/monkey-bubble.glade.h:16
+#, fuzzy
+msgid "_Contents"
+msgstr "_المحتويات"
+
+#: ../data/monkey-bubble.glade.h:17
+#, fuzzy
+msgid "_Game"
+msgstr "_لعبة"
+
+#: ../data/monkey-bubble.glade.h:18
+#, fuzzy
+msgid "_Help"
+msgstr "م_ساعدة"
+
+#: ../data/monkey-bubble.glade.h:19
+#, fuzzy
+msgid "_High Scores"
+msgstr "عرض النتائج"
+
+#: ../data/monkey-bubble.schemas.in.h:1
+#, fuzzy
+msgid "1 player game"
+msgstr "اختر لعبة"
+
+#: ../data/monkey-bubble.schemas.in.h:2
+#, fuzzy
+msgid "2 players game"
+msgstr "اختر لعبة"
+
+#: ../data/monkey-bubble.schemas.in.h:3
+#, fuzzy
+msgid "F1"
+msgstr "F1"
+
+#: ../data/monkey-bubble.schemas.in.h:4
+#, fuzzy
+msgid "F2"
+msgstr "F2"
+
+#: ../data/monkey-bubble.schemas.in.h:5
+#, fuzzy
+msgid "Left"
+msgstr "اليسار"
+
+#: ../data/monkey-bubble.schemas.in.h:6
+#, fuzzy
+msgid "Pause"
+msgstr "ايقاف مؤقّت"
+
+#: ../data/monkey-bubble.schemas.in.h:7
+#, fuzzy
+msgid "Pause the game"
+msgstr "إيقاف اللعبة"
+
+#: ../data/monkey-bubble.schemas.in.h:8
+#, fuzzy
+msgid "Quit the game"
+msgstr "اختر لعبة"
+
+#: ../data/monkey-bubble.schemas.in.h:9
+#, fuzzy
+msgid "Right"
+msgstr "اليمين"
+
+#: ../data/monkey-bubble.schemas.in.h:10
+#, fuzzy
+msgid "Stop the game"
+msgstr "اختر لعبة"
+
+#: ../data/monkey-bubble.schemas.in.h:11
+#, fuzzy
+msgid "Up"
+msgstr "أعلى"
+
+#: ../data/monkey-bubble.schemas.in.h:12
+msgid "d"
+msgstr ""
+
+#: ../data/monkey-bubble.schemas.in.h:13
+msgid "f"
+msgstr ""
+
+#: ../data/monkey-bubble.schemas.in.h:14
+#, fuzzy
+msgid "left key for player one"
+msgstr "الزر للحركة إلى اليسار."
+
+#: ../data/monkey-bubble.schemas.in.h:15
+#, fuzzy
+msgid "left key for player two"
+msgstr "الزر للحركة إلى اليسار."
+
+#: ../data/monkey-bubble.schemas.in.h:16
+#, fuzzy
+msgid "right key for player one"
+msgstr "الزر للحركة إلى اليمين."
+
+#: ../data/monkey-bubble.schemas.in.h:17
+#, fuzzy
+msgid "right key for player two"
+msgstr "الزر للحركة إلى اليمين."
+
+#: ../data/monkey-bubble.schemas.in.h:18
+msgid "s"
+msgstr ""
+
+#: ../data/monkey-bubble.schemas.in.h:19
+msgid "shoot key for player one"
+msgstr ""
+
+#: ../data/monkey-bubble.schemas.in.h:20
+msgid "shoot key for player two"
+msgstr ""
+
+#: ../data/netgame.glade.h:1
+#, fuzzy
+msgid "*"
+msgstr "*"
+
+#: ../data/netgame.glade.h:2
+#: ../data/netserver.glade.h:1
+#, fuzzy
+msgid "Network game"
+msgstr "لعبة شبكة جديدة"
+
+#: ../data/netgame.glade.h:3
+#, fuzzy
+msgid "Number of games :"
+msgstr "ألعاب الورق:"
+
+#: ../data/netgame.glade.h:4
+#, fuzzy
+msgid "Number of players :"
+msgstr "عدد اللاعبين"
+
+#: ../data/netgame.glade.h:5
+#: ../data/netserver.glade.h:4
+#: ../src/ui/keyboard-properties.c:86
+#, fuzzy
+msgid "Quit game"
+msgstr "اختر لعبة"
+
+#: ../data/netgame.glade.h:6
+#: ../data/netserver.glade.h:5
+#, fuzzy
+msgid "Ready"
+msgstr "حاظر"
+
+#: ../data/netgame.glade.h:7
+#, fuzzy
+msgid "_Go"
+msgstr "إ_ذهب"
+
+#: ../data/netgame.glade.h:8
+#, fuzzy
+msgid "_Server"
+msgstr "ال_خادم:"
+
+#: ../data/netserver.glade.h:2
+#, fuzzy
+msgid "Number of game"
+msgstr "اختر لعبة"
+
+#: ../data/netserver.glade.h:3
+#, fuzzy
+msgid "Number of players"
+msgstr "عدد اللاعبين"
+
+#: ../data/netserver.glade.h:6
+#, fuzzy
+msgid "Start Game"
+msgstr "بدء لعبةٍ جديدة"
+
+#: ../monkey-bubble.desktop.in.h:2
+msgid "Monkey Bubble Arcade Game"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:78
+#, fuzzy
+msgid "New game 1 player"
+msgstr "بدء لعبةٍ جديدة"
+
+#: ../src/ui/keyboard-properties.c:80
+#, fuzzy
+msgid "New game 2 player"
+msgstr "بدء لعبةٍ جديدة"
+
+#: ../src/ui/keyboard-properties.c:82
+#, fuzzy
+msgid "Pause/Resume"
+msgstr "إيقاف مؤقت/إنهاء"
+
+#: ../src/ui/keyboard-properties.c:92
+#, fuzzy
+msgid "Full Screen"
+msgstr "كامل الشاشة"
+
+#: ../src/ui/keyboard-properties.c:94
+#, fuzzy
+msgid "Normal Size"
+msgstr "الحجم الطبيعي"
+
+#: ../src/ui/keyboard-properties.c:99
+#: ../src/ui/keyboard-properties.c:109
+#, fuzzy
+msgid "aim left"
+msgstr "الإلتفاف إلى جهة اليسار"
+
+#: ../src/ui/keyboard-properties.c:101
+#: ../src/ui/keyboard-properties.c:111
+#, fuzzy
+msgid "aim right"
+msgstr "الإلتفاف إلى جهة اليمين"
+
+#: ../src/ui/keyboard-properties.c:103
+#: ../src/ui/keyboard-properties.c:113
+msgid "shoot"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:120
+#, fuzzy
+msgid "Player 1"
+msgstr "اللّاعب"
+
+#: ../src/ui/keyboard-properties.c:121
+#, fuzzy
+msgid "Player 2"
+msgstr "اللّاعب"
+
+#: ../src/ui/keyboard-properties.c:122
+#, fuzzy
+msgid "Game"
+msgstr "لعبة"
+
+#: ../src/ui/keyboard-properties.c:123
+#, fuzzy
+msgid "View"
+msgstr "عرض"
+
+#: ../src/ui/keyboard-properties.c:336
+#, fuzzy, c-format
+msgid "There was an error loading config from %s. (%s)\n"
+msgstr "حدث خطأ عند تحميل اﻻعدادات من %s. (%s)\n"
+
+#: ../src/ui/keyboard-properties.c:350
+#, fuzzy, c-format
+msgid "There was an error subscribing to notification of terminal keybinding changes. (%s)\n"
+msgstr "حدث خطأ عند تسجيل تغييرات المفاتيح السريعة. (%s)\n"
+
+#: ../src/ui/keyboard-properties.c:393
+#, fuzzy, c-format
+msgid "There was an error loading a terminal keybinding. (%s)\n"
+msgstr "حصل خطأ عند تحميل مفتاح سريع للشاشة طرفية. (%s)\n"
+
+#: ../src/ui/keyboard-properties.c:409
+#, fuzzy, c-format
+msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
+msgstr "قيمة مفتاح الإعداد %s غير سليمة، القيمة هي \"%s\"\n"
+
+#: ../src/ui/keyboard-properties.c:432
+#, fuzzy, c-format
+msgid "There was an error loading config value for whether to use menubar access keys. (%s)\n"
+msgstr "حدث خطأ عند تحميل فيمة الإعدادات المتعلقة بإمكانيّة إستخدام مفاتيح النفاذ إلى عمود القوائم.  (%s)\n"
+
+#: ../src/ui/keyboard-properties.c:446
+#, fuzzy, c-format
+msgid "There was an error subscribing to notification on changes on whether to use menubar access keys (%s)\n"
+msgstr "حدث خطأ عند التسجيل للإخبار عن تعديلات في إمكانيّة إستخدام مفاتيح النفاذ إلى عمود القوائم (%s)\n"
+
+#: ../src/ui/keyboard-properties.c:457
+#, fuzzy, c-format
+msgid "There was an error loading config value for whether to use menu accelerators. (%s)\n"
+msgstr "حدث خطأ عند تحميل قيمة الإعداد في ما إذا تستعمل مسرعات القوائم. (%s)\n"
+
+#: ../src/ui/keyboard-properties.c:473
+#, fuzzy, c-format
+msgid "There was an error subscribing to notification for use_menu_accelerators (%s)\n"
+msgstr "حدث خطأ عند التسجيل للإخبار عند استعمال مسرعات القوائم (%s)\n"
+
+#: ../src/ui/keyboard-properties.c:755
+#, fuzzy
+msgid "Disabled"
+msgstr "معطل"
+
+#: ../src/ui/keyboard-properties.c:815
+#, fuzzy, c-format
+msgid "Error propagating accelerator change to configuration database: %s\n"
+msgstr "خطأ تمرير تغييرات المسرع لقاعدة بيانات الإعدادات: %s\n"
+
+#: ../src/ui/keyboard-properties.c:983
+#, fuzzy, c-format
+msgid "Error setting new accelerator in configuration database: %s\n"
+msgstr "حدث خطأ أثناء ضبط مفتاح تعجيل جديد في قاعدة بيانات الإعدادات: %s\n"
+
+#: ../src/ui/keyboard-properties.c:1082
+#, fuzzy
+msgid "_Action"
+msgstr "_عملية"
+
+#: ../src/ui/keyboard-properties.c:1105
+#, fuzzy
+msgid "Shortcut _Key"
+msgstr "مفتاح ال_مختصر"
+
+#: ../src/ui/ui-main.c:537
+#, fuzzy
+msgid "Resume game"
+msgstr "اختر لعبة"
+
+#: ../src/ui/ui-main.c:635
+#, fuzzy
+msgid "translator_credits"
+msgstr "جهاد عفيفي (Djihed Afifi) <djihed@gmail.com> /n عرفات المديني، تونس <lumina@silverpen.de>"
+
+#: ../src/ui/ui-main.c:643
+msgid "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply remove all Bubbles by the creation of unicolor triplets."
+msgstr ""
+
+#: ../src/ui/ui-main.c:664
+#, fuzzy, c-format
+msgid "There was an error displaying help: %s"
+msgstr "حصل خطأ عند عرض المساعدة: %s"
+
+#: ../src/ui/ui-network-server.c:159
+#: ../src/ui/ui-network-client.c:149
+#, fuzzy
+msgid "_Player name"
+msgstr "اسم الموصول"
+
+#: ../src/ui/ui-network-server.c:166
+#: ../src/ui/ui-network-client.c:156
+#, fuzzy
+msgid "_Owner"
+msgstr "المالك:"
+
+#: ../src/ui/ui-network-server.c:173
+#: ../src/ui/ui-network-client.c:163
+#, fuzzy
+msgid "_Ready"
+msgstr "حاظر"
+
