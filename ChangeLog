@@ -1,3 +1,7 @@
+2006-12-15  Pema geyleg  <pgeyleg@gmail.com>
+
+	* configure.in: Added 'dz' to ALL_LINGUAS
+
 2006-11-16  Daniel Nylander <po@danielnylander.se>
 
 	* help/sv/sv.po: Added Swedish translation.
