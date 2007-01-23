@@ -1,3 +1,8 @@
+2007-01-23  David Lodge <dave@cirt.net>
+
+	* help/en_GB/en_GB.po: Added English (British) translation
+	* help/Makefile.am: Added en_GB to DOC_LINGUAS
+
 2006-12-15  Pema geyleg  <pgeyleg@gmail.com>
 
 	* configure.in: Added 'dz' to ALL_LINGUAS
