@@ -1,0 +1,4 @@
+2007-05-14  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
+
+	* es/es.po: Added Spanish translation
+	* Makefile.am: Added es to DOC_LINGUAS
