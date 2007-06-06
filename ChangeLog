@@ -1,3 +1,10 @@
+2007-06-06  Sven Herzberg  <herzi@gnome-de.org>
+
+	Patch by Vincent Untz (Fixes 354232):
+
+	* src/ui/main.c: set the default window icon early
+	* src/ui/ui-main.c: don't set the window icon so late
+
 2007-02-19  Lasse Bang Mikkelsen  <lbm@fatalerror.dk>
 
 	* help/da/da.po: Added Danish translation by Peter Bach.

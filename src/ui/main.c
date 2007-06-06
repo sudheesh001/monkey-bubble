@@ -46,13 +46,15 @@ int main(int  argc, char **argv)
 		      GNOME_PROGRAM_STANDARD_PROPERTIES,
 		      NULL);
 
-  gst_init(&argc,&argv);  
+  gtk_window_set_default_icon_from_file (DATADIR "/pixmaps/monkey-bubble-icon.png", NULL);
+
+  gst_init(&argc,&argv);
 
   manager = sound_manager_get_instance();
   sound_manager_init(manager,TRUE);
-  
+
   ui_main = ui_main_get_instance();
-  
+
   window = ui_main_get_window(ui_main);
 
   mb_input_manager_instance_set_window(window);

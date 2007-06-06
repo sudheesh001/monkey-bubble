@@ -173,7 +173,6 @@ static UiMain* ui_main_new(void) {
         GtkWidget * vbox;
         GtkWidget * item;
         KeyboardProperties * kp;
-	GdkPixbuf *appicon = NULL;
 
         ui_main = UI_MAIN(g_object_new(UI_TYPE_MAIN, NULL));
     
@@ -289,14 +288,6 @@ static UiMain* ui_main_new(void) {
                                       PRIVATE(ui_main)->sm,
                                       DATADIR"/monkey-bubble/sounds/splash.ogg");
 
-        appicon = gdk_pixbuf_new_from_file (DATADIR"/pixmaps/monkey-bubble-icon.png", NULL);
-  	  if (appicon) {
-                  gtk_window_set_icon (GTK_WINDOW (PRIVATE(ui_main)->window), appicon);
-                  g_object_unref (G_OBJECT (appicon));
- 	  } else {
-                  g_warning ("AppIcon file %s not found",DATADIR"/pixmaps/monkey-bubble-icon.png");
-          }
- 
         return ui_main;
 }
 
