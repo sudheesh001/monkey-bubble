@@ -1,5 +1,14 @@
 2007-06-06  Sven Herzberg  <herzi@gnome-de.org>
 
+	Fixes 354233:
+
+	* pixmaps/Makefile.am: install monkey bubble icon theme-friendly
+	* pixmaps/monkey-bubble.png: renamed from monkey-bubble-icon.png
+	* src/ui/main.c: updated path to the icon
+	* monkey-bubble.desktop.in: updated name of the icon
+
+2007-06-06  Sven Herzberg  <herzi@gnome-de.org>
+
 	Patch by Vincent Untz (Fixes 354232):
 
 	* src/ui/main.c: set the default window icon early

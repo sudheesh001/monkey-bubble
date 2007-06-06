@@ -46,7 +46,7 @@ int main(int  argc, char **argv)
 		      GNOME_PROGRAM_STANDARD_PROPERTIES,
 		      NULL);
 
-  gtk_window_set_default_icon_from_file (DATADIR "/pixmaps/monkey-bubble-icon.png", NULL);
+  gtk_window_set_default_icon_from_file (DATADIR "/icons/hicolor/32x32/apps/monkey-bubble.png", NULL);
 
   gst_init(&argc,&argv);
 
