@@ -1,5 +1,10 @@
 2007-06-06  Sven Herzberg  <herzi@gnome-de.org>
 
+	* monkey-bubble.desktop.in,
+	* src/ui/main.c: don't hard code the icon's extension
+
+2007-06-06  Sven Herzberg  <herzi@gnome-de.org>
+
 	Fixes 354233:
 
 	* pixmaps/Makefile.am: install monkey bubble icon theme-friendly
