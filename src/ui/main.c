@@ -46,7 +46,7 @@ int main(int  argc, char **argv)
 		      GNOME_PROGRAM_STANDARD_PROPERTIES,
 		      NULL);
 
-  gtk_window_set_default_icon_name ("monkey-bubble", NULL);
+  gtk_window_set_default_icon_name ("monkey-bubble");
 
   gst_init(&argc,&argv);
 
