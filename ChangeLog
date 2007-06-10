@@ -1,5 +1,13 @@
 2007-06-10  Laurent Belmonte  <laurent.belmonte@gmail.com>
 
+	* src/audio/Makefile.am: Add music-bin
+	* src/audio/mb-audio-engine.c: code cleanup
+	* src/audio/mb-music-bin.c: music code
+	* src/audio/mb-music-bin.h: music code
+	* src/ui/main.c: (main): call g_thread_init ASAP
+
+2007-06-10  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
 	update gstreamer sound engine. It's working !
 	But sfx are not sync with gfx ( audio bling with visual bling )
 	* configure.in:

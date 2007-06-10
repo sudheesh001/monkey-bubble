@@ -33,6 +33,7 @@ int main(int  argc, char **argv)
   textdomain (PACKAGE);
 #endif
 
+  g_thread_init(NULL);
   if(gnome_score_init(PACKAGE)) {
 	g_message("You'll have to play without highscore support");
   }
