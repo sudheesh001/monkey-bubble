@@ -1,4 +1,34 @@
-2007-06-10  Laurent Belmonte,,,  <laurent.belmonte@gmail.com>
+2007-06-10  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
+	update gstreamer sound engine. It's working !
+	But sfx are not sync with gfx ( audio bling with visual bling )
+	* configure.in:
+	* src/audio/Makefile.am:
+	* src/audio/gst-mbmem-content.c: (gst_mbmem_content_init),
+	(cb_newpad), (_bus_message_received), (gst_mbmem_content_get_caps),
+	(gst_mbmem_content_get_buffer), (_received_new_buffer),
+	(gst_mbmem_content_load_file), (_finalize),
+	(gst_mbmem_content_class_init):
+	* src/audio/gst-mbmem-content.h:
+	* src/audio/gst-mbmem-src.c: (gst_mbmem_src_base_init),
+	(gst_mbmem_src_class_init), (gst_mbmem_src_src_fixate),
+	(gst_mbmem_src_set_content), (gst_mbmem_src_init),
+	(gst_mbmem_src_finalize), (gst_mbmem_src_create),
+	(gst_mbmem_src_is_seekable):
+	* src/audio/gst-mbmem-src.h:
+	* src/audio/mb-audio-engine.c: (_pad_removed),
+	(mb_audio_engine_init), (mb_audio_engine_new), (_audiobin_new_pad),
+	(mb_audio_engine_cache_audio_file), (_create_audiobin),
+	(_stop_element), (_remove_element), (_event_handler),
+	(mb_audio_engine_play_audio_file), (mb_audio_engine_stop),
+	(_bus_message_received), (_finalize), (mb_audio_engine_class_init):
+	* src/audio/mb-audio-engine.h:
+	* src/audio/sound-manager.c: (sound_manager_instance_init),
+	(sound_manager_init), (load_sample), (load_samples),
+	(sound_manager_new), (sound_manager_play_music_file),
+	(sound_manager_play_fx):
+
+2007-06-10  Laurent Belmonte  <laurent.belmonte@gmail.com>
 
 	* src/ui/main.c: (main): fix bad method call
 
