@@ -127,6 +127,8 @@ struct EosStruct {
   MbAudioEngine * engine;
   gint id;
   GstElement * element;
+  gboolean loop;
+  gchar * path;
 };
 
 
@@ -166,6 +168,12 @@ gboolean _stop_element( struct EosStruct * datas)
 	_remove_element(self,datas->element);
 	g_hash_table_remove( priv->elements_map, (gpointer)datas->id );
 
+	if( datas->loop ) {
+		mb_audio_engine_play_audio_file_full(self,datas->path,TRUE);
+	}
+        g_free(datas->path);
+
+	g_free(datas);
 	return FALSE;
 }
 
@@ -192,6 +200,13 @@ static gboolean _event_handler(GstPad * pad,GstEvent * event,
 gint
 mb_audio_engine_play_audio_file(MbAudioEngine * self,
 				const gchar * path)
+{
+ 	return mb_audio_engine_play_audio_file_full(self,path,FALSE); 
+}
+gint
+mb_audio_engine_play_audio_file_full(MbAudioEngine * self,
+				const gchar * path,
+				gboolean loop)
 {
   
 	Private * priv;
@@ -221,6 +236,8 @@ mb_audio_engine_play_audio_file(MbAudioEngine * self,
 	datas = g_new0(struct EosStruct,1);
 	datas->engine = self;
 	datas->id = current_id;
+	datas->loop = loop;
+	datas->path = g_strdup( path);
 	datas->element = e;
 	gst_pad_add_event_probe(gst_element_get_pad(e,"src"),G_CALLBACK(_event_handler),datas);
 	gst_element_set_state( priv->pipeline,GST_STATE_PLAYING);

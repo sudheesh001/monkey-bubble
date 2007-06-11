@@ -33,6 +33,11 @@ typedef enum {
   NO_SAMPLE
 } MbSample;
 
+typedef enum {
+  MB_MUSIC_SPLASH,
+  MB_MUSIC_GAME,
+  NO_MUSIC
+} MbMusic;
 
 #define TYPE_SOUND_MANAGER      (sound_manager_get_type())
 
@@ -64,7 +69,7 @@ GType sound_manager_get_type(void);
 SoundManager * sound_manager_get_instance();
 
 void sound_manager_init(SoundManager * m,gboolean active);
-void sound_manager_play_music_file(SoundManager *m, gchar * path);
+void sound_manager_play_music(SoundManager *m, MbMusic music);
 void sound_manager_play_fx(SoundManager *m,MbSample sample);
 
 G_END_DECLS

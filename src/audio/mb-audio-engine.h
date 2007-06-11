@@ -42,7 +42,9 @@ MbAudioEngine * mb_audio_engine_new(void);
 void mb_audio_engine_cache_audio_file(MbAudioEngine * self,
 				      const gchar * path);
 
-
+void mb_audio_engine_cache_audio_file_full(MbAudioEngine * self,
+				           const gchar * path,
+					   gboolean loop);
 int mb_audio_engine_play_audio_file(MbAudioEngine * self,
 				    const gchar * path);
 

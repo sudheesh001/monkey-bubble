@@ -284,9 +284,7 @@ static UiMain* ui_main_new(void) {
 
 
         PRIVATE(ui_main)->sm = sound_manager_get_instance();
-        sound_manager_play_music_file(
-                                      PRIVATE(ui_main)->sm,
-                                      DATADIR"/monkey-bubble/sounds/splash.ogg");
+        sound_manager_play_music(PRIVATE(ui_main)->sm,MB_MUSIC_SPLASH);
 
         return ui_main;
 }
@@ -385,9 +383,7 @@ void ui_main_set_game_manager(UiMain * ui_main,GameManager * manager) {
         game_manager_start(manager);
 	 
 	 
-        sound_manager_play_music_file(
-                                      PRIVATE(ui_main)->sm,
-                                      DATADIR"/monkey-bubble/sounds/game.ogg");
+        sound_manager_play_music(PRIVATE(ui_main)->sm,MB_MUSIC_GAME);
 	 
 }
 
@@ -469,9 +465,7 @@ static void ui_main_stop_game(UiMain * ui_main) {
 
         monkey_canvas_clear(PRIVATE(ui_main)->canvas);
 
-        sound_manager_play_music_file(
-                                      PRIVATE(ui_main)->sm,
-                                      DATADIR"/monkey-bubble/sounds/splash.ogg");
+        sound_manager_play_music(PRIVATE(ui_main)->sm,MB_MUSIC_SPLASH);
         ui_main_draw_main(ui_main);
 }
 

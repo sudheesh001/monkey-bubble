@@ -1,5 +1,14 @@
 2007-06-11  Laurent Belmonte  <laurent.belmonte@gmail.com>
 
+	* src/audio/mb-audio-engine.[ch]:add play_full 
+	with boolean param to loop on audio stream
+	* src/audio/sound-manager.[ch]: change api to use
+	enum constant instead of full path
+	* src/ui/ui-main.c: use enum constant instead of
+	music file full path for choosing music
+
+2007-06-11  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
 	- use autoaudiosink instead of alsasing.
 	- set buffer-time property to 20000 microsecond
 	* src/audio/mb-audio-engine.c: 

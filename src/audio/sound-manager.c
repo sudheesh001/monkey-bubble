@@ -29,8 +29,8 @@ static GObjectClass* parent_class = NULL;
 struct SoundManagerPrivate {
   MbAudioEngine * engine;
   gchar ** samples_path;
-  gchar * current_music;
   gint current_music_id;
+  MbMusic current_music;
   gboolean active;
 
 };
@@ -70,7 +70,8 @@ void sound_manager_init(SoundManager * m,gboolean active)
 {
   PRIVATE(m)->active = active;
   load_samples(m);
-  
+  PRIVATE(m)->current_music_id = - 1;
+  PRIVATE(m)->current_music = NO_MUSIC;
 }
 
 
@@ -150,18 +151,30 @@ static SoundManager * sound_manager_new( void ) {
 }
 
 
-void sound_manager_play_music_file(SoundManager *m, gchar * path) {
+void sound_manager_play_music(SoundManager *m,MbMusic music)
+{
 
-  g_assert(IS_SOUND_MANAGER(m));
-  
-  if( PRIVATE(m)->current_music != NULL ) {
-    mb_audio_engine_stop( PRIVATE(m)->engine, PRIVATE(m)->current_music_id );
-    g_free( PRIVATE(m)->current_music);
-  }
+	g_assert(IS_SOUND_MANAGER(m));
+	if( PRIVATE(m)->current_music_id != -1 ) {
+		mb_audio_engine_stop( PRIVATE(m)->engine, PRIVATE(m)->current_music_id );
+		PRIVATE(m)->current_music_id = -1;
+	}
 
-  PRIVATE(m)->current_music = g_strdup( path);
-  PRIVATE(m)->current_music_id = mb_audio_engine_play_audio_file(PRIVATE(m)->engine,path);
-
+	PRIVATE(m)->current_music = music;
+	switch(music) {
+	case MB_MUSIC_SPLASH : {
+		PRIVATE(m)->current_music_id = 
+			mb_audio_engine_play_audio_file_full(PRIVATE(m)->engine,
+							DATADIR"/monkey-bubble/sounds/splash.ogg",TRUE);
+		break;
+		}
+	case MB_MUSIC_GAME : {
+		PRIVATE(m)->current_music_id = 
+			mb_audio_engine_play_audio_file_full(PRIVATE(m)->engine,
+							DATADIR"/monkey-bubble/sounds/game.ogg",TRUE);
+		break;
+		}
+	}
 }
 
 void sound_manager_play_fx(SoundManager *m,MbSample sample) 
