@@ -1,3 +1,10 @@
+2007-06-11  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
+	- use autoaudiosink instead of alsasing.
+	- set buffer-time property to 20000 microsecond
+	* src/audio/mb-audio-engine.c: 
+	
+
 2007-06-10  Laurent Belmonte  <laurent.belmonte@gmail.com>
 
 	* src/audio/Makefile.am: Add music-bin

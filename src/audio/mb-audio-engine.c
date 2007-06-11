@@ -64,6 +64,16 @@ MbAudioEngine * mb_audio_engine_new()
 	return self;  
 }
 
+static void _autoaudio_new_element(GstBin     *bin,
+			     GstElement *element,
+				   gpointer data)
+{
+  // hope this work for every audiosink ..
+  g_object_set (element,
+		"buffer-time",(gint64)20000,NULL);
+
+}
+
 static void mb_audio_engine_init (MbAudioEngine *self) 
 {
 
@@ -84,11 +94,13 @@ static void mb_audio_engine_init (MbAudioEngine *self)
 	priv->pipeline = gst_pipeline_new("bin");
 	// use fakesrc to make sure pipeline is never stopped
 	fakesrc = gst_element_factory_make("audiotestsrc","testaudifakesrc");
+
 	g_object_set( G_OBJECT( fakesrc ),"wave",4,"volume",0.6,NULL);
   	priv->adder = gst_element_factory_make("adder","adder");
 	// use auto audiosink
-	output =  gst_element_factory_make("alsasink", "audio-output");  
-	g_object_set(output, "buffer-time",(gint64)1000,NULL);
+	output =  gst_element_factory_make("autoaudiosink", "audio-output");  
+	g_signal_connect(output, "element-added", G_CALLBACK (_autoaudio_new_element), self );
+
 
 	gst_bus_add_watch (gst_pipeline_get_bus (GST_PIPELINE (priv->pipeline)),
 			   _bus_message_received, self);
