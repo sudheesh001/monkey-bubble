@@ -1,3 +1,8 @@
+2007-06-11  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
+	* src/ui/game-1-player-manager.c: restart to level
+	one when we reach level 99. fixes bug #393915
+
 2007-06-06  Sven Herzberg  <herzi@gnome-de.org>
 
 	* monkey-bubble.desktop.in,

@@ -126,8 +126,11 @@ static gboolean startnew_function(gpointer data) {
 
   ui_main_set_game(ui_main,NULL);
 
-
-  PRIVATE(manager)->current_level++;
+  if( PRIVATE(manager)->current_level < 99 ) {
+  	PRIVATE(manager)->current_level++;
+  } else {
+	PRIVATE(manager)->current_level = 0;
+  }
 
   game_1_player_manager_start_level(manager);
   return FALSE;
