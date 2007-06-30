@@ -64,6 +64,13 @@ struct NetworkGamePrivate
 };
 
 
+struct WaitingBubbles {	
+	guint8 waiting_bubbles_count;
+	guint8 * columns;
+	guint8 * colors;
+	gint time;
+};
+
 struct Client
 {
 	Monkey *monkey;
@@ -71,9 +78,11 @@ struct Client
 	NetworkGame *game;
 	guint8 *waiting_range;
 	Bubble **waiting_bubbles_range;
+	struct WaitingBubbles * wb;
 	GMutex *monkey_lock;
 	gboolean playing;
 };
+
 
 
 static void init_clients (NetworkGame * self);
@@ -128,7 +137,7 @@ add_client (gpointer data, gpointer user_data)
 	client = NETWORK_CLIENT (data);
 	game = NETWORK_GAME (user_data);
 
-	c = g_malloc (sizeof (struct Client));
+	c = g_new0 (struct Client,1);
 
 	c->playing = FALSE;
 	c->client = client;
@@ -216,9 +225,25 @@ recv_shoot (NetworkMessageHandler * handler,
 {
 
 
+	g_print("shot time :%d time here :%d",time,mb_clock_get_time (PRIVATE (c->game)->clock));
 	g_mutex_lock (c->monkey_lock);
 	if (c->playing == TRUE)
 	{
+
+		g_print("receive shoot \n");
+		if( c->wb != NULL ) {
+			g_print("add waiting bubbles ..%d , %d\n",c->wb->time,time);
+			if( c->wb->time < time ) {
+
+				monkey_add_bubbles_at (c->monkey,c->wb->waiting_bubbles_count,c->wb->colors,c->wb->columns);
+				notify_observers(c->game,c);
+				g_print("added ...\n");
+				g_free(c->wb->columns);
+				g_free(c->wb->colors);
+				g_free(c->wb);
+				c->wb = NULL;
+			}
+		}
 		shooter_set_angle (monkey_get_shooter (c->monkey), angle);
 
 		monkey_update (c->monkey, time);
@@ -402,8 +427,8 @@ bubbles_exploded (Monkey * monkey,
 				g_mutex_lock (client->monkey_lock);
 				other = client->monkey;
 
-
-				columns = monkey_add_bubbles (other,
+				columns = monkey_add_bubbles_calculate_columns (
+								other,
 							      to_go, colors);
 
 
@@ -414,15 +439,23 @@ bubbles_exploded (Monkey * monkey,
 								client),
 					 mb_clock_get_time (PRIVATE (c->game)->clock),
 					 to_go, colors, columns);
+
+				///				monkey_add_bubbles_at (other, to_go, colors,columns);
+
+				client->wb = g_new0( struct WaitingBubbles,1);
+				client->wb->waiting_bubbles_count = to_go;
+				client->wb->columns = columns;
+				client->wb->colors = colors;
+				client->wb->time = mb_clock_get_time (PRIVATE (c->game)->clock);
 				g_mutex_unlock (client->monkey_lock);
 
-				g_free (columns);
+				//g_free (columns);
 			}
 			next = g_list_next (next);
 		}
 
 
-		g_free (colors);
+		//g_free (colors);
 
 	}
 

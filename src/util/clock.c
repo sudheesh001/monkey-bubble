@@ -107,6 +107,14 @@ void mb_clock_start(MbClock * clock) {
   PRIVATE(clock)->state = MB_CLOCK_RUNNING;
 }
 
+void mb_clock_set_reference_time(MbClock *clock,GTimeVal rtime)
+{
+ g_assert( IS_MB_CLOCK(clock));
+ PRIVATE(clock)->reference_time = rtime;
+ 
+}
+
+
 void mb_clock_pause(MbClock * clock,gboolean paused) {
   GTimeVal c;
   GTimeVal p;

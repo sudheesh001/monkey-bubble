@@ -1,3 +1,18 @@
+2007-06-30  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
+
+	* src/monkey/monkey.c,
+	* src/monkey/monkey.h,
+	* src/net/game.c,
+	* src/ui/game-2-player.c,
+	* src/ui/game-network-player-manager.c,
+	* src/ui/game-network-player-manager.h,
+	* src/ui/game-network-player.c,
+	* src/ui/game-network-player.h,
+	* src/util/clock.c,
+	* src/util/clock.h: first step to fix network
+	* src/ui/main.c: fix compilation error one more time
+
 2007-06-11  Laurent Belmonte  <laurent.belmonte@gmail.com>
 
 	* src/ui/game-1-player-manager.c: restart to level

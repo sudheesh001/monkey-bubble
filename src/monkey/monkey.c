@@ -528,34 +528,49 @@ monkey_get_current_free_columns(Monkey * self)
 
 }
 
+
+void monkey_add_bubbles(Monkey * self,int bubbles_count,Color * bubbles_colors ) 
+{
+	guint8 *  columns;
+
+	columns = monkey_add_bubbles_calculate_columns(self,bubbles_count,bubbles_colors);
+	monkey_add_bubbles_at (self,bubbles_count,bubbles_colors,columns);
+
+	g_free(columns); 
+}
+
+
 guint8 *
-monkey_add_bubbles(Monkey * self,
-		   int bubbles_count,
-		   Color * bubbles_colors ) 
+monkey_add_bubbles_calculate_columns
+		(Monkey * self,int bubbles_count,Color * bubbles_colors ) 
 {
 
 
 	guint8 * columns;
 	int empty_column_count,c,i,index;
 	Bubble ** bubbles;
-  
+  	Bubble ** bubbles2;
 
 	g_assert( IS_MONKEY( self ));
   
-	bubbles = monkey_get_current_free_columns(self);
+	bubbles2 = monkey_get_current_free_columns(self);
 
-  
+	bubbles = NULL;  
 	columns = g_malloc( sizeof(guint8)*bubbles_count);
   
 	/* count the empty columns */
 	empty_column_count = 0;
 
   
-	if( bubbles != NULL) {
+	if( bubbles2 != NULL) {
+		bubbles = g_new0( Bubble *,7);
+
 		for( c = 0; c < 7; c++) {
-			if( bubbles[c] == NULL) {
+			if( bubbles2[c] == NULL) {
 				empty_column_count++;
 			} 
+
+			bubbles[c] = bubbles2[c];
 		}
 	}
 
@@ -564,8 +579,10 @@ monkey_add_bubbles(Monkey * self,
 		
 		if( empty_column_count == 0 ) {
 			empty_column_count = 7;
-			monkey_add_new_waiting_row(self);
-			bubbles = monkey_get_current_free_columns(self);
+			if( bubbles != NULL ) {
+				g_free(bubbles);
+			}
+			bubbles = g_new0( Bubble *,7);
 		}
 
 		c = rand()% empty_column_count;
@@ -590,7 +607,10 @@ monkey_add_bubbles(Monkey * self,
 	 
 	}
 
-	monkey_notify_bubbles_waiting_changed( self);
+	if( bubbles != NULL ) {
+		g_free(bubbles);
+	}
+
 	return columns;
 }
 
@@ -621,6 +641,8 @@ monkey_add_bubbles_at (Monkey * self,
 			bubbles = monkey_get_current_free_columns(self);
 
 		}
+
+		g_print("add bubble at %d \n",bubbles_column[i] );
 		bubbles[ bubbles_column[i] ] = bubble_new( bubbles_colors[i],0,0 );
 	}
 
@@ -640,15 +662,9 @@ static void
 monkey_add_new_waiting_row(Monkey * self) 
 {
 	Bubble ** row_to_add;
-	int i;
 	 
 	/* have to add a row */
-	row_to_add = g_malloc( sizeof(Bubble *) * 7 );
-	 
-	for(i = 0; i < 7; i++) {
-		row_to_add[i] = NULL;
-	}
-	 
+	row_to_add = g_new0( Bubble *,7);	 
 	PRIVATE(self)->to_add = g_list_append( PRIVATE(self)->to_add,
 					       row_to_add);
 	 

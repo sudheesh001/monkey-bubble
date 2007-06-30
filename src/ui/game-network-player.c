@@ -37,6 +37,13 @@
 
 static GObjectClass *parent_class = NULL;
 
+struct WaitingBubbles {	
+	guint8 waiting_bubbles_count;
+	guint8 * columns;
+	guint8 * colors;
+	gint time;
+};
+
 struct GameNetworkPlayerPrivate
 {
 	MonkeyCanvas *canvas;
@@ -59,9 +66,12 @@ struct GameNetworkPlayerPrivate
 	NetworkMessageHandler *handler;
         MbMiniView * mini_views[4];
 	int monkey_id;
+        struct WaitingBubbles * wb;
 
 	MbPlayerInput *input;
 };
+
+
 
 
 static void recv_winlost (NetworkMessageHandler * handler,
@@ -314,16 +324,29 @@ recv_waiting_added (NetworkMessageHandler * handler,
 
 	monkey = PRIVATE (game)->monkey;
 	g_mutex_lock (PRIVATE (game)->lock);
-        g_print("recv waiting added time %d",time);
-	monkey_add_bubbles_at (monkey, bubbles_count, colors, columns);
 
-        if( time < PRIVATE(game)->last_shoot) {
-                monkey_add_waiting_row(monkey);
+        if( time < get_time(game)) {
+        
+        g_print("recv waiting added time %d localtime %d \n",time,get_time(game));
+	monkey_add_bubbles_at (monkey, bubbles_count, colors, columns);
+	g_free (columns);
+	g_free (colors);
+
+                if( time < PRIVATE(game)->last_shoot) {
+                        monkey_add_waiting_row(monkey);
+                }
+        } else {
+                struct WaitingBubbles * wb;
+                wb = g_new0( struct WaitingBubbles,1);
+        	wb->waiting_bubbles_count = bubbles_count;
+                wb->columns = columns;
+		wb->colors = colors;
+                wb->time = time;
+                PRIVATE(game)->wb = wb;
+				
         }
 	g_mutex_unlock (PRIVATE (game)->lock);
 
-	g_free (columns);
-	g_free (colors);
 }
 
 
@@ -589,10 +612,17 @@ game_network_player_timeout (gpointer data)
 	time = get_time (game);
 	if (PRIVATE (game)->state == GAME_PLAYING)
 	{
-
+                struct WaitingBubbles * wb = NULL;
 		g_mutex_lock (PRIVATE (game)->lock);
 
-
+                wb = PRIVATE(game)->wb;
+                if( wb != NULL && wb->time < time) {
+                        monkey_add_bubbles_at (monkey,wb->waiting_bubbles_count, wb->colors, wb->columns);
+	                g_free(wb->colors);
+                        g_free(wb->columns);
+                        g_free(wb);
+                        PRIVATE(game)->wb = NULL;
+                }
 		monkey_update (monkey, time);
 
 		g_mutex_unlock (PRIVATE (game)->lock);
@@ -604,6 +634,11 @@ game_network_player_timeout (gpointer data)
 
 	monkey_canvas_paint (PRIVATE (game)->canvas);
 	return TRUE;
+}
+
+void game_network_player_set_start_time(GameNetworkPlayer * g,GTimeVal start_time)
+{
+        mb_clock_set_reference_time(PRIVATE(g)->clock,start_time);
 }
 
 static gint

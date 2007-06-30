@@ -554,7 +554,6 @@ game_2_player_bubbles_exploded(Monkey * monkey,
                                Game2Player * p) 
 {
         int i;
-        guint8 * columns;
         int to_go;
         MonkeyView * view;
         Monkey * other;
@@ -581,12 +580,8 @@ game_2_player_bubbles_exploded(Monkey * monkey,
                         other = PRIVATE(p)->monkey_right;
                 }
 
-                columns = monkey_add_bubbles( other, 
-                                              to_go,
-                                              colors); 
+                monkey_add_bubbles( other, to_go, colors); 
   
-
-                g_free(columns); 
                 g_free(colors); 
         }
 }

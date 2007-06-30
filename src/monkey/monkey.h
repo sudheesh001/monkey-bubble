@@ -94,10 +94,14 @@ void monkey_set_board_down(Monkey * monkey);
 
 void monkey_print_board(Monkey * m);
 
+void monkey_add_bubbles(
+									 Monkey * monkey,
+									 int  bubble_count,
+									 Color * bubbles_colors);
 /* 
  * @return array with column coordonate of the bubbles
  */
-guint8 * monkey_add_bubbles (
+guint8 * monkey_add_bubbles_calculate_columns (
 									 Monkey * monkey,
 									 int  bubble_count,
 									 Color * bubbles_colors);

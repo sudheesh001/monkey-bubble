@@ -38,6 +38,7 @@ struct GameNetworkPlayerManagerPrivate {
     int client_id;	
     gulong add_bubble_handler_id;
     gboolean playing;
+    GTimeVal start_time;
 };
 
 static void state_changed(Game * game,GameNetworkPlayerManager * g);
@@ -152,6 +153,7 @@ gboolean start_timeout(gpointer data) {
 
     game_start( GAME(game) );
   
+    game_network_player_set_start_time(game,PRIVATE(manager)->start_time);
 
     g_signal_connect( G_OBJECT(game), "state-changed",
 		      G_CALLBACK(state_changed),manager);
@@ -177,6 +179,7 @@ recv_start(NetworkMessageHandler * handler,
 {
     g_print("game-network-player-manager : recv start \n");
 
+    g_get_current_time(&(PRIVATE(manager)->start_time));
     g_idle_add(start_timeout,manager);
 }
 
