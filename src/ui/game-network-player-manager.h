@@ -62,7 +62,6 @@ void game_network_player_manager_stop(GameManager * g);
 
 
 
-
 G_END_DECLS
 
 

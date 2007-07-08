@@ -1,6 +1,41 @@
 2007-07-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
 
+        merge network_fix branch
+
+2007-07-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
         merge audio branch
+
+2007-07-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
+	* src/net/game.c: remove timeout_idle when game finished
+
+2007-07-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
+	* src/ui/game-network-player.c : enable auto shoot
+
+2007-07-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
+	* src/monkey/monkey.[ch]: change how add row is make
+	* src/net/game.c: change how row is add
+	* src/net/message-handler.[ch],
+	* src/net/monkey-marshal.list:  add new message
+	* src/ui/game-2-player.c: change how add row is make
+
+2007-06-30  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
+
+	* src/monkey/monkey.c,
+	* src/monkey/monkey.h,
+	* src/net/game.c,
+	* src/ui/game-2-player.c,
+	* src/ui/game-network-player-manager.c,
+	* src/ui/game-network-player-manager.h,
+	* src/ui/game-network-player.c,
+	* src/ui/game-network-player.h,
+	* src/util/clock.c,
+	* src/util/clock.h: first step to fix network
+	* src/ui/main.c: fix compilation error one more time
 
 2007-06-11  Laurent Belmonte  <laurent.belmonte@gmail.com>
 

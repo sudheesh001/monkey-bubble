@@ -58,9 +58,9 @@ struct MonkeyPrivate {
 	gint last_shoot;
 	gint last_stiked;
 	gint shot_count;
-	GList * to_add;
 	gboolean hurry_up;
 	gboolean network;
+	gint waiting_bubbles_count;
 };
 
 static void monkey_finalize(GObject* object);
@@ -78,7 +78,6 @@ static void monkey_bubbles_exploded ( Board *board,
 				      Monkey * self);
 
 
-static void monkey_add_new_waiting_row(Monkey * self);
 static void monkey_playground_lost(Playground * pg,Monkey * self);
 
 static void monkey_playground_shot(Playground *pg,Bubble * b,Monkey * self);
@@ -109,7 +108,7 @@ monkey_instance_init(Monkey * self)
 
 	PRIVATE(self)->network = FALSE;
 
-	PRIVATE(self)->to_add = NULL;
+	PRIVATE(self)->waiting_bubbles_count = 0;
 
 	PRIVATE(self)->hurry_up = TRUE;
 
@@ -157,33 +156,6 @@ monkey_new(gboolean network)
 }
 
 
-static void free_to_add(Monkey * self) 
-{
-	GList * next;
-	 
-	next = PRIVATE(self)->to_add;
-	 
-
-	while( next != NULL ) {
-		int i;
-		Bubble ** bubbles;
-
-		bubbles = (Bubble **) next->data;
-		  
-		for(i=0;i < 7; i++ ) {
-			if( bubbles[i] != NULL ) {
-				g_object_unref(bubbles[i]);
-			}
-		}
-		g_free(next->data);
-		next = g_list_next(next);
-	}
-  
-	g_list_free( PRIVATE(self)->to_add);
-
-	PRIVATE(self)->to_add = NULL;
-
-}
 
 static void 
 monkey_finalize(GObject* object)
@@ -200,10 +172,7 @@ monkey_finalize(GObject* object)
 					      G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,self);
 	 
 	g_object_unref( PRIVATE(self)->playground);
-	g_object_unref( PRIVATE(self)->shooter);
-	 
-
-	free_to_add(self);
+	g_object_unref( PRIVATE(self)->shooter);	 
 	 
 	g_free(self->private);
 	 
@@ -406,29 +375,7 @@ monkey_get_playground(Monkey * self)
 static void 
 monkey_notify_bubbles_waiting_changed(Monkey * self) {
 
-	GList * next;
-	Bubble ** bubbles;
-	int i;
-	int count;
-
-	count = 0;
-  
-	next = PRIVATE(self)->to_add;
-	while( next != NULL ) {
-		bubbles = (Bubble **)next->data;
-    
-		for(i= 0; i < 7 ;i++) {
-			if( bubbles[i] != NULL ) {
-				count++;
-			}
-		}
-
-		next = g_list_next(next);
-	}
-
-
-
-	g_signal_emit( G_OBJECT(self),signals[BUBBLES_WAITING_CHANGED],0,count);
+	g_signal_emit( G_OBJECT(self),signals[BUBBLES_WAITING_CHANGED],0,PRIVATE(self)->waiting_bubbles_count);
   
 
 }
@@ -466,10 +413,7 @@ monkey_playground_shot(Playground *pg,Bubble * b,Monkey * self)
 {
 	g_assert( IS_MONKEY(self) );
 
-
 	monkey_notify_bubble_shot(self,b);
-  
-
 }
 
 
@@ -493,8 +437,8 @@ monkey_bubble_sticked (Board * board,Bubble * bubble,gint time,Monkey * self)
 
 	PRIVATE(self)->hurry_up = TRUE;
 
-	monkey_add_waiting_row(self);
-	monkey_notify_bubbles_waiting_changed(self);
+//	monkey_add_waiting_row(self);
+//	monkey_notify_bubbles_waiting_changed(self);
 	PRIVATE(self)->last_stiked = time;
 	monkey_notify_bubble_sticked( self,bubble );
 
@@ -517,57 +461,14 @@ monkey_bubbles_exploded (Board *board,
   
 }
 
-
-
-Bubble **
-monkey_get_current_free_columns(Monkey * self) 
+void monkey_add_bubbles(Monkey * self,int bubbles_count) 
 {
-	if( PRIVATE(self)->to_add != NULL ) {
-		return (Bubble **)g_list_last(PRIVATE(self)->to_add)->data;
-	} else return NULL;
-
+	PRIVATE(self)->waiting_bubbles_count += bubbles_count;
+	monkey_notify_bubbles_waiting_changed(self);
 }
 
-guint8 *
-monkey_add_bubbles(Monkey * self,
-		   int bubbles_count,
-		   Color * bubbles_colors ) 
-{
 
-
-	guint8 * columns;
-	int empty_column_count,c,i,index;
-	Bubble ** bubbles;
-  
-
-	g_assert( IS_MONKEY( self ));
-  
-	bubbles = monkey_get_current_free_columns(self);
-
-  
-	columns = g_malloc( sizeof(guint8)*bubbles_count);
-  
-	/* count the empty columns */
-	empty_column_count = 0;
-
-  
-	if( bubbles != NULL) {
-		for( c = 0; c < 7; c++) {
-			if( bubbles[c] == NULL) {
-				empty_column_count++;
-			} 
-		}
-	}
-
-	index = 0;
-	while( index < bubbles_count  ) {
-		
-		if( empty_column_count == 0 ) {
-			empty_column_count = 7;
-			monkey_add_new_waiting_row(self);
-			bubbles = monkey_get_current_free_columns(self);
-		}
-
+/*
 		c = rand()% empty_column_count;
 
 		for( i = 0; i < 7; i++) {
@@ -589,69 +490,20 @@ monkey_add_bubbles(Monkey * self,
 
 	 
 	}
-
-	monkey_notify_bubbles_waiting_changed( self);
-	return columns;
-}
-
-void
-monkey_add_bubbles_at (Monkey * self,
-		       int bubbles_count,
-		       Color * bubbles_colors,
-		       guint8 * bubbles_column )  
-{
-
-	Bubble ** bubbles;
-	int i;
-	g_assert( IS_MONKEY( self ));
-
-
-
-	bubbles = monkey_get_current_free_columns(self);
-
-	if( bubbles == NULL) {
-		monkey_add_new_waiting_row(self);
-		bubbles = monkey_get_current_free_columns(self);		  
-	}
-
-	for( i = 0; i < bubbles_count; i++ ) {
-		if(bubbles[ bubbles_column[i]] != NULL) {
-			 
-			monkey_add_new_waiting_row(self);
-			bubbles = monkey_get_current_free_columns(self);
-
-		}
-		bubbles[ bubbles_column[i] ] = bubble_new( bubbles_colors[i],0,0 );
-	}
-
-	monkey_notify_bubbles_waiting_changed( self);
-
-}
+*/
 
 static gboolean 
 monkey_has_waiting_row(Monkey * self) 
 {
  
-	if( PRIVATE(self)->to_add == NULL ) return FALSE;
-	else return TRUE;
+	return PRIVATE(self)->waiting_bubbles_count > 0;
 }
 
-static void
-monkey_add_new_waiting_row(Monkey * self) 
+
+gint
+monkey_get_waiting_bubbles_count(Monkey * self)
 {
-	Bubble ** row_to_add;
-	int i;
-	 
-	/* have to add a row */
-	row_to_add = g_malloc( sizeof(Bubble *) * 7 );
-	 
-	for(i = 0; i < 7; i++) {
-		row_to_add[i] = NULL;
-	}
-	 
-	PRIVATE(self)->to_add = g_list_append( PRIVATE(self)->to_add,
-					       row_to_add);
-	 
+	return PRIVATE(self)->waiting_bubbles_count;
 }
 
 void 
@@ -660,20 +512,56 @@ monkey_add_waiting_row(Monkey * self)
 
 
 	if( monkey_has_waiting_row(self) ) {
-		Bubble ** bubbles;
+		Bubble ** bubbles = g_new0(Bubble *,7);
+		int count = MIN(PRIVATE(self)->waiting_bubbles_count,7);
+		int empty = 7;
+		int j;
 
-		bubbles = (Bubble **)PRIVATE(self)->to_add->data;
+		for( j = 0; j < count; j++ ) {
+			int c = rand()% empty;
+			int i;
+			for( i = 0; i < 7; i++) {
+				if( (c <= 0) && ( bubbles[i] == NULL) ) {
+					
+					bubbles[ i ] = bubble_new(  rand()%COLORS_COUNT,0,0 );					
+					empty--;
+					break;
+				}
 
-		PRIVATE(self)->to_add =
-			g_list_remove(PRIVATE(self)->to_add,
-				      bubbles);
-    
-		board_add_bubbles( playground_get_board(PRIVATE(self)->playground),
-				   bubbles );
-    
-    
-	 
+				if( bubbles[i] == NULL ) c--;
+			}
+
+		}
+
+		monkey_add_waiting_row_complete(self,bubbles);
+		
+		
+        }
+
+}
+
+void 
+monkey_add_waiting_row_complete(Monkey * self,Bubble ** bubbles) 
+{
+	int i;
+	int count = 0;
+	g_print("add row \n");
+	for( i = 0; i < 7; i++) {
+		if( bubbles[i] != NULL ) {
+			count++;
+			g_print(" %d ",bubble_get_color(bubbles[i]));
+		} else {
+			g_print("   ");
+		}
 	}
+	g_print("\n");
+
+
+	PRIVATE(self)->waiting_bubbles_count -= count;
+	board_add_bubbles( playground_get_board(PRIVATE(self)->playground),
+			   bubbles );
+
+	monkey_notify_bubbles_waiting_changed(self);
 
 }
 

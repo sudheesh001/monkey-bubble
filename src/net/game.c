@@ -61,8 +61,16 @@ struct NetworkGamePrivate
 	GMutex *observers_lock;
 	GMutex *lost_clients_lock;
 	MbClock *clock;
+	guint client_idle_id;
 };
 
+
+struct WaitingBubbles {	
+	guint8 waiting_bubbles_count;
+	guint8 * columns;
+	guint8 * colors;
+	gint time;
+};
 
 struct Client
 {
@@ -71,9 +79,12 @@ struct Client
 	NetworkGame *game;
 	guint8 *waiting_range;
 	Bubble **waiting_bubbles_range;
+	struct WaitingBubbles * wb;
+	Color * waiting_bubbles;
 	GMutex *monkey_lock;
 	gboolean playing;
 };
+
 
 
 static void init_clients (NetworkGame * self);
@@ -84,6 +95,9 @@ static void remove_client (NetworkGame * self, struct Client *client);
 static void remove_observer(NetworkGame * self, NetworkClient * observer);
 static void notify_observers (NetworkGame * self, struct Client *client);
 
+
+static gboolean
+update_client_idle (gpointer d);
 
 static void
 client_disconnected (NetworkClient * c, struct Client *client)
@@ -128,7 +142,7 @@ add_client (gpointer data, gpointer user_data)
 	client = NETWORK_CLIENT (data);
 	game = NETWORK_GAME (user_data);
 
-	c = g_malloc (sizeof (struct Client));
+	c = g_new0 (struct Client,1);
 
 	c->playing = FALSE;
 	c->client = client;
@@ -219,6 +233,45 @@ recv_shoot (NetworkMessageHandler * handler,
 	g_mutex_lock (c->monkey_lock);
 	if (c->playing == TRUE)
 	{
+
+		if(monkey_get_waiting_bubbles_count( c->monkey) > 0 ) {
+		int i;
+		g_print("receive shoot \n");
+
+		Color * colors = g_new0( Color,7);
+		for( i = 0; i < 7; i++) {
+			colors[i] = NO_COLOR;
+		}
+		
+		int count = MIN( monkey_get_waiting_bubbles_count( c->monkey),7);
+		int empty = 7;
+		int j;
+
+		for( j = 0; j < count; j++ ) {
+			int c = rand()% empty;
+			int i;
+			for( i = 0; i < 7; i++) {
+				if( (c <= 0) && ( colors[i] == NO_COLOR) ) {
+					
+					colors[ i ] = rand()%COLORS_COUNT;
+					empty--;
+					break;
+				}
+
+				if( colors[i] == NO_COLOR) c--;
+			}
+
+			
+		}
+
+		
+		network_message_handler_send_add_row(
+			network_client_get_handler(c->client),
+			network_client_get_id (c->client),
+			colors);
+		
+		c->waiting_bubbles = colors;
+		}
 		shooter_set_angle (monkey_get_shooter (c->monkey), angle);
 
 		monkey_update (c->monkey, time);
@@ -278,6 +331,18 @@ bubble_sticked (Monkey * monkey, Bubble * b, struct Client *c)
 
 
 
+	if( c->waiting_bubbles != NULL ) {
+		int i;
+		Bubble ** bubbles = g_new0(Bubble *,7);
+		for(i=0; i < 7; i++) {
+			if( c->waiting_bubbles[i] != NO_COLOR) {
+				bubbles[i] = bubble_new(c->waiting_bubbles[i],0,0);
+			}
+		}
+		monkey_add_waiting_row_complete(monkey,bubbles);
+		g_free(c->waiting_bubbles);
+		c->waiting_bubbles = NULL;
+	}
 	if (!monkey_is_empty (monkey))
 	{
 		add_bubble (c);
@@ -364,7 +429,6 @@ bubbles_exploded (Monkey * monkey,
 {
 
 
-	int i;
 	int to_go;
 	GList *next;
 
@@ -375,25 +439,12 @@ bubbles_exploded (Monkey * monkey,
 	if (to_go != 0)
 	{
 
-		Color *colors;
-
-		colors = g_malloc (sizeof (Color) * to_go);
-
-		for (i = 0; i < to_go; i++)
-		{
-			colors[i] = rand () % COLORS_COUNT;
-		}
-
-
-		//   g_mutex_lock( PRIVATE( c->game )->listMutex);
-
 		next = PRIVATE (c->game)->clients;
 
 		while (next != NULL)
 		{
 			struct Client *client;
 			Monkey *other;
-			guint8 *columns;
 
 			client = (struct Client *) next->data;
 
@@ -402,27 +453,20 @@ bubbles_exploded (Monkey * monkey,
 				g_mutex_lock (client->monkey_lock);
 				other = client->monkey;
 
-
-				columns = monkey_add_bubbles (other,
-							      to_go, colors);
-
-
+				monkey_add_bubbles(other,to_go);
 				network_message_handler_send_waiting_added
 					(network_client_get_handler
 					 (client->client),					 
 					 network_client_get_id (client->
 								client),
 					 mb_clock_get_time (PRIVATE (c->game)->clock),
-					 to_go, colors, columns);
+					 to_go);
 				g_mutex_unlock (client->monkey_lock);
 
-				g_free (columns);
 			}
 			next = g_list_next (next);
 		}
 
-
-		g_free (colors);
 
 	}
 
@@ -730,6 +774,31 @@ update_idle (gpointer d)
 	return !game_finished;
 }
 
+static gboolean
+update_client_idle (gpointer d)
+{
+
+
+	NetworkGame *self;
+	gboolean game_finished;
+
+	self = NETWORK_GAME (d);
+
+	g_mutex_lock (PRIVATE (self)->clients_lock);
+
+
+	GList * next = PRIVATE(self)->clients;
+	while(next != NULL) {
+		notify_observers(self,(struct Client *)next->data);
+		next = g_list_next(next);
+	}
+
+	game_finished = update_lost (self);
+	g_mutex_unlock (PRIVATE (self)->clients_lock);
+
+
+	return !game_finished;
+}
 
 void
 network_game_start (NetworkGame * self)
@@ -741,7 +810,8 @@ network_game_start (NetworkGame * self)
 	g_timeout_add_full (G_PRIORITY_DEFAULT_IDLE,
 			    10, update_idle, self, idle_stopped);
 
-
+	PRIVATE(self)->client_idle_id = g_timeout_add (1000, update_client_idle, self);
+	
 
 }
 
@@ -833,6 +903,7 @@ network_game_finalize (GObject * object)
 
 	g_assert (PRIVATE (self)->clients == NULL);
 
+	g_source_remove( PRIVATE(self)->client_idle_id);
 	g_list_free (PRIVATE (self)->clients);
 
 

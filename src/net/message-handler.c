@@ -49,6 +49,8 @@
 #define SEND_WAITING_ADDED 7
 #define SEND_WINLOST 8
 #define SEND_NEXT_RANGE 9
+#define SEND_ADD_ROW 10
+
 enum
 {
 	CONNECTION_CLOSED,
@@ -61,6 +63,7 @@ enum
 	RECV_MESSAGE,
 	RECV_XML_MESSAGE,
 	RECV_NEXT_RANGE,
+        RECV_ADD_ROW,
 	LAST_SIGNAL
 };
 
@@ -90,6 +93,8 @@ void parse_add_bubble (NetworkMessageHandler * mmh, guint8 * message);
 void parse_winlost (NetworkMessageHandler * mmh, guint8 * message);
 
 void parse_waiting_added (NetworkMessageHandler * mmh, guint8 * message);
+
+void parse_add_row (NetworkMessageHandler * mmh, guint8 * message);
 
 void parse_shoot (NetworkMessageHandler * mmh, guint8 * message);
 
@@ -246,11 +251,9 @@ network_message_handler_class_init (NetworkMessageHandlerClass * klass)
 						    (NetworkMessageHandlerClass,
 						     recv_waiting_added),
 						    NULL, NULL,
-						    monkey_net_marshal_VOID__UINT_UINT_UINT_POINTER_POINTER,
-						    G_TYPE_NONE, 5,
-						    G_TYPE_UINT, G_TYPE_UINT, G_TYPE_UINT,
-						    G_TYPE_POINTER,
-						    G_TYPE_POINTER);
+						    monkey_net_marshal_VOID__UINT_UINT_UINT,
+						    G_TYPE_NONE, 3,
+						    G_TYPE_UINT, G_TYPE_UINT, G_TYPE_UINT);
 
 
 
@@ -325,6 +328,18 @@ network_message_handler_class_init (NetworkMessageHandlerClass * klass)
 						 G_TYPE_NONE, 2, G_TYPE_UINT,
 						 G_TYPE_POINTER);
 
+
+	signals[RECV_ADD_ROW] = g_signal_new ("recv-add-row",
+						 G_TYPE_FROM_CLASS (klass),
+						 G_SIGNAL_RUN_FIRST |
+						 G_SIGNAL_NO_RECURSE,
+						 G_STRUCT_OFFSET
+						 (NetworkMessageHandlerClass,
+						  recv_add_row), NULL,
+						 NULL,
+						 monkey_net_marshal_VOID__UINT_POINTER,
+						 G_TYPE_NONE, 2, G_TYPE_UINT,
+						 G_TYPE_POINTER);
 }
 
 GType
@@ -387,6 +402,9 @@ parse_message (NetworkMessageHandler * mmh, guint8 * message)
 		break;
 	case SEND_WAITING_ADDED:
 		parse_waiting_added (mmh, message);
+		break;
+	case SEND_ADD_ROW:
+		parse_add_row (mmh, message);
 		break;
 	case SEND_ADD_BUBBLE:
 		parse_add_bubble (mmh, message);
@@ -673,12 +691,10 @@ void
 network_message_handler_send_waiting_added (NetworkMessageHandler * mmh,
 					    guint32 monkey_id,
                                             guint32 time,
-					    guint8 bubbles_count,
-					    Color * colors, guint8 * columns)
+					    guint8 bubbles_count)
 {
 
 	guint8 message[CHUNK_SIZE];
-	int i, j;
 
 	struct Test
 	{
@@ -699,43 +715,7 @@ network_message_handler_send_waiting_added (NetworkMessageHandler * mmh,
 	t->monkey_id = htonl (monkey_id);
 	t->time = htonl (time);
 	t->bubbles_count = bubbles_count;
-
-	j = sizeof (struct Test);
-
-	for (i = 0; i < bubbles_count; i++)
-	{
-		if (j >= CHUNK_SIZE)
-		{
-			write_chunk (mmh, message, 1);
-			j = 0;
-			memset (message, 0, CHUNK_SIZE);
-		}
-
-		message[j] = colors[i];
-		j++;
-
-	}
-
-
-
-	for (i = 0; i < bubbles_count; i++)
-	{
-		if (j >= CHUNK_SIZE)
-		{
-			write_chunk (mmh, message, 1);
-			j = 0;
-			memset (message, 0, CHUNK_SIZE);
-		}
-
-
-		message[j] = columns[i];
-		j++;
-
-	}
-	if (j != 0)
-	{
-		write_chunk (mmh, message, 1);
-	}
+	write_chunk (mmh, message, 1);
 }
 
 
@@ -743,7 +723,6 @@ void
 parse_waiting_added (NetworkMessageHandler * mmh, guint8 * message)
 {
 
-	int i, j;
 	Color *bubbles;
 	guint8 *columns;
 	guint32 monkey_id;
@@ -767,47 +746,88 @@ parse_waiting_added (NetworkMessageHandler * mmh, guint8 * message)
 	monkey_id = g_ntohl (t->monkey_id);
         time = g_ntohl (t->time);
 	bubble_count = t->bubble_count;
-	j = sizeof (struct Test);
-
-	for (i = 0; i < bubble_count; i++)
-	{
-
-		if (j >= CHUNK_SIZE && i < bubble_count)
-		{
-			read_chunk (mmh, message);
-			j = 0;
-
-		}
-
-		bubbles[i] = message[j];
-
-		j++;
-
-	}
-
-	for (i = 0; i < bubble_count; i++)
-	{
-
-		if (j >= CHUNK_SIZE && i < bubble_count)
-		{
-			read_chunk (mmh, message);
-			j = 0;
-
-		}
-
-		columns[i] = message[j];
-
-		j++;
-
-	}
 
 #ifdef DEBUG
 	g_print ("waiting added %d\n", bubble_count);
 #endif
 	g_signal_emit (G_OBJECT (mmh), signals[RECV_WAITING_ADDED], 0,
-		       monkey_id,time, bubble_count, bubbles, columns);
+		       monkey_id,time, bubble_count);
 
 }
+
+
+
+void
+parse_add_row (NetworkMessageHandler * mmh, guint8 * message)
+{
+	struct Test
+	{
+		guint8 message_type;
+		guint32 monkey_id;
+		Color colors[7];
+	};
+
+        int i;
+	struct Test *t;
+
+	t = (struct Test *) message;
+
+	t->monkey_id = g_ntohl (t->monkey_id);
+
+
+        g_print("recieve row \n");
+	for (i = 0; i < 7; i++)
+	{
+                if( t->colors[i] != NO_COLOR ) {
+                g_print(" %d ",t->colors[i]);
+                } else {
+                g_print("   ");
+                }
+	}
+        g_print("\n");
+	g_signal_emit (G_OBJECT (mmh), signals[RECV_ADD_ROW], 0,
+		       t->monkey_id, t->colors);
+}
+
+void
+network_message_handler_send_add_row (NetworkMessageHandler * mmh,
+					 guint32 monkey_id, Color * colors)
+{
+
+	guint8 message[CHUNK_SIZE];
+	int i;
+	struct Test
+	{
+		guint8 message_type;
+		guint32 monkey_id;
+		Color colors[7];
+	};
+
+	struct Test *t;
+
+
+	t = (struct Test *) message;
+	memset (t, 0, CHUNK_SIZE);
+
+	t->message_type = SEND_ADD_ROW;
+
+	t->monkey_id = htonl (monkey_id);
+
+        g_print("add row \n");
+	for (i = 0; i < 7; i++)
+	{
+		t->colors[i] = colors[i];
+                if( colors[i] != NO_COLOR ) {
+                g_print(" %d ",colors[i]);
+                } else {
+                g_print("   ");
+                }
+	}
+        g_print("\n");
+	write_chunk (mmh, message, 1);
+
+}
+
 
 static int
 calculate_size (int size)

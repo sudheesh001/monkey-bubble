@@ -553,24 +553,15 @@ game_2_player_bubbles_exploded(Monkey * monkey,
                                GList * fallen,
                                Game2Player * p) 
 {
-        int i;
-        guint8 * columns;
         int to_go;
         MonkeyView * view;
         Monkey * other;
-        Color * colors;
-
         g_assert( IS_GAME_2_PLAYER(p));
   
         to_go = MAX(0,-3 + g_list_length(exploded)  + g_list_length(fallen)*1.5);
 
         if( to_go != 0) {
 
-                colors = g_malloc( sizeof(Color)*to_go );
-
-                for( i = 0 ; i < to_go ; i++ ) {
-                        colors[i] = rand()%COLORS_COUNT;
-                }
 
 
                 other = PRIVATE(p)->monkey_left;
@@ -581,13 +572,8 @@ game_2_player_bubbles_exploded(Monkey * monkey,
                         other = PRIVATE(p)->monkey_right;
                 }
 
-                columns = monkey_add_bubbles( other, 
-                                              to_go,
-                                              colors); 
+                monkey_add_bubbles( other, to_go); 
   
-
-                g_free(columns); 
-                g_free(colors); 
         }
 }
 
@@ -640,7 +626,7 @@ game_2_player_bubble_sticked(Monkey * monkey,
 
         
         
-
+        monkey_add_waiting_row(monkey);
 
         if( ! monkey_is_empty( monkey) ) {
                 game_2_player_add_bubble(g,monkey);

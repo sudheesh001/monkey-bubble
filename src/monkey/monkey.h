@@ -85,6 +85,7 @@ void monkey_right_changed( Monkey * monkey,gboolean pressed,
 void monkey_update( Monkey * monkey,gint time );
 
 void monkey_add_waiting_row(Monkey * self);
+void monkey_add_waiting_row_complete(Monkey * self,Bubble ** bubbles);
 Shooter * monkey_get_shooter(Monkey * monkey);
 Playground * monkey_get_playground(Monkey * monkey);
 
@@ -94,23 +95,11 @@ void monkey_set_board_down(Monkey * monkey);
 
 void monkey_print_board(Monkey * m);
 
-/* 
- * @return array with column coordonate of the bubbles
- */
-guint8 * monkey_add_bubbles (
-									 Monkey * monkey,
-									 int  bubble_count,
-									 Color * bubbles_colors);
-
-
-void monkey_add_bubbles_at (
-			    Monkey * monkey,
-			    int bubble_count,
-			    Color * bubbles_colors,
-			    guint8 * bubbles_column /* waiting column for bubbles */
-			    );
+void monkey_add_bubbles(Monkey * monkey,int  bubble_count);
 
 gint monkey_get_shot_count(Monkey * monkey);
+
+gint monkey_get_waiting_bubbles_count(Monkey * monkey);
 
 void monkey_insert_bubbles(Monkey * monnkey,Bubble ** bubbles_8);
 

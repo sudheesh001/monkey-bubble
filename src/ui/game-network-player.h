@@ -61,6 +61,7 @@ GameNetworkPlayer * game_network_player_new(GtkWidget * window,
 
 gint game_network_player_get_score(GameNetworkPlayer * g);
 gboolean game_network_player_is_lost(GameNetworkPlayer * g);
+void game_network_player_set_start_time(GameNetworkPlayer * g,GTimeVal start_time);
 
 G_END_DECLS
 

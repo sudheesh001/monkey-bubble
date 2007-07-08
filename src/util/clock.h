@@ -53,7 +53,7 @@ MbClock * mb_clock_new(void);
 void mb_clock_start(MbClock * clock);
 void mb_clock_pause(MbClock * clock,gboolean paused);
 gint mb_clock_get_time(MbClock * clock);
-
+void mb_clock_set_reference_time(MbClock *clock,GTimeVal rtime);
 G_END_DECLS
 
 
