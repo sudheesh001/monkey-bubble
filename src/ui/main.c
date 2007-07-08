@@ -33,6 +33,7 @@ int main(int  argc, char **argv)
   textdomain (PACKAGE);
 #endif
 
+  g_thread_init(NULL);
   if(gnome_score_init(PACKAGE)) {
 	g_message("You'll have to play without highscore support");
   }
@@ -46,7 +47,7 @@ int main(int  argc, char **argv)
 		      GNOME_PROGRAM_STANDARD_PROPERTIES,
 		      NULL);
 
-  gtk_window_set_default_icon_name ("monkey-bubble", NULL);
+  gtk_window_set_default_icon_name ("monkey-bubble");
 
   gst_init(&argc,&argv);
 

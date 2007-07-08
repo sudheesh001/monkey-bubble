@@ -101,6 +101,8 @@ PKG_CHECK_MODULES(UI,[
 	librsvg-2.0
 	libgnomeui-2.0
 	gstreamer-0.10
+        gstreamer-base-0.10
+        gstreamer-controller-0.10
 	gconf-2.0
 	libglade-2.0
 	])
