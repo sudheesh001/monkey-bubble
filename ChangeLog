@@ -1,5 +1,9 @@
 2007-07-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
 
+	* src/net/game.c: remove timeout_idle when game finished
+
+2007-07-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
 	* src/ui/game-network-player.c : enable auto shoot
 
 2007-07-08  Laurent Belmonte  <laurent.belmonte@gmail.com>

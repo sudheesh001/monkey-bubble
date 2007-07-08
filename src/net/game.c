@@ -61,6 +61,7 @@ struct NetworkGamePrivate
 	GMutex *observers_lock;
 	GMutex *lost_clients_lock;
 	MbClock *clock;
+	guint client_idle_id;
 };
 
 
@@ -809,8 +810,7 @@ network_game_start (NetworkGame * self)
 	g_timeout_add_full (G_PRIORITY_DEFAULT_IDLE,
 			    10, update_idle, self, idle_stopped);
 
-	g_timeout_add_full (G_PRIORITY_DEFAULT_IDLE,
-			    1000, update_client_idle, self, idle_stopped);
+	PRIVATE(self)->client_idle_id = g_timeout_add (1000, update_client_idle, self);
 	
 
 }
@@ -903,6 +903,7 @@ network_game_finalize (GObject * object)
 
 	g_assert (PRIVATE (self)->clients == NULL);
 
+	g_source_remove( PRIVATE(self)->client_idle_id);
 	g_list_free (PRIVATE (self)->clients);
 
 
