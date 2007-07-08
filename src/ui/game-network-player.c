@@ -71,6 +71,8 @@ struct GameNetworkPlayerPrivate
 	MbPlayerInput *input;
         gboolean canShoot;
         gboolean bubbleSticked;
+        guint last_sticked;
+
 };
 
 
@@ -239,6 +241,7 @@ game_network_player_bubble_sticked (Monkey * monkey, Bubble * b,
 	g_assert (IS_GAME_NETWORK_PLAYER (game));
 
         PRIVATE(game)->bubbleSticked = TRUE;
+        PRIVATE(game)->last_sticked = get_time(game);
         if( PRIVATE(game)->waiting_bubbles != NULL ) {
                 _add_bubbles(game);
         }
@@ -604,7 +607,9 @@ pressed (MbPlayerInput * i, gint key, GameNetworkPlayer * game)
 		}
 		else if (key == SHOOT_KEY)
 		{
-        		monkey_shoot (monkey, get_time (game));                        
+                        if( PRIVATE(game)->canShoot == TRUE) {        		
+                                monkey_shoot (monkey, get_time (game));                        
+                        }
 		}
 		g_mutex_unlock (PRIVATE (game)->lock);
 	}
@@ -665,6 +670,13 @@ game_network_player_timeout (gpointer data)
                         g_free(wb);
                         PRIVATE(game)->wb = NULL;
                 }
+
+                
+	        if( (time - PRIVATE(game)->last_sticked) > 10000) {
+                         if( PRIVATE(game)->canShoot == TRUE) {        		
+                                monkey_shoot (monkey, get_time (game));                        
+                        } 
+	        } 
 		monkey_update (monkey, time);
 
 		g_mutex_unlock (PRIVATE (game)->lock);

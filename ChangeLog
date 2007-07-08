@@ -1,5 +1,9 @@
 2007-07-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
 
+	* src/ui/game-network-player.c : enable auto shoot
+
+2007-07-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
 	* src/monkey/monkey.[ch]: change how add row is make
 	* src/net/game.c: change how row is add
 	* src/net/message-handler.[ch],
