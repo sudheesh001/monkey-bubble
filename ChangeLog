@@ -1,5 +1,11 @@
 2007-07-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
 
+
+	* src/ui/game-2-player.c: add sfx on 2 players game
+	* src/ui/game-network-player.c: add sfx on network game
+
+2007-07-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
         merge network_fix branch
 
 2007-07-08  Laurent Belmonte  <laurent.belmonte@gmail.com>

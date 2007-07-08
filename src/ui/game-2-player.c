@@ -34,6 +34,8 @@
 #include "player-input.h"
 #include "input-manager.h"
 
+#include "game-sound.h"
+
 #define FRAME_DELAY 10
 #define INIT_BUBBLES_COUNT 8+7+8+7
 #define PRIVATE(game_2_player) (game_2_player->private)
@@ -173,6 +175,9 @@ game_2_player_new(GtkWidget * window,MonkeyCanvas * canvas,int score_left,int sc
         Bubble * b_left;
         Bubble * b_right;
         MbInputManager * input_manager;
+
+        MbGameSound * mgs;
+
         gint i;
         game = GAME_2_PLAYER (g_object_new (TYPE_GAME_2_PLAYER, NULL));
 
@@ -298,7 +303,10 @@ game_2_player_new(GtkWidget * window,MonkeyCanvas * canvas,int score_left,int sc
 
 
 
- 
+        mgs = mb_game_sound_new();
+        mb_game_sound_connect_monkey(mgs,PRIVATE(game)->monkey_left);
+        mb_game_sound_connect_monkey(mgs,PRIVATE(game)->monkey_right);
+
         input_manager = mb_input_manager_get_instance();
         PRIVATE(game)->p1_input = mb_input_manager_get_left(input_manager);
         PRIVATE(game)->p2_input = mb_input_manager_get_right(input_manager);
