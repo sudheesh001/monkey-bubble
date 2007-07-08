@@ -67,13 +67,20 @@ struct GameNetworkPlayerPrivate
         MbMiniView * mini_views[4];
 	int monkey_id;
         struct WaitingBubbles * wb;
-
+        Bubble ** waiting_bubbles;
 	MbPlayerInput *input;
+        gboolean canShoot;
+        gboolean bubbleSticked;
 };
 
 
 
+static void 
+_add_bubbles(GameNetworkPlayer * game);
 
+static void
+recv_add_row (NetworkMessageHandler * handler,
+		 int monkey_id, Color * colors, GameNetworkPlayer * game);
 static void recv_winlost (NetworkMessageHandler * handler,
 			  int monkey_id,
 			  gboolean winlost, GameNetworkPlayer * game);
@@ -231,8 +238,10 @@ game_network_player_bubble_sticked (Monkey * monkey, Bubble * b,
 
 	g_assert (IS_GAME_NETWORK_PLAYER (game));
 
-        
-
+        PRIVATE(game)->bubbleSticked = TRUE;
+        if( PRIVATE(game)->waiting_bubbles != NULL ) {
+                _add_bubbles(game);
+        }
 	if ((monkey_get_shot_count (monkey) % 8) == 0)
 	{
 		monkey_insert_bubbles (monkey, PRIVATE(game)->waiting_range);
@@ -313,9 +322,7 @@ static void
 recv_waiting_added (NetworkMessageHandler * handler,
 		    int monkey_id,
                     int time,
-		    int bubbles_count,
-		    Color * colors,
-		    guint8 * columns, GameNetworkPlayer * game)
+		    int bubbles_count, GameNetworkPlayer * game)
 {
 
 	Monkey *monkey;
@@ -323,28 +330,10 @@ recv_waiting_added (NetworkMessageHandler * handler,
 	g_assert (IS_GAME_NETWORK_PLAYER (game));
 
 	monkey = PRIVATE (game)->monkey;
+
 	g_mutex_lock (PRIVATE (game)->lock);
-
-        if( time < get_time(game)) {
-        
-        g_print("recv waiting added time %d localtime %d \n",time,get_time(game));
-	monkey_add_bubbles_at (monkey, bubbles_count, colors, columns);
-	g_free (columns);
-	g_free (colors);
-
-                if( time < PRIVATE(game)->last_shoot) {
-                        monkey_add_waiting_row(monkey);
-                }
-        } else {
-                struct WaitingBubbles * wb;
-                wb = g_new0( struct WaitingBubbles,1);
-        	wb->waiting_bubbles_count = bubbles_count;
-                wb->columns = columns;
-		wb->colors = colors;
-                wb->time = time;
-                PRIVATE(game)->wb = wb;
-				
-        }
+        g_print("add bubbles %d \n",bubbles_count);
+        monkey_add_bubbles (monkey, bubbles_count);
 	g_mutex_unlock (PRIVATE (game)->lock);
 
 }
@@ -387,14 +376,55 @@ recv_next_range (NetworkMessageHandler * handler,
 
 	for (i = 0; i < 8; i++)
 	{
-
-		bubbles[i] = bubble_new (colors[i], 0, 0);
+                if( colors[i] != NO_COLOR) {
+        		bubbles[i] = bubble_new (colors[i], 0, 0);
+                }
 	}
 
 
 	PRIVATE (game)->waiting_range = bubbles;
 }
 
+
+static void 
+_add_bubbles(GameNetworkPlayer * game)
+{
+        monkey_add_waiting_row_complete(PRIVATE(game)->monkey, PRIVATE(game)->waiting_bubbles);
+        PRIVATE(game)->waiting_bubbles = NULL;
+        PRIVATE(game)->bubbleSticked = FALSE;
+        PRIVATE(game)->canShoot = TRUE;
+}
+
+
+static void
+recv_add_row (NetworkMessageHandler * handler,
+		 int monkey_id, Color * colors, GameNetworkPlayer * game)
+{
+
+	Bubble **bubbles;
+	int i;
+
+	g_assert (IS_GAME_NETWORK_PLAYER (game));
+
+	bubbles = g_malloc (sizeof (Bubble *) * 7);
+
+	for (i = 0; i < 7; i++)
+	{
+                if( colors[i] != NO_COLOR) {
+        		bubbles[i] = bubble_new (colors[i], 0, 0);
+                } else {
+                        bubbles[i] = NULL;
+                }
+	}
+
+        g_print("add row recieve ! \n");
+
+	PRIVATE (game)->waiting_bubbles = bubbles;
+
+        if( PRIVATE(game)->bubbleSticked == TRUE ) {
+                _add_bubbles(game);
+        }
+}
 
 static void
 game_network_player_bubble_shot (Monkey * monkey,
@@ -410,12 +440,20 @@ game_network_player_bubble_shot (Monkey * monkey,
 	{
 
                 PRIVATE(game)->last_shoot = get_time(game);
+                PRIVATE(game)->bubbleSticked = FALSE;
+                if( monkey_get_waiting_bubbles_count(monkey) > 0 ) {
+                        PRIVATE(game)->canShoot = FALSE;
+                        
+
+                }
 		network_message_handler_send_shoot (PRIVATE (game)->handler,
 						    PRIVATE (game)->monkey_id,
 						    get_time (game),
 						    shooter_get_angle
 						    (monkey_get_shooter
 						     (monkey)));
+
+               
 	}
 }
 
@@ -454,6 +492,9 @@ game_network_player_new (GtkWidget * window, MonkeyCanvas * canvas,
 	g_signal_connect (G_OBJECT (handler), "recv-waiting-added",
 			  G_CALLBACK (recv_waiting_added), game);
 
+	g_signal_connect (G_OBJECT (handler), "recv-add-row",
+			  G_CALLBACK (recv_add_row), game);
+
         g_signal_connect( G_OBJECT( handler), "recv-bubble-array",
                           G_CALLBACK(recv_bubble_array),game);
 
@@ -484,7 +525,8 @@ game_network_player_new (GtkWidget * window, MonkeyCanvas * canvas,
 	PRIVATE (game)->state = GAME_STOPPED;
 
 	PRIVATE (game)->lost = FALSE;
-
+	PRIVATE (game)->canShoot = TRUE;
+        PRIVATE(game)->waiting_bubbles=  NULL;
 	PRIVATE (game)->score = score;
 	monkey_view_set_points (PRIVATE (game)->display, score);
 
@@ -562,7 +604,7 @@ pressed (MbPlayerInput * i, gint key, GameNetworkPlayer * game)
 		}
 		else if (key == SHOOT_KEY)
 		{
-			monkey_shoot (monkey, get_time (game));
+        		monkey_shoot (monkey, get_time (game));                        
 		}
 		g_mutex_unlock (PRIVATE (game)->lock);
 	}
@@ -617,7 +659,7 @@ game_network_player_timeout (gpointer data)
 
                 wb = PRIVATE(game)->wb;
                 if( wb != NULL && wb->time < time) {
-                        monkey_add_bubbles_at (monkey,wb->waiting_bubbles_count, wb->colors, wb->columns);
+                    //    monkey_add_bubbles_at (monkey,wb->waiting_bubbles_count, wb->colors, wb->columns);
 	                g_free(wb->colors);
                         g_free(wb->columns);
                         g_free(wb);

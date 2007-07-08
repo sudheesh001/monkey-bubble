@@ -1,3 +1,11 @@
+2007-07-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
+	* src/monkey/monkey.[ch]: change how add row is make
+	* src/net/game.c: change how row is add
+	* src/net/message-handler.[ch],
+	* src/net/monkey-marshal.list:  add new message
+	* src/ui/game-2-player.c: change how add row is make
+
 2007-06-30  Laurent Belmonte  <laurent.belmonte@gmail.com>
 
 
