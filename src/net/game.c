@@ -64,14 +64,6 @@ struct NetworkGamePrivate
 	guint client_idle_id;
 };
 
-
-struct WaitingBubbles {	
-	guint8 waiting_bubbles_count;
-	guint8 * columns;
-	guint8 * colors;
-	gint time;
-};
-
 struct Client
 {
 	Monkey *monkey;
@@ -79,10 +71,10 @@ struct Client
 	NetworkGame *game;
 	guint8 *waiting_range;
 	Bubble **waiting_bubbles_range;
-	struct WaitingBubbles * wb;
 	Color * waiting_bubbles;
 	GMutex *monkey_lock;
 	gboolean playing;
+	guint score;
 };
 
 
@@ -150,7 +142,7 @@ add_client (gpointer data, gpointer user_data)
 	g_object_ref (G_OBJECT (client));
 
 	c->game = game;
-
+	c->score = 0;
 	c->monkey_lock = g_mutex_new ();
 
 	c->monkey = monkey_new (TRUE);
@@ -414,6 +406,10 @@ notify_observers (NetworkGame * self, struct Client *client)
 			 8 * 13,
 			 colors,
 			 odd);
+
+	network_message_handler_send_score(network_client_get_handler (nc),
+			 network_client_get_id (client->client),
+			network_client_get_score(client->client));
 
 		next = g_list_next (next);
 	}
@@ -736,7 +732,7 @@ update_lost (NetworkGame * game)
 
 		// the client has won the game !
 		client = (struct Client *) PRIVATE (game)->clients->data;
-
+		network_client_win(client->client);
 		network_message_handler_send_winlost
 			(network_client_get_handler (client->client),
 			 network_client_get_id (client->client), 0);

@@ -343,6 +343,23 @@ recv_waiting_added (NetworkMessageHandler * handler,
 }
 
 
+static void
+recv_score(NetworkMessageHandler * handler,
+		  guint32 monkey_id,
+		  guint8 score,
+		  GameNetworkPlayer * game)
+{
+
+    
+        g_mutex_lock (PRIVATE (game)->lock);
+        
+        if( monkey_id >= 1 && monkey_id <= 4 ) {
+                mb_mini_view_set_score(PRIVATE(game)->mini_views[monkey_id -1],score);
+        }
+        g_mutex_unlock (PRIVATE (game)->lock);
+
+    
+}
 
 static void
 recv_bubble_array(NetworkMessageHandler * handler,
@@ -501,6 +518,10 @@ game_network_player_new (GtkWidget * window, MonkeyCanvas * canvas,
 
         g_signal_connect( G_OBJECT( handler), "recv-bubble-array",
                           G_CALLBACK(recv_bubble_array),game);
+
+
+        g_signal_connect( G_OBJECT( handler), "recv-score",
+                          G_CALLBACK(recv_score),game);
 
 	g_signal_connect (G_OBJECT (handler), "recv-next-range",
 			  G_CALLBACK (recv_next_range), game);

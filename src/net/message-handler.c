@@ -50,6 +50,7 @@
 #define SEND_WINLOST 8
 #define SEND_NEXT_RANGE 9
 #define SEND_ADD_ROW 10
+#define SEND_SCORE 11
 
 enum
 {
@@ -64,6 +65,7 @@ enum
 	RECV_XML_MESSAGE,
 	RECV_NEXT_RANGE,
         RECV_ADD_ROW,
+        RECV_SCORE,
 	LAST_SIGNAL
 };
 
@@ -91,6 +93,8 @@ void parse_bubble_array (NetworkMessageHandler * mmh, guint8 * message);
 void parse_add_bubble (NetworkMessageHandler * mmh, guint8 * message);
 
 void parse_winlost (NetworkMessageHandler * mmh, guint8 * message);
+
+void parse_score (NetworkMessageHandler * mmh, guint8 * message);
 
 void parse_waiting_added (NetworkMessageHandler * mmh, guint8 * message);
 
@@ -242,6 +246,16 @@ network_message_handler_class_init (NetworkMessageHandlerClass * klass)
 					      monkey_net_marshal_VOID__UINT_BOOLEAN,
 					      G_TYPE_NONE, 2, G_TYPE_UINT,
 					      G_TYPE_BOOLEAN);
+	signals[RECV_SCORE] = g_signal_new ("recv-score",
+					      G_TYPE_FROM_CLASS (klass),
+					      G_SIGNAL_RUN_FIRST |
+					      G_SIGNAL_NO_RECURSE,
+					      G_STRUCT_OFFSET
+					      (NetworkMessageHandlerClass,
+					       recv_score), NULL, NULL,
+					      monkey_net_marshal_VOID__UINT_UINT,
+					      G_TYPE_NONE, 2, G_TYPE_UINT,
+					      G_TYPE_UINT);
 
 	signals[RECV_WAITING_ADDED] = g_signal_new ("recv-waiting-added",
 						    G_TYPE_FROM_CLASS (klass),
@@ -420,6 +434,9 @@ parse_message (NetworkMessageHandler * mmh, guint8 * message)
 		break;
 	case SEND_NEXT_RANGE:
 		parse_next_range (mmh, message);
+		break;
+	case SEND_SCORE:
+		parse_score (mmh, message);
 		break;
 
 	default:
@@ -1138,6 +1155,59 @@ parse_winlost (NetworkMessageHandler * mmh, guint8 * message)
 		       t->monkey_id, t->winlost);
 
 }
+
+
+
+void
+network_message_handler_send_score (NetworkMessageHandler * mmh,
+				      guint32 monkey_id, guint8 score)
+{
+	guint8 message[CHUNK_SIZE];
+
+	struct Test
+	{
+		guint8 message_type;
+		guint32 monkey_id;
+		guint8 score;
+	};
+	struct Test *t;
+
+	t = (struct Test *) message;
+
+	memset (t, 0, CHUNK_SIZE);
+
+	t->message_type = SEND_SCORE;
+	t->monkey_id = htonl (monkey_id);
+	t->score = score;
+
+	write_chunk (mmh, message, 1);
+
+}
+
+
+
+void
+parse_score (NetworkMessageHandler * mmh, guint8 * message)
+{
+
+
+	struct Test
+	{
+		guint8 message_type;
+		guint32 monkey_id;
+		guint8 score;
+	};
+	struct Test *t;
+
+	t = (struct Test *) message;
+
+	t->monkey_id = g_ntohl (t->monkey_id);
+
+	g_signal_emit (G_OBJECT (mmh), signals[RECV_SCORE], 0,
+		       t->monkey_id, t->score);
+
+}
+
 
 void
 network_message_handler_send_start (NetworkMessageHandler * mmh)

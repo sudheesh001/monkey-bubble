@@ -80,6 +80,10 @@ void network_message_handler_send_winlost     (NetworkMessageHandler * mmh,
                                                guint32 monkey_id,
                                                guint8 win_lost);
 
+void network_message_handler_send_score     (NetworkMessageHandler * mmh,
+                                               guint32 monkey_id,
+                                               guint8 win_lost);
+
 void network_message_handler_send_start       (NetworkMessageHandler * mmh);
 
 void network_message_handler_send_xml_message(NetworkMessageHandler * mmh,
@@ -133,6 +137,10 @@ struct _NetworkMessageHandlerClass
         void (* recv_winlost)       (NetworkMessageHandler * mmh,
                                      guint32 monkey_id,
                                      guint8 win_lost);
+
+        void (* recv_score)       (NetworkMessageHandler * mmh,
+                                     guint32 monkey_id,
+                                     guint8 score);
 
         void (* recv_start)         (NetworkMessageHandler * mmh);
 

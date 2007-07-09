@@ -1,3 +1,12 @@
+2007-07-09  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
+	* src/net/client.[ch]: add score
+	* src/net/game.[c]: send player score
+	* src/net/message-handler.[ch]: recv/send score
+	message
+	* src/ui/game-network-player.c: handle score
+	* src/view/mini-view.[ch]: add method set_score
+
 2007-07-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
 
 

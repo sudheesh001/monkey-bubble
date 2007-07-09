@@ -56,6 +56,8 @@ gboolean network_client_get_state(NetworkClient * client);
 
 guint32 network_client_get_id(NetworkClient * client);
 
+guint network_client_get_score(NetworkClient * client);
+void network_client_win(NetworkClient * client);
 
 void network_client_send_number_of_players(NetworkClient * client,
 					  int n);

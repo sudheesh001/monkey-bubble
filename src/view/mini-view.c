@@ -48,6 +48,7 @@ struct MbMiniViewPrivate
 	ColorBlock ** blocks;
 	Layer * layer;
 	gint last_odd;
+        GList * score_list;
 };
 
 
@@ -247,6 +248,95 @@ mb_mini_view_update(MbMiniView * self,
 	PRIVATE(self)->last_odd = odd;
 }
 
+
+
+static Block * mb_mini_view_create_number(MbMiniView * view,int number) {
+        gchar path[4096];
+        gint str_length;
+        Block * block;
+
+
+        strcpy( path ,
+                DATADIR"/monkey-bubble/gfx/number/");
+	
+        str_length = strlen(path);
+
+    
+        sprintf(path+str_length ,"%d.svg",number);
+
+        block = monkey_canvas_create_block_from_image(PRIVATE(view)->canvas,
+                                                   path,
+                                                   32,32,
+                                                   16,16);
+  
+        return block;
+
+}
+
+static void mb_mini_view_clear_score(MbMiniView * d) {
+
+        Block * block;
+        GList * next;
+
+        next = PRIVATE(d)->score_list; 
+	 
+        while( next != NULL ) {
+		  
+                block = (Block *)next->data;
+ 
+                monkey_canvas_remove_block( PRIVATE(d)->canvas,
+                                         block);
+		  
+                monkey_canvas_unref_block( PRIVATE(d)->canvas,
+                                        block);
+
+                next = g_list_next(next);
+        }
+
+        g_list_free( PRIVATE(d)->score_list);
+        PRIVATE(d)->score_list = NULL;
+}
+
+
+void mb_mini_view_set_score(MbMiniView * d,guint score) {
+
+        Block * block;
+        int pre_score;
+        int i = 0;
+  
+    
+        mb_mini_view_clear_score(d);
+
+
+
+        if( score != 0 ) {
+
+                while( score != 0 ) {
+                        pre_score = score % 10 ;
+
+                        block = mb_mini_view_create_number(d,pre_score);  
+                        monkey_canvas_add_block( PRIVATE(d)->canvas,
+                                              PRIVATE(d)->layer,
+                                              block,
+                                              110-i*20,150);
+
+                        PRIVATE(d)->score_list = g_list_append( PRIVATE(d)->score_list,block);
+
+                        score = score / 10;
+                        i++;
+                }
+        } else {
+                block = mb_mini_view_create_number(d,0);  
+                monkey_canvas_add_block( PRIVATE(d)->canvas,
+                                      PRIVATE(d)->layer,
+                                      block,
+                                      110,150);
+
+                PRIVATE(d)->score_list = g_list_append( PRIVATE(d)->score_list,block);
+
+        }
+
+}
 
 
 static void

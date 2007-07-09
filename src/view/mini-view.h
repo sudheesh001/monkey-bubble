@@ -45,7 +45,7 @@ void mb_mini_view_update(MbMiniView * self,
 
 void mb_mini_view_lost(MbMiniView * self);
 void mb_mini_view_win(MbMiniView * self);
-
+void mb_mini_view_set_score(MbMiniView * self,guint score);
 GType		mb_mini_view_get_type	       (void);
 
 #define MB_TYPE_MINI_VIEW			(mb_mini_view_get_type ())

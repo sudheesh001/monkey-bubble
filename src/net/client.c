@@ -50,6 +50,7 @@ struct NetworkClientPrivate
 	NetworkMessageHandler * handler;
 	guint32 client_id;
 	gboolean state;
+	guint score;
 };
 
 static void  recv_xml_message(NetworkMessageHandler * mmh,
@@ -239,6 +240,16 @@ static void client_connection_closed(NetworkMessageHandler * mmh,
 {
 	g_signal_emit( G_OBJECT(client),signals[DISCONNECTED],0);
 }
+
+guint network_client_get_score(NetworkClient * client) {
+	return PRIVATE(client)->score;
+}
+
+void network_client_win(NetworkClient * client) {
+	PRIVATE(client)->score++;
+}
+
+
 
 static void 
 network_client_instance_init(NetworkClient * self) 
