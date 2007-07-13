@@ -7,6 +7,7 @@ INCLUDES = \
 	-I$(top_srcdir)/src/view \
 	-I$(top_srcdir)/src/ui \
 	-I$(top_srcdir)/src/util \
+	-I$(top_srcdir)/src \
 	-g -O2 -Wall -Werror -D_REENTRANT  -D_DEBUG_ -D_TIME_DEBUG_ \
 	$(NULL)
 # -g -O2 -Wall -Wstrict-prototypes -Wmissing-prototypes -Werror -D_REENTRANT  -D_TIME_DEBUG_ -D_DEBUG_
@@ -43,6 +44,14 @@ libmonkeynet_a_SOURCES = \
 	player.h player.c \
 	game.h game.c \
 	game-manager.h game-manager.c \
+	mb-net-connection.h mb-net-connection.c \
+	mb-net-message.h mb-net-message.c \
+	mb-net-handler.h mb-net-handler.c \
+	mb-net-abstract-handler.h mb-net-abstract-handler.c \
+	mb-net-server-handler.h mb-net-server-handler.c \
+	mb-net-server.h mb-net-server.c \
+	mb-net-game.h mb-net-game.c \
+	mb-net-game-handler.h mb-net-game-handler.c \
 	$(marshal_sources)
 
 monkey-net-marshal.c monkey-net-marshal.h: monkey-marshal.list

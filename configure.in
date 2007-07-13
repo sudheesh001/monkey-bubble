@@ -109,6 +109,20 @@ PKG_CHECK_MODULES(UI,[
 AC_SUBST(UI_CFLAGS)
 AC_SUBST(UI_LIBS)
 
+
+PKG_CHECK_MODULES(MONKEYBUBBLE,[
+	gtk+-2.0 >= 2.10
+	gthread-2.0
+	librsvg-2.0
+	libgnomeui-2.0
+	gstreamer-0.10
+        gstreamer-base-0.10
+        gstreamer-controller-0.10
+	gconf-2.0
+	libglade-2.0
+	])
+AC_SUBST(MONKEYBUBBLE_CFLAGS)
+AC_SUBST(MONKEYBUBBLE_LIBS)
 dnl ***********
 dnl GConf stuff
 dnl ***********
@@ -193,6 +207,8 @@ AC_OUTPUT([
   src/view/Makefile
   src/audio/Makefile
   src/net/Makefile
+  src/tests/Makefile
+  src/tests/net/Makefile
   src/ui/Makefile
   help/Makefile
   po/Makefile.in

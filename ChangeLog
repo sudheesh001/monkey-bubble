@@ -1,3 +1,26 @@
+2007-07-13  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
+
+	* src/net/Makefile.am,
+	* src/net/mb-net-abstract-handler.[ch],
+	* src/net/mb-net-connection.[ch],
+	* src/net/mb-net-game-handler.[ch],
+	* src/net/mb-net-message.[ch],
+	* src/net/mb-net-server-handler.[ch]
+	* src/net/mb-net-server.[ch]
+	* src/net/monkey-marshal.list: new network code
+	* configure.in,	
+	* src/Makefile.am,
+	* src/tests/Makefile.am,
+	* src/tests/net/Makefile.am,
+	* src/tests/net/main,
+	* src/tests/net/mb-tests-net-connection.[ch],
+	* src/tests/net/mb-tests-net-handler.[ch],
+	* src/tests/net/mb-tests-net-message.[ch],
+	* src/tests/net/mb-tests-net-server.[ch],
+	* src/tests/net/mb-tests-net-utils.c [ch ] :
+	add simple "unittest" for new network code
+
 2007-07-09  Laurent Belmonte  <laurent.belmonte@gmail.com>
 
 	* src/net/client.[ch]: add score
