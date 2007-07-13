@@ -31,7 +31,7 @@
 G_BEGIN_DECLS typedef struct _MbNetAbstractHandler MbNetAbstractHandler;
 typedef struct _MbNetAbstractHandlerClass MbNetAbstractHandlerClass;
 
-GType mb_net_abstract_handler_get_type (void);
+GType mb_net_abstract_handler_get_type(void);
 
 
 #define MB_NET_TYPE_ABSTRACT_HANDLER			(mb_net_abstract_handler_get_type())
@@ -41,17 +41,15 @@ GType mb_net_abstract_handler_get_type (void);
 #define MB_NET_IS_ABSTRACT_HANDLER_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE((klass), MB_NET_TYPE_ABSTRACT_HANDLER))
 #define MB_NET_ABSTRACT_HANDLER_GET_CLASS(object)	(G_TYPE_INSTANCE_GET_CLASS((object), MB_NET_TYPE_ABSTRACT_HANDLER, MbNetAbstractHandlerClass))
 
-struct _MbNetAbstractHandler
-{
-  GObject base_instance;
+struct _MbNetAbstractHandler {
+	GObject base_instance;
 };
 
-struct _MbNetAbstractHandlerClass
-{
-  GObjectClass base_class;
+struct _MbNetAbstractHandlerClass {
+	GObjectClass base_class;
 
-  /* signals */
+	/* signals */
 };
 
 G_END_DECLS
-#endif /* !_MB_NET__ABSTRACT_HANDLER_H */
+#endif				/* !_MB_NET__ABSTRACT_HANDLER_H */

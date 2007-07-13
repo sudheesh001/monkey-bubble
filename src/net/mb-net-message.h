@@ -30,23 +30,24 @@
 G_BEGIN_DECLS typedef struct _MbNetMessage MbNetMessage;
 typedef struct _MbNetMessageClass MbNetMessageClass;
 
-GType mb_net_message_get_type (void);
+GType mb_net_message_get_type(void);
 
-MbNetMessage *mb_net_message_create ();
-MbNetMessage *mb_net_message_create_from (const guint8 * data, guint32 size);
+MbNetMessage *mb_net_message_create();
+MbNetMessage *mb_net_message_create_from(const guint8 * data,
+					 guint32 size);
 
-guint32 mb_net_message_size (MbNetMessage * self);
-const guint8 *mb_net_message_data (MbNetMessage * self);
-void mb_net_message_add_int (MbNetMessage * self, guint32 value);
-void mb_net_message_add_boolean (MbNetMessage * self, gboolean value);
-void mb_net_message_add_string (MbNetMessage * self, const gchar * string);
-void mb_net_message_add_xmldoc (MbNetMessage * self, const xmlDoc * doc);
+guint32 mb_net_message_size(MbNetMessage * self);
+const guint8 *mb_net_message_data(MbNetMessage * self);
+void mb_net_message_add_int(MbNetMessage * self, guint32 value);
+void mb_net_message_add_boolean(MbNetMessage * self, gboolean value);
+void mb_net_message_add_string(MbNetMessage * self, const gchar * string);
+void mb_net_message_add_xmldoc(MbNetMessage * self, const xmlDoc * doc);
 
-void mb_net_message_skip (MbNetMessage * self, guint32 skip_size);
-guint32 mb_net_message_read_int (MbNetMessage * self);
-gboolean mb_net_message_read_boolean (MbNetMessage * self);
-gchar *mb_net_message_read_string (MbNetMessage * self);
-xmlDoc *mb_net_message_read_xmldoc (MbNetMessage * self);
+void mb_net_message_skip(MbNetMessage * self, guint32 skip_size);
+guint32 mb_net_message_read_int(MbNetMessage * self);
+gboolean mb_net_message_read_boolean(MbNetMessage * self);
+gchar *mb_net_message_read_string(MbNetMessage * self);
+xmlDoc *mb_net_message_read_xmldoc(MbNetMessage * self);
 
 #define MB_NET_TYPE_MESSAGE			(mb_net_message_get_type())
 #define MB_NET_MESSAGE(object)		(G_TYPE_CHECK_INSTANCE_CAST((object), MB_NET_TYPE_MESSAGE, MbNetMessage))
@@ -55,17 +56,15 @@ xmlDoc *mb_net_message_read_xmldoc (MbNetMessage * self);
 #define MB_NET_IS_MESSAGE_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE((klass), MB_NET_TYPE_MESSAGE))
 #define MB_NET_MESSAGE_GET_CLASS(object)	(G_TYPE_INSTANCE_GET_CLASS((object), MB_NET_TYPE_MESSAGE, MbNetMessageClass))
 
-struct _MbNetMessage
-{
-  GObject base_instance;
+struct _MbNetMessage {
+	GObject base_instance;
 };
 
-struct _MbNetMessageClass
-{
-  GObjectClass base_class;
+struct _MbNetMessageClass {
+	GObjectClass base_class;
 
-  /* signals */
+	/* signals */
 };
 
 G_END_DECLS
-#endif /* !_MB_NET::_MESSAGE_H */
+#endif				/* !_MB_NET::_MESSAGE_H */

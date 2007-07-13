@@ -7,48 +7,45 @@
 
 
 
-static void
-_test_sendreceive_int ()
+static void _test_sendreceive_int()
 {
-  MbNetMessage *m = mb_net_message_create ();
-  mb_net_message_add_int (m, 255 * 254 * 253);
+	MbNetMessage *m = mb_net_message_create();
+	mb_net_message_add_int(m, 255 * 254 * 253);
 
-  guint32 r = mb_net_message_read_int (m);
-  g_assert (r == 255 * 254 * 253);
-  g_object_unref (m);
+	guint32 r = mb_net_message_read_int(m);
+	g_assert(r == 255 * 254 * 253);
+	g_object_unref(m);
 }
 
-static void
-_test_sendreceive_boolean ()
+static void _test_sendreceive_boolean()
 {
-  MbNetMessage *m = mb_net_message_create ();
-  mb_net_message_add_boolean (m, TRUE);
-  mb_net_message_add_boolean (m, FALSE);
-  mb_net_message_add_boolean (m, TRUE);
-  gboolean b1 = mb_net_message_read_boolean (m);
-  gboolean b2 = mb_net_message_read_boolean (m);
-  gboolean b3 = mb_net_message_read_boolean (m);
-  g_assert (b1 == TRUE);
-  g_assert (b2 == FALSE);
-  g_assert (b3 == TRUE);
+	MbNetMessage *m = mb_net_message_create();
+	mb_net_message_add_boolean(m, TRUE);
+	mb_net_message_add_boolean(m, FALSE);
+	mb_net_message_add_boolean(m, TRUE);
+	gboolean b1 = mb_net_message_read_boolean(m);
+	gboolean b2 = mb_net_message_read_boolean(m);
+	gboolean b3 = mb_net_message_read_boolean(m);
+	g_assert(b1 == TRUE);
+	g_assert(b2 == FALSE);
+	g_assert(b3 == TRUE);
 
-  g_object_unref (m);
+	g_object_unref(m);
 }
 
-static void
-_test_sendreceive_string ()
+static void _test_sendreceive_string()
 {
-  MbNetMessage *m = mb_net_message_create ();
-  mb_net_message_add_string (m, "foo");
-  mb_net_message_add_string (m, "monkeybubble");
-  gchar *s1 = mb_net_message_read_string (m);
-  gchar *s2 = mb_net_message_read_string (m);
-  g_assert (g_str_equal (s1, "foo") == TRUE);
-  g_assert (g_str_equal (s2, "monkeybubble") == TRUE);
+	MbNetMessage *m = mb_net_message_create();
+	mb_net_message_add_string(m, "foo");
+	mb_net_message_add_string(m, "monkeybubble");
+	gchar *s1 = mb_net_message_read_string(m);
+	gchar *s2 = mb_net_message_read_string(m);
+	g_assert(g_str_equal(s1, "foo") == TRUE);
+	g_assert(g_str_equal(s2, "monkeybubble") == TRUE);
 
-  g_free (s1);
-  g_free (s2);
-  g_object_unref (m);
+	g_free(s1);
+	g_free(s2);
+	g_object_unref(m);
 }
 
 /*
@@ -121,13 +118,12 @@ static void _test_sendreceive_xml()
 }
 */
 
-gboolean
-mb_tests_net_message_test_all ()
+gboolean mb_tests_net_message_test_all()
 {
-  _test_sendreceive_int ();
-  _test_sendreceive_boolean ();
-  _test_sendreceive_string ();
+	_test_sendreceive_int();
+	_test_sendreceive_boolean();
+	_test_sendreceive_string();
 
-  //_test_sendreceive_xml();
-  return TRUE;
+	//_test_sendreceive_xml();
+	return TRUE;
 }

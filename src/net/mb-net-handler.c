@@ -27,42 +27,39 @@
 #include <glib-object.h>
 
 void
-mb_net_handler_receive (MbNetHandler * self, MbNetConnection * con,
-			MbNetMessage * m)
+mb_net_handler_receive(MbNetHandler * self, MbNetConnection * con,
+		       MbNetMessage * m)
 {
-  MB_NET_HANDLER_GET_INTERFACE (self)->receive (self, con, m);
+	MB_NET_HANDLER_GET_INTERFACE(self)->receive(self, con, m);
 }
 
-static void
-mb_net_handler_init (gpointer g_class)
+static void mb_net_handler_init(gpointer g_class)
 {
-  static gboolean initialized = FALSE;
-  if (!initialized)
-    {
-      /* create interface signals here. */
-      initialized = TRUE;
-    }
+	static gboolean initialized = FALSE;
+	if (!initialized) {
+		/* create interface signals here. */
+		initialized = TRUE;
+	}
 }
 
-GType
-mb_net_handler_get_type (void)
+GType mb_net_handler_get_type(void)
 {
-  static GType type = 0;
-  if (type == 0)
-    {
-      static const GTypeInfo info = {
-	sizeof (MbNetHandlerInterface),
-	mb_net_handler_init,	/* base_init */
-	NULL,			/* base_finalize */
-	NULL,			/* class_init */
-	NULL,			/* class_finalize */
-	NULL,			/* class_data */
-	0,
-	0,			/* n_preallocs */
-	NULL			/* instance_init */
-      };
-      type =
-	g_type_register_static (G_TYPE_INTERFACE, "MbNetHandler", &info, 0);
-    }
-  return type;
+	static GType type = 0;
+	if (type == 0) {
+		static const GTypeInfo info = {
+			sizeof(MbNetHandlerInterface),
+			mb_net_handler_init,	/* base_init */
+			NULL,	/* base_finalize */
+			NULL,	/* class_init */
+			NULL,	/* class_finalize */
+			NULL,	/* class_data */
+			0,
+			0,	/* n_preallocs */
+			NULL	/* instance_init */
+		};
+		type =
+		    g_type_register_static(G_TYPE_INTERFACE,
+					   "MbNetHandler", &info, 0);
+	}
+	return type;
 }

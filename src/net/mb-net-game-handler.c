@@ -27,43 +27,39 @@
 #include <glib-object.h>
 
 
-typedef struct _Private
-{
-  int i;
+typedef struct _Private {
+	int i;
 } Private;
 
 
 
 
-enum
-{
-  PROP_ATTRIBUTE
+enum {
+	PROP_ATTRIBUTE
 };
 
-enum
-{
-  N_SIGNALS
+enum {
+	N_SIGNALS
 };
 
 static GObjectClass *parent_class = NULL;
 
-static void mb_net_game_handler_get_property (GObject * object,
-					      guint prop_id,
-					      GValue * value,
-					      GParamSpec * param_spec);
-static void mb_net_game_handler_set_property (GObject * object,
-					      guint prop_id,
-					      const GValue * value,
-					      GParamSpec * param_spec);
+static void mb_net_game_handler_get_property(GObject * object,
+					     guint prop_id,
+					     GValue * value,
+					     GParamSpec * param_spec);
+static void mb_net_game_handler_set_property(GObject * object,
+					     guint prop_id,
+					     const GValue * value,
+					     GParamSpec * param_spec);
 
-static void mb_net_game_handler_iface_init (MbNetHandlerInterface * iface);
+static void mb_net_game_handler_iface_init(MbNetHandlerInterface * iface);
 //static        guint   _signals[N_SIGNALS] = { 0 };
 
-G_DEFINE_TYPE_WITH_CODE (MbNetGameHandler, mb_net_game_handler,
-			 MB_NET_TYPE_ABSTRACT_HANDLER,
-			 {
-			 G_IMPLEMENT_INTERFACE (MB_NET_TYPE_HANDLER,
-						mb_net_game_handler_iface_init)});
+G_DEFINE_TYPE_WITH_CODE(MbNetGameHandler, mb_net_game_handler,
+			MB_NET_TYPE_ABSTRACT_HANDLER, {
+			G_IMPLEMENT_INTERFACE(MB_NET_TYPE_HANDLER,
+					      mb_net_game_handler_iface_init)});
 
 #define GET_PRIVATE(o)  \
    (G_TYPE_INSTANCE_GET_PRIVATE ((o), MB_NET_TYPE_GAME_HANDLER, Private))
@@ -71,99 +67,96 @@ G_DEFINE_TYPE_WITH_CODE (MbNetGameHandler, mb_net_game_handler,
 
 
 
-static void mb_net_game_handler_finalize (MbNetGameHandler * self);
+static void mb_net_game_handler_finalize(MbNetGameHandler * self);
 
-static void mb_net_game_handler_init (MbNetGameHandler * self);
-static void _receive (MbNetHandler * handler, MbNetConnection * con,
-		      MbNetMessage * m);
+static void mb_net_game_handler_init(MbNetGameHandler * self);
+static void _receive(MbNetHandler * handler, MbNetConnection * con,
+		     MbNetMessage * m);
 
 
 
-static void
-mb_net_game_handler_init (MbNetGameHandler * self)
+static void mb_net_game_handler_init(MbNetGameHandler * self)
 {
-  Private *priv;
-  priv = GET_PRIVATE (self);
+	Private *priv;
+	priv = GET_PRIVATE(self);
 }
 
 
-static void
-mb_net_game_handler_finalize (MbNetGameHandler * self)
+static void mb_net_game_handler_finalize(MbNetGameHandler * self)
 {
-  Private *priv;
-  priv = GET_PRIVATE (self);
+	Private *priv;
+	priv = GET_PRIVATE(self);
 
-  // finalize super
-  if (G_OBJECT_CLASS (parent_class)->finalize)
-    {
-      (*G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (self));
-    }
+	// finalize super
+	if (G_OBJECT_CLASS(parent_class)->finalize) {
+		(*G_OBJECT_CLASS(parent_class)->finalize) (G_OBJECT(self));
+	}
 }
 
 static void
-_receive (MbNetHandler * handler, MbNetConnection * con, MbNetMessage * m)
+_receive(MbNetHandler * handler, MbNetConnection * con, MbNetMessage * m)
 {
 }
 
 static void
-mb_net_game_handler_get_property (GObject * object, guint prop_id,
-				  GValue * value, GParamSpec * param_spec)
+mb_net_game_handler_get_property(GObject * object, guint prop_id,
+				 GValue * value, GParamSpec * param_spec)
 {
-  MbNetGameHandler *self;
+	MbNetGameHandler *self;
 
-  self = MB_NET_GAME_HANDLER (object);
+	self = MB_NET_GAME_HANDLER(object);
 
-  switch (prop_id)
-    {
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, param_spec);
-      break;
-    }
+	switch (prop_id) {
+	default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id,
+						  param_spec);
+		break;
+	}
 }
 
 static void
-mb_net_game_handler_set_property (GObject * object, guint prop_id,
-				  const GValue * value,
-				  GParamSpec * param_spec)
+mb_net_game_handler_set_property(GObject * object, guint prop_id,
+				 const GValue * value,
+				 GParamSpec * param_spec)
 {
-  MbNetGameHandler *self;
+	MbNetGameHandler *self;
 
-  self = MB_NET_GAME_HANDLER (object);
+	self = MB_NET_GAME_HANDLER(object);
 
-  switch (prop_id)
-    {
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, param_spec);
-      break;
-    }
+	switch (prop_id) {
+	default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id,
+						  param_spec);
+		break;
+	}
+}
+
+
+static void mb_net_game_handler_iface_init(MbNetHandlerInterface * iface)
+{
+	iface->receive = _receive;
 }
 
 
 static void
-mb_net_game_handler_iface_init (MbNetHandlerInterface * iface)
+mb_net_game_handler_class_init(MbNetGameHandlerClass *
+			       mb_net_game_handler_class)
 {
-  iface->receive = _receive;
-}
+	GObjectClass *g_object_class;
+
+	parent_class = g_type_class_peek_parent(mb_net_game_handler_class);
 
 
-static void
-mb_net_game_handler_class_init (MbNetGameHandlerClass *
-				mb_net_game_handler_class)
-{
-  GObjectClass *g_object_class;
+	g_type_class_add_private(mb_net_game_handler_class,
+				 sizeof(Private));
 
-  parent_class = g_type_class_peek_parent (mb_net_game_handler_class);
+	g_object_class = G_OBJECT_CLASS(mb_net_game_handler_class);
 
-
-  g_type_class_add_private (mb_net_game_handler_class, sizeof (Private));
-
-  g_object_class = G_OBJECT_CLASS (mb_net_game_handler_class);
-
-  /* setting up property system */
-  g_object_class->set_property = mb_net_game_handler_set_property;
-  g_object_class->get_property = mb_net_game_handler_get_property;
-  g_object_class->finalize =
-    (GObjectFinalizeFunc) mb_net_game_handler_finalize;
+	/* setting up property system */
+	g_object_class->set_property = mb_net_game_handler_set_property;
+	g_object_class->get_property = mb_net_game_handler_get_property;
+	g_object_class->finalize =
+	    (GObjectFinalizeFunc) mb_net_game_handler_finalize;
 
 
 }

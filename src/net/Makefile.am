@@ -46,6 +46,7 @@ libmonkeynet_a_SOURCES = \
 	game-manager.h game-manager.c \
 	mb-net-connection.h mb-net-connection.c \
 	mb-net-message.h mb-net-message.c \
+	mb-net-holders.h mb-net-holders.c \
 	mb-net-handler.h mb-net-handler.c \
 	mb-net-abstract-handler.h mb-net-abstract-handler.c \
 	mb-net-server-handler.h mb-net-server-handler.c \

@@ -22,7 +22,7 @@
  */
 
 #include <glib-object.h>
-
+#include <net/mb-net-holders.h>
 #include <net/mb-net-abstract-handler.h>
 #include <net/mb-net-game-handler.h>
 #ifndef _MB_NET__SERVER_HANDLER_H
@@ -31,34 +31,23 @@
 G_BEGIN_DECLS typedef struct _MbNetServerHandler MbNetServerHandler;
 typedef struct _MbNetServerHandlerClass MbNetServerHandlerClass;
 
-GType mb_net_server_handler_get_type (void);
+GType mb_net_server_handler_get_type(void);
 
-void mb_net_server_handler_send_game_list (MbNetServerHandler * self,
-					   MbNetConnection * con,
-					   guint32 tohandler_id,
-					   GList * games);
-void mb_net_server_handler_send_ask_game_list (MbNetServerHandler * self,
-					       MbNetConnection * con,
-					       guint32 handler_id);
+void mb_net_server_handler_send_game_list
+    (MbNetServerHandler * self,
+     MbNetConnection * con, MbNetGameListHolder * holder);
 
-void mb_net_server_handler_send_ask_register_client (MbNetServerHandler *
-						     self,
-						     MbNetConnection * con,
-						     guint32 handler_id,
-						     gchar * pseudo);
-void mb_net_server_handler_send_register_client_response (MbNetServerHandler
-							  * self,
-							  MbNetConnection *
-							  con,
-							  guint32
-							  handler_id,
-							  gchar * client,
-							  gboolean ok);
+void mb_net_server_handler_send_ask_game_list
+    (MbNetServerHandler * self, MbNetConnection * con, guint32 handler_id);
 
-void mb_net_server_handler_send_ask_create_game_list (MbNetServerHandler *
-						      self,
-						      MbNetConnection * con,
-						      guint32 handler_id);
+void mb_net_server_handler_send_ask_register_player
+    (MbNetServerHandler * self, MbNetConnection * con,
+     MbNetPlayerHolder * holder);
+
+void mb_net_server_handler_send_register_player_response
+    (MbNetServerHandler * self, MbNetConnection * con,
+     MbNetPlayerHolder * holder, gboolean ok);
+
 #define MB_NET_TYPE_SERVER_HANDLER			(mb_net_server_handler_get_type())
 #define MB_NET_SERVER_HANDLER(object)		(G_TYPE_CHECK_INSTANCE_CAST((object), MB_NET_TYPE_SERVER_HANDLER, MbNetServerHandler))
 #define MB_NET_SERVER_HANDLER_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST((klass), MB_NET_TYPE_SERVER_HANDLER, MbNetServerHandlerClass))
@@ -68,29 +57,27 @@ void mb_net_server_handler_send_ask_create_game_list (MbNetServerHandler *
 
 
 
-struct _MbNetServerHandler
-{
-  MbNetAbstractHandler base_instance;
+struct _MbNetServerHandler {
+	GObject base_instance;
 };
 
-struct _MbNetServerHandlerClass
-{
-  MbNetAbstractHandlerClass base_class;
+struct _MbNetServerHandlerClass {
+	GObjectClass base_class;
 
-  /* signals */
-  void (*ask_game_list) (MbNetServerHandler * self,
-			 MbNetConnection * con, guint32 handler_id);
-  void (*game_list) (MbNetServerHandler * self,
-		     MbNetConnection * con, guint32 handler_id,
-		     GList * games);
-  void (*ask_register_client) (MbNetServerHandler * self,
-			       MbNetConnection * con,
-			       guint32 handler_id, gchar * pseudo);
-  void (*register_client_response) (MbNetServerHandler * self,
-				    MbNetConnection * con,
-				    guint32 handler_id,
-				    gchar * pseudo, gboolean ok);
+	/* signals */
+	void (*ask_game_list) (MbNetServerHandler * self,
+			       MbNetConnection * con, guint32 handler_id);
+	void (*game_list) (MbNetServerHandler * self,
+			   MbNetConnection * con,
+			   MbNetGameListHolder * holder);
+	void (*ask_register_player) (MbNetServerHandler * self,
+				     MbNetConnection * con,
+				     MbNetPlayerHolder * holder);
+	void (*register_player_response) (MbNetServerHandler * self,
+					  MbNetConnection * con,
+					  MbNetPlayerHolder * holder,
+					  gboolean ok);
 };
 
 G_END_DECLS
-#endif /* !_MB_NET__SERVER_HANDLER_H */
+#endif				/* !_MB_NET__SERVER_HANDLER_H */

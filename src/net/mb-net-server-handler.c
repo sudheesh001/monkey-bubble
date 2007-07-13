@@ -22,52 +22,49 @@
  */
 
 #include "mb-net-server-handler.h"
-
+#include <net/mb-net-holders.h>
 #include <glib.h>
 #include <glib-object.h>
 
 #include <net/monkey-net-marshal.h>
 
-typedef struct _Private
-{
-  int i;
+typedef struct _Private {
+	int i;
 } Private;
 
 
 
-enum
-{
-  PROP_ATTRIBUTE
+enum {
+	PROP_ATTRIBUTE
 };
 
-enum
-{
-  ASK_GAME_LIST,
-  GAME_LIST,
-  ASK_REGISTER_CLIENT,
-  REGISTER_CLIENT_RESPONSE,
-  N_SIGNALS
+enum {
+	GAME_LIST,
+	ASK_GAME_LIST,
+	ASK_REGISTER_PLAYER,
+	REGISTER_PLAYER_RESPONSE,
+	N_SIGNALS
 };
 
 static GObjectClass *parent_class = NULL;
 
-static void mb_net_server_handler_get_property (GObject * object,
-						guint prop_id,
-						GValue * value,
-						GParamSpec * param_spec);
-static void mb_net_server_handler_set_property (GObject * object,
-						guint prop_id,
-						const GValue * value,
-						GParamSpec * param_spec);
+static void mb_net_server_handler_get_property(GObject * object,
+					       guint prop_id,
+					       GValue * value,
+					       GParamSpec * param_spec);
+static void mb_net_server_handler_set_property(GObject * object,
+					       guint prop_id,
+					       const GValue * value,
+					       GParamSpec * param_spec);
 
-static void mb_net_server_handler_iface_init (MbNetHandlerInterface * iface);
+static void mb_net_server_handler_iface_init(MbNetHandlerInterface *
+					     iface);
 static guint _signals[N_SIGNALS] = { 0 };
 
-G_DEFINE_TYPE_WITH_CODE (MbNetServerHandler, mb_net_server_handler,
-			 MB_NET_TYPE_ABSTRACT_HANDLER,
-			 {
-			 G_IMPLEMENT_INTERFACE (MB_NET_TYPE_HANDLER,
-						mb_net_server_handler_iface_init)});
+G_DEFINE_TYPE_WITH_CODE(MbNetServerHandler, mb_net_server_handler,
+			G_TYPE_OBJECT, {
+			G_IMPLEMENT_INTERFACE(MB_NET_TYPE_HANDLER,
+					      mb_net_server_handler_iface_init)});
 
 #define GET_PRIVATE(o)  \
    (G_TYPE_INSTANCE_GET_PRIVATE ((o), MB_NET_TYPE_SERVER_HANDLER, Private))
@@ -75,162 +72,213 @@ G_DEFINE_TYPE_WITH_CODE (MbNetServerHandler, mb_net_server_handler,
 
 
 
-static void mb_net_server_handler_finalize (MbNetServerHandler * self);
+static void mb_net_server_handler_finalize(MbNetServerHandler * self);
 
-static void mb_net_server_handler_init (MbNetServerHandler * self);
-static void _receive (MbNetHandler * handler, MbNetConnection * con,
-		      MbNetMessage * m);
+static void mb_net_server_handler_init(MbNetServerHandler * self);
+static void _receive(MbNetHandler * handler, MbNetConnection * con,
+		     MbNetMessage * m);
 
 
 
-static void
-mb_net_server_handler_init (MbNetServerHandler * self)
+static void mb_net_server_handler_init(MbNetServerHandler * self)
 {
-  Private *priv;
-  priv = GET_PRIVATE (self);
+	Private *priv;
+	priv = GET_PRIVATE(self);
 }
 
 
-static void
-mb_net_server_handler_finalize (MbNetServerHandler * self)
+static void mb_net_server_handler_finalize(MbNetServerHandler * self)
 {
-  Private *priv;
-  priv = GET_PRIVATE (self);
+	Private *priv;
+	priv = GET_PRIVATE(self);
 
-  // finalize super
-  if (G_OBJECT_CLASS (parent_class)->finalize)
-    {
-      (*G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (self));
-    }
-}
-
-void
-mb_net_server_handler_send_game_list (MbNetServerHandler * self,
-				      MbNetConnection * con,
-				      guint32 tohandler_id, GList * games)
-{
-//      for();
+	// finalize super
+	if (G_OBJECT_CLASS(parent_class)->finalize) {
+		(*G_OBJECT_CLASS(parent_class)->finalize) (G_OBJECT(self));
+	}
 }
 
 static void
-_receive (MbNetHandler * handler, MbNetConnection * con, MbNetMessage * m)
+_receive(MbNetHandler * handler, MbNetConnection * con, MbNetMessage * m)
 {
-  MbNetServerHandler *self;
-  Private *priv;
-  self = MB_NET_SERVER_HANDLER (handler);
-  priv = GET_PRIVATE (self);
+	MbNetServerHandler *self;
+	Private *priv;
+	self = MB_NET_SERVER_HANDLER(handler);
+	priv = GET_PRIVATE(self);
 
-  guint32 code = mb_net_message_read_int (m);
+	guint32 code = mb_net_message_read_int(m);
 
-  if (code == ASK_GAME_LIST)
-    {
-      guint32 id = mb_net_message_read_int (m);
-      g_signal_emit (self, _signals[ASK_GAME_LIST], 0, con, id);
-    }
-  else if (code == GAME_LIST)
-    {
-      guint32 id = mb_net_message_read_int (m);
-      g_print ("id %d \n", id);
-    }				/*else if ( code == REGISTER_CLIENT ) {
-				   guint32 id =
-				   mb_netabstract_handler_read_int(message, size,
-				   sizeof(guint32));
-				   } */
+	if (code == ASK_GAME_LIST) {
+		guint32 id = mb_net_message_read_int(m);
+		g_signal_emit(self, _signals[ASK_GAME_LIST], 0, con, id);
+	} else if (code == GAME_LIST) {
+		MbNetGameListHolder *holder =
+		    mb_net_game_list_holder_parse(m);
+		g_signal_emit(self, _signals[GAME_LIST], 0, con, holder);
+		mb_net_game_list_holder_free(holder);
+	} else if (code == ASK_REGISTER_PLAYER) {
+		MbNetPlayerHolder *holder = mb_net_player_holder_parse(m);
+		g_signal_emit(self, _signals[ASK_REGISTER_PLAYER], 0, con,
+			      holder);
+		mb_net_player_holder_free(holder);
+	} else if (code == REGISTER_PLAYER_RESPONSE) {
+		MbNetPlayerHolder *holder = mb_net_player_holder_parse(m);
+		guint ok = mb_net_message_read_boolean(m);
+		g_signal_emit(self, _signals[REGISTER_PLAYER_RESPONSE], 0,
+			      con, holder, ok);
+		mb_net_player_holder_free(holder);
+	}
 }
 
-void
-mb_net_server_handler_send_ask_game_list (MbNetServerHandler * self,
-					  MbNetConnection * con,
-					  guint32 handler_id)
-{
-  MbNetMessage *m = mb_net_message_create ();
-  mb_net_message_add_int (m, handler_id);
-  mb_net_message_add_int (m, ASK_GAME_LIST);
 
-  mb_net_connection_send_message (con, m, NULL);
-  g_object_unref (m);
+void mb_net_server_handler_send_game_list
+    (MbNetServerHandler * self,
+     MbNetConnection * con, MbNetGameListHolder * holder) {
+	MbNetMessage *m = mb_net_message_create();
+	mb_net_message_add_int(m, GAME_LIST);
+	mb_net_game_list_holder_serialize(holder, m);
+	mb_net_connection_send_message(con, m, NULL);
+	g_object_unref(m);
+
+}
+
+void mb_net_server_handler_send_ask_game_list
+    (MbNetServerHandler * self,
+     MbNetConnection * con, guint32 handler_id) {
+	MbNetMessage *m = mb_net_message_create();
+	mb_net_message_add_int(m, ASK_GAME_LIST);
+	mb_net_message_add_int(m, handler_id);
+	mb_net_connection_send_message(con, m, NULL);
+	g_object_unref(m);
+}
+
+
+void mb_net_server_handler_send_ask_register_player
+    (MbNetServerHandler * self, MbNetConnection * con,
+     MbNetPlayerHolder * holder) {
+	MbNetMessage *m = mb_net_message_create();
+	mb_net_message_add_int(m, ASK_REGISTER_PLAYER);
+	mb_net_player_holder_serialize(holder, m);
+	mb_net_connection_send_message(con, m, NULL);
+	g_object_unref(m);
+}
+
+
+void mb_net_server_handler_send_register_player_response
+    (MbNetServerHandler * self, MbNetConnection * con,
+     MbNetPlayerHolder * holder, gboolean ok) {
+	MbNetMessage *m = mb_net_message_create();
+	mb_net_message_add_int(m, REGISTER_PLAYER_RESPONSE);
+	mb_net_player_holder_serialize(holder, m);
+	mb_net_message_add_boolean(m, ok);
+	mb_net_connection_send_message(con, m, NULL);
+	g_object_unref(m);
 }
 
 static void
-mb_net_server_handler_get_property (GObject * object, guint prop_id,
-				    GValue * value, GParamSpec * param_spec)
+mb_net_server_handler_get_property(GObject * object, guint prop_id,
+				   GValue * value, GParamSpec * param_spec)
 {
-  MbNetServerHandler *self;
+	MbNetServerHandler *self;
 
-  self = MB_NET_SERVER_HANDLER (object);
+	self = MB_NET_SERVER_HANDLER(object);
 
-  switch (prop_id)
-    {
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, param_spec);
-      break;
-    }
+	switch (prop_id) {
+	default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id,
+						  param_spec);
+		break;
+	}
 }
 
 static void
-mb_net_server_handler_set_property (GObject * object, guint prop_id,
-				    const GValue * value,
-				    GParamSpec * param_spec)
+mb_net_server_handler_set_property(GObject * object, guint prop_id,
+				   const GValue * value,
+				   GParamSpec * param_spec)
 {
-  MbNetServerHandler *self;
+	MbNetServerHandler *self;
 
-  self = MB_NET_SERVER_HANDLER (object);
+	self = MB_NET_SERVER_HANDLER(object);
 
-  switch (prop_id)
-    {
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, param_spec);
-      break;
-    }
+	switch (prop_id) {
+	default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id,
+						  param_spec);
+		break;
+	}
+}
+
+
+static void mb_net_server_handler_iface_init(MbNetHandlerInterface * iface)
+{
+	iface->receive = _receive;
 }
 
 
 static void
-mb_net_server_handler_iface_init (MbNetHandlerInterface * iface)
+mb_net_server_handler_class_init(MbNetServerHandlerClass *
+				 mb_net_server_handler_class)
 {
-  iface->receive = _receive;
-}
+	GObjectClass *g_object_class;
+
+	parent_class =
+	    g_type_class_peek_parent(mb_net_server_handler_class);
 
 
-static void
-mb_net_server_handler_class_init (MbNetServerHandlerClass *
-				  mb_net_server_handler_class)
-{
-  GObjectClass *g_object_class;
+	g_type_class_add_private(mb_net_server_handler_class,
+				 sizeof(Private));
 
-  parent_class = g_type_class_peek_parent (mb_net_server_handler_class);
+	g_object_class = G_OBJECT_CLASS(mb_net_server_handler_class);
 
+	/* setting up property system */
+	g_object_class->set_property = mb_net_server_handler_set_property;
+	g_object_class->get_property = mb_net_server_handler_get_property;
+	g_object_class->finalize =
+	    (GObjectFinalizeFunc) mb_net_server_handler_finalize;
 
-  g_type_class_add_private (mb_net_server_handler_class, sizeof (Private));
+	_signals[ASK_GAME_LIST] = g_signal_new("ask-game-list",
+					       MB_NET_TYPE_SERVER_HANDLER,
+					       G_SIGNAL_RUN_LAST,
+					       G_STRUCT_OFFSET
+					       (MbNetServerHandlerClass,
+						ask_game_list), NULL,
+					       NULL,
+					       monkey_net_marshal_VOID__POINTER_UINT,
+					       G_TYPE_NONE, 2,
+					       G_TYPE_POINTER,
+					       G_TYPE_UINT);
 
-  g_object_class = G_OBJECT_CLASS (mb_net_server_handler_class);
+	_signals[GAME_LIST] = g_signal_new("game-list",
+					   MB_NET_TYPE_SERVER_HANDLER,
+					   G_SIGNAL_RUN_LAST,
+					   G_STRUCT_OFFSET
+					   (MbNetServerHandlerClass,
+					    game_list), NULL,
+					   NULL,
+					   monkey_net_marshal_VOID__POINTER_POINTER,
+					   G_TYPE_NONE, 2,
+					   G_TYPE_POINTER, G_TYPE_POINTER);
 
-  /* setting up property system */
-  g_object_class->set_property = mb_net_server_handler_set_property;
-  g_object_class->get_property = mb_net_server_handler_get_property;
-  g_object_class->finalize =
-    (GObjectFinalizeFunc) mb_net_server_handler_finalize;
+	_signals[ASK_REGISTER_PLAYER] = g_signal_new("ask-register-player",
+						     MB_NET_TYPE_SERVER_HANDLER,
+						     G_SIGNAL_RUN_LAST,
+						     G_STRUCT_OFFSET
+						     (MbNetServerHandlerClass,
+						      ask_register_player),
+						     NULL, NULL,
+						     monkey_net_marshal_VOID__POINTER_POINTER,
+						     G_TYPE_NONE, 2,
+						     G_TYPE_POINTER,
+						     G_TYPE_POINTER);
 
-  _signals[ASK_GAME_LIST] = g_signal_new ("ask-game-list",
-					  MB_NET_TYPE_CONNECTION,
-					  G_SIGNAL_RUN_LAST,
-					  G_STRUCT_OFFSET
-					  (MbNetServerHandlerClass,
-					   ask_game_list), NULL,
-					  NULL,
-					  monkey_net_marshal_VOID__POINTER_UINT,
-					  G_TYPE_NONE, 2,
-					  G_TYPE_POINTER, G_TYPE_UINT);
+	_signals[REGISTER_PLAYER_RESPONSE] =
+	    g_signal_new("register-player-response",
+			 MB_NET_TYPE_SERVER_HANDLER, G_SIGNAL_RUN_LAST,
+			 G_STRUCT_OFFSET(MbNetServerHandlerClass,
+					 register_player_response), NULL,
+			 NULL,
+			 monkey_net_marshal_VOID__POINTER_POINTER_UINT,
+			 G_TYPE_NONE, 3, G_TYPE_POINTER, G_TYPE_POINTER,
+			 G_TYPE_UINT);
 
-  _signals[GAME_LIST] = g_signal_new ("game-list",
-				      MB_NET_TYPE_CONNECTION,
-				      G_SIGNAL_RUN_LAST,
-				      G_STRUCT_OFFSET
-				      (MbNetServerHandlerClass,
-				       ask_game_list), NULL,
-				      NULL,
-				      monkey_net_marshal_VOID__POINTER_UINT_POINTER,
-				      G_TYPE_NONE, 3,
-				      G_TYPE_POINTER,
-				      G_TYPE_UINT, G_TYPE_POINTER);
 }

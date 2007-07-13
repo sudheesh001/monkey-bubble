@@ -29,11 +29,11 @@
 G_BEGIN_DECLS typedef struct _MbNetServer MbNetServer;
 typedef struct _MbNetServerClass MbNetServerClass;
 
-GType mb_net_server_get_type (void);
+GType mb_net_server_get_type(void);
 
-void mb_net_server_accept_on (MbNetServer * self, const gchar * uri,
-			      GError ** error);
-void mb_net_server_stop (MbNetServer * self);
+void mb_net_server_accept_on(MbNetServer * self, const gchar * uri,
+			     GError ** error);
+void mb_net_server_stop(MbNetServer * self);
 #define MB_NET_TYPE_SERVER			(mb_net_server_get_type())
 #define MB_NET_SERVER(object)		(G_TYPE_CHECK_INSTANCE_CAST((object), MB_NET_TYPE_SERVER, MbNetServer))
 #define MB_NET_SERVER_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST((klass), MB_NET_TYPE_SERVER, MbNetServerClass))
@@ -41,17 +41,15 @@ void mb_net_server_stop (MbNetServer * self);
 #define MB_NET_IS_SERVER_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE((klass), MB_NET_TYPE_SERVER))
 #define MB_NET_SERVER_GET_CLASS(object)	(G_TYPE_INSTANCE_GET_CLASS((object), MB_NET_TYPE_SERVER, MbNetServerClass))
 
-struct _MbNetServer
-{
-  GObject base_instance;
+struct _MbNetServer {
+	GObject base_instance;
 };
 
-struct _MbNetServerClass
-{
-  GObjectClass base_class;
+struct _MbNetServerClass {
+	GObjectClass base_class;
 
-  /* signals */
+	/* signals */
 };
 
 G_END_DECLS
-#endif /* !_MB_NET__SERVER_H */
+#endif				/* !_MB_NET__SERVER_H */

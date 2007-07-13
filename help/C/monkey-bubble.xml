@@ -23,7 +23,7 @@
       <publishername>GNOME Documentation Project</publishername> 
     </publisher> 
     <authorgroup> 
-      <author> 
+      <author role="maintainer"> 
 	<firstname>Thomas</firstname> 
 	<surname>Cataldo</surname> 
 	<affiliation> 
@@ -49,6 +49,8 @@
 
     <releaseinfo> This manual describes version &appversion; of &app;.
     </releaseinfo> 
+    <abstract role="description"> This manual describes version &appversion; of &app;.
+    </abstract> 
     <legalnotice> 
       <title>Feedback</title> 
       <para> To report a bug or make a suggestion regarding the &app; application or this

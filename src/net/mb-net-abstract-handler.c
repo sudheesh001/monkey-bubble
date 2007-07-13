@@ -30,79 +30,72 @@
 #include <glib-object.h>
 
 
-typedef struct _Private
-{
-  int i;
+typedef struct _Private {
+	int i;
 } Private;
 
 
 
 
-enum
-{
-  PROP_ATTRIBUTE
+enum {
+	PROP_ATTRIBUTE
 };
 
-enum
-{
-  N_SIGNALS
+enum {
+	N_SIGNALS
 };
 
 static GObjectClass *parent_class = NULL;
 
-static void mb_net_abstract_handler_iface_init (MbNetHandlerInterface *
-						iface);
+static void mb_net_abstract_handler_iface_init(MbNetHandlerInterface *
+					       iface);
 
-static void mb_net_abstract_handler_get_property (GObject * object,
-						  guint prop_id,
-						  GValue * value,
-						  GParamSpec * param_spec);
-static void mb_net_abstract_handler_set_property (GObject * object,
-						  guint prop_id,
-						  const GValue * value,
-						  GParamSpec * param_spec);
+static void mb_net_abstract_handler_get_property(GObject * object,
+						 guint prop_id,
+						 GValue * value,
+						 GParamSpec * param_spec);
+static void mb_net_abstract_handler_set_property(GObject * object,
+						 guint prop_id,
+						 const GValue * value,
+						 GParamSpec * param_spec);
 
 
 //static        guint   _signals[N_SIGNALS] = { 0 };
 
-G_DEFINE_TYPE_WITH_CODE (MbNetAbstractHandler, mb_net_abstract_handler,
-			 G_TYPE_OBJECT,
-			 {
-			 G_IMPLEMENT_INTERFACE (MB_NET_TYPE_HANDLER,
-						mb_net_abstract_handler_iface_init)});
+G_DEFINE_TYPE_WITH_CODE(MbNetAbstractHandler, mb_net_abstract_handler,
+			G_TYPE_OBJECT, {
+			G_IMPLEMENT_INTERFACE(MB_NET_TYPE_HANDLER,
+					      mb_net_abstract_handler_iface_init)});
 
 #define GET_PRIVATE(o)  \
    (G_TYPE_INSTANCE_GET_PRIVATE ((o), MB_NET_TYPE_ABSTRACT_HANDLER, Private))
 
 
-void _receive (MbNetHandler * handler, MbNetConnection * con,
-	       MbNetMessage * m);
+void _receive(MbNetHandler * handler, MbNetConnection * con,
+	      MbNetMessage * m);
 
-static void mb_net_abstract_handler_finalize (MbNetAbstractHandler * self);
+static void mb_net_abstract_handler_finalize(MbNetAbstractHandler * self);
 
-static void mb_net_abstract_handler_init (MbNetAbstractHandler * self);
+static void mb_net_abstract_handler_init(MbNetAbstractHandler * self);
 
 
 
-static void
-mb_net_abstract_handler_init (MbNetAbstractHandler * self)
+static void mb_net_abstract_handler_init(MbNetAbstractHandler * self)
 {
-  Private *priv;
-  priv = GET_PRIVATE (self);
+	Private *priv;
+	priv = GET_PRIVATE(self);
 }
 
 
-static void
-mb_net_abstract_handler_finalize (MbNetAbstractHandler * self)
+static void mb_net_abstract_handler_finalize(MbNetAbstractHandler * self)
 {
-  Private *priv;
-  priv = GET_PRIVATE (self);
+	Private *priv;
+	priv = GET_PRIVATE(self);
 
-  // finalize super
-  if (G_OBJECT_CLASS (parent_class)->finalize)
-    {
-      (*G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (self));
-    }
+	// finalize super
+	if (G_OBJECT_CLASS(parent_class)->finalize) {
+		(*G_OBJECT_CLASS(parent_class)->finalize) (G_OBJECT(self));
+	}
 }
 
 /*
@@ -135,67 +128,72 @@ void mb_net_abstract_handler_send_xml_message(MbNetAbstractHandler *
 }
 */
 void
-_receive (MbNetHandler * handler, MbNetConnection * con, MbNetMessage * m)
+_receive(MbNetHandler * handler, MbNetConnection * con, MbNetMessage * m)
 {
 }
 
 static void
-mb_net_abstract_handler_get_property (GObject * object, guint prop_id,
-				      GValue * value, GParamSpec * param_spec)
+mb_net_abstract_handler_get_property(GObject * object, guint prop_id,
+				     GValue * value,
+				     GParamSpec * param_spec)
 {
-  MbNetAbstractHandler *self;
+	MbNetAbstractHandler *self;
 
-  self = MB_NET_ABSTRACT_HANDLER (object);
+	self = MB_NET_ABSTRACT_HANDLER(object);
 
-  switch (prop_id)
-    {
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, param_spec);
-      break;
-    }
+	switch (prop_id) {
+	default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id,
+						  param_spec);
+		break;
+	}
 }
 
 static void
-mb_net_abstract_handler_set_property (GObject * object, guint prop_id,
-				      const GValue * value,
-				      GParamSpec * param_spec)
+mb_net_abstract_handler_set_property(GObject * object, guint prop_id,
+				     const GValue * value,
+				     GParamSpec * param_spec)
 {
-  MbNetAbstractHandler *self;
+	MbNetAbstractHandler *self;
 
-  self = MB_NET_ABSTRACT_HANDLER (object);
+	self = MB_NET_ABSTRACT_HANDLER(object);
 
-  switch (prop_id)
-    {
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, param_spec);
-      break;
-    }
+	switch (prop_id) {
+	default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id,
+						  param_spec);
+		break;
+	}
 }
 
 static void
-mb_net_abstract_handler_iface_init (MbNetHandlerInterface * iface)
+mb_net_abstract_handler_iface_init(MbNetHandlerInterface * iface)
 {
-  iface->receive = _receive;
+	iface->receive = _receive;
 }
 
 static void
-mb_net_abstract_handler_class_init (MbNetAbstractHandlerClass *
-				    mb_net_abstract_handler_class)
+mb_net_abstract_handler_class_init(MbNetAbstractHandlerClass *
+				   mb_net_abstract_handler_class)
 {
-  GObjectClass *g_object_class;
+	GObjectClass *g_object_class;
 
-  parent_class = g_type_class_peek_parent (mb_net_abstract_handler_class);
+	parent_class =
+	    g_type_class_peek_parent(mb_net_abstract_handler_class);
 
 
-  g_type_class_add_private (mb_net_abstract_handler_class, sizeof (Private));
+	g_type_class_add_private(mb_net_abstract_handler_class,
+				 sizeof(Private));
 
-  g_object_class = G_OBJECT_CLASS (mb_net_abstract_handler_class);
+	g_object_class = G_OBJECT_CLASS(mb_net_abstract_handler_class);
 
-  /* setting up property system */
-  g_object_class->set_property = mb_net_abstract_handler_set_property;
-  g_object_class->get_property = mb_net_abstract_handler_get_property;
-  g_object_class->finalize =
-    (GObjectFinalizeFunc) mb_net_abstract_handler_finalize;
+	/* setting up property system */
+	g_object_class->set_property =
+	    mb_net_abstract_handler_set_property;
+	g_object_class->get_property =
+	    mb_net_abstract_handler_get_property;
+	g_object_class->finalize =
+	    (GObjectFinalizeFunc) mb_net_abstract_handler_finalize;
 
 
 }

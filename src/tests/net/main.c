@@ -5,14 +5,13 @@
 #include <mb-tests-net-message.h>
 
 
-int
-main (int argc, char **argv)
+int main(int argc, char **argv)
 {
-  g_thread_init (NULL);
-  g_type_init ();
-  mb_tests_net_message_test_all ();
-  mb_tests_net_connection_test_all ();
-//      mb_tests_net_handler_test_all();
-  mb_tests_net_server_test_all ();
-  return 0;
+	g_thread_init(NULL);
+	g_type_init();
+	mb_tests_net_message_test_all();
+	mb_tests_net_connection_test_all();
+	mb_tests_net_handler_test_all();
+	mb_tests_net_server_test_all();
+	return 0;
 }

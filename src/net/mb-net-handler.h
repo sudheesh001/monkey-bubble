@@ -29,10 +29,10 @@
 G_BEGIN_DECLS typedef struct _MbNetHandler MbNetHandler;
 typedef struct _MbNetHandlerInterface MbNetHandlerInterface;
 
-GType mb_net_handler_get_type (void);
+GType mb_net_handler_get_type(void);
 
-void mb_net_handler_receive (MbNetHandler * self, MbNetConnection * con,
-			     MbNetMessage * m);
+void mb_net_handler_receive(MbNetHandler * self, MbNetConnection * con,
+			    MbNetMessage * m);
 
 #define MB_NET_TYPE_HANDLER			(mb_net_handler_get_type())
 #define MB_NET_HANDLER(object)		(G_TYPE_CHECK_INSTANCE_CAST((object), MB_NET_TYPE_HANDLER, MbNetHandler))
@@ -40,14 +40,13 @@ void mb_net_handler_receive (MbNetHandler * self, MbNetConnection * con,
 #define MB_NET_HANDLER_GET_INTERFACE(object)	(G_TYPE_INSTANCE_GET_INTERFACE((object), MB_NET_TYPE_HANDLER, MbNetHandlerInterface))
 
 
-struct _MbNetHandlerInterface
-{
-  GTypeInterface parent;
+struct _MbNetHandlerInterface {
+	GTypeInterface parent;
 
-  void (*receive) (MbNetHandler * self, MbNetConnection * con,
-		   MbNetMessage * m);
-  /* signals */
+	void (*receive) (MbNetHandler * self, MbNetConnection * con,
+			 MbNetMessage * m);
+	/* signals */
 };
 
 G_END_DECLS
-#endif /* !_MB_NET__HANDLER_H */
+#endif				/* !_MB_NET__HANDLER_H */

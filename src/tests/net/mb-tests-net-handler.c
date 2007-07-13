@@ -1,206 +1,265 @@
 #include <unistd.h>
 #include <stdio.h>
 #include "mb-tests-net-utils.h"
-#include <net/mb-net-abstract-handler.h>
+#include <net/mb-net-server-handler.h>
 #include <net/mb-net-connection.h>
 #include <mb-tests-net-handler.h>
-/*
-typedef struct _TestReceive TestReceive;
 
+static void _test_server_handler();
 
-struct _TestReceive {
-
-	TestSync *sync;
-	MbNetAbstractHandler *h;
-	MbNetConnection *con;
-	MbNetConnection *con2;
-};
-
-static gboolean _test_new_connection(MbNetConnection * con,
-				     MbNetConnection * new_con,
-				     TestSync * sync);
-
-static TestReceive *_init_receive_test(gpointer data2);
-static void _free_receive_test(TestReceive * t);
-
-
-static TestReceive *_init_receive_test(gpointer data2)
+gboolean mb_tests_net_handler_test_all()
 {
-	MbNetAbstractHandler *h;
-	MbNetConnection *con;
-	MbNetConnection *con2;
-	TestSync *sync;
-	GError *error;
-
-	error = NULL;
-	TestReceive *r = g_new0(TestReceive, 1);
-
-	sync = _init_sync();
-
-	error = NULL;
-	con =
-	    MB_NET_CONNECTION(g_object_new(MB_NET_TYPE_CONNECTION, NULL));
-	con2 =
-	    MB_NET_CONNECTION(g_object_new(MB_NET_TYPE_CONNECTION, NULL));
-
-	h = MB_NET_ABSTRACT_HANDLER(g_object_new
-				    (MB_NET_TYPE_ABSTRACT_HANDLER, NULL));
-
-	sync->data = h;
-	sync->data2 = data2;
-	sync->ret = FALSE;
-	r->sync = sync;
-	r->con = con;
-	r->con2 = con2;
-	r->h = h;
-	g_signal_connect(con, "new-connection",
-			 (GCallback) _test_new_connection, sync);
-	mb_net_connection_accept_on(con, "mb://localhost:6600", &error);
-	g_assert(error == NULL);
-
-	mb_net_connection_connect(con2, "mb://localhost:6600", &error);
-	g_assert(error == NULL);
-
-	return r;
+	_test_server_handler();
+	return TRUE;
 }
 
 
-static void _free_receive_test(TestReceive * t)
-{
-	g_object_unref(t->h);
-	mb_net_connection_stop(t->con, NULL);
-	g_object_unref(t->con);
-	g_object_unref(t->con2);
+static void _test_server_handler_ask_register_player();
+static void _test_server_handler_register_player_response();
+static void _test_server_handler_send_game_list();
+static void _test_server_handler_send_ask_game_list();
 
-
-	_free_sync(t->sync);
-}
-static gboolean _test_new_connection(MbNetConnection * con,
-				     MbNetConnection * new_con,
-				     TestSync * sync)
+static void _test_server_handler()
 {
-	g_object_ref(new_con);
-	g_signal_connect(new_con, "receive", (GCallback) sync->data2,
-			 sync);
-	mb_net_connection_listen(new_con, NULL);
-	return FALSE;
+	_test_server_handler_ask_register_player();
+	_test_server_handler_register_player_response();
+	_test_server_handler_send_game_list();
+	_test_server_handler_send_ask_game_list();
 }
 
-
-
-
-static void _test_receive_int(MbNetConnection * con, guint32 size,
-			      gpointer data, TestSync * sync)
+static MbNetPlayerHolder *_new_player()
 {
 
-	guint32 v1 = mb_netabstract_handler_read_int(data, size, 0);
-	guint32 v2 =
-	    mb_netabstract_handler_read_int(data, size, sizeof(guint32));
-	g_print("receive int %d %d \n", v1, v2);
-
-	if (v1 == 255 * 255 * 255 && v2 == 10)
-		sync->ret = TRUE;
-	_signal_sync(sync);
+	MbNetPlayerHolder *holder = g_new0(MbNetPlayerHolder, 1);
+	holder->handler_id = 10;
+	holder->name = g_strdup("monkeybubble");
+	return holder;
 }
 
 
-
-static void _test_sendreceive_int()
+static MbNetGameListHolder *_new_game_list()
 {
-	GError *error;
-	TestReceive *t;
 
-	error = NULL;
-	t = _init_receive_test(_test_receive_int);
+	MbNetGameListHolder *holder = g_new0(MbNetGameListHolder, 1);
+	MbNetSimpleGameHolder *h;
 
-	_begin_sync(t->sync);
 
-	mb_net_abstract_handler_send_int(t->h, t->con2, 255 * 255 * 255,
-					 10, &error);
-	g_assert(error == NULL);
+	holder->handler_id = 10;
 
-	_wait_sync(t->sync);
+	h = g_new0(MbNetSimpleGameHolder, 1);
+	h->handler_id = 1;
+	h->name = g_strdup("monkeybubble1");
 
-	g_assert(t->sync->ret == TRUE);
+	holder->games = g_list_append(holder->games, h);
 
-	_free_receive_test(t);
-	//return TRUE;
+	h = g_new0(MbNetSimpleGameHolder, 1);
+	h->handler_id = 2;
+	h->name = g_strdup("monkeybubble2");
 
+	holder->games = g_list_append(holder->games, h);
+
+	return holder;
 }
-*/
-/*
-static void _test_receive_xml(MbNetConnection * con, guint32 size,
-			      gpointer data, TestSync * sync)
+
+static gboolean _test_game_list(MbNetGameListHolder * holder)
+{
+	gboolean ret = TRUE;
+	ret &= (holder != NULL);
+	ret &= (holder->handler_id == 10);
+	ret &= (g_list_length(holder->games) == 2);
+	return ret;
+}
+
+static gboolean _test_player(MbNetPlayerHolder * holder)
+{
+	gboolean ret = TRUE;
+	ret &= (holder != NULL);
+	ret &= (holder->handler_id == 10);
+	ret &= (g_str_equal("monkeybubble", holder->name));
+	return ret;
+}
+
+
+static void _ask_register_player(MbNetServerHandler * self,
+				 MbNetConnection * con,
+				 MbNetPlayerHolder * holder,
+				 TestSendReceive * tsr)
 {
 
-	xmlDoc *doc;
-	g_print("read xml ... \n");
-	doc =
-	    mb_net_abstract_handler_read_xml_message(data, size,
-						     sizeof(guint32) * 2);
-
-	if (doc != NULL) {
-
-		xmlNode *root;
-		root = doc->children;
-
-		g_assert(g_str_equal(root->name, "test1"));
-
-		gchar *name =
-		    (gchar *) xmlGetProp(root, (guchar *) "name");
-		g_assert(name != NULL);
-		g_assert(g_str_equal(name, "test2"));
-		g_assert(g_str_equal
-			 ((gchar *) root->children->content, "toto"));
-		sync->ret = TRUE;
+	if (_test_player(holder)) {
+		tsr->sync->ret = TRUE;
+	} else {
+		tsr->sync->ret = FALSE;
 	}
-	_signal_sync(sync);
+
 }
 
-
-static void _test_sendreceive_xml()
+static void _test_server_handler_ask_register_player()
 {
 	GError *error;
-	TestReceive *t;
 
 	error = NULL;
-	t = _init_receive_test(_test_receive_xml);
 
-	xmlDoc *doc;
-	xmlNode *text, *root;
+	TestSendReceive *tsr;
 
-	doc = xmlNewDoc((guchar *) "1.0");
-	root = xmlNewNode(NULL, (guchar *) "test1");
-	xmlDocSetRootElement(doc, root);
+	tsr = _init_test_sendreceive(NULL, NULL, TRUE, NULL, NULL, NULL);
 
-	xmlNewProp(root, (guchar *) "name", (guchar *) "test2");
+	MbNetServerHandler *handler;
+	handler =
+	    MB_NET_SERVER_HANDLER(g_object_new
+				  (MB_NET_TYPE_SERVER_HANDLER, NULL));
+
+	g_signal_connect(handler, "ask-register-player",
+			 (GCallback) _ask_register_player, tsr);
 
 
-	text = xmlNewText((const guchar *) "toto");
+	MbNetPlayerHolder *holder = _new_player();
 
-	xmlAddChild(root, text);
+	mb_net_server_handler_send_ask_register_player(handler, tsr->con2,
+						       holder);
 
-	_begin_sync(t->sync);
+	_wait_sync(tsr->sync);
+	mb_net_handler_receive(MB_NET_HANDLER(handler), tsr->con2,
+			       tsr->message);
+	g_assert(tsr->sync->ret == TRUE);
+	_free_test_sendreceive(tsr);
+}
 
-	mb_net_abstract_handler_send_xml_message(t->h, t->con2, 10, 20,
-						 doc, &error);
-
-	xmlFreeDoc(doc);
-
-	g_assert(error == NULL);
-
-	_wait_sync(t->sync);
-
-	g_assert(t->sync->ret == TRUE);
-
-	_free_receive_test(t);
+static void _register_player_response(MbNetServerHandler * self,
+				      MbNetConnection * con,
+				      MbNetPlayerHolder * holder,
+				      gboolean ok, TestSendReceive * tsr)
+{
+	if (_test_player(holder)) {
+		tsr->sync->ret = ok;
+	} else {
+		tsr->sync->ret = !ok;
+	}
 
 }
-*/
-gboolean
-mb_tests_net_handler_test_all ()
+
+static void _test_server_handler_register_player_response()
 {
-  //_test_sendreceive_int();
-  //_test_sendreceive_xml();
-  return TRUE;
+	GError *error;
+
+	error = NULL;
+
+	TestSendReceive *tsr;
+
+	tsr = _init_test_sendreceive(NULL, NULL, TRUE, NULL, NULL, NULL);
+
+	MbNetServerHandler *handler;
+	handler =
+	    MB_NET_SERVER_HANDLER(g_object_new
+				  (MB_NET_TYPE_SERVER_HANDLER, NULL));
+
+	g_signal_connect(handler, "register-player-response",
+			 (GCallback) _register_player_response, tsr);
+
+
+	MbNetPlayerHolder *holder = _new_player();
+
+	mb_net_server_handler_send_register_player_response(handler,
+							    tsr->con2,
+							    holder, TRUE);
+
+	_wait_sync(tsr->sync);
+	mb_net_handler_receive(MB_NET_HANDLER(handler), tsr->con2,
+			       tsr->message);
+
+	g_assert(tsr->sync->ret == TRUE);
+
+	_begin_sync(tsr->sync);
+	mb_net_server_handler_send_register_player_response(handler,
+							    tsr->con2,
+							    holder, FALSE);
+
+	_wait_sync(tsr->sync);
+	mb_net_handler_receive(MB_NET_HANDLER(handler), tsr->con2,
+			       tsr->message);
+
+	g_assert(tsr->sync->ret == FALSE);
+
+	_free_test_sendreceive(tsr);
+}
+
+static void _game_list(MbNetServerHandler * self,
+		       MbNetConnection * con,
+		       MbNetGameListHolder * holder, TestSendReceive * tsr)
+{
+	if (_test_game_list(holder)) {
+		tsr->sync->ret = TRUE;
+	} else {
+		tsr->sync->ret = FALSE;
+	}
+
+}
+
+static void _test_server_handler_send_game_list()
+{
+	GError *error;
+
+	error = NULL;
+
+	TestSendReceive *tsr;
+
+	tsr = _init_test_sendreceive(NULL, NULL, TRUE, NULL, NULL, NULL);
+
+	MbNetServerHandler *handler;
+	handler =
+	    MB_NET_SERVER_HANDLER(g_object_new
+				  (MB_NET_TYPE_SERVER_HANDLER, NULL));
+
+	g_signal_connect(handler, "game-list", (GCallback) _game_list,
+			 tsr);
+
+
+	MbNetGameListHolder *holder = _new_game_list();
+
+	mb_net_server_handler_send_game_list(handler, tsr->con2, holder);
+	_wait_sync(tsr->sync);
+
+	mb_net_handler_receive(MB_NET_HANDLER(handler), tsr->con2,
+			       tsr->message);
+
+	g_assert(tsr->sync->ret == TRUE);
+
+	_free_test_sendreceive(tsr);
+}
+
+static void _ask_game_list(MbNetServerHandler * self,
+			   MbNetConnection * con,
+			   guint32 handler_id, TestSendReceive * tsr)
+{
+	tsr->sync->ret = (handler_id == 10);
+
+}
+
+static void _test_server_handler_send_ask_game_list()
+{
+	GError *error;
+
+	error = NULL;
+
+	TestSendReceive *tsr;
+
+	tsr = _init_test_sendreceive(NULL, NULL, TRUE, NULL, NULL, NULL);
+
+	MbNetServerHandler *handler;
+	handler =
+	    MB_NET_SERVER_HANDLER(g_object_new
+				  (MB_NET_TYPE_SERVER_HANDLER, NULL));
+
+	g_signal_connect(handler, "ask-game-list",
+			 (GCallback) _ask_game_list, tsr);
+
+
+	mb_net_server_handler_send_ask_game_list(handler, tsr->con2, 10);
+	_wait_sync(tsr->sync);
+
+	mb_net_handler_receive(MB_NET_HANDLER(handler), tsr->con2,
+			       tsr->message);
+	g_assert(tsr->sync->ret == TRUE);
+
+	_free_test_sendreceive(tsr);
 }

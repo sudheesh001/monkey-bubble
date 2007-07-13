@@ -1,37 +1,73 @@
 #include <unistd.h>
 #include <stdio.h>
+
+#include "mb-tests-net-utils.h"
 #include <net/mb-net-server.h>
 #include <net/mb-net-server-handler.h>
 #include <net/mb-net-connection.h>
 
-
-gboolean
-mb_tests_net_server_test_all ()
+static void _test_ask_game_list();
+gboolean mb_tests_net_server_test_all()
 {
-  GError *error;
+	_test_ask_game_list();
+	return TRUE;
+}
 
-  MbNetServer *s;
 
-  MbNetConnection *con;
 
-  con = MB_NET_CONNECTION (g_object_new (MB_NET_TYPE_CONNECTION, NULL));
+static void _message(MbNetConnection * con, MbNetMessage * m,
+		     MbNetServerHandler * h)
+{
+	g_print("receive message \n");
+	mb_net_handler_receive(MB_NET_HANDLER(h), con, m);
+}
 
-  s = MB_NET_SERVER (g_object_new (MB_NET_TYPE_SERVER, NULL));
+static void _game_list(MbNetServerHandler * self,
+		       MbNetConnection * con,
+		       MbNetGameListHolder * holder, TestSync * sync)
+{
 
-  error = NULL;
-  mb_net_server_accept_on (s, "mb://localhost:6666", &error);
-  g_assert (error == NULL);
+	g_print("print games list `\n");
+	_signal_sync(sync);
+}
 
-  mb_net_connection_connect (con, "mb://localhost:6666", &error);
-  g_assert (error == NULL);
+static void _test_ask_game_list()
+{
+	GError *error;
 
-  MbNetServerHandler *h;
-  h = MB_NET_SERVER_HANDLER (g_object_new (MB_NET_TYPE_SERVER_HANDLER, NULL));
+	MbNetServer *s;
 
-  mb_net_server_handler_send_ask_game_list (h, con, 0);
+	MbNetConnection *con;
+	TestSync *sync;
 
-  g_object_unref (con);
-  g_object_unref (s);
+	sync = _init_sync();
 
-  return TRUE;
+	con =
+	    MB_NET_CONNECTION(g_object_new(MB_NET_TYPE_CONNECTION, NULL));
+
+	s = MB_NET_SERVER(g_object_new(MB_NET_TYPE_SERVER, NULL));
+
+	error = NULL;
+	mb_net_server_accept_on(s, "mb://localhost:6666", &error);
+	g_assert(error == NULL);
+
+	mb_net_connection_connect(con, "mb://localhost:6666", &error);
+	g_assert(error == NULL);
+
+	mb_net_connection_listen(con, &error);
+	g_assert(error == NULL);
+
+
+	MbNetServerHandler *h;
+	h = MB_NET_SERVER_HANDLER(g_object_new
+				  (MB_NET_TYPE_SERVER_HANDLER, NULL));
+
+	g_signal_connect(con, "receive-message", (GCallback) _message, h);
+	g_signal_connect(h, "game-list", (GCallback) _game_list, sync);
+
+	_begin_sync(sync);
+
+	mb_net_server_handler_send_ask_game_list(h, con, 1);
+
+	_wait_sync(sync);
 }

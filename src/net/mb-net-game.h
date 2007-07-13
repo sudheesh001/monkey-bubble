@@ -30,9 +30,9 @@ G_BEGIN_DECLS typedef struct _MbNetGame MbNetGame;
 typedef struct _MbNetGameClass MbNetGameClass;
 typedef struct _MbNetGameSimple MbNetGameSimple;
 
-GType mb_net_game_get_type (void);
+GType mb_net_game_get_type(void);
 
-MbNetHandler *mb_net_game_get_handler (MbNetGame * self);
+MbNetHandler *mb_net_game_get_handler(MbNetGame * self);
 
 #define MB_NET_TYPE_GAME			(mb_net_game_get_type())
 #define MB_NET_GAME(object)		(G_TYPE_CHECK_INSTANCE_CAST((object), MB_NET_TYPE_GAME, MbNetGame))
@@ -41,25 +41,22 @@ MbNetHandler *mb_net_game_get_handler (MbNetGame * self);
 #define MB_NET_IS_GAME_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE((klass), MB_NET_TYPE_GAME))
 #define MB_NET_GAME_GET_CLASS(object)	(G_TYPE_INSTANCE_GET_CLASS((object), MB_NET_TYPE_GAME, MbNetGameClass))
 
-struct _MbNetGameSimple
-{
-  guint32 handler_id;
-  gchar *name;
+struct _MbNetGameSimple {
+	guint32 handler_id;
+	gchar *name;
 };
 
-struct _MbNetGame
-{
-  GObject base_instance;
-  MbNetGameSimple info;
+struct _MbNetGame {
+	GObject base_instance;
+	MbNetGameSimple info;
 
 };
 
-struct _MbNetGameClass
-{
-  GObjectClass base_class;
+struct _MbNetGameClass {
+	GObjectClass base_class;
 
-  /* signals */
+	/* signals */
 };
 
 G_END_DECLS
-#endif /* !_MB_NET__GAME_H */
+#endif				/* !_MB_NET__GAME_H */

@@ -29,27 +29,27 @@
 G_BEGIN_DECLS typedef struct _MbNetConnection MbNetConnection;
 typedef struct _MbNetConnectionClass MbNetConnectionClass;
 
-enum
-{
-  MB_NET_CONNECTION_BAD_URI,
-  MB_NET_CONNECTION_SOCKET_ERROR
+enum {
+	MB_NET_CONNECTION_BAD_URI,
+	MB_NET_CONNECTION_SOCKET_ERROR
 };
 
-GType mb_net_connection_get_type (void);
-void mb_net_connection_connect (MbNetConnection * self,
-				const gchar * uri, GError ** error);
-void mb_net_connection_accept_on (MbNetConnection * self, const gchar * uri,
-				  GError ** error);
+GType mb_net_connection_get_type(void);
+void mb_net_connection_connect(MbNetConnection * self,
+			       const gchar * uri, GError ** error);
+void mb_net_connection_accept_on(MbNetConnection * self, const gchar * uri,
+				 GError ** error);
 
-void mb_net_connection_stop (MbNetConnection * self, GError ** error);
-void mb_net_connection_listen (MbNetConnection * self, GError ** error);
-void mb_net_connection_disconnect (MbNetConnection * self);
+void mb_net_connection_stop(MbNetConnection * self, GError ** error);
+void mb_net_connection_listen(MbNetConnection * self, GError ** error);
+void mb_net_connection_disconnect(MbNetConnection * self);
 
 /*
 void mb_net_connection_send_message(MbNetConnection * self, guint32 size,
 				    const guint8 * data, GError ** error);*/
-void mb_net_connection_send_message (MbNetConnection * self,
-				     MbNetMessage * message, GError ** error);
+void mb_net_connection_send_message(MbNetConnection * self,
+				    MbNetMessage * message,
+				    GError ** error);
 
 #define MB_NET_TYPE_CONNECTION			(mb_net_connection_get_type())
 #define MB_NET_CONNECTION(object)		(G_TYPE_CHECK_INSTANCE_CAST((object), MB_NET_TYPE_CONNECTION, MbNetConnection))
@@ -58,23 +58,22 @@ void mb_net_connection_send_message (MbNetConnection * self,
 #define MB_NET_IS_CONNECTION_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE((klass), MB_NET_TYPE_CONNECTION))
 #define MB_NET_CONNECTION_GET_CLASS(object)	(G_TYPE_INSTANCE_GET_CLASS((object), MB_NET_TYPE_CONNECTION, MbNetConnectionClass))
 
-struct _MbNetConnection
-{
-  GObject base_instance;
+struct _MbNetConnection {
+	GObject base_instance;
 };
 
-struct _MbNetConnectionClass
-{
-  GObjectClass base_class;
+struct _MbNetConnectionClass {
+	GObjectClass base_class;
 
-  /* signals */
-  void (*receive) (MbNetConnection * self, guint32 size, const guint8 * data);
+	/* signals */
+	void (*receive) (MbNetConnection * self, guint32 size,
+			 const guint8 * data);
 
-  void (*receive_message) (MbNetConnection * self, MbNetMessage * m);
-  void (*new_connection) (MbNetConnection * self,
-			  MbNetConnection * new_connection);
-  void (*disconnected) (MbNetConnection * self);
+	void (*receive_message) (MbNetConnection * self, MbNetMessage * m);
+	void (*new_connection) (MbNetConnection * self,
+				MbNetConnection * new_connection);
+	void (*disconnected) (MbNetConnection * self);
 };
 
 G_END_DECLS
-#endif /* !_MB_NET__CONNECTION_H */
+#endif				/* !_MB_NET__CONNECTION_H */
