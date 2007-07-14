@@ -3,15 +3,7 @@
 #include "mb-tests-net-utils.h"
 #include <net/mb-net-server-handler.h>
 #include <net/mb-net-connection.h>
-#include <mb-tests-net-handler.h>
-
-static void _test_server_handler();
-
-gboolean mb_tests_net_handler_test_all()
-{
-	_test_server_handler();
-	return TRUE;
-}
+#include <mb-tests-net-server-handler.h>
 
 
 static void _test_server_handler_ask_register_player();
@@ -20,7 +12,7 @@ static void _test_server_handler_send_game_list();
 static void _test_server_handler_send_ask_game_list();
 static void _test_server_handler_send_create_game();
 static void _test_server_handler_send_create_game_response();
-static void _test_server_handler()
+gboolean mb_tests_net_server_handler_test_all()
 {
 	_test_server_handler_ask_register_player();
 	_test_server_handler_register_player_response();
@@ -28,6 +20,7 @@ static void _test_server_handler()
 	_test_server_handler_send_ask_game_list();
 	_test_server_handler_send_create_game();
 	_test_server_handler_send_create_game_response();
+	return TRUE;
 }
 
 static MbNetPlayerHolder *_new_player()

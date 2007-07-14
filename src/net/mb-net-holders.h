@@ -30,11 +30,26 @@
 G_BEGIN_DECLS typedef struct _MbNetGameListHolder MbNetGameListHolder;
 typedef struct _MbNetSimpleGameHolder MbNetSimpleGameHolder;
 typedef struct _MbNetPlayerHolder MbNetPlayerHolder;
+typedef struct _MbNetPlayerListHolder MbNetPlayerListHolder;
+typedef struct _MbNetScoreHolder MbNetScoreHolder;
+typedef struct _MbNetPlayerScoreHolder MbNetPlayerScoreHolder;
 
 MbNetGameListHolder *mb_net_game_list_holder_parse(MbNetMessage * m);
 void mb_net_game_list_holder_serialize(MbNetGameListHolder * holder,
 				       MbNetMessage * m);
 void mb_net_game_list_holder_free(MbNetGameListHolder * holder);
+
+
+MbNetPlayerListHolder *mb_net_player_list_holder_parse(MbNetMessage * m);
+void mb_net_player_list_holder_serialize(MbNetPlayerListHolder * holder,
+					 MbNetMessage * m);
+void mb_net_player_list_holder_free(MbNetPlayerListHolder * holder);
+
+
+MbNetScoreHolder *mb_net_score_holder_parse(MbNetMessage * m);
+void mb_net_score_holder_serialize(MbNetScoreHolder * holder,
+				   MbNetMessage * m);
+void mb_net_score_holder_free(MbNetScoreHolder * holder);
 
 MbNetPlayerHolder *mb_net_player_holder_parse(MbNetMessage * m);
 void mb_net_player_holder_serialize(MbNetPlayerHolder * holder,
@@ -46,6 +61,19 @@ MbNetSimpleGameHolder *mb_net_simple_game_holder_create(guint handler_id,
 							name);
 struct _MbNetGameListHolder {
 	GList *games;
+};
+
+struct _MbNetPlayerListHolder {
+	GList *players;
+};
+
+struct _MbNetScoreHolder {
+	GList *score_by_player;
+};
+
+struct _MbNetPlayerScoreHolder {
+	gchar *name;
+	guint score;
 };
 
 struct _MbNetSimpleGameHolder {

@@ -26,6 +26,75 @@
 #include <glib.h>
 #include <glib-object.h>
 
+MbNetPlayerListHolder *mb_net_player_list_holder_parse(MbNetMessage * m)
+{
+	MbNetPlayerListHolder *holder;
+	holder = g_new0(MbNetPlayerListHolder, 1);
+	guint32 size = mb_net_message_read_int(m);
+	int i;
+	for (i = 0; i < size; i++) {
+		MbNetPlayerHolder *h = mb_net_player_holder_parse(m);
+		holder->players = g_list_append(holder->players, h);
+	}
+	return holder;
+}
+
+void mb_net_player_list_holder_serialize(MbNetPlayerListHolder * holder,
+					 MbNetMessage * m)
+{
+	mb_net_message_add_int(m, g_list_length(holder->players));
+	GList *next = holder->players;
+	while (next != NULL) {
+		MbNetPlayerHolder *h = (MbNetPlayerHolder *) next->data;
+		mb_net_player_holder_serialize(h, m);
+		next = g_list_next(next);
+	}
+
+
+}
+
+void mb_net_player_list_holder_free(MbNetPlayerListHolder * holder)
+{
+}
+
+
+
+MbNetScoreHolder *mb_net_score_holder_parse(MbNetMessage * m)
+{
+	MbNetScoreHolder *holder;
+	holder = g_new0(MbNetScoreHolder, 1);
+	guint32 size = mb_net_message_read_int(m);
+	int i;
+	for (i = 0; i < size; i++) {
+		MbNetPlayerScoreHolder *h =
+		    g_new0(MbNetPlayerScoreHolder, 1);
+		h->name = mb_net_message_read_string(m);
+		h->score = mb_net_message_read_int(m);
+		holder->score_by_player =
+		    g_list_append(holder->score_by_player, h);
+	}
+	return holder;
+}
+
+void mb_net_score_holder_serialize(MbNetScoreHolder * holder,
+				   MbNetMessage * m)
+{
+	mb_net_message_add_int(m, g_list_length(holder->score_by_player));
+	GList *next = holder->score_by_player;
+	while (next != NULL) {
+		MbNetPlayerScoreHolder *h =
+		    (MbNetPlayerScoreHolder *) next->data;
+		mb_net_message_add_string(m, h->name);
+		mb_net_message_add_int(m, h->score);
+		next = g_list_next(next);
+	}
+}
+
+void mb_net_score_holder_free(MbNetScoreHolder * holder)
+{
+}
+
+
 MbNetSimpleGameHolder *mb_net_simple_game_holder_create(guint handler_id,
 							const gchar * name)
 {

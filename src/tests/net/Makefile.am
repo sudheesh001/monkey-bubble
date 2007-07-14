@@ -15,7 +15,8 @@ tests_net_SOURCES = \
 	main.c \
 	mb-tests-net-connection.h mb-tests-net-connection.c \
 	mb-tests-net-message.h mb-tests-net-message.c \
-	mb-tests-net-handler.h mb-tests-net-handler.c \
+	mb-tests-net-server-handler.h mb-tests-net-server-handler.c \
+	mb-tests-net-game-handler.h mb-tests-net-game-handler.c \
 	mb-tests-net-server.h mb-tests-net-server.c \
 	mb-tests-net-utils.h mb-tests-net-utils.c \
 	$(NULL)

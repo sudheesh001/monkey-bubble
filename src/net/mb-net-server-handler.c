@@ -161,9 +161,8 @@ void mb_net_server_handler_send_create_game
 void mb_net_server_handler_send_create_game_response
     (MbNetServerHandler * self, MbNetConnection * con, guint32 handler_id,
      guint32 game_handler_id) {
-	MbNetMessage *m =
-	    mb_net_message_new(_get_id(self), handler_id,
-			       CREATE_GAME_RESPONSE);
+	MbNetMessage *m = mb_net_message_new(_get_id(self), handler_id,
+					     CREATE_GAME_RESPONSE);
 	mb_net_message_add_int(m, game_handler_id);
 	mb_net_connection_send_message(con, m, NULL);
 	g_object_unref(m);
