@@ -32,6 +32,7 @@ typedef struct _MbNetGameSimple MbNetGameSimple;
 
 GType mb_net_game_get_type(void);
 
+MbNetGame *mb_net_game_new(const gchar * name, guint32 master_client_id);
 MbNetHandler *mb_net_game_get_handler(MbNetGame * self);
 
 #define MB_NET_TYPE_GAME			(mb_net_game_get_type())

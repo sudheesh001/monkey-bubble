@@ -49,6 +49,14 @@ void mb_net_server_handler_send_register_player_response
     (MbNetServerHandler * self, MbNetConnection * con, guint32 handler_id,
      MbNetPlayerHolder * holder, gboolean ok);
 
+void mb_net_server_handler_send_create_game
+    (MbNetServerHandler * self, MbNetConnection * con, guint32 handler_id,
+     const gchar * name);
+
+void mb_net_server_handler_send_create_game_response
+    (MbNetServerHandler * self, MbNetConnection * con, guint32 handler_id,
+     guint32 game_handler_id);
+
 #define MB_NET_TYPE_SERVER_HANDLER			(mb_net_server_handler_get_type())
 #define MB_NET_SERVER_HANDLER(object)		(G_TYPE_CHECK_INSTANCE_CAST((object), MB_NET_TYPE_SERVER_HANDLER, MbNetServerHandler))
 #define MB_NET_SERVER_HANDLER_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST((klass), MB_NET_TYPE_SERVER_HANDLER, MbNetServerHandlerClass))
@@ -80,6 +88,15 @@ struct _MbNetServerHandlerClass {
 					  guint32 handler_id,
 					  MbNetPlayerHolder * holder,
 					  gboolean ok);
+
+	void (*create_game) (MbNetServerHandler * self,
+			     MbNetConnection * con, guint32 handler_id,
+			     const gchar * name);
+	void (*create_game_response) (MbNetServerHandler * self,
+				      MbNetConnection * con,
+				      guint32 handler_id,
+				      guint32 handler_game_id);
+
 };
 
 G_END_DECLS

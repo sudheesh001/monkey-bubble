@@ -30,6 +30,7 @@
 typedef struct _Private {
 
 	MbNetGameHandler *handler;
+	guint32 master_client_id;
 } Private;
 
 
@@ -95,6 +96,19 @@ static void mb_net_game_finalize(MbNetGame * self)
 	if (G_OBJECT_CLASS(parent_class)->finalize) {
 		(*G_OBJECT_CLASS(parent_class)->finalize) (G_OBJECT(self));
 	}
+}
+
+MbNetGame *mb_net_game_new(const gchar * name, guint32 master_client_id)
+{
+	Private *priv;
+	MbNetGame *self =
+	    MB_NET_GAME(g_object_new(MB_NET_TYPE_GAME, NULL));
+
+	priv = GET_PRIVATE(self);
+
+	self->info.name = g_strdup(name);
+	priv->master_client_id = master_client_id;
+	return self;
 }
 
 MbNetHandler *mb_net_game_get_handler(MbNetGame * self)

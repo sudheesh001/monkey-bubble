@@ -43,6 +43,8 @@ enum {
 	ASK_GAME_LIST,
 	ASK_REGISTER_PLAYER,
 	REGISTER_PLAYER_RESPONSE,
+	CREATE_GAME,
+	CREATE_GAME_RESPONSE,
 	N_SIGNALS
 };
 
@@ -129,12 +131,42 @@ _receive(MbNetHandler * handler, MbNetConnection * con, guint32 src_id,
 		g_signal_emit(self, _signals[REGISTER_PLAYER_RESPONSE], 0,
 			      con, src_id, holder, ok);
 		mb_net_player_holder_free(holder);
+	} else if (code == CREATE_GAME) {
+		gchar *name = mb_net_message_read_string(m);
+		g_signal_emit(self, _signals[CREATE_GAME], 0, con, src_id,
+			      name);
+	} else if (code == CREATE_GAME_RESPONSE) {
+		guint32 game_id = mb_net_message_read_int(m);
+		g_signal_emit(self, _signals[CREATE_GAME_RESPONSE], 0, con,
+			      src_id, game_id);
 	}
 }
 
 static guint32 _get_id(MbNetServerHandler * self)
 {
 	return mb_net_handler_get_id(MB_NET_HANDLER(self));
+}
+
+void mb_net_server_handler_send_create_game
+    (MbNetServerHandler * self, MbNetConnection * con, guint32 handler_id,
+     const gchar * name) {
+	MbNetMessage *m =
+	    mb_net_message_new(_get_id(self), handler_id, CREATE_GAME);
+	mb_net_message_add_string(m, name);
+	mb_net_connection_send_message(con, m, NULL);
+	g_object_unref(m);
+
+}
+
+void mb_net_server_handler_send_create_game_response
+    (MbNetServerHandler * self, MbNetConnection * con, guint32 handler_id,
+     guint32 game_handler_id) {
+	MbNetMessage *m =
+	    mb_net_message_new(_get_id(self), handler_id,
+			       CREATE_GAME_RESPONSE);
+	mb_net_message_add_int(m, game_handler_id);
+	mb_net_connection_send_message(con, m, NULL);
+	g_object_unref(m);
 }
 
 void mb_net_server_handler_send_game_list
@@ -289,4 +321,25 @@ mb_net_server_handler_class_init(MbNetServerHandlerClass *
 			 G_TYPE_NONE, 4, G_TYPE_POINTER, G_TYPE_UINT,
 			 G_TYPE_POINTER, G_TYPE_UINT);
 
+	_signals[CREATE_GAME] = g_signal_new("create-game",
+					     MB_NET_TYPE_SERVER_HANDLER,
+					     G_SIGNAL_RUN_LAST,
+					     G_STRUCT_OFFSET
+					     (MbNetServerHandlerClass,
+					      create_game),
+					     NULL, NULL,
+					     monkey_net_marshal_VOID__POINTER_UINT_POINTER,
+					     G_TYPE_NONE, 3,
+					     G_TYPE_POINTER,
+					     G_TYPE_UINT, G_TYPE_POINTER);
+
+
+	_signals[CREATE_GAME_RESPONSE] =
+	    g_signal_new("create-game-response",
+			 MB_NET_TYPE_SERVER_HANDLER, G_SIGNAL_RUN_LAST,
+			 G_STRUCT_OFFSET(MbNetServerHandlerClass,
+					 create_game_response), NULL, NULL,
+			 monkey_net_marshal_VOID__POINTER_UINT_UINT,
+			 G_TYPE_NONE, 3, G_TYPE_POINTER, G_TYPE_UINT,
+			 G_TYPE_UINT);
 }

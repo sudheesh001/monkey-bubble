@@ -11,10 +11,13 @@ static void _init_server_test(TestSync ** ts, MbNetServer ** server,
 			      MbNetServerHandler ** handler);
 static void _test_ask_game_list();
 static void _test_ask_register_player();
+static void _test_create_game();
+
 gboolean mb_tests_net_server_test_all()
 {
 	_test_ask_register_player();
 	_test_ask_game_list();
+	_test_create_game();
 	return TRUE;
 }
 
@@ -114,6 +117,57 @@ static void _test_ask_game_list()
 	g_object_unref(h);
 }
 
+
+
+static void _create_game_game_list(MbNetServerHandler * self,
+				   MbNetConnection * con, guint32 handler,
+				   MbNetGameListHolder * holder,
+				   TestSync * sync)
+{
+	g_assert(g_list_length(holder->games) == 1);
+	MbNetSimpleGameHolder *h =
+	    (MbNetSimpleGameHolder *) holder->games->data;
+	g_assert(g_str_equal(h->name, "monkeybubble"));
+	_signal_sync(sync);
+}
+
+static void _create_game_response(MbNetServerHandler * self,
+				  MbNetConnection * con, guint32 handler,
+				  guint32 game_id, TestSync * sync)
+{
+	_signal_sync(sync);
+}
+
+
+static void _test_create_game()
+{
+	//GError *error;
+	MbNetServer *s;
+	MbNetConnection *con;
+	TestSync *sync;
+	MbNetServerHandler *h;
+
+	_init_server_test(&sync, &s, &con, &h);
+	g_signal_connect(h, "create-game-response",
+			 (GCallback) _create_game_response, sync);
+	g_signal_connect(h, "game-list",
+			 (GCallback) _create_game_game_list, sync);
+	_begin_sync(sync);
+
+	mb_net_server_handler_send_create_game(h, con, 0, "monkeybubble");
+
+	_wait_sync(sync);
+
+	_begin_sync(sync);
+	mb_net_server_handler_send_ask_game_list(h, con, 0);
+	_wait_sync(sync);
+
+	mb_net_server_stop(s);
+	g_object_unref(s);
+	mb_net_connection_stop(con, NULL);
+	g_object_unref(con);
+	g_object_unref(h);
+}
 
 
 

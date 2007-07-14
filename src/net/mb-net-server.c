@@ -88,6 +88,9 @@ static void _ask_register_player(MbNetServer * self, MbNetConnection * con,
 				 MbNetPlayerHolder * holder,
 				 MbNetServerHandler * handler);
 
+static void _create_game(MbNetServer * self, MbNetConnection * con,
+			 guint32 handler_id,
+			 const gchar * name, MbNetServerHandler * handler);
 static void mb_net_server_init(MbNetServer * self)
 {
 	Private *priv;
@@ -107,7 +110,14 @@ static void mb_net_server_init(MbNetServer * self)
 
 	g_signal_connect_swapped(priv->main_handler, "ask-register-player",
 				 (GCallback) _ask_register_player, self);
+
+
+	g_signal_connect_swapped(priv->main_handler, "create-game",
+				 (GCallback) _create_game, self);
+
+
 }
+
 
 static void mb_net_server_finalize(MbNetServer * self)
 {
@@ -246,6 +256,19 @@ _ask_game_list(MbNetServer * self, MbNetConnection * con,
 					     holder);
 }
 
+static void _create_game(MbNetServer * self, MbNetConnection * con,
+			 guint32 handler_id,
+			 const gchar * name, MbNetServerHandler * handler)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	MbNetGame *game = mb_net_game_new(name, handler_id);
+	game->info.handler_id = 1;
+	priv->games = g_list_prepend(priv->games, game);
+	mb_net_server_handler_send_create_game_response(handler, con,
+							handler_id, 1);
+
+}
 
 
 static void
