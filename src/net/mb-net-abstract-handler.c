@@ -31,7 +31,7 @@
 
 
 typedef struct _Private {
-	int i;
+	int handler_id;
 } Private;
 
 
@@ -71,9 +71,11 @@ G_DEFINE_TYPE_WITH_CODE(MbNetAbstractHandler, mb_net_abstract_handler,
    (G_TYPE_INSTANCE_GET_PRIVATE ((o), MB_NET_TYPE_ABSTRACT_HANDLER, Private))
 
 
-void _receive(MbNetHandler * handler, MbNetConnection * con,
-	      MbNetMessage * m);
-
+static guint32 _get_id(MbNetHandler * handler);
+static void _set_id(MbNetHandler * handler, guint32 handler_id);
+static void _receive(MbNetHandler * handler, MbNetConnection * con,
+		     guint32 src_handler_id, guint32 dst_handler_id,
+		     guint32 action_id, MbNetMessage * m);
 static void mb_net_abstract_handler_finalize(MbNetAbstractHandler * self);
 
 static void mb_net_abstract_handler_init(MbNetAbstractHandler * self);
@@ -84,6 +86,7 @@ static void mb_net_abstract_handler_init(MbNetAbstractHandler * self)
 {
 	Private *priv;
 	priv = GET_PRIVATE(self);
+	priv->handler_id = 0;
 }
 
 
@@ -98,37 +101,23 @@ static void mb_net_abstract_handler_finalize(MbNetAbstractHandler * self)
 	}
 }
 
-/*
 
-
-void mb_net_abstract_handler_send_xml_message(MbNetAbstractHandler *
-					      handler,
-					      MbNetConnection * con,
-					      guint32 handler_id,
-					      guint32 int_value,
-					      xmlDoc * doc,
-					      GError ** error)
+static guint32 _get_id(MbNetHandler * handler)
 {
-	int size;
-	guint32 v = htonl(int_value);
-	guint8 *xml_message;
-	xmlChar *mem = NULL;
-
-	xmlDocDumpMemory(doc, &mem, &size);
-	int fsize = size + sizeof(guint32);
-	xml_message = g_malloc(fsize);
-	memset(xml_message, 0, fsize);
-
-	memcpy(xml_message, &v, sizeof(guint32));
-	memcpy(xml_message + sizeof(guint32), mem, size);
-
-	mb_net_abstract_handler_send(handler, con, handler_id,
-				     fsize, xml_message, error);
-
+	return GET_PRIVATE(MB_NET_ABSTRACT_HANDLER(handler))->handler_id;
 }
-*/
-void
-_receive(MbNetHandler * handler, MbNetConnection * con, MbNetMessage * m)
+
+static void _set_id(MbNetHandler * handler, guint32 handler_id)
+{
+	GET_PRIVATE(MB_NET_ABSTRACT_HANDLER(handler))->handler_id =
+	    handler_id;
+}
+
+
+static void
+_receive(MbNetHandler * handler, MbNetConnection * con,
+	 guint32 src_handler_id, guint32 dst_handler_id, guint32 action_id,
+	 MbNetMessage * m)
 {
 }
 
@@ -170,6 +159,8 @@ static void
 mb_net_abstract_handler_iface_init(MbNetHandlerInterface * iface)
 {
 	iface->receive = _receive;
+	iface->get_id = _get_id;
+	iface->set_id = _set_id;
 }
 
 static void

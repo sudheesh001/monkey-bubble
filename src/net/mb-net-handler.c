@@ -26,12 +26,33 @@
 #include <glib.h>
 #include <glib-object.h>
 
-void
-mb_net_handler_receive(MbNetHandler * self, MbNetConnection * con,
-		       MbNetMessage * m)
+void mb_net_handler_receive(MbNetHandler * self,
+			    MbNetConnection * con,
+			    guint32 source_handler_id,
+			    guint32 dest_handler_id,
+			    guint32 action_id, MbNetMessage * m)
 {
-	MB_NET_HANDLER_GET_INTERFACE(self)->receive(self, con, m);
+	MB_NET_HANDLER_GET_INTERFACE(self)->receive(self, con,
+						    source_handler_id,
+						    dest_handler_id,
+						    action_id, m);
 }
+
+guint32 mb_net_handler_get_id(MbNetHandler * self)
+{
+	return MB_NET_HANDLER_GET_INTERFACE(self)->get_id(self);
+}
+
+void mb_net_handler_set_id(MbNetHandler * self, guint32 id)
+{
+	MB_NET_HANDLER_GET_INTERFACE(self)->set_id(self, id);
+}
+
+void mb_net_handler_receive(MbNetHandler * self,
+			    MbNetConnection * con,
+			    guint32 source_handler_id,
+			    guint32 dest_handler_id,
+			    guint32 action_id, MbNetMessage * m);
 
 static void mb_net_handler_init(gpointer g_class)
 {

@@ -32,9 +32,15 @@ typedef struct _MbNetMessageClass MbNetMessageClass;
 
 GType mb_net_message_get_type(void);
 
+MbNetMessage *mb_net_message_new(guint32 handler_id,
+				 guint32 dst_handler_id,
+				 guint32 action_id);
 MbNetMessage *mb_net_message_create();
 MbNetMessage *mb_net_message_create_from(const guint8 * data,
 					 guint32 size);
+void mb_net_message_read_init(MbNetMessage * self, guint32 * handler_id,
+			      guint32 * dst_handler_id,
+			      guint32 * action_id);
 
 guint32 mb_net_message_size(MbNetMessage * self);
 const guint8 *mb_net_message_data(MbNetMessage * self);

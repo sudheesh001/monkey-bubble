@@ -111,6 +111,30 @@ MbNetMessage *mb_net_message_create_from(const guint8 * data, guint32 size)
 	return self;
 }
 
+MbNetMessage *mb_net_message_new(guint32 handler_id,
+				 guint32 dst_handler_id, guint32 action_id)
+{
+	Private *priv;
+
+	MbNetMessage *self =
+	    MB_NET_MESSAGE(g_object_new(MB_NET_TYPE_MESSAGE, NULL));
+	priv = GET_PRIVATE(self);
+	mb_net_message_add_int(self, handler_id);
+	mb_net_message_add_int(self, dst_handler_id);
+	mb_net_message_add_int(self, action_id);
+	return self;
+
+}
+
+void mb_net_message_read_init(MbNetMessage * self, guint32 * handler_id,
+			      guint32 * dst_handler_id,
+			      guint32 * action_id)
+{
+	(*handler_id) = mb_net_message_read_int(self);
+	(*dst_handler_id) = mb_net_message_read_int(self);
+	(*action_id) = mb_net_message_read_int(self);
+}
+
 guint32 mb_net_message_size(MbNetMessage * self)
 {
 	Private *priv;

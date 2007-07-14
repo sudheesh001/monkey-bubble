@@ -35,17 +35,18 @@ GType mb_net_server_handler_get_type(void);
 
 void mb_net_server_handler_send_game_list
     (MbNetServerHandler * self,
-     MbNetConnection * con, MbNetGameListHolder * holder);
+     MbNetConnection * con, guint32 handler_id,
+     MbNetGameListHolder * holder);
 
 void mb_net_server_handler_send_ask_game_list
     (MbNetServerHandler * self, MbNetConnection * con, guint32 handler_id);
 
 void mb_net_server_handler_send_ask_register_player
-    (MbNetServerHandler * self, MbNetConnection * con,
+    (MbNetServerHandler * self, MbNetConnection * con, guint32 handler_id,
      MbNetPlayerHolder * holder);
 
 void mb_net_server_handler_send_register_player_response
-    (MbNetServerHandler * self, MbNetConnection * con,
+    (MbNetServerHandler * self, MbNetConnection * con, guint32 handler_id,
      MbNetPlayerHolder * holder, gboolean ok);
 
 #define MB_NET_TYPE_SERVER_HANDLER			(mb_net_server_handler_get_type())
@@ -58,23 +59,25 @@ void mb_net_server_handler_send_register_player_response
 
 
 struct _MbNetServerHandler {
-	GObject base_instance;
+	MbNetAbstractHandler base_instance;
 };
 
 struct _MbNetServerHandlerClass {
-	GObjectClass base_class;
+	MbNetAbstractHandlerClass base_class;
 
 	/* signals */
 	void (*ask_game_list) (MbNetServerHandler * self,
 			       MbNetConnection * con, guint32 handler_id);
 	void (*game_list) (MbNetServerHandler * self,
-			   MbNetConnection * con,
+			   MbNetConnection * con, guint32 handler_id,
 			   MbNetGameListHolder * holder);
 	void (*ask_register_player) (MbNetServerHandler * self,
 				     MbNetConnection * con,
+				     guint32 handler_id,
 				     MbNetPlayerHolder * holder);
 	void (*register_player_response) (MbNetServerHandler * self,
 					  MbNetConnection * con,
+					  guint32 handler_id,
 					  MbNetPlayerHolder * holder,
 					  gboolean ok);
 };

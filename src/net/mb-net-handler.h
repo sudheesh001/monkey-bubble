@@ -31,8 +31,14 @@ typedef struct _MbNetHandlerInterface MbNetHandlerInterface;
 
 GType mb_net_handler_get_type(void);
 
-void mb_net_handler_receive(MbNetHandler * self, MbNetConnection * con,
-			    MbNetMessage * m);
+guint32 mb_net_handler_get_id(MbNetHandler * self);
+void mb_net_handler_set_id(MbNetHandler * self, guint32 id);
+
+void mb_net_handler_receive(MbNetHandler * self,
+			    MbNetConnection * con,
+			    guint32 source_handler_id,
+			    guint32 dest_handler_id,
+			    guint32 action_id, MbNetMessage * m);
 
 #define MB_NET_TYPE_HANDLER			(mb_net_handler_get_type())
 #define MB_NET_HANDLER(object)		(G_TYPE_CHECK_INSTANCE_CAST((object), MB_NET_TYPE_HANDLER, MbNetHandler))
@@ -44,7 +50,12 @@ struct _MbNetHandlerInterface {
 	GTypeInterface parent;
 
 	void (*receive) (MbNetHandler * self, MbNetConnection * con,
+			 guint32 source_handler_id,
+			 guint32 dest_handler_id, guint32 action_id,
 			 MbNetMessage * m);
+
+	 guint32(*get_id) (MbNetHandler * self);
+	void (*set_id) (MbNetHandler * self, guint32 id);
 	/* signals */
 };
 

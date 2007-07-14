@@ -71,7 +71,7 @@ static void mb_net_game_handler_finalize(MbNetGameHandler * self);
 
 static void mb_net_game_handler_init(MbNetGameHandler * self);
 static void _receive(MbNetHandler * handler, MbNetConnection * con,
-		     MbNetMessage * m);
+		     guint32 i, guint32 j, guint32 k, MbNetMessage * m);
 
 
 
@@ -94,7 +94,8 @@ static void mb_net_game_handler_finalize(MbNetGameHandler * self)
 }
 
 static void
-_receive(MbNetHandler * handler, MbNetConnection * con, MbNetMessage * m)
+_receive(MbNetHandler * handler, MbNetConnection * con, guint32 i,
+	 guint32 j, guint32 k, MbNetMessage * m)
 {
 }
 

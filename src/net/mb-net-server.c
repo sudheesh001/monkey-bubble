@@ -35,6 +35,7 @@ typedef struct _Private {
 	MbNetServerHandler *main_handler;
 
 	GList *games;
+	GList *players;
 } Private;
 
 
@@ -45,6 +46,7 @@ enum {
 };
 
 enum {
+	NEW_PLAYER,
 	N_SIGNALS
 };
 
@@ -60,7 +62,7 @@ static void mb_net_server_set_property(GObject * object,
 				       GParamSpec * param_spec);
 
 
-//static        guint   _signals[N_SIGNALS] = { 0 };
+static guint _signals[N_SIGNALS] = { 0 };
 
 G_DEFINE_TYPE_WITH_CODE(MbNetServer, mb_net_server, G_TYPE_OBJECT, {
 			});
@@ -81,6 +83,10 @@ static void mb_net_server_init(MbNetServer * self);
 static void _ask_game_list(MbNetServer * self, MbNetConnection * con,
 			   guint32 handler_id,
 			   MbNetServerHandler * handler);
+static void _ask_register_player(MbNetServer * self, MbNetConnection * con,
+				 guint32 handler_id,
+				 MbNetPlayerHolder * holder,
+				 MbNetServerHandler * handler);
 
 static void mb_net_server_init(MbNetServer * self)
 {
@@ -95,24 +101,38 @@ static void mb_net_server_init(MbNetServer * self)
 	    MB_NET_SERVER_HANDLER(g_object_new
 				  (MB_NET_TYPE_SERVER_HANDLER, NULL));
 
-	g_print("object class %s \n",
-		G_OBJECT_CLASS_NAME(G_OBJECT_GET_CLASS
-				    (priv->main_handler)));
-
 	g_signal_connect_swapped(priv->main_handler, "ask-game-list",
 				 (GCallback) _ask_game_list, self);
+
+
+	g_signal_connect_swapped(priv->main_handler, "ask-register-player",
+				 (GCallback) _ask_register_player, self);
 }
 
 static void mb_net_server_finalize(MbNetServer * self)
 {
-	Private *priv;
-	priv = GET_PRIVATE(self);
 
 	// finalize super
 	if (G_OBJECT_CLASS(parent_class)->finalize) {
 		(*G_OBJECT_CLASS(parent_class)->finalize) (G_OBJECT(self));
 	}
 }
+
+void mb_net_server_stop(MbNetServer * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+
+	g_list_foreach(priv->connections, (GFunc) mb_net_connection_stop,
+		       NULL);
+	g_list_foreach(priv->connections, (GFunc) g_object_unref, NULL);
+	g_list_free(priv->connections);
+	mb_net_connection_stop(priv->main_connection, NULL);
+	g_object_unref(priv->main_connection);
+	priv->main_connection = NULL;
+}
+
 
 
 void
@@ -134,32 +154,69 @@ _receive_message(MbNetServer * self, MbNetMessage * m,
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
+	guint32 src_handler_id, dst_handler_id, action_id;
+	mb_net_message_read_init(m, &src_handler_id, &dst_handler_id,
+				 &action_id);
 
-	guint32 handler_id = mb_net_message_read_int(m);
-	g_print("receive message %d \n", handler_id);
-	if (handler_id == 0) {
+	if (dst_handler_id == 0) {
 		mb_net_handler_receive(MB_NET_HANDLER(priv->main_handler),
-				       con, m);
+				       con, src_handler_id, dst_handler_id,
+				       action_id, m);
 	} else {
-		g_print("recevie .. \n");
-		mb_net_handler_receive(MB_NET_HANDLER(priv->main_handler),
-				       con, m);
+		/*
+		   g_print("recevie .. \n");
+		   mb_net_handler_receive(MB_NET_HANDLER(priv->main_handler),
+		   con, src_handler_id, dst_handler_id,
+		   action_id, m); */
 	}
 }
 
 static void _new_connection(MbNetServer * self, MbNetConnection * con)
 {
 
-	Private *priv;
-	priv = GET_PRIVATE(self);
-	priv->connections = g_list_prepend(priv->connections, con);
-	g_object_ref(con);
+	if (con != NULL) {
+		Private *priv;
+		priv = GET_PRIVATE(self);
+		g_object_ref(con);
 
-	g_signal_connect_swapped(con, "receive-message",
-				 (GCallback) _receive_message, self);
-	mb_net_connection_listen(con, NULL);
+		priv->connections = g_list_prepend(priv->connections, con);
+
+		g_signal_connect_swapped(con, "receive-message",
+					 (GCallback) _receive_message,
+					 self);
+		mb_net_connection_listen(con, NULL);
+	}
 
 }
+
+static MbNetServerPlayer *_create_player(MbNetConnection * con,
+					 guint32 handler_id,
+					 const gchar * name)
+{
+	MbNetServerPlayer *p;
+	p = g_new0(MbNetServerPlayer, 1);
+	p->con = con;
+	p->handler_id = handler_id;
+	p->name = g_strdup(name);
+	return p;
+}
+
+static void _ask_register_player(MbNetServer * self, MbNetConnection * con,
+				 guint32 handler_id,
+				 MbNetPlayerHolder * holder,
+				 MbNetServerHandler * handler)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	MbNetServerPlayer *p;
+	p = _create_player(con, handler_id, holder->name);
+	priv->players = g_list_prepend(priv->players, p);
+	mb_net_server_handler_send_register_player_response(handler, con,
+							    handler_id,
+							    holder, TRUE);
+	g_signal_emit(self, _signals[NEW_PLAYER], 0, p);
+}
+
 
 void
 _ask_game_list(MbNetServer * self, MbNetConnection * con,
@@ -168,10 +225,8 @@ _ask_game_list(MbNetServer * self, MbNetConnection * con,
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
-	g_print("ask game_ list \n");
 	MbNetGameListHolder *holder;
 	holder = g_new0(MbNetGameListHolder, 1);
-	holder->handler_id = 0;
 	GList *l = NULL;
 	GList *next = priv->games;
 	for (next = priv->games; next != NULL; next = g_list_next(next)) {
@@ -187,9 +242,8 @@ _ask_game_list(MbNetServer * self, MbNetConnection * con,
 	}
 
 	holder->games = l;
-	g_print("send game_ list \n");
-	mb_net_server_handler_send_game_list(handler, con, holder);
-	g_print("sended .. \n");
+	mb_net_server_handler_send_game_list(handler, con, handler_id,
+					     holder);
 }
 
 
@@ -244,5 +298,12 @@ mb_net_server_class_init(MbNetServerClass * mb_net_server_class)
 	g_object_class->finalize =
 	    (GObjectFinalizeFunc) mb_net_server_finalize;
 
+	_signals[NEW_PLAYER] =
+	    g_signal_new("new-player", MB_NET_TYPE_SERVER,
+			 G_SIGNAL_RUN_LAST,
+			 G_STRUCT_OFFSET(MbNetServerClass,
+					 new_player), NULL, NULL,
+			 g_cclosure_marshal_VOID__POINTER, G_TYPE_NONE, 1,
+			 G_TYPE_POINTER);
 
 }

@@ -43,7 +43,9 @@
 
 #include <glib.h>
 #include <glib-object.h>
-
+#include <execinfo.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #define MAX_WAITING_CONN 20
 
@@ -122,22 +124,18 @@ static void mb_net_connection_init(MbNetConnection * self)
 	priv = GET_PRIVATE(self);
 	priv->host = NULL;
 	priv->socket = -1;
+	priv->stop = TRUE;
 }
-
 
 static void mb_net_connection_finalize(MbNetConnection * self)
 {
 	Private *priv;
 	priv = GET_PRIVATE(self);
-
-
 	if (priv->socket != -1) {
 		mb_net_connection_close(self, NULL);
 	}
 
-	if (priv->main_thread != NULL) {
-		mb_net_connection_stop(self, NULL);
-	}
+	g_assert(priv->main_thread == NULL);
 
 	if (priv->host != NULL) {
 		g_free(priv->host);
@@ -153,9 +151,11 @@ void mb_net_connection_close(MbNetConnection * self, GError ** error)
 {
 	Private *priv;
 	priv = GET_PRIVATE(self);
-	if (priv->socket != -1) {
+	int socket = priv->socket;
+	priv->socket = -1;
+	if (socket != -1) {
 		int ret;
-		ret = shutdown(priv->socket, 2);
+		ret = shutdown(socket, 2);
 		if (ret == -1) {
 
 			g_set_error(error, error_quark,
@@ -172,18 +172,24 @@ void mb_net_connection_stop(MbNetConnection * self, GError ** error)
 	GError *err;
 	err = NULL;
 	priv = GET_PRIVATE(self);
+
 	mb_net_connection_close(self, &err);
 
 	if (err != NULL) {
+		perror("error on close");
 		g_propagate_error(error, err);
-		priv->socket = -1;
-		return;
 	}
-	if (priv->main_thread != NULL && priv->running == TRUE) {
+
+	if (priv->main_thread != NULL) {	// && priv->running == TRUE) {
 		priv->stop = TRUE;
 		g_thread_join(priv->main_thread);
+
 	}
-	priv->socket = -1;
+
+	priv->stop = TRUE;
+
+	priv->main_thread = NULL;
+
 
 }
 
@@ -363,9 +369,11 @@ void *_accept_loop(MbNetConnection * self)
 						      (MB_NET_TYPE_CONNECTION,
 						       NULL));
 				GET_PRIVATE(con)->socket = sock;
+				g_object_ref(self);
 				g_signal_emit(self,
 					      _signals[NEW_CONNECTION], 0,
 					      con);
+				g_object_unref(self);
 				g_object_unref(con);
 
 			} else {
@@ -374,7 +382,6 @@ void *_accept_loop(MbNetConnection * self)
 
 		}
 	}
-	priv->main_thread = NULL;
 	priv->running = FALSE;
 	return 0;
 
@@ -420,14 +427,16 @@ mb_net_connection_accept_on(MbNetConnection * self, const gchar * uri,
 
 
 
-void _read_message(MbNetConnection * self)
+gboolean _read_message(MbNetConnection * self)
 {
 	Private *priv;
 	guint32 size;
 	priv = GET_PRIVATE(self);
-
-	if (read(priv->socket, &size, sizeof(size)) < 1) {
-		return;
+	if (priv->socket == -1)
+		return FALSE;
+	int ret = read(priv->socket, &size, sizeof(size));
+	if (ret < 1) {
+		return FALSE;
 	} else {
 
 
@@ -444,21 +453,26 @@ void _read_message(MbNetConnection * self)
 			     read(priv->socket, data + p, size)) < 1) {
 				perror("read()");
 				g_free(data);
-				return;
+				return FALSE;
 			} else {
 				p += readed;
 				size -= readed;
 			}
 
+			g_object_ref(self);
+
 			g_signal_emit(self, _signals[RECEIVE], 0, s, data);
+
+
 			MbNetMessage *m =
 			    mb_net_message_create_from(data, s);
 			g_signal_emit(self, _signals[RECEIVE_MESSAGE], 0,
 				      m);
 			g_object_unref(m);
+			g_object_unref(self);
 			g_free(data);
 		}
-
+		return TRUE;
 
 	}
 }
@@ -491,14 +505,17 @@ void *_listen_loop(MbNetConnection * self)
 
 		FD_ZERO(&set);
 		FD_SET(ssock, &set);
-		if ((select(ssock + 1, &set, NULL, NULL, &timeout) >
-		     0) && FD_ISSET(ssock, &set)) {
-			_read_message(self);
+		int sr = select(ssock + 1, &set, NULL, NULL, &timeout);
+		if ((sr > 0) && FD_ISSET(ssock, &set)) {
+			if (!_read_message(self)) {
+				priv->stop = TRUE;
+			}
 		}
+		if (sr == -1)
+			priv->stop = TRUE;
 	}
 
-	priv->main_thread = NULL;
-	priv->running = FALSE;
+//      priv->running = FALSE;
 	return 0;
 
 }
@@ -519,6 +536,8 @@ void mb_net_connection_listen(MbNetConnection * self, GError ** error)
 	g_mutex_lock(priv->start_mutex);
 	priv->main_thread =
 	    g_thread_create((GThreadFunc) _listen_loop, self, TRUE, &err);
+
+
 
 	g_cond_wait(priv->start_cond, priv->start_mutex);
 	g_mutex_unlock(priv->start_mutex);

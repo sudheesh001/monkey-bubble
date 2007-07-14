@@ -22,11 +22,12 @@
  */
 
 #include <glib-object.h>
-
+#include <net/mb-net-connection.h>
 #ifndef _MB_NET__SERVER_H
 #define _MB_NET__SERVER_H
 
-G_BEGIN_DECLS typedef struct _MbNetServer MbNetServer;
+G_BEGIN_DECLS typedef struct _MbNetServerPlayer MbNetServerPlayer;
+typedef struct _MbNetServer MbNetServer;
 typedef struct _MbNetServerClass MbNetServerClass;
 
 GType mb_net_server_get_type(void);
@@ -41,6 +42,12 @@ void mb_net_server_stop(MbNetServer * self);
 #define MB_NET_IS_SERVER_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE((klass), MB_NET_TYPE_SERVER))
 #define MB_NET_SERVER_GET_CLASS(object)	(G_TYPE_INSTANCE_GET_CLASS((object), MB_NET_TYPE_SERVER, MbNetServerClass))
 
+struct _MbNetServerPlayer {
+	MbNetConnection *con;
+	guint32 handler_id;
+	gchar *name;
+};
+
 struct _MbNetServer {
 	GObject base_instance;
 };
@@ -49,6 +56,7 @@ struct _MbNetServerClass {
 	GObjectClass base_class;
 
 	/* signals */
+	void (*new_player) (MbNetServer * self, MbNetServerPlayer * p);
 };
 
 G_END_DECLS

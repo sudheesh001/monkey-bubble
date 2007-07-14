@@ -16,6 +16,7 @@ struct _TestSync {
 	gpointer data;
 	gpointer data2;
 	gboolean ret;
+	gboolean ret2;
 };
 
 struct _TestSendReceive {
