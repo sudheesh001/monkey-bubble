@@ -122,9 +122,9 @@ void mb_net_handler_manager_message(MbNetHandlerManager * self,
 	priv = GET_PRIVATE(self);
 	g_print("message game to %d action  : %d \n", tohandler_id,
 		action);
-	MbNetHandler *h =
-	    (MbNetHandler *) g_hash_table_lookup(priv->map,
-						 (gpointer) tohandler_id);
+	MbNetHandler *h = (MbNetHandler *) g_hash_table_lookup(priv->map,
+							       (gpointer)
+							       tohandler_id);
 	if (h != NULL) {
 		mb_net_handler_receive(h, con, handler_id, tohandler_id,
 				       action, m);
