@@ -24,6 +24,7 @@
 #include "mb-net-server.h"
 #include <net/mb-net-connection.h>
 #include <net/mb-net-handler.h>
+#include <net/mb-net-handler-manager.h>
 #include <net/mb-net-server-handler.h>
 #include <glib.h>
 #include <glib-object.h>
@@ -33,7 +34,7 @@ typedef struct _Private {
 	MbNetConnection *main_connection;
 	GList *connections;
 	MbNetServerHandler *main_handler;
-
+	MbNetHandlerManager *manager;
 	GList *games;
 	GList *players;
 } Private;
@@ -116,6 +117,12 @@ static void mb_net_server_init(MbNetServer * self)
 				 (GCallback) _create_game, self);
 
 
+	priv->manager =
+	    MB_NET_HANDLER_MANAGER(g_object_new
+				   (MB_NET_TYPE_HANDLER_MANAGER, NULL));
+	mb_net_handler_manager_register(priv->manager,
+					MB_NET_HANDLER(priv->
+						       main_handler));
 }
 
 
@@ -168,17 +175,16 @@ _receive_message(MbNetServer * self, MbNetMessage * m,
 	mb_net_message_read_init(m, &src_handler_id, &dst_handler_id,
 				 &action_id);
 
+	mb_net_handler_manager_message(priv->manager, con, src_handler_id,
+				       dst_handler_id, action_id, m);
+/*
 	if (dst_handler_id == 0) {
 		mb_net_handler_receive(MB_NET_HANDLER(priv->main_handler),
 				       con, src_handler_id, dst_handler_id,
 				       action_id, m);
 	} else {
-		/*
-		   g_print("recevie .. \n");
-		   mb_net_handler_receive(MB_NET_HANDLER(priv->main_handler),
-		   con, src_handler_id, dst_handler_id,
-		   action_id, m); */
-	}
+		
+	}*/
 }
 
 static void _new_connection(MbNetServer * self, MbNetConnection * con)
@@ -263,10 +269,18 @@ static void _create_game(MbNetServer * self, MbNetConnection * con,
 	Private *priv;
 	priv = GET_PRIVATE(self);
 	MbNetGame *game = mb_net_game_new(name, handler_id);
-	game->info.handler_id = 1;
+
+	mb_net_handler_manager_register(priv->manager,
+					mb_net_game_get_handler(game));
+	game->info.handler_id =
+	    mb_net_handler_get_id(mb_net_game_get_handler(game));
 	priv->games = g_list_prepend(priv->games, game);
+
+	g_print("server : create game %s", name);
 	mb_net_server_handler_send_create_game_response(handler, con,
-							handler_id, 1);
+							handler_id,
+							game->info.
+							handler_id);
 
 }
 

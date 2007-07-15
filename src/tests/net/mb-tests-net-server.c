@@ -131,13 +131,44 @@ static void _create_game_game_list(MbNetServerHandler * self,
 	_signal_sync(sync);
 }
 
+static void _message(MbNetConnection * con, MbNetMessage * m,
+		     MbNetServerHandler * h)
+{
+	guint32 s, d, a;
+	mb_net_message_read_init(m, &s, &d, &a);
+	mb_net_handler_receive(MB_NET_HANDLER(h), con, s, d, a, m);
+}
+
+
 static void _create_game_response(MbNetServerHandler * self,
 				  MbNetConnection * con, guint32 handler,
 				  guint32 game_id, TestSync * sync)
 {
+	sync->id = game_id;
 	_signal_sync(sync);
 }
 
+
+guint32 mb_tests_net_server_create_game(MbNetConnection * con,
+					TestSync * s)
+{
+	MbNetServerHandler *h;
+	h = MB_NET_SERVER_HANDLER(g_object_new
+				  (MB_NET_TYPE_SERVER_HANDLER, NULL));
+
+	TestSync *sync = _init_sync();
+	g_signal_connect(h, "create-game-response",
+			 (GCallback) _create_game_response, sync);
+	s->handler = h;
+	_begin_sync(sync);
+
+	mb_net_server_handler_send_create_game(h, con, 0, "monkeybubble");
+
+	_wait_sync(sync);
+
+	return sync->id;
+
+}
 
 static void _test_create_game()
 {
@@ -170,15 +201,6 @@ static void _test_create_game()
 }
 
 
-
-static void _message(MbNetConnection * con, MbNetMessage * m,
-		     MbNetServerHandler * h)
-{
-	g_print("receive message \n");
-	guint32 s, d, a;
-	mb_net_message_read_init(m, &s, &d, &a);
-	mb_net_handler_receive(MB_NET_HANDLER(h), con, s, d, a, m);
-}
 
 
 static void _init_server_test(TestSync ** ts, MbNetServer ** server,

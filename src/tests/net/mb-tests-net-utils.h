@@ -5,7 +5,7 @@
 #include <gtk/gtk.h>
 #include <net/mb-net-connection.h>
 #include <net/mb-net-message.h>
-
+#include <net/mb-net-handler.h>
 typedef struct _TestSync TestSync;
 typedef struct _TestSendReceive TestSendReceive;
 
@@ -17,6 +17,8 @@ struct _TestSync {
 	gpointer data2;
 	gboolean ret;
 	gboolean ret2;
+	guint32 id;
+	MbNetHandler *handler;
 };
 
 struct _TestSendReceive {
