@@ -229,9 +229,8 @@ void mb_net_match_handler_send_new_cannon_bubble(MbNetMatchHandler * self,
 						 guint32 handler_id,
 						 Color color)
 {
-	MbNetMessage *m =
-	    mb_net_message_new(_get_id(self), handler_id,
-			       NEW_CANNON_BUBBLE);
+	MbNetMessage *m = mb_net_message_new(_get_id(self), handler_id,
+					     NEW_CANNON_BUBBLE);
 	mb_net_message_add_int(m, color);
 	mb_net_connection_send_message(con, m, NULL);
 	g_object_unref(m);
@@ -299,9 +298,8 @@ void mb_net_match_handler_send_penality_bubbles(MbNetMatchHandler * self,
 						guint32 handler_id,
 						Color * bubbles)
 {
-	MbNetMessage *m =
-	    mb_net_message_new(_get_id(self), handler_id,
-			       PENALITY_BUBBLES);
+	MbNetMessage *m = mb_net_message_new(_get_id(self), handler_id,
+					     PENALITY_BUBBLES);
 	int i = 0;
 	for (i = 0; i < 7; i++) {
 		mb_net_message_add_int(m, bubbles[i]);

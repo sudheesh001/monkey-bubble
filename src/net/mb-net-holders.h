@@ -55,10 +55,13 @@ MbNetPlayerHolder *mb_net_player_holder_parse(MbNetMessage * m);
 void mb_net_player_holder_serialize(MbNetPlayerHolder * holder,
 				    MbNetMessage * m);
 void mb_net_player_holder_free(MbNetPlayerHolder * holder);
-
+MbNetPlayerHolder *mb_net_player_holder_create(const gchar * name);
 MbNetSimpleGameHolder *mb_net_simple_game_holder_create(guint handler_id,
 							const gchar *
 							name);
+
+void mb_net_simple_game_holder_free(MbNetSimpleGameHolder * holder);
+
 struct _MbNetGameListHolder {
 	GList *games;
 };

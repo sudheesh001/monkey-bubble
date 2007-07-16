@@ -22,10 +22,11 @@
  */
 
 #include <glib-object.h>
-#include <net/mb-net-connection.h>
 #ifndef _MB_NET__SERVER_H
 #define _MB_NET__SERVER_H
 
+
+#include <net/mb-net-connection.h>
 G_BEGIN_DECLS typedef struct _MbNetServerPlayer MbNetServerPlayer;
 typedef struct _MbNetServer MbNetServer;
 typedef struct _MbNetServerClass MbNetServerClass;

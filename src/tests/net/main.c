@@ -6,7 +6,7 @@
 #include <mb-tests-net-game-handler.h>
 #include <mb-tests-net-match-handler.h>
 #include <mb-tests-net-message.h>
-
+#include <mb-tests-net-client-server.h>
 
 int main(int argc, char **argv)
 {
@@ -26,6 +26,10 @@ int main(int argc, char **argv)
 	mb_tests_net_server_test_all();
 	g_print("mb_tests_net_game_test_all();\n");
 	mb_tests_net_game_test_all();
+	g_print("mb_tests_net_client_server_test_all();\n");
+	mb_tests_net_client_server_test_all();
+
 	g_print("all test OK\n");
+
 	return 0;
 }

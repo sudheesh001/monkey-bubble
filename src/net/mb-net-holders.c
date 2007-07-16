@@ -144,6 +144,11 @@ void mb_net_game_list_holder_free(MbNetGameListHolder * holder)
 
 
 
+void mb_net_simple_game_holder_free(MbNetSimpleGameHolder * holder)
+{
+	g_free(holder->name);
+	g_free(holder);
+}
 
 MbNetPlayerHolder *mb_net_player_holder_parse(MbNetMessage * m)
 {
@@ -159,6 +164,14 @@ void mb_net_player_holder_serialize(MbNetPlayerHolder * holder,
 	mb_net_message_add_string(m, holder->name);
 }
 
+
+MbNetPlayerHolder *mb_net_player_holder_create(const gchar * name)
+{
+	MbNetPlayerHolder *holder =
+	    (MbNetPlayerHolder *) g_new0(MbNetPlayerHolder, 1);
+	holder->name = g_strdup(name);
+	return holder;
+}
 
 void mb_net_player_holder_free(MbNetPlayerHolder * holder)
 {
