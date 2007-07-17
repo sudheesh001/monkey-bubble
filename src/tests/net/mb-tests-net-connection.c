@@ -86,18 +86,7 @@ void _test_bind()
 }
 
 
-static gboolean
-_new_connection(MbNetConnection * con, MbNetConnection * new_con,
-		TestSendReceive * tsr)
-{
-	if (new_con != NULL) {
-		tsr->sync->ret = TRUE;
-		_signal_sync(tsr->sync);
-	} else {
-		g_error("new connection is null ");
-	}
-	return FALSE;
-}
+
 
 static gboolean _test_accept()
 {
@@ -107,25 +96,23 @@ static gboolean _test_accept()
 
 	TestSendReceive *tsr;
 
-	tsr =
-	    _init_test_sendreceive((GCallback) _new_connection, NULL, TRUE,
-				   NULL, NULL, NULL);
+	tsr = _init_test_sendreceive(NULL, NULL, FALSE, NULL, NULL, NULL);
 
-	MbNetMessage *m = mb_net_message_create();
-	mb_net_message_add_string(m, "hello");
-	mb_net_connection_send_message(tsr->con2, m, &error);
-	g_assert(error == NULL);
-
-	_wait_sync(tsr->sync);
-
-	g_assert(tsr->sync->ret == TRUE);
-	g_object_unref(m);
 	_free_test_sendreceive(tsr);
 	return TRUE;
 }
 
 
 
+
+
+static void
+_message(MbNetConnection * con, MbNetMessage * m, TestSendReceive * tsr)
+{
+	g_object_ref(m);
+	tsr->message = m;
+	_signal_sync(tsr->sync);
+}
 
 static gboolean _test_send_receive_message()
 {
@@ -135,13 +122,16 @@ static gboolean _test_send_receive_message()
 
 	TestSendReceive *tsr;
 
-	tsr = _init_test_sendreceive(NULL, NULL, TRUE, NULL, NULL, NULL);
+	tsr =
+	    _init_test_sendreceive(NULL, (GCallback) _message, FALSE, NULL,
+				   NULL, NULL);
 
 	MbNetMessage *m = mb_net_message_create();
 	mb_net_message_add_int(m, 1);
 	mb_net_message_add_string(m, "hello");
 	mb_net_message_add_boolean(m, FALSE);
 	mb_net_message_add_string(m, "bye");
+	_begin_sync(tsr->sync);
 
 	mb_net_connection_send_message(tsr->con2, m, &error);
 	g_assert(error == NULL);
@@ -161,12 +151,50 @@ static gboolean _test_send_receive_message()
 
 }
 
+static void _disconnected(MbNetConnection * con, TestSendReceive * tsr)
+{
+	tsr->sync->ret = TRUE;
+	_signal_sync(tsr->sync);
+
+
+}
+
+static gboolean _test_disconnected()
+{
+	GError *error;
+
+	error = NULL;
+
+	TestSendReceive *tsr;
+
+	tsr = _init_test_sendreceive(NULL, NULL, TRUE, NULL, NULL, NULL);
+
+	g_signal_connect(tsr->con3, "disconnected",
+			 (GCallback) _disconnected, tsr);
+	mb_net_connection_stop(tsr->con2, NULL);
+
+	_wait_sync(tsr->sync);
+
+	g_assert(tsr->sync->ret == TRUE);
+	_free_test_sendreceive(tsr);
+	return TRUE;
+
+
+}
+
 gboolean mb_tests_net_connection_test_all()
 {
+	g_print("	_test_set_uri\n");
 	_test_set_uri();
+	g_print("	_test_connect\n");
 	_test_connect();
+	g_print("	_test_bind\n");
 	_test_bind();
+	g_print("	_test_accept\n");
 	_test_accept();
+	g_print("	_test_send_receive_message\n");
 	_test_send_receive_message();
+	g_print("	_test_disconnected\n");
+	_test_disconnected();
 	return TRUE;
 }

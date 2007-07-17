@@ -23,6 +23,8 @@
 
 #include <glib-object.h>
 #include <net/mb-net-handler.h>
+#include <net/mb-net-handler-manager.h>
+#include <net/mb-net-server-player.h>
 #ifndef _MB_NET__GAME_H
 #define _MB_NET__GAME_H
 
@@ -32,7 +34,9 @@ typedef struct _MbNetGameSimple MbNetGameSimple;
 
 GType mb_net_game_get_type(void);
 
-MbNetGame *mb_net_game_new(const gchar * name, guint32 master_client_id);
+MbNetGame *mb_net_game_new(const gchar * name,
+			   MbNetServerPlayer * master_player,
+			   MbNetHandlerManager * manager);
 MbNetHandler *mb_net_game_get_handler(MbNetGame * self);
 
 #define MB_NET_TYPE_GAME			(mb_net_game_get_type())
@@ -57,6 +61,7 @@ struct _MbNetGameClass {
 	GObjectClass base_class;
 
 	/* signals */
+	void (*stopped) (MbNetGame * self);
 };
 
 G_END_DECLS

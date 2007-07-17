@@ -154,7 +154,8 @@ MbNetPlayerHolder *mb_net_player_holder_parse(MbNetMessage * m)
 {
 	MbNetPlayerHolder *h;
 	h = g_new0(MbNetPlayerHolder, 1);
-	h->name = mb_net_message_read_string(m);;
+	h->name = mb_net_message_read_string(m);
+	h->player_id = mb_net_message_read_int(m);
 	return h;
 }
 
@@ -162,6 +163,7 @@ void mb_net_player_holder_serialize(MbNetPlayerHolder * holder,
 				    MbNetMessage * m)
 {
 	mb_net_message_add_string(m, holder->name);
+	mb_net_message_add_int(m, holder->player_id);
 }
 
 

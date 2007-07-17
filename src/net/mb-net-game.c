@@ -41,7 +41,7 @@ typedef struct __Observer {
 typedef struct _Private {
 
 	MbNetGameHandler *handler;
-	guint32 master_client_id;
+	MbNetServerPlayer *master_player;
 	GList *players;
 	GList *observers;
 } Private;
@@ -54,6 +54,7 @@ enum {
 };
 
 enum {
+	STOPPED,
 	N_SIGNALS
 };
 
@@ -69,7 +70,7 @@ static void mb_net_game_set_property(GObject * object,
 				     GParamSpec * param_spec);
 
 
-//static        guint   _signals[N_SIGNALS] = { 0 };
+static guint _signals[N_SIGNALS] = { 0 };
 
 G_DEFINE_TYPE_WITH_CODE(MbNetGame, mb_net_game, G_TYPE_OBJECT, {
 			});
@@ -78,7 +79,7 @@ G_DEFINE_TYPE_WITH_CODE(MbNetGame, mb_net_game, G_TYPE_OBJECT, {
    (G_TYPE_INSTANCE_GET_PRIVATE ((o), MB_NET_TYPE_GAME, Private))
 
 
-
+static void _stop_game(MbNetGame * self);
 
 static void mb_net_game_finalize(MbNetGame * self);
 
@@ -142,16 +143,38 @@ static void mb_net_game_finalize(MbNetGame * self)
 	}
 }
 
-MbNetGame *mb_net_game_new(const gchar * name, guint32 master_client_id)
+void _player_disconnected(MbNetGame * self, MbNetServerPlayer * p)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	if (priv->master_player == p) {
+		_stop_game(self);
+	}
+
+}
+
+MbNetGame *mb_net_game_new(const gchar * name, MbNetServerPlayer * p,
+			   MbNetHandlerManager * manager)
 {
 	Private *priv;
 	MbNetGame *self =
 	    MB_NET_GAME(g_object_new(MB_NET_TYPE_GAME, NULL));
 
 	priv = GET_PRIVATE(self);
+	g_object_ref(p);
+	priv->master_player = p;
+
+	g_signal_connect_swapped(p, "disconnected",
+				 (GCallback) _player_disconnected, self);
+
+
+	mb_net_handler_manager_register(manager,
+					MB_NET_HANDLER(priv->handler));
 
 	self->info.name = g_strdup(name);
-	priv->master_client_id = master_client_id;
+	self->info.handler_id =
+	    mb_net_handler_get_id(MB_NET_HANDLER(priv->handler));
+
 	return self;
 }
 
@@ -275,6 +298,13 @@ static void _start(MbNetGame * self, MbNetConnection * con,
 static void _stop(MbNetGame * self, MbNetConnection * con,
 		  guint32 handler_id, MbNetGameHandler * h)
 {
+	_stop_game(self);
+}
+
+
+static void _stop_game(MbNetGame * self)
+{
+	g_signal_emit(self, _signals[STOPPED], 0);
 }
 
 static void _ask_score(MbNetGame * self, MbNetConnection * con,
@@ -348,5 +378,12 @@ static void mb_net_game_class_init(MbNetGameClass * mb_net_game_class)
 	g_object_class->finalize =
 	    (GObjectFinalizeFunc) mb_net_game_finalize;
 
+	_signals[STOPPED] =
+	    g_signal_new("stopped", MB_NET_TYPE_GAME,
+			 G_SIGNAL_RUN_LAST,
+			 G_STRUCT_OFFSET(MbNetGameClass,
+					 stopped), NULL, NULL,
+			 g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0,
+			 NULL);
 
 }

@@ -51,7 +51,7 @@ void mb_net_server_handler_send_register_player_response
 
 void mb_net_server_handler_send_create_game
     (MbNetServerHandler * self, MbNetConnection * con, guint32 handler_id,
-     const gchar * name);
+     guint32 player_id, const gchar * name);
 
 void mb_net_server_handler_send_create_game_response
     (MbNetServerHandler * self, MbNetConnection * con, guint32 handler_id,
@@ -91,7 +91,7 @@ struct _MbNetServerHandlerClass {
 
 	void (*create_game) (MbNetServerHandler * self,
 			     MbNetConnection * con, guint32 handler_id,
-			     const gchar * name);
+			     guint32 player_id, const gchar * name);
 	void (*create_game_response) (MbNetServerHandler * self,
 				      MbNetConnection * con,
 				      guint32 handler_id,

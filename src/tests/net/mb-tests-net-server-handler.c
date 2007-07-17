@@ -274,10 +274,10 @@ static void _test_server_handler_send_ask_game_list()
 
 static void _create_game(MbNetServerHandler * self,
 			 MbNetConnection * con,
-			 guint32 handler_id, const gchar * name,
-			 TestSendReceive * tsr)
+			 guint32 handler_id, guint32 player_id,
+			 const gchar * name, TestSendReceive * tsr)
 {
-	tsr->sync->ret = (handler_id == 10)
+	tsr->sync->ret = (handler_id == 10) && (player_id == 20)
 	    && (g_str_equal(name, "monkeybubble") == TRUE);
 
 }
@@ -301,7 +301,7 @@ static void _test_server_handler_send_create_game()
 			 (GCallback) _create_game, tsr);
 
 
-	mb_net_server_handler_send_create_game(handler, tsr->con2, 0,
+	mb_net_server_handler_send_create_game(handler, tsr->con2, 0, 20,
 					       "monkeybubble");
 	_wait_sync(tsr->sync);
 

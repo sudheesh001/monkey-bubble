@@ -15,8 +15,12 @@ static void _test_create_game();
 
 gboolean mb_tests_net_server_test_all()
 {
+	g_print("	_test_ask_register_player();\n");
 	_test_ask_register_player();
+	g_print("	_test_ask_game_list();\n");
+
 	_test_ask_game_list();
+	g_print("	_test_create_game();\n");
 	_test_create_game();
 	return TRUE;
 }
@@ -27,7 +31,7 @@ gboolean mb_tests_net_server_test_all()
 static void _new_player(MbNetServer * server, MbNetServerPlayer * p,
 			TestSync * sync)
 {
-	g_print("new player  ! %s \n", p->name);
+
 	sync->ret2 = TRUE;
 	_signal_sync(sync);
 
@@ -39,8 +43,8 @@ static void _register_player_response(MbNetServerHandler * self,
 				      MbNetPlayerHolder * holder,
 				      gboolean ok, TestSync * sync)
 {
-	g_print("register player response\n");
 	sync->ret2 = TRUE;
+	sync->id = holder->player_id;
 	_signal_sync(sync);
 }
 
@@ -79,7 +83,9 @@ static void _test_ask_register_player()
 
 	mb_net_connection_stop(con, NULL);
 	g_object_unref(con);
+
 	mb_net_server_stop(s);
+
 	g_object_unref(s);
 	g_object_unref(h);
 
@@ -159,10 +165,23 @@ guint32 mb_tests_net_server_create_game(MbNetConnection * con,
 	TestSync *sync = _init_sync();
 	g_signal_connect(h, "create-game-response",
 			 (GCallback) _create_game_response, sync);
-	s->handler = h;
+	s->handler = MB_NET_HANDLER(h);
+	g_signal_connect(h, "register-player-response",
+			 (GCallback) _register_player_response, sync);
+
 	_begin_sync(sync);
 
-	mb_net_server_handler_send_create_game(h, con, 0, "monkeybubble");
+	MbNetPlayerHolder *holder = g_new0(MbNetPlayerHolder, 1);
+	holder->name = g_strdup("monkeybubble");
+
+	mb_net_server_handler_send_ask_register_player(h, con, 0, holder);
+
+	_wait_sync(sync);
+
+	_begin_sync(sync);
+
+	mb_net_server_handler_send_create_game(h, con, 0, sync->id,
+					       "monkeybubble");
 
 	_wait_sync(sync);
 
@@ -179,13 +198,29 @@ static void _test_create_game()
 	MbNetServerHandler *h;
 
 	_init_server_test(&sync, &s, &con, &h);
+
+
+	g_signal_connect(h, "register-player-response",
+			 (GCallback) _register_player_response, sync);
+
+	_begin_sync(sync);
+
+	MbNetPlayerHolder *holder = g_new0(MbNetPlayerHolder, 1);
+	holder->name = g_strdup("monkeybubble");
+
+	mb_net_server_handler_send_ask_register_player(h, con, 0, holder);
+
+	_wait_sync(sync);
+
+
 	g_signal_connect(h, "create-game-response",
 			 (GCallback) _create_game_response, sync);
 	g_signal_connect(h, "game-list",
 			 (GCallback) _create_game_game_list, sync);
 	_begin_sync(sync);
 
-	mb_net_server_handler_send_create_game(h, con, 0, "monkeybubble");
+	mb_net_server_handler_send_create_game(h, con, 0, sync->id,
+					       "monkeybubble");
 
 	_wait_sync(sync);
 

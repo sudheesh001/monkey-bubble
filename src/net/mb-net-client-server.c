@@ -39,7 +39,7 @@ typedef struct _Private {
 	GMutex *games_lock;
 	GList *games;
 	MbNetClientGame *game;
-	guint32 client_id;
+	guint32 player_id;
 } Private;
 
 
@@ -201,7 +201,7 @@ void mb_net_client_server_disconnect(MbNetClientServer * self)
 	mb_net_connection_stop(priv->con, NULL);
 	priv->registred = FALSE;
 	priv->connected = FALSE;
-	priv->client_id = 0;
+	priv->player_id = 0;
 }
 
 static void _copy_holder(MbNetSimpleGameHolder * h,
@@ -278,7 +278,7 @@ void mb_net_client_server_create_game(MbNetClientServer * self,
 	g_assert(priv->registred);
 
 	mb_net_server_handler_send_create_game(priv->handler, priv->con, 0,
-					       name);
+					       priv->player_id, name);
 }
 
 
@@ -314,6 +314,7 @@ _register_player_response(MbNetClientServer * self,
 	} else {
 		priv->connected = TRUE;
 		priv->registred = TRUE;
+		priv->player_id = holder->player_id;
 	}
 
 

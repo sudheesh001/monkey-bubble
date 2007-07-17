@@ -355,12 +355,11 @@ void *_accept_loop(MbNetConnection * self)
 
 		FD_ZERO(&set);
 		FD_SET(ssock, &set);
-		if ((select(ssock + 1, &set, NULL, NULL, &timeout) >
+		if ((select(ssock + 1, &set, NULL, NULL, &timeout) >=
 		     0) && FD_ISSET(ssock, &set)) {
 			sock =
 			    accept(ssock, (struct sockaddr *) &sock_client,
 				   &lg_info);
-
 
 			if (sock != -1) {
 				MbNetConnection *con;
@@ -380,9 +379,13 @@ void *_accept_loop(MbNetConnection * self)
 				priv->stop = TRUE;
 			}
 
+		} else {
+			priv->stop = TRUE;
 		}
 	}
+	priv->stop = TRUE;
 	priv->running = FALSE;
+	priv->main_thread = NULL;
 	return 0;
 
 }
@@ -434,6 +437,7 @@ gboolean _read_message(MbNetConnection * self)
 	priv = GET_PRIVATE(self);
 	if (priv->socket == -1)
 		return FALSE;
+
 	int ret = read(priv->socket, &size, sizeof(size));
 	if (ret < 1) {
 		return FALSE;
@@ -482,6 +486,9 @@ void *_listen_loop(MbNetConnection * self)
 
 	Private *priv;
 
+	// thread ref
+	g_object_ref(self);
+
 	priv = GET_PRIVATE(self);
 
 	priv->running = TRUE;
@@ -506,7 +513,8 @@ void *_listen_loop(MbNetConnection * self)
 		FD_ZERO(&set);
 		FD_SET(ssock, &set);
 		int sr = select(ssock + 1, &set, NULL, NULL, &timeout);
-		if ((sr > 0) && FD_ISSET(ssock, &set)) {
+		if (priv->socket != -1 && (sr > 0)
+		    && FD_ISSET(ssock, &set)) {
 			if (!_read_message(self)) {
 				priv->stop = TRUE;
 			}
@@ -515,7 +523,11 @@ void *_listen_loop(MbNetConnection * self)
 			priv->stop = TRUE;
 	}
 
+
+	g_signal_emit(self, _signals[DISCONNECTED], 0);
+	priv->main_thread = NULL;
 //      priv->running = FALSE;
+	g_object_unref(self);
 	return 0;
 
 }
@@ -536,8 +548,6 @@ void mb_net_connection_listen(MbNetConnection * self, GError ** error)
 	g_mutex_lock(priv->start_mutex);
 	priv->main_thread =
 	    g_thread_create((GThreadFunc) _listen_loop, self, TRUE, &err);
-
-
 
 	g_cond_wait(priv->start_cond, priv->start_mutex);
 	g_mutex_unlock(priv->start_mutex);

@@ -20,10 +20,10 @@ gboolean mb_tests_net_client_server_test_all()
 	mb_net_server_accept_on(s, "mb://localhost:6666", &error);
 	g_assert(error == NULL);
 
-    	_test_connect();
+	_test_connect();
 	_create_game();
 	_ask_games();
-	
+
 	mb_net_server_stop(s);
 	g_object_unref(s);
 	return TRUE;
@@ -95,9 +95,8 @@ GList *mb_tests_net_client_server_get_games(MbNetClientServer * client)
 	error = NULL;
 
 
-	gulong i =
-	    g_signal_connect(client, "new-game-list",
-			     (GCallback) _new_game_list, sync);
+	gulong i = g_signal_connect(client, "new-game-list",
+				    (GCallback) _new_game_list, sync);
 	_begin_sync(sync);
 	mb_net_client_server_ask_games(client, &error);
 	g_assert(error == NULL);
@@ -129,9 +128,8 @@ MbNetClientGame *mb_tests_net_client_server_create_game(MbNetClientServer *
 	error = NULL;
 
 
-	gulong i =
-	    g_signal_connect(client, "game-created",
-			     (GCallback) _game_created, sync);
+	gulong i = g_signal_connect(client, "game-created",
+				    (GCallback) _game_created, sync);
 
 	_begin_sync(sync);
 	mb_net_client_server_create_game(client, "bubble game", &error);

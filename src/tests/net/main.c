@@ -18,9 +18,9 @@ int main(int argc, char **argv)
 	mb_tests_net_connection_test_all();
 	g_print("mb_tests_net_server_handler_test_all();\n");
 	mb_tests_net_server_handler_test_all();
-	g_print("mb_tests_net_game_handler_test_all();n");
+	g_print("mb_tests_net_game_handler_test_all();\n");
 	mb_tests_net_game_handler_test_all();
-	g_print("mb_tests_net_match_handler_test_all();n");
+	g_print("mb_tests_net_match_handler_test_all();\n");
 	mb_tests_net_match_handler_test_all();
 	g_print("mb_tests_net_server_test_all();\n");
 	mb_tests_net_server_test_all();

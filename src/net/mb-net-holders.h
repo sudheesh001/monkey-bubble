@@ -86,6 +86,7 @@ struct _MbNetSimpleGameHolder {
 
 struct _MbNetPlayerHolder {
 	gchar *name;
+	guint32 player_id;
 };
 
 G_END_DECLS

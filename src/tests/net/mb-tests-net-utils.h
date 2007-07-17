@@ -26,6 +26,7 @@ struct _TestSendReceive {
 	TestSync *sync;
 	MbNetConnection *con;
 	MbNetConnection *con2;
+	MbNetConnection *con3;
 	gpointer data3;
 	GCallback connect_method;
 	GCallback new_message;

@@ -133,8 +133,9 @@ _receive(MbNetHandler * handler, MbNetConnection * con, guint32 src_id,
 		mb_net_player_holder_free(holder);
 	} else if (code == CREATE_GAME) {
 		gchar *name = mb_net_message_read_string(m);
+		guint32 player_id = mb_net_message_read_int(m);
 		g_signal_emit(self, _signals[CREATE_GAME], 0, con, src_id,
-			      name);
+			      player_id, name);
 	} else if (code == CREATE_GAME_RESPONSE) {
 		guint32 game_id = mb_net_message_read_int(m);
 		g_signal_emit(self, _signals[CREATE_GAME_RESPONSE], 0, con,
@@ -149,10 +150,11 @@ static guint32 _get_id(MbNetServerHandler * self)
 
 void mb_net_server_handler_send_create_game
     (MbNetServerHandler * self, MbNetConnection * con, guint32 handler_id,
-     const gchar * name) {
+     guint32 player_id, const gchar * name) {
 	MbNetMessage *m =
 	    mb_net_message_new(_get_id(self), handler_id, CREATE_GAME);
 	mb_net_message_add_string(m, name);
+	mb_net_message_add_int(m, player_id);
 	mb_net_connection_send_message(con, m, NULL);
 	g_object_unref(m);
 
@@ -327,10 +329,11 @@ mb_net_server_handler_class_init(MbNetServerHandlerClass *
 					     (MbNetServerHandlerClass,
 					      create_game),
 					     NULL, NULL,
-					     monkey_net_marshal_VOID__POINTER_UINT_POINTER,
-					     G_TYPE_NONE, 3,
+					     monkey_net_marshal_VOID__POINTER_UINT_UINT_POINTER,
+					     G_TYPE_NONE, 4,
 					     G_TYPE_POINTER,
-					     G_TYPE_UINT, G_TYPE_POINTER);
+					     G_TYPE_UINT, G_TYPE_UINT,
+					     G_TYPE_POINTER);
 
 
 	_signals[CREATE_GAME_RESPONSE] =

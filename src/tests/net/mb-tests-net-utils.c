@@ -73,9 +73,11 @@ _init_basic_new_connection(MbNetConnection * con,
 	if (new_con != NULL) {
 		g_object_ref(new_con);
 		tsr->sync->data = new_con;
+		tsr->con3 = new_con;
 		g_signal_connect(new_con, "receive-message",
 				 (GCallback) tsr->new_message, tsr);
 		mb_net_connection_listen(new_con, NULL);
+		_signal_sync(tsr->sync);
 	} else {
 		g_error("new connection is null ");
 	}
@@ -99,9 +101,7 @@ TestSendReceive *_init_test_sendreceive(GCallback func,
 
 	sync = _init_sync();
 
-	if (locked) {
-		g_mutex_lock(sync->m);
-	}
+
 	error = NULL;
 	con =
 	    MB_NET_CONNECTION(g_object_new(MB_NET_TYPE_CONNECTION, NULL));
@@ -117,12 +117,16 @@ TestSendReceive *_init_test_sendreceive(GCallback func,
 	r->con2 = con2;
 	r->data3 = data3;
 
+	gboolean wait = TRUE;
 	if (func == NULL) {
-		func = _init_basic_new_connection;
+		wait = TRUE;
+		func = (GCallback) _init_basic_new_connection;
+	} else {
+		wait = FALSE;
 	}
 	r->connect_method = func;
 	if (receive_message == NULL) {
-		receive_message = _init_basic_receive_message;
+		receive_message = (GCallback) _init_basic_receive_message;
 	}
 
 	r->new_message = receive_message;
@@ -130,9 +134,19 @@ TestSendReceive *_init_test_sendreceive(GCallback func,
 	mb_net_connection_accept_on(con, "mb://localhost:6600", &error);
 	g_assert(error == NULL);
 
+	if (wait) {
+		_begin_sync(r->sync);
+	}
 	mb_net_connection_connect(con2, "mb://localhost:6600", &error);
 	g_assert(error == NULL);
+	if (wait) {
+		_wait_sync(r->sync);
+	}
 
+
+	if (locked) {
+		_begin_sync(sync);
+	}
 	return r;
 }
 

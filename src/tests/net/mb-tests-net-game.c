@@ -22,10 +22,15 @@ static void _test_ask_score();
 
 gboolean mb_tests_net_game_test_all()
 {
+	g_print("	_test_join\n");
 	_test_join();
+	g_print("	_test_ask_player_list\n");
 	_test_ask_player_list();
+	g_print("	start\n");
 	_test_start();
+	g_print("	stop\n");
 	_test_stop();
+	g_print("	ask_score\n");
 	_test_ask_score();
 
 	return TRUE;
@@ -100,7 +105,6 @@ static void _test_ask_score()
 static void _message(MbNetConnection * con, MbNetMessage * m,
 		     TestSync * sync)
 {
-	g_print("receive message \n");
 	guint32 s, d, a;
 	mb_net_message_read_init(m, &s, &d, &a);
 	mb_net_handler_receive(MB_NET_HANDLER(sync->handler), con, s, d, a,
@@ -139,9 +143,7 @@ static void _init_game_test(TestSync ** ts, MbNetServer ** server,
 	g_signal_connect(con, "receive-message", (GCallback) _message,
 			 sync);
 
-	g_print("create game \n");
 	guint32 game_id = mb_tests_net_server_create_game(con, sync);
-	g_print("create game %d \n", game_id);
 	MbNetGameHandler *h;
 	h = MB_NET_GAME_HANDLER(g_object_new
 				(MB_NET_TYPE_GAME_HANDLER, NULL));
