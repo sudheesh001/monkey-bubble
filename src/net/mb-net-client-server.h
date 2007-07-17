@@ -43,8 +43,7 @@ void mb_net_client_server_create_game(MbNetClientServer * self,
 				      const gchar * name, GError ** error);
 
 MbNetClientGame *mb_net_client_server_create_client(MbNetClientServer *
-						    self, guint32 game_id,
-						    GError ** error);
+						    self, guint32 game_id);
 
 #define MB_NET_TYPE_CLIENT_SERVER			(mb_net_client_server_get_type())
 #define MB_NET_CLIENT_SERVER(object)		(G_TYPE_CHECK_INSTANCE_CAST((object), MB_NET_TYPE_CLIENT_SERVER, MbNetClientServer))

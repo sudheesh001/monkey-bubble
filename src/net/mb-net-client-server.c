@@ -261,14 +261,25 @@ static void _create_game_response(MbNetClientServer * self,
 	priv = GET_PRIVATE(self);
 	MbNetClientGame *game;
 	game =
-	    MB_NET_CLIENT_GAME(g_object_new
-			       (MB_NET_TYPE_CLIENT_GAME, NULL));
-	mb_net_client_game__init(game, game_id, priv->con, priv->manager);
-
+	    mb_net_client_game_create(game_id, priv->player_id, priv->con,
+				      priv->manager);
 	g_signal_emit(self, _signals[GAME_CREATED], 0, game);
 	priv->game = game;
 }
 
+
+MbNetClientGame *mb_net_client_server_create_client(MbNetClientServer *
+						    self, guint32 game_id)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	MbNetClientGame *game;
+	game =
+	    mb_net_client_game_create(game_id, priv->player_id, priv->con,
+				      priv->manager);
+	priv->game = game;
+	return game;
+}
 
 void mb_net_client_server_create_game(MbNetClientServer * self,
 				      const gchar * name, GError ** error)

@@ -245,11 +245,12 @@ static void _test_game_handler_match_created()
 
 
 static void _join(MbNetGameHandler * handler, MbNetConnection * con,
-		  guint32 handler_id, gboolean has_observer,
-		  TestSendReceive * tsr)
+		  guint32 handler_id, guint32 player_id,
+		  gboolean has_observer, TestSendReceive * tsr)
 {
 	g_assert(has_observer == TRUE);
 	g_assert(handler_id == 10);
+	g_assert(player_id == 20);
 	tsr->sync->ret = TRUE;
 }
 
@@ -271,7 +272,7 @@ static void _test_game_handler_join()
 	g_signal_connect(handler, "join", (GCallback) _join, tsr);
 
 
-	mb_net_game_handler_send_join(handler, tsr->con2, 0, TRUE);
+	mb_net_game_handler_send_join(handler, tsr->con2, 0, 20, TRUE);
 	_wait_sync(tsr->sync);
 
 	guint32 s, d, a;

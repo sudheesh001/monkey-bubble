@@ -116,9 +116,10 @@ _receive(MbNetHandler * handler, MbNetConnection * con, guint32 src_id,
 
 
 	if (code == JOIN) {
+		guint32 player_id = mb_net_message_read_int(m);
 		gboolean observer = mb_net_message_read_boolean(m);
 		g_signal_emit(self, _signals[JOIN], 0, con,
-			      src_id, observer);
+			      src_id, player_id, observer);
 	} else if (code == JOIN_RESPONSE) {
 		gboolean observer = mb_net_message_read_boolean(m);
 		g_signal_emit(self, _signals[JOIN_RESPONSE], 0, con,
@@ -160,11 +161,12 @@ static guint32 _get_id(MbNetGameHandler * self)
 
 void mb_net_game_handler_send_join(MbNetGameHandler * self,
 				   MbNetConnection * con,
-				   guint32 handler_id,
+				   guint32 handler_id, guint32 player_id,
 				   gboolean has_observer)
 {
 	MbNetMessage *m =
 	    mb_net_message_new(_get_id(self), handler_id, JOIN);
+	mb_net_message_add_int(m, player_id);
 	mb_net_message_add_boolean(m, has_observer);
 	mb_net_connection_send_message(con, m, NULL);
 	g_object_unref(m);
@@ -330,10 +332,10 @@ mb_net_game_handler_class_init(MbNetGameHandlerClass *
 				      (MbNetGameHandlerClass,
 				       join),
 				      NULL, NULL,
-				      monkey_net_marshal_VOID__POINTER_UINT_UINT,
-				      G_TYPE_NONE, 3,
+				      monkey_net_marshal_VOID__POINTER_UINT_UINT_UINT,
+				      G_TYPE_NONE, 4,
 				      G_TYPE_POINTER, G_TYPE_UINT,
-				      G_TYPE_UINT);
+				      G_TYPE_UINT, G_TYPE_UINT);
 	_signals[JOIN_RESPONSE] =
 	    g_signal_new("join-response", MB_NET_TYPE_GAME_HANDLER,
 			 G_SIGNAL_RUN_LAST,

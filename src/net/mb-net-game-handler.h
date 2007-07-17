@@ -35,19 +35,23 @@ GType mb_net_game_handler_get_type(void);
 
 void mb_net_game_handler_send_join(MbNetGameHandler * self,
 				   MbNetConnection * con,
-				   guint32 handler_id,
+				   guint32 handler_id, guint32 player_id,
 				   gboolean has_observer);
+
 void mb_net_game_handler_send_join_response(MbNetGameHandler * self,
 					    MbNetConnection * con,
 					    guint32 handler_id,
 					    gboolean ok);
+
 void mb_net_game_handler_send_ask_player_list(MbNetGameHandler * self,
 					      MbNetConnection * con,
 					      guint32 handler_id);
+
 void mb_net_game_handler_send_player_list(MbNetGameHandler * self,
 					  MbNetConnection * con,
 					  guint32 handler_id,
 					  MbNetPlayerListHolder * holder);
+
 void mb_net_game_handler_send_match_created(MbNetGameHandler * self,
 					    MbNetConnection * con,
 					    guint32 handler_id,
@@ -56,6 +60,7 @@ void mb_net_game_handler_send_match_created(MbNetGameHandler * self,
 void mb_net_game_handler_send_start(MbNetGameHandler * self,
 				    MbNetConnection * con,
 				    guint32 handler_id);
+
 void mb_net_game_handler_send_stop(MbNetGameHandler * self,
 				   MbNetConnection * con,
 				   guint32 handler_id);
@@ -63,6 +68,7 @@ void mb_net_game_handler_send_stop(MbNetGameHandler * self,
 void mb_net_game_handler_send_ask_score(MbNetGameHandler * self,
 					MbNetConnection * con,
 					guint32 handler_id);
+
 void mb_net_game_handler_send_score(MbNetGameHandler * self,
 				    MbNetConnection * con,
 				    guint32 handler_id,

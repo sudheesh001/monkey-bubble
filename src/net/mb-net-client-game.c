@@ -29,6 +29,12 @@
 
 typedef struct _Private {
 	MbNetGameHandler *handler;
+	guint32 player_id;
+	guint32 game_id;
+	MbNetConnection *con;
+	GList *players;
+	GMutex *players_mutex;
+	GList *scores;
 } Private;
 
 
@@ -39,6 +45,9 @@ enum {
 };
 
 enum {
+	JOIN_RESPONSE,
+	PLAYER_LIST_CHANGED,
+	SCORE_CHANGED,
 	N_SIGNALS
 };
 
@@ -54,7 +63,7 @@ static void mb_net_client_game_set_property(GObject * object,
 					    GParamSpec * param_spec);
 
 
-//static        guint   _signals[N_SIGNALS] = { 0 };
+static guint _signals[N_SIGNALS] = { 0 };
 
 G_DEFINE_TYPE_WITH_CODE(MbNetClientGame, mb_net_client_game, G_TYPE_OBJECT, {
 			});
@@ -68,26 +77,188 @@ G_DEFINE_TYPE_WITH_CODE(MbNetClientGame, mb_net_client_game, G_TYPE_OBJECT, {
 static void mb_net_client_game_finalize(MbNetClientGame * self);
 
 static void mb_net_client_game_init(MbNetClientGame * self);
+static void _score(MbNetGameHandler * h, MbNetConnection * con,
+		   guint32 handler_id, MbNetScoreHolder * holder,
+		   MbNetClientGame * self);
 
+static void _join_response(MbNetGameHandler * h, MbNetConnection * c,
+			   guint32 handler_id, gboolean ok,
+			   MbNetClientGame * self)
+{
+	g_signal_emit(self, _signals[JOIN_RESPONSE], 0, ok);
 
+}
 
 static void mb_net_client_game_init(MbNetClientGame * self)
 {
 	Private *priv;
 	priv = GET_PRIVATE(self);
+	priv->players_mutex = g_mutex_new();
 }
 
-void mb_net_client_game__init(MbNetClientGame * self, guint32 id,
-			      MbNetConnection * con,
-			      MbNetHandlerManager * manager)
+guint32 mb_net_client_game_get_game_id(MbNetClientGame * self)
 {
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	return priv->game_id;
+}
+
+static void _copy_holder(MbNetPlayerHolder * h, MbNetClientGame * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	priv->players =
+	    g_list_append(priv->players,
+			  mb_net_player_holder_create(h->name));
+}
+
+static void _player_list(MbNetGameHandler * h, MbNetConnection * con,
+			 guint32 handler_id,
+			 MbNetPlayerListHolder * holder,
+			 MbNetClientGame * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	g_mutex_lock(priv->players_mutex);
+
+
+	g_list_foreach(priv->players, (GFunc) mb_net_player_holder_free,
+		       NULL);
+	g_list_free(priv->players);
+	priv->players = NULL;
+
+
+	g_list_foreach(holder->players, (GFunc) _copy_holder, self);
+
+	g_mutex_unlock(priv->players_mutex);
+	g_signal_emit(self, _signals[PLAYER_LIST_CHANGED], 0);
+}
+
+
+MbNetClientGame *mb_net_client_game_create(guint32 id, guint32 player_id,
+					   MbNetConnection * con,
+					   MbNetHandlerManager * manager)
+{
+	MbNetClientGame *self;
+
+	self =
+	    MB_NET_CLIENT_GAME(g_object_new
+			       (MB_NET_TYPE_CLIENT_GAME, NULL));
+
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
 	priv->handler =
 	    MB_NET_GAME_HANDLER(g_object_new
 				(MB_NET_TYPE_GAME_HANDLER, NULL));
-//      mb_net_handler_manager_
+
+	g_signal_connect(priv->handler, "join-response",
+			 (GCallback) _join_response, self);
+
+	g_signal_connect(priv->handler, "player-list",
+			 (GCallback) _player_list, self);
+
+	g_signal_connect(priv->handler, "score", (GCallback) _score, self);
+
+	mb_net_handler_manager_register(manager,
+					MB_NET_HANDLER(priv->handler));
+	priv->game_id = id;
+	priv->player_id = player_id;
+	priv->con = con;
+	g_object_ref(con);
+	return self;
+}
+
+void mb_net_client_game_ask_player_list(MbNetClientGame * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	mb_net_game_handler_send_ask_player_list(priv->handler, priv->con,
+						 priv->game_id);
+}
+
+static void _copy_score_holder(MbNetPlayerScoreHolder * h,
+			       MbNetClientGame * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	priv->scores =
+	    g_list_append(priv->scores,
+			  mb_net_player_score_holder_create(h->name,
+							    h->score));
+}
+static void _score(MbNetGameHandler * h, MbNetConnection * con,
+		   guint32 handler_id, MbNetScoreHolder * holder,
+		   MbNetClientGame * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	g_mutex_lock(priv->players_mutex);
+
+
+	g_list_foreach(priv->scores,
+		       (GFunc) mb_net_player_score_holder_free, NULL);
+	g_list_free(priv->scores);
+	priv->scores = NULL;
+
+
+	g_list_foreach(holder->score_by_player, (GFunc) _copy_score_holder,
+		       self);
+
+	g_mutex_unlock(priv->players_mutex);
+	g_signal_emit(self, _signals[SCORE_CHANGED], 0);
+}
+
+
+void mb_net_client_game_ask_score(MbNetClientGame * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	mb_net_game_handler_send_ask_score(priv->handler, priv->con,
+					   priv->game_id);
+}
+
+
+GList *mb_net_client_game_get_players(MbNetClientGame * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	g_mutex_lock(priv->players_mutex);
+	GList *t = priv->players;
+	priv->players = NULL;
+
+
+	g_list_foreach(t, (GFunc) _copy_holder, self);
+	g_mutex_unlock(priv->players_mutex);
+	return t;
+
+}
+
+void mb_net_client_game_start(MbNetClientGame * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	mb_net_game_handler_send_start(priv->handler, priv->con,
+				       priv->game_id);
+}
+
+void mb_net_client_game_stop(MbNetClientGame * self)
+{
+}
+
+
+void mb_net_client_game_join(MbNetClientGame * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	mb_net_game_handler_send_join(priv->handler, priv->con,
+				      priv->game_id, priv->player_id,
+				      FALSE);
 }
 
 static void mb_net_client_game_finalize(MbNetClientGame * self)
@@ -154,5 +325,27 @@ mb_net_client_game_class_init(MbNetClientGameClass *
 	g_object_class->finalize =
 	    (GObjectFinalizeFunc) mb_net_client_game_finalize;
 
+	_signals[JOIN_RESPONSE] =
+	    g_signal_new("join-response", MB_NET_TYPE_CLIENT_GAME,
+			 G_SIGNAL_RUN_LAST,
+			 G_STRUCT_OFFSET(MbNetClientGameClass,
+					 join_response), NULL, NULL,
+			 g_cclosure_marshal_VOID__BOOLEAN, G_TYPE_NONE, 1,
+			 G_TYPE_BOOLEAN);
 
+	_signals[PLAYER_LIST_CHANGED] =
+	    g_signal_new("player-list-changed", MB_NET_TYPE_CLIENT_GAME,
+			 G_SIGNAL_RUN_LAST,
+			 G_STRUCT_OFFSET(MbNetClientGameClass,
+					 player_list_changed), NULL, NULL,
+			 g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0,
+			 NULL);
+
+	_signals[SCORE_CHANGED] =
+	    g_signal_new("score-changed", MB_NET_TYPE_CLIENT_GAME,
+			 G_SIGNAL_RUN_LAST,
+			 G_STRUCT_OFFSET(MbNetClientGameClass,
+					 score_changed), NULL, NULL,
+			 g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0,
+			 NULL);
 }

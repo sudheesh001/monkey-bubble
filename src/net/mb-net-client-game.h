@@ -31,10 +31,9 @@ G_BEGIN_DECLS typedef struct _MbNetClientGame MbNetClientGame;
 typedef struct _MbNetClientGameClass MbNetClientGameClass;
 
 GType mb_net_client_game_get_type(void);
-void mb_net_client_game__init(MbNetClientGame * self, guint32 id,
-			      MbNetConnection * con,
-			      MbNetHandlerManager * manager);
-
+MbNetClientGame *mb_net_client_game_create(guint32 id, guint32 player_id,
+					   MbNetConnection * con,
+					   MbNetHandlerManager * manager);
 void mb_net_client_game_join(MbNetClientGame * self);
 void mb_net_client_game_start(MbNetClientGame * self);
 void mb_net_client_game_stop(MbNetClientGame * self);
@@ -43,6 +42,7 @@ void mb_net_client_game_ask_score(MbNetClientGame * self);
 GList *mb_net_client_game_get_players(MbNetClientGame * self);
 GList *mb_net_client_game_get_score(MbNetClientGame * self);
 gboolean mb_net_client_game_is_master(MbNetClientGame * self);
+guint32 mb_net_client_game_get_game_id(MbNetClientGame * self);
 
 #define MB_NET_TYPE_CLIENT_GAME			(mb_net_client_game_get_type())
 #define MB_NET_CLIENT_GAME(object)		(G_TYPE_CHECK_INSTANCE_CAST((object), MB_NET_TYPE_CLIENT_GAME, MbNetClientGame))

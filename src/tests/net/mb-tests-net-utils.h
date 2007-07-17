@@ -19,6 +19,7 @@ struct _TestSync {
 	gboolean ret2;
 	guint32 id;
 	MbNetHandler *handler;
+	guint32 i;
 };
 
 struct _TestSendReceive {

@@ -34,7 +34,9 @@ static void _test_connect()
 {
 
 	MbNetClientServer *client = NULL;
-	client = mb_tests_net_client_server_connect("mb://localhost:6666");
+	client =
+	    mb_tests_net_client_server_connect("mb://localhost:6666",
+					       "monkeybubble");
 	g_assert(client != NULL);
 	mb_net_client_server_disconnect(client);
 	g_object_unref(client);
@@ -47,7 +49,9 @@ static void _create_game()
 {
 
 	MbNetClientServer *client = NULL;
-	client = mb_tests_net_client_server_connect("mb://localhost:6666");
+	client =
+	    mb_tests_net_client_server_connect("mb://localhost:6666",
+					       "monkeybubble");
 	MbNetClientGame *game =
 	    mb_tests_net_client_server_create_game(client);
 	g_assert(game != NULL);
@@ -61,7 +65,9 @@ static void _create_game()
 static void _ask_games()
 {
 	MbNetClientServer *client = NULL;
-	client = mb_tests_net_client_server_connect("mb://localhost:6666");
+	client =
+	    mb_tests_net_client_server_connect("mb://localhost:6666",
+					       "monkeybubble");
 
 	GList *games = mb_tests_net_client_server_get_games(client);
 	g_assert(g_list_length(games) == 0);
@@ -152,7 +158,8 @@ static void _connected(MbNetClientServer * client, gboolean ok,
 	_signal_sync(sync);
 }
 
-MbNetClientServer *mb_tests_net_client_server_connect(const gchar * uri)
+MbNetClientServer *mb_tests_net_client_server_connect(const gchar * uri,
+						      const gchar * name)
 {
 	GError *error;
 	TestSync *sync;
@@ -163,7 +170,7 @@ MbNetClientServer *mb_tests_net_client_server_connect(const gchar * uri)
 	MbNetClientServer *client =
 	    MB_NET_CLIENT_SERVER(g_object_new
 				 (MB_NET_TYPE_CLIENT_SERVER, NULL));
-	mb_net_client_server_set_name(client, "monkeybubble");
+	mb_net_client_server_set_name(client, name);
 	int i =
 	    g_signal_connect(client, "connected", (GCallback) _connected,
 			     sync);

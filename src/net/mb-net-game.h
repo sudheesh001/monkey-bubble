@@ -25,6 +25,7 @@
 #include <net/mb-net-handler.h>
 #include <net/mb-net-handler-manager.h>
 #include <net/mb-net-server-player.h>
+#include <net/mb-net-server.h>
 #ifndef _MB_NET__GAME_H
 #define _MB_NET__GAME_H
 
@@ -36,7 +37,8 @@ GType mb_net_game_get_type(void);
 
 MbNetGame *mb_net_game_new(const gchar * name,
 			   MbNetServerPlayer * master_player,
-			   MbNetHandlerManager * manager);
+			   MbNetHandlerManager * manager,
+			   MbNetServer * server);
 MbNetHandler *mb_net_game_get_handler(MbNetGame * self);
 
 #define MB_NET_TYPE_GAME			(mb_net_game_get_type())

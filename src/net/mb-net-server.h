@@ -37,7 +37,8 @@ void mb_net_server_accept_on(MbNetServer * self, const gchar * uri,
 			     GError ** error);
 void mb_net_server_stop(MbNetServer * self);
 
-MbNetServerPlayer *mb_net_server_get_player(guint32 player_id);
+MbNetServerPlayer *mb_net_server_get_player(MbNetServer * self,
+					    guint32 player_id);
 #define MB_NET_TYPE_SERVER			(mb_net_server_get_type())
 #define MB_NET_SERVER(object)		(G_TYPE_CHECK_INSTANCE_CAST((object), MB_NET_TYPE_SERVER, MbNetServer))
 #define MB_NET_SERVER_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST((klass), MB_NET_TYPE_SERVER, MbNetServerClass))

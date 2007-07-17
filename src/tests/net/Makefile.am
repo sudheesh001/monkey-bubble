@@ -21,6 +21,7 @@ tests_net_SOURCES = \
 	mb-tests-net-server.h mb-tests-net-server.c \
 	mb-tests-net-game.h mb-tests-net-game.c \
 	mb-tests-net-client-server.h mb-tests-net-client-server.c \
+	mb-tests-net-client-game.h mb-tests-net-client-game.c \
 	mb-tests-net-utils.h mb-tests-net-utils.c \
 	$(NULL)
 

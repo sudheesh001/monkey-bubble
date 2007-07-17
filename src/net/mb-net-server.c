@@ -157,12 +157,10 @@ void mb_net_server_stop(MbNetServer * self)
 	GList *next = priv->connections;
 	while (next != NULL) {
 		MbNetConnection *con = MB_NET_CONNECTION(next->data);
-		g_signal_handlers_disconnect_by_func(con,
-						     (GCallback)
+		g_signal_handlers_disconnect_by_func(con, (GCallback)
 						     _receive_message,
 						     self);
-		g_signal_handlers_disconnect_by_func(con,
-						     (GCallback)
+		g_signal_handlers_disconnect_by_func(con, (GCallback)
 						     _disconnected, self);
 		next = g_list_next(next);
 	}
@@ -270,14 +268,20 @@ static MbNetServerPlayer *_find_by_id(MbNetServer * self, guint32 id)
 	return ret;
 }
 
+MbNetServerPlayer *mb_net_server_get_player(MbNetServer * self,
+					    guint32 player_id)
+{
+	return _find_by_id(self, player_id);
+}
+
+
 static void _remove_player(MbNetServer * self, MbNetServerPlayer * p)
 {
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
 	g_mutex_lock(priv->players_lock);
-	g_signal_handlers_disconnect_by_func(p,
-					     (GCallback)
+	g_signal_handlers_disconnect_by_func(p, (GCallback)
 					     _player_disconnected, self);
 	priv->players = g_list_remove(priv->players, p);
 	g_object_unref(p);
@@ -375,7 +379,8 @@ static void _create_game(MbNetServer * self, MbNetConnection * con,
 								0);
 	} else {
 
-		MbNetGame *game = mb_net_game_new(name, p, priv->manager);
+		MbNetGame *game =
+		    mb_net_game_new(name, p, priv->manager, self);
 
 		g_mutex_lock(priv->games_lock);
 		g_signal_connect_swapped(game, "stopped",

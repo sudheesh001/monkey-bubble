@@ -178,3 +178,22 @@ MbNetPlayerHolder *mb_net_player_holder_create(const gchar * name)
 void mb_net_player_holder_free(MbNetPlayerHolder * holder)
 {
 }
+
+MbNetPlayerScoreHolder *mb_net_player_score_holder_create(const gchar *
+							  name,
+							  guint32 score)
+{
+	MbNetPlayerScoreHolder *holder = NULL;
+	holder =
+	    (MbNetPlayerScoreHolder *) g_new(MbNetPlayerScoreHolder, 1);
+	holder->name = g_strdup(name);
+	holder->score = score;
+	return holder;
+
+}
+
+void mb_net_player_score_holder_free(MbNetPlayerScoreHolder * holder)
+{
+	g_free(holder->name);
+	g_free(holder);
+}

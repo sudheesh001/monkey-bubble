@@ -61,7 +61,10 @@ MbNetSimpleGameHolder *mb_net_simple_game_holder_create(guint handler_id,
 							name);
 
 void mb_net_simple_game_holder_free(MbNetSimpleGameHolder * holder);
-
+MbNetPlayerScoreHolder *mb_net_player_score_holder_create(const gchar *
+							  name,
+							  guint32 score);
+void mb_net_player_score_holder_free(MbNetPlayerScoreHolder * holder);
 struct _MbNetGameListHolder {
 	GList *games;
 };

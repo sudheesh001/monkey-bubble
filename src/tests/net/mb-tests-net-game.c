@@ -68,7 +68,7 @@ static void _test_join()
 	_begin_sync(sync);
 
 
-	mb_net_game_handler_send_join(h, con, game_id, FALSE);
+	mb_net_game_handler_send_join(h, con, game_id, 1, FALSE);
 
 	_wait_sync(sync);
 	_begin_sync(sync);
