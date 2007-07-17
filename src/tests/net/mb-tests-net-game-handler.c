@@ -286,9 +286,11 @@ static void _test_game_handler_join()
 
 static void _join_response(MbNetGameHandler * handler,
 			   MbNetConnection * con, guint32 handler_id,
-			   gboolean ok, TestSendReceive * tsr)
+			   gboolean ok, gboolean master,
+			   TestSendReceive * tsr)
 {
 	g_assert(ok == TRUE);
+	g_assert(master == TRUE);
 	g_assert(handler_id == 10);
 	tsr->sync->ret = TRUE;
 }
@@ -313,7 +315,7 @@ static void _test_game_handler_join_response()
 
 
 	mb_net_game_handler_send_join_response(handler, tsr->con2, 0,
-					       TRUE);
+					       TRUE, TRUE);
 	_wait_sync(tsr->sync);
 
 	guint32 s, d, a;

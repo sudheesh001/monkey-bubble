@@ -24,6 +24,7 @@
 #include "mb-net-game.h"
 #include <net/mb-net-game-handler.h>
 #include <net/mb-net-server.h>
+#include <net/mb-net-match.h>
 #include <glib.h>
 #include <glib-object.h>
 
@@ -41,6 +42,7 @@ typedef struct __Observer {
 } _Observer;
 
 typedef struct _Private {
+	MbNetHandlerManager *manager;
 	MbNetServer *server;
 	MbNetGameHandler *handler;
 	MbNetServerPlayer *master_player;
@@ -144,7 +146,6 @@ static void mb_net_game_finalize(MbNetGame * self)
 	priv = GET_PRIVATE(self);
 
 	g_object_unref(priv->handler);
-
 	g_mutex_lock(priv->players_mutex);
 	GList *next = priv->observers;
 
@@ -214,7 +215,7 @@ MbNetGame *mb_net_game_new(const gchar * name, MbNetServerPlayer * p,
 				 (GCallback) _main_player_disconnected,
 				 self);
 
-
+	priv->manager = manager;
 	mb_net_handler_manager_register(manager,
 					MB_NET_HANDLER(priv->handler));
 
@@ -252,7 +253,7 @@ static MbNetPlayerListHolder *_create_player_list(MbNetGame * self)
 {
 	Private *priv;
 	priv = GET_PRIVATE(self);
-
+	g_mutex_lock(priv->players_mutex);
 
 	MbNetPlayerListHolder *h;
 	h = (MbNetPlayerListHolder *) g_new0(MbNetPlayerListHolder, 1);
@@ -266,6 +267,7 @@ static MbNetPlayerListHolder *_create_player_list(MbNetGame * self)
 		h->players = g_list_append(h->players, ph);
 		next = g_list_next(next);
 	}
+	g_mutex_unlock(priv->players_mutex);
 
 	return h;
 
@@ -295,6 +297,7 @@ static void _remove_player(MbNetGame * self, MbNetServerPlayer * player)
 	priv = GET_PRIVATE(self);
 
 	g_mutex_lock(priv->players_mutex);
+
 	GList *next = priv->observers;
 	while (next != NULL) {
 		_Observer *o = (_Observer *) next->data;
@@ -332,6 +335,28 @@ static void _remove_player(MbNetGame * self, MbNetServerPlayer * player)
 	g_mutex_unlock(priv->players_mutex);
 }
 
+static MbNetServerPlayer *_get_player(MbNetGame * self, guint32 handler_id)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	g_mutex_lock(priv->players_mutex);
+	MbNetServerPlayer *ret = NULL;
+	GList *next = priv->players;
+	while (next != NULL) {
+		_Player *p = (_Player *) next->data;
+		if (p->handler_id == handler_id) {
+			ret = p->player;
+			break;
+		}
+
+
+		next = g_list_next(next);
+	}
+	g_mutex_unlock(priv->players_mutex);
+
+	return ret;
+}
 static void _join(MbNetGame * self, MbNetConnection * con,
 		  guint32 handler_id, guint32 player_id, gboolean observer,
 		  MbNetGameHandler * h)
@@ -343,12 +368,16 @@ static void _join(MbNetGame * self, MbNetConnection * con,
 	    mb_net_server_get_player(priv->server, player_id);
 	if (player == NULL) {
 		mb_net_game_handler_send_join_response(h, con, handler_id,
-						       FALSE);
+						       FALSE, FALSE);
 		return;
 	}
 
 	g_object_ref(player);
 	g_mutex_lock(priv->players_mutex);
+
+	g_signal_connect(player, "disconnected",
+			 (GCallback) _player_disconnected, self);
+
 	if (observer == TRUE) {
 		_Observer *o = (_Observer *) g_new0(_Observer, 1);
 		o->con = con;
@@ -358,7 +387,7 @@ static void _join(MbNetGame * self, MbNetConnection * con,
 
 		priv->observers = g_list_append(priv->observers, o);
 		mb_net_game_handler_send_join_response(h, con, handler_id,
-						       TRUE);
+						       TRUE, FALSE);
 	} else {
 		_Player *p = (_Player *) g_new0(_Player, 1);
 		p->con = con;
@@ -368,14 +397,15 @@ static void _join(MbNetGame * self, MbNetConnection * con,
 		p->player = player;
 		priv->players = g_list_append(priv->players, p);
 		mb_net_game_handler_send_join_response(h, con, handler_id,
-						       TRUE);
+						       TRUE,
+						       player ==
+						       priv->
+						       master_player);
 
 
 	}
 
 	g_mutex_unlock(priv->players_mutex);
-	g_signal_connect(player, "disconnected",
-			 (GCallback) _player_disconnected, self);
 	if (observer == FALSE)
 		_notify_new_player(self);
 }
@@ -384,10 +414,10 @@ static void _notify_new_player(MbNetGame * self)
 {
 	Private *priv;
 	priv = GET_PRIVATE(self);
-
+	MbNetPlayerListHolder *h = _create_player_list(self);
 	g_mutex_lock(priv->players_mutex);
 
-	MbNetPlayerListHolder *h = _create_player_list(self);
+
 	GList *next = priv->players;
 	while (next != NULL) {
 		_Player *p = (_Player *) next->data;
@@ -413,9 +443,72 @@ static void _ask_player_list(MbNetGame * self, MbNetConnection * con,
 	_send_player_list(self, con, handler_id);
 }
 
+static void _send_match_created(MbNetGame * self, MbNetMatch * m)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	guint32 match_id = mb_net_match_get_id(m);
+
+	GList *next = priv->players;
+	while (next != NULL) {
+		_Player *p = (_Player *) next->data;
+		mb_net_game_handler_send_match_created(priv->handler,
+						       p->con,
+						       p->handler_id,
+						       match_id);
+		next = g_list_next(next);
+	}
+
+	next = priv->observers;
+	while (next != NULL) {
+		_Observer *o = (_Observer *) next->data;
+		mb_net_game_handler_send_match_created(priv->handler,
+						       o->con,
+						       o->handler_id,
+						       match_id);
+		next = g_list_next(next);
+	}
+
+
+}
+
 static void _start(MbNetGame * self, MbNetConnection * con,
 		   guint32 handler_id, MbNetGameHandler * h)
 {
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	MbNetServerPlayer *p = _get_player(self, handler_id);
+	if (p != priv->master_player)
+		return;
+	g_mutex_lock(priv->players_mutex);
+
+	GList *next = priv->players;
+	GList *players = NULL;
+	while (next != NULL) {
+		_Player *p = (_Player *) next->data;
+		players = g_list_append(players, p->player);
+		next = g_list_next(next);
+	}
+
+	next = priv->observers;
+	GList *observers = NULL;
+	while (next != NULL) {
+		_Observer *o = (_Observer *) next->data;
+		observers = g_list_append(observers, o->player);
+		next = g_list_next(next);
+	}
+
+
+
+	MbNetMatch *match;
+	match =
+	    mb_net_match_new(priv->master_player, players, observers,
+			     priv->manager);
+	_send_match_created(self, match);
+
+	g_mutex_unlock(priv->players_mutex);
 }
 
 static void _stop(MbNetGame * self, MbNetConnection * con,

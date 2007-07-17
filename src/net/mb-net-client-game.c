@@ -35,6 +35,7 @@ typedef struct _Private {
 	GList *players;
 	GMutex *players_mutex;
 	GList *scores;
+	gboolean master;
 } Private;
 
 
@@ -48,6 +49,7 @@ enum {
 	JOIN_RESPONSE,
 	PLAYER_LIST_CHANGED,
 	SCORE_CHANGED,
+	START,
 	N_SIGNALS
 };
 
@@ -83,8 +85,11 @@ static void _score(MbNetGameHandler * h, MbNetConnection * con,
 
 static void _join_response(MbNetGameHandler * h, MbNetConnection * c,
 			   guint32 handler_id, gboolean ok,
-			   MbNetClientGame * self)
+			   gboolean master, MbNetClientGame * self)
 {
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	priv->master = master;
 	g_signal_emit(self, _signals[JOIN_RESPONSE], 0, ok);
 
 }
@@ -137,6 +142,17 @@ static void _player_list(MbNetGameHandler * h, MbNetConnection * con,
 }
 
 
+static void _match_created(MbNetGameHandler * handler,
+			   MbNetConnection * con, guint32 handler_id,
+			   guint32 match_id, MbNetClientGame * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	MbNetClientMatch *match = NULL;
+	g_signal_emit(self, _signals[START], 0, match);
+}
+
 MbNetClientGame *mb_net_client_game_create(guint32 id, guint32 player_id,
 					   MbNetConnection * con,
 					   MbNetHandlerManager * manager)
@@ -161,6 +177,9 @@ MbNetClientGame *mb_net_client_game_create(guint32 id, guint32 player_id,
 			 (GCallback) _player_list, self);
 
 	g_signal_connect(priv->handler, "score", (GCallback) _score, self);
+
+	g_signal_connect(priv->handler, "match-created",
+			 (GCallback) _match_created, self);
 
 	mb_net_handler_manager_register(manager,
 					MB_NET_HANDLER(priv->handler));
@@ -249,6 +268,10 @@ void mb_net_client_game_start(MbNetClientGame * self)
 
 void mb_net_client_game_stop(MbNetClientGame * self)
 {
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	mb_net_game_handler_send_stop(priv->handler, priv->con,
+				      priv->game_id);
 }
 
 
@@ -259,6 +282,13 @@ void mb_net_client_game_join(MbNetClientGame * self)
 	mb_net_game_handler_send_join(priv->handler, priv->con,
 				      priv->game_id, priv->player_id,
 				      FALSE);
+}
+
+gboolean mb_net_client_game_is_master(MbNetClientGame * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	return priv->master;
 }
 
 static void mb_net_client_game_finalize(MbNetClientGame * self)
@@ -348,4 +378,12 @@ mb_net_client_game_class_init(MbNetClientGameClass *
 					 score_changed), NULL, NULL,
 			 g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0,
 			 NULL);
+
+	_signals[START] =
+	    g_signal_new("start", MB_NET_TYPE_CLIENT_GAME,
+			 G_SIGNAL_RUN_LAST,
+			 G_STRUCT_OFFSET(MbNetClientGameClass,
+					 start), NULL, NULL,
+			 g_cclosure_marshal_VOID__POINTER, G_TYPE_NONE, 1,
+			 G_TYPE_POINTER);
 }

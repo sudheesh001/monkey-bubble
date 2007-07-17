@@ -122,8 +122,9 @@ _receive(MbNetHandler * handler, MbNetConnection * con, guint32 src_id,
 			      src_id, player_id, observer);
 	} else if (code == JOIN_RESPONSE) {
 		gboolean observer = mb_net_message_read_boolean(m);
+		gboolean master = mb_net_message_read_boolean(m);
 		g_signal_emit(self, _signals[JOIN_RESPONSE], 0, con,
-			      src_id, observer);
+			      src_id, observer, master);
 	} else if (code == ASK_PLAYER_LIST) {
 
 		g_signal_emit(self, _signals[ASK_PLAYER_LIST], 0, con,
@@ -175,11 +176,12 @@ void mb_net_game_handler_send_join(MbNetGameHandler * self,
 void mb_net_game_handler_send_join_response(MbNetGameHandler * self,
 					    MbNetConnection * con,
 					    guint32 handler_id,
-					    gboolean ok)
+					    gboolean ok, gboolean master)
 {
 	MbNetMessage *m =
 	    mb_net_message_new(_get_id(self), handler_id, JOIN_RESPONSE);
 	mb_net_message_add_boolean(m, ok);
+	mb_net_message_add_boolean(m, master);
 	mb_net_connection_send_message(con, m, NULL);
 	g_object_unref(m);
 }
@@ -341,9 +343,9 @@ mb_net_game_handler_class_init(MbNetGameHandlerClass *
 			 G_SIGNAL_RUN_LAST,
 			 G_STRUCT_OFFSET(MbNetGameHandlerClass,
 					 join_response), NULL, NULL,
-			 monkey_net_marshal_VOID__POINTER_UINT_UINT,
-			 G_TYPE_NONE, 3, G_TYPE_POINTER, G_TYPE_UINT,
-			 G_TYPE_UINT);
+			 monkey_net_marshal_VOID__POINTER_UINT_UINT_UINT,
+			 G_TYPE_NONE, 4, G_TYPE_POINTER, G_TYPE_UINT,
+			 G_TYPE_UINT, G_TYPE_UINT);
 
 	_signals[ASK_PLAYER_LIST] = g_signal_new("ask-player-list",
 						 MB_NET_TYPE_GAME_HANDLER,

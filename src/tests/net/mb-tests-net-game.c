@@ -40,7 +40,7 @@ gboolean mb_tests_net_game_test_all()
 
 static void _join_response(MbNetGameHandler * h, MbNetConnection * c,
 			   guint32 handler_id, gboolean ok,
-			   TestSync * sync)
+			   gboolean master, TestSync * sync)
 {
 	_signal_sync(sync);
 }

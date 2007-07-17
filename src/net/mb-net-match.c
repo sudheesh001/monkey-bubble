@@ -22,13 +22,18 @@
  */
 
 #include "mb-net-match.h"
-
+#include <net/mb-net-match-handler.h>
 #include <glib.h>
 #include <glib-object.h>
 
 
 typedef struct _Private {
-
+	MbNetHandlerManager *manager;
+	MbNetMatchHandler *handler;
+	GList *players;
+	GList *observers;
+	MbNetServerPlayer *master;
+	GMutex *players_mutex;
 } Private;
 
 
@@ -75,6 +80,12 @@ static void mb_net_match_init(MbNetMatch * self)
 {
 	Private *priv;
 	priv = GET_PRIVATE(self);
+
+	priv->handler =
+	    MB_NET_MATCH_HANDLER(g_object_new
+				 (MB_NET_TYPE_MATCH_HANDLER, NULL));
+
+	priv->players_mutex = g_mutex_new();
 }
 
 
@@ -88,6 +99,37 @@ static void mb_net_match_finalize(MbNetMatch * self)
 		(*G_OBJECT_CLASS(parent_class)->finalize) (G_OBJECT(self));
 	}
 }
+
+MbNetMatch *mb_net_match_new(MbNetServerPlayer * master, GList * players,
+			     GList * observers,
+			     MbNetHandlerManager * manager)
+{
+	Private *priv;
+	MbNetMatch *self =
+	    MB_NET_MATCH(g_object_new(MB_NET_TYPE_MATCH, NULL));
+
+	priv = GET_PRIVATE(self);
+	priv->manager = manager;
+	g_object_ref(master);
+	priv->master = master;
+
+	priv->manager = manager;
+	mb_net_handler_manager_register(manager,
+					MB_NET_HANDLER(priv->handler));
+
+
+	return self;
+}
+
+
+guint32 mb_net_match_get_id(MbNetMatch * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	return mb_net_handler_get_id(MB_NET_HANDLER(priv->handler));
+}
+
+
 
 static void
 mb_net_match_get_property(GObject * object, guint prop_id, GValue * value,

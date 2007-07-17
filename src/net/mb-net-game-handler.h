@@ -38,10 +38,11 @@ void mb_net_game_handler_send_join(MbNetGameHandler * self,
 				   guint32 handler_id, guint32 player_id,
 				   gboolean has_observer);
 
+
 void mb_net_game_handler_send_join_response(MbNetGameHandler * self,
 					    MbNetConnection * con,
 					    guint32 handler_id,
-					    gboolean ok);
+					    gboolean ok, gboolean master);
 
 void mb_net_game_handler_send_ask_player_list(MbNetGameHandler * self,
 					      MbNetConnection * con,
@@ -95,7 +96,7 @@ struct _MbNetGameHandlerClass {
 		      guint32 handler_id, gboolean has_observer);
 	void (*join_response) (MbNetGameHandler * self,
 			       MbNetConnection * con, guint32 handler_id,
-			       gboolean ok);
+			       gboolean ok, gboolean master);
 	void (*ask_player_list) (MbNetGameHandler * self,
 				 MbNetConnection * con,
 				 guint32 handler_id);

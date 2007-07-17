@@ -23,6 +23,8 @@
 
 #include <glib-object.h>
 
+#include <net/mb-net-server-player.h>
+#include <net/mb-net-handler-manager.h>
 #ifndef _MB_NET__MATCH_H
 #define _MB_NET__MATCH_H
 
@@ -30,6 +32,11 @@ G_BEGIN_DECLS typedef struct _MbNetMatch MbNetMatch;
 typedef struct _MbNetMatchClass MbNetMatchClass;
 
 GType mb_net_match_get_type(void);
+MbNetMatch *mb_net_match_new(MbNetServerPlayer * master, GList * players,
+			     GList * observers,
+			     MbNetHandlerManager * manager);
+
+guint32 mb_net_match_get_id(MbNetMatch * match);
 
 #define MB_NET_TYPE_MATCH			(mb_net_match_get_type())
 #define MB_NET_MATCH(object)		(G_TYPE_CHECK_INSTANCE_CAST((object), MB_NET_TYPE_MATCH, MbNetMatch))
