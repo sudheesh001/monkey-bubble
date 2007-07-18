@@ -65,7 +65,6 @@ struct _MbNetClientGameClass {
 	void (*score_changed) (MbNetClientGame * self);
 	void (*start) (MbNetClientGame * self, MbNetClientMatch * match);
 	void (*stop) (MbNetClientGame * self);
-	void (*current_match) (MbNetClientMatch * match);
 };
 
 G_END_DECLS

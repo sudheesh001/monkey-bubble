@@ -41,6 +41,8 @@ typedef struct _Private {
 	gboolean bubble_sticked;
 	gboolean can_shoot;
 	guint32 last_shoot;
+	guint32 last_sticked;
+	gboolean running;
 } Private;
 
 
@@ -117,6 +119,8 @@ static void _bubble_sticked(Monkey * monkey, Bubble * bubble,
 static void _bubble_shot(Monkey * monkey, Bubble * bubble,
 			 MbNetClientMatch * self);
 
+static gint _update_monkey (MbNetClientMatch * self);
+
 static void _start(MbNetMatchHandler * handler, MbNetConnection * con,
 		   guint32 handler_id, MbNetClientMatch * self)
 {
@@ -136,6 +140,7 @@ static void _start(MbNetMatchHandler * handler, MbNetConnection * con,
 
 	g_signal_emit(self, _signals[START], 0);
 
+	gtk_timeout_add (10, (GSourceFunc)_update_monkey,self);
 }
 
 void mb_net_client_match_ready(MbNetClientMatch * self)
@@ -387,6 +392,7 @@ static void _bubble_sticked(Monkey * monkey, Bubble * bubble,
 	priv = GET_PRIVATE(self);
 	Monkey *m = priv->monkey;
 
+	priv->last_sticked = mb_clock_get_time(priv->clock);
 	priv->bubble_sticked = TRUE;
 	if (priv->waiting_bubbles != NULL) {
 		_add_waiting_bubbles(self);
@@ -415,6 +421,34 @@ void mb_net_client_match_shoot(MbNetClientMatch * self)
 }
 
 
+static gint _update_monkey (MbNetClientMatch * self)
+{
+
+
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	g_mutex_lock(priv->lock);
+	Monkey *m = priv->monkey;
+
+	gint time;
+	time = mb_clock_get_time(priv->clock);
+	
+	if( priv->running == TRUE )
+	{
+                
+	        if( (time - priv->last_sticked) > 10000) {
+                         if( priv->can_shoot == TRUE) {        		
+                                monkey_shoot (m, time);
+                        } 
+	        } 
+		monkey_update (m, time);
+
+	}
+	g_mutex_unlock(priv->lock);
+	
+	return priv->running;
+}
 
 static void mb_net_client_match_finalize(MbNetClientMatch * self)
 {

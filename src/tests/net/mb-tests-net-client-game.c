@@ -32,7 +32,10 @@ gboolean mb_tests_net_client_game_test_all()
 	g_print("	_test_stop\n");
 	_test_stop();
 
+	g_print("	OK \n");
+	g_print(" stop server \n");
 	mb_net_server_stop(s);
+	g_print("serfer stopped \n");
 	g_object_unref(s);
 	return TRUE;
 }
@@ -91,7 +94,6 @@ static void _test_join()
 	g_assert(client_game2 != NULL);
 
 	g_assert(mb_net_client_game_is_master(client_game2) == FALSE);
-
 	mb_net_client_server_disconnect(client);
 	g_object_unref(client);
 
@@ -225,10 +227,8 @@ static void _test_start()
 
 }
 
-static void _stop(MbNetClientGame * g, MbNetClientMatch * match,
-		  TestSync * sync)
+static void _stop(MbNetClientGame * g, TestSync * sync)
 {
-	g_assert(match != NULL);
 	_signal_sync(sync);
 }
 static void _test_stop()
@@ -266,12 +266,19 @@ static void _test_stop()
 	g_signal_connect(client_game2, "stop", (GCallback) _stop, sync);
 
 	mb_net_client_game_stop(client_game);
+	g_print(".. bok \n");
 	_wait_sync(sync);
-
+	g_print(".. ok \n");
+	
+		g_print(".. disconnect 1 \n");
 	mb_net_client_server_disconnect(client);
+		g_print(".. unref 1 \n");
+	
 	g_object_unref(client);
-
+	
+	g_print(".. disconnect 2 \n");
 	mb_net_client_server_disconnect(client2);
+		g_print(".. unref 2 \n");
 	g_object_unref(client2);
 
 }

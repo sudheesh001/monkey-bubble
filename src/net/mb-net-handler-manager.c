@@ -110,6 +110,15 @@ void mb_net_handler_manager_register(MbNetHandlerManager * self,
 void mb_net_handler_manager_unregister(MbNetHandlerManager * self,
 				       guint32 handler_id)
 {
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	MbNetHandler *h = (MbNetHandler *) g_hash_table_lookup(priv->map,
+							       (gpointer)
+							       handler_id);
+	if( h != NULL ) {
+		g_hash_table_remove(priv->map,(gpointer)handler_id);
+		g_object_unref(h);
+	}
 }
 
 void mb_net_handler_manager_message(MbNetHandlerManager * self,
@@ -123,12 +132,13 @@ void mb_net_handler_manager_message(MbNetHandlerManager * self,
 	MbNetHandler *h = (MbNetHandler *) g_hash_table_lookup(priv->map,
 							       (gpointer)
 							       tohandler_id);
+			
 	if (h != NULL) {
 		mb_net_handler_receive(h, con, handler_id, tohandler_id,
 				       action, m);
 
 	} else {
-		g_print("handler not found ... \n");
+		g_print("handler not found ... to : %d action %d con %d \n",tohandler_id,action,(guint32)con);
 	}
 }
 

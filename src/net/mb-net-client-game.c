@@ -160,6 +160,7 @@ static void _match_created(MbNetGameHandler * handler,
 static void _stop(MbNetGameHandler * handler, MbNetConnection * con,
 		  guint32 handler_id, MbNetClientGame * self)
 {
+	g_print("stopped \n");
 	g_signal_emit(self, _signals[STOP], 0);
 }
 

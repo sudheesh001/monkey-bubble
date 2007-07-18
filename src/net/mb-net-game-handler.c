@@ -402,7 +402,7 @@ mb_net_game_handler_class_init(MbNetGameHandlerClass *
 				      G_SIGNAL_RUN_LAST,
 				      G_STRUCT_OFFSET
 				      (MbNetGameHandlerClass,
-				       start),
+				       stop),
 				      NULL, NULL,
 				      monkey_net_marshal_VOID__POINTER_UINT,
 				      G_TYPE_NONE, 2,

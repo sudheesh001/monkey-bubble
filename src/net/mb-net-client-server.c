@@ -120,6 +120,9 @@ static void mb_net_client_server_init(MbNetClientServer * self)
 	g_signal_connect_swapped(priv->con, "receive-message",
 				 (GCallback) _message, self);
 
+/*	g_signal_connect_swapped(priv->con, "disconnected",
+				 (GCallback) _message, self);
+*/
 	g_signal_connect_swapped(priv->handler, "register-player-response",
 				 (GCallback) _register_player_response,
 				 self);

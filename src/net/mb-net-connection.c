@@ -153,6 +153,7 @@ void mb_net_connection_close(MbNetConnection * self, GError ** error)
 	priv = GET_PRIVATE(self);
 	int socket = priv->socket;
 	priv->socket = -1;
+	g_print("close %d \n",(guint32)self);
 	if (socket != -1) {
 		int ret;
 		ret = shutdown(socket, 2);
@@ -433,7 +434,7 @@ mb_net_connection_accept_on(MbNetConnection * self, const gchar * uri,
 gboolean _read_message(MbNetConnection * self)
 {
 	Private *priv;
-	guint32 size;
+	int size;
 	priv = GET_PRIVATE(self);
 	if (priv->socket == -1)
 		return FALSE;
@@ -448,7 +449,7 @@ gboolean _read_message(MbNetConnection * self)
 		guint32 s = size;
 		guint8 *data = g_new0(guint8, size);
 		guint p;
-		guint readed;
+		int readed;
 		readed = 1;
 		p = 0;
 
@@ -463,7 +464,9 @@ gboolean _read_message(MbNetConnection * self)
 				size -= readed;
 			}
 
-			g_object_ref(self);
+		}
+		
+					g_object_ref(self);
 
 			g_signal_emit(self, _signals[RECEIVE], 0, s, data);
 
@@ -475,7 +478,7 @@ gboolean _read_message(MbNetConnection * self)
 			g_object_unref(m);
 			g_object_unref(self);
 			g_free(data);
-		}
+
 		return TRUE;
 
 	}
@@ -524,8 +527,8 @@ void *_listen_loop(MbNetConnection * self)
 	}
 
 
-	g_signal_emit(self, _signals[DISCONNECTED], 0);
 	priv->main_thread = NULL;
+	g_signal_emit(self, _signals[DISCONNECTED], 0);
 //      priv->running = FALSE;
 	g_object_unref(self);
 	return 0;
@@ -645,27 +648,34 @@ _mb_net_connection_send_message(MbNetConnection * self, guint32 s,
 
 	priv = GET_PRIVATE(self);
 
-	guint size;
-	guint p;
-	guint writed;
+	int size;
+	int p;
+	int writed;
 	p = 0;
-	writed = 0;
+	writed = 1;
 	size = s;
 	guint32 ssize = htonl(s);
 	write(priv->socket, &ssize, sizeof(ssize));
-	while (size > 0) {
-		writed = write(priv->socket, data + p, size);
+	g_assert( priv->socket != -1);
+	//g_print("write \n");
+	int sock = priv->socket;
+	while (size > 0 && writed > 0) {
+	//	g_print("w1 %d sock %d  data %d \n",size,priv->socket,(guint32)data);
+		writed = write(sock, data + p, size);
+//		g_print("w2 \n");
 		if (writed == -1) {
 			perror("write()");
+	//		g_print("set erro \n");
 			g_set_error(error, error_quark,
 				    MB_NET_CONNECTION_SOCKET_ERROR,
 				    "write socket error\n");
+	//		g_print("return ... \n");
 			return;
 		}
 		size -= writed;
 		p += writed;
 	}
-
+//	g_print("write after \n");
 
 }
 
