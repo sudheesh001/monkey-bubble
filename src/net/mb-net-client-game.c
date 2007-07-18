@@ -29,6 +29,7 @@
 
 typedef struct _Private {
 	MbNetGameHandler *handler;
+	MbNetHandlerManager *manager;
 	guint32 player_id;
 	guint32 game_id;
 	MbNetConnection *con;
@@ -50,6 +51,7 @@ enum {
 	PLAYER_LIST_CHANGED,
 	SCORE_CHANGED,
 	START,
+	STOP,
 	N_SIGNALS
 };
 
@@ -149,8 +151,16 @@ static void _match_created(MbNetGameHandler * handler,
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
-	MbNetClientMatch *match = NULL;
+	MbNetClientMatch *match =
+	    mb_net_client_match_new(match_id, priv->player_id, priv->con,
+				    priv->manager);
 	g_signal_emit(self, _signals[START], 0, match);
+}
+
+static void _stop(MbNetGameHandler * handler, MbNetConnection * con,
+		  guint32 handler_id, MbNetClientGame * self)
+{
+	g_signal_emit(self, _signals[STOP], 0);
 }
 
 MbNetClientGame *mb_net_client_game_create(guint32 id, guint32 player_id,
@@ -181,8 +191,12 @@ MbNetClientGame *mb_net_client_game_create(guint32 id, guint32 player_id,
 	g_signal_connect(priv->handler, "match-created",
 			 (GCallback) _match_created, self);
 
+	g_signal_connect(priv->handler, "stop", (GCallback) _stop, self);
+
 	mb_net_handler_manager_register(manager,
 					MB_NET_HANDLER(priv->handler));
+
+	priv->manager = manager;
 	priv->game_id = id;
 	priv->player_id = player_id;
 	priv->con = con;
@@ -386,4 +400,11 @@ mb_net_client_game_class_init(MbNetClientGameClass *
 					 start), NULL, NULL,
 			 g_cclosure_marshal_VOID__POINTER, G_TYPE_NONE, 1,
 			 G_TYPE_POINTER);
+	_signals[STOP] =
+	    g_signal_new("stop", MB_NET_TYPE_CLIENT_GAME,
+			 G_SIGNAL_RUN_LAST,
+			 G_STRUCT_OFFSET(MbNetClientGameClass,
+					 stop), NULL, NULL,
+			 g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0,
+			 NULL);
 }

@@ -50,7 +50,6 @@ typedef struct _Private {
 	GList *observers;
 
 	GMutex *players_mutex;
-	GMutex *observers_mutex;
 } Private;
 
 
@@ -134,7 +133,6 @@ static void mb_net_game_init(MbNetGame * self)
 	g_signal_connect_swapped(priv->handler, "ask-score",
 				 (GCallback) _ask_score, self);
 
-	priv->observers_mutex = g_mutex_new();
 	priv->players_mutex = g_mutex_new();
 
 }
@@ -298,6 +296,7 @@ static void _remove_player(MbNetGame * self, MbNetServerPlayer * player)
 
 	g_mutex_lock(priv->players_mutex);
 
+	g_object_ref(player);
 	GList *next = priv->observers;
 	while (next != NULL) {
 		_Observer *o = (_Observer *) next->data;
@@ -332,6 +331,7 @@ static void _remove_player(MbNetGame * self, MbNetServerPlayer * player)
 		next = g_list_next(next);
 	}
 
+	g_object_unref(player);
 	g_mutex_unlock(priv->players_mutex);
 }
 

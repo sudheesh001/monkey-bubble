@@ -10,7 +10,7 @@ static void _test_penality();
 static void _test_next_row();
 static void _test_new_cannon_bubble();
 static void _test_shoot();
-static void _test_field();
+static void _test_init_match();
 static void _test_penality_bubbles();
 static void _test_winlost();
 static void _test_ready();
@@ -25,7 +25,7 @@ gboolean mb_tests_net_match_handler_test_all()
 	_test_next_row();
 	_test_new_cannon_bubble();
 	_test_shoot();
-	_test_field();
+	_test_init_match();
 	_test_penality_bubbles();
 	_test_winlost();
 	_test_ready();
@@ -174,9 +174,10 @@ static void _test_shoot()
 	_free_test_sendreceive(tsr);
 }
 
-static void _field(MbNetMatchHandler * h, MbNetConnection * con,
-		   guint32 hanlder_id, guint32 count, Color * bubbles,
-		   gboolean odd, TestSendReceive * tsr)
+static void _match_init(MbNetMatchHandler * h, MbNetConnection * con,
+			guint32 hanlder_id, guint32 count, Color * bubbles,
+			gboolean odd, guint32 bubble1, guint32 bubble2,
+			TestSendReceive * tsr)
 {
 	g_assert(count == 255);
 	int i;
@@ -185,10 +186,12 @@ static void _field(MbNetMatchHandler * h, MbNetConnection * con,
 	}
 
 	g_assert(odd == TRUE);
+	g_assert(bubble1 == 1);
+	g_assert(bubble2 == 2);
 	tsr->sync->ret = TRUE;
 
 }
-static void _test_field()
+static void _test_init_match()
 {
 	Color colors[255];
 	int i;
@@ -204,10 +207,11 @@ static void _test_field()
 	    MB_NET_MATCH_HANDLER(g_object_new
 				 (MB_NET_TYPE_MATCH_HANDLER, NULL));
 	mb_net_handler_set_id(MB_NET_HANDLER(handler), 10);
-	g_signal_connect(handler, "field", (GCallback) _field, tsr);
+	g_signal_connect(handler, "match_init", (GCallback) _match_init,
+			 tsr);
 
-	mb_net_match_handler_send_field(handler, tsr->con2, 0, 255, colors,
-					TRUE);
+	mb_net_match_handler_send_match_init(handler, tsr->con2, 0, 255,
+					     colors, TRUE, 1, 2);
 	_wait_sync(tsr->sync);
 
 	guint32 s, d, a;
@@ -293,10 +297,12 @@ static void _test_winlost()
 	_free_test_sendreceive(tsr);
 }
 
-static void _simple(MbNetMatchHandler * h, MbNetConnection * con,
-		    guint32 hanlder_id, TestSendReceive * tsr)
+static void _ready(MbNetMatchHandler * h, MbNetConnection * con,
+		   guint32 hanlder_id, guint32 player_id,
+		   TestSendReceive * tsr)
 {
 	tsr->sync->ret = TRUE;
+	g_assert(player_id == 1);
 
 }
 
@@ -311,9 +317,9 @@ static void _test_ready()
 	    MB_NET_MATCH_HANDLER(g_object_new
 				 (MB_NET_TYPE_MATCH_HANDLER, NULL));
 	mb_net_handler_set_id(MB_NET_HANDLER(handler), 10);
-	g_signal_connect(handler, "ready", (GCallback) _simple, tsr);
+	g_signal_connect(handler, "ready", (GCallback) _ready, tsr);
 
-	mb_net_match_handler_send_ready(handler, tsr->con2, 0);
+	mb_net_match_handler_send_ready(handler, tsr->con2, 0, 1);
 	_wait_sync(tsr->sync);
 
 	guint32 s, d, a;
@@ -322,6 +328,13 @@ static void _test_ready()
 			       tsr->message);
 	g_assert(tsr->sync->ret == TRUE);
 	_free_test_sendreceive(tsr);
+}
+
+static void _simple(MbNetMatchHandler * h, MbNetConnection * con,
+		    guint32 hanlder_id, TestSendReceive * tsr)
+{
+	tsr->sync->ret = TRUE;
+
 }
 
 static void _test_start()

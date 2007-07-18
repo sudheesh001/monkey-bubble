@@ -44,7 +44,7 @@ enum {
 	NEXT_ROW,
 	NEW_CANNON_BUBBLE,
 	SHOOT,
-	FIELD,
+	MATCH_INIT,
 	WINLOST,
 	READY,
 	START,
@@ -63,8 +63,8 @@ void _parse_next_row(MbNetMatchHandler * self, MbNetConnection * con,
 		     guint32 handler_id, MbNetMessage * m);
 void _parse_shoot(MbNetMatchHandler * self, MbNetConnection * con,
 		  guint32 handler_id, MbNetMessage * m);
-void _parse_field(MbNetMatchHandler * self, MbNetConnection * con,
-		  guint32 handler_id, MbNetMessage * m);
+void _parse_match_init(MbNetMatchHandler * self, MbNetConnection * con,
+		       guint32 handler_id, MbNetMessage * m);
 
 static void mb_net_match_handler_get_property(GObject * object,
 					      guint prop_id,
@@ -152,13 +152,16 @@ _receive(MbNetHandler * handler, MbNetConnection * con, guint32 src_id,
 				      src_id, win);
 			break;
 		}
-	case FIELD:
-		_parse_field(self, con, src_id, m);
+	case MATCH_INIT:
+		_parse_match_init(self, con, src_id, m);
 		break;
 
-	case READY:
-		g_signal_emit(self, _signals[READY], 0, con, src_id);
-		break;
+	case READY:{
+			guint32 player_id = mb_net_message_read_int(m);
+			g_signal_emit(self, _signals[READY], 0, con,
+				      src_id, player_id);
+			break;
+		}
 	case START:
 		g_signal_emit(self, _signals[START], 0, con, src_id);
 		break;
@@ -259,14 +262,16 @@ void _parse_shoot(MbNetMatchHandler * self, MbNetConnection * con,
 }
 
 
-void mb_net_match_handler_send_field(MbNetMatchHandler * self,
-				     MbNetConnection * con,
-				     guint32 handler_id, guint32 count,
-				     Color * bubbles, gboolean odd)
+void mb_net_match_handler_send_match_init(MbNetMatchHandler * self,
+					  MbNetConnection * con,
+					  guint32 handler_id,
+					  guint32 count, Color * bubbles,
+					  gboolean odd, Color bubble1,
+					  Color bubble2)
 {
 
 	MbNetMessage *m =
-	    mb_net_message_new(_get_id(self), handler_id, FIELD);
+	    mb_net_message_new(_get_id(self), handler_id, MATCH_INIT);
 	mb_net_message_add_int(m, count);
 
 	int i = 0;
@@ -274,12 +279,14 @@ void mb_net_match_handler_send_field(MbNetMatchHandler * self,
 		mb_net_message_add_int(m, bubbles[i]);
 	}
 	mb_net_message_add_boolean(m, odd);
+	mb_net_message_add_int(m, bubble1);
+	mb_net_message_add_int(m, bubble2);
 	mb_net_connection_send_message(con, m, NULL);
 	g_object_unref(m);
 }
 
-void _parse_field(MbNetMatchHandler * self, MbNetConnection * con,
-		  guint32 handler_id, MbNetMessage * m)
+void _parse_match_init(MbNetMatchHandler * self, MbNetConnection * con,
+		       guint32 handler_id, MbNetMessage * m)
 {
 	guint size = mb_net_message_read_int(m);
 	Color *bubbles = g_new0(Color, size);
@@ -288,8 +295,10 @@ void _parse_field(MbNetMatchHandler * self, MbNetConnection * con,
 		bubbles[i] = mb_net_message_read_int(m);
 	}
 	gboolean odd = mb_net_message_read_boolean(m);
-	g_signal_emit(self, _signals[FIELD], 0, con, handler_id, size,
-		      bubbles, odd);
+	Color bubble1 = mb_net_message_read_int(m);
+	Color bubble2 = mb_net_message_read_int(m);
+	g_signal_emit(self, _signals[MATCH_INIT], 0, con, handler_id, size,
+		      bubbles, odd, bubble1, bubble2);
 
 }
 
@@ -336,11 +345,11 @@ void mb_net_match_handler_send_winlost(MbNetMatchHandler * self,
 
 void mb_net_match_handler_send_ready(MbNetMatchHandler * self,
 				     MbNetConnection * con,
-				     guint32 handler_id)
+				     guint32 handler_id, guint32 player_id)
 {
 	MbNetMessage *m =
 	    mb_net_message_new(_get_id(self), handler_id, READY);
-
+	mb_net_message_add_int(m, player_id);
 	mb_net_connection_send_message(con, m, NULL);
 	g_object_unref(m);
 }
@@ -484,18 +493,19 @@ mb_net_match_handler_class_init(MbNetMatchHandlerClass *
 				       G_TYPE_FLOAT);
 
 
-	_signals[FIELD] = g_signal_new("field",
-				       MB_NET_TYPE_MATCH_HANDLER,
-				       G_SIGNAL_RUN_LAST,
-				       G_STRUCT_OFFSET
-				       (MbNetMatchHandlerClass,
-					field),
-				       NULL, NULL,
-				       monkey_net_marshal_VOID__POINTER_UINT_UINT_POINTER_UINT,
-				       G_TYPE_NONE, 5,
-				       G_TYPE_POINTER,
-				       G_TYPE_UINT, G_TYPE_UINT,
-				       G_TYPE_POINTER, G_TYPE_UINT);
+	_signals[MATCH_INIT] = g_signal_new("match-init",
+					    MB_NET_TYPE_MATCH_HANDLER,
+					    G_SIGNAL_RUN_LAST,
+					    G_STRUCT_OFFSET
+					    (MbNetMatchHandlerClass,
+					     match_init),
+					    NULL, NULL,
+					    monkey_net_marshal_VOID__POINTER_UINT_UINT_POINTER_UINT_UINT_UINT,
+					    G_TYPE_NONE, 7,
+					    G_TYPE_POINTER,
+					    G_TYPE_UINT, G_TYPE_UINT,
+					    G_TYPE_POINTER, G_TYPE_UINT,
+					    G_TYPE_UINT, G_TYPE_UINT);
 
 	_signals[WINLOST] = g_signal_new("winlost",
 					 MB_NET_TYPE_MATCH_HANDLER,
@@ -516,9 +526,10 @@ mb_net_match_handler_class_init(MbNetMatchHandlerClass *
 				       (MbNetMatchHandlerClass,
 					ready),
 				       NULL, NULL,
-				       monkey_net_marshal_VOID__POINTER_UINT,
-				       G_TYPE_NONE, 2,
-				       G_TYPE_POINTER, G_TYPE_UINT);
+				       monkey_net_marshal_VOID__POINTER_UINT_UINT,
+				       G_TYPE_NONE, 3,
+				       G_TYPE_POINTER, G_TYPE_UINT,
+				       G_TYPE_UINT);
 
 	_signals[START] = g_signal_new("start",
 				       MB_NET_TYPE_MATCH_HANDLER,

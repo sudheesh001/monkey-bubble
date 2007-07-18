@@ -26,10 +26,24 @@
 #ifndef _MB_NET__CLIENT_MATCH_H
 #define _MB_NET__CLIENT_MATCH_H
 
+#include <monkey/monkey.h>
+#include <net/mb-net-match-handler.h>
+#include <net/mb-net-handler-manager.h>
+#include <monkey/monkey.h>
 G_BEGIN_DECLS typedef struct _MbNetClientMatch MbNetClientMatch;
 typedef struct _MbNetClientMatchClass MbNetClientMatchClass;
 
 GType mb_net_client_match_get_type(void);
+
+MbNetClientMatch *mb_net_client_match_new(guint32 match_id,
+					  guint32 player_id,
+					  MbNetConnection * con,
+					  MbNetHandlerManager * manager);
+void mb_net_client_match_ready(MbNetClientMatch * self);
+void mb_net_client_match_shoot(MbNetClientMatch * self);
+void mb_net_client_match_lock(MbNetClientMatch * self);
+void mb_net_client_match_unlock(MbNetClientMatch * self);
+Monkey *mb_net_client_match_get_monkey(MbNetClientMatch * self);
 
 #define MB_NET_TYPE_CLIENT_MATCH			(mb_net_client_match_get_type())
 #define MB_NET_CLIENT_MATCH(object)		(G_TYPE_CHECK_INSTANCE_CAST((object), MB_NET_TYPE_CLIENT_MATCH, MbNetClientMatch))
@@ -46,6 +60,9 @@ struct _MbNetClientMatchClass {
 	GObjectClass base_class;
 
 	/* signals */
+	void (*winlost) (MbNetClientMatch * self, gboolean win);
+	void (*start) (MbNetClientMatch * self);
+	void (*stop) (MbNetClientMatch * self);
 };
 
 G_END_DECLS

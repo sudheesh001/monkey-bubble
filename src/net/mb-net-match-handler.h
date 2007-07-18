@@ -48,10 +48,12 @@ void mb_net_match_handler_send_shoot(MbNetMatchHandler * self,
 				     MbNetConnection * con,
 				     guint32 handler_id, guint32 time,
 				     gfloat radian);
-void mb_net_match_handler_send_field(MbNetMatchHandler * self,
-				     MbNetConnection * con,
-				     guint32 handler_id, guint32 count,
-				     Color * bubbles, gboolean odd);
+void mb_net_match_handler_send_match_init(MbNetMatchHandler * self,
+					  MbNetConnection * con,
+					  guint32 handler_id,
+					  guint32 count, Color * bubbles,
+					  gboolean odd, Color bubble1,
+					  Color bubble2);
 void mb_net_match_handler_send_penality_bubbles(MbNetMatchHandler * self,
 						MbNetConnection * con,
 						guint32 handler_id,
@@ -61,7 +63,8 @@ void mb_net_match_handler_send_winlost(MbNetMatchHandler * self,
 				       guint32 handler_id, gboolean win);
 void mb_net_match_handler_send_ready(MbNetMatchHandler * self,
 				     MbNetConnection * con,
-				     guint32 handler_id);
+				     guint32 handler_id,
+				     guint32 player_id);
 void mb_net_match_handler_send_start(MbNetMatchHandler * self,
 				     MbNetConnection * con,
 				     guint32 handler_id);
@@ -91,16 +94,17 @@ struct _MbNetMatchHandlerClass {
 				   guint32 handler_id, Color color);
 	void (*shoot) (MbNetMatchHandler * self, MbNetConnection * con,
 		       guint32 handler_id, guint32 time, gfloat radian);
-	void (*field) (MbNetMatchHandler * self, MbNetConnection * con,
-		       guint32 handler_id, guint32 count, Color * bubbles,
-		       gboolean odd);
+	void (*match_init) (MbNetMatchHandler * self,
+			    MbNetConnection * con, guint32 handler_id,
+			    guint32 count, Color * bubbles, gboolean odd,
+			    Color bubble1, Color bubble2);
 	void (*penality_bubbles) (MbNetMatchHandler * self,
 				  MbNetConnection * con,
 				  guint32 handler_id, Color * bubbles);
 	void (*winlost) (MbNetMatchHandler * self, MbNetConnection * con,
 			 guint32 handler_id, gboolean win);
 	void (*ready) (MbNetMatchHandler * self, MbNetConnection * con,
-		       guint32 handler_id);
+		       guint32 handler_id, guint32 player_id);
 	void (*start) (MbNetMatchHandler * self, MbNetConnection * con,
 		       guint32 handler_id);
 
