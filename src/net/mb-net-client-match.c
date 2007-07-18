@@ -119,7 +119,7 @@ static void _bubble_sticked(Monkey * monkey, Bubble * bubble,
 static void _bubble_shot(Monkey * monkey, Bubble * bubble,
 			 MbNetClientMatch * self);
 
-static gint _update_monkey (MbNetClientMatch * self);
+static gint _update_monkey(MbNetClientMatch * self);
 
 static void _start(MbNetMatchHandler * handler, MbNetConnection * con,
 		   guint32 handler_id, MbNetClientMatch * self)
@@ -140,7 +140,7 @@ static void _start(MbNetMatchHandler * handler, MbNetConnection * con,
 
 	g_signal_emit(self, _signals[START], 0);
 
-	gtk_timeout_add (10, (GSourceFunc)_update_monkey,self);
+	gtk_timeout_add(10, (GSourceFunc) _update_monkey, self);
 }
 
 void mb_net_client_match_ready(MbNetClientMatch * self)
@@ -421,7 +421,7 @@ void mb_net_client_match_shoot(MbNetClientMatch * self)
 }
 
 
-static gint _update_monkey (MbNetClientMatch * self)
+static gint _update_monkey(MbNetClientMatch * self)
 {
 
 
@@ -433,20 +433,19 @@ static gint _update_monkey (MbNetClientMatch * self)
 
 	gint time;
 	time = mb_clock_get_time(priv->clock);
-	
-	if( priv->running == TRUE )
-	{
-                
-	        if( (time - priv->last_sticked) > 10000) {
-                         if( priv->can_shoot == TRUE) {        		
-                                monkey_shoot (m, time);
-                        } 
-	        } 
-		monkey_update (m, time);
+
+	if (priv->running == TRUE) {
+
+		if ((time - priv->last_sticked) > 10000) {
+			if (priv->can_shoot == TRUE) {
+				monkey_shoot(m, time);
+			}
+		}
+		monkey_update(m, time);
 
 	}
 	g_mutex_unlock(priv->lock);
-	
+
 	return priv->running;
 }
 

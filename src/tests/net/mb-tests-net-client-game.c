@@ -269,16 +269,16 @@ static void _test_stop()
 	g_print(".. bok \n");
 	_wait_sync(sync);
 	g_print(".. ok \n");
-	
-		g_print(".. disconnect 1 \n");
+
+	g_print(".. disconnect 1 \n");
 	mb_net_client_server_disconnect(client);
-		g_print(".. unref 1 \n");
-	
+	g_print(".. unref 1 \n");
+
 	g_object_unref(client);
-	
+
 	g_print(".. disconnect 2 \n");
 	mb_net_client_server_disconnect(client2);
-		g_print(".. unref 2 \n");
+	g_print(".. unref 2 \n");
 	g_object_unref(client2);
 
 }

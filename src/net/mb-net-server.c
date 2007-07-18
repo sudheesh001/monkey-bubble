@@ -209,7 +209,7 @@ static void _disconnected(MbNetServer * self, MbNetConnection * con)
 	priv = GET_PRIVATE(self);
 
 	g_mutex_lock(priv->lock);
-	
+
 	priv->connections = g_list_remove(priv->connections, con);
 	g_signal_handlers_disconnect_by_func(con,
 					     (GCallback) _receive_message,
@@ -220,7 +220,7 @@ static void _disconnected(MbNetServer * self, MbNetConnection * con)
 
 
 	g_mutex_unlock(priv->lock);
-	mb_net_connection_stop( con,NULL);
+	mb_net_connection_stop(con, NULL);
 	g_object_unref(con);
 }
 
@@ -312,7 +312,7 @@ static void _ask_register_player(MbNetServer * self, MbNetConnection * con,
 	holder->player_id = player_id;
 
 	g_mutex_unlock(priv->players_lock);
-	
+
 	mb_net_server_handler_send_register_player_response(handler, con,
 							    handler_id,
 							    holder, TRUE);

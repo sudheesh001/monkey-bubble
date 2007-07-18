@@ -144,15 +144,18 @@ static void mb_net_game_finalize(MbNetGame * self)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
-	
+
 	g_mutex_lock(priv->players_mutex);
-	mb_net_handler_manager_unregister(priv->manager,mb_net_handler_get_id(MB_NET_HANDLER(priv->handler)));
+	mb_net_handler_manager_unregister(priv->manager,
+					  mb_net_handler_get_id
+					  (MB_NET_HANDLER(priv->handler)));
 	g_object_unref(priv->handler);
 	priv->handler = NULL;
-	
-	if( priv->master_player != NULL ) {
-		
-		g_signal_handlers_disconnect_by_func(priv->master_player, (GCallback)
+
+	if (priv->master_player != NULL) {
+
+		g_signal_handlers_disconnect_by_func(priv->master_player,
+						     (GCallback)
 						     _main_player_disconnected,
 						     self);
 
@@ -160,7 +163,7 @@ static void mb_net_game_finalize(MbNetGame * self)
 		priv->master_player = NULL;
 
 	}
-	
+
 	GList *next = priv->observers;
 
 	while (next != NULL) {
@@ -209,7 +212,8 @@ void _main_player_disconnected(MbNetGame * self, MbNetServerPlayer * p)
 	priv = GET_PRIVATE(self);
 	if (priv->master_player == p) {
 		g_print("master disconnected \n");
-		g_signal_handlers_disconnect_by_func(priv->master_player, (GCallback)
+		g_signal_handlers_disconnect_by_func(priv->master_player,
+						     (GCallback)
 						     _main_player_disconnected,
 						     self);
 		g_object_unref(priv->master_player);
@@ -349,15 +353,14 @@ static void _remove_player(MbNetGame * self, MbNetServerPlayer * player)
 							     _player_disconnected,
 							     self);
 
-			priv->players =
-			    g_list_remove(priv->players, p);
+			priv->players = g_list_remove(priv->players, p);
 			g_object_unref(p->player);
 			g_free(p);
 			break;
 		}
 		next = g_list_next(next);
 	}
-;
+	;
 	g_mutex_unlock(priv->players_mutex);
 }
 
@@ -546,23 +549,24 @@ static void _stop(MbNetGame * self, MbNetConnection * con,
 
 static void _stop_game(MbNetGame * self)
 {
-	
+
 	Private *priv;
 	priv = GET_PRIVATE(self);
-//	g_print("stop game .. \n");
+//      g_print("stop game .. \n");
 	g_mutex_lock(priv->players_mutex);
-//	g_print("stop game running .. \n");	
+//      g_print("stop game running .. \n");     
 	GList *next = priv->players;
 	while (next != NULL) {
 		_Player *p = (_Player *) next->data;
 		next = g_list_next(next);
-//		g_print("send stop %d \n",(guint32)p->con);
-		mb_net_game_handler_send_stop(priv->handler,p->con,p->handler_id);
+//              g_print("send stop %d \n",(guint32)p->con);
+		mb_net_game_handler_send_stop(priv->handler, p->con,
+					      p->handler_id);
 	}
 
-	
+
 	g_mutex_unlock(priv->players_mutex);
-//	g_print("stop game done .. \n");	
+//      g_print("stop game done .. \n");        
 	g_signal_emit(self, _signals[STOPPED], 0);
 }
 
