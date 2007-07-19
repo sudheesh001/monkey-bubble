@@ -8,11 +8,12 @@
 #include <mb-tests-net-message.h>
 #include <mb-tests-net-client-server.h>
 #include <mb-tests-net-client-game.h>
+#include <mb-tests-net-client-match.h>
 int main(int argc, char **argv)
 {
 	g_thread_init(NULL);
 	g_type_init();
-	g_print("mb_tests_net_message_test_all();\n");
+/*	g_print("mb_tests_net_message_test_all();\n");
 	mb_tests_net_message_test_all();
 	g_print("mb_tests_net_connection_test_all();\n");
 	mb_tests_net_connection_test_all();
@@ -30,6 +31,9 @@ int main(int argc, char **argv)
 	mb_tests_net_client_server_test_all();
 	g_print("mb_tests_net_client_game_test_all();\n");
 	mb_tests_net_client_game_test_all();
+*/
+	g_print("mb_tests_net_client_match_test_all();\n");
+	mb_tests_net_client_match_test_all();
 
 	g_print("all test OK\n");
 

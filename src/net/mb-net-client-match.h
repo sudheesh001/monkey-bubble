@@ -39,6 +39,7 @@ MbNetClientMatch *mb_net_client_match_new(guint32 match_id,
 					  guint32 player_id,
 					  MbNetConnection * con,
 					  MbNetHandlerManager * manager);
+guint32 mb_net_client_match_get_id(MbNetClientMatch * self);
 void mb_net_client_match_ready(MbNetClientMatch * self);
 void mb_net_client_match_shoot(MbNetClientMatch * self);
 void mb_net_client_match_lock(MbNetClientMatch * self);

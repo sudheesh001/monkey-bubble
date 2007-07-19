@@ -104,6 +104,7 @@ monkey_instance_init(Monkey * self)
 	PRIVATE(self)->left_pressed_time = 0;
 	PRIVATE(self)->time = 0;
 
+	PRIVATE(self)->last_shoot = -1000;
 	PRIVATE(self)->last_stiked = 0;
 
 	PRIVATE(self)->network = FALSE;

@@ -66,6 +66,12 @@ static MbNetClientGame *_join_game(MbNetClientServer * client,
 	return client_game;
 }
 
+MbNetClientGame *mb_tests_net_client_game_join(MbNetClientServer * client,
+					       guint32 game_id)
+{
+	return _join_game(client, game_id);
+}
+
 static void _test_join()
 {
 	TestSync *sync = _init_sync();
@@ -185,9 +191,26 @@ static void _start(MbNetClientGame * g, MbNetClientMatch * match,
 		   TestSync * sync)
 {
 //      g_assert(match != NULL);
+	sync->id = mb_net_client_match_get_id(match);
 	_signal_sync(sync);
 }
 
+guint32 mb_tests_net_client_game_start(MbNetClientGame * game)
+{
+	TestSync *sync = _init_sync();
+
+	int i = g_signal_connect(game, "start", (GCallback) _start, sync);
+
+	_begin_sync(sync);
+	mb_net_client_game_start(game);
+
+
+	_wait_sync(sync);
+
+	g_signal_handler_disconnect(game, i);
+
+	return sync->id;
+}
 
 static void _test_start()
 {
@@ -200,18 +223,18 @@ static void _test_start()
 					       "monkey1");
 	MbNetClientGame *client_game =
 	    mb_tests_net_client_server_create_game(client);
-	client_game = _join_game(client,
-				 mb_net_client_game_get_game_id
-				 (client_game));
+
+	guint32 game_id = mb_net_client_game_get_game_id(client_game);
+	client_game = mb_tests_net_client_game_join(client, game_id);
+
 	MbNetClientServer *client2 =
 	    mb_tests_net_client_server_connect("mb://localhost:6666",
 					       "monkey2");
-	MbNetClientGame *client_game2 = _join_game(client2,
-						   mb_net_client_game_get_game_id
-						   (client_game));
+	MbNetClientGame *client_game2 = NULL;
+	client_game2 = mb_tests_net_client_game_join(client2, game_id);
 
 
-	g_signal_connect(client_game, "start", (GCallback) _start, sync);
+	g_signal_connect(client_game2, "start", (GCallback) _start, sync);
 
 	_begin_sync(sync);
 	mb_net_client_game_start(client_game);

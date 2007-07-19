@@ -129,7 +129,7 @@ static void _start(MbNetMatchHandler * handler, MbNetConnection * con,
 
 	g_signal_connect(priv->handler, "penality", (GCallback) _penality,
 			 self);
-	g_signal_connect(priv->handler, "new-row", (GCallback) _next_row,
+	g_signal_connect(priv->handler, "next-row", (GCallback) _next_row,
 			 self);
 	g_signal_connect(priv->handler, "new-cannon-bubble",
 			 (GCallback) _new_cannon_bubble, self);
@@ -138,9 +138,13 @@ static void _start(MbNetMatchHandler * handler, MbNetConnection * con,
 	g_signal_connect(priv->handler, "winlost", (GCallback) _winlost,
 			 self);
 
+	priv->running = TRUE;
+	priv->can_shoot = TRUE;
+	mb_clock_start(priv->clock);
+	gtk_timeout_add(10, (GSourceFunc) _update_monkey, self);
+
 	g_signal_emit(self, _signals[START], 0);
 
-	gtk_timeout_add(10, (GSourceFunc) _update_monkey, self);
 }
 
 void mb_net_client_match_ready(MbNetClientMatch * self)
@@ -199,6 +203,7 @@ static void mb_net_client_match_init(MbNetClientMatch * self)
 
 	g_signal_connect(priv->handler, "start", (GCallback) _start, self);
 	priv->lock = g_mutex_new();
+	priv->clock = mb_clock_new();
 
 }
 
@@ -223,6 +228,12 @@ Monkey *mb_net_client_match_get_monkey(MbNetClientMatch * self)
 	return priv->monkey;
 }
 
+guint32 mb_net_client_match_get_id(MbNetClientMatch * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	return priv->match_id;
+}
 static void _match_init(MbNetMatchHandler * h, MbNetConnection * con,
 			guint32 handler_id, guint32 count, Color * colors,
 			gboolean odd, Color bubble1, Color bubble2,
@@ -365,6 +376,7 @@ static void _winlost(MbNetMatchHandler * h, MbNetConnection * con,
 static void _bubble_shot(Monkey * monkey, Bubble * bubble,
 			 MbNetClientMatch * self)
 {
+
 	Private *priv;
 	priv = GET_PRIVATE(self);
 	Monkey *m = priv->monkey;
@@ -376,6 +388,7 @@ static void _bubble_shot(Monkey * monkey, Bubble * bubble,
 
 
 	}
+
 	Shooter *s = monkey_get_shooter(m);
 	mb_net_match_handler_send_shoot(priv->handler, priv->con,
 					priv->match_id, priv->last_shoot,
@@ -409,10 +422,8 @@ void mb_net_client_match_shoot(MbNetClientMatch * self)
 {
 	Private *priv;
 	priv = GET_PRIVATE(self);
-
 	g_mutex_lock(priv->lock);
 	Monkey *m = priv->monkey;
-
 	if (priv->can_shoot == TRUE) {
 		monkey_shoot(m, mb_clock_get_time(priv->clock));
 	}
@@ -427,10 +438,10 @@ static gint _update_monkey(MbNetClientMatch * self)
 
 	Private *priv;
 	priv = GET_PRIVATE(self);
-
+	//g_print("update ... \n");
 	g_mutex_lock(priv->lock);
 	Monkey *m = priv->monkey;
-
+	//g_print("update2 ... \n");
 	gint time;
 	time = mb_clock_get_time(priv->clock);
 
