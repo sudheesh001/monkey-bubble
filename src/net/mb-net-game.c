@@ -480,17 +480,8 @@ static void _send_match_created(MbNetGame * self, MbNetMatch * m)
 
 	guint32 match_id = mb_net_match_get_id(m);
 	guint32 match_observer_id = mb_net_match_get_observer_id(m);
-	GList *next = priv->players;
-	while (next != NULL) {
-		_Player *p = (_Player *) next->data;
-		mb_net_game_handler_send_match_created(priv->handler,
-						       p->con,
-						       p->handler_id,
-						       match_id, FALSE);
-		next = g_list_next(next);
-	}
 
-	next = priv->observers;
+	GList *next = priv->observers;
 	while (next != NULL) {
 		_Observer *o = (_Observer *) next->data;
 		mb_net_game_handler_send_match_created(priv->handler,
@@ -500,6 +491,17 @@ static void _send_match_created(MbNetGame * self, MbNetMatch * m)
 						       TRUE);
 		next = g_list_next(next);
 	}
+
+	next = priv->players;
+	while (next != NULL) {
+		_Player *p = (_Player *) next->data;
+		mb_net_game_handler_send_match_created(priv->handler,
+						       p->con,
+						       p->handler_id,
+						       match_id, FALSE);
+		next = g_list_next(next);
+	}
+
 
 
 }

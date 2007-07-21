@@ -29,9 +29,11 @@
 
 typedef struct _Private {
 	MbNetGameHandler *handler;
+	MbNetGameHandler *observer_handler;
 	MbNetHandlerManager *manager;
 	guint32 player_id;
 	guint32 game_id;
+	guint32 observed_match_id;
 	MbNetConnection *con;
 	GList *players;
 	GMutex *players_mutex;
@@ -143,6 +145,16 @@ static void _player_list(MbNetGameHandler * h, MbNetConnection * con,
 	g_signal_emit(self, _signals[PLAYER_LIST_CHANGED], 0);
 }
 
+static void _observer_match_created(MbNetGameHandler * handler,
+				    MbNetConnection * con,
+				    guint32 handler_id, guint32 match_id,
+				    MbNetClientGame * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	priv->observed_match_id = match_id;
+}
 
 static void _match_created(MbNetGameHandler * handler,
 			   MbNetConnection * con, guint32 handler_id,
@@ -152,7 +164,8 @@ static void _match_created(MbNetGameHandler * handler,
 	priv = GET_PRIVATE(self);
 
 	MbNetClientMatch *match =
-	    mb_net_client_match_new(match_id, priv->player_id, priv->con,
+	    mb_net_client_match_new(match_id, priv->observed_match_id,
+				    priv->player_id, priv->con,
 				    priv->manager);
 	g_signal_emit(self, _signals[START], 0, match);
 }
@@ -181,6 +194,10 @@ MbNetClientGame *mb_net_client_game_create(guint32 id, guint32 player_id,
 	    MB_NET_GAME_HANDLER(g_object_new
 				(MB_NET_TYPE_GAME_HANDLER, NULL));
 
+	priv->observer_handler =
+	    MB_NET_GAME_HANDLER(g_object_new
+				(MB_NET_TYPE_GAME_HANDLER, NULL));
+
 	g_signal_connect(priv->handler, "join-response",
 			 (GCallback) _join_response, self);
 
@@ -192,10 +209,16 @@ MbNetClientGame *mb_net_client_game_create(guint32 id, guint32 player_id,
 	g_signal_connect(priv->handler, "match-created",
 			 (GCallback) _match_created, self);
 
+	g_signal_connect(priv->observer_handler, "match-created",
+			 (GCallback) _observer_match_created, self);
 	g_signal_connect(priv->handler, "stop", (GCallback) _stop, self);
 
 	mb_net_handler_manager_register(manager,
 					MB_NET_HANDLER(priv->handler));
+
+	mb_net_handler_manager_register(manager,
+					MB_NET_HANDLER(priv->
+						       observer_handler));
 
 	priv->manager = manager;
 	priv->game_id = id;
@@ -297,6 +320,10 @@ void mb_net_client_game_join(MbNetClientGame * self)
 	mb_net_game_handler_send_join(priv->handler, priv->con,
 				      priv->game_id, priv->player_id,
 				      FALSE);
+	mb_net_game_handler_send_join(priv->observer_handler, priv->con,
+				      priv->game_id, priv->player_id,
+				      TRUE);
+
 }
 
 gboolean mb_net_client_game_is_master(MbNetClientGame * self)

@@ -36,6 +36,7 @@ typedef struct _MbNetClientMatchClass MbNetClientMatchClass;
 GType mb_net_client_match_get_type(void);
 
 MbNetClientMatch *mb_net_client_match_new(guint32 match_id,
+					  guint32 observer_match_id,
 					  guint32 player_id,
 					  MbNetConnection * con,
 					  MbNetHandlerManager * manager);
@@ -46,8 +47,12 @@ void mb_net_client_match_lock(MbNetClientMatch * self);
 void mb_net_client_match_unlock(MbNetClientMatch * self);
 Monkey *mb_net_client_match_get_monkey(MbNetClientMatch * self);
 
-Color *mb_net_client_match_get_player_bubbles(MbNetClientMatch * self,
-					      int player);
+void mb_net_client_match_get_player_bubbles(MbNetClientMatch * self,
+					    int player, Color ** color,
+					    int *count, gboolean * odd);
+gboolean mb_net_client_match_is_player_lost(MbNetClientMatch * self,
+					    int player);
+
 guint32 mb_net_client_match_get_time(MbNetClientMatch * self);
 #define MB_NET_TYPE_CLIENT_MATCH			(mb_net_client_match_get_type())
 #define MB_NET_CLIENT_MATCH(object)		(G_TYPE_CHECK_INSTANCE_CAST((object), MB_NET_TYPE_CLIENT_MATCH, MbNetClientMatch))

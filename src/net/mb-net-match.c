@@ -107,6 +107,8 @@ static void mb_net_match_finalize(MbNetMatch * self);
 static void mb_net_match_init(MbNetMatch * self);
 
 
+static void _notify_winlost(MbNetMatch * self, _Player * p, gboolean win);
+static void _notify_bubbles(MbNetMatch * self, _Player * p);
 
 static void mb_net_match_init(MbNetMatch * self)
 {
@@ -220,6 +222,7 @@ static void _observer_ready(MbNetMatchHandler * handler,
 	o->handler_id = handler_id;
 	o->con = con;
 
+	g_print("add obserrver ... \n");
 	priv->observers = g_list_append(priv->observers, o);
 
 	g_signal_connect(p, "disconnected",
@@ -396,8 +399,10 @@ static void _bubble_sticked(Monkey * monkey, Bubble * b, _Player * c)
 
 	g_print("player  bubble sticked :%s \n",
 		mb_net_server_player_get_name(c->player));
+	MbNetMatch *self = c->self;
+
 	Private *priv;
-	priv = GET_PRIVATE(c->self);
+	priv = GET_PRIVATE(self);
 	if (c->waiting_bubbles != NULL) {
 		int i;
 		Bubble **bubbles = g_new0(Bubble *, 7);
@@ -436,6 +441,8 @@ static void _bubble_sticked(Monkey * monkey, Bubble * b, _Player * c)
 		c->waiting_range = NULL;
 
 	}
+
+	_notify_bubbles(self, c);
 	//notify_observers (c->game, c);
 //#ifdef DEBUG
 //      monkey_print_board(monkey);
@@ -504,6 +511,7 @@ static void _game_lost(Monkey * m, _Player * c)
 	c->lost = TRUE;
 	mb_net_match_handler_send_winlost(priv->handler, c->con,
 					  c->handler_id, FALSE);
+	_notify_winlost(self, c, FALSE);
 }
 
 static void _shoot(MbNetMatchHandler * handler, MbNetConnection * con,
@@ -664,6 +672,8 @@ static void _init_player(MbNetMatch * self, _Player * player,
 					     player->handler_id,
 					     INIT_BUBBLES_COUNT, colors,
 					     FALSE, bubble1, bubble2);
+
+	_notify_bubbles(self, player);
 }
 
 
@@ -755,6 +765,7 @@ static gboolean _update_lost(MbNetMatch * self)
 								  c->
 								  handler_id,
 								  TRUE);
+				_notify_winlost(self, c, TRUE);
 				break;
 			}
 			next = g_list_next(next);
@@ -784,9 +795,10 @@ static void _start_match(MbNetMatch * self)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
-	_init_players(self);
 
 	g_mutex_lock(priv->players_mutex);
+
+	_init_players(self);
 	GList *next = priv->players;
 
 	while (next != NULL) {
@@ -846,6 +858,75 @@ static void _remove_player(MbNetMatch * self, MbNetServerPlayer * p)
 
 	g_mutex_unlock(priv->players_mutex);
 
+
+
+
+}
+
+static void _notify_bubbles(MbNetMatch * self, _Player * p)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+
+
+	guint32 player_id = mb_net_server_player_get_id(p->player);
+	Board *board =
+	    playground_get_board(monkey_get_playground(p->monkey));
+	Bubble **bubbles = board_get_array(board);
+
+	gboolean odd = board_get_odd(board);
+	int count = 8 * 13;
+	Color *colors = g_new0(Color, count);
+
+	int i;
+	for (i = 0; i < count; i++) {
+
+		if (bubbles[i] != NULL) {
+			colors[i] = bubble_get_color(bubbles[i]);
+		} else {
+			colors[i] = NO_COLOR;
+		}
+	}
+
+	GList *next = priv->observers;
+	while (next != NULL) {
+		_Observer *o = (_Observer *) next->data;
+		mb_net_match_handler_send_observer_player_bubbles(priv->
+								  observer_handler,
+								  o->con,
+								  o->
+								  handler_id,
+								  player_id,
+								  count,
+								  colors,
+								  odd);
+		next = g_list_next(next);
+	}
+}
+
+
+static void _notify_winlost(MbNetMatch * self, _Player * p, gboolean win)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+
+	guint32 player_id = mb_net_server_player_get_id(p->player);
+
+
+	GList *next = priv->observers;
+	while (next != NULL) {
+		_Observer *o = (_Observer *) next->data;
+		mb_net_match_handler_send_observer_player_winlost(priv->
+								  observer_handler,
+								  o->con,
+								  o->
+								  handler_id,
+								  player_id,
+								  win);
+		next = g_list_next(next);
+	}
 
 
 }

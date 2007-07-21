@@ -49,6 +49,7 @@ enum {
 	READY,
 	START,
 	OBSERVER_PLAYER_BUBBLES,
+	OBSERVER_PLAYER_WINLOST,
 	N_SIGNALS
 };
 
@@ -358,6 +359,34 @@ void _parse_observer_player_bubbles(MbNetMatchHandler * self,
 
 }
 
+void mb_net_match_handler_send_observer_player_winlost(MbNetMatchHandler *
+						       self,
+						       MbNetConnection *
+						       con,
+						       guint32 handler_id,
+						       guint32 player_id,
+						       gboolean winlost)
+{
+	MbNetMessage *m = mb_net_message_new(_get_id(self), handler_id,
+					     OBSERVER_PLAYER_WINLOST);
+
+	mb_net_message_add_int(m, player_id);
+	mb_net_message_add_boolean(m, winlost);
+
+	mb_net_connection_send_message(con, m, NULL);
+	g_object_unref(m);
+}
+
+void _parse_observer_player_winlost(MbNetMatchHandler * self,
+				    MbNetConnection * con,
+				    guint32 handler_id, MbNetMessage * m)
+{
+	guint player_id = mb_net_message_read_int(m);
+	gboolean winlost = mb_net_message_read_boolean(m);
+	g_signal_emit(self, _signals[OBSERVER_PLAYER_WINLOST], 0,
+		      player_id, winlost);
+
+}
 
 void mb_net_match_handler_send_penality_bubbles(MbNetMatchHandler * self,
 						MbNetConnection * con,
@@ -608,4 +637,14 @@ mb_net_match_handler_class_init(MbNetMatchHandlerClass *
 			 monkey_net_marshal_VOID__UINT_UINT_POINTER_UINT,
 			 G_TYPE_NONE, 4, G_TYPE_UINT, G_TYPE_UINT,
 			 G_TYPE_POINTER, G_TYPE_UINT);
+
+	_signals[OBSERVER_PLAYER_WINLOST] =
+	    g_signal_new("observer-player-winlost",
+			 MB_NET_TYPE_MATCH_HANDLER, G_SIGNAL_RUN_LAST,
+			 G_STRUCT_OFFSET(MbNetMatchHandlerClass,
+					 observer_player_bubbles), NULL,
+			 NULL,
+			 monkey_net_marshal_VOID__UINT_UINT,
+			 G_TYPE_NONE, 2, G_TYPE_UINT, G_TYPE_UINT);
+
 }

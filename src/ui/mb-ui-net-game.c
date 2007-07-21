@@ -142,20 +142,32 @@ static void _winlost(MbNetClientMatch * match, gboolean win,
 	priv->state = GAME_FINISHED;
 	g_print(" winlost ... \n");
 	if (win == FALSE) {
-
-
-		//PRIVATE (game)->score++;
-		monkey_view_draw_win(priv->display);
+		monkey_view_draw_lost(priv->display);
 
 	} else {
-
-		monkey_view_draw_lost(priv->display);
+		monkey_view_draw_win(priv->display);
 
 
 	}
 	game_notify_changed(GAME(self));
 
-	mb_net_client_match_lock(priv->match);
+	mb_net_client_match_unlock(priv->match);
+}
+
+static void _player_changed(MbNetClientMatch * match, guint32 player,
+			    MbUiNetGame * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	Color *color = NULL;
+	gboolean odd;
+	guint32 count;
+	g_print("player changed %d\n", player);
+	mb_net_client_match_get_player_bubbles(match, player, &color,
+					       &count, &odd);
+	//if( monkey_id >= 1 && monkey_id <= 4 ) {
+	mb_mini_view_update(priv->mini_views[player], color, odd);
+	//     }
 }
 
 MbUiNetGame *mb_ui_net_game_new(MbNetClientGame * game,
@@ -254,6 +266,9 @@ MbUiNetGame *mb_ui_net_game_new(MbNetClientGame * game,
 
 
 	}
+
+	g_signal_connect(priv->match, "player-changed",
+			 (GCallback) _player_changed, self);
 
 	return self;
 
