@@ -46,7 +46,9 @@ int main(int argc, char **argv) {
 	
 	GError * error = NULL;
 	mb_net_server_accept_on(server, "mb://localhost:6666", &error);
-
+GMainLoop *loop = g_main_loop_new(NULL, TRUE);
+	g_thread_create((GThreadFunc) g_main_loop_run, loop, TRUE, NULL);
+	
 	if( error == NULL ) {
 		mb_net_server_join(server);
 	}

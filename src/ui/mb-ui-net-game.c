@@ -133,6 +133,31 @@ static void mb_ui_net_game_finalize(MbUiNetGame * self)
 	}
 }
 
+static void _winlost(MbNetClientMatch * match, gboolean win,
+		     MbUiNetGame * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	mb_net_client_match_lock(priv->match);
+	priv->state = GAME_FINISHED;
+	g_print(" winlost ... \n");
+	if (win == FALSE) {
+
+
+		//PRIVATE (game)->score++;
+		monkey_view_draw_win(priv->display);
+
+	} else {
+
+		monkey_view_draw_lost(priv->display);
+
+
+	}
+	game_notify_changed(GAME(self));
+
+	mb_net_client_match_lock(priv->match);
+}
+
 MbUiNetGame *mb_ui_net_game_new(MbNetClientGame * game,
 				MbNetClientMatch * match)
 {
@@ -156,14 +181,13 @@ MbUiNetGame *mb_ui_net_game_new(MbNetClientGame * game,
 			    DATADIR
 			    "/monkey-bubble/gfx/layout_network_player.svg",
 			    TRUE, FALSE);
-	/*priv->paused_block =
-	   monkey_canvas_create_block_from_image (canvas,
-	   DATADIR
-	   "/monkey-bubble/gfx/pause.svg",
-	   200, 200, 100, 100);
+	priv->paused_block =
+	    monkey_canvas_create_block_from_image(canvas,
+						  DATADIR
+						  "/monkey-bubble/gfx/pause.svg",
+						  200, 200, 100, 100);
 
-	   priv->paused_layer =
-	   monkey_canvas_append_layer (canvas, 0, 0); */
+	priv->paused_layer = monkey_canvas_append_layer(canvas, 0, 0);
 
 
 	monkey_view_set_score(priv->display, 0);
@@ -197,6 +221,8 @@ MbUiNetGame *mb_ui_net_game_new(MbNetClientGame * game,
 
 
 	 */
+	g_signal_connect(priv->match, "winlost", (GCallback) _winlost,
+			 self);
 	MbGameSound *mgs = mb_game_sound_new();
 	mb_game_sound_connect_monkey(mgs,
 				     mb_net_client_match_get_monkey(priv->

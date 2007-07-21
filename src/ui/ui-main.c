@@ -49,8 +49,6 @@
 #include "ui-network-client.h"
 #include "ui-network-server.h"
 #include "simple-server.h"
-#include <ui/mb-ui-net-server.h>
-#include <ui/mb-ui-net-client.h>
 #include <ui/mb-ui-net.h>
 #define PRIVATE(main) (main->private)
 

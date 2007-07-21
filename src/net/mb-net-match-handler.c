@@ -256,7 +256,9 @@ void mb_net_match_handler_send_shoot(MbNetMatchHandler * self,
 	MbNetMessage *m =
 	    mb_net_message_new(_get_id(self), handler_id, SHOOT);
 	mb_net_message_add_int(m, time);
-	mb_net_message_add_int(m, (guint32) (radian * 65536.0));
+	int i = (gint32) (radian * 65536.0);
+	mb_net_message_add_int(m, i);
+
 	mb_net_connection_send_message(con, m, NULL);
 	g_object_unref(m);
 }
@@ -265,8 +267,9 @@ void _parse_shoot(MbNetMatchHandler * self, MbNetConnection * con,
 		  guint32 handler_id, MbNetMessage * m)
 {
 	guint32 time = mb_net_message_read_int(m);
-	guint32 radian = mb_net_message_read_int(m);
-	gfloat r = ((gfloat) radian) / 65536.0;
+	gint32 radian = mb_net_message_read_int(m);
+	gfloat r = radian;
+	r = r / 65536.0;
 	g_signal_emit(self, _signals[SHOOT], 0, con, handler_id, time, r);
 }
 
@@ -322,9 +325,8 @@ void mb_net_match_handler_send_observer_player_bubbles(MbNetMatchHandler *
 						       gboolean odd)
 {
 
-	MbNetMessage *m =
-	    mb_net_message_new(_get_id(self), handler_id,
-			       OBSERVER_PLAYER_BUBBLES);
+	MbNetMessage *m = mb_net_message_new(_get_id(self), handler_id,
+					     OBSERVER_PLAYER_BUBBLES);
 
 	mb_net_message_add_int(m, player_id);
 	mb_net_message_add_int(m, count);

@@ -183,7 +183,6 @@ MbNetClientMatch *mb_net_client_match_new(guint32 match_id,
 
 	g_signal_connect(priv->monkey, "bubble-sticked",
 			 (GCallback) _bubble_sticked, self);
-//      g_signal_connect (priv->monkey,"game-lost",(GCallback)_game_list,self);
 	g_signal_connect(priv->monkey, "bubble-shot",
 			 (GCallback) _bubble_shot, self);
 
@@ -277,7 +276,7 @@ static void _penality(MbNetMatchHandler * h, MbNetConnection * con,
 	priv = GET_PRIVATE(self);
 
 	g_mutex_lock(priv->lock);
-
+	g_print("add penality c %d \n", penality);
 	Monkey *m = priv->monkey;
 	monkey_add_bubbles(m, penality);
 	g_mutex_unlock(priv->lock);
@@ -329,14 +328,12 @@ static void _add_waiting_bubbles(MbNetClientMatch * self)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
-	g_mutex_lock(priv->lock);
 
 	Monkey *m = priv->monkey;
 
 	monkey_add_waiting_row_complete(m, priv->waiting_bubbles);
 	priv->waiting_bubbles = NULL;
 	priv->can_shoot = TRUE;
-	g_mutex_unlock(priv->lock);
 
 }
 
@@ -352,19 +349,18 @@ static void _penality_bubbles(MbNetMatchHandler * h,
 
 	Bubble **bubbles = g_new0(Bubble *, 7);
 	int i;
+	g_print("penality bubbles !! \n");
 	for (i = 0; i < 7; i++) {
 		if (colors[i] != NO_COLOR) {
 			bubbles[i] = bubble_new(colors[i], 0, 0);
 		}
 	}
-
 	priv->waiting_bubbles = bubbles;
-
-	g_mutex_unlock(priv->lock);
 
 	if (priv->bubble_sticked == TRUE) {
 		_add_waiting_bubbles(self);
 	}
+	g_mutex_unlock(priv->lock);
 
 }
 
@@ -374,11 +370,8 @@ static void _winlost(MbNetMatchHandler * h, MbNetConnection * con,
 {
 	Private *priv;
 	priv = GET_PRIVATE(self);
-
-	g_mutex_lock(priv->lock);
-
+	g_print("emit winlost ... \n");
 	g_signal_emit(self, _signals[WINLOST], 0, win);
-	g_mutex_unlock(priv->lock);
 }
 static void _bubble_shot(Monkey * monkey, Bubble * bubble,
 			 MbNetClientMatch * self)
@@ -412,8 +405,10 @@ static void _bubble_sticked(Monkey * monkey, Bubble * bubble,
 	priv = GET_PRIVATE(self);
 	Monkey *m = priv->monkey;
 
+	g_print("bubble _sticked \n");
 	priv->last_sticked = mb_clock_get_time(priv->clock);
 	priv->bubble_sticked = TRUE;
+	priv->can_shoot = TRUE;
 	if (priv->waiting_bubbles != NULL) {
 		_add_waiting_bubbles(self);
 	}
@@ -552,7 +547,7 @@ mb_net_client_match_class_init(MbNetClientMatchClass *
 	    g_signal_new("winlost", MB_NET_TYPE_CLIENT_MATCH,
 			 G_SIGNAL_RUN_LAST,
 			 G_STRUCT_OFFSET(MbNetClientMatchClass, winlost),
-			 NULL, NULL, g_cclosure_marshal_VOID__BOOLEAN,
+			 NULL, NULL, g_cclosure_marshal_VOID__UINT,
 			 G_TYPE_NONE, 1, G_TYPE_UINT);
 
 }
