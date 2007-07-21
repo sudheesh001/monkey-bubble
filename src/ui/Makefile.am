@@ -22,17 +22,13 @@ bin_PROGRAMS = monkey-bubble
 monkey_bubble_SOURCES = \
 	game.c game.h \
 	game-1-player.c game-1-player.h \
-	game-network-player.c game-network-player.h \
 	game-2-player.c game-2-player.h \
 	game-manager.c game-manager.h \
 	game-1-player-manager.c game-1-player-manager.h \
 	game-2-player-manager.c game-2-player-manager.h \
-	game-network-player-manager.c game-network-player-manager.h \
 	main.c \
 	game-sound.c game-sound.h \
 	keyboard-properties.c keyboard-properties.h \
-	ui-network-client.c ui-network-client.h \
-	ui-network-server.c ui-network-server.h \
 	ui-main.c ui-main.h \
         mb-ui-net.h mb-ui-net.c \
 	mb-ui-net-player-list.c  mb-ui-net-player-list.h \

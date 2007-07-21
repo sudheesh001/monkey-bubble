@@ -29,7 +29,7 @@
 #include "game-1-player.h"
 #include "game-1-player-manager.h"
 #include "game-2-player-manager.h"
-#include "game-network-player-manager.h"
+
 #include "game-2-player.h"
 #include "keyboard-properties.h"
 #include "sound-manager.h"
@@ -46,9 +46,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "ui-network-client.h"
-#include "ui-network-server.h"
-#include "simple-server.h"
 #include <ui/mb-ui-net.h>
 #define PRIVATE(main) (main->private)
 
@@ -549,7 +546,6 @@ static void new_network_game(gpointer    callback_data,
 static void new_network_server(gpointer    callback_data,
                                guint       callback_action,
                                GtkWidget  *widget) {
-        UiNetworkServer  * ngl;
         UiMain * ui_main;
         GError * error;
         ui_main = UI_MAIN(callback_data);

@@ -17,7 +17,6 @@
  * Boston, MA 02111-1307, USA.
  */
  
-#include "simple-server.h"
 
 #include <stdio.h>
 #include <unistd.h>

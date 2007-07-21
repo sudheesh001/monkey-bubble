@@ -37,13 +37,6 @@ monkey_srv_LDADD = \
 $(libmonkeynet_a_OBJECTS): $(marshal_sources)
 
 libmonkeynet_a_SOURCES = \
-	message-handler.c message-handler.h \
-	simple-server.h simple-server.c \
-	client.h client.c \
-	game-manager-proxy.h game-manager-proxy.c \
-	player.h player.c \
-	game.h game.c \
-	game-manager.h game-manager.c \
 	mb-net-connection.h mb-net-connection.c \
 	mb-net-message.h mb-net-message.c \
 	mb-net-holders.h mb-net-holders.c \
