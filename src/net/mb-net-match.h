@@ -25,6 +25,8 @@
 
 #include <net/mb-net-server-player.h>
 #include <net/mb-net-handler-manager.h>
+#include <net/mb-net-server.h>
+
 #ifndef _MB_NET__MATCH_H
 #define _MB_NET__MATCH_H
 
@@ -33,10 +35,11 @@ typedef struct _MbNetMatchClass MbNetMatchClass;
 
 GType mb_net_match_get_type(void);
 MbNetMatch *mb_net_match_new(MbNetServerPlayer * master, GList * players,
-			     GList * observers,
-			     MbNetHandlerManager * manager);
+			     MbNetHandlerManager * manager,
+			     MbNetServer * server);
 
 guint32 mb_net_match_get_id(MbNetMatch * match);
+guint32 mb_net_match_get_observer_id(MbNetMatch * match);
 
 #define MB_NET_TYPE_MATCH			(mb_net_match_get_type())
 #define MB_NET_MATCH(object)		(G_TYPE_CHECK_INSTANCE_CAST((object), MB_NET_TYPE_MATCH, MbNetMatch))

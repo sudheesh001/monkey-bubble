@@ -35,6 +35,8 @@ GType mb_net_server_get_type(void);
 
 void mb_net_server_accept_on(MbNetServer * self, const gchar * uri,
 			     GError ** error);
+
+void mb_net_server_join(MbNetServer * self);
 void mb_net_server_stop(MbNetServer * self);
 
 MbNetServerPlayer *mb_net_server_get_player(MbNetServer * self,

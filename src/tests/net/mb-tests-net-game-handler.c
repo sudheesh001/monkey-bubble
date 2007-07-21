@@ -204,11 +204,13 @@ static void _test_game_handler_stop()
 
 static void _match_created(MbNetGameHandler * handler,
 			   MbNetConnection * con, guint32 handler_id,
-			   guint32 game_id, TestSendReceive * tsr)
+			   guint32 game_id, gboolean observer,
+			   TestSendReceive * tsr)
 {
 
 	g_assert(handler_id == 10);
 	g_assert(game_id == 20);
+	g_assert(observer == TRUE);
 	tsr->sync->ret = TRUE;
 }
 
@@ -231,7 +233,8 @@ static void _test_game_handler_match_created()
 			 (GCallback) _match_created, tsr);
 
 
-	mb_net_game_handler_send_match_created(handler, tsr->con2, 0, 20);
+	mb_net_game_handler_send_match_created(handler, tsr->con2, 0, 20,
+					       TRUE);
 	_wait_sync(tsr->sync);
 
 	guint32 s, d, a;

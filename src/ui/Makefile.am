@@ -13,6 +13,7 @@ INCLUDES = \
 	-I$(top_srcdir)/src/util			\
 	-I$(top_srcdir)/src/net 			\
 	-I$(top_srcdir)/src/input                       \
+	-I$(top_srcdir)/src
 	-Wall -Werror
 
 
@@ -33,6 +34,12 @@ monkey_bubble_SOURCES = \
 	ui-network-client.c ui-network-client.h \
 	ui-network-server.c ui-network-server.h \
 	ui-main.c ui-main.h \
+        mb-ui-net.h mb-ui-net.c \
+	mb-ui-net-client.h mb-ui-net-client.c \
+	mb-ui-net-server.c mb-ui-net-server.h \
+	mb-ui-net-player-list.c  mb-ui-net-player-list.h \
+	mb-ui-net-game-manager.c mb-ui-net-game-manager.h \
+	mb-ui-net-game.c mb-ui-net-game.h \
 	$(NULL)
 
 

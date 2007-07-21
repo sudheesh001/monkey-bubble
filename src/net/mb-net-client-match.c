@@ -234,6 +234,13 @@ guint32 mb_net_client_match_get_id(MbNetClientMatch * self)
 	priv = GET_PRIVATE(self);
 	return priv->match_id;
 }
+
+guint32 mb_net_client_match_get_time(MbNetClientMatch * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	return mb_clock_get_time(priv->clock);
+}
 static void _match_init(MbNetMatchHandler * h, MbNetConnection * con,
 			guint32 handler_id, guint32 count, Color * colors,
 			gboolean odd, Color bubble1, Color bubble2,
@@ -310,7 +317,7 @@ static void _new_cannon_bubble(MbNetMatchHandler * h,
 	priv = GET_PRIVATE(self);
 
 	g_mutex_lock(priv->lock);
-
+	g_print("new  bublbe %d\n", color);
 	Monkey *m = priv->monkey;
 	shooter_add_bubble(monkey_get_shooter(m), bubble_new(color, 0, 0));
 	g_mutex_unlock(priv->lock);

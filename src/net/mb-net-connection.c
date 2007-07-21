@@ -37,6 +37,7 @@
 #include <sys/time.h>
 #include <time.h>
 
+#include <signal.h>
 
 
 #include "mb-net-connection.h"
@@ -146,6 +147,18 @@ static void mb_net_connection_finalize(MbNetConnection * self)
 	}
 }
 
+
+void mb_net_connection_join(MbNetConnection * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	if (priv->main_thread != NULL) {	// && priv->running == TRUE) {
+		g_thread_join(priv->main_thread);
+
+	}
+
+}
 
 void mb_net_connection_close(MbNetConnection * self, GError ** error)
 {
@@ -355,8 +368,10 @@ void *_accept_loop(MbNetConnection * self)
 
 		FD_ZERO(&set);
 		FD_SET(ssock, &set);
+		g_print("select \n");
 		if ((select(ssock + 1, &set, NULL, NULL, &timeout) >=
 		     0) && FD_ISSET(ssock, &set)) {
+			g_print("accept \n");
 			sock =
 			    accept(ssock, (struct sockaddr *) &sock_client,
 				   &lg_info);
@@ -376,16 +391,16 @@ void *_accept_loop(MbNetConnection * self)
 				g_object_unref(con);
 
 			} else {
+				g_print("stop server ..\n");
 				priv->stop = TRUE;
 			}
 
-		} else {
-			priv->stop = TRUE;
 		}
 	}
 	priv->stop = TRUE;
 	priv->running = FALSE;
 	priv->main_thread = NULL;
+	g_print("server listen plus \n");
 	return 0;
 
 }
@@ -548,7 +563,6 @@ void mb_net_connection_listen(MbNetConnection * self, GError ** error)
 	g_mutex_lock(priv->start_mutex);
 	priv->main_thread =
 	    g_thread_create((GThreadFunc) _listen_loop, self, TRUE, &err);
-
 	g_cond_wait(priv->start_cond, priv->start_mutex);
 	g_mutex_unlock(priv->start_mutex);
 	g_mutex_free(priv->start_mutex);
@@ -656,7 +670,16 @@ _mb_net_connection_send_message(MbNetConnection * self, guint32 s,
 	g_assert(priv->socket != -1);
 	int sock = priv->socket;
 	while (size > 0 && writed > 0) {
+		sigset_t mask;
+		sigfillset(&mask);
+		pthread_sigmask(SIG_BLOCK, &mask, NULL);
 		writed = write(sock, data + p, size);
+
+/*		if (sigpending(SIGPIPE) {
+			sigwait({SIGPIPE},);
+}*/
+		//                      pthread_sigmask(SIG_UNBLOCK,&mask,NULL);
+
 		if (writed == -1) {
 			perror("write()");
 			g_set_error(error, error_quark,

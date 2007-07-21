@@ -39,7 +39,7 @@ void mb_net_connection_connect(MbNetConnection * self,
 			       const gchar * uri, GError ** error);
 void mb_net_connection_accept_on(MbNetConnection * self, const gchar * uri,
 				 GError ** error);
-
+void mb_net_connection_join(MbNetConnection * self);
 void mb_net_connection_stop(MbNetConnection * self, GError ** error);
 void mb_net_connection_listen(MbNetConnection * self, GError ** error);
 void mb_net_connection_disconnect(MbNetConnection * self);

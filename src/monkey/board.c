@@ -874,7 +874,7 @@ board_init (Board * board, Bubble ** bubbles, gint count)
 				}
 
 		}
-
+	board_notify_bubbles_inserted (board, bubbles, count);
 }
 
 gboolean

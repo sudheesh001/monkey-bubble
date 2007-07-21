@@ -38,8 +38,18 @@ static void _test_connect()
 	    mb_tests_net_client_server_connect("mb://localhost:6666",
 					       "monkeybubble");
 	g_assert(client != NULL);
-	mb_net_client_server_disconnect(client);
+	//mb_net_client_server_disconnect(client);
 	g_object_unref(client);
+	int i = 0;
+	for (i = 0; i < 20; i++) {
+		client =
+		    mb_tests_net_client_server_connect
+		    ("mb://localhost:6666", "monkeybubble");
+		g_assert(client != NULL);
+		//mb_net_client_server_disconnect(client);
+		g_object_unref(client);
+	}
+
 
 
 }

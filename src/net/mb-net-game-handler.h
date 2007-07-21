@@ -56,7 +56,8 @@ void mb_net_game_handler_send_player_list(MbNetGameHandler * self,
 void mb_net_game_handler_send_match_created(MbNetGameHandler * self,
 					    MbNetConnection * con,
 					    guint32 handler_id,
-					    guint32 match_id);
+					    guint32 match_id,
+					    gboolean observer);
 
 void mb_net_game_handler_send_start(MbNetGameHandler * self,
 				    MbNetConnection * con,
@@ -105,7 +106,7 @@ struct _MbNetGameHandlerClass {
 			     MbNetPlayerListHolder * holder);
 	void (*match_created) (MbNetGameHandler * self,
 			       MbNetConnection * con, guint32 handler_id,
-			       guint32 match_id);
+			       guint32 match_id, gboolean observer);
 
 	void (*start) (MbNetGameHandler * self, MbNetConnection * con,
 		       guint32 handler_id);

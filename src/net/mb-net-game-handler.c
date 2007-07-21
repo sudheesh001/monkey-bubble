@@ -138,8 +138,9 @@ _receive(MbNetHandler * handler, MbNetConnection * con, guint32 src_id,
 	} else if (code == MATCH_CREATED) {
 
 		guint32 match_id = mb_net_message_read_int(m);
+		gboolean observer = mb_net_message_read_boolean(m);
 		g_signal_emit(self, _signals[MATCH_CREATED], 0, con,
-			      src_id, match_id);
+			      src_id, match_id, observer);
 	} else if (code == START) {
 		g_signal_emit(self, _signals[START], 0, con, src_id);
 	} else if (code == STOP) {
@@ -212,12 +213,14 @@ void mb_net_game_handler_send_player_list(MbNetGameHandler * self,
 void mb_net_game_handler_send_match_created(MbNetGameHandler * self,
 					    MbNetConnection * con,
 					    guint32 handler_id,
-					    guint32 match_id)
+					    guint32 match_id,
+					    gboolean observer)
 {
 
 	MbNetMessage *m =
 	    mb_net_message_new(_get_id(self), handler_id, MATCH_CREATED);
 	mb_net_message_add_int(m, match_id);
+	mb_net_message_add_boolean(m, observer);
 	mb_net_connection_send_message(con, m, NULL);
 	g_object_unref(m);
 }

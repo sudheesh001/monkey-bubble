@@ -49,7 +49,9 @@
 #include "ui-network-client.h"
 #include "ui-network-server.h"
 #include "simple-server.h"
-
+#include <ui/mb-ui-net-server.h>
+#include <ui/mb-ui-net-client.h>
+#include <ui/mb-ui-net.h>
 #define PRIVATE(main) (main->private)
 
 static GObjectClass* parent_class = NULL;
@@ -540,9 +542,9 @@ void ui_main_game_changed(Game * game,
 static void new_network_game(gpointer    callback_data,
                              guint       callback_action,
                              GtkWidget  *widget) {
-        UiNetworkClient  * ngl;
-
-        ngl = ui_network_client_new();
+    
+ MbUiNet * client = mb_ui_net_new();
+                                       mb_ui_net_connect(client);
 }
 
 
@@ -550,18 +552,16 @@ static void new_network_server(gpointer    callback_data,
                                guint       callback_action,
                                GtkWidget  *widget) {
         UiNetworkServer  * ngl;
-        NetworkSimpleServer * server;
         UiMain * ui_main;
-
+        GError * error;
         ui_main = UI_MAIN(callback_data);
-        server = network_simple_server_new();
-
-        if( network_simple_server_start( server ) == TRUE) {
-        
-                ngl = ui_network_server_new(server);
-        
-        } else {
-                GladeXML * gx;
+        error = NULL;
+                                       
+                                       MbUiNet * server = mb_ui_net_new();
+                                       mb_ui_net_host(server,&error);
+                                       
+                                       if( error != NULL ) {
+                                                    GladeXML * gx;
 
                 g_object_unref(server);
                 gx = glade_xml_new(DATADIR"/monkey-bubble/glade/monkey-bubble.glade",
@@ -570,7 +570,8 @@ static void new_network_server(gpointer    callback_data,
                 glade_xml_signal_autoconnect(gx);
                 gtk_widget_show( glade_xml_get_widget(gx,"create_server_warning"));
                 g_object_unref(gx);
-        }
+                                       }
+	
 }
 
 static void

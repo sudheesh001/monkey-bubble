@@ -46,6 +46,9 @@ void mb_net_client_match_lock(MbNetClientMatch * self);
 void mb_net_client_match_unlock(MbNetClientMatch * self);
 Monkey *mb_net_client_match_get_monkey(MbNetClientMatch * self);
 
+Color *mb_net_client_match_get_player_bubbles(MbNetClientMatch * self,
+					      int player);
+guint32 mb_net_client_match_get_time(MbNetClientMatch * self);
 #define MB_NET_TYPE_CLIENT_MATCH			(mb_net_client_match_get_type())
 #define MB_NET_CLIENT_MATCH(object)		(G_TYPE_CHECK_INSTANCE_CAST((object), MB_NET_TYPE_CLIENT_MATCH, MbNetClientMatch))
 #define MB_NET_CLIENT_MATCH_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST((klass), MB_NET_TYPE_CLIENT_MATCH, MbNetClientMatchClass))
@@ -64,6 +67,8 @@ struct _MbNetClientMatchClass {
 	void (*winlost) (MbNetClientMatch * self, gboolean win);
 	void (*start) (MbNetClientMatch * self);
 	void (*stop) (MbNetClientMatch * self);
+	void (*player_changed) (MbNetClientMatch * self,
+				int player_number);
 };
 
 G_END_DECLS

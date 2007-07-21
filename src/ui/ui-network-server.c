@@ -43,19 +43,20 @@
 #include "ui-main.h"
 #include "game-manager-proxy.h"
 
+#include <net/mb-net-client-server.h>
+#include <net/mb-net-client-game.h>
 struct UiNetworkServerPrivate {
         GladeXML * glade_xml;
         GtkWidget * window;
         gchar * server_name;
-        NetworkMessageHandler * handler;
         int client_id;
         gboolean ready;
         GtkLabel * connection_label;
         GtkListStore * players_list;
-        NetworkSimpleServer * manager;
-        NetGameManagerProxy * manager_proxy;
-        gboolean np_from_server;
-        gboolean ng_from_server;
+        MbNetServer * server;
+        
+        MbNetClientServer * client;
+        MbNetClientGame * game;
 };
 
 
@@ -97,6 +98,7 @@ static void start_signal(gpointer    callback_data,
 
 static gboolean connect_server(UiNetworkServer * self);
 
+static void _connect_master(UiNetworkServer * self);
 
 static void set_sensitive(GtkWidget * w,
                           gboolean s);
@@ -115,7 +117,7 @@ static void set_number_of_players(UiNetworkServer * self,
                                   int n);
  
 UiNetworkServer *
-ui_network_server_new(NetworkSimpleServer * server) 
+ui_network_server_new(MbNetServer * server) 
 {
         UiNetworkServer * ngl;
         GtkWidget * item;
@@ -126,7 +128,7 @@ ui_network_server_new(NetworkSimpleServer * server)
         ngl = UI_NETWORK_SERVER(g_object_new(TYPE_UI_NETWORK_SERVER,
                                                    NULL));
 
-        PRIVATE(ngl)->manager = server;
+        PRIVATE(ngl)->server = server;
         PRIVATE(ngl)->server_name = NULL;
 
         PRIVATE(ngl)->ready = FALSE;
@@ -154,13 +156,14 @@ ui_network_server_new(NetworkSimpleServer * server)
 
 
        item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml,"players_treeview");
-       list = gtk_list_store_new(3,G_TYPE_STRING,G_TYPE_BOOLEAN,G_TYPE_BOOLEAN);
+       list = gtk_list_store_new(1,G_TYPE_STRING);
 
         column = gtk_tree_view_column_new_with_attributes(_("_Player name"),gtk_cell_renderer_text_new(),
                                                           "text",0, (char *)NULL);
 
         gtk_tree_view_append_column (GTK_TREE_VIEW (item), column);
 
+        /*
         column = gtk_tree_view_column_new();
 
         column = gtk_tree_view_column_new_with_attributes(_("_Owner"),gtk_cell_renderer_toggle_new(),
@@ -174,7 +177,7 @@ ui_network_server_new(NetworkSimpleServer * server)
                                                           "active",2, (char *)NULL);
 
         gtk_tree_view_append_column (GTK_TREE_VIEW (item), column);
-
+*/
 
         gtk_tree_view_set_model( GTK_TREE_VIEW(item), GTK_TREE_MODEL(list));
 
@@ -191,8 +194,10 @@ ui_network_server_new(NetworkSimpleServer * server)
         
         PRIVATE(ngl)->server_name = "localhost";
 
+        
+        _connect_master(ngl);
 
-        connect_server(ngl);
+      //  connect_server(ngl);
 
         return ngl;
         
@@ -206,16 +211,51 @@ struct StatusJob {
 
 
 
+static void _game_created(MbNetClientServer * client,MbNetClientGame * game,UiNetworkServer * self)
+{
+        g_print("game created ... \n");
+        PRIVATE(self)->game = game;
+   /*     MbNetClientGame * game = 	    MB_NET_CLIENT_GAME(g_object_new
+				 (MB_NET_TYPE_CLIENT_GAME, NULL));
+        */
+    //    mb_net_client_server_create_game(client, "bubble game", NULL);
+	
+}
+
+static void _connected(MbNetClientServer * client,UiNetworkServer * self)
+{
+        g_print("connected ... \n");
+   /*     MbNetClientGame * game = 	    MB_NET_CLIENT_GAME(g_object_new
+				 (MB_NET_TYPE_CLIENT_GAME, NULL));
+        */
+        mb_net_client_server_create_game(client, "bubble game", NULL);
+	
+}
+
+static void _connect_master(UiNetworkServer * self)
+{
+        MbNetClientServer * client = 	    MB_NET_CLIENT_SERVER(g_object_new
+				 (MB_NET_TYPE_CLIENT_SERVER, NULL));
+
+        PRIVATE(self)->client = client;
+	mb_net_client_server_set_name(client, g_get_user_name());
+	mb_net_client_server_connect(client, "mb://localhost:6666",NULL);
+	g_signal_connect(client, "connected", (GCallback) _connected,self);
+        g_signal_connect(client, "game-created",(GCallback) _game_created, self);
+
+
+}
+
 static void 
 number_of_players_changed(UiNetworkServer * self,
                           GtkWidget  *widget)
 {
-
+/*
         if( PRIVATE(self)->np_from_server == FALSE ) {
                 net_game_manager_proxy_send_number_of_players(PRIVATE(self)->manager_proxy,
                                                               gtk_spin_button_get_value_as_int ( GTK_SPIN_BUTTON(widget)));
         }
-
+*/
         
 }
 
@@ -225,18 +265,18 @@ static void
 number_of_games_changed(UiNetworkServer * self,
                           GtkWidget  *widget)
 {
-
+/*
         if( PRIVATE(self)->ng_from_server == FALSE) {
                 net_game_manager_proxy_send_number_of_games(PRIVATE(self)->manager_proxy,
                                                             gtk_spin_button_get_value_as_int ( GTK_SPIN_BUTTON(widget)));
         }
-
+*/
         
 }
 
 
 
-
+/*
 
 static void send_disconnect(UiNetworkServer * self) {
         xmlDoc * doc;
@@ -255,7 +295,7 @@ static void send_disconnect(UiNetworkServer * self) {
         xmlFreeDoc(doc);
 
 }
-
+*/
 static void quit_server_signal(gpointer    callback_data,
                            guint       callback_action,
                                GtkWidget  *widget) {
@@ -281,22 +321,19 @@ static void quit_signal(gpointer    callback_data,
         self = UI_NETWORK_SERVER(callback_data);
 
 
-        update_players_list(self);
-
+ //       update_players_list(self);
+/*
         if( PRIVATE(self)->handler != NULL) {
-                send_disconnect(self);
-                
-                network_message_handler_disconnect(PRIVATE(self)->handler);
         
                 g_object_unref( PRIVATE(self)->handler);
                 PRIVATE(self)->handler = NULL;
 
         }
+*/
 
-
-        network_simple_server_stop(PRIVATE(self)->manager);
+       mb_net_server_stop(PRIVATE(self)->server);
         
-        g_object_unref( PRIVATE(self)->manager);
+        g_object_unref( PRIVATE(self)->server);
         
 
 }
@@ -313,7 +350,7 @@ static void ready_signal(gpointer    callback_data,
 
         self = UI_NETWORK_SERVER(callback_data);
 
-        item = glade_xml_get_widget( PRIVATE(self)->glade_xml, "ready_button");
+     /*   item = glade_xml_get_widget( PRIVATE(self)->glade_xml, "ready_button");
 
         if( ! PRIVATE(self)->ready ) {
                 net_game_manager_proxy_send_ready_state(PRIVATE(self)->manager_proxy,
@@ -326,7 +363,7 @@ static void ready_signal(gpointer    callback_data,
                 
                 PRIVATE(self)->ready = FALSE;
                 
-        }
+        }*/
 }
 
 
@@ -339,7 +376,7 @@ static void start_signal(gpointer    callback_data,
         UiNetworkServer * self;
 
         self = UI_NETWORK_SERVER(callback_data);
-
+/*
         net_game_manager_proxy_send_start( PRIVATE(self)->manager_proxy);
 
         set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
@@ -350,10 +387,10 @@ static void start_signal(gpointer    callback_data,
 
         set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
                                              , "ready_button"),FALSE); 
-
+*/
 }
 
-
+/*
 static void send_init(UiNetworkServer * self) {
         xmlDoc * doc;
         xmlNode * current, * root;
@@ -635,7 +672,7 @@ static void recv_network_xml_message(NetworkMessageHandler * mmh,
         
         
 }
-
+*/
 static gboolean set_sensitive_true_idle(gpointer data) {
         gtk_widget_set_sensitive( GTK_WIDGET(data),
                                   TRUE);
@@ -676,7 +713,7 @@ set_number_of_players(UiNetworkServer * self,
         g_print("number of players %d\n",n);
 }
 
-
+/*
 static gboolean connect_server(UiNetworkServer * self) {
 
         PRIVATE(self)->handler = network_message_handler_new(0);
@@ -701,7 +738,7 @@ static gboolean connect_server(UiNetworkServer * self) {
         PRIVATE(self)->ready = FALSE;
         return TRUE;
 }
-
+*/
 
 void ui_network_server_finalize(GObject *object) {
         UiNetworkServer * self = (UiNetworkServer *) object;
@@ -715,8 +752,8 @@ void ui_network_server_finalize(GObject *object) {
 
 static void ui_network_server_instance_init(UiNetworkServer * self) {
         self->private =g_new0 (UiNetworkServerPrivate, 1);
-        PRIVATE(self)->np_from_server = FALSE;
-        PRIVATE(self)->ng_from_server = FALSE;
+     //   PRIVATE(self)->np_from_server = FALSE;
+    //    PRIVATE(self)->ng_from_server = FALSE;
 }
 
 static void ui_network_server_class_init (UiNetworkServerClass *klass) {

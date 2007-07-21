@@ -360,8 +360,9 @@ static void _remove_player(MbNetGame * self, MbNetServerPlayer * player)
 		}
 		next = g_list_next(next);
 	}
-	;
+
 	g_mutex_unlock(priv->players_mutex);
+	_notify_new_player(self);
 }
 
 static MbNetServerPlayer *_get_player(MbNetGame * self, guint32 handler_id)
@@ -478,14 +479,14 @@ static void _send_match_created(MbNetGame * self, MbNetMatch * m)
 	priv = GET_PRIVATE(self);
 
 	guint32 match_id = mb_net_match_get_id(m);
-
+	guint32 match_observer_id = mb_net_match_get_observer_id(m);
 	GList *next = priv->players;
 	while (next != NULL) {
 		_Player *p = (_Player *) next->data;
 		mb_net_game_handler_send_match_created(priv->handler,
 						       p->con,
 						       p->handler_id,
-						       match_id);
+						       match_id, FALSE);
 		next = g_list_next(next);
 	}
 
@@ -495,7 +496,8 @@ static void _send_match_created(MbNetGame * self, MbNetMatch * m)
 		mb_net_game_handler_send_match_created(priv->handler,
 						       o->con,
 						       o->handler_id,
-						       match_id);
+						       match_observer_id,
+						       TRUE);
 		next = g_list_next(next);
 	}
 
@@ -521,20 +523,12 @@ static void _start(MbNetGame * self, MbNetConnection * con,
 		next = g_list_next(next);
 	}
 
-	next = priv->observers;
-	GList *observers = NULL;
-	while (next != NULL) {
-		_Observer *o = (_Observer *) next->data;
-		observers = g_list_append(observers, o->player);
-		next = g_list_next(next);
-	}
-
 
 
 	MbNetMatch *match;
 	match =
-	    mb_net_match_new(priv->master_player, players, observers,
-			     priv->manager);
+	    mb_net_match_new(priv->master_player, players,
+			     priv->manager, priv->server);
 	_send_match_created(self, match);
 
 	g_mutex_unlock(priv->players_mutex);

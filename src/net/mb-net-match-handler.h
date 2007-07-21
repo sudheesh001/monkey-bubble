@@ -69,6 +69,16 @@ void mb_net_match_handler_send_start(MbNetMatchHandler * self,
 				     MbNetConnection * con,
 				     guint32 handler_id);
 
+void mb_net_match_handler_send_observer_player_bubbles(MbNetMatchHandler *
+						       self,
+						       MbNetConnection *
+						       con,
+						       guint32 handler_id,
+						       guint32 player_id,
+						       guint32 count,
+						       Color * bubbles,
+						       gboolean odd);
+
 #define MB_NET_TYPE_MATCH_HANDLER			(mb_net_match_handler_get_type())
 #define MB_NET_MATCH_HANDLER(object)		(G_TYPE_CHECK_INSTANCE_CAST((object), MB_NET_TYPE_MATCH_HANDLER, MbNetMatchHandler))
 #define MB_NET_MATCH_HANDLER_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST((klass), MB_NET_TYPE_MATCH_HANDLER, MbNetMatchHandlerClass))
@@ -107,6 +117,10 @@ struct _MbNetMatchHandlerClass {
 		       guint32 handler_id, guint32 player_id);
 	void (*start) (MbNetMatchHandler * self, MbNetConnection * con,
 		       guint32 handler_id);
+
+	void (*observer_player_bubbles) (MbNetMatchHandler * self,
+					 guint32 player_id, guint32 count,
+					 Color * bubbles, gboolean odd);
 
 };
 

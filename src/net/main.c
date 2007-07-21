@@ -25,17 +25,30 @@
 #include <signal.h>
 
 #include <gtk/gtk.h>
+#include <net/mb-net-server.h>
+void handler( int signo )
+{
 
+    printf(" signo = %d. \n", signo );
+
+  //  signal( SIGPIPE, handler );
+//    signal( SIGSEGV, handler );
+}
+
+  
 int main(int argc, char **argv) {
-	 NetworkSimpleServer * server;
+	 MbNetServer * server;
 
     g_type_init();
     g_thread_init(NULL);
+	 
+	server = MB_NET_SERVER(g_object_new(MB_NET_TYPE_SERVER, NULL));
+	
+	GError * error = NULL;
+	mb_net_server_accept_on(server, "mb://localhost:6666", &error);
 
-	 server = network_simple_server_new();
-
-	 network_simple_server_start(server);
-
-	 gtk_main();
+	if( error == NULL ) {
+		mb_net_server_join(server);
+	}
     return(0);
 }

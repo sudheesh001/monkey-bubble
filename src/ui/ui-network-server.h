@@ -21,7 +21,7 @@
 
 #include <gtk/gtk.h>
 #include "simple-server.h"
-
+#include <net/mb-net-server.h>
 G_BEGIN_DECLS
 
 #define TYPE_UI_NETWORK_SERVER   (ui_network_server_get_type())
@@ -47,7 +47,7 @@ typedef struct {
 
 
 GType ui_network_server_get_type(void);
-UiNetworkServer * ui_network_server_new(NetworkSimpleServer * server);
+UiNetworkServer * ui_network_server_new(MbNetServer * server);
 
 G_END_DECLS
 

@@ -180,10 +180,11 @@ void mb_net_client_server_connect(MbNetClientServer * self,
 		return;
 	}
 
+	perror("connect");
 
 	priv->connected = TRUE;
 
-
+	g_print("connected ...... \n");
 	MbNetPlayerHolder *holder =
 	    mb_net_player_holder_create(priv->name);
 
@@ -200,8 +201,9 @@ void mb_net_client_server_disconnect(MbNetClientServer * self)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
-	g_assert(priv->connected);
-	mb_net_connection_stop(priv->con, NULL);
+	if (priv->connected) {
+		mb_net_connection_stop(priv->con, NULL);
+	}
 	priv->registred = FALSE;
 	priv->connected = FALSE;
 	priv->player_id = 0;
@@ -321,6 +323,7 @@ _register_player_response(MbNetClientServer * self,
 {
 	Private *priv;
 	priv = GET_PRIVATE(self);
+	g_print("user registred\n");
 	if (ok != TRUE) {
 		mb_net_connection_stop(priv->con, NULL);
 		priv->connected = FALSE;

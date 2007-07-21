@@ -26,15 +26,14 @@ int main(int argc, char **argv)
 	g_print("mb_tests_net_server_test_all();\n");
 	mb_tests_net_server_test_all();
 	g_print("mb_tests_net_game_test_all();\n");
-	mb_tests_net_game_test_all();
+	mb_tests_net_game_test_all();*/
 	g_print("mb_tests_net_client_server_test_all();\n");
 	mb_tests_net_client_server_test_all();
-	g_print("mb_tests_net_client_game_test_all();\n");
+/*	g_print("mb_tests_net_client_game_test_all();\n");
 	mb_tests_net_client_game_test_all();
-*/
 	g_print("mb_tests_net_client_match_test_all();\n");
 	mb_tests_net_client_match_test_all();
-
+*/
 	g_print("all test OK\n");
 
 	return 0;

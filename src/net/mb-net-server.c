@@ -185,6 +185,13 @@ mb_net_server_accept_on(MbNetServer * self, const gchar * uri,
 	mb_net_connection_accept_on(priv->main_connection, uri, error);
 }
 
+void mb_net_server_join(MbNetServer * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	mb_net_connection_join(priv->main_connection);
+}
 
 
 static void
@@ -226,6 +233,7 @@ static void _disconnected(MbNetServer * self, MbNetConnection * con)
 
 static void _new_connection(MbNetServer * self, MbNetConnection * con)
 {
+	g_print("new connection .... %d \n", (guint32) con);
 	if (con != NULL) {
 		Private *priv;
 		priv = GET_PRIVATE(self);
@@ -233,6 +241,7 @@ static void _new_connection(MbNetServer * self, MbNetConnection * con)
 
 		g_mutex_lock(priv->lock);
 		priv->connections = g_list_prepend(priv->connections, con);
+
 
 		g_signal_connect_swapped(con, "receive-message",
 					 (GCallback) _receive_message,
@@ -303,6 +312,7 @@ static void _ask_register_player(MbNetServer * self, MbNetConnection * con,
 	Private *priv;
 	priv = GET_PRIVATE(self);
 	MbNetServerPlayer *p;
+	g_print("player register .... \n");
 	guint32 player_id = priv->current_player_id++;
 	p = mb_net_server_player_new(con, player_id, holder->name);
 	g_mutex_lock(priv->players_lock);
