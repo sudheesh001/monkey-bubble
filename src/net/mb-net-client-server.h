@@ -61,6 +61,7 @@ struct _MbNetClientServerClass {
 
 	/* signals */
 	void (*connected) (MbNetClientServer * self, gboolean ok);
+	void (*disconnected) (MbNetClientServer * self);
 	void (*new_game_list) (MbNetClientServer * self);
 	void (*game_created) (MbNetClientServer * self,
 			      MbNetClientGame * game);

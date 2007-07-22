@@ -51,6 +51,7 @@ typedef struct _Private {
 
 	MbUiNetPlayerList *list;
 	gboolean is_server;
+	gboolean connected;
 } Private;
 
 
@@ -109,6 +110,7 @@ static void _set_sensitive(GtkWidget * w, gboolean s);
 static void _set_status_message(MbUiNet * self, const gchar * message);
 
 static void _disconnect(MbUiNet * self);
+static void _server_disconnected(MbNetClientServer * server,MbUiNet * self);
 static void mb_ui_net_init(MbUiNet * self)
 {
 	Private *priv;
@@ -160,7 +162,7 @@ void mb_ui_net_host(MbUiNet * self, GError ** error)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
-//      mb_net_server_accept_on(priv->server, "mb://localhost:6666", &err);
+      mb_net_server_accept_on(priv->server, "mb://localhost:6666", &err);
 
 	if (err != NULL) {
 		g_propagate_error(error, err);
@@ -191,6 +193,10 @@ static void _disconnect(MbUiNet * self)
 	priv = GET_PRIVATE(self);
 //      _backtrace();//printstack();
 	g_print("disconnect client ... \n");
+	if( priv->connected == TRUE ) {
+		
+	g_signal_handlers_disconnect_by_func(priv->client, _server_disconnected,
+					     self);
 	mb_net_client_server_disconnect(priv->client);
 	if (priv->game != NULL) {
 		g_signal_handlers_disconnect_by_func(priv->game,
@@ -208,27 +214,42 @@ static void _disconnect(MbUiNet * self)
 	g_signal_handlers_disconnect_by_func(priv->client, _new_game_list,
 					     self);
 
+
 	gtk_label_set_label(priv->connection_label, g_strdup_printf("",
 								    priv->
 								    server_name));
+	}
 
-	if (priv->is_server == TRUE) {
+	if (priv->is_server == FALSE ) {
 		gtk_widget_set_sensitive(glade_xml_get_widget
 					 (priv->glade_xml, "connect_hbox"),
 					 TRUE);
 	}
 }
 
+
 static gboolean _disconnect_idle(MbUiNet * self)
 {
 	_disconnect(self);
+	g_object_unref(self);
 	return FALSE;
 }
 static void _stop_signal(MbNetClientGame * game, MbUiNet * self)
 {
+	g_print("stop game  ... \n");
+	g_object_ref(self);
 	g_idle_add((GSourceFunc) _disconnect_idle, self);
 
 }
+
+static void _server_disconnected(MbNetClientServer * server,MbUiNet * self)
+{
+	
+	g_print("disconnect client... \n");
+	g_object_ref(self);
+	g_idle_add((GSourceFunc) _disconnect_idle, self);
+}
+
 static void _connect_server(MbUiNet * self)
 {
 
@@ -261,6 +282,7 @@ static void _join_response(MbNetClientGame * game, gboolean ok,
 	priv = GET_PRIVATE(self);
 
 	if (ok == FALSE) {
+		g_object_ref(self);
 		g_idle_add((GSourceFunc) _disconnect_idle, self);
 		_set_status_message(self,
 				    g_strdup_printf("Can't join game ...",
@@ -344,7 +366,7 @@ static void _new_game_list(MbNetClientServer * client, MbUiNet * self)
 
 		mb_net_client_game_join(priv->game);
 	} else {
-
+		g_object_ref(self);
 		g_idle_add((GSourceFunc) _disconnect_idle, self);
 		_set_status_message(self,
 				    g_strdup_printf("No game found ...",
@@ -374,6 +396,7 @@ static void _connect(MbUiNet * self)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
+	priv->connected = TRUE;
 	_set_status_message(self, g_strdup_printf("Connecting %s ...",
 						  priv->server_name));
 
@@ -393,7 +416,8 @@ static void _connect(MbUiNet * self)
 				 (GCallback) _connected_and_join, self);
 
 	}
-	g_print("connect server ... %s \n", priv->server_name);
+	
+	g_signal_connect(priv->client,"disconnected",(GCallback)_server_disconnected,self);
 	mb_net_client_server_connect(priv->client, "mb://localhost:6666",
 				     &error);
 
@@ -571,6 +595,7 @@ static void _quit(MbUiNet * self)
 {
 	Private *priv;
 	priv = GET_PRIVATE(self);
+	_disconnect(self);
 	g_object_unref(self);
 }
 

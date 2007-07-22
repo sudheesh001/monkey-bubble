@@ -50,8 +50,9 @@ enum {
 
 enum {
 	CONNECTED,
+	DISCONNECTED,
 	NEW_GAME_LIST,
-	GAME_CREATED,
+	GAME_CREATED,	
 	N_SIGNALS
 };
 
@@ -102,7 +103,12 @@ static void _create_game_response(MbNetClientServer * self,
 static void _message(MbNetClientServer * self, MbNetMessage * m,
 		     MbNetConnection * con);
 
+static void _disconnected(MbNetClientServer * self,MbNetConnection * con)
+{
+	g_signal_emit(self,_signals[DISCONNECTED],0);
+}
 
+			  
 
 static void mb_net_client_server_init(MbNetClientServer * self)
 {
@@ -119,9 +125,9 @@ static void mb_net_client_server_init(MbNetClientServer * self)
 	g_signal_connect_swapped(priv->con, "receive-message",
 				 (GCallback) _message, self);
 
-/*	g_signal_connect_swapped(priv->con, "disconnected",
-				 (GCallback) _message, self);
-*/
+	g_signal_connect_swapped(priv->con, "disconnected",
+				 (GCallback) _disconnected, self);
+
 	g_signal_connect_swapped(priv->handler, "register-player-response",
 				 (GCallback) _register_player_response,
 				 self);
@@ -425,6 +431,13 @@ mb_net_client_server_class_init(MbNetClientServerClass *
 					 connected), NULL, NULL,
 			 g_cclosure_marshal_VOID__BOOLEAN, G_TYPE_NONE, 1,
 			 G_TYPE_BOOLEAN);
+
+	_signals[DISCONNECTED] =
+	    g_signal_new("disconnected", MB_NET_TYPE_CLIENT_SERVER,
+			 G_SIGNAL_RUN_LAST,
+			 G_STRUCT_OFFSET(MbNetClientServerClass,
+					 disconnected), NULL, NULL,
+			 g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
 	_signals[NEW_GAME_LIST] =
 	    g_signal_new("new_game_list", MB_NET_TYPE_CLIENT_SERVER,

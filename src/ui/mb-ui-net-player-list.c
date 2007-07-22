@@ -134,11 +134,13 @@ static void _player_list_changed(MbNetClientGame * game,
 static gboolean _stop_idle(MbUiNetPlayerList * self)
 {
 	_stop(self);
+	g_object_unref(self);
 	return FALSE;
 }
 
 static void _stop_signal(MbNetClientGame * game, MbUiNetPlayerList * self)
 {
+	g_object_ref(self);
 	g_idle_add((GSourceFunc) _stop_idle, self);
 
 }
@@ -148,7 +150,6 @@ static void _stop(MbUiNetPlayerList * self)
 
 	Private *priv;
 	priv = GET_PRIVATE(self);
-	g_print("stop list .. \n");
 	if (priv->game != NULL) {
 		g_signal_handlers_disconnect_by_func(priv->game,
 						     _player_list_changed,
