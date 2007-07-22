@@ -79,13 +79,122 @@ G_DEFINE_TYPE_WITH_CODE(MbNetClientGame, mb_net_client_game, G_TYPE_OBJECT, {
 
 
 
+static void _join_response(MbNetGameHandler * h, MbNetConnection * c,
+			   guint32 handler_id, gboolean ok,
+			   gboolean master, MbNetClientGame * self);
+static void _player_list(MbNetGameHandler * h, MbNetConnection * con,
+			 guint32 handler_id,
+			 MbNetPlayerListHolder * holder,
+			 MbNetClientGame * self);
+static void _observer_match_created(MbNetGameHandler * handler,
+				    MbNetConnection * con,
+				    guint32 handler_id, guint32 match_id,
+				    MbNetClientGame * self);
+static void _match_created(MbNetGameHandler * handler,
+			   MbNetConnection * con, guint32 handler_id,
+			   guint32 match_id, MbNetClientGame * self);
+static void _stop(MbNetGameHandler * handler, MbNetConnection * con,
+		  guint32 handler_id, MbNetClientGame * self);
+static void _score(MbNetGameHandler * h, MbNetConnection * con,
+		   guint32 handler_id, MbNetScoreHolder * holder,
+		   MbNetClientGame * self);
+
 
 static void mb_net_client_game_finalize(MbNetClientGame * self);
 
 static void mb_net_client_game_init(MbNetClientGame * self);
-static void _score(MbNetGameHandler * h, MbNetConnection * con,
-		   guint32 handler_id, MbNetScoreHolder * holder,
-		   MbNetClientGame * self);
+
+
+MbNetClientGame *mb_net_client_game_create(guint32 id, guint32 player_id,
+					   MbNetConnection * con,
+					   MbNetHandlerManager * manager)
+{
+	MbNetClientGame *self;
+
+	self =
+	    MB_NET_CLIENT_GAME(g_object_new
+			       (MB_NET_TYPE_CLIENT_GAME, NULL));
+
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	priv->handler =
+	    MB_NET_GAME_HANDLER(g_object_new
+				(MB_NET_TYPE_GAME_HANDLER, NULL));
+
+	priv->observer_handler =
+	    MB_NET_GAME_HANDLER(g_object_new
+				(MB_NET_TYPE_GAME_HANDLER, NULL));
+
+	g_signal_connect(priv->handler, "join-response",
+			 (GCallback) _join_response, self);
+
+	g_signal_connect(priv->handler, "player-list",
+			 (GCallback) _player_list, self);
+
+	g_signal_connect(priv->handler, "score", (GCallback) _score, self);
+
+	g_signal_connect(priv->handler, "match-created",
+			 (GCallback) _match_created, self);
+
+	g_signal_connect(priv->observer_handler, "match-created",
+			 (GCallback) _observer_match_created, self);
+	g_signal_connect(priv->handler, "stop", (GCallback) _stop, self);
+
+	mb_net_handler_manager_register(manager,
+					MB_NET_HANDLER(priv->handler));
+
+	mb_net_handler_manager_register(manager,
+					MB_NET_HANDLER(priv->
+						       observer_handler));
+
+	g_object_ref(manager);
+	priv->manager = manager;
+	priv->game_id = id;
+	priv->player_id = player_id;
+	g_object_ref(con);
+	priv->con = con;
+	return self;
+}
+
+
+static void mb_net_client_game_init(MbNetClientGame * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	priv->players_mutex = g_mutex_new();
+}
+
+static void mb_net_client_game_finalize(MbNetClientGame * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	mb_net_handler_manager_unregister(priv->manager,
+					  mb_net_handler_get_id
+					  (MB_NET_HANDLER(priv->handler)));
+	mb_net_handler_manager_unregister(priv->manager,
+					  mb_net_handler_get_id
+					  (MB_NET_HANDLER
+					   (priv->observer_handler)));
+	g_object_unref(priv->handler);
+	g_object_unref(priv->observer_handler);
+	g_object_unref(priv->manager);
+	g_object_unref(priv->con);
+	g_mutex_free(priv->players_mutex);
+	g_list_foreach(priv->players, (GFunc) mb_net_player_holder_free,
+		       NULL);
+	g_list_free(priv->players);
+
+	g_list_foreach(priv->scores,
+		       (GFunc) mb_net_player_score_holder_free, NULL);
+	g_list_free(priv->scores);
+	// finalize super
+	if (G_OBJECT_CLASS(parent_class)->finalize) {
+		(*G_OBJECT_CLASS(parent_class)->finalize) (G_OBJECT(self));
+	}
+}
+
 
 static void _join_response(MbNetGameHandler * h, MbNetConnection * c,
 			   guint32 handler_id, gboolean ok,
@@ -96,13 +205,6 @@ static void _join_response(MbNetGameHandler * h, MbNetConnection * c,
 	priv->master = master;
 	g_signal_emit(self, _signals[JOIN_RESPONSE], 0, ok);
 
-}
-
-static void mb_net_client_game_init(MbNetClientGame * self)
-{
-	Private *priv;
-	priv = GET_PRIVATE(self);
-	priv->players_mutex = g_mutex_new();
 }
 
 guint32 mb_net_client_game_get_game_id(MbNetClientGame * self)
@@ -175,57 +277,6 @@ static void _stop(MbNetGameHandler * handler, MbNetConnection * con,
 {
 	g_print("stopped \n");
 	g_signal_emit(self, _signals[STOP], 0);
-}
-
-MbNetClientGame *mb_net_client_game_create(guint32 id, guint32 player_id,
-					   MbNetConnection * con,
-					   MbNetHandlerManager * manager)
-{
-	MbNetClientGame *self;
-
-	self =
-	    MB_NET_CLIENT_GAME(g_object_new
-			       (MB_NET_TYPE_CLIENT_GAME, NULL));
-
-	Private *priv;
-	priv = GET_PRIVATE(self);
-
-	priv->handler =
-	    MB_NET_GAME_HANDLER(g_object_new
-				(MB_NET_TYPE_GAME_HANDLER, NULL));
-
-	priv->observer_handler =
-	    MB_NET_GAME_HANDLER(g_object_new
-				(MB_NET_TYPE_GAME_HANDLER, NULL));
-
-	g_signal_connect(priv->handler, "join-response",
-			 (GCallback) _join_response, self);
-
-	g_signal_connect(priv->handler, "player-list",
-			 (GCallback) _player_list, self);
-
-	g_signal_connect(priv->handler, "score", (GCallback) _score, self);
-
-	g_signal_connect(priv->handler, "match-created",
-			 (GCallback) _match_created, self);
-
-	g_signal_connect(priv->observer_handler, "match-created",
-			 (GCallback) _observer_match_created, self);
-	g_signal_connect(priv->handler, "stop", (GCallback) _stop, self);
-
-	mb_net_handler_manager_register(manager,
-					MB_NET_HANDLER(priv->handler));
-
-	mb_net_handler_manager_register(manager,
-					MB_NET_HANDLER(priv->
-						       observer_handler));
-
-	priv->manager = manager;
-	priv->game_id = id;
-	priv->player_id = player_id;
-	priv->con = con;
-	g_object_ref(con);
-	return self;
 }
 
 void mb_net_client_game_ask_player_list(MbNetClientGame * self)
@@ -333,16 +384,6 @@ gboolean mb_net_client_game_is_master(MbNetClientGame * self)
 	return priv->master;
 }
 
-static void mb_net_client_game_finalize(MbNetClientGame * self)
-{
-	Private *priv;
-	priv = GET_PRIVATE(self);
-
-	// finalize super
-	if (G_OBJECT_CLASS(parent_class)->finalize) {
-		(*G_OBJECT_CLASS(parent_class)->finalize) (G_OBJECT(self));
-	}
-}
 
 static void
 mb_net_client_game_get_property(GObject * object, guint prop_id,

@@ -38,19 +38,8 @@ static void _test_connect()
 	    mb_tests_net_client_server_connect("mb://localhost:6666",
 					       "monkeybubble");
 	g_assert(client != NULL);
-	//mb_net_client_server_disconnect(client);
+	mb_net_client_server_disconnect(client);
 	g_object_unref(client);
-	int i = 0;
-	for (i = 0; i < 20; i++) {
-		client =
-		    mb_tests_net_client_server_connect
-		    ("mb://localhost:6666", "monkeybubble");
-		g_assert(client != NULL);
-		//mb_net_client_server_disconnect(client);
-		g_object_unref(client);
-	}
-
-
 
 }
 
@@ -120,6 +109,7 @@ GList *mb_tests_net_client_server_get_games(MbNetClientServer * client)
 	g_assert(sync->ret == TRUE);
 	g_signal_handler_disconnect(client, i);
 
+	_free_sync(sync);
 	return mb_net_client_server_get_games(client);
 }
 
@@ -155,7 +145,9 @@ MbNetClientGame *mb_tests_net_client_server_create_game(MbNetClientServer *
 	g_signal_handler_disconnect(client, i);
 
 	g_assert(sync->ret == TRUE);
-	return MB_NET_CLIENT_GAME(sync->data);
+	MbNetClientGame *ret = sync->data;
+	_free_sync(sync);
+	return ret;
 }
 
 

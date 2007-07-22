@@ -141,10 +141,14 @@ static gboolean _test_send_receive_message()
 
 	g_assert(tsr->message != NULL);
 	m = MB_NET_MESSAGE(tsr->message);
+	gchar *t;
 	g_assert(mb_net_message_read_int(m) == 1);
-	g_assert(g_str_equal(mb_net_message_read_string(m), "hello"));
+	g_assert(g_str_equal
+		 ((t = mb_net_message_read_string(m)), "hello"));
+	g_free(t);
 	g_assert(mb_net_message_read_boolean(m) == FALSE);
-	g_assert(g_str_equal(mb_net_message_read_string(m), "bye"));
+	g_assert(g_str_equal((t = mb_net_message_read_string(m)), "bye"));
+	g_free(t);
 	_free_test_sendreceive(tsr);
 	return TRUE;
 

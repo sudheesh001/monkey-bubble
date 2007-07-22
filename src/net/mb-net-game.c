@@ -197,6 +197,7 @@ static void mb_net_game_finalize(MbNetGame * self)
 
 
 	g_mutex_unlock(priv->players_mutex);
+	g_mutex_free(priv->players_mutex);
 	if (self->info.name != NULL) {
 		g_free(self->info.name);
 	}
@@ -463,6 +464,7 @@ static void _notify_new_player(MbNetGame * self)
 		next = g_list_next(next);
 	}
 
+	mb_net_player_list_holder_free(h);
 	g_mutex_unlock(priv->players_mutex);
 
 

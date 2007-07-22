@@ -81,6 +81,7 @@ static void _test_join()
 	mb_net_connection_stop(con, NULL);
 	g_object_unref(con);
 	g_object_unref(h);
+	_free_sync(sync);
 }
 
 static void _test_ask_player_list()

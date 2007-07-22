@@ -244,7 +244,7 @@ mb_net_connection_connect(MbNetConnection * self, const gchar * uri,
 	sock_client.sin_family = AF_INET;
 	sock_client.sin_port = (unsigned short) htons(priv->port);
 	src_host = (struct hostent *) gethostbyname(priv->host);
-	if (!src_host) {
+	if (src_host == NULL) {
 
 		perror("invalid hostname ");
 		g_set_error(error, error_quark,
@@ -256,6 +256,7 @@ mb_net_connection_connect(MbNetConnection * self, const gchar * uri,
 
 	bcopy((char *) src_host->h_addr,
 	      (char *) &sock_client.sin_addr.s_addr, src_host->h_length);
+
 
 	while (connect
 	       (sock, (struct sockaddr *) &sock_client,
@@ -486,8 +487,11 @@ gboolean _read_message(MbNetConnection * self)
 
 
 		MbNetMessage *m = mb_net_message_create_from(data, s);
+
 		g_signal_emit(self, _signals[RECEIVE_MESSAGE], 0, m);
+
 		g_object_unref(m);
+
 		g_object_unref(self);
 		g_free(data);
 

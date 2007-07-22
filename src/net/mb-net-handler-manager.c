@@ -80,12 +80,17 @@ static void mb_net_handler_manager_init(MbNetHandlerManager * self)
 	priv->map = g_hash_table_new(g_direct_hash, g_direct_equal);
 }
 
+static void _unref_handler(gpointer key, gpointer data)
+{
+	g_object_unref(data);
+}
 
 static void mb_net_handler_manager_finalize(MbNetHandlerManager * self)
 {
 	Private *priv;
 	priv = GET_PRIVATE(self);
-
+	g_hash_table_foreach(priv->map, (GHFunc) _unref_handler, NULL);
+	g_hash_table_unref(priv->map);
 	// finalize super
 	if (G_OBJECT_CLASS(parent_class)->finalize) {
 		(*G_OBJECT_CLASS(parent_class)->finalize) (G_OBJECT(self));
@@ -102,8 +107,9 @@ void mb_net_handler_manager_register(MbNetHandlerManager * self,
 	guint32 id = priv->current_id;
 	priv->current_id++;
 	mb_net_handler_set_id(h, id);
-	g_hash_table_insert(priv->map, (gpointer) id, h);
 	g_object_ref(h);
+	g_hash_table_insert(priv->map, (gpointer) id, h);
+
 
 }
 

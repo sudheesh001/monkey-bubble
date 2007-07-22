@@ -55,6 +55,10 @@ void mb_net_player_list_holder_serialize(MbNetPlayerListHolder * holder,
 
 void mb_net_player_list_holder_free(MbNetPlayerListHolder * holder)
 {
+	g_list_foreach(holder->players, (GFunc) mb_net_player_holder_free,
+		       NULL);
+	g_list_free(holder->players);
+	g_free(holder);
 }
 
 
@@ -92,6 +96,10 @@ void mb_net_score_holder_serialize(MbNetScoreHolder * holder,
 
 void mb_net_score_holder_free(MbNetScoreHolder * holder)
 {
+	g_list_foreach(holder->score_by_player,
+		       (GFunc) mb_net_player_score_holder_free, NULL);
+	g_list_free(holder->score_by_player);
+	g_free(holder);
 }
 
 
@@ -140,6 +148,10 @@ void mb_net_game_list_holder_serialize(MbNetGameListHolder * holder,
 
 void mb_net_game_list_holder_free(MbNetGameListHolder * holder)
 {
+	g_list_foreach(holder->games,
+		       (GFunc) mb_net_simple_game_holder_free, NULL);
+	g_list_free(holder->games);
+	g_free(holder);
 }
 
 
@@ -177,6 +189,8 @@ MbNetPlayerHolder *mb_net_player_holder_create(const gchar * name)
 
 void mb_net_player_holder_free(MbNetPlayerHolder * holder)
 {
+	g_free(holder->name);
+	g_free(holder);
 }
 
 MbNetPlayerScoreHolder *mb_net_player_score_holder_create(const gchar *

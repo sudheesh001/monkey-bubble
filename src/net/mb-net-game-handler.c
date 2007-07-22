@@ -382,10 +382,10 @@ mb_net_game_handler_class_init(MbNetGameHandlerClass *
 					       (MbNetGameHandlerClass,
 						match_created),
 					       NULL, NULL,
-					       monkey_net_marshal_VOID__POINTER_UINT_UINT,
-					       G_TYPE_NONE, 3,
+					       monkey_net_marshal_VOID__POINTER_UINT_UINT_UINT,
+					       G_TYPE_NONE, 4,
 					       G_TYPE_POINTER, G_TYPE_UINT,
-					       G_TYPE_UINT);
+					       G_TYPE_UINT, G_TYPE_UINT);
 
 
 	_signals[START] = g_signal_new("start",

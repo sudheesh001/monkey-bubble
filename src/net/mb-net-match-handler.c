@@ -235,6 +235,7 @@ void _parse_next_row(MbNetMatchHandler * self, MbNetConnection * con,
 
 	g_signal_emit(self, _signals[NEXT_ROW], 0, con, handler_id,
 		      bubbles);
+	g_free(bubbles);
 }
 
 void mb_net_match_handler_send_new_cannon_bubble(MbNetMatchHandler * self,
@@ -312,6 +313,8 @@ void _parse_match_init(MbNetMatchHandler * self, MbNetConnection * con,
 	Color bubble2 = mb_net_message_read_int(m);
 	g_signal_emit(self, _signals[MATCH_INIT], 0, con, handler_id, size,
 		      bubbles, odd, bubble1, bubble2);
+
+	g_free(bubbles);
 
 }
 
@@ -415,6 +418,7 @@ void _parse_penality_bubbles(MbNetMatchHandler * self,
 
 	g_signal_emit(self, _signals[PENALITY_BUBBLES], 0, con, handler_id,
 		      bubbles);
+	g_free(bubbles);
 }
 
 void mb_net_match_handler_send_winlost(MbNetMatchHandler * self,

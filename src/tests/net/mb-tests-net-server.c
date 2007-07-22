@@ -85,9 +85,11 @@ static void _test_ask_register_player()
 	g_object_unref(con);
 
 	mb_net_server_stop(s);
-
+	mb_net_player_holder_free(holder);
 	g_object_unref(s);
 	g_object_unref(h);
+	_free_sync(sync2);
+	_free_sync(sync);
 
 }
 
@@ -117,10 +119,11 @@ static void _test_ask_game_list()
 	_wait_sync(sync);
 
 	mb_net_server_stop(s);
-	g_object_unref(s);
 	mb_net_connection_stop(con, NULL);
 	g_object_unref(con);
 	g_object_unref(h);
+	g_object_unref(s);
+	_free_sync(sync);
 }
 
 
@@ -171,8 +174,9 @@ guint32 mb_tests_net_server_create_game(MbNetConnection * con,
 
 	_begin_sync(sync);
 
-	MbNetPlayerHolder *holder = g_new0(MbNetPlayerHolder, 1);
-	holder->name = g_strdup("monkeybubble");
+
+	MbNetPlayerHolder *holder =
+	    mb_net_player_holder_create("monkeybubble");
 
 	mb_net_server_handler_send_ask_register_player(h, con, 0, holder);
 
@@ -185,6 +189,7 @@ guint32 mb_tests_net_server_create_game(MbNetConnection * con,
 
 	_wait_sync(sync);
 
+	mb_net_player_holder_free(holder);
 	return sync->id;
 
 }
@@ -233,6 +238,8 @@ static void _test_create_game()
 	mb_net_connection_stop(con, NULL);
 	g_object_unref(con);
 	g_object_unref(h);
+	_free_sync(sync);
+	mb_net_player_holder_free(holder);
 }
 
 

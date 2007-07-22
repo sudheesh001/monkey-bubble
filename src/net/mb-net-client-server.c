@@ -38,7 +38,6 @@ typedef struct _Private {
 	gboolean registred;
 	GMutex *games_lock;
 	GList *games;
-	MbNetClientGame *game;
 	guint32 player_id;
 } Private;
 
@@ -145,7 +144,19 @@ static void mb_net_client_server_finalize(MbNetClientServer * self)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
-	// finalize super
+	g_mutex_free(priv->games_lock);
+	g_list_foreach(priv->games, (GFunc) mb_net_simple_game_holder_free,
+		       NULL);
+	g_list_free(priv->games);
+	priv->games = NULL;
+	mb_net_handler_manager_unregister(priv->manager,
+					  mb_net_handler_get_id
+					  (MB_NET_HANDLER(priv->handler)));
+	g_object_unref(priv->handler);
+
+	g_free(priv->name);
+	g_object_unref(priv->con);
+	g_object_unref(priv->manager);
 	if (G_OBJECT_CLASS(parent_class)->finalize) {
 		(*G_OBJECT_CLASS(parent_class)->finalize) (G_OBJECT(self));
 	}
@@ -180,11 +191,8 @@ void mb_net_client_server_connect(MbNetClientServer * self,
 		return;
 	}
 
-	perror("connect");
-
 	priv->connected = TRUE;
 
-	g_print("connected ...... \n");
 	MbNetPlayerHolder *holder =
 	    mb_net_player_holder_create(priv->name);
 
@@ -192,7 +200,7 @@ void mb_net_client_server_connect(MbNetClientServer * self,
 						       priv->con, 0,
 						       holder);
 
-
+	mb_net_player_holder_free(holder);
 }
 
 
@@ -269,7 +277,8 @@ static void _create_game_response(MbNetClientServer * self,
 	    mb_net_client_game_create(game_id, priv->player_id, priv->con,
 				      priv->manager);
 	g_signal_emit(self, _signals[GAME_CREATED], 0, game);
-	priv->game = game;
+
+	g_object_unref(game);
 }
 
 
@@ -282,7 +291,7 @@ MbNetClientGame *mb_net_client_server_create_client(MbNetClientServer *
 	game =
 	    mb_net_client_game_create(game_id, priv->player_id, priv->con,
 				      priv->manager);
-	priv->game = game;
+
 	return game;
 }
 

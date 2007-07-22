@@ -136,6 +136,7 @@ _receive(MbNetHandler * handler, MbNetConnection * con, guint32 src_id,
 		guint32 player_id = mb_net_message_read_int(m);
 		g_signal_emit(self, _signals[CREATE_GAME], 0, con, src_id,
 			      player_id, name);
+		g_free(name);
 	} else if (code == CREATE_GAME_RESPONSE) {
 		guint32 game_id = mb_net_message_read_int(m);
 		g_signal_emit(self, _signals[CREATE_GAME_RESPONSE], 0, con,

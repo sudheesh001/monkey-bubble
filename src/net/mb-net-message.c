@@ -86,6 +86,7 @@ static void mb_net_message_finalize(MbNetMessage * self)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
+	g_array_free(priv->message, TRUE);
 	// finalize super
 	if (G_OBJECT_CLASS(parent_class)->finalize) {
 		(*G_OBJECT_CLASS(parent_class)->finalize) (G_OBJECT(self));

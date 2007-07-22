@@ -141,7 +141,16 @@ static void mb_net_server_init(MbNetServer * self)
 
 static void mb_net_server_finalize(MbNetServer * self)
 {
+	Private *priv;
+	priv = GET_PRIVATE(self);
 
+	g_mutex_free(priv->lock);
+	g_mutex_free(priv->players_lock);
+	g_mutex_free(priv->games_lock);
+	g_object_unref(priv->manager);
+	g_object_unref(priv->main_handler);
+	g_list_foreach(priv->players, (GFunc) g_object_unref, NULL);
+	g_list_foreach(priv->games, (GFunc) g_object_unref, NULL);
 	// finalize super
 	if (G_OBJECT_CLASS(parent_class)->finalize) {
 		(*G_OBJECT_CLASS(parent_class)->finalize) (G_OBJECT(self));
@@ -327,6 +336,7 @@ static void _ask_register_player(MbNetServer * self, MbNetConnection * con,
 							    handler_id,
 							    holder, TRUE);
 	g_signal_emit(self, _signals[NEW_PLAYER], 0, p);
+
 }
 
 
@@ -356,6 +366,8 @@ _ask_game_list(MbNetServer * self, MbNetConnection * con,
 	holder->games = l;
 	mb_net_server_handler_send_game_list(handler, con, handler_id,
 					     holder);
+
+	mb_net_game_list_holder_free(holder);
 }
 
 static void _game_stopped(MbNetServer * self, MbNetGame * game)

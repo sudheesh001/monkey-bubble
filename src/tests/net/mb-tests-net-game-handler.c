@@ -18,14 +18,31 @@ static void _test_game_handler_score();
 
 gboolean mb_tests_net_game_handler_test_all()
 {
+	g_print("	_test_game_handler_join();\n");
 	_test_game_handler_join();
+
+	g_print("	_test_game_handler_join_response();\n");
 	_test_game_handler_join_response();
+
+	g_print("	_test_game_handler_ask_player_list();\n");
 	_test_game_handler_ask_player_list();
+
+	g_print("	_test_game_handler_player_list();\n");
 	_test_game_handler_player_list();
+
+	g_print("	_test_game_handler_match_created();\n");
 	_test_game_handler_match_created();
+
+	g_print("	_test_game_handler_start();\n");
 	_test_game_handler_start();
+
+	g_print("	_test_game_handler_stop();\n");
 	_test_game_handler_stop();
+
+	g_print("	_test_game_handler_ask_score();\n");
 	_test_game_handler_ask_score();
+
+	g_print("	_test_game_handler_score();\n");
 	_test_game_handler_score();
 	return TRUE;
 }
@@ -92,6 +109,7 @@ static void _test_game_handler_score()
 	mb_net_handler_receive(MB_NET_HANDLER(handler), tsr->con2, s, d, a,
 			       tsr->message);
 	g_assert(tsr->sync->ret == TRUE);
+	mb_net_score_holder_free(holder);
 	_free_test_sendreceive(tsr);
 
 }
@@ -424,5 +442,6 @@ static void _test_game_handler_player_list()
 	mb_net_handler_receive(MB_NET_HANDLER(handler), tsr->con2, s, d, a,
 			       tsr->message);
 	g_assert(tsr->sync->ret == TRUE);
+	mb_net_player_list_holder_free(holder);
 	_free_test_sendreceive(tsr);
 }

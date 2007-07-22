@@ -26,8 +26,8 @@ gboolean mb_tests_net_server_handler_test_all()
 static MbNetPlayerHolder *_new_player()
 {
 
-	MbNetPlayerHolder *holder = g_new0(MbNetPlayerHolder, 1);
-	holder->name = g_strdup("monkeybubble");
+	MbNetPlayerHolder *holder =
+	    mb_net_player_holder_create("monkeybubble");
 	return holder;
 }
 
@@ -38,16 +38,11 @@ static MbNetGameListHolder *_new_game_list()
 	MbNetGameListHolder *holder = g_new0(MbNetGameListHolder, 1);
 	MbNetSimpleGameHolder *h;
 
-
-	h = g_new0(MbNetSimpleGameHolder, 1);
-	h->handler_id = 1;
-	h->name = g_strdup("monkeybubble1");
+	h = mb_net_simple_game_holder_create(1, "monkeybubble1");
 
 	holder->games = g_list_append(holder->games, h);
 
-	h = g_new0(MbNetSimpleGameHolder, 1);
-	h->handler_id = 2;
-	h->name = g_strdup("monkeybubble2");
+	h = mb_net_simple_game_holder_create(2, "monkeybubble1");
 
 	holder->games = g_list_append(holder->games, h);
 
@@ -116,6 +111,7 @@ static void _test_server_handler_ask_register_player()
 	mb_net_handler_receive(MB_NET_HANDLER(handler), tsr->con2, s, d, a,
 			       tsr->message);
 	g_assert(tsr->sync->ret == TRUE);
+	mb_net_player_holder_free(holder);
 	_free_test_sendreceive(tsr);
 }
 
@@ -178,7 +174,7 @@ static void _test_server_handler_register_player_response()
 			       tsr->message);
 
 	g_assert(tsr->sync->ret == FALSE);
-
+	mb_net_player_holder_free(holder);
 	_free_test_sendreceive(tsr);
 }
 
@@ -226,7 +222,7 @@ static void _test_server_handler_send_game_list()
 			       tsr->message);
 
 	g_assert(tsr->sync->ret == TRUE);
-
+	mb_net_game_list_holder_free(holder);
 	_free_test_sendreceive(tsr);
 }
 
@@ -311,6 +307,7 @@ static void _test_server_handler_send_create_game()
 	mb_net_handler_receive(MB_NET_HANDLER(handler), tsr->con2, s, d, a,
 			       tsr->message);
 	g_assert(tsr->sync->ret == TRUE);
+
 
 	_free_test_sendreceive(tsr);
 }
