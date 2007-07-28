@@ -477,6 +477,30 @@ MonkeyView * monkey_view_new(MonkeyCanvas * canvas,
   
         pl = monkey_get_playground( monkey);
 
+        board = playground_get_board( monkey_get_playground( monkey));
+ 
+        for( j = 0; j < board_get_row_count( board); j++) {
+      
+                for( i = 0; i < board_get_column_count( board); i++) {
+	  
+                        if( ( b = board_get_bubble_at(board,i,j) )!= NULL ) {
+                                bubble_get_position(b,&x,&y);
+                                block = monkey_view_create_bubble(monkey_view,b);
+                                monkey_canvas_add_block(PRIVATE(monkey_view)->canvas,
+                                                     PRIVATE(monkey_view)->bubble_layer , 
+                                                     block,
+                                                     x,y);
+	
+                                g_hash_table_insert( PRIVATE(monkey_view)->hash_map, b, block );
+	
+                                g_signal_connect( G_OBJECT(b), "bubble-changed", G_CALLBACK( monkey_view_bubble_changed), monkey_view);
+	
+	
+                        }
+      
+                }
+    
+        }
         g_signal_connect( G_OBJECT(monkey),"bubbles-waiting-changed",
                           G_CALLBACK( monkey_view_bubbles_waiting_changed),
                           monkey_view);
@@ -518,8 +542,6 @@ MonkeyView * monkey_view_new(MonkeyCanvas * canvas,
                           G_CALLBACK( monkey_view_shooter_bubble_added), 
                           monkey_view);		    
 
-        board = playground_get_board( monkey_get_playground( monkey));
- 
         g_signal_connect( G_OBJECT( board),
                           "bubbles-exploded",G_CALLBACK(monkey_view_bubbles_exploded),monkey_view);
 
@@ -537,28 +559,7 @@ MonkeyView * monkey_view_new(MonkeyCanvas * canvas,
 
 
   
-        for( j = 0; j < board_get_row_count( board); j++) {
-      
-                for( i = 0; i < board_get_column_count( board); i++) {
-	  
-                        if( ( b = board_get_bubble_at(board,i,j) )!= NULL ) {
-                                bubble_get_position(b,&x,&y);
-                                block = monkey_view_create_bubble(monkey_view,b);
-                                monkey_canvas_add_block(PRIVATE(monkey_view)->canvas,
-                                                     PRIVATE(monkey_view)->bubble_layer , 
-                                                     block,
-                                                     x,y);
-	
-                                g_hash_table_insert( PRIVATE(monkey_view)->hash_map, b, block );
-	
-                                g_signal_connect( G_OBJECT(b), "bubble-changed", G_CALLBACK( monkey_view_bubble_changed), monkey_view);
-	
-	
-                        }
-      
-                }
-    
-        }
+ 
 
 
         PRIVATE(monkey_view)->init = FALSE;  

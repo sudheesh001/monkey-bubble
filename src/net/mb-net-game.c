@@ -50,6 +50,7 @@ typedef struct _Private {
 	GList *observers;
 
 	GMutex *players_mutex;
+	MbNetMatch *current_match;
 } Private;
 
 
@@ -111,6 +112,7 @@ static void _send_player_list(MbNetGame * self, MbNetConnection * con,
 			      guint32 handler_id);
 static MbNetScoreHolder *_create_score(MbNetGame * self);
 static void _notify_new_player(MbNetGame * self);
+static _Player *_get_player_by_id(MbNetGame * self, guint32 player_id);
 static void mb_net_game_init(MbNetGame * self)
 {
 	Private *priv;
@@ -388,6 +390,29 @@ static MbNetServerPlayer *_get_player(MbNetGame * self, guint32 handler_id)
 
 	return ret;
 }
+
+static _Player *_get_player_by_id(MbNetGame * self, guint32 player_id)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	g_mutex_lock(priv->players_mutex);
+	_Player *ret = NULL;
+	GList *next = priv->players;
+	while (next != NULL) {
+		_Player *p = (_Player *) next->data;
+		if (mb_net_server_player_get_id(p->player) == player_id) {
+			ret = p;
+			break;
+		}
+
+
+		next = g_list_next(next);
+	}
+	g_mutex_unlock(priv->players_mutex);
+
+	return ret;
+}
 static void _join(MbNetGame * self, MbNetConnection * con,
 		  guint32 handler_id, guint32 player_id, gboolean observer,
 		  MbNetGameHandler * h)
@@ -508,6 +533,15 @@ static void _send_match_created(MbNetGame * self, MbNetMatch * m)
 
 }
 
+static void _match_won(MbNetMatch * match, guint32 player_id,
+		       MbNetGame * self)
+{
+	_Player *p = _get_player_by_id(self, player_id);
+	if (p != NULL) {
+		p->score++;
+	}
+}
+
 static void _start(MbNetGame * self, MbNetConnection * con,
 		   guint32 handler_id, MbNetGameHandler * h)
 {
@@ -519,11 +553,16 @@ static void _start(MbNetGame * self, MbNetConnection * con,
 		return;
 	g_mutex_lock(priv->players_mutex);
 
+	if (priv->current_match != NULL) {
+		g_object_unref(priv->current_match);
+	}
 	GList *next = priv->players;
 	GList *players = NULL;
 	while (next != NULL) {
 		_Player *p = (_Player *) next->data;
-		players = g_list_append(players, p->player);
+		MbNetMatchPlayer *mp =
+		    mb_net_match_player_new(p->player, p->score);
+		players = g_list_append(players, mp);
 		next = g_list_next(next);
 	}
 
@@ -533,6 +572,9 @@ static void _start(MbNetGame * self, MbNetConnection * con,
 	match =
 	    mb_net_match_new(priv->master_player, players,
 			     priv->manager, priv->server);
+	priv->current_match = match;
+
+	g_signal_connect(match, "win", (GCallback) _match_won, self);
 	_send_match_created(self, match);
 
 	g_mutex_unlock(priv->players_mutex);

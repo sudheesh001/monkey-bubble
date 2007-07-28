@@ -32,7 +32,6 @@
 #include <monkey/monkey.h>
 G_BEGIN_DECLS typedef struct _MbNetClientMatch MbNetClientMatch;
 typedef struct _MbNetClientMatchClass MbNetClientMatchClass;
-
 GType mb_net_client_match_get_type(void);
 
 MbNetClientMatch *mb_net_client_match_new(guint32 match_id,
@@ -50,6 +49,9 @@ Monkey *mb_net_client_match_get_monkey(MbNetClientMatch * self);
 void mb_net_client_match_get_player_bubbles(MbNetClientMatch * self,
 					    int player, Color ** color,
 					    int *count, gboolean * odd);
+int mb_net_client_match_get_player_score(MbNetClientMatch * self,
+					 int player);
+int mb_net_client_match_get_score(MbNetClientMatch * self);
 gboolean mb_net_client_match_is_player_lost(MbNetClientMatch * self,
 					    int player);
 

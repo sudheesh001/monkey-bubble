@@ -123,6 +123,8 @@ static void ui_main_finalize(GObject* object);
 static void ui_main_draw_main(UiMain * ui_main);
 
 
+static void _set_sensitive(GtkWidget * w,gboolean b);
+static void _set_text(GtkLabel * label,const gchar * v);
 
 static UiMain* ui_main_new(void);
 
@@ -367,7 +369,7 @@ void ui_main_set_game_manager(UiMain * ui_main,GameManager * manager) {
         if( PRIVATE(ui_main)->game != NULL) {
                 ui_main_stop_game(ui_main);
         }
-	 
+	 g_print("set game manager \n");
         root_layer = monkey_canvas_get_root_layer(PRIVATE(ui_main)->canvas);
 	 
         monkey_canvas_clear(PRIVATE(ui_main)->canvas);
@@ -390,14 +392,13 @@ void ui_main_enabled_games_item(UiMain * ui_main ,gboolean enabled) {
 
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"pause_game");
-        gtk_widget_set_sensitive(item,!enabled);
+        _set_sensitive(item,!enabled);
 
         item = gtk_bin_get_child( GTK_BIN(item));
         gtk_label_set_text( GTK_LABEL(item), _("Pause game"));
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"stop_game");
-        gtk_widget_set_sensitive(item,!enabled);
-
+        _set_sensitive(item,!enabled);
 
 }
 
@@ -480,6 +481,7 @@ Block * ui_main_get_main_image(UiMain *ui_main) {
 
 void ui_main_set_game(UiMain *ui_main, Game *game) {
 
+        g_print("set gaime !! \n");
         if( PRIVATE(ui_main)->game != NULL ) {
 
                 g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(ui_main)->game ),
@@ -508,7 +510,6 @@ void ui_main_game_changed(Game * game,
 
 
         GtkWidget * item;
-  
 
         if( game_get_state(game) == GAME_PAUSED ) {
 
@@ -516,21 +517,41 @@ void ui_main_game_changed(Game * game,
                 item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"pause_game");
     
                 item = gtk_bin_get_child( GTK_BIN(item));
-                gtk_label_set_text( GTK_LABEL(item), _("Resume game"));
+                _set_text( GTK_LABEL(item), _("Resume game"));
 
         } else if( game_get_state(game) == GAME_PLAYING ) {
   
                 item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"pause_game");
 
                 item = gtk_bin_get_child( GTK_BIN(item));
-                gtk_label_set_text( GTK_LABEL(item), _("Pause game"));
-
-
-		
+                _set_text( GTK_LABEL(item), _("Pause game"));
 
         } else if( game_get_state(game) == GAME_STOPPED ) {
         }
   
+}
+
+
+
+
+
+static gboolean _set_sensitive_idle(gpointer * pointers) {
+        gtk_widget_set_sensitive( GTK_WIDGET(pointers[0]), (gboolean)pointers[1]);
+        g_free(pointers);
+        return FALSE;
+}
+
+static void _set_sensitive(GtkWidget * w,gboolean b)
+{
+        gpointer * pointers = g_new(gpointer,2);
+        pointers[0] = w;
+        pointers[1] = (gpointer)b;
+	g_idle_add((GSourceFunc)_set_sensitive_idle, pointers);
+}
+
+static void _set_text(GtkLabel * label, const gchar * v)
+{
+
 }
 
 

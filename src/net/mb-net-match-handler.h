@@ -30,20 +30,31 @@
 G_BEGIN_DECLS typedef struct _MbNetMatchHandler MbNetMatchHandler;
 typedef struct _MbNetMatchHandlerClass MbNetMatchHandlerClass;
 
+typedef struct _MbNetMatchInitStruct MbNetMatchInitStruct;
+
 GType mb_net_match_handler_get_type(void);
+MbNetMatchInitStruct *mb_net_match_init_struct_new();
+void mb_net_match_init_struct_free(MbNetMatchInitStruct * self);
 
 void mb_net_match_handler_send_penality(MbNetMatchHandler * self,
 					MbNetConnection * con,
 					guint32 handler_id, guint32 time,
 					guint32 penality);
+
 void mb_net_match_handler_send_next_row(MbNetMatchHandler * self,
 					MbNetConnection * con,
 					guint32 handler_id,
 					Color * bubbles);
+
 void mb_net_match_handler_send_new_cannon_bubble(MbNetMatchHandler * self,
 						 MbNetConnection * con,
 						 guint32 handler_id,
 						 Color color);
+
+void mb_net_match_handler_send_stop(MbNetMatchHandler * self,
+				    MbNetConnection * con,
+				    guint32 handler_id);
+
 void mb_net_match_handler_send_shoot(MbNetMatchHandler * self,
 				     MbNetConnection * con,
 				     guint32 handler_id, guint32 time,
@@ -51,9 +62,8 @@ void mb_net_match_handler_send_shoot(MbNetMatchHandler * self,
 void mb_net_match_handler_send_match_init(MbNetMatchHandler * self,
 					  MbNetConnection * con,
 					  guint32 handler_id,
-					  guint32 count, Color * bubbles,
-					  gboolean odd, Color bubble1,
-					  Color bubble2);
+					  MbNetMatchInitStruct * init);
+
 void mb_net_match_handler_send_penality_bubbles(MbNetMatchHandler * self,
 						MbNetConnection * con,
 						guint32 handler_id,
@@ -75,9 +85,8 @@ void mb_net_match_handler_send_observer_player_bubbles(MbNetMatchHandler *
 						       con,
 						       guint32 handler_id,
 						       guint32 player_id,
-						       guint32 count,
-						       Color * bubbles,
-						       gboolean odd);
+						       MbNetMatchInitStruct
+						       * match_content);
 
 void mb_net_match_handler_send_observer_player_winlost(MbNetMatchHandler *
 						       self,
@@ -114,8 +123,7 @@ struct _MbNetMatchHandlerClass {
 		       guint32 handler_id, guint32 time, gfloat radian);
 	void (*match_init) (MbNetMatchHandler * self,
 			    MbNetConnection * con, guint32 handler_id,
-			    guint32 count, Color * bubbles, gboolean odd,
-			    Color bubble1, Color bubble2);
+			    MbNetMatchInitStruct * init);
 	void (*penality_bubbles) (MbNetMatchHandler * self,
 				  MbNetConnection * con,
 				  guint32 handler_id, Color * bubbles);
@@ -126,9 +134,11 @@ struct _MbNetMatchHandlerClass {
 	void (*start) (MbNetMatchHandler * self, MbNetConnection * con,
 		       guint32 handler_id);
 
-	void (*observer_player_bubbles) (MbNetMatchHandler * self,
-					 guint32 player_id, guint32 count,
-					 Color * bubbles, gboolean odd);
+	void (*stop) (MbNetMatchHandler * self, MbNetConnection * con);
+	void (*observer_player_match) (MbNetMatchHandler * self,
+				       guint32 player_id,
+				       MbNetMatchInitStruct *
+				       match_content);
 
 	void (*observer_player_winlost) (MbNetMatchHandler * self,
 					 guint32 player_id,
@@ -136,5 +146,13 @@ struct _MbNetMatchHandlerClass {
 
 };
 
+struct _MbNetMatchInitStruct {
+	guint32 bubbles_count;
+	Color *bubbles;
+	gboolean odd;
+	Color bubble1;
+	Color bubble2;
+	guint32 score;
+};
 G_END_DECLS
 #endif				/* !_MB_NET::_MATCH_HANDLER_H */

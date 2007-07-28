@@ -52,7 +52,7 @@ enum {
 	CONNECTED,
 	DISCONNECTED,
 	NEW_GAME_LIST,
-	GAME_CREATED,	
+	GAME_CREATED,
 	N_SIGNALS
 };
 
@@ -103,12 +103,12 @@ static void _create_game_response(MbNetClientServer * self,
 static void _message(MbNetClientServer * self, MbNetMessage * m,
 		     MbNetConnection * con);
 
-static void _disconnected(MbNetClientServer * self,MbNetConnection * con)
+static void _disconnected(MbNetClientServer * self, MbNetConnection * con)
 {
-	g_signal_emit(self,_signals[DISCONNECTED],0);
+	g_signal_emit(self, _signals[DISCONNECTED], 0);
 }
 
-			  
+
 
 static void mb_net_client_server_init(MbNetClientServer * self)
 {

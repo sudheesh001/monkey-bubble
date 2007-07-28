@@ -35,6 +35,7 @@ typedef struct __ObservedPlayer {
 	Color *bubbles;
 	guint32 bubbles_count;
 	gboolean odd;
+	int score;
 } _ObservedPlayer;
 
 typedef struct _Private {
@@ -55,6 +56,7 @@ typedef struct _Private {
 	guint32 last_sticked;
 	gboolean running;
 	GList *observed_players;
+	guint32 score;
 } Private;
 
 
@@ -101,8 +103,7 @@ static void mb_net_client_match_finalize(MbNetClientMatch * self);
 static void mb_net_client_match_init(MbNetClientMatch * self);
 
 static void _match_init(MbNetMatchHandler * h, MbNetConnection * con,
-			guint32 handler_id, guint32 count, Color * bubbles,
-			gboolean odd, Color bubble1, Color bubble2,
+			guint32 handler_id, MbNetMatchInitStruct * init,
 			MbNetClientMatch * self);
 
 static void _penality(MbNetMatchHandler * h, MbNetConnection * con,
@@ -126,6 +127,8 @@ static void _winlost(MbNetMatchHandler * h, MbNetConnection * con,
 		     guint32 handler_id, gboolean win,
 		     MbNetClientMatch * self);
 
+static void _stop(MbNetMatchHandler * h, MbNetConnection * con,
+		  guint32 handler_id, MbNetClientMatch * self);
 
 static void _bubble_sticked(Monkey * monkey, Bubble * bubble,
 			    MbNetClientMatch * self);
@@ -151,6 +154,7 @@ static void _start(MbNetMatchHandler * handler, MbNetConnection * con,
 	g_signal_connect(priv->handler, "winlost", (GCallback) _winlost,
 			 self);
 
+	g_signal_connect(priv->handler, "stop", (GCallback) _stop, self);
 	priv->running = TRUE;
 	priv->can_shoot = TRUE;
 	mb_clock_start(priv->clock);
@@ -186,21 +190,20 @@ static _ObservedPlayer *_get_observed_player(MbNetClientMatch * self,
 
 }
 
-static void _observer_player_bubbles(MbNetMatchHandler * handler,
-				     guint32 player_id, guint32 count,
-				     Color * bubbles, gboolean odd,
-				     MbNetClientMatch * self)
+static void _observer_player_match(MbNetMatchHandler * handler,
+				   guint32 player_id,
+				   MbNetMatchInitStruct * match,
+				   MbNetClientMatch * self)
 {
-	g_print("observer bubble changed \n");
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
 	g_mutex_lock(priv->lock);
 	_ObservedPlayer *p = _get_observed_player(self, player_id);
-	p->bubbles_count = count;
-	p->bubbles = bubbles;
-	p->odd = odd;
-
+	p->bubbles_count = match->bubbles_count;
+	p->bubbles = match->bubbles;
+	p->odd = match->odd;
+	p->score = match->score;
 	int index = g_list_index(priv->observed_players, p);
 	g_mutex_unlock(priv->lock);
 
@@ -210,9 +213,13 @@ static void _observer_player_bubbles(MbNetMatchHandler * handler,
 static void _observer_player_winlost(MbNetMatchHandler * h,
 				     guint32 player_id, gboolean winlost)
 {
-	g_print("observer winlost \n");
 }
 
+static void _stop(MbNetMatchHandler * h, MbNetConnection * con,
+		  guint32 handler_id, MbNetClientMatch * self)
+{
+	g_signal_emit(self, _signals[STOP], 0);
+}
 
 void mb_net_client_match_ready(MbNetClientMatch * self)
 {
@@ -221,8 +228,8 @@ void mb_net_client_match_ready(MbNetClientMatch * self)
 	g_signal_connect(priv->handler, "match-init",
 			 (GCallback) _match_init, self);
 
-	g_signal_connect(priv->observer_handler, "observer-player-bubbles",
-			 (GCallback) _observer_player_bubbles, self);
+	g_signal_connect(priv->observer_handler, "observer-player-match",
+			 (GCallback) _observer_player_match, self);
 
 	g_signal_connect(priv->observer_handler, "observer-player-winlost",
 			 (GCallback) _observer_player_winlost, self);
@@ -320,6 +327,13 @@ guint32 mb_net_client_match_get_id(MbNetClientMatch * self)
 	return priv->match_id;
 }
 
+int mb_net_client_match_get_score(MbNetClientMatch * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	return priv->score;
+}
+
 guint32 mb_net_client_match_get_time(MbNetClientMatch * self)
 {
 	Private *priv;
@@ -327,8 +341,7 @@ guint32 mb_net_client_match_get_time(MbNetClientMatch * self)
 	return mb_clock_get_time(priv->clock);
 }
 static void _match_init(MbNetMatchHandler * h, MbNetConnection * con,
-			guint32 handler_id, guint32 count, Color * colors,
-			gboolean odd, Color bubble1, Color bubble2,
+			guint32 handler_id, MbNetMatchInitStruct * init,
 			MbNetClientMatch * self)
 {
 
@@ -343,14 +356,14 @@ static void _match_init(MbNetMatchHandler * h, MbNetConnection * con,
 	    (Bubble **) g_new0(Bubble *, INIT_BUBBLES_COUNT);
 	int i;
 	for (i = 0; i < INIT_BUBBLES_COUNT; i++) {
-		bubbles[i] = bubble_new(colors[i], 0, 0);
+		bubbles[i] = bubble_new(init->bubbles[i], 0, 0);
 	}
 	board_init(playground_get_board(monkey_get_playground(m)),
 		   bubbles, INIT_BUBBLES_COUNT);
 
-	shooter_add_bubble(s, bubble_new(bubble1, 0, 0));
-	shooter_add_bubble(s, bubble_new(bubble2, 0, 0));
-
+	shooter_add_bubble(s, bubble_new(init->bubble1, 0, 0));
+	shooter_add_bubble(s, bubble_new(init->bubble2, 0, 0));
+	priv->score = init->score;
 	g_mutex_unlock(priv->lock);
 }
 
@@ -401,7 +414,6 @@ static void _new_cannon_bubble(MbNetMatchHandler * h,
 	priv = GET_PRIVATE(self);
 
 	g_mutex_lock(priv->lock);
-	g_print("new  bublbe %d\n", color);
 	Monkey *m = priv->monkey;
 	shooter_add_bubble(monkey_get_shooter(m), bubble_new(color, 0, 0));
 	g_mutex_unlock(priv->lock);
@@ -434,7 +446,6 @@ static void _penality_bubbles(MbNetMatchHandler * h,
 
 	Bubble **bubbles = g_new0(Bubble *, 7);
 	int i;
-	g_print("penality bubbles !! \n");
 	for (i = 0; i < 7; i++) {
 		if (colors[i] != NO_COLOR) {
 			bubbles[i] = bubble_new(colors[i], 0, 0);
@@ -491,7 +502,6 @@ static void _bubble_sticked(Monkey * monkey, Bubble * bubble,
 	priv = GET_PRIVATE(self);
 	Monkey *m = priv->monkey;
 
-	g_print("bubble _sticked \n");
 	priv->last_sticked = mb_clock_get_time(priv->clock);
 	priv->bubble_sticked = TRUE;
 	priv->can_shoot = TRUE;
@@ -574,6 +584,21 @@ void mb_net_client_match_get_player_bubbles(MbNetClientMatch * self,
 	*odd = p->odd;
 	g_mutex_unlock(priv->lock);
 	return;
+}
+
+
+int mb_net_client_match_get_player_score(MbNetClientMatch * self,
+					 int player)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	g_mutex_lock(priv->lock);
+	_ObservedPlayer *p =
+	    (_ObservedPlayer *) g_list_nth(priv->observed_players,
+					   player)->data;
+	int score = p->score;
+	g_mutex_unlock(priv->lock);
+	return score;
 }
 
 gboolean mb_net_client_match_is_player_lost(MbNetClientMatch * self,

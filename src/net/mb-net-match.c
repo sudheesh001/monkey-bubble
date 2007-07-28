@@ -73,6 +73,7 @@ enum {
 };
 
 enum {
+	WIN,
 	N_SIGNALS
 };
 
@@ -88,7 +89,7 @@ static void mb_net_match_set_property(GObject * object,
 				      GParamSpec * param_spec);
 
 
-//static        guint   _signals[N_SIGNALS] = { 0 };
+static guint _signals[N_SIGNALS] = { 0 };
 
 G_DEFINE_TYPE_WITH_CODE(MbNetMatch, mb_net_match, G_TYPE_OBJECT, {
 			});
@@ -180,19 +181,19 @@ static void _observer_disconnected(MbNetServerPlayer * p,
 
 }
 
-static MbNetServerPlayer *_get_waited_player(MbNetMatch * self,
-					     guint32 player_id)
+static MbNetMatchPlayer *_get_waited_player(MbNetMatch * self,
+					    guint32 player_id)
 {
 
 	Private *priv;
 	priv = GET_PRIVATE(self);
 	g_mutex_lock(priv->players_mutex);
 	GList *next = priv->waited_players;
-	MbNetServerPlayer *ret = NULL;
+	MbNetMatchPlayer *ret = NULL;
 	while (next != NULL) {
-		MbNetServerPlayer *p;
-		p = MB_NET_SERVER_PLAYER(next->data);
-		if (mb_net_server_player_get_id(p) == player_id) {
+		MbNetMatchPlayer *p;
+		p = (MbNetMatchPlayer *) next->data;
+		if (mb_net_server_player_get_id(p->player) == player_id) {
 			ret = p;
 			break;
 		}
@@ -222,7 +223,6 @@ static void _observer_ready(MbNetMatchHandler * handler,
 	o->handler_id = handler_id;
 	o->con = con;
 
-	g_print("add obserrver ... \n");
 	priv->observers = g_list_append(priv->observers, o);
 
 	g_signal_connect(p, "disconnected",
@@ -240,18 +240,19 @@ static void _ready(MbNetMatchHandler * handler, MbNetConnection * con,
 
 	if (priv->running == FALSE) {
 
-		MbNetServerPlayer *p = _get_waited_player(self, player_id);
+		MbNetMatchPlayer *p = _get_waited_player(self, player_id);
 		if (p == NULL) {
 			g_print("player not found ... \n");
 			return;
 		}
-		g_print("player ready :%s \n",
-			mb_net_server_player_get_name(p));
+/*		g_print("player ready :%s \n",
+			mb_net_server_player_get_name(p->player));*/
 		g_mutex_lock(priv->players_mutex);
 		priv->waited_players =
 		    g_list_remove(priv->waited_players, p);
 		_Player *player = (_Player *) g_new0(_Player, 1);
-		player->player = p;
+		player->player = p->player;
+		player->score = p->score;
 		player->handler_id = handler_id;
 		player->con = con;
 		player->self = self;
@@ -292,10 +293,10 @@ MbNetMatch *mb_net_match_new(MbNetServerPlayer * master, GList * players,
 
 	GList *next = players;
 	while (next != NULL) {
-		MbNetServerPlayer *p;
-		p = MB_NET_SERVER_PLAYER(next->data);
+		MbNetMatchPlayer *p;
+		p = (MbNetMatchPlayer *) next->data;
 		g_object_ref(p);
-		g_signal_connect(p, "disconnected",
+		g_signal_connect(p->player, "disconnected",
 				 (GCallback) _disconnected, self);
 		priv->waited_players =
 		    g_list_append(priv->waited_players, p);
@@ -397,8 +398,6 @@ static void _shooter_bubble_added(Shooter * s, Bubble * b, _Player * c)
 static void _bubble_sticked(Monkey * monkey, Bubble * b, _Player * c)
 {
 
-	g_print("player  bubble sticked :%s \n",
-		mb_net_server_player_get_name(c->player));
 	MbNetMatch *self = c->self;
 
 	Private *priv;
@@ -414,8 +413,6 @@ static void _bubble_sticked(Monkey * monkey, Bubble * b, _Player * c)
 			}
 		}
 
-		g_print("player  add row :%s \n",
-			mb_net_server_player_get_name(c->player));
 		monkey_add_waiting_row_complete(monkey, bubbles);
 		g_free(c->waiting_bubbles);
 		c->waiting_bubbles = NULL;
@@ -464,7 +461,6 @@ _bubbles_exploded(Monkey * monkey,
 		    -3 + g_list_length(exploded) +
 		    g_list_length(fallen) * 1.5);
 
-	g_print("to go .. %d \n", to_go);
 	if (to_go != 0) {
 
 		next = priv->players;
@@ -479,10 +475,6 @@ _bubbles_exploded(Monkey * monkey,
 				other = p->monkey;
 
 				monkey_add_bubbles(other, to_go);
-				g_print("send penality to  :%s %d \n",
-					mb_net_server_player_get_name(p->
-								      player),
-					to_go);
 				mb_net_match_handler_send_penality(priv->
 								   handler,
 								   p->con,
@@ -508,6 +500,8 @@ static void _game_lost(Monkey * m, _Player * c)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
+	g_print("player %d lost \n",
+		mb_net_server_player_get_id(c->player));
 	c->lost = TRUE;
 	mb_net_match_handler_send_winlost(priv->handler, c->con,
 					  c->handler_id, FALSE);
@@ -561,9 +555,6 @@ static void _shoot(MbNetMatchHandler * handler, MbNetConnection * con,
 
 
 				}
-				g_print("send penality bubbles :%s \n",
-					mb_net_server_player_get_name(p->
-								      player));
 				mb_net_match_handler_send_penality_bubbles
 				    (priv->handler, p->con, p->handler_id,
 				     colors);
@@ -571,9 +562,6 @@ static void _shoot(MbNetMatchHandler * handler, MbNetConnection * con,
 			}
 			shooter_set_angle(monkey_get_shooter(p->monkey),
 					  radian);
-			g_print("shoot r : %f , time : %d by %s\n", radian,
-				time,
-				mb_net_server_player_get_name(p->player));
 			monkey_update(p->monkey, time);
 			monkey_shoot(p->monkey, time);
 			g_mutex_unlock(priv->players_mutex);
@@ -607,8 +595,6 @@ static Color what_color(Color * colors_count)
 
 static void _bubble_shot(Monkey * monkey, Bubble * bubble, _Player * p)
 {
-	g_print("bubble shooted %d by %s\n", bubble_get_color(bubble),
-		mb_net_server_player_get_name(p->player));
 }
 
 
@@ -668,10 +654,15 @@ static void _init_player(MbNetMatch * self, _Player * player,
 	g_signal_connect(priv->handler, "shoot", (GCallback) _shoot,
 			 player);
 	player->monkey = m;
+	MbNetMatchInitStruct *init = mb_net_match_init_struct_new();
+	init->bubbles_count = INIT_BUBBLES_COUNT;
+	init->bubbles = colors;
+	init->odd = FALSE;
+	init->bubble1 = bubble1;
+	init->bubble2 = bubble2;
+	init->score = player->score;
 	mb_net_match_handler_send_match_init(priv->handler, player->con,
-					     player->handler_id,
-					     INIT_BUBBLES_COUNT, colors,
-					     FALSE, bubble1, bubble2);
+					     player->handler_id, init);
 
 	_notify_bubbles(self, player);
 }
@@ -722,6 +713,13 @@ static void _update_player(_Player * player, MbNetMatch * self)
 			      mb_clock_get_time(priv->clock));
 	}
 }
+static void _send_match_stop(_Player * player, MbNetMatch * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	mb_net_match_handler_send_stop(priv->handler, player->con,
+				       player->handler_id);
+}
 
 static gboolean _update_lost(MbNetMatch * self)
 {
@@ -759,13 +757,17 @@ static gboolean _update_lost(MbNetMatch * self)
 
 			c = (_Player *) next->data;
 			if (c->lost == FALSE) {
+				_notify_winlost(self, c, TRUE);
+				g_signal_emit(self, _signals[WIN], 0,
+					      (guint32)
+					      mb_net_server_player_get_id
+					      (c->player));
 				mb_net_match_handler_send_winlost(priv->
 								  handler,
 								  c->con,
 								  c->
 								  handler_id,
 								  TRUE);
-				_notify_winlost(self, c, TRUE);
 				break;
 			}
 			next = g_list_next(next);
@@ -785,6 +787,10 @@ static gboolean _update_idle(MbNetMatch * self)
 	g_list_foreach(priv->players, (GFunc) _update_player, self);
 
 	gboolean game_finished = _update_lost(self);
+	if (game_finished == TRUE) {
+		g_list_foreach(priv->players, (GFunc) _send_match_stop,
+			       self);
+	}
 	g_mutex_unlock(priv->players_mutex);
 
 	return !game_finished;
@@ -823,14 +829,17 @@ static void _remove_player(MbNetMatch * self, MbNetServerPlayer * p)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
+
+	MbNetMatchPlayer *waited =
+	    _get_waited_player(self, mb_net_server_player_get_id(p));
 	g_mutex_lock(priv->players_mutex);
 
-	GList *l = g_list_find(priv->waited_players, p);
 
-	if (l != NULL) {
+
+	if (waited != NULL) {
 		priv->waited_players =
-		    g_list_delete_link(priv->waited_players, l);
-		g_object_unref(p);
+		    g_list_remove(priv->waited_players, waited);
+//              g_object_unref(p);
 
 	} else {
 
@@ -889,6 +898,14 @@ static void _notify_bubbles(MbNetMatch * self, _Player * p)
 		}
 	}
 
+	MbNetMatchInitStruct *init = mb_net_match_init_struct_new();
+	init->bubbles_count = count;
+	init->bubbles = colors;
+	init->odd = odd;
+//      init->bubble1 = bubble1;
+//      init->bubble2 = bubble2;
+	init->score = p->score;
+
 	GList *next = priv->observers;
 	while (next != NULL) {
 		_Observer *o = (_Observer *) next->data;
@@ -898,9 +915,7 @@ static void _notify_bubbles(MbNetMatch * self, _Player * p)
 								  o->
 								  handler_id,
 								  player_id,
-								  count,
-								  colors,
-								  odd);
+								  init);
 		next = g_list_next(next);
 	}
 }
@@ -929,6 +944,15 @@ static void _notify_winlost(MbNetMatch * self, _Player * p, gboolean win)
 	}
 
 
+}
+
+MbNetMatchPlayer *mb_net_match_player_new(MbNetServerPlayer * p,
+					  guint32 score)
+{
+	MbNetMatchPlayer *self = g_new0(MbNetMatchPlayer, 1);
+	self->player = p;
+	self->score = score;
+	return self;
 }
 
 static void
@@ -980,5 +1004,13 @@ static void mb_net_match_class_init(MbNetMatchClass * mb_net_match_class)
 	g_object_class->finalize =
 	    (GObjectFinalizeFunc) mb_net_match_finalize;
 
-
+	_signals[WIN] = g_signal_new("win",
+				     MB_NET_TYPE_MATCH,
+				     G_SIGNAL_RUN_LAST,
+				     G_STRUCT_OFFSET
+				     (MbNetMatchClass,
+				      win),
+				     NULL, NULL,
+				     g_cclosure_marshal_VOID__UINT,
+				     G_TYPE_NONE, 1, G_TYPE_UINT);
 }

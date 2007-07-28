@@ -48,7 +48,8 @@ enum {
 	WINLOST,
 	READY,
 	START,
-	OBSERVER_PLAYER_BUBBLES,
+	STOP,
+	OBSERVER_PLAYER_MATCH,
 	OBSERVER_PLAYER_WINLOST,
 	N_SIGNALS
 };
@@ -162,7 +163,7 @@ _receive(MbNetHandler * handler, MbNetConnection * con, guint32 src_id,
 	case MATCH_INIT:
 		_parse_match_init(self, con, src_id, m);
 		break;
-	case OBSERVER_PLAYER_BUBBLES:
+	case OBSERVER_PLAYER_MATCH:
 		_parse_observer_player_bubbles(self, con, src_id, m);
 		break;
 
@@ -174,6 +175,9 @@ _receive(MbNetHandler * handler, MbNetConnection * con, guint32 src_id,
 		}
 	case START:
 		g_signal_emit(self, _signals[START], 0, con, src_id);
+		break;
+	case STOP:
+		g_signal_emit(self, _signals[STOP], 0, con, src_id);
 		break;
 	}
 
@@ -276,25 +280,51 @@ void _parse_shoot(MbNetMatchHandler * self, MbNetConnection * con,
 }
 
 
+void mb_net_match_init_struct_serialize(MbNetMatchInitStruct * self,
+					MbNetMessage * m)
+{
+	mb_net_message_add_int(m, self->bubbles_count);
+
+	int i = 0;
+	for (i = 0; i < self->bubbles_count; i++) {
+		mb_net_message_add_int(m, self->bubbles[i]);
+	}
+	mb_net_message_add_boolean(m, self->odd);
+	mb_net_message_add_int(m, self->bubble1);
+	mb_net_message_add_int(m, self->bubble2);
+	mb_net_message_add_int(m, self->score);
+}
+
+MbNetMatchInitStruct *mb_net_match_init_struct_parse(MbNetMessage * m)
+{
+	MbNetMatchInitStruct *self = mb_net_match_init_struct_new();
+
+	self->bubbles_count = mb_net_message_read_int(m);
+
+	Color *bubbles = g_new0(Color, self->bubbles_count);
+	int i = 0;
+	for (i = 0; i < self->bubbles_count; i++) {
+		bubbles[i] = mb_net_message_read_int(m);
+	}
+	self->bubbles = bubbles;
+	self->odd = mb_net_message_read_boolean(m);
+	self->bubble1 = mb_net_message_read_int(m);
+	self->bubble2 = mb_net_message_read_int(m);
+	self->score = mb_net_message_read_int(m);
+	return self;
+}
+
 void mb_net_match_handler_send_match_init(MbNetMatchHandler * self,
 					  MbNetConnection * con,
 					  guint32 handler_id,
-					  guint32 count, Color * bubbles,
-					  gboolean odd, Color bubble1,
-					  Color bubble2)
+					  MbNetMatchInitStruct * init)
 {
 
 	MbNetMessage *m =
 	    mb_net_message_new(_get_id(self), handler_id, MATCH_INIT);
-	mb_net_message_add_int(m, count);
 
-	int i = 0;
-	for (i = 0; i < count; i++) {
-		mb_net_message_add_int(m, bubbles[i]);
-	}
-	mb_net_message_add_boolean(m, odd);
-	mb_net_message_add_int(m, bubble1);
-	mb_net_message_add_int(m, bubble2);
+	mb_net_match_init_struct_serialize(init, m);
+
 	mb_net_connection_send_message(con, m, NULL);
 	g_object_unref(m);
 }
@@ -302,19 +332,12 @@ void mb_net_match_handler_send_match_init(MbNetMatchHandler * self,
 void _parse_match_init(MbNetMatchHandler * self, MbNetConnection * con,
 		       guint32 handler_id, MbNetMessage * m)
 {
-	guint size = mb_net_message_read_int(m);
-	Color *bubbles = g_new0(Color, size);
-	int i = 0;
-	for (i = 0; i < size; i++) {
-		bubbles[i] = mb_net_message_read_int(m);
-	}
-	gboolean odd = mb_net_message_read_boolean(m);
-	Color bubble1 = mb_net_message_read_int(m);
-	Color bubble2 = mb_net_message_read_int(m);
-	g_signal_emit(self, _signals[MATCH_INIT], 0, con, handler_id, size,
-		      bubbles, odd, bubble1, bubble2);
 
-	g_free(bubbles);
+	MbNetMatchInitStruct *init = mb_net_match_init_struct_parse(m);
+	g_signal_emit(self, _signals[MATCH_INIT], 0, con, handler_id,
+		      init);
+
+	mb_net_match_init_struct_free(init);
 
 }
 
@@ -324,22 +347,17 @@ void mb_net_match_handler_send_observer_player_bubbles(MbNetMatchHandler *
 						       con,
 						       guint32 handler_id,
 						       guint32 player_id,
-						       guint32 count,
-						       Color * bubbles,
-						       gboolean odd)
+						       MbNetMatchInitStruct
+						       * init)
 {
 
 	MbNetMessage *m = mb_net_message_new(_get_id(self), handler_id,
-					     OBSERVER_PLAYER_BUBBLES);
+					     OBSERVER_PLAYER_MATCH);
 
 	mb_net_message_add_int(m, player_id);
-	mb_net_message_add_int(m, count);
 
-	int i = 0;
-	for (i = 0; i < count; i++) {
-		mb_net_message_add_int(m, bubbles[i]);
-	}
-	mb_net_message_add_boolean(m, odd);
+	mb_net_match_init_struct_serialize(init, m);
+
 	mb_net_connection_send_message(con, m, NULL);
 	g_object_unref(m);
 }
@@ -349,16 +367,10 @@ void _parse_observer_player_bubbles(MbNetMatchHandler * self,
 				    guint32 handler_id, MbNetMessage * m)
 {
 	guint player_id = mb_net_message_read_int(m);
-	guint size = mb_net_message_read_int(m);
-	Color *bubbles = g_new0(Color, size);
-	int i = 0;
-	for (i = 0; i < size; i++) {
-		bubbles[i] = mb_net_message_read_int(m);
-	}
-
-	gboolean odd = mb_net_message_read_boolean(m);
-	g_signal_emit(self, _signals[OBSERVER_PLAYER_BUBBLES], 0,
-		      player_id, size, bubbles, odd);
+	MbNetMatchInitStruct *init = mb_net_match_init_struct_parse(m);
+	g_signal_emit(self, _signals[OBSERVER_PLAYER_MATCH], 0,
+		      player_id, init);
+	mb_net_match_init_struct_free(init);
 
 }
 
@@ -455,6 +467,29 @@ void mb_net_match_handler_send_start(MbNetMatchHandler * self,
 	g_object_unref(m);
 
 }
+
+void mb_net_match_handler_send_stop(MbNetMatchHandler * self,
+				    MbNetConnection * con,
+				    guint32 handler_id)
+{
+	MbNetMessage *m =
+	    mb_net_message_new(_get_id(self), handler_id, STOP);
+
+	mb_net_connection_send_message(con, m, NULL);
+	g_object_unref(m);
+
+}
+
+MbNetMatchInitStruct *mb_net_match_init_struct_new()
+{
+	return g_new0(MbNetMatchInitStruct, 1);
+}
+
+void mb_net_match_init_struct_free(MbNetMatchInitStruct * self)
+{
+	g_free(self);
+}
+
 
 
 static void
@@ -590,12 +625,10 @@ mb_net_match_handler_class_init(MbNetMatchHandlerClass *
 					    (MbNetMatchHandlerClass,
 					     match_init),
 					    NULL, NULL,
-					    monkey_net_marshal_VOID__POINTER_UINT_UINT_POINTER_UINT_UINT_UINT,
-					    G_TYPE_NONE, 7,
+					    monkey_net_marshal_VOID__POINTER_UINT_POINTER,
+					    G_TYPE_NONE, 3,
 					    G_TYPE_POINTER,
-					    G_TYPE_UINT, G_TYPE_UINT,
-					    G_TYPE_POINTER, G_TYPE_UINT,
-					    G_TYPE_UINT, G_TYPE_UINT);
+					    G_TYPE_UINT, G_TYPE_POINTER);
 
 	_signals[WINLOST] = g_signal_new("winlost",
 					 MB_NET_TYPE_MATCH_HANDLER,
@@ -632,21 +665,31 @@ mb_net_match_handler_class_init(MbNetMatchHandlerClass *
 				       G_TYPE_NONE, 2,
 				       G_TYPE_POINTER, G_TYPE_UINT);
 
-	_signals[OBSERVER_PLAYER_BUBBLES] =
-	    g_signal_new("observer-player-bubbles",
+	_signals[STOP] = g_signal_new("stop",
+				      MB_NET_TYPE_MATCH_HANDLER,
+				      G_SIGNAL_RUN_LAST,
+				      G_STRUCT_OFFSET
+				      (MbNetMatchHandlerClass,
+				       stop),
+				      NULL, NULL,
+				      monkey_net_marshal_VOID__POINTER_UINT,
+				      G_TYPE_NONE, 2,
+				      G_TYPE_POINTER, G_TYPE_UINT);
+
+	_signals[OBSERVER_PLAYER_MATCH] =
+	    g_signal_new("observer-player-match",
 			 MB_NET_TYPE_MATCH_HANDLER, G_SIGNAL_RUN_LAST,
 			 G_STRUCT_OFFSET(MbNetMatchHandlerClass,
-					 observer_player_bubbles), NULL,
+					 observer_player_match), NULL,
 			 NULL,
-			 monkey_net_marshal_VOID__UINT_UINT_POINTER_UINT,
-			 G_TYPE_NONE, 4, G_TYPE_UINT, G_TYPE_UINT,
-			 G_TYPE_POINTER, G_TYPE_UINT);
+			 monkey_net_marshal_VOID__UINT_POINTER,
+			 G_TYPE_NONE, 2, G_TYPE_UINT, G_TYPE_POINTER);
 
 	_signals[OBSERVER_PLAYER_WINLOST] =
 	    g_signal_new("observer-player-winlost",
 			 MB_NET_TYPE_MATCH_HANDLER, G_SIGNAL_RUN_LAST,
 			 G_STRUCT_OFFSET(MbNetMatchHandlerClass,
-					 observer_player_bubbles), NULL,
+					 observer_player_winlost), NULL,
 			 NULL,
 			 monkey_net_marshal_VOID__UINT_UINT,
 			 G_TYPE_NONE, 2, G_TYPE_UINT, G_TYPE_UINT);

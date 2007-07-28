@@ -369,10 +369,8 @@ void *_accept_loop(MbNetConnection * self)
 
 		FD_ZERO(&set);
 		FD_SET(ssock, &set);
-		g_print("select \n");
 		if ((select(ssock + 1, &set, NULL, NULL, &timeout) >=
 		     0) && FD_ISSET(ssock, &set)) {
-			g_print("accept \n");
 			sock =
 			    accept(ssock, (struct sockaddr *) &sock_client,
 				   &lg_info);
@@ -401,7 +399,6 @@ void *_accept_loop(MbNetConnection * self)
 	priv->stop = TRUE;
 	priv->running = FALSE;
 	priv->main_thread = NULL;
-	g_print("server listen plus \n");
 	return 0;
 
 }

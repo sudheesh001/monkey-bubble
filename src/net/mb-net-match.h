@@ -32,15 +32,19 @@
 
 G_BEGIN_DECLS typedef struct _MbNetMatch MbNetMatch;
 typedef struct _MbNetMatchClass MbNetMatchClass;
+typedef struct _MbNetMatchPlayer MbNetMatchPlayer;
 
 GType mb_net_match_get_type(void);
-MbNetMatch *mb_net_match_new(MbNetServerPlayer * master, GList * players,
+MbNetMatch *mb_net_match_new(MbNetServerPlayer * master,
+			     GList * match_players,
 			     MbNetHandlerManager * manager,
 			     MbNetServer * server);
 
 guint32 mb_net_match_get_id(MbNetMatch * match);
 guint32 mb_net_match_get_observer_id(MbNetMatch * match);
 
+MbNetMatchPlayer *mb_net_match_player_new(MbNetServerPlayer * p,
+					  guint32 score);
 #define MB_NET_TYPE_MATCH			(mb_net_match_get_type())
 #define MB_NET_MATCH(object)		(G_TYPE_CHECK_INSTANCE_CAST((object), MB_NET_TYPE_MATCH, MbNetMatch))
 #define MB_NET_MATCH_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST((klass), MB_NET_TYPE_MATCH, MbNetMatchClass))
@@ -56,6 +60,12 @@ struct _MbNetMatchClass {
 	GObjectClass base_class;
 
 	/* signals */
+	void (*win) (MbNetMatch * match, guint32 player_id);
+};
+
+struct _MbNetMatchPlayer {
+	MbNetServerPlayer *player;
+	guint32 score;
 };
 
 G_END_DECLS

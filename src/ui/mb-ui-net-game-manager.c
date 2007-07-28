@@ -28,6 +28,9 @@
 #include "game-manager.h"
 #include "ui-main.h"
 #include <ui/mb-ui-net-game.h>
+
+#include <input/player-input.h>
+#include <input/input-manager.h>
 typedef struct _Private {
 	MonkeyCanvas *canvas;
 	gboolean playing;
@@ -35,7 +38,7 @@ typedef struct _Private {
 	MbNetClientServer *client;
 	MbNetClientMatch *match;
 	MbNetServer *server;
-
+	gboolean waiting_start;
 } Private;
 
 
@@ -83,12 +86,41 @@ static void mb_ui_net_game_manager_init(MbUiNetGameManager * self);
 
 
 
+
+static gboolean _pressed(MbPlayerInput * i, gint key,
+			 MbUiNetGameManager * self)
+{
+
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	if (priv->waiting_start == TRUE) {
+
+		if (key == SHOOT_KEY) {
+			priv->waiting_start = FALSE;
+			mb_net_client_game_start(priv->game);
+
+		}
+
+
+	}
+
+	return FALSE;
+
+}
+
 static void mb_ui_net_game_manager_init(MbUiNetGameManager * self)
 {
 	Private *priv;
 	priv = GET_PRIVATE(self);
 	UiMain *ui_main = ui_main_get_instance();
 	priv->canvas = ui_main_get_canvas(ui_main);
+	MbInputManager *input_manager;
+	input_manager = mb_input_manager_get_instance();
+	MbPlayerInput *input = mb_input_manager_get_left(input_manager);
+	g_signal_connect(input, "notify-pressed",
+			 GTK_SIGNAL_FUNC(_pressed), self);
+
+
 }
 
 
@@ -136,8 +168,8 @@ static void _game_rstart(MbUiNetGameManager * self)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
-	monkey_canvas_clear(priv->canvas);
-	monkey_canvas_paint(priv->canvas);
+	//monkey_canvas_clear(priv->canvas);
+	//monkey_canvas_paint(priv->canvas);
 
 	MbUiNetGame *g = mb_ui_net_game_new(priv->game, priv->match);
 
@@ -149,7 +181,7 @@ static void _game_rstart(MbUiNetGameManager * self)
 	ui_main_set_game(ui_main, GAME(g));
 
 
-	monkey_canvas_paint(priv->canvas);
+	//monkey_canvas_paint(priv->canvas);
 
 	game_start(GAME(g));
 	//   monkey_canvas_paint( priv->canvas);
@@ -158,6 +190,16 @@ static void _game_rstart(MbUiNetGameManager * self)
 static gboolean _game_rstart_idle(MbUiNetGameManager * self)
 {
 	_game_rstart(self);
+}
+
+void _match_stopped(MbNetClientMatch * match, MbUiNetGameManager * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	if (mb_net_client_game_is_master(priv->game)) {
+		priv->waiting_start = TRUE;
+	}
 }
 
 void _game_start(MbNetClientGame * game, MbNetClientMatch * match,
@@ -169,8 +211,9 @@ void _game_start(MbNetClientGame * game, MbNetClientMatch * match,
 	g_object_ref(match);
 	priv->match = match;
 
-	g_idle_add((GSourceFunc) _game_rstart_idle, self);
-
+	_game_rstart(self);
+	//g_idle_add((GSourceFunc) _game_rstart_idle, self);
+	g_signal_connect(match, "stop", (GCallback) _match_stopped, self);
 //    game_network_player_set_start_time(game,PRIVATE(manager)->start_time);
 
 	/* g_signal_connect( G_OBJECT(game), "state-changed",
@@ -190,28 +233,6 @@ void _manager_start(GameManager * g)
 
 	g_signal_connect(priv->game, "start",
 			 (GCallback) _game_start, self);
-
-	/*
-
-	   PRIVATE(manager)->current_level = 0;
-	   PRIVATE(manager)->current_score = 0;
-
-
-	   g_signal_connect( G_OBJECT(PRIVATE(manager)->handler),
-	   "recv-xml-message",
-	   G_CALLBACK( recv_xml_message ),
-	   manager);
-
-	   g_signal_connect( G_OBJECT( PRIVATE(manager)->handler), "recv-bubble-array",
-	   G_CALLBACK(recv_bubble_array),manager);
-
-	   PRIVATE(manager)->add_bubble_handler_id = 
-	   g_signal_connect( G_OBJECT( PRIVATE(manager)->handler), "recv-add-bubble",
-	   G_CALLBACK(recv_add_bubble),manager);
-
-	   g_signal_connect( G_OBJECT( PRIVATE(manager)->handler), "recv-start",
-	   G_CALLBACK(recv_start),manager);
-	 */
 
 }
 

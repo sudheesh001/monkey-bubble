@@ -119,6 +119,16 @@ static void mb_ui_net_game_init(MbUiNetGame * self)
 	priv = GET_PRIVATE(self);
 	UiMain *ui_main = ui_main_get_instance();
 	priv->canvas = ui_main_get_canvas(ui_main);
+
+	MbInputManager *input_manager;
+	input_manager = mb_input_manager_get_instance();
+	priv->input = mb_input_manager_get_left(input_manager);
+	g_signal_connect(priv->input, "notify-pressed",
+			 GTK_SIGNAL_FUNC(_pressed), self);
+
+	g_signal_connect(priv->input, "notify-released",
+			 GTK_SIGNAL_FUNC(_released), self);
+
 }
 
 
@@ -140,7 +150,6 @@ static void _winlost(MbNetClientMatch * match, gboolean win,
 	priv = GET_PRIVATE(self);
 	mb_net_client_match_lock(priv->match);
 	priv->state = GAME_FINISHED;
-	g_print(" winlost ... \n");
 	if (win == FALSE) {
 		monkey_view_draw_lost(priv->display);
 
@@ -162,12 +171,16 @@ static void _player_changed(MbNetClientMatch * match, guint32 player,
 	Color *color = NULL;
 	gboolean odd;
 	guint32 count;
-	g_print("player changed %d\n", player);
+	int score = mb_net_client_match_get_player_score(match, player);
 	mb_net_client_match_get_player_bubbles(match, player, &color,
 					       &count, &odd);
 	//if( monkey_id >= 1 && monkey_id <= 4 ) {
 	mb_mini_view_update(priv->mini_views[player], color, odd);
+	mb_mini_view_set_score(priv->mini_views[player], score);
 	//     }
+
+	monkey_view_set_score(priv->display,
+			      mb_net_client_match_get_score(match));
 }
 
 MbUiNetGame *mb_ui_net_game_new(MbNetClientGame * game,
@@ -186,13 +199,6 @@ MbUiNetGame *mb_ui_net_game_new(MbNetClientGame * game,
 	canvas = priv->canvas;
 
 	monkey_canvas_clear(canvas);
-	priv->display =
-	    monkey_view_new(canvas,
-			    mb_net_client_match_get_monkey(priv->match),
-			    -175, 0,
-			    DATADIR
-			    "/monkey-bubble/gfx/layout_network_player.svg",
-			    TRUE, FALSE);
 	priv->paused_block =
 	    monkey_canvas_create_block_from_image(canvas,
 						  DATADIR
@@ -202,37 +208,17 @@ MbUiNetGame *mb_ui_net_game_new(MbNetClientGame * game,
 	priv->paused_layer = monkey_canvas_append_layer(canvas, 0, 0);
 
 
-	monkey_view_set_score(priv->display, 0);
 
 
 
 
-	priv->timeout_id =
-	    gtk_timeout_add(FRAME_DELAY, (GSourceFunc) _timeout, self);
 
 
 	priv->state = GAME_STOPPED;
 
 	priv->lost = FALSE;
-	monkey_view_set_points(priv->display, 0);
-
-	/*
-	   g_signal_connect (G_OBJECT (PRIVATE (game)->monkey),
-	   "bubble-sticked",
-	   G_CALLBACK (game_network_player_bubble_sticked),
-	   game);
-
-	   g_signal_connect (G_OBJECT (PRIVATE (game)->monkey),
-	   "game-lost",
-	   G_CALLBACK (game_network_player_game_lost), game);
 
 
-	   g_signal_connect (G_OBJECT (PRIVATE (game)->monkey),
-	   "bubble-shot",
-	   G_CALLBACK (game_network_player_bubble_shot), game);
-
-
-	 */
 	g_signal_connect(priv->match, "winlost", (GCallback) _winlost,
 			 self);
 	MbGameSound *mgs = mb_game_sound_new();
@@ -240,9 +226,6 @@ MbUiNetGame *mb_ui_net_game_new(MbNetClientGame * game,
 				     mb_net_client_match_get_monkey(priv->
 								    match));
 
-	MbInputManager *input_manager;
-	input_manager = mb_input_manager_get_instance();
-	priv->input = mb_input_manager_get_left(input_manager);
 
 
 	int x = 350;
@@ -267,6 +250,17 @@ MbUiNetGame *mb_ui_net_game_new(MbNetClientGame * game,
 
 	}
 
+	priv->display =
+	    monkey_view_new(canvas,
+			    mb_net_client_match_get_monkey(priv->match),
+			    -175, 0,
+			    DATADIR
+			    "/monkey-bubble/gfx/layout_network_player.svg",
+			    TRUE, FALSE);
+	monkey_view_set_score(priv->display,
+			      mb_net_client_match_get_score(match));
+	monkey_view_set_points(priv->display, 0);
+
 	g_signal_connect(priv->match, "player-changed",
 			 (GCallback) _player_changed, self);
 
@@ -281,8 +275,6 @@ static gint _timeout(MbUiNetGame * self)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
-//      Monkey *monkey;         
-//      g_print("paint ... \n");
 	mb_net_client_match_lock(priv->match);
 
 	monkey_view_update(priv->display, _get_time(self));
@@ -290,23 +282,19 @@ static gint _timeout(MbUiNetGame * self)
 	monkey_canvas_paint(priv->canvas);
 
 	mb_net_client_match_unlock(priv->match);
-	//g_print("painted ... \n");
 	return TRUE;
 }
 
 static _match_start(MbNetClientMatch * client, MbUiNetGame * self)
 {
-	g_print("match started ... launch clock and display \n");
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
 	priv->state = GAME_PLAYING;
-	game_notify_changed(GAME(self));
-	g_signal_connect(priv->input, "notify-pressed",
-			 GTK_SIGNAL_FUNC(_pressed), self);
+	priv->timeout_id =
+	    gtk_timeout_add(FRAME_DELAY, (GSourceFunc) _timeout, self);
 
-	g_signal_connect(priv->input, "notify-released",
-			 GTK_SIGNAL_FUNC(_released), self);
+	game_notify_changed(GAME(self));
 
 }
 
@@ -338,7 +326,6 @@ static gboolean _pressed(MbPlayerInput * i, gint key, MbUiNetGame * self)
 		}
 		mb_net_client_match_unlock(priv->match);
 		if (key == SHOOT_KEY) {
-			g_print("shoot ... \n");
 			mb_net_client_match_shoot(priv->match);
 
 		}

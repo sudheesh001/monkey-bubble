@@ -175,19 +175,19 @@ static void _test_shoot()
 }
 
 static void _match_init(MbNetMatchHandler * h, MbNetConnection * con,
-			guint32 hanlder_id, guint32 count, Color * bubbles,
-			gboolean odd, guint32 bubble1, guint32 bubble2,
+			guint32 hanlder_id, MbNetMatchInitStruct * init,
 			TestSendReceive * tsr)
 {
-	g_assert(count == 255);
+	g_assert(init->bubbles_count == 255);
 	int i;
 	for (i = 0; i < 255; i++) {
-		g_assert(bubbles[i] == i % 8);
+		g_assert(init->bubbles[i] == i % 8);
 	}
 
-	g_assert(odd == TRUE);
-	g_assert(bubble1 == 1);
-	g_assert(bubble2 == 2);
+	g_assert(init->odd == TRUE);
+	g_assert(init->bubble1 == 1);
+	g_assert(init->bubble2 == 2);
+	g_assert(init->score == 10);
 	tsr->sync->ret = TRUE;
 
 }
@@ -210,8 +210,14 @@ static void _test_init_match()
 	g_signal_connect(handler, "match_init", (GCallback) _match_init,
 			 tsr);
 
-	mb_net_match_handler_send_match_init(handler, tsr->con2, 0, 255,
-					     colors, TRUE, 1, 2);
+	MbNetMatchInitStruct *init = mb_net_match_init_struct_new();
+	init->bubbles_count = 255;
+	init->bubbles = colors;
+	init->odd = TRUE;
+	init->bubble1 = 1;
+	init->bubble2 = 2;
+	init->score = 10;
+	mb_net_match_handler_send_match_init(handler, tsr->con2, 0, init);
 	_wait_sync(tsr->sync);
 
 	guint32 s, d, a;

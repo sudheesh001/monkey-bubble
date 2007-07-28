@@ -32,14 +32,14 @@ typedef struct _Private {
 	MbNetGameHandler *observer_handler;
 	MbNetHandlerManager *manager;
 	MbNetConnection *con;
-	
+
 	guint32 player_id;
 	guint32 game_id;
 	guint32 observed_match_id;
-	
+
 	GMutex *players_mutex;
 	GList *players;
-	GList *scores;	
+	GList *scores;
 	gboolean master;
 } Private;
 
@@ -90,23 +90,27 @@ static void _player_list(MbNetGameHandler * h, MbNetConnection * con,
 			 MbNetClientGame * self);
 static void _observer_match_created(MbNetGameHandler * handler,
 				    MbNetConnection * con,
-				    guint32 handler_id, guint32 match_id,gboolean observer,
+				    guint32 handler_id, guint32 match_id,
+				    gboolean observer,
 				    MbNetClientGame * self);
 static void _match_created(MbNetGameHandler * handler,
 			   MbNetConnection * con, guint32 handler_id,
-			   guint32 match_id, gboolean observer, MbNetClientGame * self);
+			   guint32 match_id, gboolean observer,
+			   MbNetClientGame * self);
 static void _stop(MbNetGameHandler * handler, MbNetConnection * con,
 		  guint32 handler_id, MbNetClientGame * self);
 static void _score(MbNetGameHandler * h, MbNetConnection * con,
 		   guint32 handler_id, MbNetScoreHolder * holder,
 		   MbNetClientGame * self);
 
-static void _con_disconnected(MbNetConnection * con,MbNetClientGame * self);
+static void _con_disconnected(MbNetConnection * con,
+			      MbNetClientGame * self);
 
 static void mb_net_client_game_finalize(MbNetClientGame * self);
 
 static void mb_net_client_game_init(MbNetClientGame * self);
-static void _copy_player_holder(MbNetPlayerHolder * h, MbNetClientGame * self);
+static void _copy_player_holder(MbNetPlayerHolder * h,
+				MbNetClientGame * self);
 static void _copy_score_holder(MbNetPlayerScoreHolder * h,
 			       MbNetClientGame * self);
 MbNetClientGame *mb_net_client_game_create(guint32 id, guint32 player_id,
@@ -158,7 +162,8 @@ MbNetClientGame *mb_net_client_game_create(guint32 id, guint32 player_id,
 	priv->player_id = player_id;
 	g_object_ref(con);
 	priv->con = con;
-	g_signal_connect(priv->con,"disconnected",(GCallback) _con_disconnected,self);
+	g_signal_connect(priv->con, "disconnected",
+			 (GCallback) _con_disconnected, self);
 
 	return self;
 }
@@ -306,7 +311,8 @@ static void _player_list(MbNetGameHandler * h, MbNetConnection * con,
 
 static void _observer_match_created(MbNetGameHandler * handler,
 				    MbNetConnection * con,
-				    guint32 handler_id, guint32 match_id,gboolean observer,
+				    guint32 handler_id, guint32 match_id,
+				    gboolean observer,
 				    MbNetClientGame * self)
 {
 	Private *priv;
@@ -317,7 +323,8 @@ static void _observer_match_created(MbNetGameHandler * handler,
 
 static void _match_created(MbNetGameHandler * handler,
 			   MbNetConnection * con, guint32 handler_id,
-			   guint32 match_id, gboolean observer,MbNetClientGame * self)
+			   guint32 match_id, gboolean observer,
+			   MbNetClientGame * self)
 {
 	Private *priv;
 	priv = GET_PRIVATE(self);
@@ -331,11 +338,12 @@ static void _match_created(MbNetGameHandler * handler,
 
 static void _stop(MbNetGameHandler * handler, MbNetConnection * con,
 		  guint32 handler_id, MbNetClientGame * self)
-{	
+{
 	g_signal_emit(self, _signals[STOP], 0);
 }
 
-static void _con_disconnected(MbNetConnection * con,MbNetClientGame * self)
+static void _con_disconnected(MbNetConnection * con,
+			      MbNetClientGame * self)
 {
 	g_signal_emit(self, _signals[STOP], 0);
 }
@@ -385,7 +393,8 @@ static void _copy_score_holder(MbNetPlayerScoreHolder * h,
 							    h->score));
 }
 
-static void _copy_player_holder(MbNetPlayerHolder * h, MbNetClientGame * self)
+static void _copy_player_holder(MbNetPlayerHolder * h,
+				MbNetClientGame * self)
 {
 	Private *priv;
 	priv = GET_PRIVATE(self);

@@ -110,7 +110,8 @@ static void _set_sensitive(GtkWidget * w, gboolean s);
 static void _set_status_message(MbUiNet * self, const gchar * message);
 
 static void _disconnect(MbUiNet * self);
-static void _server_disconnected(MbNetClientServer * server,MbUiNet * self);
+static void _server_disconnected(MbNetClientServer * server,
+				 MbUiNet * self);
 static void mb_ui_net_init(MbUiNet * self)
 {
 	Private *priv;
@@ -162,7 +163,7 @@ void mb_ui_net_host(MbUiNet * self, GError ** error)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
-      mb_net_server_accept_on(priv->server, "mb://localhost:6666", &err);
+	mb_net_server_accept_on(priv->server, "mb://localhost:6666", &err);
 
 	if (err != NULL) {
 		g_propagate_error(error, err);
@@ -193,34 +194,39 @@ static void _disconnect(MbUiNet * self)
 	priv = GET_PRIVATE(self);
 //      _backtrace();//printstack();
 	g_print("disconnect client ... \n");
-	if( priv->connected == TRUE ) {
-		
-	g_signal_handlers_disconnect_by_func(priv->client, _server_disconnected,
-					     self);
-	mb_net_client_server_disconnect(priv->client);
-	if (priv->game != NULL) {
-		g_signal_handlers_disconnect_by_func(priv->game,
-						     _join_response, self);
-		g_signal_handlers_disconnect_by_func(priv->game,
-						     _stop_signal, self);
-		g_object_unref(priv->game);
-		priv->game = NULL;
+	if (priv->connected == TRUE) {
+
+		g_signal_handlers_disconnect_by_func(priv->client,
+						     _server_disconnected,
+						     self);
+		mb_net_client_server_disconnect(priv->client);
+		if (priv->game != NULL) {
+			g_signal_handlers_disconnect_by_func(priv->game,
+							     _join_response,
+							     self);
+			g_signal_handlers_disconnect_by_func(priv->game,
+							     _stop_signal,
+							     self);
+			g_object_unref(priv->game);
+			priv->game = NULL;
+		}
+
+		g_signal_handlers_disconnect_by_func(priv->client,
+						     _connected_and_join,
+						     self);
+		g_signal_handlers_disconnect_by_func(priv->client,
+						     _connected_and_create,
+						     self);
+		g_signal_handlers_disconnect_by_func(priv->client,
+						     _new_game_list, self);
+
+
+		gtk_label_set_label(priv->connection_label,
+				    g_strdup_printf("",
+						    priv->server_name));
 	}
 
-	g_signal_handlers_disconnect_by_func(priv->client,
-					     _connected_and_join, self);
-	g_signal_handlers_disconnect_by_func(priv->client,
-					     _connected_and_create, self);
-	g_signal_handlers_disconnect_by_func(priv->client, _new_game_list,
-					     self);
-
-
-	gtk_label_set_label(priv->connection_label, g_strdup_printf("",
-								    priv->
-								    server_name));
-	}
-
-	if (priv->is_server == FALSE ) {
+	if (priv->is_server == FALSE) {
 		gtk_widget_set_sensitive(glade_xml_get_widget
 					 (priv->glade_xml, "connect_hbox"),
 					 TRUE);
@@ -236,15 +242,15 @@ static gboolean _disconnect_idle(MbUiNet * self)
 }
 static void _stop_signal(MbNetClientGame * game, MbUiNet * self)
 {
-	g_print("stop game  ... \n");
 	g_object_ref(self);
 	g_idle_add((GSourceFunc) _disconnect_idle, self);
 
 }
 
-static void _server_disconnected(MbNetClientServer * server,MbUiNet * self)
+static void _server_disconnected(MbNetClientServer * server,
+				 MbUiNet * self)
 {
-	
+
 	g_print("disconnect client... \n");
 	g_object_ref(self);
 	g_idle_add((GSourceFunc) _disconnect_idle, self);
@@ -269,10 +275,10 @@ static void _connect_server(MbUiNet * self)
 static void _game_start(MbNetClientGame * game, MbNetClientMatch * match,
 			MbUiNet * self)
 {
-	g_print("match created \n");
 	Private *priv;
 	priv = GET_PRIVATE(self);
 	gtk_widget_destroy(priv->window);
+	g_signal_handlers_disconnect_by_func(game, _game_start, self);
 }
 
 static void _join_response(MbNetClientGame * game, gboolean ok,
@@ -385,7 +391,6 @@ static void _connected_and_join(MbNetClientServer * client, gboolean ok,
 
 	g_signal_connect(priv->client, "new-game-list",
 			 (GCallback) _new_game_list, self);
-	g_print("connected and join .... \n");
 	mb_net_client_server_ask_games(priv->client, NULL);
 
 }
@@ -416,8 +421,9 @@ static void _connect(MbUiNet * self)
 				 (GCallback) _connected_and_join, self);
 
 	}
-	
-	g_signal_connect(priv->client,"disconnected",(GCallback)_server_disconnected,self);
+
+	g_signal_connect(priv->client, "disconnected",
+			 (GCallback) _server_disconnected, self);
 	mb_net_client_server_connect(priv->client, "mb://localhost:6666",
 				     &error);
 
@@ -446,7 +452,6 @@ static void _connect(MbUiNet * self)
 
 static void _start_signal(MbUiNet * self)
 {
-	g_print("start \n");
 	Private *priv;
 	priv = GET_PRIVATE(self);
 	mb_net_client_game_start(priv->game);
