@@ -402,6 +402,16 @@ static void _connect(MbUiNet * self)
 	priv = GET_PRIVATE(self);
 
 	priv->connected = TRUE;
+
+	if (priv->server == FALSE) {
+		GtkWidget *entry;
+		entry =
+		    glade_xml_get_widget(priv->glade_xml,
+					 "server_name_entry");
+		priv->server_name =
+		    g_strdup(gtk_entry_get_text(GTK_ENTRY(entry)));
+
+	}
 	_set_status_message(self, g_strdup_printf("Connecting %s ...",
 						  priv->server_name));
 
@@ -424,7 +434,7 @@ static void _connect(MbUiNet * self)
 
 	g_signal_connect(priv->client, "disconnected",
 			 (GCallback) _server_disconnected, self);
-	mb_net_client_server_connect(priv->client, "mb://localhost:6666",
+	mb_net_client_server_connect(priv->client, priv->server_name,
 				     &error);
 
 	if (error != NULL) {

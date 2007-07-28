@@ -163,23 +163,30 @@ void mb_net_server_stop(MbNetServer * self)
 	priv = GET_PRIVATE(self);
 
 	g_mutex_lock(priv->lock);
-	GList *next = priv->connections;
-	while (next != NULL) {
-		MbNetConnection *con = MB_NET_CONNECTION(next->data);
-		g_signal_handlers_disconnect_by_func(con, (GCallback)
-						     _receive_message,
-						     self);
-		g_signal_handlers_disconnect_by_func(con, (GCallback)
-						     _disconnected, self);
-		next = g_list_next(next);
+	if (priv->main_connection != NULL) {
+		GList *next = priv->connections;
+		while (next != NULL) {
+			MbNetConnection *con =
+			    MB_NET_CONNECTION(next->data);
+			g_signal_handlers_disconnect_by_func(con,
+							     (GCallback)
+							     _receive_message,
+							     self);
+			g_signal_handlers_disconnect_by_func(con,
+							     (GCallback)
+							     _disconnected,
+							     self);
+			next = g_list_next(next);
+		}
+		g_list_foreach(priv->connections,
+			       (GFunc) mb_net_connection_stop, NULL);
+		g_list_foreach(priv->connections, (GFunc) g_object_unref,
+			       NULL);
+		g_list_free(priv->connections);
+		mb_net_connection_stop(priv->main_connection, NULL);
+		g_object_unref(priv->main_connection);
+		priv->main_connection = NULL;
 	}
-	g_list_foreach(priv->connections, (GFunc) mb_net_connection_stop,
-		       NULL);
-	g_list_foreach(priv->connections, (GFunc) g_object_unref, NULL);
-	g_list_free(priv->connections);
-	mb_net_connection_stop(priv->main_connection, NULL);
-	g_object_unref(priv->main_connection);
-	priv->main_connection = NULL;
 	g_mutex_unlock(priv->lock);
 }
 

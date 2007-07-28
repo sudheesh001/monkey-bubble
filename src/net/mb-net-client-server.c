@@ -185,7 +185,9 @@ void mb_net_client_server_connect(MbNetClientServer * self,
 	GError *err;
 	g_assert(priv->name != NULL);
 	err = NULL;
-	mb_net_connection_connect(priv->con, "mb://localhost:6666", &err);
+	gchar t[255];
+	g_snprintf(t, 255, "mb://%s:6666", uri);
+	mb_net_connection_connect(priv->con, t, &err);
 	if (err != NULL) {
 		g_propagate_error(error, err);
 		return;

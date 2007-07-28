@@ -123,6 +123,13 @@ static void mb_ui_net_game_manager_init(MbUiNetGameManager * self)
 
 }
 
+static void _stop(MbNetClientGame * game, MbUiNetGameManager * self)
+{
+
+	_manager_stop(self);
+
+}
+
 
 static void mb_ui_net_game_manager_finalize(MbUiNetGameManager * self)
 {
@@ -142,6 +149,21 @@ void mb_ui_net_game_manager_set_game(MbUiNetGameManager * self,
 	priv = GET_PRIVATE(self);
 	priv->game = game;
 	g_object_ref(game);
+	g_signal_connect(priv->game, "stop", (GCallback) _stop, self);
+
+}
+
+static void _disconnected(MbNetClientServer * client,
+			  MbUiNetGameManager * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+	g_object_unref(priv->client);
+	priv->client = NULL;
+
+	g_object_unref(priv->game);
+	priv->game = NULL;
+	_manager_stop(self);
 }
 
 void mb_ui_net_game_manager_set_client(MbUiNetGameManager * self,
@@ -151,6 +173,8 @@ void mb_ui_net_game_manager_set_client(MbUiNetGameManager * self,
 	priv = GET_PRIVATE(self);
 	priv->client = client;
 	g_object_ref(client);
+	g_signal_connect(priv->client, "disconnected",
+			 (GCallback) _disconnected, self);
 }
 
 void mb_ui_net_game_manager_set_server(MbUiNetGameManager * self,
@@ -242,12 +266,41 @@ void _manager_stop(GameManager * g)
 	UiMain *ui_main = ui_main_get_instance();
 
 	self = MB_UI_NET_GAME_MANAGER(g);
+	Private *priv;
+	priv = GET_PRIVATE(self);
 
+	if (priv->game != NULL) {
+		g_signal_handlers_disconnect_by_func(priv->game,
+						     _stop, self);
+
+		mb_net_client_game_stop(priv->game);
+		g_object_unref(priv->game);
+		priv->game = NULL;
+	}
+
+	if (priv->client != NULL) {
+		mb_net_client_server_disconnect(priv->client);
+		g_object_unref(priv->client);
+	}
+
+	if (priv->server != NULL) {
+		mb_net_server_stop(priv->server);
+		g_object_unref(priv->server);
+		priv->server = NULL;
+	}
+
+	g_print("stoppp game ..... !!! \n");
 	//game_stop( GAME(PRIVATE(manager)->current_game));
-/*
-    g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(manager)->current_game ),
-					   G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,manager);
-*/
+
+	MbInputManager *input_manager;
+	input_manager = mb_input_manager_get_instance();
+	MbPlayerInput *input = mb_input_manager_get_left(input_manager);
+
+
+	g_signal_handlers_disconnect_matched(input,
+					     G_SIGNAL_MATCH_DATA, 0, 0,
+					     NULL, NULL, self);
+
 //    g_object_unref( PRIVATE(manager)->current_game);
 	//  PRIVATE(manager)->current_game = NULL;
 	ui_main_set_game(ui_main, NULL);

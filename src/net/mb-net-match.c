@@ -133,6 +133,7 @@ static void mb_net_match_finalize(MbNetMatch * self)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
+	g_print("match finalzi e !! \n");
 	// finalize super
 	if (G_OBJECT_CLASS(parent_class)->finalize) {
 		(*G_OBJECT_CLASS(parent_class)->finalize) (G_OBJECT(self));
@@ -257,6 +258,9 @@ static void _ready(MbNetMatchHandler * handler, MbNetConnection * con,
 		player->con = con;
 		player->self = self;
 
+		g_object_ref(player->con);
+		g_object_ref(player->player);
+
 		priv->players = g_list_append(priv->players, player);
 
 		gboolean start = FALSE;
@@ -295,7 +299,6 @@ MbNetMatch *mb_net_match_new(MbNetServerPlayer * master, GList * players,
 	while (next != NULL) {
 		MbNetMatchPlayer *p;
 		p = (MbNetMatchPlayer *) next->data;
-		g_object_ref(p);
 		g_signal_connect(p->player, "disconnected",
 				 (GCallback) _disconnected, self);
 		priv->waited_players =
@@ -717,8 +720,10 @@ static void _send_match_stop(_Player * player, MbNetMatch * self)
 {
 	Private *priv;
 	priv = GET_PRIVATE(self);
-	mb_net_match_handler_send_stop(priv->handler, player->con,
-				       player->handler_id);
+	if (player->con != NULL) {
+		mb_net_match_handler_send_stop(priv->handler, player->con,
+					       player->handler_id);
+	}
 }
 
 static gboolean _update_lost(MbNetMatch * self)
@@ -859,7 +864,9 @@ static void _remove_player(MbNetMatch * self, MbNetServerPlayer * p)
 		if (current != NULL) {
 			current->lost = TRUE;
 			current->player = NULL;
-			g_object_unref(p);
+			current->con = NULL;
+			g_object_unref(current->player);
+			g_object_unref(current->con);
 		}
 
 

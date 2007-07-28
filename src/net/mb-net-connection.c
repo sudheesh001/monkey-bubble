@@ -222,6 +222,7 @@ mb_net_connection_connect(MbNetConnection * self, const gchar * uri,
 	err = NULL;
 	priv = GET_PRIVATE(self);
 
+	g_print("connect %s \n", uri);
 	mb_net_connection_set_uri(self, uri, &err);
 	if (err != NULL) {
 		g_propagate_error(error, err);
