@@ -57,7 +57,7 @@ typedef struct _Private {
 	gboolean running;
 	GList *observed_players;
 	guint32 score;
-	MbNetHandlerManager * manager;
+	MbNetHandlerManager *manager;
 } Private;
 
 
@@ -305,14 +305,19 @@ static void mb_net_client_match_finalize(MbNetClientMatch * self)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
-	mb_net_handler_manager_unregister( priv->manager,mb_net_handler_get_id( MB_NET_HANDLER(priv->handler)));
-	mb_net_handler_manager_unregister( priv->manager,mb_net_handler_get_id( MB_NET_HANDLER(priv->observer_handler)));
+	mb_net_handler_manager_unregister(priv->manager,
+					  mb_net_handler_get_id
+					  (MB_NET_HANDLER(priv->handler)));
+	mb_net_handler_manager_unregister(priv->manager,
+					  mb_net_handler_get_id
+					  (MB_NET_HANDLER
+					   (priv->observer_handler)));
 	g_object_unref(priv->handler);
 	priv->handler = NULL;
-	
+
 	g_object_unref(priv->observer_handler);
 	priv->observer_handler = NULL;
-	
+
 	g_object_unref(priv->monkey);
 	g_object_unref(priv->clock);
 	g_mutex_free(priv->lock);

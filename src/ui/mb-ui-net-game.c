@@ -193,7 +193,7 @@ MbUiNetGame *mb_ui_net_game_new(MbNetClientGame * game,
 	g_object_ref(game);
 	g_object_ref(match);
 
-	
+
 	priv->match = match;
 	priv->game = game;
 	mb_net_client_match_lock(priv->match);

@@ -674,7 +674,7 @@ _mb_net_connection_send_message(MbNetConnection * self, guint32 s,
 	size = s;
 	guint32 ssize = htonl(s);
 	write(priv->socket, &ssize, sizeof(ssize));
-//	g_assert(priv->socket != -1);
+//      g_assert(priv->socket != -1);
 	int sock = priv->socket;
 	while (size > 0 && writed > 0) {
 		sigset_t mask;

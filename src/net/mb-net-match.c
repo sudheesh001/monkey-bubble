@@ -135,43 +135,49 @@ static void mb_net_match_finalize(MbNetMatch * self)
 
 	g_mutex_lock(priv->players_mutex);
 
-	
+
 	mb_net_handler_manager_unregister(priv->manager,
-					mb_net_handler_get_id(MB_NET_HANDLER(priv->handler)));
+					  mb_net_handler_get_id
+					  (MB_NET_HANDLER(priv->handler)));
 	mb_net_handler_manager_unregister(priv->manager,
-					mb_net_handler_get_id(MB_NET_HANDLER(priv->
-						       observer_handler)));
+					  mb_net_handler_get_id
+					  (MB_NET_HANDLER
+					   (priv->observer_handler)));
 
 	g_object_unref(priv->handler);
 	g_object_unref(priv->observer_handler);
-	
+
 	GList *next = priv->observers;
 	while (next != NULL) {
 		_Observer *o;
 		o = (_Observer *) (next->data);
-		g_signal_handlers_disconnect_matched( o->player,G_SIGNAL_MATCH_DATA,
-											 0,0,NULL,NULL,self);
+		g_signal_handlers_disconnect_matched(o->player,
+						     G_SIGNAL_MATCH_DATA,
+						     0, 0, NULL, NULL,
+						     self);
 		g_object_unref(o->player);
 		next = g_list_next(next);
 	}
-	g_list_foreach(priv->observers,(GFunc)g_free,NULL);
+	g_list_foreach(priv->observers, (GFunc) g_free, NULL);
 	g_list_free(priv->observers);
 	priv->observers = NULL;
-	
+
 	next = priv->observers;
 	while (next != NULL) {
 		_Player *p;
 		p = (_Player *) (next->data);
-		if( p->player != NULL ) {
-			g_signal_handlers_disconnect_matched( p->player,G_SIGNAL_MATCH_DATA,
-												 0,0,NULL,NULL,self);
+		if (p->player != NULL) {
+			g_signal_handlers_disconnect_matched(p->player,
+							     G_SIGNAL_MATCH_DATA,
+							     0, 0, NULL,
+							     NULL, self);
 			g_object_unref(p->player);
 		}
-			next = g_list_next(next);
+		next = g_list_next(next);
 	}
-	g_list_foreach(priv->players,(GFunc)g_free,NULL);
+	g_list_foreach(priv->players, (GFunc) g_free, NULL);
 	g_list_free(priv->players);
-	
+
 	g_mutex_unlock(priv->players_mutex);
 	g_mutex_free(priv->players_mutex);
 	priv->players_mutex = NULL;
@@ -859,9 +865,11 @@ static void _start_match(MbNetMatch * self)
 	while (next != NULL) {
 		_Player *player;
 		player = (_Player *) (next->data);
-		if( player->player != NULL) {
-		mb_net_match_handler_send_start(priv->handler, player->con,
-						player->handler_id);
+		if (player->player != NULL) {
+			mb_net_match_handler_send_start(priv->handler,
+							player->con,
+							player->
+							handler_id);
 		}
 		next = g_list_next(next);
 	}
@@ -910,13 +918,16 @@ static void _remove_player(MbNetMatch * self, MbNetServerPlayer * p)
 		if (current != NULL) {
 			current->lost = TRUE;
 			g_object_unref(current->player);
-			
-			g_signal_handlers_disconnect_matched( current->player,G_SIGNAL_MATCH_DATA,
-												 0,0,NULL,NULL,self);
+
+			g_signal_handlers_disconnect_matched(current->
+							     player,
+							     G_SIGNAL_MATCH_DATA,
+							     0, 0, NULL,
+							     NULL, self);
 			//g_object_unref(current->con);
 			current->player = NULL;
 			current->con = NULL;
-			
+
 		}
 
 
