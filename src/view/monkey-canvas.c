@@ -785,5 +785,9 @@ void monkey_canvas_paint(MonkeyCanvas * monkey_canvas){
   }
 
   gdk_region_destroy( screen);
+	
+
+		         
+  gdk_window_process_updates( gtk_widget_get_parent_window(GTK_WIDGET(monkey_canvas)),TRUE);
   
 }

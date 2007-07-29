@@ -38,6 +38,7 @@ typedef struct _Private {
 	MbNetClientServer *client;
 	MbNetClientMatch *match;
 	MbNetServer *server;
+	MbUiNetGame *current_game;
 	gboolean waiting_start;
 } Private;
 
@@ -79,7 +80,7 @@ G_DEFINE_TYPE_WITH_CODE(MbUiNetGameManager, mb_ui_net_game_manager,
 
 
 
-
+void _manager_stop(GameManager * g);
 static void mb_ui_net_game_manager_finalize(MbUiNetGameManager * self);
 
 static void mb_ui_net_game_manager_init(MbUiNetGameManager * self);
@@ -125,8 +126,10 @@ static void mb_ui_net_game_manager_init(MbUiNetGameManager * self)
 
 static void _stop(MbNetClientGame * game, MbUiNetGameManager * self)
 {
+	g_print("manager game stop ... \n");
+	UiMain *ui_main = ui_main_get_instance();
 
-	_manager_stop(self);
+	ui_main_stop_game(ui_main);
 
 }
 
@@ -163,7 +166,10 @@ static void _disconnected(MbNetClientServer * client,
 
 	g_object_unref(priv->game);
 	priv->game = NULL;
-	_manager_stop(self);
+
+	UiMain *ui_main = ui_main_get_instance();
+
+	ui_main_stop_game(ui_main);
 }
 
 void mb_ui_net_game_manager_set_client(MbUiNetGameManager * self,
@@ -204,6 +210,7 @@ static void _game_rstart(MbUiNetGameManager * self)
 
 	ui_main_set_game(ui_main, GAME(g));
 
+	priv->current_game = g;
 
 	//monkey_canvas_paint(priv->canvas);
 
@@ -258,6 +265,7 @@ void _manager_start(GameManager * g)
 	g_signal_connect(priv->game, "start",
 			 (GCallback) _game_start, self);
 
+
 }
 
 void _manager_stop(GameManager * g)
@@ -269,6 +277,21 @@ void _manager_stop(GameManager * g)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
+	g_print("disconnect game \n");
+	ui_main_set_game(ui_main, NULL);
+	g_print("disconnect ok game \n");
+
+	g_print("free match \n");
+	if (priv->match != NULL) {
+		g_signal_handlers_disconnect_by_func(priv->match,
+						     _match_stopped, self);
+
+		mb_net_client_match_stop(priv->match);
+		g_object_unref(priv->match);
+		priv->match = NULL;
+	}
+
+	g_print("free game \n");
 	if (priv->game != NULL) {
 		g_signal_handlers_disconnect_by_func(priv->game,
 						     _stop, self);
@@ -278,11 +301,15 @@ void _manager_stop(GameManager * g)
 		priv->game = NULL;
 	}
 
+	g_print("free client \n");
 	if (priv->client != NULL) {
+		g_signal_handlers_disconnect_by_func(priv->client,
+						     _disconnected, self);
 		mb_net_client_server_disconnect(priv->client);
 		g_object_unref(priv->client);
 	}
 
+	g_print("free servver \n");
 	if (priv->server != NULL) {
 		mb_net_server_stop(priv->server);
 		g_object_unref(priv->server);
@@ -290,8 +317,9 @@ void _manager_stop(GameManager * g)
 	}
 
 	g_print("stoppp game ..... !!! \n");
-	//game_stop( GAME(PRIVATE(manager)->current_game));
-
+	if (priv->current_game != NULL) {
+		game_stop(GAME(priv->current_game));
+	}
 	MbInputManager *input_manager;
 	input_manager = mb_input_manager_get_instance();
 	MbPlayerInput *input = mb_input_manager_get_left(input_manager);
@@ -301,9 +329,10 @@ void _manager_stop(GameManager * g)
 					     G_SIGNAL_MATCH_DATA, 0, 0,
 					     NULL, NULL, self);
 
+
+
 //    g_object_unref( PRIVATE(manager)->current_game);
 	//  PRIVATE(manager)->current_game = NULL;
-	ui_main_set_game(ui_main, NULL);
 }
 
 

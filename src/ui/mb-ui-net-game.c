@@ -137,6 +137,7 @@ static void mb_ui_net_game_finalize(MbUiNetGame * self)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
+	g_object_unref(priv->display);
 	// finalize super
 	if (G_OBJECT_CLASS(parent_class)->finalize) {
 		(*G_OBJECT_CLASS(parent_class)->finalize) (G_OBJECT(self));
@@ -381,6 +382,13 @@ static void _start(Game * game)
 static void _stop(Game * game)
 {
 	g_print("stop game .. \n");
+	MbUiNetGame *self;
+
+	self = MB_UI_NET_GAME(game);
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	mb_net_client_match_stop(priv->match);
 }
 
 static void _pause(Game * game, gboolean pause)

@@ -583,7 +583,14 @@ static void _start(MbNetGame * self, MbNetConnection * con,
 static void _stop(MbNetGame * self, MbNetConnection * con,
 		  guint32 handler_id, MbNetGameHandler * h)
 {
-	_stop_game(self);
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	MbNetServerPlayer *p = _get_player(self, handler_id);
+	if (p != priv->master_player)
+		return;
+	g_print("main player stop the game \n");
+//      _stop_game(self);
 }
 
 
@@ -592,7 +599,7 @@ static void _stop_game(MbNetGame * self)
 
 	Private *priv;
 	priv = GET_PRIVATE(self);
-//      g_print("stop game .. \n");
+	g_print("stop game .. \n");
 	g_mutex_lock(priv->players_mutex);
 //      g_print("stop game running .. \n");     
 	GList *next = priv->players;
@@ -604,6 +611,15 @@ static void _stop_game(MbNetGame * self)
 					      p->handler_id);
 	}
 
+	if (priv->current_match != NULL) {
+		g_signal_handlers_disconnect_by_func(priv->current_match,
+						     (GCallback)
+						     _match_won, self);
+
+
+		g_object_unref(priv->current_match);
+		priv->current_match = NULL;
+	}
 
 	g_mutex_unlock(priv->players_mutex);
 //      g_print("stop game done .. \n");        

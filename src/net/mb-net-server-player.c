@@ -78,6 +78,9 @@ static void mb_net_server_player_init(MbNetServerPlayer * self);
 void _disconnected(MbNetConnection * con, MbNetServerPlayer * self)
 {
 	g_print("disconnected \n");
+	g_signal_connect_swapped(con, "disconnected",
+				 (GCallback) _disconnected, self);
+
 	g_signal_emit(self, _signals[DISCONNECTED], 0);
 }
 

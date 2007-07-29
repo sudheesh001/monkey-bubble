@@ -48,7 +48,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <gst/gst.h>
 
 
 #define MAX_WAITING_CONN 20
@@ -190,7 +189,6 @@ void mb_net_connection_stop(MbNetConnection * self, GError ** error)
 	err = NULL;
 	priv = GET_PRIVATE(self);
 
-	gst_debug_print_stack_trace();
 	mb_net_connection_close(self, &err);
 
 	if (err != NULL) {
@@ -200,7 +198,7 @@ void mb_net_connection_stop(MbNetConnection * self, GError ** error)
 
 	if (priv->main_thread != NULL) {	// && priv->running == TRUE) {
 		priv->stop = TRUE;
-		g_thread_join(priv->main_thread);
+		//      g_thread_join(priv->main_thread);
 
 	}
 
@@ -509,7 +507,7 @@ void *_listen_loop(MbNetConnection * self)
 	Private *priv;
 
 	// thread ref
-	g_object_ref(self);
+//      g_object_ref(self);
 
 	priv = GET_PRIVATE(self);
 
@@ -547,9 +545,10 @@ void *_listen_loop(MbNetConnection * self)
 
 
 	priv->main_thread = NULL;
+	priv->stop = TRUE;
 	g_signal_emit(self, _signals[DISCONNECTED], 0);
 //      priv->running = FALSE;
-	g_object_unref(self);
+//      g_object_unref(self);
 	return 0;
 
 }

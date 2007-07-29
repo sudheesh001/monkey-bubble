@@ -63,6 +63,7 @@ typedef struct _Private {
 
 	gboolean running;
 	MbClock *clock;
+	guint timeout_id;
 } Private;
 
 
@@ -135,6 +136,8 @@ static void mb_net_match_finalize(MbNetMatch * self)
 
 	g_mutex_lock(priv->players_mutex);
 
+	g_source_remove(priv->timeout_id);
+	priv->running = FALSE;
 
 	mb_net_handler_manager_unregister(priv->manager,
 					  mb_net_handler_get_id
@@ -848,7 +851,7 @@ static gboolean _update_idle(MbNetMatch * self)
 	}
 	g_mutex_unlock(priv->players_mutex);
 
-	return !game_finished;
+	return (!game_finished) && (priv->running);
 }
 
 static void _start_match(MbNetMatch * self)
@@ -877,7 +880,9 @@ static void _start_match(MbNetMatch * self)
 
 	mb_clock_start(priv->clock);
 
-	g_timeout_add(10, (GSourceFunc) _update_idle, self);
+	priv->running = TRUE;
+	priv->timeout_id =
+	    g_timeout_add(10, (GSourceFunc) _update_idle, self);
 
 }
 
@@ -896,6 +901,12 @@ static void _remove_player(MbNetMatch * self, MbNetServerPlayer * p)
 
 
 	if (waited != NULL) {
+
+		g_signal_handlers_disconnect_matched(waited->
+						     player,
+						     G_SIGNAL_MATCH_DATA,
+						     0, 0, NULL,
+						     NULL, self);
 		priv->waited_players =
 		    g_list_remove(priv->waited_players, waited);
 //              g_object_unref(p);

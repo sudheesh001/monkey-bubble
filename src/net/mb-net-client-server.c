@@ -28,7 +28,8 @@
 #include <net/mb-net-connection.h>
 #include <net/mb-net-server-handler.h>
 #include <net/mb-net-handler-manager.h>
-
+// include for backtrace ..
+#include "clock.h"
 typedef struct _Private {
 	MbNetConnection *con;
 	MbNetServerHandler *handler;
@@ -105,6 +106,14 @@ static void _message(MbNetClientServer * self, MbNetMessage * m,
 
 static void _disconnected(MbNetClientServer * self, MbNetConnection * con)
 {
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	g_print("client disconnected HERE \n");
+	priv->registred = FALSE;
+	priv->connected = FALSE;
+	priv->player_id = 0;
+
 	g_signal_emit(self, _signals[DISCONNECTED], 0);
 }
 
@@ -161,6 +170,7 @@ static void mb_net_client_server_finalize(MbNetClientServer * self)
 	g_object_unref(priv->handler);
 
 	g_free(priv->name);
+
 	g_object_unref(priv->con);
 	g_object_unref(priv->manager);
 	if (G_OBJECT_CLASS(parent_class)->finalize) {
@@ -217,12 +227,17 @@ void mb_net_client_server_disconnect(MbNetClientServer * self)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
+	mb_backtrace();
+	g_print("mb_net_client_server_disconnec begin \n");
+
 	if (priv->connected) {
+		priv->registred = FALSE;
+		priv->connected = FALSE;
+		priv->player_id = 0;
 		mb_net_connection_stop(priv->con, NULL);
 	}
-	priv->registred = FALSE;
-	priv->connected = FALSE;
-	priv->player_id = 0;
+	g_print("mb_net_client_server_disconnec begin \n");
+
 }
 
 static void _copy_holder(MbNetSimpleGameHolder * h,

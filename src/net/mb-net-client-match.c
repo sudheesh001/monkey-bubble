@@ -219,6 +219,19 @@ static void _observer_player_winlost(MbNetMatchHandler * h,
 static void _stop(MbNetMatchHandler * h, MbNetConnection * con,
 		  guint32 handler_id, MbNetClientMatch * self)
 {
+	mb_net_client_match_stop(self);
+}
+
+
+void mb_net_client_match_stop(MbNetClientMatch * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	g_mutex_lock(priv->lock);
+	priv->running = FALSE;
+	g_mutex_unlock(priv->lock);
+
 	g_signal_emit(self, _signals[STOP], 0);
 }
 
@@ -304,7 +317,9 @@ static void mb_net_client_match_finalize(MbNetClientMatch * self)
 {
 	Private *priv;
 	priv = GET_PRIVATE(self);
-
+	g_mutex_lock(priv->lock);
+	priv->running = FALSE;
+	g_mutex_unlock(priv->lock);
 	mb_net_handler_manager_unregister(priv->manager,
 					  mb_net_handler_get_id
 					  (MB_NET_HANDLER(priv->handler)));
@@ -321,6 +336,7 @@ static void mb_net_client_match_finalize(MbNetClientMatch * self)
 	g_object_unref(priv->monkey);
 	g_object_unref(priv->clock);
 	g_mutex_free(priv->lock);
+	g_object_unref(priv->con);
 	// finalize super
 	if (G_OBJECT_CLASS(parent_class)->finalize) {
 		(*G_OBJECT_CLASS(parent_class)->finalize) (G_OBJECT(self));
@@ -563,10 +579,8 @@ static gint _update_monkey(MbNetClientMatch * self)
 
 	Private *priv;
 	priv = GET_PRIVATE(self);
-	//g_print("update ... \n");
 	g_mutex_lock(priv->lock);
 	Monkey *m = priv->monkey;
-	//g_print("update2 ... \n");
 	gint time;
 	time = mb_clock_get_time(priv->clock);
 

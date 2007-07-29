@@ -199,6 +199,8 @@ static void mb_net_client_game_finalize(MbNetClientGame * self)
 	g_object_unref(priv->handler);
 	g_object_unref(priv->observer_handler);
 	g_object_unref(priv->manager);
+	g_signal_handlers_disconnect_by_func(priv->con, _con_disconnected,
+					     self);
 	g_object_unref(priv->con);
 	g_mutex_free(priv->players_mutex);
 	g_list_foreach(priv->players, (GFunc) mb_net_player_holder_free,

@@ -300,7 +300,8 @@ static void ui_main_draw_main(UiMain * ui_main) {
                                 PRIVATE(ui_main)->main_image,
                                 0,0);
     
-        monkey_canvas_paint( PRIVATE(ui_main)->canvas);
+//        g_idle_add( monkey_canvas_paint,PRIVATE(ui_main)->canvas);
+//        monkey_canvas_paint( PRIVATE(ui_main)->canvas);
 }
 
 MonkeyCanvas * ui_main_get_canvas(UiMain * ui_main) {
@@ -334,7 +335,7 @@ static void ui_main_init (UiMain *ui_main) {
 
 
 
-static void ui_main_stop_game(UiMain * ui_main);
+void ui_main_stop_game(UiMain * ui_main);
 
 static void ui_main_new_1_player_game(UiMain * ui_main) {
 
@@ -394,8 +395,8 @@ void ui_main_enabled_games_item(UiMain * ui_main ,gboolean enabled) {
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"pause_game");
         _set_sensitive(item,!enabled);
 
-        item = gtk_bin_get_child( GTK_BIN(item));
-        gtk_label_set_text( GTK_LABEL(item), _("Pause game"));
+       // item = gtk_bin_get_child( GTK_BIN(item));
+     //   gtk_label_set_text( GTK_LABEL(item), _("Pause game"));
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"stop_game");
         _set_sensitive(item,!enabled);
@@ -453,14 +454,15 @@ static void pause_game(gpointer    callback_data,
   
 }
 
-static void ui_main_stop_game(UiMain * ui_main) {
-      
+void ui_main_stop_game(UiMain * ui_main) {
+
+        if( PRIVATE(ui_main)->manager != NULL ) {
         game_manager_stop(PRIVATE(ui_main)->manager);
 
 
         g_object_unref( PRIVATE(ui_main)->manager );
         PRIVATE(ui_main)->manager = NULL;
-
+        }
         monkey_canvas_clear(PRIVATE(ui_main)->canvas);
 
         sound_manager_play_music(PRIVATE(ui_main)->sm,MB_MUSIC_SPLASH);
@@ -546,7 +548,7 @@ static void _set_sensitive(GtkWidget * w,gboolean b)
         gpointer * pointers = g_new(gpointer,2);
         pointers[0] = w;
         pointers[1] = (gpointer)b;
-	g_idle_add((GSourceFunc)_set_sensitive_idle, pointers);
+	//g_idle_add((GSourceFunc)_set_sensitive_idle, pointers);
 }
 
 static void _set_text(GtkLabel * label, const gchar * v)

@@ -51,6 +51,7 @@ int main(int  argc, char **argv)
 
   gst_init(&argc,&argv);
 
+ g_log_set_always_fatal( G_LOG_LEVEL_WARNING );
   manager = sound_manager_get_instance();
   sound_manager_init(manager,TRUE);
 

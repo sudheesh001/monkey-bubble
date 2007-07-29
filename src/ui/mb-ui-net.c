@@ -163,7 +163,7 @@ void mb_ui_net_host(MbUiNet * self, GError ** error)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
-//      mb_net_server_accept_on(priv->server, "mb://localhost:6666", &err);
+	mb_net_server_accept_on(priv->server, "mb://localhost:6666", &err);
 
 	if (err != NULL) {
 		g_propagate_error(error, err);
@@ -194,37 +194,31 @@ static void _disconnect(MbUiNet * self)
 	priv = GET_PRIVATE(self);
 //      _backtrace();//printstack();
 	g_print("disconnect client ... \n");
-	if (priv->connected == TRUE) {
+	//if (priv->connected == TRUE) {
 
-		g_signal_handlers_disconnect_by_func(priv->client,
-						     _server_disconnected,
-						     self);
-		mb_net_client_server_disconnect(priv->client);
-		if (priv->game != NULL) {
-			g_signal_handlers_disconnect_by_func(priv->game,
-							     _join_response,
-							     self);
-			g_signal_handlers_disconnect_by_func(priv->game,
-							     _stop_signal,
-							     self);
-			g_object_unref(priv->game);
-			priv->game = NULL;
-		}
-
-		g_signal_handlers_disconnect_by_func(priv->client,
-						     _connected_and_join,
-						     self);
-		g_signal_handlers_disconnect_by_func(priv->client,
-						     _connected_and_create,
-						     self);
-		g_signal_handlers_disconnect_by_func(priv->client,
-						     _new_game_list, self);
-
-
-		gtk_label_set_label(priv->connection_label,
-				    g_strdup_printf("",
-						    priv->server_name));
+	g_signal_handlers_disconnect_by_func(priv->client,
+					     _server_disconnected, self);
+	mb_net_client_server_disconnect(priv->client);
+	if (priv->game != NULL) {
+		g_signal_handlers_disconnect_by_func(priv->game,
+						     _join_response, self);
+		g_signal_handlers_disconnect_by_func(priv->game,
+						     _stop_signal, self);
+		g_object_unref(priv->game);
+		priv->game = NULL;
 	}
+
+	g_signal_handlers_disconnect_by_func(priv->client,
+					     _connected_and_join, self);
+	g_signal_handlers_disconnect_by_func(priv->client,
+					     _connected_and_create, self);
+	g_signal_handlers_disconnect_by_func(priv->client,
+					     _new_game_list, self);
+
+
+	gtk_label_set_label(priv->connection_label,
+			    g_strdup_printf("", priv->server_name));
+//      }
 
 	if (priv->is_server == FALSE) {
 		gtk_widget_set_sensitive(glade_xml_get_widget
@@ -234,16 +228,9 @@ static void _disconnect(MbUiNet * self)
 }
 
 
-static gboolean _disconnect_idle(MbUiNet * self)
-{
-	_disconnect(self);
-	g_object_unref(self);
-	return FALSE;
-}
 static void _stop_signal(MbNetClientGame * game, MbUiNet * self)
 {
-	g_object_ref(self);
-	g_idle_add((GSourceFunc) _disconnect_idle, self);
+	_disconnect(self);
 
 }
 
@@ -251,9 +238,8 @@ static void _server_disconnected(MbNetClientServer * server,
 				 MbUiNet * self)
 {
 
-	g_print("disconnect client... \n");
-	g_object_ref(self);
-	g_idle_add((GSourceFunc) _disconnect_idle, self);
+	g_print("disconnect client... MB_UI_NET ..\n");
+	_disconnect(self);
 }
 
 static void _connect_server(MbUiNet * self)
@@ -278,7 +264,13 @@ static void _game_start(MbNetClientGame * game, MbNetClientMatch * match,
 	Private *priv;
 	priv = GET_PRIVATE(self);
 	gtk_widget_destroy(priv->window);
-	g_signal_handlers_disconnect_by_func(game, _game_start, self);
+	g_signal_handlers_disconnect_matched(game, G_SIGNAL_MATCH_DATA, 0,
+					     0, NULL, NULL, self);
+	g_signal_handlers_disconnect_matched(priv->client,
+					     G_SIGNAL_MATCH_DATA, 0, 0,
+					     NULL, NULL, self);
+
+
 }
 
 static void _join_response(MbNetClientGame * game, gboolean ok,
@@ -287,9 +279,11 @@ static void _join_response(MbNetClientGame * game, gboolean ok,
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
+	g_print("receive join response ... \n");
 	if (ok == FALSE) {
-		g_object_ref(self);
-		g_idle_add((GSourceFunc) _disconnect_idle, self);
+		//g_object_ref(self);
+		//g_idle_add((GSourceFunc) _disconnect_idle, self);
+		_disconnect(self);
 		_set_status_message(self,
 				    g_strdup_printf("Can't join game ...",
 						    priv->server_name));
@@ -372,8 +366,9 @@ static void _new_game_list(MbNetClientServer * client, MbUiNet * self)
 
 		mb_net_client_game_join(priv->game);
 	} else {
-		g_object_ref(self);
-		g_idle_add((GSourceFunc) _disconnect_idle, self);
+		//g_object_ref(self);
+		_disconnect(self);
+//              g_idle_add((GSourceFunc) _disconnect_idle, self);
 		_set_status_message(self,
 				    g_strdup_printf("No game found ...",
 						    priv->server_name));

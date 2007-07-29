@@ -55,6 +55,6 @@ GtkWidget * ui_main_get_window(UiMain * ui_main);
 Block * ui_main_get_main_image(UiMain * ui_main);
 void ui_main_set_game(UiMain *ui_main, Game *game);
 void ui_main_set_game_manager(UiMain * ui_main,GameManager * manager);
-
+void ui_main_stop_game(UiMain * ui_main);
 void ui_main_enabled_games_item(UiMain * ui_main ,gboolean enabled);
 #endif /* __UI_MAIN_H__ */
