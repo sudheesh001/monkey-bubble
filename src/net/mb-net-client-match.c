@@ -57,6 +57,7 @@ typedef struct _Private {
 	gboolean running;
 	GList *observed_players;
 	guint32 score;
+	MbNetHandlerManager * manager;
 } Private;
 
 
@@ -264,9 +265,9 @@ MbNetClientMatch *mb_net_client_match_new(guint32 match_id,
 	priv->observer_match_id = observer_match_id;
 	priv->player_id = player_id;
 	priv->con = con;
-
+	g_object_ref(priv->con);
 	priv->monkey = monkey_new(TRUE);
-
+	priv->manager = manager;
 	g_signal_connect(priv->monkey, "bubble-sticked",
 			 (GCallback) _bubble_sticked, self);
 	g_signal_connect(priv->monkey, "bubble-shot",
@@ -299,6 +300,27 @@ static void mb_net_client_match_init(MbNetClientMatch * self)
 
 }
 
+static void mb_net_client_match_finalize(MbNetClientMatch * self)
+{
+	Private *priv;
+	priv = GET_PRIVATE(self);
+
+	mb_net_handler_manager_unregister( priv->manager,mb_net_handler_get_id( MB_NET_HANDLER(priv->handler)));
+	mb_net_handler_manager_unregister( priv->manager,mb_net_handler_get_id( MB_NET_HANDLER(priv->observer_handler)));
+	g_object_unref(priv->handler);
+	priv->handler = NULL;
+	
+	g_object_unref(priv->observer_handler);
+	priv->observer_handler = NULL;
+	
+	g_object_unref(priv->monkey);
+	g_object_unref(priv->clock);
+	g_mutex_free(priv->lock);
+	// finalize super
+	if (G_OBJECT_CLASS(parent_class)->finalize) {
+		(*G_OBJECT_CLASS(parent_class)->finalize) (G_OBJECT(self));
+	}
+}
 void mb_net_client_match_lock(MbNetClientMatch * self)
 {
 	Private *priv;
@@ -558,16 +580,7 @@ static gint _update_monkey(MbNetClientMatch * self)
 	return priv->running;
 }
 
-static void mb_net_client_match_finalize(MbNetClientMatch * self)
-{
-	Private *priv;
-	priv = GET_PRIVATE(self);
 
-	// finalize super
-	if (G_OBJECT_CLASS(parent_class)->finalize) {
-		(*G_OBJECT_CLASS(parent_class)->finalize) (G_OBJECT(self));
-	}
-}
 
 void mb_net_client_match_get_player_bubbles(MbNetClientMatch * self,
 					    int player, Color ** color,

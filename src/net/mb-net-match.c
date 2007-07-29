@@ -133,6 +133,48 @@ static void mb_net_match_finalize(MbNetMatch * self)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
+	g_mutex_lock(priv->players_mutex);
+
+	
+	mb_net_handler_manager_unregister(priv->manager,
+					mb_net_handler_get_id(MB_NET_HANDLER(priv->handler)));
+	mb_net_handler_manager_unregister(priv->manager,
+					mb_net_handler_get_id(MB_NET_HANDLER(priv->
+						       observer_handler)));
+
+	g_object_unref(priv->handler);
+	g_object_unref(priv->observer_handler);
+	
+	GList *next = priv->observers;
+	while (next != NULL) {
+		_Observer *o;
+		o = (_Observer *) (next->data);
+		g_signal_handlers_disconnect_matched( o->player,G_SIGNAL_MATCH_DATA,
+											 0,0,NULL,NULL,self);
+		g_object_unref(o->player);
+		next = g_list_next(next);
+	}
+	g_list_foreach(priv->observers,(GFunc)g_free,NULL);
+	g_list_free(priv->observers);
+	priv->observers = NULL;
+	
+	next = priv->observers;
+	while (next != NULL) {
+		_Player *p;
+		p = (_Player *) (next->data);
+		if( p->player != NULL ) {
+			g_signal_handlers_disconnect_matched( p->player,G_SIGNAL_MATCH_DATA,
+												 0,0,NULL,NULL,self);
+			g_object_unref(p->player);
+		}
+			next = g_list_next(next);
+	}
+	g_list_foreach(priv->players,(GFunc)g_free,NULL);
+	g_list_free(priv->players);
+	
+	g_mutex_unlock(priv->players_mutex);
+	g_mutex_free(priv->players_mutex);
+	priv->players_mutex = NULL;
 	g_print("match finalzi e !! \n");
 	// finalize super
 	if (G_OBJECT_CLASS(parent_class)->finalize) {
@@ -171,7 +213,7 @@ static void _observer_disconnected(MbNetServerPlayer * p,
 	if (current != NULL) {
 		current->lost = TRUE;
 		current->player = NULL;
-		g_object_unref(p);
+		g_object_unref(current->player);
 		priv->observers = g_list_remove(priv->observers, current);
 	}
 
@@ -221,9 +263,10 @@ static void _observer_ready(MbNetMatchHandler * handler,
 	g_mutex_lock(priv->players_mutex);
 	_Observer *o = (_Observer *) g_new0(_Observer, 1);
 	o->player = p;
+	g_object_ref(o->player);
 	o->handler_id = handler_id;
 	o->con = con;
-
+	g_object_ref(o->player);
 	priv->observers = g_list_append(priv->observers, o);
 
 	g_signal_connect(p, "disconnected",
@@ -299,6 +342,7 @@ MbNetMatch *mb_net_match_new(MbNetServerPlayer * master, GList * players,
 	while (next != NULL) {
 		MbNetMatchPlayer *p;
 		p = (MbNetMatchPlayer *) next->data;
+		g_object_ref(p->player);
 		g_signal_connect(p->player, "disconnected",
 				 (GCallback) _disconnected, self);
 		priv->waited_players =
@@ -474,7 +518,7 @@ _bubbles_exploded(Monkey * monkey,
 
 			p = (_Player *) next->data;
 
-			if (p != c) {
+			if (p->player != NULL && p != c) {
 				other = p->monkey;
 
 				monkey_add_bubbles(other, to_go);
@@ -711,7 +755,7 @@ static void _update_player(_Player * player, MbNetMatch * self)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
-	if (player->lost != TRUE) {
+	if (player->lost != TRUE && player->player != NULL) {
 		monkey_update(player->monkey,
 			      mb_clock_get_time(priv->clock));
 	}
@@ -761,7 +805,7 @@ static gboolean _update_lost(MbNetMatch * self)
 			_Player *c;
 
 			c = (_Player *) next->data;
-			if (c->lost == FALSE) {
+			if (c->lost == FALSE && c->player != NULL) {
 				_notify_winlost(self, c, TRUE);
 				g_signal_emit(self, _signals[WIN], 0,
 					      (guint32)
@@ -815,8 +859,10 @@ static void _start_match(MbNetMatch * self)
 	while (next != NULL) {
 		_Player *player;
 		player = (_Player *) (next->data);
+		if( player->player != NULL) {
 		mb_net_match_handler_send_start(priv->handler, player->con,
 						player->handler_id);
+		}
 		next = g_list_next(next);
 	}
 	g_mutex_unlock(priv->players_mutex);
@@ -863,10 +909,14 @@ static void _remove_player(MbNetMatch * self, MbNetServerPlayer * p)
 
 		if (current != NULL) {
 			current->lost = TRUE;
+			g_object_unref(current->player);
+			
+			g_signal_handlers_disconnect_matched( current->player,G_SIGNAL_MATCH_DATA,
+												 0,0,NULL,NULL,self);
+			//g_object_unref(current->con);
 			current->player = NULL;
 			current->con = NULL;
-			g_object_unref(current->player);
-			g_object_unref(current->con);
+			
 		}
 
 

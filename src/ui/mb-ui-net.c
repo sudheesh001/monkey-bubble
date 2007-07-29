@@ -163,7 +163,7 @@ void mb_ui_net_host(MbUiNet * self, GError ** error)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
-	mb_net_server_accept_on(priv->server, "mb://localhost:6666", &err);
+//	mb_net_server_accept_on(priv->server, "mb://localhost:6666", &err);
 
 	if (err != NULL) {
 		g_propagate_error(error, err);

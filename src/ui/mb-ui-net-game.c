@@ -193,8 +193,10 @@ MbUiNetGame *mb_ui_net_game_new(MbNetClientGame * game,
 	g_object_ref(game);
 	g_object_ref(match);
 
+	
 	priv->match = match;
 	priv->game = game;
+	mb_net_client_match_lock(priv->match);
 	MonkeyCanvas *canvas;
 	canvas = priv->canvas;
 
@@ -264,6 +266,7 @@ MbUiNetGame *mb_ui_net_game_new(MbNetClientGame * game,
 	g_signal_connect(priv->match, "player-changed",
 			 (GCallback) _player_changed, self);
 
+	mb_net_client_match_unlock(priv->match);
 	return self;
 
 }
@@ -377,6 +380,7 @@ static void _start(Game * game)
 
 static void _stop(Game * game)
 {
+	g_print("stop game .. \n");
 }
 
 static void _pause(Game * game, gboolean pause)

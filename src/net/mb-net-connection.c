@@ -48,6 +48,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <gst/gst.h>
+
+
 #define MAX_WAITING_CONN 20
 
 typedef struct _Private {
@@ -133,6 +136,7 @@ static void mb_net_connection_finalize(MbNetConnection * self)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 	if (priv->socket != -1) {
+		g_warning("finalize but socket not yet closed\n");
 		mb_net_connection_close(self, NULL);
 	}
 
@@ -186,6 +190,7 @@ void mb_net_connection_stop(MbNetConnection * self, GError ** error)
 	err = NULL;
 	priv = GET_PRIVATE(self);
 
+	gst_debug_print_stack_trace();
 	mb_net_connection_close(self, &err);
 
 	if (err != NULL) {
@@ -669,7 +674,7 @@ _mb_net_connection_send_message(MbNetConnection * self, guint32 s,
 	size = s;
 	guint32 ssize = htonl(s);
 	write(priv->socket, &ssize, sizeof(ssize));
-	g_assert(priv->socket != -1);
+//	g_assert(priv->socket != -1);
 	int sock = priv->socket;
 	while (size > 0 && writed > 0) {
 		sigset_t mask;
