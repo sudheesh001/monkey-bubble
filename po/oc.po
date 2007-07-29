@@ -1,0 +1,371 @@
+# Occitan translation of monkey-bubble.
+# Copyright (C) 2003-2006 Free Software Foundation, Inc.
+#
+# Yannig MARCHEGAY (yannig@marchegay.org) - 2006-2007
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: monkey-bubble fr\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-02-28 23:13+0100\n"
+"PO-Revision-Date: 2007-07-29 15:00+0200\n"
+"Last-Translator: Yannig MARCHEGAY <yannig@marchegay.org>\n"
+"Language-Team: Occitan (post 1500) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);"
+
+#: ../data/keybinding.glade.h:1
+msgid "Keyboard Shortcuts"
+msgstr "Acorchis de clavièr"
+
+#: ../data/keybinding.glade.h:2
+msgid "_Shortcut Keys:"
+msgstr ""
+
+#: ../data/monkey-bubble.glade.h:1
+msgid ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Can't create server !\n"
+"</span>\n"
+"</markup>"
+msgstr ""
+
+#: ../data/monkey-bubble.glade.h:7
+msgid "Join _network game"
+msgstr ""
+
+#: ../data/monkey-bubble.glade.h:8 ../monkey-bubble.desktop.in.h:1
+msgid "Monkey Bubble"
+msgstr ""
+
+#: ../data/monkey-bubble.glade.h:9
+msgid "New 1 player"
+msgstr ""
+
+#: ../data/monkey-bubble.glade.h:10
+msgid "New 2 players"
+msgstr ""
+
+#: ../data/monkey-bubble.glade.h:11
+msgid "New network game"
+msgstr ""
+
+#: ../data/monkey-bubble.glade.h:12 ../src/ui/ui-main.c:412
+#: ../src/ui/ui-main.c:544
+msgid "Pause game"
+msgstr ""
+
+#: ../data/monkey-bubble.glade.h:13 ../src/ui/keyboard-properties.c:84
+msgid "Stop game"
+msgstr ""
+
+#: ../data/monkey-bubble.glade.h:14
+msgid "Warning"
+msgstr "Alèrta"
+
+#: ../data/monkey-bubble.glade.h:15
+msgid "_About"
+msgstr "_A prepaus"
+
+#: ../data/monkey-bubble.glade.h:16
+msgid "_Contents"
+msgstr "_Somari"
+
+#: ../data/monkey-bubble.glade.h:17
+msgid "_Game"
+msgstr "_Jòc"
+
+#: ../data/monkey-bubble.glade.h:18
+msgid "_Help"
+msgstr "_Ajuda"
+
+#: ../data/monkey-bubble.glade.h:19
+msgid "_High Scores"
+msgstr ""
+
+#: ../data/monkey-bubble.schemas.in.h:1
+msgid "1 player game"
+msgstr ""
+
+#: ../data/monkey-bubble.schemas.in.h:2
+msgid "2 players game"
+msgstr ""
+
+#: ../data/monkey-bubble.schemas.in.h:3
+msgid "F1"
+msgstr "F1"
+
+#: ../data/monkey-bubble.schemas.in.h:4
+msgid "F2"
+msgstr "F 2"
+
+#: ../data/monkey-bubble.schemas.in.h:5
+msgid "Left"
+msgstr "Esquèrra"
+
+#: ../data/monkey-bubble.schemas.in.h:6
+msgid "Pause"
+msgstr "Pausa"
+
+#: ../data/monkey-bubble.schemas.in.h:7
+msgid "Pause the game"
+msgstr ""
+
+#: ../data/monkey-bubble.schemas.in.h:8
+msgid "Quit the game"
+msgstr ""
+
+#: ../data/monkey-bubble.schemas.in.h:9
+msgid "Right"
+msgstr "Drecha"
+
+#: ../data/monkey-bubble.schemas.in.h:10
+msgid "Stop the game"
+msgstr ""
+
+#: ../data/monkey-bubble.schemas.in.h:11
+msgid "Up"
+msgstr "Amont"
+
+#: ../data/monkey-bubble.schemas.in.h:12
+msgid "d"
+msgstr ""
+
+#: ../data/monkey-bubble.schemas.in.h:13
+msgid "f"
+msgstr ""
+
+#: ../data/monkey-bubble.schemas.in.h:14
+msgid "left key for player one"
+msgstr ""
+
+#: ../data/monkey-bubble.schemas.in.h:15
+msgid "left key for player two"
+msgstr ""
+
+#: ../data/monkey-bubble.schemas.in.h:16
+msgid "right key for player one"
+msgstr ""
+
+#: ../data/monkey-bubble.schemas.in.h:17
+msgid "right key for player two"
+msgstr ""
+
+#: ../data/monkey-bubble.schemas.in.h:18
+msgid "s"
+msgstr ""
+
+#: ../data/monkey-bubble.schemas.in.h:19
+msgid "shoot key for player one"
+msgstr ""
+
+#: ../data/monkey-bubble.schemas.in.h:20
+msgid "shoot key for player two"
+msgstr ""
+
+#: ../data/netgame.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: ../data/netgame.glade.h:2 ../data/netserver.glade.h:1
+msgid "Network game"
+msgstr ""
+
+#: ../data/netgame.glade.h:3
+msgid "Number of games :"
+msgstr ""
+
+#: ../data/netgame.glade.h:4
+msgid "Number of players :"
+msgstr ""
+
+#: ../data/netgame.glade.h:5 ../data/netserver.glade.h:4
+#: ../src/ui/keyboard-properties.c:86
+msgid "Quit game"
+msgstr ""
+
+#: ../data/netgame.glade.h:6 ../data/netserver.glade.h:5
+msgid "Ready"
+msgstr "Prèst"
+
+#: ../data/netgame.glade.h:7
+msgid "_Go"
+msgstr "_Anar"
+
+#: ../data/netgame.glade.h:8
+msgid "_Server"
+msgstr ""
+
+#: ../data/netserver.glade.h:2
+msgid "Number of game"
+msgstr ""
+
+#: ../data/netserver.glade.h:3
+msgid "Number of players"
+msgstr ""
+
+#: ../data/netserver.glade.h:6
+msgid "Start Game"
+msgstr ""
+
+#: ../monkey-bubble.desktop.in.h:2
+msgid "Monkey Bubble Arcade Game"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:78
+msgid "New game 1 player"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:80
+msgid "New game 2 player"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:82
+msgid "Pause/Resume"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:92
+msgid "Full Screen"
+msgstr "Ecran complet"
+
+#: ../src/ui/keyboard-properties.c:94
+msgid "Normal Size"
+msgstr "Talha normala"
+
+#: ../src/ui/keyboard-properties.c:99 ../src/ui/keyboard-properties.c:109
+msgid "aim left"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:101 ../src/ui/keyboard-properties.c:111
+msgid "aim right"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:103 ../src/ui/keyboard-properties.c:113
+msgid "shoot"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:120
+msgid "Player 1"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:121
+msgid "Player 2"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:122
+msgid "Game"
+msgstr "Jòc"
+
+#: ../src/ui/keyboard-properties.c:123
+msgid "View"
+msgstr "Visualizacion"
+
+#: ../src/ui/keyboard-properties.c:336
+#, c-format
+msgid "There was an error loading config from %s. (%s)\n"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:350
+#, c-format
+msgid ""
+"There was an error subscribing to notification of terminal keybinding "
+"changes. (%s)\n"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:393
+#, c-format
+msgid "There was an error loading a terminal keybinding. (%s)\n"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:409
+#, c-format
+msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:432
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menubar access "
+"keys. (%s)\n"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:446
+#, c-format
+msgid ""
+"There was an error subscribing to notification on changes on whether to use "
+"menubar access keys (%s)\n"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:457
+#, c-format
+msgid ""
+"There was an error loading config value for whether to use menu "
+"accelerators. (%s)\n"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:473
+#, c-format
+msgid ""
+"There was an error subscribing to notification for use_menu_accelerators (%"
+"s)\n"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:755
+msgid "Disabled"
+msgstr "Desactivat"
+
+#: ../src/ui/keyboard-properties.c:815
+#, c-format
+msgid "Error propagating accelerator change to configuration database: %s\n"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:983
+#, c-format
+msgid "Error setting new accelerator in configuration database: %s\n"
+msgstr ""
+
+#: ../src/ui/keyboard-properties.c:1082
+msgid "_Action"
+msgstr "_Accion"
+
+#: ../src/ui/keyboard-properties.c:1105
+msgid "Shortcut _Key"
+msgstr ""
+
+#: ../src/ui/ui-main.c:537
+msgid "Resume game"
+msgstr ""
+
+#: ../src/ui/ui-main.c:635
+msgid "translator_credits"
+msgstr ""
+"La còla occitana de revirada d'Ubuntu, 2006 - ubuntu-l10n-"
+"oci@lists.ubuntu.com"
+
+#: ../src/ui/ui-main.c:643
+msgid ""
+"Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
+"remove all Bubbles by the creation of unicolor triplets."
+msgstr ""
+
+#: ../src/ui/ui-main.c:664
+#, c-format
+msgid "There was an error displaying help: %s"
+msgstr "I a agut una error al moment de mostrar l'ajuda : %s"
+
+#: ../src/ui/ui-network-server.c:159 ../src/ui/ui-network-client.c:149
+msgid "_Player name"
+msgstr ""
+
+#: ../src/ui/ui-network-server.c:166 ../src/ui/ui-network-client.c:156
+msgid "_Owner"
+msgstr ""
+
+#: ../src/ui/ui-network-server.c:173 ../src/ui/ui-network-client.c:163
+msgid "_Ready"
+msgstr ""
+
