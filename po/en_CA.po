@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: monkey-bubble\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-20 11:36-0400\n"
+"POT-Creation-Date: 2007-08-15 16:46-0400\n"
 "PO-Revision-Date: 2004-09-20 17:15-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -16,15 +16,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/keybinding.glade.h:1
+#: ../data/keybinding.glade.h:1
 msgid "Keyboard Shortcuts"
 msgstr "Keyboard Shortcuts"
 
-#: data/keybinding.glade.h:2
+#: ../data/keybinding.glade.h:2
 msgid "_Shortcut Keys:"
 msgstr "_Shortcut Keys:"
 
-#: data/monkey-bubble.glade.h:1
+#: ../data/monkey-bubble.glade.h:1
 msgid ""
 "<markup>\n"
 "<span weight=\"bold\" size=\"large\"\n"
@@ -40,269 +40,242 @@ msgstr ""
 "</span>\n"
 "</markup>"
 
-#: data/monkey-bubble.glade.h:7
-msgid "Create network game"
-msgstr "Create network game"
-
-#: data/monkey-bubble.glade.h:8
+#: ../data/monkey-bubble.glade.h:7
 msgid "Join _network game"
 msgstr "Join _network game"
 
-#: data/monkey-bubble.glade.h:9 monkey-bubble.desktop.in.h:1
+#: ../data/monkey-bubble.glade.h:8 ../monkey-bubble.desktop.in.h:1
 msgid "Monkey Bubble"
 msgstr "Monkey Bubble"
 
-#: data/monkey-bubble.glade.h:10
+#: ../data/monkey-bubble.glade.h:9
 msgid "New 1 player"
 msgstr "New 1 player"
 
-#: data/monkey-bubble.glade.h:11
+#: ../data/monkey-bubble.glade.h:10
 msgid "New 2 players"
 msgstr "New 2 players"
 
-#: data/monkey-bubble.glade.h:12 src/ui/ui-main.c:401 src/ui/ui-main.c:533
+#: ../data/monkey-bubble.glade.h:11
+msgid "New network game"
+msgstr "New network game"
+
+#: ../data/monkey-bubble.glade.h:12 ../src/ui/ui-main.c:399
+#: ../src/ui/ui-main.c:529
 msgid "Pause game"
 msgstr "Pause game"
 
-#: data/monkey-bubble.glade.h:13 src/ui/keyboard-properties.c:86
+#: ../data/monkey-bubble.glade.h:13 ../src/ui/keyboard-properties.c:84
 msgid "Stop game"
 msgstr "Stop game"
 
-#: data/monkey-bubble.glade.h:14
+#: ../data/monkey-bubble.glade.h:14
 msgid "Warning"
 msgstr "Warning"
 
-#: data/monkey-bubble.glade.h:15
+#: ../data/monkey-bubble.glade.h:15
 msgid "_About"
 msgstr "_About"
 
-#: data/monkey-bubble.glade.h:16
+#: ../data/monkey-bubble.glade.h:16
 msgid "_Contents"
 msgstr "_Contents"
 
-#: data/monkey-bubble.glade.h:17
+#: ../data/monkey-bubble.glade.h:17
 msgid "_Game"
 msgstr "_Game"
 
-#: data/monkey-bubble.glade.h:18
+#: ../data/monkey-bubble.glade.h:18
 msgid "_Help"
 msgstr "_Help"
 
-#: data/monkey-bubble.glade.h:19
-msgid "_Settings"
-msgstr "_Settings"
+#: ../data/monkey-bubble.glade.h:19
+msgid "_High Scores"
+msgstr "_High Scores"
 
-#: data/monkey-bubble.schemas.in.h:1
+#: ../data/monkey-bubble.schemas.in.h:1
 msgid "1 player game"
 msgstr "1 player game"
 
-#: data/monkey-bubble.schemas.in.h:2
+#: ../data/monkey-bubble.schemas.in.h:2
 msgid "2 players game"
 msgstr "2 players game"
 
-#: data/monkey-bubble.schemas.in.h:3
+#: ../data/monkey-bubble.schemas.in.h:3
 msgid "F1"
 msgstr "F1"
 
-#: data/monkey-bubble.schemas.in.h:4
+#: ../data/monkey-bubble.schemas.in.h:4
 msgid "F2"
 msgstr "F2"
 
-#: data/monkey-bubble.schemas.in.h:5
+#: ../data/monkey-bubble.schemas.in.h:5
 msgid "Left"
 msgstr "Left"
 
-#: data/monkey-bubble.schemas.in.h:6
+#: ../data/monkey-bubble.schemas.in.h:6
 msgid "Pause"
 msgstr "Pause"
 
-#: data/monkey-bubble.schemas.in.h:7
+#: ../data/monkey-bubble.schemas.in.h:7
 msgid "Pause the game"
 msgstr "Pause the game"
 
-#: data/monkey-bubble.schemas.in.h:8
+#: ../data/monkey-bubble.schemas.in.h:8
 msgid "Quit the game"
 msgstr "Quit the game"
 
-#: data/monkey-bubble.schemas.in.h:9
+#: ../data/monkey-bubble.schemas.in.h:9
 msgid "Right"
 msgstr "Right"
 
-#: data/monkey-bubble.schemas.in.h:10
+#: ../data/monkey-bubble.schemas.in.h:10
 msgid "Stop the game"
 msgstr "Stop the game"
 
-#: data/monkey-bubble.schemas.in.h:11
+#: ../data/monkey-bubble.schemas.in.h:11
 msgid "Up"
 msgstr "Up"
 
-#: data/monkey-bubble.schemas.in.h:12
+#: ../data/monkey-bubble.schemas.in.h:12
 msgid "d"
 msgstr "d"
 
-#: data/monkey-bubble.schemas.in.h:13
+#: ../data/monkey-bubble.schemas.in.h:13
 msgid "f"
 msgstr "f"
 
-#: data/monkey-bubble.schemas.in.h:14
+#: ../data/monkey-bubble.schemas.in.h:14
 msgid "left key for player one"
 msgstr "left key for player one"
 
-#: data/monkey-bubble.schemas.in.h:15
+#: ../data/monkey-bubble.schemas.in.h:15
 msgid "left key for player two"
 msgstr "left key for player two"
 
-#: data/monkey-bubble.schemas.in.h:16
+#: ../data/monkey-bubble.schemas.in.h:16
 msgid "right key for player one"
 msgstr "right key for player one"
 
-#: data/monkey-bubble.schemas.in.h:17
+#: ../data/monkey-bubble.schemas.in.h:17
 msgid "right key for player two"
 msgstr "right key for player two"
 
-#: data/monkey-bubble.schemas.in.h:18
+#: ../data/monkey-bubble.schemas.in.h:18
 msgid "s"
 msgstr "s"
 
-#: data/monkey-bubble.schemas.in.h:19
+#: ../data/monkey-bubble.schemas.in.h:19
 msgid "shoot key for player one"
 msgstr "shoot key for player one"
 
-#: data/monkey-bubble.schemas.in.h:20
+#: ../data/monkey-bubble.schemas.in.h:20
 msgid "shoot key for player two"
 msgstr "shoot key for player two"
 
-#: data/netgame.glade.h:1
+#: ../data/netgame.glade.h:1
 msgid "*"
 msgstr "*"
 
-#: data/netgame.glade.h:2 data/netserver.glade.h:1
+#: ../data/netgame.glade.h:2 ../data/netserver.glade.h:1
 msgid "Network game"
 msgstr "Network game"
 
-#: data/netgame.glade.h:3
+#: ../data/netgame.glade.h:3
 msgid "Number of games :"
 msgstr "Number of games :"
 
-#: data/netgame.glade.h:4
+#: ../data/netgame.glade.h:4
 msgid "Number of players :"
 msgstr "Number of players :"
 
-#: data/netgame.glade.h:5 data/netserver.glade.h:4
-#: src/ui/keyboard-properties.c:88
+#: ../data/netgame.glade.h:5 ../data/netserver.glade.h:4
+#: ../src/ui/keyboard-properties.c:86
 msgid "Quit game"
 msgstr "Quit game"
 
-#: data/netgame.glade.h:6 data/netserver.glade.h:5
+#: ../data/netgame.glade.h:6 ../data/netserver.glade.h:5
 msgid "Ready"
 msgstr "Ready"
 
-#: data/netgame.glade.h:7
+#: ../data/netgame.glade.h:7
 msgid "_Go"
 msgstr "_Go"
 
-#: data/netgame.glade.h:8
+#: ../data/netgame.glade.h:8
 msgid "_Server"
 msgstr "_Server"
 
-#: data/netserver.glade.h:2
+#: ../data/netserver.glade.h:2
 msgid "Number of game"
 msgstr "Game number"
 
-#: data/netserver.glade.h:3
+#: ../data/netserver.glade.h:3
 msgid "Number of players"
 msgstr "Number of players"
 
-#: data/netserver.glade.h:6
+#: ../data/netserver.glade.h:6
 msgid "Start Game"
 msgstr "Start Game"
 
-#: monkey-bubble.desktop.in.h:2
+#: ../monkey-bubble.desktop.in.h:2
 msgid "Monkey Bubble Arcade Game"
 msgstr "Monkey Bubble Arcade Game"
 
-#: src/ui/eggcellrendererkeys.c:160 src/ui/eggcellrendererkeys.c:161
-msgid "Accelerator key"
-msgstr "Accelerator key"
-
-#: src/ui/eggcellrendererkeys.c:170 src/ui/eggcellrendererkeys.c:171
-msgid "Accelerator modifiers"
-msgstr "Accelerator modifiers"
-
-#: src/ui/eggcellrendererkeys.c:180
-msgid "Accelerator Mode"
-msgstr "Accelerator Mode"
-
-#: src/ui/eggcellrendererkeys.c:181
-msgid "The type of accelerator."
-msgstr "The type of accelerator."
-
-#: src/ui/eggcellrendererkeys.c:219 src/ui/keyboard-properties.c:765
-msgid "Disabled"
-msgstr "Disabled"
-
-#: src/ui/eggcellrendererkeys.c:330 src/ui/eggcellrendererkeys.c:568
-msgid "Type a new accelerator, or press Backspace to clear"
-msgstr "Type a new accelerator, or press Backspace to clear"
-
-#: src/ui/eggcellrendererkeys.c:571
-msgid "Type a new accelerator"
-msgstr "Type a new accelerator"
-
-#: src/ui/keyboard-properties.c:80
+#: ../src/ui/keyboard-properties.c:78
 msgid "New game 1 player"
 msgstr "New game 1 player"
 
-#: src/ui/keyboard-properties.c:82
+#: ../src/ui/keyboard-properties.c:80
 msgid "New game 2 player"
 msgstr "New game 2 player"
 
-#: src/ui/keyboard-properties.c:84
+#: ../src/ui/keyboard-properties.c:82
 msgid "Pause/Resume"
 msgstr "Pause/Resume"
 
-#: src/ui/keyboard-properties.c:94
+#: ../src/ui/keyboard-properties.c:92
 msgid "Full Screen"
 msgstr "Full Screen"
 
-#: src/ui/keyboard-properties.c:96
+#: ../src/ui/keyboard-properties.c:94
 msgid "Normal Size"
 msgstr "Normal Size"
 
-#: src/ui/keyboard-properties.c:101 src/ui/keyboard-properties.c:111
+#: ../src/ui/keyboard-properties.c:99 ../src/ui/keyboard-properties.c:109
 msgid "aim left"
 msgstr "aim left"
 
-#: src/ui/keyboard-properties.c:103 src/ui/keyboard-properties.c:113
+#: ../src/ui/keyboard-properties.c:101 ../src/ui/keyboard-properties.c:111
 msgid "aim right"
 msgstr "aim right"
 
-#: src/ui/keyboard-properties.c:105 src/ui/keyboard-properties.c:115
+#: ../src/ui/keyboard-properties.c:103 ../src/ui/keyboard-properties.c:113
 msgid "shoot"
 msgstr "shoot"
 
-#: src/ui/keyboard-properties.c:122
+#: ../src/ui/keyboard-properties.c:120
 msgid "Player 1"
 msgstr "Player 1"
 
-#: src/ui/keyboard-properties.c:123
+#: ../src/ui/keyboard-properties.c:121
 msgid "Player 2"
 msgstr "Player 2"
 
-#: src/ui/keyboard-properties.c:124
+#: ../src/ui/keyboard-properties.c:122
 msgid "Game"
 msgstr "Game"
 
-#: src/ui/keyboard-properties.c:125
+#: ../src/ui/keyboard-properties.c:123
 msgid "View"
 msgstr "View"
 
-#: src/ui/keyboard-properties.c:338
+#: ../src/ui/keyboard-properties.c:336
 #, c-format
 msgid "There was an error loading config from %s. (%s)\n"
 msgstr "There was an error loading config from %s. (%s)\n"
 
-#: src/ui/keyboard-properties.c:352
+#: ../src/ui/keyboard-properties.c:350
 #, c-format
 msgid ""
 "There was an error subscribing to notification of terminal keybinding "
@@ -311,17 +284,17 @@ msgstr ""
 "There was an error subscribing to notification of terminal keybinding "
 "changes. (%s)\n"
 
-#: src/ui/keyboard-properties.c:395
+#: ../src/ui/keyboard-properties.c:393
 #, c-format
 msgid "There was an error loading a terminal keybinding. (%s)\n"
 msgstr "There was an error loading a terminal keybinding. (%s)\n"
 
-#: src/ui/keyboard-properties.c:411
+#: ../src/ui/keyboard-properties.c:409
 #, c-format
 msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
 msgstr "The value of configuration key %s is not valid; value is \"%s\"\n"
 
-#: src/ui/keyboard-properties.c:434
+#: ../src/ui/keyboard-properties.c:432
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menubar access "
@@ -330,7 +303,7 @@ msgstr ""
 "There was an error loading config value for whether to use menubar access "
 "keys. (%s)\n"
 
-#: src/ui/keyboard-properties.c:448
+#: ../src/ui/keyboard-properties.c:446
 #, c-format
 msgid ""
 "There was an error subscribing to notification on changes on whether to use "
@@ -339,7 +312,7 @@ msgstr ""
 "There was an error subscribing to notification on changes on whether to use "
 "menubar access keys (%s)\n"
 
-#: src/ui/keyboard-properties.c:459
+#: ../src/ui/keyboard-properties.c:457
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menu "
@@ -348,7 +321,7 @@ msgstr ""
 "There was an error loading config value for whether to use menu "
 "accelerators. (%s)\n"
 
-#: src/ui/keyboard-properties.c:475
+#: ../src/ui/keyboard-properties.c:473
 #, c-format
 msgid ""
 "There was an error subscribing to notification for use_menu_accelerators (%"
@@ -357,54 +330,57 @@ msgstr ""
 "There was an error subscribing to notification for use_menu_accelerators (%"
 "s)\n"
 
-#: src/ui/keyboard-properties.c:825
+#: ../src/ui/keyboard-properties.c:755
+msgid "Disabled"
+msgstr "Disabled"
+
+#: ../src/ui/keyboard-properties.c:815
 #, c-format
 msgid "Error propagating accelerator change to configuration database: %s\n"
 msgstr "Error propagating accelerator change to configuration database: %s\n"
 
-#: src/ui/keyboard-properties.c:994
+#: ../src/ui/keyboard-properties.c:983
 #, c-format
 msgid "Error setting new accelerator in configuration database: %s\n"
 msgstr "Error setting new accelerator in configuration database: %s\n"
 
-#: src/ui/keyboard-properties.c:1093
+#: ../src/ui/keyboard-properties.c:1082
 msgid "_Action"
 msgstr "_Action"
 
-#: src/ui/keyboard-properties.c:1115
+#: ../src/ui/keyboard-properties.c:1105
 msgid "Shortcut _Key"
 msgstr "Shortcut _Key"
 
-#: src/ui/ui-main.c:526
+#: ../src/ui/ui-main.c:522
 msgid "Resume game"
 msgstr "Resume game"
 
-#: src/ui/ui-main.c:611
+#: ../src/ui/ui-main.c:620
 msgid "translator_credits"
 msgstr "Adam Weinberger <adamw@gnome.org>"
 
-#: src/ui/ui-main.c:619
+#: ../src/ui/ui-main.c:628
 msgid ""
 "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
 "remove all Bubbles by the creation of unicolor triplets."
 msgstr ""
-"Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. "
-"Remove all the bubbles by creating sets of three or more bubbles of "
-"the same colour."
+"Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Remove "
+"all the bubbles by creating sets of three or more bubbles of the same colour."
 
-#: src/ui/ui-main.c:640
+#: ../src/ui/ui-main.c:649
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "There was an error displaying help: %s"
 
-#: src/ui/ui-network-server.c:159 src/ui/ui-network-client.c:149
+#: ../src/ui/ui-network-server.c:159 ../src/ui/ui-network-client.c:149
 msgid "_Player name"
 msgstr "_Player name"
 
-#: src/ui/ui-network-server.c:166 src/ui/ui-network-client.c:156
+#: ../src/ui/ui-network-server.c:166 ../src/ui/ui-network-client.c:156
 msgid "_Owner"
 msgstr "_Owner"
 
-#: src/ui/ui-network-server.c:173 src/ui/ui-network-client.c:163
+#: ../src/ui/ui-network-server.c:173 ../src/ui/ui-network-client.c:163
 msgid "_Ready"
 msgstr "_Ready"
