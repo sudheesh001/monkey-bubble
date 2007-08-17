@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-02-28 23:13+0100\n"
 "PO-Revision-Date: 2007-07-29 15:00+0200\n"
-"Last-Translator: Yannig MARCHEGAY <yannig@marchegay.org>\n"
+"Last-Translator: Yannig MARCHEGAY (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan (post 1500) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -355,7 +355,7 @@ msgstr ""
 #: ../src/ui/ui-main.c:664
 #, c-format
 msgid "There was an error displaying help: %s"
-msgstr "I a agut una error al moment de mostrar l'ajuda : %s"
+msgstr "I a agut una error al moment de visualizar l'ajuda : %s"
 
 #: ../src/ui/ui-network-server.c:159 ../src/ui/ui-network-client.c:149
 msgid "_Player name"
