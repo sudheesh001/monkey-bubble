@@ -137,7 +137,7 @@ static void mb_ui_net_game_finalize(MbUiNetGame * self)
 	Private *priv;
 	priv = GET_PRIVATE(self);
 
-	g_object_unref(priv->display);
+	//g_object_unref(priv->display);
 	// finalize super
 	if (G_OBJECT_CLASS(parent_class)->finalize) {
 		(*G_OBJECT_CLASS(parent_class)->finalize) (G_OBJECT(self));
