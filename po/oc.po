@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: monkey-bubble fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-02-28 23:13+0100\n"
-"PO-Revision-Date: 2007-07-29 15:00+0200\n"
+"PO-Revision-Date: 2007-08-20 18:29+0200\n"
 "Last-Translator: Yannig MARCHEGAY (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan (post 1500) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
@@ -40,7 +40,7 @@ msgstr ""
 
 #: ../data/monkey-bubble.glade.h:8 ../monkey-bubble.desktop.in.h:1
 msgid "Monkey Bubble"
-msgstr ""
+msgstr "Monkey Bubble"
 
 #: ../data/monkey-bubble.glade.h:9
 msgid "New 1 player"
@@ -198,7 +198,7 @@ msgstr "_Anar"
 
 #: ../data/netgame.glade.h:8
 msgid "_Server"
-msgstr ""
+msgstr "_Servidor"
 
 #: ../data/netserver.glade.h:2
 msgid "Number of game"
@@ -250,11 +250,11 @@ msgstr ""
 
 #: ../src/ui/keyboard-properties.c:120
 msgid "Player 1"
-msgstr ""
+msgstr "Jogaire 1"
 
 #: ../src/ui/keyboard-properties.c:121
 msgid "Player 2"
-msgstr ""
+msgstr "Jogaire 2"
 
 #: ../src/ui/keyboard-properties.c:122
 msgid "Game"
@@ -359,13 +359,13 @@ msgstr "I a agut una error al moment de visualizar l'ajuda : %s"
 
 #: ../src/ui/ui-network-server.c:159 ../src/ui/ui-network-client.c:149
 msgid "_Player name"
-msgstr ""
+msgstr "Nom del _jogaire"
 
 #: ../src/ui/ui-network-server.c:166 ../src/ui/ui-network-client.c:156
 msgid "_Owner"
-msgstr ""
+msgstr "_Propietari"
 
 #: ../src/ui/ui-network-server.c:173 ../src/ui/ui-network-client.c:163
 msgid "_Ready"
-msgstr ""
+msgstr "_Prèst"
 
