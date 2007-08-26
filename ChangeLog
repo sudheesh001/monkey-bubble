@@ -1,3 +1,7 @@
+2007-08-27  Satoru SATOH <ss@gnome.gr.jp>
+
+	* help/Makefile.am: Added "ja" to DOC_LINGUAS.
+
 2007-07-09  Laurent Belmonte  <laurent.belmonte@gmail.com>
 
 	* src/net/client.[ch]: add score
