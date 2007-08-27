@@ -23,13 +23,17 @@
       <publishername>GNOME Documentation Project</publishername> 
     </publisher> 
     <authorgroup> 
-      <author> 
+      <author role="createtor"> 
 	<firstname>Thomas</firstname> 
 	<surname>Cataldo</surname> 
 	<affiliation> 
 	  <orgname>GNOME Documentation Project</orgname> 
 	</affiliation> 
       </author> 
+      <author role="maintainer">
+        <firstname>Laurent</firstname>
+        <surname>Belmont</surname>
+      </author>
     </authorgroup> 
 
     <revhistory> 
@@ -55,6 +59,9 @@
 	manual, follow the directions in the 
 	<ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. </para>
     </legalnotice> 
+    <abstract role="description">
+      <para>User manual for &app;.</para>
+    </abstract>
   </articleinfo> 
 
   <indexterm> 

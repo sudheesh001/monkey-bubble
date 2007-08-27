@@ -1,3 +1,9 @@
+2007-08-27  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
+	fix help build failure ( bug #470716 )
+	( correction made by Satoru SATOH  )
+	* C/monkey-bubble.xml:
+
 2007-05-14  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
 
 	* es/es.po: Added Spanish translation
