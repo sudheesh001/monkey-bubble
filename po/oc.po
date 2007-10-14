@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: monkey-bubble fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-28 23:13+0100\n"
+"POT-Creation-Date: 2007-10-13 17:50+0200\n"
 "PO-Revision-Date: 2007-08-20 18:29+0200\n"
 "Last-Translator: Yannig MARCHEGAY (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan (post 1500) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../data/keybinding.glade.h:1
 msgid "Keyboard Shortcuts"
@@ -54,8 +54,8 @@ msgstr ""
 msgid "New network game"
 msgstr ""
 
-#: ../data/monkey-bubble.glade.h:12 ../src/ui/ui-main.c:412
-#: ../src/ui/ui-main.c:544
+#: ../data/monkey-bubble.glade.h:12 ../src/ui/ui-main.c:399
+#: ../src/ui/ui-main.c:529
 msgid "Pause game"
 msgstr ""
 
@@ -336,21 +336,21 @@ msgstr "_Accion"
 msgid "Shortcut _Key"
 msgstr ""
 
-#: ../src/ui/ui-main.c:537
+#: ../src/ui/ui-main.c:522
 msgid "Resume game"
 msgstr ""
 
-#: ../src/ui/ui-main.c:635
+#: ../src/ui/ui-main.c:620
 msgid "translator_credits"
 msgstr "Yannig Marchegay (Kokoyaya) <yannig@marchegay.org)"
 
-#: ../src/ui/ui-main.c:643
+#: ../src/ui/ui-main.c:628
 msgid ""
 "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
 "remove all Bubbles by the creation of unicolor triplets."
 msgstr ""
 
-#: ../src/ui/ui-main.c:664
+#: ../src/ui/ui-main.c:649
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "I a agut una error al moment de visualizar l'ajuda : %s"
@@ -366,4 +366,3 @@ msgstr "_Propietari"
 #: ../src/ui/ui-network-server.c:173 ../src/ui/ui-network-client.c:163
 msgid "_Ready"
 msgstr "_Prèst"
-
