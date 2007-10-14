@@ -1,15 +1,15 @@
 # Occitan translation of monkey-bubble documentation.
 # Copyright (C) 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-cd documentation package.
-# Yannig MARCHEGAY (Kokoyaya) <yannig@marchegay>.
 # 
+# Yannig MARCHEGAY (Kokoyaya) <yannig@marchegay>.
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: monkey-bubble\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-08-01 16:31+0200\n"
-"PO-Revision-Date: 2007-10-14 16:37+0200\n"
+"PO-Revision-Date: 2007-10-14 16:41+0200\n"
 "Last-Translator: Yannig MARCHEGAY (Kokoyaya) <yannig@marchegay>\n"
 "Language-Team: Occitan (post 1500) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr "2004"
 
 #: help/C/monkey-bubble.xml:20(holder) help/C/monkey-bubble.xml:40(para) 
 msgid "Thomas Cataldo"
-msgstr ""
+msgstr "Thomas Cataldo"
 
 #: help/C/monkey-bubble.xml:23(publishername) help/C/monkey-bubble.xml:30(orgname) help/C/monkey-bubble.xml:43(para) 
 msgid "GNOME Documentation Project"
@@ -34,11 +34,11 @@ msgstr ""
 
 #: help/C/monkey-bubble.xml:27(firstname) 
 msgid "Thomas"
-msgstr ""
+msgstr "Thomas"
 
 #: help/C/monkey-bubble.xml:28(surname) 
 msgid "Cataldo"
-msgstr ""
+msgstr "Cataldo"
 
 #: help/C/monkey-bubble.xml:50(releaseinfo) 
 msgid "This manual describes version 0.1.7 of Monkey Bubble."
@@ -58,7 +58,7 @@ msgstr ""
 
 #: help/C/monkey-bubble.xml:68(title) 
 msgid "Introduction"
-msgstr ""
+msgstr "Introduccion"
 
 #: help/C/monkey-bubble.xml:69(para) 
 msgid "<application>Monkey Bubble</application> is an arcade game with the following objectives :"
