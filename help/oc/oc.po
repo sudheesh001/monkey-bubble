@@ -1,138 +1,141 @@
+# translation of oc.po to Occitan
 # Occitan translation of monkey-bubble documentation.
 # Copyright (C) 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-cd documentation package.
-# 
+#
 # Yannig MARCHEGAY (Kokoyaya) <yannig@marchegay>.
-# 
+#
+# Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: monkey-bubble\n"
+"Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-08-01 16:31+0200\n"
-"PO-Revision-Date: 2007-10-14 16:41+0200\n"
-"Last-Translator: Yannig MARCHEGAY (Kokoyaya) <yannig@marchegay>\n"
-"Language-Team: Occitan (post 1500) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
+"PO-Revision-Date: 2007-11-20 14:32+0100\n"
+"Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
+"Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
 
-#: help/C/monkey-bubble.xml:17(title) help/C/monkey-bubble.xml:37(revnumber) 
+#: help/C/monkey-bubble.xml:17(title) help/C/monkey-bubble.xml:37(revnumber)
 msgid "Monkey Bubble Manual V0.1"
 msgstr ""
 
-#: help/C/monkey-bubble.xml:19(year) 
+#: help/C/monkey-bubble.xml:19(year)
 msgid "2004"
 msgstr "2004"
 
-#: help/C/monkey-bubble.xml:20(holder) help/C/monkey-bubble.xml:40(para) 
+#: help/C/monkey-bubble.xml:20(holder) help/C/monkey-bubble.xml:40(para)
 msgid "Thomas Cataldo"
 msgstr "Thomas Cataldo"
 
-#: help/C/monkey-bubble.xml:23(publishername) help/C/monkey-bubble.xml:30(orgname) help/C/monkey-bubble.xml:43(para) 
+#: help/C/monkey-bubble.xml:23(publishername) help/C/monkey-bubble.xml:30(orgname) help/C/monkey-bubble.xml:43(para)
 msgid "GNOME Documentation Project"
-msgstr ""
+msgstr "Projècte de documentacion de GNOME"
 
-#: help/C/monkey-bubble.xml:27(firstname) 
+#: help/C/monkey-bubble.xml:27(firstname)
 msgid "Thomas"
 msgstr "Thomas"
 
-#: help/C/monkey-bubble.xml:28(surname) 
+#: help/C/monkey-bubble.xml:28(surname)
 msgid "Cataldo"
 msgstr "Cataldo"
 
-#: help/C/monkey-bubble.xml:50(releaseinfo) 
+#: help/C/monkey-bubble.xml:50(releaseinfo)
 msgid "This manual describes version 0.1.7 of Monkey Bubble."
 msgstr ""
 
-#: help/C/monkey-bubble.xml:53(title) 
+#: help/C/monkey-bubble.xml:53(title)
 msgid "Feedback"
 msgstr ""
 
-#: help/C/monkey-bubble.xml:54(para) 
+#: help/C/monkey-bubble.xml:54(para)
 msgid "To report a bug or make a suggestion regarding the Monkey Bubble application or this manual, follow the directions in the <ulink url=\"ghelp:gnome-feedback\" type=\"help\">GNOME Feedback Page</ulink>."
 msgstr ""
 
-#: help/C/monkey-bubble.xml:64(primary) 
+#: help/C/monkey-bubble.xml:64(primary)
 msgid "bubble game"
 msgstr ""
 
-#: help/C/monkey-bubble.xml:68(title) 
+#: help/C/monkey-bubble.xml:68(title)
 msgid "Introduction"
 msgstr "Introduccion"
 
-#: help/C/monkey-bubble.xml:69(para) 
+#: help/C/monkey-bubble.xml:69(para)
 msgid "<application>Monkey Bubble</application> is an arcade game with the following objectives :"
 msgstr ""
 
-#: help/C/monkey-bubble.xml:75(term) 
+#: help/C/monkey-bubble.xml:75(term)
 msgid "Clear the jungle from all those nasty bubbles"
 msgstr ""
 
-#: help/C/monkey-bubble.xml:77(para) 
+#: help/C/monkey-bubble.xml:77(para)
 msgid "To clear a level, you need to stick at least 3 bubbles of the same color together using the bubble shooter."
 msgstr ""
 
-#: help/C/monkey-bubble.xml:81(para) 
+#: help/C/monkey-bubble.xml:81(para)
 msgid "Once 3 or more bubbles of the color are sticked together at the top of the playground, they will explode."
 msgstr ""
 
-#: help/C/monkey-bubble.xml:85(para) 
+#: help/C/monkey-bubble.xml:85(para)
 msgid "To level up, you need to clear all the bubbles stuck in the playground."
 msgstr ""
 
-#: help/C/monkey-bubble.xml:94(title) 
+#: help/C/monkey-bubble.xml:94(title)
 msgid "Getting Started"
-msgstr ""
+msgstr "Per començar"
 
-#: help/C/monkey-bubble.xml:95(para) 
+#: help/C/monkey-bubble.xml:95(para)
 msgid "The following sections describe how to start <application>Monkey Bubble</application>."
 msgstr ""
 
-#: help/C/monkey-bubble.xml:100(title) 
+#: help/C/monkey-bubble.xml:100(title)
 msgid "To Start Monkey Bubble"
 msgstr ""
 
-#: help/C/monkey-bubble.xml:101(para) 
+#: help/C/monkey-bubble.xml:101(para)
 msgid "You can start <application>Monkey Bubble</application> in the following ways:"
 msgstr ""
 
-#: help/C/monkey-bubble.xml:106(term) 
+#: help/C/monkey-bubble.xml:106(term)
 msgid "Applications menu"
-msgstr ""
+msgstr "Menut de las aplicacions"
 
-#: help/C/monkey-bubble.xml:108(para) 
+#: help/C/monkey-bubble.xml:108(para)
 msgid "Choose <menuchoice><guimenu>Games</guimenu><guimenuitem>Monkey Bubble</guimenuitem></menuchoice>."
 msgstr ""
 
-#: help/C/monkey-bubble.xml:117(term) 
+#: help/C/monkey-bubble.xml:117(term)
 msgid "Command line"
-msgstr ""
+msgstr "Linha de comanda"
 
-#: help/C/monkey-bubble.xml:119(para) 
+#: help/C/monkey-bubble.xml:119(para)
 msgid "Execute the following command: <command>monkey-bubble</command>"
 msgstr ""
 
-#: help/C/monkey-bubble-C.omf:4(creator) 
+#: help/C/monkey-bubble-C.omf:4(creator)
 msgid "tom@aliacom.fr"
 msgstr "tom@aliacom.fr"
 
-#: help/C/monkey-bubble-C.omf:7(maintainer) 
+#: help/C/monkey-bubble-C.omf:7(maintainer)
 msgid "laurentb@aliacom.fr"
 msgstr "laurentb@aliacom.fr"
 
-#: help/C/monkey-bubble-C.omf:11(title) 
+#: help/C/monkey-bubble-C.omf:11(title)
 msgid "Monkey Bubble"
 msgstr "Monkey Bubble"
 
-#: help/C/monkey-bubble-C.omf:15(date) 
+#: help/C/monkey-bubble-C.omf:15(date)
 msgid "2004-01-08"
 msgstr ""
 
-#: help/C/monkey-bubble-C.omf:20(description) 
+#: help/C/monkey-bubble-C.omf:20(description)
 msgid "User manual for the Monkey Bubble game."
 msgstr ""
 
-#: help/C/monkey-bubble-C.omf:23(type) 
+#: help/C/monkey-bubble-C.omf:23(type)
 msgid "user's guide"
 msgstr ""
 
