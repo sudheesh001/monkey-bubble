@@ -23,11 +23,11 @@ libmonkey_a_SOURCES = \
 	point.h color.h \
 	$(marshal_sources)
 
-$(libmonkey_a_OBJECTS): $(marshal_sources)
+monkey-marshal.c: monkey-marshal.list Makefile
+	glib-genmarshal --prefix=monkey_marshal --body $< > $@
 
-monkey-marshal.c monkey-marshal.h: monkey-marshal.list
-	glib-genmarshal --prefix=monkey_marshal --body $^ > monkey-marshal.c
-	glib-genmarshal --prefix=monkey_marshal --header $^ > monkey-marshal.h
+monkey-marshal.h: monkey-marshal.list Makefile
+	glib-genmarshal --prefix=monkey_marshal --header $< > $@
 
 
 CLEANFILES = monkey-marshal.c monkey-marshal.h

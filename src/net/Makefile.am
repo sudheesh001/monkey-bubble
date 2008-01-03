@@ -45,9 +45,11 @@ libmonkeynet_a_SOURCES = \
 	game-manager.h game-manager.c \
 	$(marshal_sources)
 
-monkey-net-marshal.c monkey-net-marshal.h: monkey-marshal.list
-	glib-genmarshal --prefix=monkey_net_marshal --body $^ > monkey-net-marshal.c
-	glib-genmarshal --prefix=monkey_net_marshal --header $^ > monkey-net-marshal.h
+monkey-net-marshal.c: monkey-marshal.list Makefile
+	glib-genmarshal --prefix=monkey_net_marshal --body $< > $@
+
+monkey-net-marshal.h: monkey-marshal.list Makefile
+	glib-genmarshal --prefix=monkey_net_marshal --header $< > $@
 
 CLEANFILES = $(marshal_sources)
 
