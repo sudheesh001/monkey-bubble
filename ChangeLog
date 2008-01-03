@@ -1,5 +1,9 @@
 2008-01-03  Sven Herzberg  <herzi@gnome-de.org>
 
+	* help/C/monkey-bubble.xml: fixed a typo
+
+2008-01-03  Sven Herzberg  <herzi@gnome-de.org>
+
 	* src/monkey/Makefile.am,
 	* src/net/Makefile.am: make sure the build supports srcdir != builddir
 	(to make testing the upcoming maemo-build easier)
