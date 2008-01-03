@@ -41,7 +41,7 @@
 #include <libgnome/gnome-help.h>
 #include <gdk/gdkkeysyms.h>
 #include <glade/glade.h>
-#include <bonobo/bonobo-i18n.h>
+#include <glib/gi18n.h>
 
 #include <string.h>
 #include <stdlib.h>

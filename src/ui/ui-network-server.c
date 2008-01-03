@@ -33,7 +33,7 @@
 
 #include <gtk/gtk.h>
 #include <glade/glade.h>
-#include <bonobo/bonobo-i18n.h>
+#include <glib/gi18n.h>
 
 #include "message-handler.h"
 

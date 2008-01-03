@@ -1,5 +1,14 @@
 2008-01-03  Sven Herzberg  <herzi@gnome-de.org>
 
+	* src/ui/keyboard-properties.c,
+	* src/ui/main.c,
+	* src/ui/ui-main.c,
+	* src/ui/ui-network-client.c,
+	* src/ui/ui-network-server.c: replaced <bonobo/bonobo-i18n.h> by
+	<glib/gi18n.h>
+
+2008-01-03  Sven Herzberg  <herzi@gnome-de.org>
+
 	* help/C/monkey-bubble.xml: fixed a typo
 
 2008-01-03  Sven Herzberg  <herzi@gnome-de.org>

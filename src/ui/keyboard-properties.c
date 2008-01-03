@@ -21,7 +21,7 @@
 #include <string.h>
 
 #include <glade/glade.h>
-#include <bonobo/bonobo-i18n.h>
+#include <glib/gi18n.h>
 #include <gconf/gconf-client.h>
 #include "keyboard-properties.h"
 

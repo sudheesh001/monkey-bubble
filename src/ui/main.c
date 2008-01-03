@@ -14,7 +14,7 @@
 #include <esd.h>
 #include <gtk/gtk.h>
 #include <gst/gst.h>
-#include <bonobo/bonobo-i18n.h>
+#include <glib/gi18n.h>
 #include <glib/gthread.h>
 #include <libgnome/gnome-score.h>
 #include <libgnomeui/gnome-ui-init.h>
