@@ -1,3 +1,7 @@
+2008-01-03  Sven Herzberg <herzi@gnome-de.org>
+
+	* MAINTAINTERS: added file required by GNOME Subversion
+
 2007-10-14  Yannig Marchegay  <yannig@marchegay.org>
 
 	* configure.in: Added 'oc' to ALL_LINGUAS.
