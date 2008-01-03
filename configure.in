@@ -37,6 +37,38 @@ dnl  ---------------
 
 GNOME_DOC_INIT
 
+dnl  ------------------
+dnl | platform support |------------------------------------------------------
+dnl  ------------------
+
+dnl Monkey Bubble is supposed to work out of the box both on GNOME and on
+dnl Maemo. This stuff checks which one should be built.
+dnl
+dnl Enable the platform you want to support with --with-platform={gnome,maemo}
+
+AC_MSG_CHECKING([for platform])
+AC_ARG_WITH(platform,
+	    AC_HELP_STRING([--with-platform=PLATFORM],[Build for PLATFORM: "gnome" (default) or "maemo"]),
+	    [case "$with_platform" in
+	     "gnome")
+		AC_MSG_RESULT([GNOME])
+		;;
+	     "maemo")
+		AC_MSG_RESULT([Maemo])
+		;;
+	     *)
+		AC_MSG_ERROR(["$with_platform" is not a valid or supported platform])
+		;;
+	     esac],
+	    [with_platform=gnome
+	     AC_MSG_RESULT([GNOME])])
+
+if test "$with_platform" = "gnome"; then
+	AC_DEFINE(GNOME,[],[defined if we're building for gnome])
+elif test "$with_platform" = "maemo"; then
+	AC_DEFINE(MAEMO,[],[defined if we're building for maemo])
+fi
+
 dnl  ----------------------
 dnl | library dependencies |--------------------------------------------------
 dnl  ----------------------
@@ -109,15 +141,22 @@ PKG_CHECK_MODULES(UI,[
 AC_SUBST(UI_CFLAGS)
 AC_SUBST(UI_LIBS)
 
-dnl ***********
-dnl GConf stuff
-dnl ***********
+if test "$with_platform" = "gnome"; then
+	PKG_CHECK_MODULES(PLATFORM,[libgnomeui-2.0])
+elif test "$with_platform" = "maemo"; then
+	PKG_CHECK_MODULES(PLATFORM,[hildon-1 libosso])
+fi
+
+dnl  -------------
+dnl | GConf stuff |-----------------------------------------------------------
+dnl  -------------
+
 AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
 AM_GCONF_SOURCE_2
 
-
-# Check for utility programs 
+# Check for utility programs
 AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
+
 dnl --------------------------------------------------------------------------
 
 

@@ -13,7 +13,9 @@ INCLUDES = \
 	-I$(top_srcdir)/src/util			\
 	-I$(top_srcdir)/src/net 			\
 	-I$(top_srcdir)/src/input                       \
-	-Wall -Werror
+	-Wall -Werror \
+	$(PLATFORM_CFLAGS) \
+	$(NULL)
 
 
 bin_PROGRAMS = monkey-bubble
@@ -41,6 +43,7 @@ monkey_bubble_LDFLAGS=
 
 monkey_bubble_LDADD =  \
 	$(UI_LIBS) \
+	$(PLATFORM_LIBS) \
 	../monkey/libmonkey.a \
 	../view/libmonkeyview.a \
 	../util/libmonkeyutil.a \
