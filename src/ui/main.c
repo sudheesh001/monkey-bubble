@@ -28,17 +28,29 @@ int main(int  argc, char **argv)
   UiMain * ui_main;
   GtkWidget * window;
   SoundManager * manager;
+  GError* error = NULL;
+  GOptionContext * context;
 #ifdef ENABLE_NLS
   bindtextdomain (PACKAGE, PACKAGE_LOCALE_DIR);
   textdomain (PACKAGE);
 #endif
 
   g_thread_init(NULL);
+
+  context = g_option_context_new ("");
+  g_option_context_set_summary (context, _("Monkey Bubble is a Bust'a'Move clone for GNOME"));
+  g_option_context_add_group   (context, gtk_get_option_group (TRUE));
+  g_option_context_add_group   (context, gst_init_get_option_group ());
+  if (!g_option_context_parse (context, &argc, &argv, &error)) {
+    g_printerr ("%s\n", error->message);
+    g_error_free (error);
+    return 1;
+  }
+  g_option_context_free (context);
+
   if(gnome_score_init(PACKAGE)) {
 	g_message("You'll have to play without highscore support");
   }
-
-  gtk_init (&argc, &argv);
 
   /* to get help working */
   gnome_program_init (PACKAGE, VERSION,
@@ -48,8 +60,6 @@ int main(int  argc, char **argv)
 		      NULL);
 
   gtk_window_set_default_icon_name ("monkey-bubble");
-
-  gst_init(&argc,&argv);
 
   manager = sound_manager_get_instance();
   sound_manager_init(manager,TRUE);
