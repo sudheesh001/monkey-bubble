@@ -9,7 +9,7 @@ INCLUDES = \
 
 noinst_LIBRARIES = libmonkey.a
 
-marshal_sources = 			\
+BUILT_SOURCES = \
 	monkey-marshal.h		\
 	monkey-marshal.c		\
 	$(NULL)
@@ -21,7 +21,7 @@ libmonkey_a_SOURCES = \
 	playground.c playground.h\
 	monkey.c monkey.h\
 	point.h color.h \
-	$(marshal_sources)
+	$(BUILT_SOURCES)
 
 monkey-marshal.c: monkey-marshal.list Makefile
 	glib-genmarshal --prefix=monkey_marshal --body $< > $@

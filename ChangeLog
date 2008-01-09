@@ -1,3 +1,9 @@
+2008-01-09  Sven Herzberg  <herzi@gnome-de.org>
+
+	Fix compilation of a fresh checkout (closes #508137)
+
+	* src/monkey/Makefile.am: use BUILT_SOURCES for built files
+
 2008-01-04  Sven Herzberg  <herzi@gnome-de.org>
 
 	* src/ui/main.c: use GOptionContext for argument parsing, this will
