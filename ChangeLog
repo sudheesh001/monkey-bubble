@@ -1,5 +1,12 @@
 2008-01-11  Sven Herzberg  <herzi@gnome-de.org>
 
+	Add a make rule for debian packages. Based on the Maemo port of
+	Monkey-Bubble which was created by Jouni Roivas.
+
+	* Makefile.am: added a rule to build the debian package easily
+
+2008-01-11  Sven Herzberg  <herzi@gnome-de.org>
+
 	Repair the .deb build system
 
 	* debian/control: fix the file to get monkey-bubble built again
