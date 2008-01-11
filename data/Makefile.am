@@ -13,6 +13,8 @@ dbus_DATA=$(dbus_in_files:.service.in=.service)
 
 $(dbus_DATA): $(dbus_in_files) Makefile
 	sed 's#@BINDIR@#$(bindir)#' $< > $@
+
+CLEANFILES=$(dbus_DATA)
 endif
 
 gladexmldir = $(datadir)/monkey-bubble/glade
@@ -42,5 +44,6 @@ EXTRA_DIST=\
 	$(schemas_in_files) \
 	$(NULL)
 CLEANFILES=\
+	$(dbus_DATA) \
 	$(schemas_DATA) \
 	$(NULL)

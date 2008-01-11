@@ -1,3 +1,9 @@
+2008-01-11  Sven Herzberg  <herzi@gnome-de.org>
+
+	Clean up the build tree properly.
+
+	* data/Makefile.am: added $(dbus_DATA) to CLEANFILES
+
 2008-01-10  Sven Herzberg  <herzi@gnome-de.org>
 
 	Install a D-Bus service file for Maemo to get an idea about restarting
