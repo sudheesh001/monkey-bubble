@@ -1,5 +1,16 @@
 2008-01-11  Sven Herzberg  <herzi@gnome-de.org>
 
+	Be able to specify different sections for Debian/Ubuntu and Maemo
+
+	* debian/control,
+	* debian/control.in: renamed the file and replaced the section by
+	@SECTION@
+	* debian/rules: added a rule to create the debian/control file from
+	the template (this will also allow better dependency specification)
+	* Makefile.am: updated the package build rule
+
+2008-01-11  Sven Herzberg  <herzi@gnome-de.org>
+
 	Add a make rule for debian packages. Based on the Maemo port of
 	Monkey-Bubble which was created by Jouni Roivas.
 

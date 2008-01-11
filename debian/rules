@@ -6,6 +6,9 @@ include /usr/share/cdbs/1/class/gnome.mk
 
 DEB_INSTALL_MANPAGES_monkey-bubble := debian/monkey-bubble.1 debian/monkey-srv.1
 
+debian/control:: debian/control.in
+	sed 's#@SECTION@#gnome#' $< > $@
+
 build/monkey-bubble::
 	/usr/bin/docbook-to-man debian/monkey-bubble.sgml > debian/monkey-bubble.1
 	/usr/bin/docbook-to-man debian/monkey-srv.sgml > debian/monkey-srv.1

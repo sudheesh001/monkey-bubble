@@ -1,5 +1,5 @@
 Source: monkey-bubble
-Section: gnome
+Section: @SECTION@
 Priority: optional
 Maintainer: Thomas Cataldo <thomas.cataldo@aliacom.fr>
 Standards-Version: 3.6.1

@@ -50,6 +50,7 @@ deb: dist
 	cd $(top_builddir)/debian-build && tar zxf ../$(top_builddir)/$(PACKAGE)-$(VERSION).tar.gz
 	cp -r $(top_srcdir)/debian $(top_builddir)/debian-build/$(PACKAGE)-$(VERSION)/
 	cd $(top_builddir)/debian-build/$(PACKAGE)-$(VERSION) && \
+		 make -f debian/rules debian/control && \
 		 dpkg-buildpackage -rfakeroot || \
 		 true
 	-rm -rf $(top_builddir)/debian-build/$(PACKAGE)-$(VERSION)
