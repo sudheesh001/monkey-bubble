@@ -1,7 +1,18 @@
 2008-01-10  Sven Herzberg  <herzi@gnome-de.org>
 
+	Install a D-Bus service file for Maemo to get an idea about restarting
+	Monkey-Bubble. Based on the Maemo port of Monkey-Bubble which was
+	created by Jouni Roivas.
+
+	* data/com.nokia.monkey_bubble.service.in: template for the service
+	file
+	* data/Makefile.am: added rules to distribute the template and build
+	and install the service file
+
+2008-01-10  Sven Herzberg  <herzi@gnome-de.org>
+
 	Install monkey-bubble.desktop to the right path for Maemo. Based on
-	the Maemo port of Monkey-Bubble with was created by Jouni Roivas.
+	the Maemo port of Monkey-Bubble which was created by Jouni Roivas.
 
 	* configure.in: set GNOME and MAEMO conditionals for automake
 	* Makefile.am: set the right installation path for the .desktop file

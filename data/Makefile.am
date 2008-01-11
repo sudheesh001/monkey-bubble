@@ -6,6 +6,15 @@ leveldir = $(datadir)/monkey-bubble
 level_DATA = \
 	levels
 
+if MAEMO
+dbusdir=$(datadir)/dbus-1/services
+dbus_in_files=com.nokia.monkey_bubble.service.in
+dbus_DATA=$(dbus_in_files:.service.in=.service)
+
+$(dbus_DATA): $(dbus_in_files) Makefile
+	sed 's#@BINDIR@#$(bindir)#' $< > $@
+endif
+
 gladexmldir = $(datadir)/monkey-bubble/glade
 gladexml_DATA = \
 	monkey-bubble.glade keybinding.glade netgame.glade netserver.glade
@@ -26,7 +35,8 @@ install-data-local:
 	-chown $(scores_user):$(scores_group) $(DESTDIR)$(scoredir)/monkey-bubble.scores
 	-chmod 664 $(DESTDIR)$(scoredir)/monkey-bubble.scores
 
-EXTRA_DIST = \
+EXTRA_DIST=\
+	$(dbus_in_files) \
 	$(level_DATA) \
 	$(gladexml_DATA) \
 	$(schemas_in_files) \
