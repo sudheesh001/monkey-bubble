@@ -11,7 +11,11 @@ SUBDIRS = 	\
 
 applications_in_files = monkey-bubble.desktop.in
 applications_DATA = $(applications_in_files:.desktop.in=.desktop)
+if MAEMO
+applicationsdir = $(datadir)/applications/hildon
+else
 applicationsdir = $(datadir)/applications
+endif
 
 @INTLTOOL_DESKTOP_RULE@
 

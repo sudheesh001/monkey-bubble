@@ -1,3 +1,12 @@
+2008-01-10  Sven Herzberg  <herzi@gnome-de.org>
+
+	Install monkey-bubble.desktop to the right path for Maemo. Based on
+	the Maemo port of Monkey-Bubble with was created by Jouni Roivas.
+
+	* configure.in: set GNOME and MAEMO conditionals for automake
+	* Makefile.am: set the right installation path for the .desktop file
+	for Maemo and for GNOME
+
 2008-01-09  Sven Herzberg  <herzi@gnome-de.org>
 
 	Fix compilation of a fresh checkout (closes #508137)
