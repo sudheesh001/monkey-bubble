@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Thomas Cataldo <thomas.cataldo@aliacom.fr>
 Standards-Version: 3.6.1
 Build-Depends: cdbs, debhelper (>= 3.4.4), librsvg2-dev (>= 2.6.4-5), intltool,
- libgstreamer0.8-dev (>= 0.8.1-2), libgnomeui-dev (>= 2.6.1.1-2)
+ libgstreamer0.10-dev, libgnomeui-dev (>= 2.6.1.1-2),
  libglade2-dev (>= 2.4.0-1), scrollkeeper, libstartup-notification0-dev, 
  gnome-pkg-tools, docbook-to-man
 

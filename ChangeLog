@@ -1,5 +1,11 @@
 2008-01-11  Sven Herzberg  <herzi@gnome-de.org>
 
+	Repair the .deb build system
+
+	* debian/control: fix the file to get monkey-bubble built again
+
+2008-01-11  Sven Herzberg  <herzi@gnome-de.org>
+
 	For Maemo, specify the full path of the binary in the .desktop file.
 	Based on the Maemo port of Monkey-Bubble which was created by Jouni
 	Roivas.
