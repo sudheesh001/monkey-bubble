@@ -23,7 +23,7 @@ $(applications_in_files): $(applications_in_in_files) Makefile
 if MAEMO
 	sed 's#@BINDIR@#$(bindir)/#' $< > $@
 else
-	cp $< $@
+	sed 's#@BINDIR@##' $< > $@
 endif
 
 @INTLTOOL_DESKTOP_RULE@

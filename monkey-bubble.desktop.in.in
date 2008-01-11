@@ -2,7 +2,7 @@
 Encoding=UTF-8
 _Name=Monkey Bubble
 _Comment=Monkey Bubble Arcade Game
-Exec=monkey-bubble
+Exec=@BINDIR@monkey-bubble
 Icon=monkey-bubble
 Terminal=false
 Type=Application
