@@ -1,5 +1,11 @@
 2008-01-11  Sven Herzberg  <herzi@gnome-de.org>
 
+	Get the file ready for merging the maemo build system
+
+	* debian/control.in: added Jouni to the Maintainers
+
+2008-01-11  Sven Herzberg  <herzi@gnome-de.org>
+
 	Be able to specify different sections for Debian/Ubuntu and Maemo
 
 	* debian/control,
