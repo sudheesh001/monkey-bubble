@@ -10,9 +10,6 @@ build/monkey-bubble::
 	/usr/bin/docbook-to-man debian/monkey-bubble.sgml > debian/monkey-bubble.1
 	/usr/bin/docbook-to-man debian/monkey-srv.sgml > debian/monkey-srv.1
 
-binary-post-install/monkey-bubble::
-	cp debian/monkey-bubble.xpm debian/monkey-bubble/usr/share/pixmaps
-
 clean::
 	rm -f debian/monkey-bubble.1
 	rm -f debian/monkey-srv.1

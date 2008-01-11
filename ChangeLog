@@ -13,6 +13,19 @@
 
 2008-01-11  Sven Herzberg  <herzi@gnome-de.org>
 
+	Dropped the old xpm and use the one from the debian folder now. This
+	makes the tarball a little smaller and will result in less effort for
+	debian packaging.
+
+	* debian/monkey-bubble.xpm: moved into pixmaps
+	* debian/rules: don't install the xpm file anymore, it's done
+	automatically now
+	* pixmaps/Makefile.am: install the .xpm into $(datadir)/monkey-bubble
+	* pixmaps/monkey-bubble-icon.xpm: deleted the old, bad icon
+	* pixmaps/monkey-bubble.xpm: moved from debian/
+
+2008-01-11  Sven Herzberg  <herzi@gnome-de.org>
+
 	For Maemo, specify the full path of the binary in the .desktop file.
 	Based on the Maemo port of Monkey-Bubble which was created by Jouni
 	Roivas.

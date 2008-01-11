@@ -18,6 +18,9 @@ gfx_DATA = \
 icondir=$(datadir)/icons/hicolor/32x32/apps
 icon_DATA=monkey-bubble.png
 
+pixmapsdir=$(datadir)/monkey-bubble
+pixmaps_DATA=monkey-bubble.xpm
+
 gtk_update_icon_cache=gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
 
 install-data-hook: update-icon-cache
@@ -31,5 +34,5 @@ update-icon-cache:
 		echo "***   $(gtk_update_icon_cache)"; \
 	fi
 
-EXTRA_DIST = $(gfx_DATA) $(icon_DATA)
+EXTRA_DIST = $(gfx_DATA) $(icon_DATA) $(pixmaps_DATA)
 
