@@ -176,9 +176,27 @@ static UiMain* ui_main_new(void) {
 
         ui_main = UI_MAIN(g_object_new(UI_TYPE_MAIN, NULL));
     
+#ifdef GNOME
         PRIVATE(ui_main)->glade_xml = glade_xml_new(DATADIR"/monkey-bubble/glade/monkey-bubble.glade","main_window",NULL);
         
         PRIVATE(ui_main)->window = glade_xml_get_widget( PRIVATE(ui_main)->glade_xml, "main_window");
+#endif
+#ifdef MAEMO
+	PRIVATE(ui_main)->glade_xml = glade_xml_new(DATADIR"/monkey-bubble/glade/monkey-bubble.glade","main_vbox",NULL);
+
+	container = glade_xml_get_widget( PRIVATE(ui_main)->glade_xml, "main_vbox");
+	program = HILDON_PROGRAM(hildon_program_get_instance());
+	PRIVATE(ui_main)->window = hildon_window_new();
+	g_signal_connect_swapped(PRIVATE(ui_main)->window ,"destroy",GTK_SIGNAL_FUNC(quit_program),ui_main);
+	hildon_program_add_window(program, HILDON_WINDOW(PRIVATE(ui_main)->window));
+	gtk_container_add(GTK_CONTAINER(PRIVATE(ui_main)->window),
+				GTK_WIDGET(container));
+	g_set_application_name(_("Monkey Bubble"));
+	g_signal_connect(G_OBJECT(program), "notify::is-topmost", G_CALLBACK(ui_main_topmost_cb), NULL);
+	PRIVATE(ui_main)->ic = NULL;
+
+	gtk_widget_hide (glade_xml_get_widget (PRIVATE(ui_main)->glade_xml, "main_menubar"));
+#endif
 
         vbox = glade_xml_get_widget( PRIVATE(ui_main)->glade_xml,"main_vbox");
 
