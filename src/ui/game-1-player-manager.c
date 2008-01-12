@@ -17,13 +17,18 @@
  * Boston, MA 02111-1307, USA.
  */
 #include <gtk/gtk.h>
+#ifdef GNOME
 #include <libgnome/gnome-score.h>
+#endif
 #include "game-1-player-manager.h"
 #include "game-1-player.h"
 #include "game.h"
 #include "game-manager.h"
 #include "ui-main.h"
 
+#ifdef MAEMO
+#include "global.h"
+#endif
 #define PRIVATE(game_1_player_manager) (game_1_player_manager->private )
 
 static GObjectClass* parent_class = NULL;
@@ -132,6 +137,10 @@ static gboolean startnew_function(gpointer data) {
 	PRIVATE(manager)->current_level = 0;
   }
 
+#ifdef MAEMO
+  state.level = PRIVATE(manager)->current_level;
+#endif
+
   game_1_player_manager_start_level(manager);
   return FALSE;
 }
@@ -185,6 +194,9 @@ static void game_1_player_manager_state_changed(Game * game,
 
   if( game_get_state( game ) == GAME_FINISHED ) {
     PRIVATE(manager)->current_score = game_1_player_get_score( GAME_1_PLAYER(game));
+#ifdef MAEMO
+    state.score = PRIVATE(manager)->current_score;
+#endif
     if( game_1_player_is_lost( GAME_1_PLAYER(game) )) {
       ui_main_set_game(ui_main,NULL);	 
       g_timeout_add(2000,
@@ -231,8 +243,22 @@ void game_1_player_manager_start(GameManager * g) {
 	 
   manager = GAME_1_PLAYER_MANAGER(g);
 
+#ifdef GNOME
   PRIVATE(manager)->current_level = 0;
   PRIVATE(manager)->current_score = 0;
+#endif
+#ifdef MAEMO
+  if (state.game == 1 && state.level > 0 ) {
+    PRIVATE(manager)->current_level = state.level;
+    PRIVATE(manager)->current_score = state.score;
+  } else {
+    state.level = 0;
+    PRIVATE(manager)->current_level = 0;
+    PRIVATE(manager)->current_score = 0;
+  }
+  state.game = 1;
+#endif
+
   game_1_player_manager_start_level(manager);
 
 }
@@ -248,7 +274,9 @@ void game_1_player_manager_stop(GameManager * g) {
   g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(manager)->current_game ),
                                          G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,manager);
 
+#ifdef GNOME
   gnome_score_log(0.0 + game_1_player_get_score(PRIVATE(manager)->current_game), NULL, TRUE);
+#endif
 
   g_object_unref( PRIVATE(manager)->current_game);
 

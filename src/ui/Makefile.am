@@ -35,6 +35,7 @@ monkey_bubble_SOURCES = \
 	ui-network-client.c ui-network-client.h \
 	ui-network-server.c ui-network-server.h \
 	ui-main.c ui-main.h \
+	state.c state.h global.h \
 	$(NULL)
 
 

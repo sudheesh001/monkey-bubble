@@ -34,17 +34,26 @@
 #include "keyboard-properties.h"
 #include "sound-manager.h"
 
+#ifdef GNOME
 #include <libgnomeui/libgnomeui.h>
 #include <libgnomeui/gnome-about.h>
 #include <libgnome/gnome-score.h>
 #include <libgnome/gnome-sound.h>
 #include <libgnome/gnome-help.h>
+#endif
 #include <gdk/gdkkeysyms.h>
 #include <glade/glade.h>
 #include <glib/gi18n.h>
 
 #include <string.h>
 #include <stdlib.h>
+
+#ifdef MAEMO
+#include <hildon/hildon-program.h>
+#include "global.h"
+#include "state.h"
+#include <conic.h>
+#endif
 
 #include "ui-network-client.h"
 #include "ui-network-server.h"
@@ -59,34 +68,43 @@ void ui_main_game_changed(Game * game,UiMain * ui_main);
 static void new_1_player_game(gpointer    callback_data,
                               guint       callback_action,
                               GtkWidget  *widget);
+#ifdef GNOME
 static void new_2_player_game(gpointer    callback_data,
                               guint       callback_action,
                               GtkWidget  *widget);
+#endif
 
 static void new_network_game(gpointer    callback_data,
                              guint       callback_action,
                              GtkWidget  *widget);
 
+#ifdef GNOME
 static void new_network_server(gpointer    callback_data,
                                guint       callback_action,
                                GtkWidget  *widget);
+#endif
 
+#ifdef GNOME
 static void show_high_scores(gpointer callback_data,
 			     guint    callback_action,
 			     GtkWidget* widget);
+#endif
 
 static void pause_game(gpointer    callback_data,
                        guint       callback_action,
                        GtkWidget  *widget);
+#ifdef GNOME
 static void stop_game(gpointer    callback_data,
                       guint       callback_action,
                       GtkWidget  *widget);
+#endif
 
 
 static void quit_program(gpointer    callback_data,
                          guint       callback_action,
                          GtkWidget  *widget);
 			      
+#ifdef GNOME
 static void about(gpointer    callback_data,
                   guint       callback_action,
                   GtkWidget  *widget);
@@ -101,7 +119,9 @@ static void show_help_content(gpointer    callback_data,
 static void show_preferences_dialog(gpointer    callback_data,
                                     guint       callback_action,
                                     GtkWidget  *widget);
+#endif
 
+static void ui_main_new_1_player_game(UiMain * ui_main);
 
 struct UiMainPrivate {
         GtkAccelGroup * accel_group;
@@ -116,6 +136,9 @@ struct UiMainPrivate {
         gboolean fullscreen;
         SoundManager * sm;
         GladeXML * glade_xml;
+#ifdef MAEMO
+	ConIcConnection *ic;
+#endif
 };
 
 static void ui_main_class_init(UiMainClass* klass);
@@ -125,9 +148,36 @@ static void ui_main_finalize(GObject* object);
 
 static void ui_main_draw_main(UiMain * ui_main);
 
-
-
 static UiMain* ui_main_new(void);
+
+
+#ifdef MAEMO
+static void ui_main_topmost_cb(GObject *self, GParamSpec *property_param, gpointer null)
+{
+       HildonProgram *program = HILDON_PROGRAM(self);
+
+       if (program == NULL) return;
+
+       if (hildon_program_get_is_topmost(program)) {
+               hildon_program_set_can_hibernate(program, FALSE);
+       } else {
+               if (state.game == 1 && global.game!=NULL) {
+                       //game_1_player_save(global.game); //TODO: enable saving
+                       state.loadmap=1;
+               }
+               state_save();
+               hildon_program_set_can_hibernate(program, TRUE);
+       }
+}
+
+void continue_game(void) {
+        UiMain * ui_main;
+        ui_main = ui_main_get_instance();
+
+        ui_main_new_1_player_game(ui_main);
+}
+
+#endif
 
 GType ui_main_get_type(void) {
         static GType ui_main_type = 0;
@@ -169,10 +219,17 @@ UiMain * ui_main_get_instance(void) {
 
 
 static UiMain* ui_main_new(void) {
+#ifdef MAEMO
+	HildonProgram * program;
+	GtkWidget * container;
+	GtkWidget * main_menu; 
+#endif
         UiMain * ui_main;
         GtkWidget * vbox;
         GtkWidget * item;
+#ifdef GNOME
         KeyboardProperties * kp;
+#endif
 
         ui_main = UI_MAIN(g_object_new(UI_TYPE_MAIN, NULL));
     
@@ -215,7 +272,33 @@ static UiMain* ui_main_new(void) {
                           GTK_WIDGET(PRIVATE(ui_main)->canvas), 
                           TRUE,
                           TRUE, 0);
+
+#ifdef MAEMO
+	/* Setting menu */
+	main_menu = gtk_menu_new();
+
+	item = gtk_menu_item_new_with_label(_("New game"));
+	g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(new_1_player_game),ui_main);
+	gtk_menu_append(main_menu, item);
+
+	item = gtk_menu_item_new_with_label(_("Join network game"));
+	g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(new_network_game),ui_main);
+	gtk_menu_append(main_menu, item);
+
+	item = gtk_menu_item_new_with_label(_("Pause"));
+	g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(pause_game),ui_main);
+	gtk_menu_append(main_menu, item);
+
+	item = gtk_menu_item_new_with_label(_("Quit"));
+	g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(quit_program),ui_main);
+	gtk_menu_append(main_menu, item);
+
+	hildon_window_set_menu(HILDON_WINDOW(PRIVATE(ui_main)->window), GTK_MENU(main_menu));
+
+	gtk_widget_show_all(GTK_WIDGET(main_menu));
+#endif
      
+#ifdef GNOME
         PRIVATE(ui_main)->menu = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"main_menubar");
         g_object_ref(PRIVATE(ui_main)->menu);
         kp = keyboard_properties_get_instance();
@@ -272,6 +355,7 @@ static UiMain* ui_main_new(void) {
         g_signal_connect_swapped( G_OBJECT( PRIVATE(ui_main)->window),"delete-event",GTK_SIGNAL_FUNC(quit_program),NULL);
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"help_contents");
+
         g_signal_connect_swapped(item, "activate", 
                                  GTK_SIGNAL_FUNC(show_help_content), ui_main);
 
@@ -280,6 +364,7 @@ static UiMain* ui_main_new(void) {
                                   "activate",
                                   G_CALLBACK (about),
                                   ui_main);
+#endif
 
         PRIVATE(ui_main)->game = NULL;
 
@@ -366,6 +451,7 @@ static void ui_main_new_1_player_game(UiMain * ui_main) {
         ui_main_set_game_manager(ui_main,manager);
 }
 
+#ifdef GNOME
 static void ui_main_new_2_player_game(UiMain * ui_main) {
 
         GameManager * manager;
@@ -379,6 +465,7 @@ static void ui_main_new_2_player_game(UiMain * ui_main) {
 
         ui_main_set_game_manager(ui_main,manager);
 }
+#endif
 
 
 void ui_main_set_game_manager(UiMain * ui_main,GameManager * manager) {
@@ -429,11 +516,16 @@ static void new_1_player_game(gpointer    callback_data,
         UiMain * ui_main;
         ui_main = ui_main_get_instance();
 
+#ifdef MAEMO
+	state_clear();
+#endif
+
         ui_main_new_1_player_game(ui_main);
 
 }
 
 
+#ifdef GNOME
 static void new_2_player_game(gpointer    callback_data,
                               guint       callback_action,
                               GtkWidget  *widget){
@@ -447,6 +539,7 @@ static void new_2_player_game(gpointer    callback_data,
 
 
 }
+#endif
 
 static void quit_program(gpointer    callback_data,
                          guint       callback_action,
@@ -487,6 +580,7 @@ static void ui_main_stop_game(UiMain * ui_main) {
         ui_main_draw_main(ui_main);
 }
 
+#ifdef GNOME
 static void stop_game(gpointer    callback_data,
                       guint       callback_action,
                       GtkWidget  *widget) {
@@ -498,6 +592,7 @@ static void stop_game(gpointer    callback_data,
 Block * ui_main_get_main_image(UiMain *ui_main) {
         return(PRIVATE(ui_main)->main_image);
 }
+#endif
 
 void ui_main_set_game(UiMain *ui_main, Game *game) {
 
@@ -554,16 +649,40 @@ void ui_main_game_changed(Game * game,
   
 }
 
+#ifdef MAEMO
+static void network_connected(ConIcConnection *cnx, ConIcConnectionEvent *event, gpointer user_data)
+{
+        UiNetworkClient  * ngl;
+
+	switch (con_ic_connection_event_get_status(event)) {
+		case CON_IC_STATUS_CONNECTED:
+		  ngl = ui_network_client_new();
+		  break;
+		default:
+		  break;
+	}
+}
+#endif
 
 static void new_network_game(gpointer    callback_data,
                              guint       callback_action,
                              GtkWidget  *widget) {
-        UiNetworkClient  * ngl;
+#ifdef MAEMO
+	UiMain * uimain = UI_MAIN(callback_data);
+	PRIVATE(uimain)->ic = con_ic_connection_new();
+	g_signal_connect(PRIVATE(uimain)->ic, "connection-event", (GCallback)network_connected, NULL);
+	con_ic_connection_connect(PRIVATE(uimain)->ic, CON_IC_CONNECT_FLAG_NONE);
+#endif
 
+
+#ifdef GNOME
+        UiNetworkClient  * ngl;
         ngl = ui_network_client_new();
+#endif
 }
 
 
+#ifdef GNOME
 static void new_network_server(gpointer    callback_data,
                                guint       callback_action,
                                GtkWidget  *widget) {
@@ -605,7 +724,9 @@ show_high_scores(gpointer callback_data, guint callback_action, GtkWidget* widge
 	gnome_scores_set_logo_pixmap(GNOME_SCORES(dialog), DATADIR "/monkey-bubble/gfx/monkey.png");
 	gtk_widget_show(dialog);
 }
+#endif
 
+#ifdef GNOME
 static void show_preferences_dialog(gpointer    callback_data,
                                     guint       callback_action,
                                     GtkWidget  *widget) {
@@ -620,7 +741,9 @@ static void show_preferences_dialog(gpointer    callback_data,
   
         keyboard_properties_show( keyboard_properties_get_instance(),GTK_WINDOW(PRIVATE(ui_main)->window));
 }
+#endif
 
+#ifdef GNOME
 static void about (gpointer    callback_data,
                    guint       callback_action,
                    GtkWidget  *widget) {
@@ -652,7 +775,9 @@ static void about (gpointer    callback_data,
 
         g_object_unref( logo);
 }
+#endif
 
+#ifdef GNOME
 static void show_help_content(gpointer    callback_data,
                               guint       callback_action,
                               GtkWidget  *widget) {
@@ -669,7 +794,9 @@ static void show_help_content(gpointer    callback_data,
                 g_error_free (err);
         }
 }
+#endif
 
+#ifdef GNOME
 static void show_error_dialog (GtkWindow *transient_parent,
                                const char *message_format, ...) {
         char *message;
@@ -696,3 +823,4 @@ static void show_error_dialog (GtkWindow *transient_parent,
     
         gtk_widget_show_all (dialog);
 }
+#endif

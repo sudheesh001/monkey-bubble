@@ -307,3 +307,10 @@ GType playground_get_type(void) {
 	return playground_type;
 }
 
+#ifdef MAEMO
+void 
+playground_save(Playground * self, const gchar * level_filename)
+{
+       board_save_to_file(PRIVATE(self)->board, level_filename);
+}
+#endif

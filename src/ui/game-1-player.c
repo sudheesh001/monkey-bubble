@@ -17,6 +17,10 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif /* HAVE_CONFIG_H */
+
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include <gconf/gconf-client.h>
@@ -28,6 +32,10 @@
 #include "input-manager.h"
 #include "game-sound.h"
 #define FRAME_DELAY 10
+
+#ifdef MAEMO
+#include "global.h"
+#endif
 
 #define PRIVATE(game_1_player) (game_1_player->private)
 
@@ -94,6 +102,13 @@ static gint get_time(Game1Player * game);
 static void time_paused(Game1Player * game);
 static void time_init(Game1Player * game);
 
+
+#ifdef MAEMO
+void game_1_player_save(Game1Player *game)
+{
+        //monkey_save(PRIVATE(game)->monkey, MONKEY_TEMP); //TODO: enable saving
+}
+#endif
 
 static void game_1_player_instance_init(Game1Player * game) {
         game->private =g_new0 (Game1PlayerPrivate, 1);		
@@ -213,9 +228,23 @@ Game1Player * game_1_player_new(GtkWidget * window,MonkeyCanvas * canvas, int le
 
 
         monkey_canvas_clear(canvas);
+#ifdef GNOME
         PRIVATE(game)->monkey = 
                 monkey_new_level_from_file(DATADIR"/monkey-bubble/levels",
                                            level);
+#endif
+
+#ifdef MAEMO
+	if (state.loadmap==1) {
+          PRIVATE(game)->monkey =
+                monkey_new_level_from_file(MONKEY_TEMP, 0);
+          state.loadmap = 0;
+        } else {
+          PRIVATE(game)->monkey =
+                monkey_new_level_from_file(DATADIR"/monkey-bubble/levels",
+                                           level);
+        }
+#endif
         PRIVATE(game)->display = 
                 monkey_view_new(canvas, 
                                 PRIVATE(game)->monkey,0,0,DATADIR"/monkey-bubble/gfx/layout_1_player.svg",TRUE,TRUE);

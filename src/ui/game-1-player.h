@@ -55,6 +55,10 @@ Game1Player * game_1_player_new(GtkWidget * window,MonkeyCanvas * canvas,int lev
 gint game_1_player_get_score(Game1Player * g);
 gboolean game_1_player_is_lost(Game1Player * g);
 
+#ifdef MAEMO
+void game_1_player_save(Game1Player *game);
+#endif
+
 G_END_DECLS
 
 

@@ -165,6 +165,61 @@ board_new (gdouble y_min, const gchar * level_filename, gint level)
 	return b;
 }
 
+
+#ifdef MAEMO
+void
+board_save_to_file (Board * board, const char *filename)
+{
+        #define MUL 4 
+        GError *error = NULL;
+        GIOChannel *channel;
+        gint i, j, s=0;
+        gchar buffer[COLUMN_COUNT*3+2];
+        gsize written = 0;
+
+        if (PRIVATE(board)->bubble_array==NULL) return;
+
+        channel = g_io_channel_new_file (filename, "w+", &error);
+
+        if (channel == NULL) return;
+
+        for (i = 0; i < ROW_COUNT; i++)
+        {
+                for (j = 0; j < COLUMN_COUNT*MUL; j++)
+                        buffer[j] = ' ';
+
+                if (i%2==1) {
+                        s = 2; 
+                } else {
+                        s = 0;
+                }
+
+                for (j = 0; j < COLUMN_COUNT; j++)
+                {
+                        Bubble *b;
+                        Color c;
+
+                        if (s>0 && (j+1==COLUMN_COUNT)) break;
+
+                        b = PRIVATE(board)->bubble_array[i*COLUMN_COUNT+j];
+                        if (b!=NULL) {
+                                c = bubble_get_color(b);
+                                buffer[j*MUL+s] = '0'+(int)c;
+                        } else {
+                                buffer[j*MUL+s] = '-';
+                        }
+                }
+                buffer[COLUMN_COUNT*MUL]='\n';
+                buffer[COLUMN_COUNT*MUL+1]=0;
+
+                g_io_channel_write_chars(channel, (const gchar *)&buffer, -1, &written, &error);
+        }
+
+        g_io_channel_shutdown (channel, TRUE, &error);
+        g_io_channel_unref (channel);
+}
+#endif
+
 void
 board_load_from_file (Board * board, const char *filename, gint level)
 {

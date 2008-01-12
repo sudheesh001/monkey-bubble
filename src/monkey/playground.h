@@ -52,6 +52,9 @@ void playground_update(Playground * playground,gint time);
 
 void playground_shoot_bubble(Playground *pl,Bubble * b);
 
+#ifdef MAEMO
+void playground_save(Playground * self, const gchar * level_filename);
+#endif
 
 #define TYPE_PLAYGROUND            (playground_get_type())
 

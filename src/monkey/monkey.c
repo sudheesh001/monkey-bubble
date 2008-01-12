@@ -737,3 +737,9 @@ GType monkey_get_type(void) {
 	return monkey_type;
 }
 
+#ifdef MAEMO
+void monkey_save(Monkey *monkey, const gchar * filename)
+{
+       playground_save(PRIVATE(monkey)->playground, filename);
+}
+#endif

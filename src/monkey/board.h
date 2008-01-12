@@ -61,6 +61,9 @@ int board_bubbles_count (Board * board);
 
 Bubble **board_get_array (Board * board);
 void board_print (Board * board);
+#ifdef MAEMO
+void board_save_to_file (Board * board, const char *filename);
+#endif
 
 
 #define TYPE_BOARD            (board_get_type())

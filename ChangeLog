@@ -1,5 +1,27 @@
 2008-01-12  Sven Herzberg  <herzi@gnome-de.org>
 
+	Merge the outstanding Maemo changes from Jouni Roivas.
+
+	* src/monkey/board.c,
+	* src/monkey/board.h,
+	* src/monkey/monkey.c,
+	* src/monkey/monkey.h,
+	* src/monkey/playground.c,
+	* src/monkey/playground.h,
+	* src/ui/Makefile.am,
+	* src/ui/game-1-player-manager.c,
+	* src/ui/game-1-player.c,
+	* src/ui/game-1-player.h,
+	* src/ui/global.h,
+	* src/ui/main.c,
+	* src/ui/state.c,
+	* src/ui/state.h,
+	* src/ui/ui-main.c,
+	* src/ui/ui-main.h,
+	* src/ui/ui-network-client.c: implement the maemo ui
+
+2008-01-12  Sven Herzberg  <herzi@gnome-de.org>
+
 	Prepare the network game window for the maemo port.
 
 	* data/netgame.glade,

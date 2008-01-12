@@ -15,13 +15,57 @@
 #include <gtk/gtk.h>
 #include <gst/gst.h>
 #include <glib/gi18n.h>
-#include <glib/gthread.h>
+#ifdef GNOME
 #include <libgnome/gnome-score.h>
 #include <libgnomeui/gnome-ui-init.h>
+#endif
+#include <glib/gthread.h>
 
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
+
+#ifdef MAEMO
+#include <libosso.h>
+
+#include "state.h"
+#include "global.h"
+
+#include "game-1-player.h"
+
+#define APPNAME "monkey_bubble"
+#define APPVERSION "0.0.1"
+
+
+struct GlobalData global;
+
+static void _top_cb(const char *args, gpointer data)
+{
+}
+
+static void _hw_cb(osso_hw_state_t * state, gpointer data)
+{
+       if(state->shutdown_ind)
+       {
+               state_save();
+               gtk_main_quit();
+       }
+}
+
+osso_context_t *osso_init(void)
+{
+    osso_context_t *osso =
+        osso_initialize(APPNAME, APPVERSION, TRUE, NULL);
+
+    if (OSSO_OK != osso_application_set_top_cb(osso, _top_cb, NULL))
+        return NULL;
+
+    if (OSSO_OK != osso_hw_set_event_cb(osso, NULL, _hw_cb, NULL))
+        return NULL;
+
+    return osso;
+}
+#endif
 
 int main(int  argc, char **argv)
 {
@@ -30,6 +74,12 @@ int main(int  argc, char **argv)
   SoundManager * manager;
   GError* error = NULL;
   GOptionContext * context;
+
+#ifdef MAEMO
+  setlocale(LC_ALL, "");
+  bind_textdomain_codeset(PACKAGE, "UTF-8");
+#endif
+
 #ifdef ENABLE_NLS
   bindtextdomain (PACKAGE, PACKAGE_LOCALE_DIR);
   textdomain (PACKAGE);
@@ -48,16 +98,29 @@ int main(int  argc, char **argv)
   }
   g_option_context_free (context);
 
+#ifdef GNOME
   if(gnome_score_init(PACKAGE)) {
 	g_message("You'll have to play without highscore support");
   }
+#endif
+  
+#ifdef MAEMO
+  global.osso = osso_init();
+  if (!global.osso) {
+       perror("osso_init");
+       exit(1);
+  }
+  global.game = NULL;
+#endif
 
+#ifdef GNOME
   /* to get help working */
   gnome_program_init (PACKAGE, VERSION,
 		      LIBGNOMEUI_MODULE,
 		      argc, argv,
 		      GNOME_PROGRAM_STANDARD_PROPERTIES,
 		      NULL);
+#endif
 
   gtk_window_set_default_icon_name ("monkey-bubble");
 
@@ -72,6 +135,12 @@ int main(int  argc, char **argv)
   gdk_rgb_init ();
 
   gtk_widget_show_all (window);
+
+#ifdef MAEMO
+  if (state.game == 1) {
+       continue_game();
+  }
+#endif
 
   gtk_main ();
 

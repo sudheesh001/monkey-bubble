@@ -102,7 +102,33 @@ void recv_network_xml_message(NetworkMessageHandler * mmh,
                               xmlDoc * message,
                               gpointer * p);
 
+#ifdef MAEMO
+static gboolean close_signal(gpointer    callback_data,
+                             guint       callback_action,
+                             GtkWidget  *widget) {
+
+    UiNetworkClient * self;
+    self = UI_NETWORK_CLIENT(callback_data);
+
+    quit_signal(callback_data, callback_action, widget);
+    gtk_widget_hide_all(PRIVATE(self)->window);
+    return FALSE;
+}
+
+void connected_set_sensitive(UiNetworkClient * ngl, gboolean sensitive) {
+    set_sensitive( glade_xml_get_widget( PRIVATE(ngl)->glade_xml
+        ,"scrolledwindow2"), sensitive);
+    set_sensitive( glade_xml_get_widget( PRIVATE(ngl)->glade_xml
+        ,"quit_button"), sensitive);
+    set_sensitive( glade_xml_get_widget( PRIVATE(ngl)->glade_xml
+        ,"ready_button"), sensitive);
+}
+#endif
+
 UiNetworkClient *ui_network_client_new() {
+#ifdef MAEMO
+	GtkWidget * container;
+#endif
         UiNetworkClient * ngl;
         GtkWidget * item;
 
@@ -152,9 +178,14 @@ UiNetworkClient *ui_network_client_new() {
         
         PRIVATE(ngl)->connection_label = GTK_LABEL(glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "connection_state_label"));
         
+#ifdef GNOME
        gtk_widget_set_sensitive( glade_xml_get_widget( PRIVATE(ngl)->glade_xml
                                                        , "connected_game_hbox"),
                                  FALSE);
+#endif
+#ifdef MAEMO
+	connected_set_sensitive(ngl, FALSE);
+#endif
 
 
        item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml,"players_treeview");
@@ -184,6 +215,10 @@ UiNetworkClient *ui_network_client_new() {
 
         
         PRIVATE(ngl)->players_list = list;
+
+#ifdef MAEMO
+	gtk_widget_show_all(GTK_WIDGET(PRIVATE(ngl)->window));
+#endif
         
         return ngl;
         
@@ -244,7 +279,6 @@ static void connect_server_signal(gpointer    callback_data,
         set_status_message(self,  g_strdup_printf("Connecting %s ...",
                                                  PRIVATE(self)->server_name));
 
-
         set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
                                              , "connect_hbox"),FALSE);        
         if( connect_server(self) ) {
@@ -256,7 +290,6 @@ static void connect_server_signal(gpointer    callback_data,
 
                 set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
                                                      , "connect_hbox"),TRUE);        
-
         }
 
 }
@@ -287,8 +320,13 @@ static void disconnected(UiNetworkClient * self) {
         PRIVATE(self)->manager_proxy = NULL;
                 
         update_players_list(self);
+#ifdef GNOME
         set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
                                              , "connected_game_hbox"),FALSE);
+#endif
+#ifdef MAEMO
+	connected_set_sensitive(self, FALSE);
+#endif
         
         set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
                                              , "connect_hbox"),TRUE);
@@ -363,8 +401,13 @@ static gboolean quit_server_signal(gpointer    callback_data,
         set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
                                              , "connect_hbox"),TRUE); 
 
+#ifdef GNOME
         set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
                                              , "connected_game_hbox"),FALSE); 
+#endif
+#ifdef MAEMO
+	connected_set_sensitive(self, FALSE);
+#endif
 
         
         return FALSE;
@@ -654,8 +697,13 @@ void recv_network_xml_message(NetworkMessageHandler * mmh,
                 
                 sscanf((gchar*)root->children->content,"%d",&game_id);
                 g_print("game id : %d\n",game_id);                
+#ifdef GNOME
                 set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
                                                      ,"connected_game_hbox"),TRUE); 
+#endif
+#ifdef MAEMO
+	connected_set_sensitive(self, TRUE);
+#endif
 
                 sscanf((gchar*)root->children->content,"%d",&game_id);
              

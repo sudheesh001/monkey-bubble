@@ -57,4 +57,8 @@ void ui_main_set_game(UiMain *ui_main, Game *game);
 void ui_main_set_game_manager(UiMain * ui_main,GameManager * manager);
 
 void ui_main_enabled_games_item(UiMain * ui_main ,gboolean enabled);
+
+#ifdef MAEMO
+void continue_game(void);
+#endif
 #endif /* __UI_MAIN_H__ */

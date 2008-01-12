@@ -105,6 +105,9 @@ void monkey_insert_bubbles(Monkey * monnkey,Bubble ** bubbles_8);
 
 
 gboolean monkey_is_empty(Monkey * monkey);
+#ifdef MAEMO
+void monkey_save(Monkey *monkey, const gchar * filename);
+#endif
 G_END_DECLS
 
 
