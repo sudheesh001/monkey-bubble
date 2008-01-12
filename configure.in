@@ -134,7 +134,6 @@ PKG_CHECK_MODULES(UI,[
 	gtk+-2.0 >= 2.10
 	gthread-2.0
 	librsvg-2.0
-	libgnomeui-2.0
 	gstreamer-0.10
         gstreamer-base-0.10
         gstreamer-controller-0.10
@@ -147,7 +146,7 @@ AC_SUBST(UI_LIBS)
 if test "$with_platform" = "gnome"; then
 	PKG_CHECK_MODULES(PLATFORM,[libgnomeui-2.0])
 elif test "$with_platform" = "maemo"; then
-	PKG_CHECK_MODULES(PLATFORM,[hildon-1 libosso])
+	PKG_CHECK_MODULES(PLATFORM,[hildon-1 libosso conic])
 fi
 
 dnl  -------------

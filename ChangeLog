@@ -1,5 +1,12 @@
 2008-01-12  Sven Herzberg  <herzi@gnome-de.org>
 
+	Add the right dependencies for the Maemo port. Based on the Maemo port
+	of Monkey-Bubble which was created by Jouni Roivas.
+
+	* configure.in: finish dependency tracking for the two builds
+
+2008-01-12  Sven Herzberg  <herzi@gnome-de.org>
+
 	Fix dist to include every necessary file.
 
 	* data/Makefile.am: always define dbus_in_files to get the files
