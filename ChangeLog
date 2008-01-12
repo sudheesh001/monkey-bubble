@@ -1,3 +1,10 @@
+2008-01-12  Sven Herzberg  <herzi@gnome-de.org>
+
+	Fix dist to include every necessary file.
+
+	* data/Makefile.am: always define dbus_in_files to get the files
+	included even when calling 'make dist' in a gnome-configured build
+
 2008-01-11  Sven Herzberg  <herzi@gnome-de.org>
 
 	Get the file ready for merging the maemo build system

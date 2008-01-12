@@ -6,15 +6,13 @@ leveldir = $(datadir)/monkey-bubble
 level_DATA = \
 	levels
 
+dbus_in_files=com.nokia.monkey_bubble.service.in
 if MAEMO
 dbusdir=$(datadir)/dbus-1/services
-dbus_in_files=com.nokia.monkey_bubble.service.in
 dbus_DATA=$(dbus_in_files:.service.in=.service)
 
 $(dbus_DATA): $(dbus_in_files) Makefile
 	sed 's#@BINDIR@#$(bindir)#' $< > $@
-
-CLEANFILES=$(dbus_DATA)
 endif
 
 gladexmldir = $(datadir)/monkey-bubble/glade
