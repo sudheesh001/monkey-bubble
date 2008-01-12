@@ -1,5 +1,13 @@
 2008-01-12  Sven Herzberg  <herzi@gnome-de.org>
 
+	Prepare the network game window for the maemo port.
+
+	* data/netgame.glade,
+	* src/ui/ui-network-client.c: modify the code and the glade file to
+	work for GNOME and for Maemo
+
+2008-01-12  Sven Herzberg  <herzi@gnome-de.org>
+
 	Prepare the game window for the maemo port.
 
 	* src/ui/ui-main.c: modify the code to work for GNOME and for Maemo
