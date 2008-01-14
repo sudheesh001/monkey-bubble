@@ -295,7 +295,7 @@ static UiMain* ui_main_new(void) {
 
 	hildon_window_set_menu(HILDON_WINDOW(PRIVATE(ui_main)->window), GTK_MENU(main_menu));
 
-	gtk_widget_show_all(GTK_WIDGET(main_menu));
+	gtk_widget_show (main_menu);
 #endif
      
 #ifdef GNOME

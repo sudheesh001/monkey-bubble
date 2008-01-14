@@ -1,3 +1,10 @@
+2008-01-14  Sven Herzberg  <herzi@gnome-de.org>
+
+	Fix the display of the old menubar by only using gtk_widget_show()
+	instead of gtk_widget_show_all() on the main window.
+
+	* src/ui/ui-main.c: hide the menubar successfully in the maemo port
+
 2008-01-12  Sven Herzberg  <herzi@gnome-de.org>
 
 	Merge the outstanding Maemo changes from Jouni Roivas.
