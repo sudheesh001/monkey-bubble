@@ -66,3 +66,13 @@ deb: dist
 		 dpkg-buildpackage -rfakeroot || \
 		 true
 	-rm -rf $(top_builddir)/debian-build/$(PACKAGE)-$(VERSION)
+
+dist-local:
+	@break_dist@ echo "FATAL:" 2>&1 > /dev/null
+	@break_dist@ echo "FATAL: Trying to create broken tarball:" 2>&1 > /dev/null
+	@break_dist@ echo "FATAL: ================================" 2>&1 > /dev/null
+	@break_dist@ echo "FATAL: Some serious build-dependency (like gnome-doc-utils) is missing." 2>&1 > /dev/null
+	@break_dist@ echo "FATAL: Refusing to 'make dist'" 2>&1 > /dev/null
+	@break_dist@ echo "FATAL:" 2>&1 > /dev/null
+	@break_dist@ false
+

@@ -35,8 +35,10 @@ dnl  ---------------
 dnl | documentation |---------------------------------------------------------
 dnl  ---------------
 
-GNOME_DOC_INIT([],[have_gdu=1],[have_gdu=0])
+broke_dist=#
+ifdef([GNOME_DOC_INIT],[GNOME_DOC_INIT([],[have_gdu=1],[have_gdu=0])],[broke_dist=""])
 AM_CONDITIONAL(WITH_GNOME_DOC_UTILS,test "x$have_gdu" = "x1")
+AC_SUBST(broke_dist)
 
 dnl  ------------------
 dnl | platform support |------------------------------------------------------

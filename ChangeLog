@@ -1,5 +1,14 @@
 2008-02-05  Sven Herzberg  <sven@imendio.com>
 
+	Finish development of the Maemo stuff wrt missing gnome-doc-utils.
+
+	* Makefile.am: don't pass 'make dist' if gnome-doc-utils macros
+	haven't been found
+	* configure.in: support running autoconf and aclocal without installed
+	gnome-doc-utils macros
+
+2008-02-05  Sven Herzberg  <sven@imendio.com>
+
 	Conditionalize gnome-doc-utils usage
 
 	* Makefile.am: build help only if we have gnome-doc-utils
