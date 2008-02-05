@@ -1,12 +1,24 @@
 NULL=
 
-SUBDIRS = 	\
+always_subdirs=\
 	data	\
 	pixmaps	\
 	sounds 	\
         src     \
         po      \
-        help    \
+	$(NULL)
+
+SUBDIRS=\
+	$(always_subdirs) \
+	$(NULL)
+
+if WITH_GNOME_DOC_UTILS
+SUBDIRS+=help
+endif
+
+DIST_SUBDIRS=\
+	$(always_subdirs) \
+	help \
 	$(NULL)
 
 applications_in_in_files = monkey-bubble.desktop.in.in

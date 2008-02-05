@@ -1,5 +1,13 @@
 2008-02-05  Sven Herzberg  <sven@imendio.com>
 
+	Conditionalize gnome-doc-utils usage
+
+	* Makefile.am: build help only if we have gnome-doc-utils
+	* configure.in: also pass if there are no gnome-doc-utils (but then,
+	don't build help)
+
+2008-02-05  Sven Herzberg  <sven@imendio.com>
+
 	* configure.in: use AC_HELP_STRING() for proper indentation and line
 	breaks in the output of "./configure --help"
 
