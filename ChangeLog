@@ -1,3 +1,8 @@
+2008-02-05  Sven Herzberg  <sven@imendio.com>
+
+	* configure.in: use AC_HELP_STRING() for proper indentation and line
+	breaks in the output of "./configure --help"
+
 2008-02-05  Sven Herzberg  <herzi@gnome-de.org>
 
 	Build the .deb packages for GNOME and Maemo. Based on the Maemo port
