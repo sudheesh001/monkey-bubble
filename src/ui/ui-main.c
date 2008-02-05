@@ -244,7 +244,8 @@ static UiMain* ui_main_new(void) {
 	container = glade_xml_get_widget( PRIVATE(ui_main)->glade_xml, "main_vbox");
 	program = HILDON_PROGRAM(hildon_program_get_instance());
 	PRIVATE(ui_main)->window = hildon_window_new();
-	g_signal_connect_swapped(PRIVATE(ui_main)->window ,"destroy",GTK_SIGNAL_FUNC(quit_program),ui_main);
+	g_signal_connect_swapped(PRIVATE (ui_main)->window, "destroy",
+				 G_CALLBACK (quit_program), ui_main);
 	hildon_program_add_window(program, HILDON_WINDOW(PRIVATE(ui_main)->window));
 	gtk_container_add(GTK_CONTAINER(PRIVATE(ui_main)->window),
 				container);
@@ -279,19 +280,23 @@ static UiMain* ui_main_new(void) {
 	main_menu = gtk_menu_new();
 
 	item = gtk_menu_item_new_with_label(_("New game"));
-	g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(new_1_player_game),ui_main);
+	g_signal_connect_swapped (item, "activate",
+				  G_CALLBACK (new_1_player_game), ui_main);
 	gtk_menu_append(main_menu, item);
 
 	item = gtk_menu_item_new_with_label(_("Join network game"));
-	g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(new_network_game),ui_main);
+	g_signal_connect_swapped (item, "activate",
+				  G_CALLBACK (new_network_game), ui_main);
 	gtk_menu_append(main_menu, item);
 
 	item = gtk_menu_item_new_with_label(_("Pause"));
-	g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(pause_game),ui_main);
+	g_signal_connect_swapped (item, "activate",
+				  G_CALLBACK (pause_game), ui_main);
 	gtk_menu_append(main_menu, item);
 
 	item = gtk_menu_item_new_with_label(_("Quit"));
-	g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(quit_program),ui_main);
+	g_signal_connect_swapped (item, "activate",
+				  G_CALLBACK (quit_program), ui_main);
 	gtk_menu_append(main_menu, item);
 
 	hildon_window_set_menu(HILDON_WINDOW(PRIVATE(ui_main)->window), GTK_MENU(main_menu));

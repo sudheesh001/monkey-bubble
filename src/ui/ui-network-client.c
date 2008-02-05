@@ -157,7 +157,8 @@ UiNetworkClient *ui_network_client_new() {
 	container = glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "vbox1");
 	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(PRIVATE(ngl)->window)->vbox), container);
 	item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "close_button");
-	g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(close_signal),ngl);
+	g_signal_connect_swapped (item, "clicked",
+				  G_CALLBACK (close_signal), ngl);
 	gtk_widget_set_size_request (glade_xml_get_widget (PRIVATE(ngl)->glade_xml, "scrolledwindow2"), -1, 298); // FIXME: check if necessary
 #endif
 

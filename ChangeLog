@@ -1,5 +1,12 @@
 2008-02-05  Sven Herzberg  <sven@imendio.com>
 
+	Drop lots of GTK_SIGNAL_FUNC() casts
+
+	* src/ui/ui-main.c: (ui_main_new):
+	* src/ui/ui-network-client.c: (ui_network_client_new):
+
+2008-02-05  Sven Herzberg  <sven@imendio.com>
+
 	* configure.in: fix variable expansion
 
 2008-02-03  Sven Herzberg  <sven@imendio.com>
