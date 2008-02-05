@@ -1,3 +1,7 @@
+2008-02-05  Sven Herzberg  <sven@imendio.com>
+
+	* configure.in: fix variable expansion
+
 2008-02-03  Sven Herzberg  <sven@imendio.com>
 
 	Now really fix the menubar for Maemo.

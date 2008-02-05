@@ -12,7 +12,7 @@ AM_CONFIG_HEADER(config.h)
 AM_MAINTAINER_MODE
 
 DISTCHECK_CONFIGURE_FLAGS="--disable-schemas-install --disable-scrollkeeper"
-DISTCHECK_CONFIGURE_FLAGS+=" --disable-setgid"
+DISTCHECK_CONFIGURE_FLAGS="$DISTCHECK_CONFIGURE_FLAGS --disable-setgid"
 AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
 
 dnl --------------------------------------------------------------------------
