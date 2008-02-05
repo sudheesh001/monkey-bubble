@@ -3,14 +3,15 @@ Section: @SECTION@
 Priority: optional
 Maintainer: Thomas Cataldo <thomas.cataldo@aliacom.fr>, Jouni Roivas <jouni.roivas@nomovok.com>
 Standards-Version: 3.6.1
-Build-Depends: cdbs, debhelper (>= 3.4.4), librsvg2-dev (>= 2.6.4-5), intltool,
- libgstreamer0.10-dev, libgnomeui-dev (>= 2.6.1.1-2),
- libglade2-dev (>= 2.4.0-1), scrollkeeper, libstartup-notification0-dev, 
- gnome-pkg-tools, docbook-to-man
+Build-Depends: cdbs, debhelper (>= 4.0.0), librsvg2-dev (>= 2.6.4-5), intltool,
+ libgstreamer0.10-dev, libgnomeui-dev (>= 2.6.1.1-2) | libhildon1-dev,
+ libgnomeui-dev | libosso-dev, libgnomeui-dev | libconic0-dev,
+ libglade2-dev (>= 2.4.0-1), scrollkeeper | libconic0-dev,
+ libstartup-notification0-dev | libhildon1-dev, docbook-to-man
 
 Package: monkey-bubble
 Architecture: any
-Depends: ${shlibs:Depends}, scrollkeeper (>= 0.3.14-5)
+Depends: ${shlibs:Depends}, scrollkeeper (>= 0.3.14-5) | libconic0
 Recommends: yelp
 Description: The GNOME bust'a'move clone
  Blow up some bubbles in the jungle. You can play alone, with another

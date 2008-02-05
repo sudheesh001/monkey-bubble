@@ -1,3 +1,11 @@
+2008-02-05  Sven Herzberg  <herzi@gnome-de.org>
+
+	Build the .deb packages for GNOME and Maemo. Based on the Maemo port
+	of Monkey-Bubble which was created Jouni Roivas.
+
+	* debian/changelog: merged the changelog from maemo-monkey-bubble
+	* debian/control.in: merged the dependencies from maemo-monkey-bubble
+
 2008-02-05  Sven Herzberg  <sven@imendio.com>
 
 	Drop lots of GTK_SIGNAL_FUNC() casts

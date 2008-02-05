@@ -1,3 +1,34 @@
+monkey-bubble (0.4.1-0herzi1) unstable; urgency=low
+
+  * Build the merged code: monkey-bubble and maemo-monkey-bubble
+
+ -- Sven Herzberg <herzi@gnome-de.org>  Fri, 11 Jan 2008 23:10:55 +0200
+
+maemo-monkey-bubble (0.0.3-1) unstable; urgency=low
+
+  * Changes to work in Chinook
+
+ -- Jouni Roivas <jouni.roivas@nomovok.com>  Mon, 3 Dec 2007 21:05:18 +0200
+
+maemo-monkey-bubble (0.0.2-2) unstable; urgency=low
+
+  * Desktop file fix.
+  * Separate sounds package.
+
+ -- Jouni Roivas <jouni.roivas@nomovok.com>  Mon, 8 Jan 2007 14:05:18 +0200
+
+maemo-monkey-bubble (0.0.2-1) unstable; urgency=low
+
+  * Repackaging.
+
+ -- Jouni Roivas <jouni.roivas@nomovok.com>  Mon, 8 Jan 2007 14:05:18 +0200
+
+maemo-monkey-bubble (0.0.1-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Jouni Roivas <jouni.roivas@nomovok.com>  Fri, 4 Jan 2007 10:38:18 +0200
+
 monkey-bubble (0.1.9+0.2.0-8) unstable; urgency=low
 
   * CVS update
