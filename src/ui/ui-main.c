@@ -247,7 +247,7 @@ static UiMain* ui_main_new(void) {
 	g_signal_connect_swapped(PRIVATE(ui_main)->window ,"destroy",GTK_SIGNAL_FUNC(quit_program),ui_main);
 	hildon_program_add_window(program, HILDON_WINDOW(PRIVATE(ui_main)->window));
 	gtk_container_add(GTK_CONTAINER(PRIVATE(ui_main)->window),
-				GTK_WIDGET(container));
+				container);
 	g_set_application_name(_("Monkey Bubble"));
 	g_signal_connect(G_OBJECT(program), "notify::is-topmost", G_CALLBACK(ui_main_topmost_cb), NULL);
 	PRIVATE(ui_main)->ic = NULL;
@@ -261,6 +261,7 @@ static UiMain* ui_main_new(void) {
 
 
         PRIVATE(ui_main)->canvas =monkey_canvas_new();
+	gtk_widget_show (GTK_WIDGET (PRIVATE(ui_main)->canvas));
         PRIVATE(ui_main)->main_image = 
                 monkey_canvas_create_block_from_image(
                                                       PRIVATE(ui_main)->canvas,

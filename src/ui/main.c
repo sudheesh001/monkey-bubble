@@ -134,7 +134,7 @@ int main(int  argc, char **argv)
   mb_input_manager_instance_set_window(window);
   gdk_rgb_init ();
 
-  gtk_widget_show_all (window);
+  gtk_widget_show (window);
 
 #ifdef MAEMO
   if (state.game == 1) {

@@ -1,3 +1,11 @@
+2008-02-03  Sven Herzberg  <sven@imendio.com>
+
+	Now really fix the menubar for Maemo.
+
+	* src/ui/main.c: (main): don't gtk_widget_show_all() the window
+	* src/ui/ui-main.c: (ui_main_new): add an extra call to
+	gtk_widget_show() for the canvas
+
 2008-01-14  Sven Herzberg  <herzi@gnome-de.org>
 
 	Fix the display of the old menubar by only using gtk_widget_show()
