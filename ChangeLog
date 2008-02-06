@@ -1,5 +1,13 @@
 2008-02-05  Sven Herzberg  <sven@imendio.com>
 
+	Build the Maemo main menu with a GtkUIManager
+
+	* src/ui/ui-main.c: (ui_main_new): added the required GtkActions into
+	the actions group; added the proper UI to the GtkUIManager and get the
+	popup menu from the ui manager
+
+2008-02-05  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-main.c: (ui_main_new): dropped gtk_widget_show() for the
 	main menu; gtk_menu_popup() will automatically show the widget
 

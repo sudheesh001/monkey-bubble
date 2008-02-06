@@ -242,11 +242,31 @@ static UiMain* ui_main_new(void) {
 	HildonProgram * program;
 	GtkWidget * container;
 	GtkWidget * main_menu;
+	GtkActionGroup* actions;
+	GtkActionEntry  entries[] = {
+		{"GameNew", NULL, N_("New Game"),
+		 NULL, NULL,
+		 G_CALLBACK (game_new_cb)
+		},
+		{"GameJoin", NULL, N_("Join network game"),
+		 NULL, NULL,
+		 G_CALLBACK (game_join_cb)
+		},
+		{"GamePause", NULL, N_("Pause"),
+		 NULL, NULL,
+		 G_CALLBACK (game_pause_cb)
+		},
+		{"ApplicationQuit", NULL, N_("Quit"),
+		 NULL, NULL,
+		 G_CALLBACK (application_quit_cb)
+		}
+	};
+	GError* error = NULL;
 #endif
         UiMain * ui_main;
         GtkWidget * vbox;
-        GtkWidget * item;
 #ifdef GNOME
+        GtkWidget * item;
         KeyboardProperties * kp;
 #endif
 
@@ -288,43 +308,45 @@ static UiMain* ui_main_new(void) {
                                                       DATADIR"/monkey-bubble/gfx/splash.svg",
                                                       640,480,
                                                       0,0);
-     
-        gtk_box_pack_end (GTK_BOX (vbox), 
-                          GTK_WIDGET(PRIVATE(ui_main)->canvas), 
+
+        gtk_box_pack_end (GTK_BOX (vbox),
+                          GTK_WIDGET(PRIVATE(ui_main)->canvas),
                           TRUE,
                           TRUE, 0);
 
 #ifdef MAEMO
 	ui_manager = gtk_ui_manager_new ();
+	actions    = gtk_action_group_new ("main");
+	gtk_action_group_add_actions (actions, entries,
+				      G_N_ELEMENTS (entries), ui_main);
+	gtk_ui_manager_insert_action_group (ui_manager, actions, 0);
+
+	gtk_ui_manager_add_ui_from_string (ui_manager,
+					   "<ui><popup name='main_menu'>"
+					     "<menuitem action='GameNew' />"
+					     "<menuitem action='GameJoin' />"
+					     "<menuitem action='GamePause' />"
+					     "<menuitem action='ApplicationQuit' />"
+					   "</popup></ui>",
+					   -1,
+					   &error);
+
+	if (error) {
+		g_warning ("there was en error constructing the user interface: %s",
+			   error->message);
+		g_error_free (error);
+		error = NULL;
+	}
 
 	/* Setting menu */
-	main_menu = gtk_menu_new();
-
-	item = gtk_menu_item_new_with_label(_("New game"));
-	g_signal_connect (item, "activate",
-			  G_CALLBACK (game_new_cb), ui_main);
-	gtk_menu_append(main_menu, item);
-
-	item = gtk_menu_item_new_with_label(_("Join network game"));
-	g_signal_connect (item, "activate",
-			  G_CALLBACK (game_join_cb), ui_main);
-	gtk_menu_append(main_menu, item);
-
-	item = gtk_menu_item_new_with_label(_("Pause"));
-	g_signal_connect (item, "activate",
-			  G_CALLBACK (game_pause_cb), ui_main);
-	gtk_menu_append(main_menu, item);
-
-	item = gtk_menu_item_new_with_label(_("Quit"));
-	g_signal_connect (item, "activate",
-			  G_CALLBACK (application_quit_cb), ui_main);
-	gtk_menu_append(main_menu, item);
+	main_menu = gtk_ui_manager_get_widget (ui_manager, "/ui/main_menu");
 
 	hildon_window_set_menu(HILDON_WINDOW(PRIVATE(ui_main)->window), GTK_MENU(main_menu));
 
+	g_object_unref (actions);
 	g_object_unref (ui_manager);
 #endif
-     
+
 #ifdef GNOME
         PRIVATE(ui_main)->menu = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"main_menubar");
         g_object_ref(PRIVATE(ui_main)->menu);
@@ -333,18 +355,16 @@ static UiMain* ui_main_new(void) {
         PRIVATE(ui_main)->accel_group = gtk_accel_group_new ();
         gtk_window_add_accel_group(GTK_WINDOW(PRIVATE(ui_main)->window),
                                    PRIVATE(ui_main)->accel_group);
-  
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"game_menu_menu");
         gtk_menu_set_accel_group( GTK_MENU(item),
                                   PRIVATE(ui_main)->accel_group);
-  
+
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"new_1_player");
         g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(new_1_player_game),ui_main);
         gtk_menu_item_set_accel_path( GTK_MENU_ITEM(item),
                                       ACCEL_PATH_NEW_1_PLAYER);
 
-  
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"new_2_players");
         g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(new_2_player_game),ui_main);
         gtk_menu_item_set_accel_path( GTK_MENU_ITEM(item),
@@ -397,15 +417,13 @@ static UiMain* ui_main_new(void) {
 
         ui_main_set_game( ui_main,NULL);
         PRIVATE(ui_main)->manager = NULL;
-    
+
         gtk_widget_push_visual (gdk_rgb_get_visual ());
         gtk_widget_push_colormap (gdk_rgb_get_cmap ());
-     
-     
+
         gtk_widget_pop_visual ();
         gtk_widget_pop_colormap ();
-     
-     
+
         ui_main_draw_main(ui_main);
 
         PRIVATE(ui_main)->fullscreen = FALSE;
@@ -430,7 +448,7 @@ static void ui_main_draw_main(UiMain * ui_main) {
                                 root_layer,
                                 PRIVATE(ui_main)->main_image,
                                 0,0);
-    
+
         monkey_canvas_paint( PRIVATE(ui_main)->canvas);
 }
 
