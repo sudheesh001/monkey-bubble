@@ -206,6 +206,35 @@ UiMain * ui_main_get_instance(void) {
         return instance;
 }
 
+#ifdef MAEMO
+static void
+game_new_cb (GtkAction* action,
+	     UiMain   * ui)
+{
+	new_1_player_game (ui);
+}
+
+static void
+game_join_cb (GtkAction* action,
+	      UiMain   * ui)
+{
+	new_network_game (ui);
+}
+
+static void
+game_pause_cb (GtkAction* action,
+	       UiMain   * ui)
+{
+	pause_game (ui);
+}
+
+static void
+application_quit_cb (GtkAction* action,
+		     UiMain   * ui)
+{
+	quit_program (ui);
+}
+#endif
 
 static UiMain* ui_main_new(void) {
 #ifdef MAEMO
@@ -272,23 +301,23 @@ static UiMain* ui_main_new(void) {
 	main_menu = gtk_menu_new();
 
 	item = gtk_menu_item_new_with_label(_("New game"));
-	g_signal_connect_swapped (item, "activate",
-				  G_CALLBACK (new_1_player_game), ui_main);
+	g_signal_connect (item, "activate",
+			  G_CALLBACK (game_new_cb), ui_main);
 	gtk_menu_append(main_menu, item);
 
 	item = gtk_menu_item_new_with_label(_("Join network game"));
-	g_signal_connect_swapped (item, "activate",
-				  G_CALLBACK (new_network_game), ui_main);
+	g_signal_connect (item, "activate",
+			  G_CALLBACK (game_join_cb), ui_main);
 	gtk_menu_append(main_menu, item);
 
 	item = gtk_menu_item_new_with_label(_("Pause"));
-	g_signal_connect_swapped (item, "activate",
-				  G_CALLBACK (pause_game), ui_main);
+	g_signal_connect (item, "activate",
+			  G_CALLBACK (game_pause_cb), ui_main);
 	gtk_menu_append(main_menu, item);
 
 	item = gtk_menu_item_new_with_label(_("Quit"));
-	g_signal_connect_swapped (item, "activate",
-				  G_CALLBACK (quit_program), ui_main);
+	g_signal_connect (item, "activate",
+			  G_CALLBACK (application_quit_cb), ui_main);
 	gtk_menu_append(main_menu, item);
 
 	hildon_window_set_menu(HILDON_WINDOW(PRIVATE(ui_main)->window), GTK_MENU(main_menu));
