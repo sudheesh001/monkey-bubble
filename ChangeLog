@@ -1,5 +1,11 @@
 2008-02-07  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/ui-main.c: (ui_main_new), (ui_main_finalize): save the action
+	group within the UiMainPrivate structure (to be able to enable and
+	disable actions)
+
+2008-02-07  Sven Herzberg  <sven@imendio.com>
+
 	* autogen.sh: manually run gnome-doc-prepare (as the gnome-autogen.sh
 	rule "^GNOME_DOC_INIT" doesn't apply anymore); if that fails, create
 	an empty one (for Maemo)

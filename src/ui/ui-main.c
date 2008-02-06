@@ -118,11 +118,12 @@ struct UiMainPrivate {
         MonkeyCanvas * canvas;
         GtkWidget * window;
         Block * main_image;
-        Game * game;  
+        Game * game;
         GameManager * manager;
         gboolean fullscreen;
         SoundManager * sm;
         GladeXML * glade_xml;
+	GtkActionGroup* actions;
 #ifdef MAEMO
 	ConIcConnection *ic;
 #endif
@@ -246,7 +247,6 @@ ui_main_new (void)
 {
 	GtkUIManager* ui_manager;
 	GError* error = NULL;
-	GtkActionGroup* actions;
 	GtkActionEntry  entries[] = {
 #ifdef MAEMO
 		{"GameNew", NULL, N_("New Game"),
@@ -332,10 +332,10 @@ ui_main_new (void)
 
 	ui_manager = gtk_ui_manager_new ();
 
-	actions    = gtk_action_group_new ("main");
-	gtk_action_group_add_actions (actions, entries,
+	PRIVATE (ui_main)->actions = gtk_action_group_new ("main");
+	gtk_action_group_add_actions (PRIVATE (ui_main)->actions, entries,
 				      G_N_ELEMENTS (entries), ui_main);
-	gtk_ui_manager_insert_action_group (ui_manager, actions, 0);
+	gtk_ui_manager_insert_action_group (ui_manager, PRIVATE (ui_main)->actions, 0);
 
 #ifdef MAEMO
 	gtk_ui_manager_add_ui_from_string (ui_manager,
@@ -431,7 +431,6 @@ ui_main_new (void)
 				   gtk_ui_manager_get_widget (ui_manager, "/ui/help_menu"));
 #endif
 
-	g_object_unref (actions);
 	g_object_unref (ui_manager);
 
         PRIVATE(ui_main)->game = NULL;
@@ -482,11 +481,15 @@ GtkWidget* ui_main_get_window(UiMain * ui_main) {
 }
 
 
-static void ui_main_finalize(GObject* object) {
+static void
+ui_main_finalize (GObject* object)
+{
+	UiMain* self = UI_MAIN (object);
 
+	g_object_unref (PRIVATE (self)->actions);
 
         if (G_OBJECT_CLASS (parent_class)->finalize) {
-                (* G_OBJECT_CLASS (parent_class)->finalize) (object);
+                (G_OBJECT_CLASS (parent_class)->finalize) (object);
         }
 }
 
