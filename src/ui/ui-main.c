@@ -94,16 +94,14 @@ static void stop_game(gpointer    callback_data,
 static void quit_program      (UiMain* uimain);
 
 #ifdef GNOME
-static void about(gpointer    callback_data,
-                  guint       callback_action,
-                  GtkWidget  *widget);
+static void about             (GtkAction* action,
+			       UiMain   * uimain);
 
 static void show_error_dialog (GtkWindow *transient_parent,
                                const char *message_format, ...);
 
-static void show_help_content(gpointer    callback_data,
-                              guint       callback_action,
-                              GtkWidget  *widget);
+static void show_help_content (GtkAction* action,
+			       UiMain   * uimain);
 
 static void show_preferences_dialog(gpointer    callback_data,
                                     guint       callback_action,
@@ -423,10 +421,10 @@ ui_main_new (void)
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"help_contents");
 
-        g_signal_connect_swapped(item, "activate", 
+        g_signal_connect(item, "activate", 
                                  GTK_SIGNAL_FUNC(show_help_content), ui_main);
 
-        g_signal_connect_swapped (
+        g_signal_connect (
                                   glade_xml_get_widget (PRIVATE(ui_main)->glade_xml,"about"),
                                   "activate",
                                   G_CALLBACK (about),
@@ -799,9 +797,10 @@ static void show_preferences_dialog(gpointer    callback_data,
 #endif
 
 #ifdef GNOME
-static void about (gpointer    callback_data,
-                   guint       callback_action,
-                   GtkWidget  *widget) {
+static void
+about (GtkAction* action,
+       UiMain   * ui_main)
+{
 
         const gchar* authors[] = {
                 "Laurent Belmonte <laurent.belmonte@aliacom.fr>",
@@ -830,17 +829,15 @@ static void about (gpointer    callback_data,
 
         g_object_unref( logo);
 }
-#endif
 
-#ifdef GNOME
-static void show_help_content(gpointer    callback_data,
-                              guint       callback_action,
-                              GtkWidget  *widget) {
-        UiMain * ui_main;
+static void
+show_help_content (GtkAction* action,
+		   UiMain   * ui_main)
+{
         GError *err = NULL;
 
         gnome_help_display ("monkey-bubble", NULL, &err);
-    
+
         if (err) {
                 ui_main = ui_main_get_instance();
                 show_error_dialog (GTK_WINDOW (PRIVATE(ui_main)->window),
@@ -849,9 +846,7 @@ static void show_help_content(gpointer    callback_data,
                 g_error_free (err);
         }
 }
-#endif
 
-#ifdef GNOME
 static void show_error_dialog (GtkWindow *transient_parent,
                                const char *message_format, ...) {
         char *message;
