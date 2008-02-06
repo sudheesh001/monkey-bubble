@@ -220,9 +220,10 @@ UiMain * ui_main_get_instance(void) {
 
 static UiMain* ui_main_new(void) {
 #ifdef MAEMO
+	GtkUIManager* ui_manager;
 	HildonProgram * program;
 	GtkWidget * container;
-	GtkWidget * main_menu; 
+	GtkWidget * main_menu;
 #endif
         UiMain * ui_main;
         GtkWidget * vbox;
@@ -232,7 +233,7 @@ static UiMain* ui_main_new(void) {
 #endif
 
         ui_main = UI_MAIN(g_object_new(UI_TYPE_MAIN, NULL));
-    
+
 #ifdef GNOME
         PRIVATE(ui_main)->glade_xml = glade_xml_new(DATADIR"/monkey-bubble/glade/monkey-bubble.glade","main_window",NULL);
         
@@ -276,6 +277,8 @@ static UiMain* ui_main_new(void) {
                           TRUE, 0);
 
 #ifdef MAEMO
+	ui_manager = gtk_ui_manager_new ();
+
 	/* Setting menu */
 	main_menu = gtk_menu_new();
 
@@ -302,6 +305,8 @@ static UiMain* ui_main_new(void) {
 	hildon_window_set_menu(HILDON_WINDOW(PRIVATE(ui_main)->window), GTK_MENU(main_menu));
 
 	gtk_widget_show (main_menu);
+
+	g_object_unref (ui_manager);
 #endif
      
 #ifdef GNOME
