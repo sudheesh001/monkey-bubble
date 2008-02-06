@@ -1,5 +1,10 @@
 2008-02-07  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/ui-main.c: (ui_main_new): create the menu for "Help" with the
+	GtkUIManager
+
+2008-02-07  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-main.c: (ui_main_new), (about), (show_help_content):
 	changed signal handler prototypes to match the ones for the upcoming
 	GtkAction* API (noone used the GtkMenuItem anyway)

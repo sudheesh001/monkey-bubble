@@ -266,6 +266,12 @@ ui_main_new (void)
 		 G_CALLBACK (application_quit_cb)
 		}
 #elif defined(GNOME)
+		{"HelpContent", GTK_STOCK_HELP, N_("_Contents"),
+		 NULL, NULL,
+		 G_CALLBACK (show_help_content)},
+		{"HelpAbout", NULL, N_("_About"),
+		 NULL, NULL,
+		 G_CALLBACK (about)}
 #endif
 	};
 #ifdef MAEMO
@@ -345,6 +351,8 @@ ui_main_new (void)
 #ifdef GNOME
 	gtk_ui_manager_add_ui_from_string (ui_manager,
 					   "<ui><popup name='help_menu'>"
+					     "<menuitem action='HelpContent' />"
+					     "<menuitem action='HelpAbout' />"
 					   "</popup></ui>",
 					   -1,
 					   &error);
@@ -419,16 +427,8 @@ ui_main_new (void)
         g_signal_connect (PRIVATE (ui_main)->window, "delete-event",
 			  G_CALLBACK (window_destroy_cb), NULL);
 
-        item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"help_contents");
-
-        g_signal_connect(item, "activate", 
-                                 GTK_SIGNAL_FUNC(show_help_content), ui_main);
-
-        g_signal_connect (
-                                  glade_xml_get_widget (PRIVATE(ui_main)->glade_xml,"about"),
-                                  "activate",
-                                  G_CALLBACK (about),
-                                  ui_main);
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (glade_xml_get_widget (PRIVATE (ui_main)->glade_xml, "help")),
+				   gtk_ui_manager_get_widget (ui_manager, "/ui/help_menu"));
 #endif
 
 	g_object_unref (actions);
