@@ -1,3 +1,8 @@
+2008-02-07  Sven Herzberg  <sven@imendio.com>
+
+	* src/ui/ui-main.c: (ui_main_new): provide the GtkUIManager for the
+	GNOME code, too
+
 2008-02-06  Sven Herzberg  <sven@imendio.com>
 
 	* src/ui/ui-main.c: (window_destroy_cb), (ui_main_new): added a

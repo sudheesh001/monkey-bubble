@@ -246,8 +246,8 @@ window_destroy_cb (GtkWidget* window,
 static UiMain*
 ui_main_new (void)
 {
-#ifdef MAEMO
 	GtkUIManager* ui_manager;
+#ifdef MAEMO
 	HildonProgram * program;
 	GtkWidget * container;
 	GtkWidget * main_menu;
@@ -323,8 +323,9 @@ ui_main_new (void)
                           TRUE,
                           TRUE, 0);
 
-#ifdef MAEMO
 	ui_manager = gtk_ui_manager_new ();
+
+#ifdef MAEMO
 	actions    = gtk_action_group_new ("main");
 	gtk_action_group_add_actions (actions, entries,
 				      G_N_ELEMENTS (entries), ui_main);
@@ -353,7 +354,6 @@ ui_main_new (void)
 	hildon_window_set_menu(HILDON_WINDOW(PRIVATE(ui_main)->window), GTK_MENU(main_menu));
 
 	g_object_unref (actions);
-	g_object_unref (ui_manager);
 #endif
 
 #ifdef GNOME
@@ -422,6 +422,8 @@ ui_main_new (void)
                                   G_CALLBACK (about),
                                   ui_main);
 #endif
+
+	g_object_unref (ui_manager);
 
         PRIVATE(ui_main)->game = NULL;
 
