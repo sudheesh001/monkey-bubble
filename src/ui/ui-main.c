@@ -65,19 +65,14 @@ static GObjectClass* parent_class = NULL;
 
 void ui_main_game_changed(Game * game,UiMain * ui_main);
 
-static void new_1_player_game(gpointer    callback_data,
-                              guint       callback_action,
-                              GtkWidget  *widget);
+static void new_1_player_game (UiMain* uimain);
 #ifdef GNOME
 static void new_2_player_game(gpointer    callback_data,
                               guint       callback_action,
                               GtkWidget  *widget);
 #endif
 
-static void new_network_game(gpointer    callback_data,
-                             guint       callback_action,
-                             GtkWidget  *widget);
-
+static void new_network_game  (UiMain* uimain);
 #ifdef GNOME
 static void new_network_server(gpointer    callback_data,
                                guint       callback_action,
@@ -90,20 +85,14 @@ static void show_high_scores(gpointer callback_data,
 			     GtkWidget* widget);
 #endif
 
-static void pause_game(gpointer    callback_data,
-                       guint       callback_action,
-                       GtkWidget  *widget);
+static void pause_game        (UiMain* uimain);
 #ifdef GNOME
 static void stop_game(gpointer    callback_data,
                       guint       callback_action,
                       GtkWidget  *widget);
 #endif
+static void quit_program      (UiMain* uimain);
 
-
-static void quit_program(gpointer    callback_data,
-                         guint       callback_action,
-                         GtkWidget  *widget);
-			      
 #ifdef GNOME
 static void about(gpointer    callback_data,
                   guint       callback_action,
@@ -520,19 +509,14 @@ void ui_main_enabled_games_item(UiMain * ui_main ,gboolean enabled) {
 
 }
 
-static void new_1_player_game(gpointer    callback_data,
-                              guint       callback_action,
-                              GtkWidget  *widget){
-
-        UiMain * ui_main;
-        ui_main = ui_main_get_instance();
-
+static void
+new_1_player_game (UiMain* ui_main)
+{
 #ifdef MAEMO
 	state_clear();
 #endif
 
         ui_main_new_1_player_game(ui_main);
-
 }
 
 
@@ -552,29 +536,23 @@ static void new_2_player_game(gpointer    callback_data,
 }
 #endif
 
-static void quit_program(gpointer    callback_data,
-                         guint       callback_action,
-                         GtkWidget  *widget){
-
+static void
+quit_program (UiMain* uimain)
+{
+	// FIXME: use gtk_main_quit()
         exit(0);
 }
 
-static void pause_game(gpointer    callback_data,
-                       guint       callback_action,
-                       GtkWidget  *widget) {
-
-        UiMain * ui_main;
-
-        ui_main = ui_main_get_instance();
-
+static void
+pause_game (UiMain* ui_main)
+{
         if( PRIVATE(ui_main)->game != NULL) {
                 if( game_get_state( PRIVATE(ui_main)->game) == GAME_PAUSED) {
                         game_pause(PRIVATE(ui_main)->game,FALSE);
-                } else { 
+                } else {
                         game_pause(PRIVATE(ui_main)->game,TRUE);
                 }
         }
-  
 }
 
 static void ui_main_stop_game(UiMain * ui_main) {
@@ -675,16 +653,14 @@ static void network_connected(ConIcConnection *cnx, ConIcConnectionEvent *event,
 }
 #endif
 
-static void new_network_game(gpointer    callback_data,
-                             guint       callback_action,
-                             GtkWidget  *widget) {
+static void
+new_network_game(UiMain* uimain)
+{
 #ifdef MAEMO
-	UiMain * uimain = UI_MAIN(callback_data);
 	PRIVATE(uimain)->ic = con_ic_connection_new();
 	g_signal_connect(PRIVATE(uimain)->ic, "connection-event", (GCallback)network_connected, NULL);
 	con_ic_connection_connect(PRIVATE(uimain)->ic, CON_IC_CONNECT_FLAG_NONE);
 #endif
-
 
 #ifdef GNOME
         UiNetworkClient  * ngl;
