@@ -29,7 +29,7 @@ dnl Initialize libtool
 AM_DISABLE_STATIC
 AC_LIBTOOL_WIN32_DLL
 AM_PROG_LIBTOOL
-AC_PROG_INTLTOOL
+IT_PROG_INTLTOOL([0.35.0])
 
 dnl  ---------------
 dnl | documentation |---------------------------------------------------------
@@ -173,9 +173,6 @@ GETTEXT_PACKAGE=monkey-bubble
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE",[The package name, for gettext])
 
-dnl Please keep this in alphabetical order
-ALL_LINGUAS="ar bg ca cs da de dz el en_CA en_GB es eu fi fr hr hu ja lv ms ne nl oc pt pt_BR ru rw sr sr@Latn sv tr uk vi zh_CN zh_TW"
-
 AM_GLIB_GNU_GETTEXT
 
 dnl AM_GLIB_GNU_GETTEXT sets $DATADIRNAME
@@ -188,7 +185,7 @@ else
 fi
 
 AC_DEFINE_UNQUOTED(PACKAGE_LOCALE_DIR, "$PACKAGE_LOCALE_DIR",
-	[The directory in which gphpedit's locale data will be stored])
+	[The directory in which monkey-bubble's locale data will be stored])
 AC_MSG_RESULT($PACKAGE_LOCALE_DIR)
 
 dnl  -------------------

@@ -1,3 +1,10 @@
+2008-02-06  Sven Herzberg  <sven@imendio.com>
+
+	Use LINGUAS according to http://live.gnome.org/GnomeGoals/PoLinguas
+
+	* configure.in,
+	* po/LINGUAS: moved the language definition into a po/LINGUAS file
+
 2008-02-05  Sven Herzberg  <sven@imendio.com>
 
 	Finish development of the Maemo stuff wrt missing gnome-doc-utils.
