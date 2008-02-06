@@ -236,7 +236,16 @@ application_quit_cb (GtkAction* action,
 }
 #endif
 
-static UiMain* ui_main_new(void) {
+static void
+window_destroy_cb (GtkWidget* window,
+		   UiMain   * uimain)
+{
+	quit_program (uimain);
+}
+
+static UiMain*
+ui_main_new (void)
+{
 #ifdef MAEMO
 	GtkUIManager* ui_manager;
 	HildonProgram * program;
@@ -283,8 +292,8 @@ static UiMain* ui_main_new(void) {
 	container = glade_xml_get_widget( PRIVATE(ui_main)->glade_xml, "main_vbox");
 	program = HILDON_PROGRAM(hildon_program_get_instance());
 	PRIVATE(ui_main)->window = hildon_window_new();
-	g_signal_connect_swapped(PRIVATE (ui_main)->window, "destroy",
-				 G_CALLBACK (quit_program), ui_main);
+	g_signal_connect (PRIVATE (ui_main)->window, "destroy",
+			  G_CALLBACK (window_destroy_cb), ui_main);
 	hildon_program_add_window(program, HILDON_WINDOW(PRIVATE(ui_main)->window));
 	gtk_container_add(GTK_CONTAINER(PRIVATE(ui_main)->window),
 				container);
@@ -399,7 +408,8 @@ static UiMain* ui_main_new(void) {
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"game_preferences");
         g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(show_preferences_dialog),ui_main);
 
-        g_signal_connect_swapped( G_OBJECT( PRIVATE(ui_main)->window),"delete-event",GTK_SIGNAL_FUNC(quit_program),NULL);
+        g_signal_connect (PRIVATE (ui_main)->window, "delete-event",
+			  G_CALLBACK (window_destroy_cb), NULL);
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"help_contents");
 

@@ -1,3 +1,9 @@
+2008-02-06  Sven Herzberg  <sven@imendio.com>
+
+	* src/ui/ui-main.c: (window_destroy_cb), (ui_main_new): added a
+	callback for the destroy signal of the main window with the proper
+	signature
+
 2008-02-05  Sven Herzberg  <sven@imendio.com>
 
 	Build the Maemo main menu with a GtkUIManager
