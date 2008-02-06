@@ -1,5 +1,9 @@
 2008-02-06  Sven Herzberg  <sven@imendio.com>
 
+	* po/de.po: updated German translation
+
+2008-02-06  Sven Herzberg  <sven@imendio.com>
+
 	* POTFILES.in: fixed warnings from
 	http://l10n.gnome.org/module/monkey-bubble:
 	- monkey-bubble.desktop.in (doesn't exist anymore)
