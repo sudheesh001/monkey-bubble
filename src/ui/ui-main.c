@@ -247,12 +247,9 @@ static UiMain*
 ui_main_new (void)
 {
 	GtkUIManager* ui_manager;
-#ifdef MAEMO
-	HildonProgram * program;
-	GtkWidget * container;
-	GtkWidget * main_menu;
 	GtkActionGroup* actions;
 	GtkActionEntry  entries[] = {
+#ifdef MAEMO
 		{"GameNew", NULL, N_("New Game"),
 		 NULL, NULL,
 		 G_CALLBACK (game_new_cb)
@@ -269,8 +266,14 @@ ui_main_new (void)
 		 NULL, NULL,
 		 G_CALLBACK (application_quit_cb)
 		}
+#elif defined(GNOME)
+#endif
 	};
+#ifdef MAEMO
 	GError* error = NULL;
+	HildonProgram * program;
+	GtkWidget * container;
+	GtkWidget * main_menu;
 #endif
         UiMain * ui_main;
         GtkWidget * vbox;
@@ -325,12 +328,12 @@ ui_main_new (void)
 
 	ui_manager = gtk_ui_manager_new ();
 
-#ifdef MAEMO
 	actions    = gtk_action_group_new ("main");
 	gtk_action_group_add_actions (actions, entries,
 				      G_N_ELEMENTS (entries), ui_main);
 	gtk_ui_manager_insert_action_group (ui_manager, actions, 0);
 
+#ifdef MAEMO
 	gtk_ui_manager_add_ui_from_string (ui_manager,
 					   "<ui><popup name='main_menu'>"
 					     "<menuitem action='GameNew' />"
@@ -352,8 +355,6 @@ ui_main_new (void)
 	main_menu = gtk_ui_manager_get_widget (ui_manager, "/ui/main_menu");
 
 	hildon_window_set_menu(HILDON_WINDOW(PRIVATE(ui_main)->window), GTK_MENU(main_menu));
-
-	g_object_unref (actions);
 #endif
 
 #ifdef GNOME
@@ -423,6 +424,7 @@ ui_main_new (void)
                                   ui_main);
 #endif
 
+	g_object_unref (actions);
 	g_object_unref (ui_manager);
 
         PRIVATE(ui_main)->game = NULL;
