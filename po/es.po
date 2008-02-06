@@ -1,24 +1,26 @@
-# translation of monkey-bubble.HEAD.po to 
-# translation of es.po to Spanish
+# translation of monkey-bubble.HEAD.po to Español
+# translation of monkey-bubble.HEAD.po to
 # Basque translation of Monkey Bubble.
 # Copyright (C) 2003 THE Monkey Bubble'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the Monkey Bubble package.
+#
+#
 # Mikel Olasagasti <hey_neken@mundurat.net>, 2003.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005.
-#
-#
+# Jorge González <jorgegonz@svn.gnome.org>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: monkey-bubble.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-30 00:27+0100\n"
-"PO-Revision-Date: 2006-10-30 00:27+0100\n"
-"Last-Translator: \n"
-"Language-Team:  <es@li.org>\n"
+"POT-Creation-Date: 2008-02-06 16:07+0000\n"
+"PO-Revision-Date: 2008-02-06 22:41+0100\n"
+"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.9.1\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../data/keybinding.glade.h:1
 msgid "Keyboard Shortcuts"
@@ -48,7 +50,8 @@ msgstr ""
 msgid "Join _network game"
 msgstr "Unirse a un juego en _red"
 
-#: ../data/monkey-bubble.glade.h:8 ../monkey-bubble.desktop.in.h:1
+#: ../data/monkey-bubble.glade.h:8 ../monkey-bubble.desktop.in.in.h:1
+#: ../src/ui/ui-main.c:291
 msgid "Monkey Bubble"
 msgstr "Monkey Bubble"
 
@@ -64,8 +67,8 @@ msgstr "Nuevo 2 jugadores"
 msgid "New network game"
 msgstr "Juego en red nuevo"
 
-#: ../data/monkey-bubble.glade.h:12 ../src/ui/ui-main.c:412
-#: ../src/ui/ui-main.c:544
+#: ../data/monkey-bubble.glade.h:12 ../src/ui/ui-main.c:549
+#: ../src/ui/ui-main.c:676
 msgid "Pause game"
 msgstr "Pausar juego"
 
@@ -117,7 +120,7 @@ msgstr "F2"
 msgid "Left"
 msgstr "Izquierda"
 
-#: ../data/monkey-bubble.schemas.in.h:6
+#: ../data/monkey-bubble.schemas.in.h:6 ../src/ui/ui-main.c:255
 msgid "Pause"
 msgstr "Pausa"
 
@@ -181,32 +184,37 @@ msgstr "tecla de disparo para jugador 2"
 msgid "*"
 msgstr "*"
 
-#: ../data/netgame.glade.h:2 ../data/netserver.glade.h:1
+#: ../data/netgame.glade.h:2
+msgid "Close"
+msgstr "Cerrar"
+
+#: ../data/netgame.glade.h:3 ../data/netserver.glade.h:1
+#: ../src/ui/ui-network-client.c:156
 msgid "Network game"
 msgstr "Juego en red"
 
-#: ../data/netgame.glade.h:3
+#: ../data/netgame.glade.h:4
 msgid "Number of games :"
 msgstr "Número de juegos :"
 
-#: ../data/netgame.glade.h:4
+#: ../data/netgame.glade.h:5
 msgid "Number of players :"
 msgstr "Nuevo 2 jugadores"
 
-#: ../data/netgame.glade.h:5 ../data/netserver.glade.h:4
+#: ../data/netgame.glade.h:6 ../data/netserver.glade.h:4
 #: ../src/ui/keyboard-properties.c:86
 msgid "Quit game"
 msgstr "Salir del juego"
 
-#: ../data/netgame.glade.h:6 ../data/netserver.glade.h:5
+#: ../data/netgame.glade.h:7 ../data/netserver.glade.h:5
 msgid "Ready"
 msgstr "Preparado"
 
-#: ../data/netgame.glade.h:7
+#: ../data/netgame.glade.h:8
 msgid "_Go"
 msgstr "_Ir a"
 
-#: ../data/netgame.glade.h:8
+#: ../data/netgame.glade.h:9
 msgid "_Server"
 msgstr "_Servidor"
 
@@ -222,7 +230,7 @@ msgstr "Número de jugadores"
 msgid "Start Game"
 msgstr "Iniciar juego"
 
-#: ../monkey-bubble.desktop.in.h:2
+#: ../monkey-bubble.desktop.in.in.h:2
 msgid "Monkey Bubble Arcade Game"
 msgstr "Monkey Bubble Juego Arcade"
 
@@ -291,14 +299,12 @@ msgstr ""
 #: ../src/ui/keyboard-properties.c:393
 #, c-format
 msgid "There was an error loading a terminal keybinding. (%s)\n"
-msgstr ""
-"Ha ocurrido un error cargando una asignación de teclas de terminal. (%s)\n"
+msgstr "Ha ocurrido un error cargando una asignación de teclas de terminal. (%s)\n"
 
 #: ../src/ui/keyboard-properties.c:409
 #, c-format
 msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
-msgstr ""
-"El valor de la clave de configuración %s no es válido; el valor es «%s»\n"
+msgstr "El valor de la clave de configuración %s no es válido; el valor es «%s»\n"
 
 #: ../src/ui/keyboard-properties.c:432
 #, c-format
@@ -332,8 +338,7 @@ msgstr ""
 msgid ""
 "There was an error subscribing to notification for use_menu_accelerators (%"
 "s)\n"
-msgstr ""
-"Ha ocurrido un error subscribiendo al aviso de use_menu_accelerators (%s)\n"
+msgstr "Ha ocurrido un error subscribiendo al aviso de use_menu_accelerators (%s)\n"
 
 #: ../src/ui/keyboard-properties.c:755
 msgid "Disabled"
@@ -361,15 +366,34 @@ msgstr "_Acción"
 msgid "Shortcut _Key"
 msgstr "Co_mbinación de teclas"
 
-#: ../src/ui/ui-main.c:537
+#: ../src/ui/main.c:91
+msgid "Monkey Bubble is a Bust'a'Move clone for GNOME"
+msgstr "Monkey Bubble es un clon de Bust'a'Move para GNOME"
+
+#: ../src/ui/ui-main.c:247
+msgid "New Game"
+msgstr "Juego nuevo"
+
+#: ../src/ui/ui-main.c:251
+msgid "Join network game"
+msgstr "Unirse a un juego en red"
+
+#: ../src/ui/ui-main.c:259
+msgid "Quit"
+msgstr "Salir"
+
+#: ../src/ui/ui-main.c:669
 msgid "Resume game"
 msgstr "Continuar juego"
 
-#: ../src/ui/ui-main.c:635
+#: ../src/ui/ui-main.c:793
 msgid "translator_credits"
-msgstr "creditos de _traduccion"
+msgstr ""
+"Jorge González <jorgegonz@svn.gnome.org>, 2008.\n"
+"Mikel Olasagasti <hey_neken@mundurat.net>, 2003.\n"
+"Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005."
 
-#: ../src/ui/ui-main.c:643
+#: ../src/ui/ui-main.c:801
 msgid ""
 "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
 "remove all Bubbles by the creation of unicolor triplets."
@@ -377,43 +401,20 @@ msgstr ""
 "Monkey Bubble es un juego Arcade para el GNOME Desktop Environment. "
 "Simplemente elimina todas las burbujas creando tríos del mismo color."
 
-#: ../src/ui/ui-main.c:664
+#: ../src/ui/ui-main.c:824
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Hubo un error al mostrar la ayuda: %s"
 
-#: ../src/ui/ui-network-server.c:159 ../src/ui/ui-network-client.c:149
+#: ../src/ui/ui-network-server.c:159 ../src/ui/ui-network-client.c:195
 msgid "_Player name"
 msgstr "_Nombre del jugador"
 
-#: ../src/ui/ui-network-server.c:166 ../src/ui/ui-network-client.c:156
+#: ../src/ui/ui-network-server.c:166 ../src/ui/ui-network-client.c:202
 msgid "_Owner"
 msgstr "_Dueño"
 
-#: ../src/ui/ui-network-server.c:173 ../src/ui/ui-network-client.c:163
+#: ../src/ui/ui-network-server.c:173 ../src/ui/ui-network-client.c:209
 msgid "_Ready"
 msgstr "P_reparado"
 
-#~ msgid "Create network game"
-#~ msgstr "Crear juego en red"
-
-#~ msgid "_Settings"
-#~ msgstr "_Opciones"
-
-#~ msgid "Accelerator key"
-#~ msgstr "Combinación de tecla"
-
-#~ msgid "Accelerator modifiers"
-#~ msgstr "Modificadores de combinación"
-
-#~ msgid "Accelerator Mode"
-#~ msgstr "Modo de la combinación de teclas"
-
-#~ msgid "The type of accelerator."
-#~ msgstr "El tipo de acelerador."
-
-#~ msgid "Type a new accelerator, or press Backspace to clear"
-#~ msgstr "Escriba una combinación nueva o pulse Retroceso para borrarla"
-
-#~ msgid "Type a new accelerator"
-#~ msgstr "Escriba una combinación nueva"
