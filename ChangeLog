@@ -1,5 +1,10 @@
 2008-02-07  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/ui-main.c: (ui_main_new): add a user interface to the
+	GtkUIManager for the GNOME code
+
+2008-02-07  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-main.c: (ui_main_new): provide the GtkActionGroup for the
 	GNOME code, too
 

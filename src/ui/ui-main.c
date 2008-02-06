@@ -247,6 +247,7 @@ static UiMain*
 ui_main_new (void)
 {
 	GtkUIManager* ui_manager;
+	GError* error = NULL;
 	GtkActionGroup* actions;
 	GtkActionEntry  entries[] = {
 #ifdef MAEMO
@@ -270,7 +271,6 @@ ui_main_new (void)
 #endif
 	};
 #ifdef MAEMO
-	GError* error = NULL;
 	HildonProgram * program;
 	GtkWidget * container;
 	GtkWidget * main_menu;
@@ -343,6 +343,14 @@ ui_main_new (void)
 					   "</popup></ui>",
 					   -1,
 					   &error);
+#endif
+#ifdef GNOME
+	gtk_ui_manager_add_ui_from_string (ui_manager,
+					   "<ui><popup name='help_menu'>"
+					   "</popup></ui>",
+					   -1,
+					   &error);
+#endif
 
 	if (error) {
 		g_warning ("there was en error constructing the user interface: %s",
@@ -351,6 +359,7 @@ ui_main_new (void)
 		error = NULL;
 	}
 
+#ifdef MAEMO
 	/* Setting menu */
 	main_menu = gtk_ui_manager_get_widget (ui_manager, "/ui/main_menu");
 
