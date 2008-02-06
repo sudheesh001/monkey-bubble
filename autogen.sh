@@ -33,6 +33,8 @@ if test -z "$gnome_autogen" ; then
   exit 1
 fi
 
+gnome-doc-prepare --automake --force || touch $srcdir/gnome-doc-utils.make # FIXME: faking gnome-doc-utils for maemo
+
 NOCONFIGURE="yes" GNOME_DATADIR="$gnome_datadir" USE_GNOME2_MACROS=1 . $gnome_autogen
 
 $srcdir/configure --enable-maintainer-mode `/bin/grep ^DISTCHECK configure.in | head -n 1 | sed 's/^DISTCHECK_CONFIGURE_FLAGS="\(.*\)"$/\1/'` $@

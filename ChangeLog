@@ -1,5 +1,11 @@
 2008-02-07  Sven Herzberg  <sven@imendio.com>
 
+	* autogen.sh: manually run gnome-doc-prepare (as the gnome-autogen.sh
+	rule "^GNOME_DOC_INIT" doesn't apply anymore); if that fails, create
+	an empty one (for Maemo)
+
+2008-02-07  Sven Herzberg  <sven@imendio.com>
+
 	* data/monkey-bubble.glade: dropped the unused GtkMenu for the "Help"
 	menu items
 
