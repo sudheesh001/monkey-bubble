@@ -1,7 +1,16 @@
+2008-02-06  Sven Herzberg  <sven@imendio.com>
+
+	* POTFILES.in: fixed warnings from
+	http://l10n.gnome.org/module/monkey-bubble:
+	- monkey-bubble.desktop.in (doesn't exist anymore)
+	- monkey-bubble.desktop.in.in (missing)
+	- src/ui/main.c (missing)
+
 2007-12-31  Yannig Marchegay <yannig@marchegay.org>
 
 	* oc.po: Updated Occitan translation.
-2007-08-27  Satoru SATOH <ss@gnome.gr.jp>
+
+2007-08-27  Satoru SATOH <ss@gnome.gr.jp>
 
 	* ja.po:  Updated Japanese translation.
 
