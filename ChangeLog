@@ -1,5 +1,10 @@
 2008-02-05  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/ui-main.c: (ui_main_new): dropped gtk_widget_show() for the
+	main menu; gtk_menu_popup() will automatically show the widget
+
+2008-02-05  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-main.c: (game_new_cb), (game_join_cb), (game_pause_cb),
 	(application_quit_cb), (ui_main_new): use extra callbacks for Maemo;
 	these take GtkAction* and UiMain* arguments for the upcoming
