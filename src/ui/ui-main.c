@@ -65,7 +65,8 @@ static GObjectClass* parent_class = NULL;
 
 void ui_main_game_changed(Game * game,UiMain * ui_main);
 
-static void new_1_player_game (UiMain* uimain);
+static void new_1_player_game      (GtkAction* action,
+				    UiMain   * uimain);
 #ifdef GNOME
 static void new_2_player_game(gpointer    callback_data,
                               guint       callback_action,
@@ -208,13 +209,6 @@ UiMain * ui_main_get_instance(void) {
 
 #ifdef MAEMO
 static void
-game_new_cb (GtkAction* action,
-	     UiMain   * ui)
-{
-	new_1_player_game (ui);
-}
-
-static void
 game_pause_cb (GtkAction* action,
 	       UiMain   * ui)
 {
@@ -245,7 +239,7 @@ ui_main_new (void)
 #ifdef MAEMO
 		{"GameNew", NULL, N_("New Game"),
 		 NULL, NULL,
-		 G_CALLBACK (game_new_cb)
+		 G_CALLBACK (new_1_player_game)
 		},
 		{"GameJoin", NULL, N_("Join network game"),
 		 NULL, NULL,
@@ -380,7 +374,8 @@ ui_main_new (void)
                                   PRIVATE(ui_main)->accel_group);
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"new_1_player");
-        g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(new_1_player_game),ui_main);
+        g_signal_connect (item, "activate",
+			  G_CALLBACK (new_1_player_game), ui_main);
         gtk_menu_item_set_accel_path( GTK_MENU_ITEM(item),
                                       ACCEL_PATH_NEW_1_PLAYER);
 
@@ -574,7 +569,8 @@ void ui_main_enabled_games_item(UiMain * ui_main ,gboolean enabled) {
 }
 
 static void
-new_1_player_game (UiMain* ui_main)
+new_1_player_game (GtkAction* action,
+		   UiMain   * ui_main)
 {
 #ifdef MAEMO
 	state_clear();
