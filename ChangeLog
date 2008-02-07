@@ -6,6 +6,13 @@
 
 2008-02-07  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/ui-main.c: (ui_main_new), (stop_game),
+	(new_network_server), (show_high_scores),
+	(show_preferences_dialog): updated the other menu callback to be
+	prepared for usage with GtkActions
+
+2008-02-07  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-main.c: (ui_main_new), (new_2_player_game): prepared
 	new_2_player_game for the usage with GtkActions
 

@@ -75,40 +75,36 @@ static void new_2_player_game      (GtkAction* action,
 static void new_network_game       (GtkAction* action,
 				    UiMain   * uimain);
 #ifdef GNOME
-static void new_network_server(gpointer    callback_data,
-                               guint       callback_action,
-                               GtkWidget  *widget);
+static void new_network_server     (GtkAction* action,
+				    UiMain   * uimain);
 #endif
 
 #ifdef GNOME
-static void show_high_scores(gpointer callback_data,
-			     guint    callback_action,
-			     GtkWidget* widget);
+static void show_high_scores       (GtkAction* action,
+				    UiMain   * uimain);
 #endif
 
 static void pause_game             (GtkAction* action,
 				    UiMain   * uimain);
 #ifdef GNOME
-static void stop_game(gpointer    callback_data,
-                      guint       callback_action,
-                      GtkWidget  *widget);
+static void stop_game              (GtkAction* action,
+				    UiMain   * uimain);
 #endif
 static void quit_program           (GtkAction* action,
 				    UiMain   * uimain);
 
 #ifdef GNOME
-static void about             (GtkAction* action,
-			       UiMain   * uimain);
+static void about                  (GtkAction* action,
+				    UiMain   * uimain);
 
 static void show_error_dialog (GtkWindow *transient_parent,
                                const char *message_format, ...);
 
-static void show_help_content (GtkAction* action,
-			       UiMain   * uimain);
+static void show_help_content       (GtkAction* action,
+				     UiMain   * uimain);
 
-static void show_preferences_dialog(gpointer    callback_data,
-                                    guint       callback_action,
-                                    GtkWidget  *widget);
+static void show_preferences_dialog (GtkAction* action,
+				     UiMain   * uimain);
 #endif
 
 static void ui_main_new_1_player_game(UiMain * ui_main);
@@ -375,11 +371,12 @@ ui_main_new (void)
 			  G_CALLBACK (new_network_game), ui_main);
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"new_network_server");
-        g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(new_network_server),ui_main);
+        g_signal_connect (item, "activate",
+			  G_CALLBACK (new_network_server), ui_main);
 
 	item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml, "high_scores1");
-	g_signal_connect_swapped(item, "activate",
-				 G_CALLBACK(show_high_scores), ui_main);
+	g_signal_connect (item, "activate",
+			  G_CALLBACK (show_high_scores), ui_main);
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"pause_game");
         g_signal_connect (item, "activate",
@@ -388,7 +385,8 @@ ui_main_new (void)
                                       ACCEL_PATH_PAUSE_GAME);
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"stop_game");
-        g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(stop_game),ui_main);
+        g_signal_connect (item, "activate",
+			  G_CALLBACK (stop_game), ui_main);
         gtk_menu_item_set_accel_path( GTK_MENU_ITEM(item),
                                       ACCEL_PATH_STOP_GAME);
 
@@ -399,7 +397,8 @@ ui_main_new (void)
                                       ACCEL_PATH_QUIT_GAME);
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"game_preferences");
-        g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(show_preferences_dialog),ui_main);
+        g_signal_connect (item, "activate",
+			  G_CALLBACK (show_preferences_dialog), ui_main);
 
         g_signal_connect (PRIVATE (ui_main)->window, "delete-event",
 			  G_CALLBACK (window_destroy_cb), NULL);
@@ -611,12 +610,11 @@ static void ui_main_stop_game(UiMain * ui_main) {
 }
 
 #ifdef GNOME
-static void stop_game(gpointer    callback_data,
-                      guint       callback_action,
-                      GtkWidget  *widget) {
-
-        UiMain * ui_main = ui_main_get_instance();
-        ui_main_stop_game(ui_main);
+static void
+stop_game (GtkAction* action,
+	   UiMain   * uimain)
+{
+        ui_main_stop_game(uimain);
 }
 
 Block * ui_main_get_main_image(UiMain *ui_main) {
@@ -712,20 +710,17 @@ new_network_game(GtkAction* action,
 
 
 #ifdef GNOME
-static void new_network_server(gpointer    callback_data,
-                               guint       callback_action,
-                               GtkWidget  *widget) {
+static void
+new_network_server (GtkAction* action,
+		    UiMain   * ui_main)
+{
         UiNetworkServer  * ngl;
         NetworkSimpleServer * server;
-        UiMain * ui_main;
 
-        ui_main = UI_MAIN(callback_data);
         server = network_simple_server_new();
 
         if( network_simple_server_start( server ) == TRUE) {
-        
                 ngl = ui_network_server_new(server);
-        
         } else {
                 GladeXML * gx;
 
@@ -740,39 +735,34 @@ static void new_network_server(gpointer    callback_data,
 }
 
 static void
-show_high_scores(gpointer callback_data, guint callback_action, GtkWidget* widget) {
+show_high_scores (GtkAction* action,
+		  UiMain   * ui_main)
+{
 	GtkWidget* dialog = NULL;
 	gint       number;
 	gchar    **names;
 	gfloat   * scores;
 	time_t   * times;
 
+	// FIXME: set the parent window and transient mode
 	number = gnome_score_get_notable(PACKAGE, NULL,
 					 &names, &scores, &times);
 	dialog = gnome_scores_new(number, names, scores, times, FALSE);
 	gnome_scores_set_logo_pixmap(GNOME_SCORES(dialog), DATADIR "/monkey-bubble/gfx/monkey.png");
 	gtk_widget_show(dialog);
 }
-#endif
 
-#ifdef GNOME
-static void show_preferences_dialog(gpointer    callback_data,
-                                    guint       callback_action,
-                                    GtkWidget  *widget) {
-
-        UiMain * ui_main;
-
-        ui_main = ui_main_get_instance();
-
+static void
+show_preferences_dialog (GtkAction* action,
+			 UiMain   * ui_main)
+{
         if( PRIVATE(ui_main)->game != NULL && game_get_state(PRIVATE(ui_main)->game) != GAME_PAUSED ) {
                 game_pause(PRIVATE(ui_main)->game,TRUE);      
         }
   
         keyboard_properties_show( keyboard_properties_get_instance(),GTK_WINDOW(PRIVATE(ui_main)->window));
 }
-#endif
 
-#ifdef GNOME
 static void
 about (GtkAction* action,
        UiMain   * ui_main)
