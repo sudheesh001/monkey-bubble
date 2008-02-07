@@ -1,5 +1,10 @@
 2008-02-07  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/ui-main.c: (ui_main_new): added the main menu to the
+	GtkUIManager
+
+2008-02-07  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-main.c: (ui_main_new): don't create a GtkAccelGroup, use
 	the one from the GtkUIManager
 

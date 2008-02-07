@@ -318,7 +318,21 @@ ui_main_new (void)
 #endif
 #ifdef GNOME
 	gtk_ui_manager_add_ui_from_string (ui_manager,
-					   "<ui><popup name='help_menu'>"
+					   "<ui><popup name='game_menu'>"
+					     "<menuitem action='GameNew1Player' />"
+					     "<menuitem action='GameNew2Player' />"
+					     "<separator />"
+					     "<menuitem action='GameNetworkNew' />"
+					     "<menuitem action='GameNetworkJoin' />"
+					     "<separator />"
+					     "<menuitem action='GameSettings' />"
+					     "<menuitem action='GameScores' />"
+					     "<separator />"
+					     "<menuitem action='GamePause' />"
+					     "<menuitem action='GameResume' />"
+					     "<menuitem action='GameStop' />"
+					     "<menuitem action='GameQuit' />"
+					   "</popup><popup name='help_menu'>"
 					     "<menuitem action='HelpContent' />"
 					     "<menuitem action='HelpAbout' />"
 					   "</popup></ui>",
