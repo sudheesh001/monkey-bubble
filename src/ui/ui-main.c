@@ -68,9 +68,8 @@ void ui_main_game_changed(Game * game,UiMain * ui_main);
 static void new_1_player_game      (GtkAction* action,
 				    UiMain   * uimain);
 #ifdef GNOME
-static void new_2_player_game(gpointer    callback_data,
-                              guint       callback_action,
-                              GtkWidget  *widget);
+static void new_2_player_game      (GtkAction* action,
+				    UiMain   * uimain);
 #endif
 
 static void new_network_game       (GtkAction* action,
@@ -365,7 +364,8 @@ ui_main_new (void)
                                       ACCEL_PATH_NEW_1_PLAYER);
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"new_2_players");
-        g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(new_2_player_game),ui_main);
+        g_signal_connect (item, "activate",
+			  G_CALLBACK (new_2_player_game), ui_main);
         gtk_menu_item_set_accel_path( GTK_MENU_ITEM(item),
                                       ACCEL_PATH_NEW_2_PLAYERS);
 
@@ -566,20 +566,12 @@ new_1_player_game (GtkAction* action,
         ui_main_new_1_player_game(ui_main);
 }
 
-
 #ifdef GNOME
-static void new_2_player_game(gpointer    callback_data,
-                              guint       callback_action,
-                              GtkWidget  *widget){
-
-        UiMain * ui_main;
-
-        ui_main = ui_main_get_instance();
-
+static void
+new_2_player_game (GtkAction* action,
+		   UiMain   * ui_main)
+{
         ui_main_new_2_player_game(ui_main);
-
-
-
 }
 #endif
 

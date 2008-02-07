@@ -6,6 +6,11 @@
 
 2008-02-07  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/ui-main.c: (ui_main_new), (new_2_player_game): prepared
+	new_2_player_game for the usage with GtkActions
+
+2008-02-07  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-main.c: (window_destroy_cb), (ui_main_new),
 	(quit_program): prepared quit_program() for the usage with GtkActions;
 	drop application_quit_cb() which was a wrapper - now the signatures
