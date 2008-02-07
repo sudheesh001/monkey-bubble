@@ -351,7 +351,7 @@ ui_main_new (void)
 #endif
 
 	if (error) {
-		g_warning ("there was en error constructing the user interface: %s",
+		g_warning ("there was an error constructing the user interface: %s",
 			   error->message);
 		g_error_free (error);
 		error = NULL;

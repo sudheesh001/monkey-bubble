@@ -1,5 +1,9 @@
 2008-02-07  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/ui-main.c: (ui_main_new): fixed a typo
+
+2008-02-07  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-main.c: (ui_main_enabled_games_item),
 	(ui_main_game_changed): update the visibility and GamePause and
 	GameResume properly, as well as the sensitivity of GamePause and
