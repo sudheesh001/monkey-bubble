@@ -345,7 +345,7 @@ ui_main_new (void)
         g_object_ref(PRIVATE(ui_main)->menu);
         kp = keyboard_properties_get_instance();
 
-        PRIVATE(ui_main)->accel_group = gtk_accel_group_new ();
+        PRIVATE(ui_main)->accel_group = g_object_ref (gtk_ui_manager_get_accel_group (ui_manager));
         gtk_window_add_accel_group(GTK_WINDOW(PRIVATE(ui_main)->window),
                                    PRIVATE(ui_main)->accel_group);
 
