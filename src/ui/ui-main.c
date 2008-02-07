@@ -234,6 +234,16 @@ ui_main_new (void)
 		 G_CALLBACK (quit_program)
 		}
 #elif defined(GNOME)
+		{"GameNew1Player"},
+		{"GameNew2Player"},
+		{"GameNetworkNew"},
+		{"GameNetworkJoin"},
+		{"GameSettings"},
+		{"GameScores"},
+		{"GamePause"},
+		{"GameResume"},
+		{"GameStop"},
+		{"GameQuit"},
 		{"HelpContent", GTK_STOCK_HELP, N_("_Contents"),
 		 NULL, NULL,
 		 G_CALLBACK (show_help_content)},
