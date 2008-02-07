@@ -72,7 +72,8 @@ static void new_2_player_game(gpointer    callback_data,
                               GtkWidget  *widget);
 #endif
 
-static void new_network_game  (UiMain* uimain);
+static void new_network_game       (GtkAction* action,
+				    UiMain   * uimain);
 #ifdef GNOME
 static void new_network_server(gpointer    callback_data,
                                guint       callback_action,
@@ -214,13 +215,6 @@ game_new_cb (GtkAction* action,
 }
 
 static void
-game_join_cb (GtkAction* action,
-	      UiMain   * ui)
-{
-	new_network_game (ui);
-}
-
-static void
 game_pause_cb (GtkAction* action,
 	       UiMain   * ui)
 {
@@ -255,7 +249,7 @@ ui_main_new (void)
 		},
 		{"GameJoin", NULL, N_("Join network game"),
 		 NULL, NULL,
-		 G_CALLBACK (game_join_cb)
+		 G_CALLBACK (new_network_game)
 		},
 		{"GamePause", NULL, N_("Pause"),
 		 NULL, NULL,
@@ -397,7 +391,8 @@ ui_main_new (void)
 
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"new_network_game");
-        g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(new_network_game),ui_main);
+        g_signal_connect (item, "activate",
+			  G_CALLBACK (new_network_game), ui_main);
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"new_network_server");
         g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(new_network_server),ui_main);
@@ -723,7 +718,8 @@ static void network_connected(ConIcConnection *cnx, ConIcConnectionEvent *event,
 #endif
 
 static void
-new_network_game(UiMain* uimain)
+new_network_game(GtkAction* action,
+		 UiMain   * uimain)
 {
 #ifdef MAEMO
 	PRIVATE(uimain)->ic = con_ic_connection_new();

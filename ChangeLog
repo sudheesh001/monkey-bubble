@@ -6,6 +6,12 @@
 
 2008-02-07  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/ui-main.c: (ui_main_new), (new_network_game): prepared
+	new_network_game() for the usage with GtkActions; drop game_join_cb()
+	which was a wrapper - now the signatures are identical
+
+2008-02-07  Sven Herzberg  <sven@imendio.com>
+
 	* autogen.sh: manually run gnome-doc-prepare (as the gnome-autogen.sh
 	rule "^GNOME_DOC_INIT" doesn't apply anymore); if that fails, create
 	an empty one (for Maemo)
