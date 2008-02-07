@@ -1,5 +1,10 @@
 2008-02-07  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/ui-main.c: (ui_main_new): added labels and stock icons to
+	GNOME's main menu
+
+2008-02-07  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-main.c: (ui_main_new): added actions for GNOME's main menu
 
 2008-02-07  Sven Herzberg  <sven@imendio.com>
