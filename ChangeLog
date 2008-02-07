@@ -6,6 +6,12 @@
 
 2008-02-07  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/ui-main.c: (continue_game), (ui_main_new), (pause_game):
+	prepared pause_game() for the usage with GtkActions; drop
+	game_pause_cb() which was a wrapper - now the signatures are identical
+
+2008-02-07  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-main.c: (ui_main_new), (new_1_player_game): prepared
 	new_1_player_game() for the usage with GtkActions; drop game_new_cb()
 	which was a wrapper - now the signatures are identical

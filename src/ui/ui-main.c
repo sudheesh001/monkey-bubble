@@ -87,7 +87,8 @@ static void show_high_scores(gpointer callback_data,
 			     GtkWidget* widget);
 #endif
 
-static void pause_game        (UiMain* uimain);
+static void pause_game             (GtkAction* action,
+				    UiMain   * uimain);
 #ifdef GNOME
 static void stop_game(gpointer    callback_data,
                       guint       callback_action,
@@ -166,7 +167,6 @@ void continue_game(void) {
 
         ui_main_new_1_player_game(ui_main);
 }
-
 #endif
 
 GType ui_main_get_type(void) {
@@ -209,13 +209,6 @@ UiMain * ui_main_get_instance(void) {
 
 #ifdef MAEMO
 static void
-game_pause_cb (GtkAction* action,
-	       UiMain   * ui)
-{
-	pause_game (ui);
-}
-
-static void
 application_quit_cb (GtkAction* action,
 		     UiMain   * ui)
 {
@@ -247,7 +240,7 @@ ui_main_new (void)
 		},
 		{"GamePause", NULL, N_("Pause"),
 		 NULL, NULL,
-		 G_CALLBACK (game_pause_cb)
+		 G_CALLBACK (pause_game)
 		},
 		{"ApplicationQuit", NULL, N_("Quit"),
 		 NULL, NULL,
@@ -397,7 +390,8 @@ ui_main_new (void)
 				 G_CALLBACK(show_high_scores), ui_main);
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"pause_game");
-        g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(pause_game),ui_main);
+        g_signal_connect (item, "activate",
+			  G_CALLBACK (pause_game), ui_main);
         gtk_menu_item_set_accel_path( GTK_MENU_ITEM(item),
                                       ACCEL_PATH_PAUSE_GAME);
 
@@ -604,7 +598,8 @@ quit_program (UiMain* uimain)
 }
 
 static void
-pause_game (UiMain* ui_main)
+pause_game (GtkAction* action,
+	    UiMain   * ui_main)
 {
         if( PRIVATE(ui_main)->game != NULL) {
                 if( game_get_state( PRIVATE(ui_main)->game) == GAME_PAUSED) {
