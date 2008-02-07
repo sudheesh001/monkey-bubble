@@ -94,7 +94,8 @@ static void stop_game(gpointer    callback_data,
                       guint       callback_action,
                       GtkWidget  *widget);
 #endif
-static void quit_program      (UiMain* uimain);
+static void quit_program           (GtkAction* action,
+				    UiMain   * uimain);
 
 #ifdef GNOME
 static void about             (GtkAction* action,
@@ -207,20 +208,11 @@ UiMain * ui_main_get_instance(void) {
         return instance;
 }
 
-#ifdef MAEMO
-static void
-application_quit_cb (GtkAction* action,
-		     UiMain   * ui)
-{
-	quit_program (ui);
-}
-#endif
-
 static void
 window_destroy_cb (GtkWidget* window,
 		   UiMain   * uimain)
 {
-	quit_program (uimain);
+	quit_program (NULL, uimain);
 }
 
 static UiMain*
@@ -244,7 +236,7 @@ ui_main_new (void)
 		},
 		{"ApplicationQuit", NULL, N_("Quit"),
 		 NULL, NULL,
-		 G_CALLBACK (application_quit_cb)
+		 G_CALLBACK (quit_program)
 		}
 #elif defined(GNOME)
 		{"HelpContent", GTK_STOCK_HELP, N_("_Contents"),
@@ -401,7 +393,8 @@ ui_main_new (void)
                                       ACCEL_PATH_STOP_GAME);
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"main_quit");
-        g_signal_connect_swapped( item,"activate",GTK_SIGNAL_FUNC(quit_program),ui_main);
+        g_signal_connect (item, "activate",
+			  G_CALLBACK (quit_program), ui_main);
         gtk_menu_item_set_accel_path( GTK_MENU_ITEM(item),
                                       ACCEL_PATH_QUIT_GAME);
 
@@ -591,7 +584,8 @@ static void new_2_player_game(gpointer    callback_data,
 #endif
 
 static void
-quit_program (UiMain* uimain)
+quit_program (GtkAction* action,
+	      UiMain   * uimain)
 {
 	// FIXME: use gtk_main_quit()
         exit(0);

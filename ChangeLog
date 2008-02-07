@@ -6,6 +6,13 @@
 
 2008-02-07  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/ui-main.c: (window_destroy_cb), (ui_main_new),
+	(quit_program): prepared quit_program() for the usage with GtkActions;
+	drop application_quit_cb() which was a wrapper - now the signatures
+	are identical
+
+2008-02-07  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-main.c: (continue_game), (ui_main_new), (pause_game):
 	prepared pause_game() for the usage with GtkActions; drop
 	game_pause_cb() which was a wrapper - now the signatures are identical
