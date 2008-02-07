@@ -1,5 +1,12 @@
 2008-02-07  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/ui-main.c: (ui_main_enabled_games_item),
+	(ui_main_game_changed): update the visibility and GamePause and
+	GameResume properly, as well as the sensitivity of GamePause and
+	GameStop
+
+2008-02-07  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-main.c: (ui_main_new): added labels and stock icons to
 	GNOME's main menu
 
