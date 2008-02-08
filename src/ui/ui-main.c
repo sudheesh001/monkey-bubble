@@ -216,6 +216,7 @@ ui_main_new (void)
 	GtkUIManager* ui_manager;
 	GError* error = NULL;
 	GtkActionEntry  entries[] = {
+		{"Game"},
 #ifdef MAEMO
 		{"GameNew", NULL, N_("New Game"),
 		 NULL, NULL,
@@ -314,7 +315,7 @@ ui_main_new (void)
 
 #ifdef MAEMO
 	gtk_ui_manager_add_ui_from_string (ui_manager,
-					   "<ui><popup name='main_menu'>"
+					   "<ui><popup name='main_menu' action='Game'>"
 					     "<menuitem action='GameNew' />"
 					     "<menuitem action='GameJoin' />"
 					     "<menuitem action='GamePause' />"
@@ -325,7 +326,8 @@ ui_main_new (void)
 #endif
 #ifdef GNOME
 	gtk_ui_manager_add_ui_from_string (ui_manager,
-					   "<ui><popup name='game_menu'>"
+					   "<ui><popup name='game_menu' action='Game'>"
+					     "<menuitem />"
 					     "<menuitem action='GameNew1Player' />"
 					     "<menuitem action='GameNew2Player' />"
 					     "<separator />"
