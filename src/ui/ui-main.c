@@ -282,7 +282,6 @@ ui_main_new (void)
 	};
 #ifdef MAEMO
 	HildonProgram * program;
-	GtkWidget * container;
 	GtkWidget * main_menu;
 #endif
         UiMain * ui_main;
@@ -300,29 +299,27 @@ ui_main_new (void)
 #endif
 #ifdef MAEMO
 	PRIVATE(ui_main)->glade_xml = glade_xml_new(DATADIR"/monkey-bubble/glade/monkey-bubble.glade","main_vbox",NULL);
+#endif
 
-	container = glade_xml_get_widget( PRIVATE(ui_main)->glade_xml, "main_vbox");
+        vbox = glade_xml_get_widget (PRIVATE (ui_main)->glade_xml, "main_vbox");
+
+	gtk_widget_destroy (vbox);
+	vbox = gtk_vbox_new (FALSE, 0);
+	gtk_widget_show (vbox);
+
+#ifdef MAEMO
 	program = HILDON_PROGRAM(hildon_program_get_instance());
 	PRIVATE(ui_main)->window = hildon_window_new();
 	g_signal_connect (PRIVATE (ui_main)->window, "destroy",
 			  G_CALLBACK (window_destroy_cb), ui_main);
 	hildon_program_add_window(program, HILDON_WINDOW(PRIVATE(ui_main)->window));
-	gtk_container_add(GTK_CONTAINER(PRIVATE(ui_main)->window),
-				container);
 	g_set_application_name(_("Monkey Bubble"));
 	g_signal_connect(G_OBJECT(program), "notify::is-topmost", G_CALLBACK(ui_main_topmost_cb), NULL);
 	PRIVATE(ui_main)->ic = NULL;
 #endif
 
-        vbox = glade_xml_get_widget( PRIVATE(ui_main)->glade_xml,"main_vbox");
-#ifdef GNOME
-	gtk_widget_destroy (vbox);
-	vbox = gtk_vbox_new (FALSE, 0);
-	gtk_widget_show (vbox);
-
 	gtk_container_add (GTK_CONTAINER (PRIVATE (ui_main)->window),
 			   vbox);
-#endif
 
         PRIVATE(ui_main)->canvas =monkey_canvas_new();
 	gtk_widget_show (GTK_WIDGET (PRIVATE(ui_main)->canvas));

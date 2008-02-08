@@ -1,6 +1,11 @@
 2008-02-08  Sven Herzberg  <sven@imendio.com>
 
 	* src/ui/ui-main.c: (ui_main_new): replace the glade-generated vbox by
+	a manually created one (for Maemo, too)
+
+2008-02-08  Sven Herzberg  <sven@imendio.com>
+
+	* src/ui/ui-main.c: (ui_main_new): replace the glade-generated vbox by
 	a manually created one (for GNOME)
 
 2008-02-08  Sven Herzberg  <sven@imendio.com>
