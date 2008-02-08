@@ -1,5 +1,9 @@
 2008-02-08  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/ui-main.c: (ui_main_new): removed the glade_xml from the code
+
+2008-02-08  Sven Herzberg  <sven@imendio.com>
+
 	* data/monkey-bubble.glade: dropped the main window
 	* src/ui/ui-main.c: (ui_main_new): don't use glade for the main window
 	anymore

@@ -127,7 +127,6 @@ struct UiMainPrivate {
         GameManager * manager;
         gboolean fullscreen;
         SoundManager * sm;
-        GladeXML * glade_xml;
 	GtkActionGroup* actions;
 #ifdef MAEMO
 	ConIcConnection *ic;
@@ -292,7 +291,6 @@ ui_main_new (void)
 
         ui_main = UI_MAIN(g_object_new(UI_TYPE_MAIN, NULL));
 
-	PRIVATE (ui_main)->glade_xml = NULL;
 #ifdef GNOME
 	PRIVATE (ui_main)->window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title (GTK_WINDOW (PRIVATE (ui_main)->window), _("Monkey Bubble"));
