@@ -88,8 +88,10 @@ static void game_pause_cb          (GtkAction* action,
 				    UiMain   * uimain);
 static void game_resume_cb         (GtkAction* action,
 				    UiMain   * uimain);
+#ifdef MAEMO
 static void pause_game             (GtkAction* action,
 				    UiMain   * uimain);
+#endif
 #ifdef GNOME
 static void stop_game              (GtkAction* action,
 				    UiMain   * uimain);
@@ -285,7 +287,6 @@ ui_main_new (void)
         UiMain * ui_main;
         GtkWidget * vbox;
 #ifdef GNOME
-        GtkWidget * item;
         KeyboardProperties * kp;
 #endif
 
@@ -395,72 +396,24 @@ ui_main_new (void)
         gtk_window_add_accel_group(GTK_WINDOW(PRIVATE(ui_main)->window),
                                    PRIVATE(ui_main)->accel_group);
 
-        item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"game_menu_menu");
-        gtk_menu_set_accel_group( GTK_MENU(item),
-                                  PRIVATE(ui_main)->accel_group);
-
-        item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"new_1_player");
-        g_signal_connect (item, "activate",
-			  G_CALLBACK (new_1_player_game), ui_main);
-        gtk_menu_item_set_accel_path( GTK_MENU_ITEM(item),
-                                      ACCEL_PATH_NEW_1_PLAYER);
 	gtk_action_set_accel_path (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GameNew1Player"),
 				   ACCEL_PATH_NEW_1_PLAYER);
-
-        item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"new_2_players");
-        g_signal_connect (item, "activate",
-			  G_CALLBACK (new_2_player_game), ui_main);
-        gtk_menu_item_set_accel_path( GTK_MENU_ITEM(item),
-                                      ACCEL_PATH_NEW_2_PLAYERS);
 	gtk_action_set_accel_path (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GameNew2Player"),
 				   ACCEL_PATH_NEW_2_PLAYERS);
-
-
-        item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"new_network_game");
-        g_signal_connect (item, "activate",
-			  G_CALLBACK (new_network_game), ui_main);
-
-        item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"new_network_server");
-        g_signal_connect (item, "activate",
-			  G_CALLBACK (new_network_server), ui_main);
-
-	item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml, "high_scores1");
-	g_signal_connect (item, "activate",
-			  G_CALLBACK (show_high_scores), ui_main);
-
-        item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"pause_game");
-        g_signal_connect (item, "activate",
-			  G_CALLBACK (pause_game), ui_main);
-        gtk_menu_item_set_accel_path( GTK_MENU_ITEM(item),
-                                      ACCEL_PATH_PAUSE_GAME);
 	gtk_action_set_accel_path (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GamePause"),
 				   ACCEL_PATH_PAUSE_GAME);
 	gtk_action_set_accel_path (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GameResume"),
 				   ACCEL_PATH_PAUSE_GAME);
-
-        item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"stop_game");
-        g_signal_connect (item, "activate",
-			  G_CALLBACK (stop_game), ui_main);
-        gtk_menu_item_set_accel_path( GTK_MENU_ITEM(item),
-                                      ACCEL_PATH_STOP_GAME);
 	gtk_action_set_accel_path (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GameStop"),
 				   ACCEL_PATH_STOP_GAME);
-
-        item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"main_quit");
-        g_signal_connect (item, "activate",
-			  G_CALLBACK (quit_program), ui_main);
-        gtk_menu_item_set_accel_path( GTK_MENU_ITEM(item),
-                                      ACCEL_PATH_QUIT_GAME);
 	gtk_action_set_accel_path (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GameQuit"),
 				   ACCEL_PATH_QUIT_GAME);
-
-        item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"game_preferences");
-        g_signal_connect (item, "activate",
-			  G_CALLBACK (show_preferences_dialog), ui_main);
 
         g_signal_connect (PRIVATE (ui_main)->window, "delete-event",
 			  G_CALLBACK (window_destroy_cb), NULL);
 
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (glade_xml_get_widget (PRIVATE (ui_main)->glade_xml, "game_menu")),
+				   gtk_ui_manager_get_widget (ui_manager, "/ui/game_menu"));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (glade_xml_get_widget (PRIVATE (ui_main)->glade_xml, "help")),
 				   gtk_ui_manager_get_widget (ui_manager, "/ui/help_menu"));
 #endif
@@ -601,6 +554,7 @@ void
 ui_main_enabled_games_item (UiMain  * ui_main,
 			    gboolean  enabled)
 {
+#if 0
         GtkWidget * item;
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"pause_game");
@@ -611,6 +565,7 @@ ui_main_enabled_games_item (UiMain  * ui_main,
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"stop_game");
         gtk_widget_set_sensitive(item,!enabled);
+#endif
 
 #ifdef GNOME
 	gtk_action_set_sensitive (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GameStop"),
@@ -666,6 +621,7 @@ game_resume_cb (GtkAction* action,
 	game_pause (PRIVATE (ui_main)->game, FALSE);
 }
 
+#ifdef MAEMO
 static void
 pause_game (GtkAction* action,
 	    UiMain   * ui_main)
@@ -678,6 +634,7 @@ pause_game (GtkAction* action,
                 }
         }
 }
+#endif
 
 static void ui_main_stop_game(UiMain * ui_main) {
       
