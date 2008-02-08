@@ -260,7 +260,6 @@ ui_main_new (void)
 	};
 #ifdef MAEMO
 	HildonProgram * program;
-	GtkWidget * main_menu;
 #endif
         UiMain * ui_main;
         GtkWidget * vbox;
@@ -358,15 +357,14 @@ ui_main_new (void)
 		error = NULL;
 	}
 
-#ifdef MAEMO
-	/* Setting menu */
-	main_menu = gtk_ui_manager_get_widget (ui_manager, "/ui/main_menu");
+	PRIVATE (ui_main)->menu = gtk_ui_manager_get_widget (ui_manager, "/ui/main_menu");
 
-	hildon_window_set_menu(HILDON_WINDOW(PRIVATE(ui_main)->window), GTK_MENU(main_menu));
+#ifdef MAEMO
+	hildon_window_set_menu (HILDON_WINDOW (PRIVATE (ui_main)->window),
+				GTK_MENU (PRIVATE (ui_main)->menu));
 #endif
 
 #ifdef GNOME
-        PRIVATE(ui_main)->menu = gtk_ui_manager_get_widget (ui_manager, "/ui/main_menu");
         g_object_ref(PRIVATE(ui_main)->menu);
         kp = keyboard_properties_get_instance();
 

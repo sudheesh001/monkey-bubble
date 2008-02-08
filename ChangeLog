@@ -1,5 +1,10 @@
 2008-02-08  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/ui-main.c: (ui_main_new): let maemo use the same variables
+	for the menu as gnome does
+
+2008-02-08  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-main.c: (ui_main_new): updated indentation of the GNOME
 	menu structure
 
