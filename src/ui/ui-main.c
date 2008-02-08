@@ -225,11 +225,10 @@ ui_main_new (void)
 		{"GameNew1Player", NULL, N_("New 1 player"),
 		 NULL, NULL,
 		 G_CALLBACK (new_1_player_game)},
-#ifdef MAEMO
-		{"GameJoin", NULL, N_("Join network game"),
+		{"GameNetworkJoin", NULL, N_("Join _network game"),
 		 NULL, NULL,
-		 G_CALLBACK (new_network_game)
-		},
+		 G_CALLBACK (new_network_game)},
+#ifdef MAEMO
 		{"GamePause", NULL, N_("Pause"),
 		 NULL, NULL,
 		 G_CALLBACK (pause_game)
@@ -245,9 +244,6 @@ ui_main_new (void)
 		{"GameNetworkNew", NULL, N_("New network game"),
 		 NULL, NULL,
 		 G_CALLBACK (new_network_server)},
-		{"GameNetworkJoin", NULL, N_("Join _network game"),
-		 NULL, NULL,
-		 G_CALLBACK (new_network_game)},
 		{"GameSettings", GTK_STOCK_PREFERENCES, NULL,
 		 NULL, NULL,
 		 G_CALLBACK (show_preferences_dialog)},
@@ -334,7 +330,7 @@ ui_main_new (void)
 	gtk_ui_manager_add_ui_from_string (ui_manager,
 					   "<ui><popup name='main_menu' action='Game'>"
 					     "<menuitem action='GameNew1Player' />"
-					     "<menuitem action='GameJoin' />"
+					     "<menuitem action='GameNetworkJoin' />"
 					     "<menuitem action='GamePause' />"
 					     "<menuitem action='ApplicationQuit' />"
 					   "</popup></ui>",
