@@ -281,8 +281,6 @@ ui_main_new (void)
 #ifdef MAEMO
 	program = HILDON_PROGRAM(hildon_program_get_instance());
 	PRIVATE(ui_main)->window = hildon_window_new();
-	g_signal_connect (PRIVATE (ui_main)->window, "destroy",
-			  G_CALLBACK (window_destroy_cb), ui_main);
 	hildon_program_add_window(program, HILDON_WINDOW(PRIVATE(ui_main)->window));
 	g_set_application_name(_("Monkey Bubble"));
 	g_signal_connect(G_OBJECT(program), "notify::is-topmost", G_CALLBACK(ui_main_topmost_cb), NULL);
@@ -393,10 +391,10 @@ ui_main_new (void)
 				   ACCEL_PATH_STOP_GAME);
 	gtk_action_set_accel_path (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GameQuit"),
 				   ACCEL_PATH_QUIT_GAME);
-
-        g_signal_connect (PRIVATE (ui_main)->window, "delete-event",
-			  G_CALLBACK (window_destroy_cb), NULL);
 #endif
+
+	g_signal_connect (PRIVATE (ui_main)->window, "destroy",
+			  G_CALLBACK (window_destroy_cb), ui_main);
 
 	g_object_unref (ui_manager);
 
