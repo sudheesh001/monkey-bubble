@@ -1,5 +1,11 @@
 2008-02-08  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/ui-main.c: (ui_main_new), (ui_main_enabled_games_item),
+	(ui_main_game_changed): merge the pause and resume handling code for
+	GNOME and Maemo
+
+2008-02-08  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-main.c: (ui_main_new): share the "Join network game" menu
 	item between Maemo and GNOME
 

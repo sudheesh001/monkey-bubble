@@ -88,10 +88,6 @@ static void game_pause_cb          (GtkAction* action,
 				    UiMain   * uimain);
 static void game_resume_cb         (GtkAction* action,
 				    UiMain   * uimain);
-#ifdef MAEMO
-static void pause_game             (GtkAction* action,
-				    UiMain   * uimain);
-#endif
 #ifdef GNOME
 static void stop_game              (GtkAction* action,
 				    UiMain   * uimain);
@@ -228,11 +224,13 @@ ui_main_new (void)
 		{"GameNetworkJoin", NULL, N_("Join _network game"),
 		 NULL, NULL,
 		 G_CALLBACK (new_network_game)},
-#ifdef MAEMO
-		{"GamePause", NULL, N_("Pause"),
+		{"GamePause", NULL, N_("Pause game"),
 		 NULL, NULL,
-		 G_CALLBACK (pause_game)
-		},
+		 G_CALLBACK (game_pause_cb)},
+		{"GameResume", NULL, N_("Resume game"),
+		 NULL, NULL,
+		 G_CALLBACK (game_resume_cb)},
+#ifdef MAEMO
 		{"ApplicationQuit", NULL, N_("Quit"),
 		 NULL, NULL,
 		 G_CALLBACK (quit_program)
@@ -250,12 +248,6 @@ ui_main_new (void)
 		{"GameScores", GTK_STOCK_INDEX, N_("_High Scores"),
 		 NULL, NULL,
 		 G_CALLBACK (show_high_scores)},
-		{"GamePause", NULL, N_("Pause game"),
-		 NULL, NULL,
-		 G_CALLBACK (game_pause_cb)},
-		{"GameResume", NULL, N_("Resume game"),
-		 NULL, NULL,
-		 G_CALLBACK (game_resume_cb)},
 		{"GameStop", NULL, N_("Stop game"),
 		 NULL, NULL,
 		 G_CALLBACK (stop_game)},
@@ -332,6 +324,7 @@ ui_main_new (void)
 					     "<menuitem action='GameNew1Player' />"
 					     "<menuitem action='GameNetworkJoin' />"
 					     "<menuitem action='GamePause' />"
+					     "<menuitem action='GameResume' />"
 					     "<menuitem action='ApplicationQuit' />"
 					   "</popup></ui>",
 					   -1,
@@ -549,13 +542,13 @@ ui_main_enabled_games_item (UiMain  * ui_main,
 #ifdef GNOME
 	gtk_action_set_sensitive (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GameStop"),
 				  !enabled);
+#endif
 	gtk_action_set_sensitive (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GamePause"),
 				  !enabled);
 	gtk_action_set_visible   (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GamePause"),
 				  TRUE);
 	gtk_action_set_visible   (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GameResume"),
 				  FALSE);
-#endif
 }
 
 static void
@@ -599,21 +592,6 @@ game_resume_cb (GtkAction* action,
 {
 	game_pause (PRIVATE (ui_main)->game, FALSE);
 }
-
-#ifdef MAEMO
-static void
-pause_game (GtkAction* action,
-	    UiMain   * ui_main)
-{
-        if( PRIVATE(ui_main)->game != NULL) {
-                if( game_get_state( PRIVATE(ui_main)->game) == GAME_PAUSED) {
-			game_resume_cb (action, ui_main);
-                } else {
-			game_pause_cb (action, ui_main);
-                }
-        }
-}
-#endif
 
 static void ui_main_stop_game(UiMain * ui_main) {
       
@@ -672,19 +650,15 @@ ui_main_game_changed(Game  * game,
                      UiMain* ui_main)
 {
         if( game_get_state(game) == GAME_PAUSED ) {
-#ifdef GNOME
 		gtk_action_set_visible (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GameResume"),
 					TRUE);
 		gtk_action_set_visible (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GamePause"),
 					FALSE);
-#endif
         } else if( game_get_state(game) == GAME_PLAYING ) {
-#ifdef GNOME
 		gtk_action_set_visible (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GameResume"),
 					FALSE);
 		gtk_action_set_visible (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GamePause"),
 					TRUE);
-#endif
         } else if( game_get_state(game) == GAME_STOPPED ) {
         }
 }
