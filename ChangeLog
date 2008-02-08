@@ -1,5 +1,10 @@
 2008-02-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
 
+	* src/ui/ui-main.c: (ui_main_new), (leave_fullscreen),
+	(window_state_event): add leave fullscreen action,menuitem and method
+
+2008-02-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
 	* src/ui/ui-main.c: (fullscreen): implement simple fullscreen
 
 2008-02-08  Laurent Belmonte  <laurent.belmonte@gmail.com>

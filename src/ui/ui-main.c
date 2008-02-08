@@ -111,6 +111,9 @@ static void show_preferences_dialog (GtkAction* action,
 static void fullscreen              (GtkAction* action,
 				     UiMain   * uimain);
 
+static void leave_fullscreen        (GtkAction* action,
+				     UiMain   * uimain);
+
 static void window_state_event	    (GtkWindow *window,
 				     GdkEvent  *event,
 				     UiMain    * uimain);
@@ -263,6 +266,9 @@ ui_main_new (void)
                 {"WindowFullscreen", GTK_STOCK_FULLSCREEN, N_("_Fullscreen"),
                  NULL, NULL,
                  G_CALLBACK (fullscreen)},
+                {"WindowLeaveFullscreen",GTK_STOCK_LEAVE_FULLSCREEN, N_("_Leave Fullscreen"),
+                 NULL, NULL,
+                 G_CALLBACK (leave_fullscreen)},
 #endif
 		{"GameQuit", GTK_STOCK_QUIT, NULL,
 		 NULL, NULL,
@@ -335,6 +341,7 @@ ui_main_new (void)
 					       "<menuitem action='GameSettings' />"
 					       "<menuitem action='GameScores' />"
 					       "<menuitem action='WindowFullscreen' />"
+					       "<menuitem action='WindowLeaveFullscreen' />"
 					       "<separator />"
 					       "<menuitem action='GamePause' />"
 					       "<menuitem action='GameResume' />"
@@ -389,6 +396,10 @@ ui_main_new (void)
 				   ACCEL_PATH_STOP_GAME);
 	gtk_action_set_accel_path (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GameQuit"),
 				   ACCEL_PATH_QUIT_GAME);
+        
+        // hide Leave fullscreen item on startup
+        gtk_action_set_visible (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "WindowLeaveFullscreen"),
+				FALSE);				   
 #endif
 
 	g_signal_connect (PRIVATE (ui_main)->window, "destroy",
@@ -837,6 +848,13 @@ static void fullscreen (GtkAction* action,
         gtk_window_fullscreen (GTK_WINDOW (PRIVATE (uimain)->window));
 }
 
+static void leave_fullscreen (GtkAction* action,
+                              UiMain   * uimain)
+{
+        gtk_window_unfullscreen (GTK_WINDOW (PRIVATE (uimain)->window));
+}
+
+
 static void window_state_event (GtkWindow *window,
                                 GdkEvent  *event,
                                 UiMain    * uimain)
@@ -848,6 +866,8 @@ static void window_state_event (GtkWindow *window,
                 fullscreen = ( gdk_window_get_state( GTK_WIDGET(window) ->window ) & GDK_WINDOW_STATE_FULLSCREEN ) != 0;
                 gtk_action_set_visible (gtk_action_group_get_action (PRIVATE (uimain)->actions, "WindowFullscreen"),
 					!fullscreen);
+                gtk_action_set_visible (gtk_action_group_get_action (PRIVATE (uimain)->actions, "WindowLeaveFullscreen"),
+					fullscreen);					
         }
 }
 #endif
