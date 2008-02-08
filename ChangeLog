@@ -1,3 +1,8 @@
+2008-02-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
+	* src/ui/ui-main.c: (ui_main_new), (fullscreen): add fullscreen
+	GtkActionEntry and dummy fullscreen callback
+
 2008-02-08  Sven Herzberg  <sven@imendio.com>
 
 	* src/ui/ui-main.c: (ui_main_new): set up the vbox' child widgets in

@@ -107,6 +107,9 @@ static void show_help_content       (GtkAction* action,
 
 static void show_preferences_dialog (GtkAction* action,
 				     UiMain   * uimain);
+
+static void fullscreen              (GtkAction* action,
+				     UiMain   * uimain);
 #endif
 
 static void ui_main_new_1_player_game(UiMain * ui_main);
@@ -253,6 +256,9 @@ ui_main_new (void)
 		{"HelpAbout", NULL, N_("_About"),
 		 NULL, NULL,
 		 G_CALLBACK (about)},
+                {"WindowFullscreen", GTK_STOCK_FULLSCREEN, N_("_Fullscreen"),
+                 NULL, NULL,
+                 G_CALLBACK (fullscreen)},
 #endif
 		{"GameQuit", GTK_STOCK_QUIT, NULL,
 		 NULL, NULL,
@@ -816,5 +822,11 @@ static void show_error_dialog (GtkWindow *transient_parent,
         gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
     
         gtk_widget_show_all (dialog);
+}
+
+static void fullscreen (GtkAction* action,
+                        UiMain   * uimain)
+{
+        // TODO : do something here
 }
 #endif
