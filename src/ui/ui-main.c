@@ -312,8 +312,6 @@ ui_main_new (void)
 	g_set_application_name(_("Monkey Bubble"));
 	g_signal_connect(G_OBJECT(program), "notify::is-topmost", G_CALLBACK(ui_main_topmost_cb), NULL);
 	PRIVATE(ui_main)->ic = NULL;
-
-	gtk_widget_hide (glade_xml_get_widget (PRIVATE(ui_main)->glade_xml, "main_menubar"));
 #endif
 
         vbox = glade_xml_get_widget( PRIVATE(ui_main)->glade_xml,"main_vbox");
@@ -389,7 +387,6 @@ ui_main_new (void)
 #endif
 
 #ifdef GNOME
-	gtk_widget_destroy (glade_xml_get_widget (PRIVATE (ui_main)->glade_xml, "main_menubar"));
         PRIVATE(ui_main)->menu = gtk_ui_manager_get_widget (ui_manager, "/ui/menubar");
         g_object_ref(PRIVATE(ui_main)->menu);
         kp = keyboard_properties_get_instance();
