@@ -327,7 +327,6 @@ ui_main_new (void)
 #ifdef GNOME
 	gtk_ui_manager_add_ui_from_string (ui_manager,
 					   "<ui><popup name='game_menu' action='Game'>"
-					     "<menuitem />"
 					     "<menuitem action='GameNew1Player' />"
 					     "<menuitem action='GameNew2Player' />"
 					     "<separator />"
