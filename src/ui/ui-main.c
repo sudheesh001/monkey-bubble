@@ -291,9 +291,6 @@ ui_main_new (void)
 
         vbox = glade_xml_get_widget( PRIVATE(ui_main)->glade_xml,"main_vbox");
 
-        ui_main_enabled_games_item(ui_main ,TRUE);
-
-
         PRIVATE(ui_main)->canvas =monkey_canvas_new();
 	gtk_widget_show (GTK_WIDGET (PRIVATE(ui_main)->canvas));
         PRIVATE(ui_main)->main_image = 
@@ -444,6 +441,8 @@ ui_main_new (void)
 #endif
 
 	g_object_unref (ui_manager);
+
+        ui_main_enabled_games_item(ui_main ,TRUE);
 
         PRIVATE(ui_main)->game = NULL;
 
