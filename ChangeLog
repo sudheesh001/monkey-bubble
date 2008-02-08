@@ -1,5 +1,10 @@
 2008-02-08  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/ui-main.c: (ui_main_new): set up the vbox' child widgets in
+	the proper order, so we don't have to reorder the box again
+
+2008-02-08  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-main.c: (ui_main_new): let maemo use the same variables
 	for the menu as gnome does
 

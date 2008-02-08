@@ -289,20 +289,6 @@ ui_main_new (void)
 	gtk_container_add (GTK_CONTAINER (PRIVATE (ui_main)->window),
 			   vbox);
 
-        PRIVATE(ui_main)->canvas =monkey_canvas_new();
-	gtk_widget_show (GTK_WIDGET (PRIVATE(ui_main)->canvas));
-        PRIVATE(ui_main)->main_image = 
-                monkey_canvas_create_block_from_image(
-                                                      PRIVATE(ui_main)->canvas,
-                                                      DATADIR"/monkey-bubble/gfx/splash.svg",
-                                                      640,480,
-                                                      0,0);
-
-        gtk_box_pack_end (GTK_BOX (vbox),
-                          GTK_WIDGET(PRIVATE(ui_main)->canvas),
-                          TRUE,
-                          TRUE, 0);
-
 	ui_manager = gtk_ui_manager_new ();
 
 	PRIVATE (ui_main)->actions = gtk_action_group_new ("main");
@@ -373,9 +359,6 @@ ui_main_new (void)
 			    FALSE,
 			    FALSE,
 			    0);
-	gtk_box_reorder_child (GTK_BOX (vbox),
-			       PRIVATE (ui_main)->menu,
-			       0);
 
         PRIVATE(ui_main)->accel_group = g_object_ref (gtk_ui_manager_get_accel_group (ui_manager));
         gtk_window_add_accel_group(GTK_WINDOW(PRIVATE(ui_main)->window),
@@ -400,7 +383,21 @@ ui_main_new (void)
 
 	g_object_unref (ui_manager);
 
-        ui_main_enabled_games_item(ui_main ,TRUE);
+        ui_main_enabled_games_item (ui_main, TRUE);
+
+	PRIVATE (ui_main)->canvas = monkey_canvas_new();
+	gtk_widget_show (GTK_WIDGET (PRIVATE (ui_main)->canvas));
+	PRIVATE (ui_main)->main_image =
+		monkey_canvas_create_block_from_image (
+						       PRIVATE (ui_main)->canvas,
+						       DATADIR "/monkey-bubble/gfx/splash.svg",
+						       640, 480,
+						       0, 0);
+
+	gtk_box_pack_end (GTK_BOX (vbox),
+			  GTK_WIDGET (PRIVATE (ui_main)->canvas),
+			  TRUE,
+			  TRUE, 0);
 
         PRIVATE(ui_main)->game = NULL;
 
