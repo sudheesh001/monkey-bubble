@@ -328,6 +328,7 @@ ui_main_new (void)
 					       "<separator />"
 					       "<menuitem action='GameSettings' />"
 					       "<menuitem action='GameScores' />"
+					       "<menuitem action='WindowFullscreen' />"
 					       "<separator />"
 					       "<menuitem action='GamePause' />"
 					       "<menuitem action='GameResume' />"
