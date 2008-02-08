@@ -315,6 +315,14 @@ ui_main_new (void)
 #endif
 
         vbox = glade_xml_get_widget( PRIVATE(ui_main)->glade_xml,"main_vbox");
+#ifdef GNOME
+	gtk_widget_destroy (vbox);
+	vbox = gtk_vbox_new (FALSE, 0);
+	gtk_widget_show (vbox);
+
+	gtk_container_add (GTK_CONTAINER (PRIVATE (ui_main)->window),
+			   vbox);
+#endif
 
         PRIVATE(ui_main)->canvas =monkey_canvas_new();
 	gtk_widget_show (GTK_WIDGET (PRIVATE(ui_main)->canvas));
@@ -391,12 +399,12 @@ ui_main_new (void)
         g_object_ref(PRIVATE(ui_main)->menu);
         kp = keyboard_properties_get_instance();
 
-	gtk_box_pack_start (GTK_BOX (glade_xml_get_widget (PRIVATE (ui_main)->glade_xml, "main_vbox")),
+	gtk_box_pack_start (GTK_BOX (vbox),
 			    PRIVATE (ui_main)->menu,
 			    FALSE,
 			    FALSE,
 			    0);
-	gtk_box_reorder_child (GTK_BOX (glade_xml_get_widget (PRIVATE (ui_main)->glade_xml, "main_vbox")),
+	gtk_box_reorder_child (GTK_BOX (vbox),
 			       PRIVATE (ui_main)->menu,
 			       0);
 
