@@ -4,6 +4,11 @@
 
 2008-02-08  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/ui-main.c: (ui_main_new), (game_pause_cb),
+	(game_resume_cb), (pause_game): added callbacks for the new GtkActions
+
+2008-02-08  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-main.c: (ui_main_new): added a "Game" action to work
 	around bug http://bugzilla.gnome.org/show_bug.cgi?id=515017
 

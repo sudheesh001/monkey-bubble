@@ -84,6 +84,10 @@ static void show_high_scores       (GtkAction* action,
 				    UiMain   * uimain);
 #endif
 
+static void game_pause_cb          (GtkAction* action,
+				    UiMain   * uimain);
+static void game_resume_cb         (GtkAction* action,
+				    UiMain   * uimain);
 static void pause_game             (GtkAction* action,
 				    UiMain   * uimain);
 #ifdef GNOME
@@ -235,16 +239,36 @@ ui_main_new (void)
 		 G_CALLBACK (quit_program)
 		}
 #elif defined(GNOME)
-		{"GameNew1Player", NULL, N_("New 1 player")},
-		{"GameNew2Player", NULL, N_("New 2 players")},
-		{"GameNetworkNew", NULL, N_("New network game")},
-		{"GameNetworkJoin", NULL, N_("Join _network game")},
-		{"GameSettings", GTK_STOCK_PREFERENCES},
-		{"GameScores", GTK_STOCK_INDEX, N_("_High Scores")},
-		{"GamePause", NULL, N_("Pause game")},
-		{"GameResume", NULL, N_("Resume game")},
-		{"GameStop", NULL, N_("Stop game")},
-		{"GameQuit", GTK_STOCK_QUIT},
+		{"GameNew1Player", NULL, N_("New 1 player"),
+		 NULL, NULL,
+		 G_CALLBACK (new_1_player_game)},
+		{"GameNew2Player", NULL, N_("New 2 players"),
+		 NULL, NULL,
+		 G_CALLBACK (new_2_player_game)},
+		{"GameNetworkNew", NULL, N_("New network game"),
+		 NULL, NULL,
+		 G_CALLBACK (new_network_server)},
+		{"GameNetworkJoin", NULL, N_("Join _network game"),
+		 NULL, NULL,
+		 G_CALLBACK (new_network_game)},
+		{"GameSettings", GTK_STOCK_PREFERENCES, NULL,
+		 NULL, NULL,
+		 G_CALLBACK (show_preferences_dialog)},
+		{"GameScores", GTK_STOCK_INDEX, N_("_High Scores"),
+		 NULL, NULL,
+		 G_CALLBACK (show_high_scores)},
+		{"GamePause", NULL, N_("Pause game"),
+		 NULL, NULL,
+		 G_CALLBACK (game_pause_cb)},
+		{"GameResume", NULL, N_("Resume game"),
+		 NULL, NULL,
+		 G_CALLBACK (game_resume_cb)},
+		{"GameStop", NULL, N_("Stop game"),
+		 NULL, NULL,
+		 G_CALLBACK (stop_game)},
+		{"GameQuit", GTK_STOCK_QUIT, NULL,
+		 NULL, NULL,
+		 G_CALLBACK (quit_program)},
 		{"HelpContent", GTK_STOCK_HELP, N_("_Contents"),
 		 NULL, NULL,
 		 G_CALLBACK (show_help_content)},
@@ -629,14 +653,28 @@ quit_program (GtkAction* action,
 }
 
 static void
+game_pause_cb (GtkAction* action,
+	       UiMain   * ui_main)
+{
+	game_pause (PRIVATE (ui_main)->game, TRUE);
+}
+
+static void
+game_resume_cb (GtkAction* action,
+		UiMain   * ui_main)
+{
+	game_pause (PRIVATE (ui_main)->game, FALSE);
+}
+
+static void
 pause_game (GtkAction* action,
 	    UiMain   * ui_main)
 {
         if( PRIVATE(ui_main)->game != NULL) {
                 if( game_get_state( PRIVATE(ui_main)->game) == GAME_PAUSED) {
-                        game_pause(PRIVATE(ui_main)->game,FALSE);
+			game_resume_cb (action, ui_main);
                 } else {
-                        game_pause(PRIVATE(ui_main)->game,TRUE);
+			game_pause_cb (action, ui_main);
                 }
         }
 }
