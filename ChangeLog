@@ -1,5 +1,9 @@
 2008-02-08  Sven Herzberg  <sven@imendio.com>
 
+	* data/monkey-bubble.glade: dropped the unused game menu
+
+2008-02-08  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-main.c: (ui_main_new), (ui_main_enabled_games_item): use
 	the generated menu
 
