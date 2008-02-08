@@ -222,7 +222,7 @@ ui_main_new (void)
 	GtkUIManager* ui_manager;
 	GError* error = NULL;
 	GtkActionEntry  entries[] = {
-		{"Game"},
+		{"Game", NULL, N_("_Game")},
 #ifdef MAEMO
 		{"GameNew", NULL, N_("New Game"),
 		 NULL, NULL,
@@ -271,6 +271,7 @@ ui_main_new (void)
 		{"GameQuit", GTK_STOCK_QUIT, NULL,
 		 NULL, NULL,
 		 G_CALLBACK (quit_program)},
+		{"Help", NULL, N_("_Help")},
 		{"HelpContent", GTK_STOCK_HELP, N_("_Contents"),
 		 NULL, NULL,
 		 G_CALLBACK (show_help_content)},
@@ -351,7 +352,7 @@ ui_main_new (void)
 #endif
 #ifdef GNOME
 	gtk_ui_manager_add_ui_from_string (ui_manager,
-					   "<ui><popup name='game_menu' action='Game'>"
+					   "<ui><menubar><menu action='Game'>"
 					     "<menuitem action='GameNew1Player' />"
 					     "<menuitem action='GameNew2Player' />"
 					     "<separator />"
@@ -365,10 +366,10 @@ ui_main_new (void)
 					     "<menuitem action='GameResume' />"
 					     "<menuitem action='GameStop' />"
 					     "<menuitem action='GameQuit' />"
-					   "</popup><popup name='help_menu'>"
+					   "</menu><menu action='Help'>"
 					     "<menuitem action='HelpContent' />"
 					     "<menuitem action='HelpAbout' />"
-					   "</popup></ui>",
+					   "</menu></menubar></ui>",
 					   -1,
 					   &error);
 #endif
@@ -388,9 +389,19 @@ ui_main_new (void)
 #endif
 
 #ifdef GNOME
-        PRIVATE(ui_main)->menu = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"main_menubar");
+	gtk_widget_destroy (glade_xml_get_widget (PRIVATE (ui_main)->glade_xml, "main_menubar"));
+        PRIVATE(ui_main)->menu = gtk_ui_manager_get_widget (ui_manager, "/ui/menubar");
         g_object_ref(PRIVATE(ui_main)->menu);
         kp = keyboard_properties_get_instance();
+
+	gtk_box_pack_start (GTK_BOX (glade_xml_get_widget (PRIVATE (ui_main)->glade_xml, "main_vbox")),
+			    PRIVATE (ui_main)->menu,
+			    FALSE,
+			    FALSE,
+			    0);
+	gtk_box_reorder_child (GTK_BOX (glade_xml_get_widget (PRIVATE (ui_main)->glade_xml, "main_vbox")),
+			       PRIVATE (ui_main)->menu,
+			       0);
 
         PRIVATE(ui_main)->accel_group = g_object_ref (gtk_ui_manager_get_accel_group (ui_manager));
         gtk_window_add_accel_group(GTK_WINDOW(PRIVATE(ui_main)->window),
@@ -411,11 +422,6 @@ ui_main_new (void)
 
         g_signal_connect (PRIVATE (ui_main)->window, "delete-event",
 			  G_CALLBACK (window_destroy_cb), NULL);
-
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (glade_xml_get_widget (PRIVATE (ui_main)->glade_xml, "game_menu")),
-				   gtk_ui_manager_get_widget (ui_manager, "/ui/game_menu"));
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (glade_xml_get_widget (PRIVATE (ui_main)->glade_xml, "help")),
-				   gtk_ui_manager_get_widget (ui_manager, "/ui/help_menu"));
 #endif
 
 	g_object_unref (ui_manager);
@@ -554,19 +560,6 @@ void
 ui_main_enabled_games_item (UiMain  * ui_main,
 			    gboolean  enabled)
 {
-#if 0
-        GtkWidget * item;
-
-        item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"pause_game");
-        gtk_widget_set_sensitive(item,!enabled);
-
-        item = gtk_bin_get_child( GTK_BIN(item));
-        gtk_label_set_text( GTK_LABEL(item), _("Pause game"));
-
-        item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"stop_game");
-        gtk_widget_set_sensitive(item,!enabled);
-#endif
-
 #ifdef GNOME
 	gtk_action_set_sensitive (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GameStop"),
 				  !enabled);
@@ -692,14 +685,7 @@ void
 ui_main_game_changed(Game  * game,
                      UiMain* ui_main)
 {
-        GtkWidget * item;
-
         if( game_get_state(game) == GAME_PAUSED ) {
-                item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"pause_game");
-
-                item = gtk_bin_get_child( GTK_BIN(item));
-                gtk_label_set_text( GTK_LABEL(item), _("Resume game"));
-
 #ifdef GNOME
 		gtk_action_set_visible (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GameResume"),
 					TRUE);
@@ -707,11 +693,6 @@ ui_main_game_changed(Game  * game,
 					FALSE);
 #endif
         } else if( game_get_state(game) == GAME_PLAYING ) {
-                item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"pause_game");
-
-                item = gtk_bin_get_child( GTK_BIN(item));
-                gtk_label_set_text( GTK_LABEL(item), _("Pause game"));
-
 #ifdef GNOME
 		gtk_action_set_visible (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GameResume"),
 					FALSE);
