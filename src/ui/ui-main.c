@@ -222,11 +222,10 @@ ui_main_new (void)
 	GError* error = NULL;
 	GtkActionEntry  entries[] = {
 		{"Game", NULL, N_("_Game")},
-#ifdef MAEMO
-		{"GameNew", NULL, N_("New Game"),
+		{"GameNew1Player", NULL, N_("New 1 player"),
 		 NULL, NULL,
-		 G_CALLBACK (new_1_player_game)
-		},
+		 G_CALLBACK (new_1_player_game)},
+#ifdef MAEMO
 		{"GameJoin", NULL, N_("Join network game"),
 		 NULL, NULL,
 		 G_CALLBACK (new_network_game)
@@ -240,9 +239,6 @@ ui_main_new (void)
 		 G_CALLBACK (quit_program)
 		}
 #elif defined(GNOME)
-		{"GameNew1Player", NULL, N_("New 1 player"),
-		 NULL, NULL,
-		 G_CALLBACK (new_1_player_game)},
 		{"GameNew2Player", NULL, N_("New 2 players"),
 		 NULL, NULL,
 		 G_CALLBACK (new_2_player_game)},
@@ -337,7 +333,7 @@ ui_main_new (void)
 #ifdef MAEMO
 	gtk_ui_manager_add_ui_from_string (ui_manager,
 					   "<ui><popup name='main_menu' action='Game'>"
-					     "<menuitem action='GameNew' />"
+					     "<menuitem action='GameNew1Player' />"
 					     "<menuitem action='GameJoin' />"
 					     "<menuitem action='GamePause' />"
 					     "<menuitem action='ApplicationQuit' />"
