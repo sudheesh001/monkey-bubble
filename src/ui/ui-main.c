@@ -382,12 +382,16 @@ ui_main_new (void)
 			  G_CALLBACK (new_1_player_game), ui_main);
         gtk_menu_item_set_accel_path( GTK_MENU_ITEM(item),
                                       ACCEL_PATH_NEW_1_PLAYER);
+	gtk_action_set_accel_path (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GameNew1Player"),
+				   ACCEL_PATH_NEW_1_PLAYER);
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"new_2_players");
         g_signal_connect (item, "activate",
 			  G_CALLBACK (new_2_player_game), ui_main);
         gtk_menu_item_set_accel_path( GTK_MENU_ITEM(item),
                                       ACCEL_PATH_NEW_2_PLAYERS);
+	gtk_action_set_accel_path (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GameNew2Player"),
+				   ACCEL_PATH_NEW_2_PLAYERS);
 
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"new_network_game");
@@ -407,18 +411,26 @@ ui_main_new (void)
 			  G_CALLBACK (pause_game), ui_main);
         gtk_menu_item_set_accel_path( GTK_MENU_ITEM(item),
                                       ACCEL_PATH_PAUSE_GAME);
+	gtk_action_set_accel_path (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GamePause"),
+				   ACCEL_PATH_PAUSE_GAME);
+	gtk_action_set_accel_path (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GameResume"),
+				   ACCEL_PATH_PAUSE_GAME);
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"stop_game");
         g_signal_connect (item, "activate",
 			  G_CALLBACK (stop_game), ui_main);
         gtk_menu_item_set_accel_path( GTK_MENU_ITEM(item),
                                       ACCEL_PATH_STOP_GAME);
+	gtk_action_set_accel_path (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GameStop"),
+				   ACCEL_PATH_STOP_GAME);
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"main_quit");
         g_signal_connect (item, "activate",
 			  G_CALLBACK (quit_program), ui_main);
         gtk_menu_item_set_accel_path( GTK_MENU_ITEM(item),
                                       ACCEL_PATH_QUIT_GAME);
+	gtk_action_set_accel_path (gtk_action_group_get_action (PRIVATE (ui_main)->actions, "GameQuit"),
+				   ACCEL_PATH_QUIT_GAME);
 
         item = glade_xml_get_widget(PRIVATE(ui_main)->glade_xml,"game_preferences");
         g_signal_connect (item, "activate",
