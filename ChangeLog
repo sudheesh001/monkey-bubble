@@ -1,5 +1,9 @@
 2008-02-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
 
+	* src/ui/ui-main.c: (fullscreen): implement simple fullscreen
+
+2008-02-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
 	* src/ui/ui-main.c: (frame_event): listen window state and change
 	fullscreen action state
 

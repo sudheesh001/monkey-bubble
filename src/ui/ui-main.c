@@ -834,7 +834,7 @@ static void show_error_dialog (GtkWindow *transient_parent,
 static void fullscreen (GtkAction* action,
                         UiMain   * uimain)
 {
-        // TODO : do something here
+        gtk_window_fullscreen (GTK_WINDOW (PRIVATE (uimain)->window));
 }
 
 static void window_state_event (GtkWindow *window,
