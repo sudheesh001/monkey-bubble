@@ -841,6 +841,13 @@ static void window_state_event (GtkWindow *window,
                                 GdkEvent  *event,
                                 UiMain    * uimain)
 {
-        // TODO : do something here
+        if( ( ((GdkEventWindowState*) event) ->changed_mask & GDK_WINDOW_STATE_FULLSCREEN ) != 0 ) {
+                // fullscreen event
+                gboolean fullscreen;
+                
+                fullscreen = ( gdk_window_get_state( GTK_WIDGET(window) ->window ) & GDK_WINDOW_STATE_FULLSCREEN ) != 0;
+                gtk_action_set_visible (gtk_action_group_get_action (PRIVATE (uimain)->actions, "WindowFullscreen"),
+					!fullscreen);
+        }
 }
 #endif

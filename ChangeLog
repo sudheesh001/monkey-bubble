@@ -1,5 +1,10 @@
 2008-02-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
 
+	* src/ui/ui-main.c: (frame_event): listen window state and change
+	fullscreen action state
+
+2008-02-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
 	* src/ui/ui-main.c: (ui_main_new), (frame_event): listen window state,
 	dummy code behind
 
