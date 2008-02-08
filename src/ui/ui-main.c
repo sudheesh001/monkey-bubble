@@ -314,10 +314,12 @@ ui_main_new (void)
 #ifdef MAEMO
 	gtk_ui_manager_add_ui_from_string (ui_manager,
 					   "<ui><popup name='main_menu' action='Game'>"
-					     "<menuitem action='GameNew1Player' />"
-					     "<menuitem action='GameNetworkJoin' />"
-					     "<menuitem action='GamePause' />"
-					     "<menuitem action='GameResume' />"
+					     "<menu action='Game'>"
+					       "<menuitem action='GameNew1Player' />"
+					       "<menuitem action='GameNetworkJoin' />"
+					       "<menuitem action='GamePause' />"
+					       "<menuitem action='GameResume' />"
+					     "</menu>"
 					     "<menuitem action='GameQuit' />"
 					   "</popup></ui>",
 					   -1,
