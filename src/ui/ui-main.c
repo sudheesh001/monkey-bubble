@@ -327,24 +327,26 @@ ui_main_new (void)
 #endif
 #ifdef GNOME
 	gtk_ui_manager_add_ui_from_string (ui_manager,
-					   "<ui><menubar><menu action='Game'>"
-					     "<menuitem action='GameNew1Player' />"
-					     "<menuitem action='GameNew2Player' />"
-					     "<separator />"
-					     "<menuitem action='GameNetworkNew' />"
-					     "<menuitem action='GameNetworkJoin' />"
-					     "<separator />"
-					     "<menuitem action='GameSettings' />"
-					     "<menuitem action='GameScores' />"
-					     "<separator />"
-					     "<menuitem action='GamePause' />"
-					     "<menuitem action='GameResume' />"
-					     "<menuitem action='GameStop' />"
-					     "<menuitem action='GameQuit' />"
-					   "</menu><menu action='Help'>"
-					     "<menuitem action='HelpContent' />"
-					     "<menuitem action='HelpAbout' />"
-					   "</menu></menubar></ui>",
+					   "<ui><menubar name='main_menu'>"
+					     "<menu action='Game'>"
+					       "<menuitem action='GameNew1Player' />"
+					       "<menuitem action='GameNew2Player' />"
+					       "<separator />"
+					       "<menuitem action='GameNetworkNew' />"
+					       "<menuitem action='GameNetworkJoin' />"
+					       "<separator />"
+					       "<menuitem action='GameSettings' />"
+					       "<menuitem action='GameScores' />"
+					       "<separator />"
+					       "<menuitem action='GamePause' />"
+					       "<menuitem action='GameResume' />"
+					       "<menuitem action='GameStop' />"
+					       "<menuitem action='GameQuit' />"
+					     "</menu><menu action='Help'>"
+					       "<menuitem action='HelpContent' />"
+					       "<menuitem action='HelpAbout' />"
+					     "</menu>"
+					   "</menubar></ui>",
 					   -1,
 					   &error);
 #endif
@@ -364,7 +366,7 @@ ui_main_new (void)
 #endif
 
 #ifdef GNOME
-        PRIVATE(ui_main)->menu = gtk_ui_manager_get_widget (ui_manager, "/ui/menubar");
+        PRIVATE(ui_main)->menu = gtk_ui_manager_get_widget (ui_manager, "/ui/main_menu");
         g_object_ref(PRIVATE(ui_main)->menu);
         kp = keyboard_properties_get_instance();
 

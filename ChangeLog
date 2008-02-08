@@ -1,5 +1,10 @@
 2008-02-08  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/ui-main.c: (ui_main_new): updated indentation of the GNOME
+	menu structure
+
+2008-02-08  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-main.c: (ui_main_new): adjusted the maemo menu to comply
 	with the maemo style guidelines
 	(http://test.maemo.org/community/hildon_ui.html)
