@@ -230,12 +230,7 @@ ui_main_new (void)
 		{"GameResume", NULL, N_("Resume game"),
 		 NULL, NULL,
 		 G_CALLBACK (game_resume_cb)},
-#ifdef MAEMO
-		{"ApplicationQuit", NULL, N_("Quit"),
-		 NULL, NULL,
-		 G_CALLBACK (quit_program)
-		}
-#elif defined(GNOME)
+#ifdef GNOME
 		{"GameNew2Player", NULL, N_("New 2 players"),
 		 NULL, NULL,
 		 G_CALLBACK (new_2_player_game)},
@@ -251,17 +246,17 @@ ui_main_new (void)
 		{"GameStop", NULL, N_("Stop game"),
 		 NULL, NULL,
 		 G_CALLBACK (stop_game)},
-		{"GameQuit", GTK_STOCK_QUIT, NULL,
-		 NULL, NULL,
-		 G_CALLBACK (quit_program)},
 		{"Help", NULL, N_("_Help")},
 		{"HelpContent", GTK_STOCK_HELP, N_("_Contents"),
 		 NULL, NULL,
 		 G_CALLBACK (show_help_content)},
 		{"HelpAbout", NULL, N_("_About"),
 		 NULL, NULL,
-		 G_CALLBACK (about)}
+		 G_CALLBACK (about)},
 #endif
+		{"GameQuit", GTK_STOCK_QUIT, NULL,
+		 NULL, NULL,
+		 G_CALLBACK (quit_program)}
 	};
 #ifdef MAEMO
 	HildonProgram * program;
@@ -325,7 +320,7 @@ ui_main_new (void)
 					     "<menuitem action='GameNetworkJoin' />"
 					     "<menuitem action='GamePause' />"
 					     "<menuitem action='GameResume' />"
-					     "<menuitem action='ApplicationQuit' />"
+					     "<menuitem action='GameQuit' />"
 					   "</popup></ui>",
 					   -1,
 					   &error);
