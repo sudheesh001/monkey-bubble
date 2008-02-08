@@ -1,5 +1,11 @@
 2008-02-08  Sven Herzberg  <sven@imendio.com>
 
+	* data/monkey-bubble.glade: dropped the main window
+	* src/ui/ui-main.c: (ui_main_new): don't use glade for the main window
+	anymore
+
+2008-02-08  Sven Herzberg  <sven@imendio.com>
+
 	* data/monkey-bubble.glade: remove the old vbox (it's not used
 	anymore)
 	* src/ui/ui-main.c: (ui_main_new): don't replace the old vbox, just

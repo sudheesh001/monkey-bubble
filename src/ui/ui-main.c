@@ -292,13 +292,10 @@ ui_main_new (void)
 
         ui_main = UI_MAIN(g_object_new(UI_TYPE_MAIN, NULL));
 
+	PRIVATE (ui_main)->glade_xml = NULL;
 #ifdef GNOME
-        PRIVATE(ui_main)->glade_xml = glade_xml_new(DATADIR"/monkey-bubble/glade/monkey-bubble.glade","main_window",NULL);
-        
-        PRIVATE(ui_main)->window = glade_xml_get_widget( PRIVATE(ui_main)->glade_xml, "main_window");
-#endif
-#ifdef MAEMO
-	PRIVATE(ui_main)->glade_xml = NULL; //glade_xml_new(DATADIR"/monkey-bubble/glade/monkey-bubble.glade","main_vbox",NULL);
+	PRIVATE (ui_main)->window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+	gtk_window_set_title (GTK_WINDOW (PRIVATE (ui_main)->window), _("Monkey Bubble"));
 #endif
 
 	vbox = gtk_vbox_new (FALSE, 0);
