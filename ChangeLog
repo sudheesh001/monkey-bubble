@@ -1,5 +1,10 @@
 2008-02-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
 
+	* src/ui/ui-main.c: (ui_main_new), (frame_event): listen window state,
+	dummy code behind
+
+2008-02-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
+
 	* src/ui/ui-main.c: (ui_main_new): add fullscreen menuitem to ui
 	string
 

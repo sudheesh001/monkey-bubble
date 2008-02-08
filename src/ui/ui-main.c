@@ -110,6 +110,10 @@ static void show_preferences_dialog (GtkAction* action,
 
 static void fullscreen              (GtkAction* action,
 				     UiMain   * uimain);
+
+static void window_state_event	    (GtkWindow *window,
+				     GdkEvent  *event,
+				     UiMain    * uimain);
 #endif
 
 static void ui_main_new_1_player_game(UiMain * ui_main);
@@ -278,6 +282,8 @@ ui_main_new (void)
 #ifdef GNOME
 	PRIVATE (ui_main)->window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title (GTK_WINDOW (PRIVATE (ui_main)->window), _("Monkey Bubble"));
+	g_signal_connect (G_OBJECT(PRIVATE (ui_main)->window), "window-state-event",
+			  G_CALLBACK (window_state_event), ui_main);
 #endif
 
 	vbox = gtk_vbox_new (FALSE, 0);
@@ -827,6 +833,13 @@ static void show_error_dialog (GtkWindow *transient_parent,
 
 static void fullscreen (GtkAction* action,
                         UiMain   * uimain)
+{
+        // TODO : do something here
+}
+
+static void window_state_event (GtkWindow *window,
+                                GdkEvent  *event,
+                                UiMain    * uimain)
 {
         // TODO : do something here
 }
