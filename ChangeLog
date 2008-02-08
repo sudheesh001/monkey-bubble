@@ -1,5 +1,12 @@
 2008-02-08  Sven Herzberg  <sven@imendio.com>
 
+	* data/monkey-bubble.glade: remove the old vbox (it's not used
+	anymore)
+	* src/ui/ui-main.c: (ui_main_new): don't replace the old vbox, just
+	create the new one; don't load the glade UI for Maemo
+
+2008-02-08  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-main.c: (ui_main_new): replace the glade-generated vbox by
 	a manually created one (for Maemo, too)
 

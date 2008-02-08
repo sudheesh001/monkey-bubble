@@ -298,12 +298,9 @@ ui_main_new (void)
         PRIVATE(ui_main)->window = glade_xml_get_widget( PRIVATE(ui_main)->glade_xml, "main_window");
 #endif
 #ifdef MAEMO
-	PRIVATE(ui_main)->glade_xml = glade_xml_new(DATADIR"/monkey-bubble/glade/monkey-bubble.glade","main_vbox",NULL);
+	PRIVATE(ui_main)->glade_xml = NULL; //glade_xml_new(DATADIR"/monkey-bubble/glade/monkey-bubble.glade","main_vbox",NULL);
 #endif
 
-        vbox = glade_xml_get_widget (PRIVATE (ui_main)->glade_xml, "main_vbox");
-
-	gtk_widget_destroy (vbox);
 	vbox = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox);
 
