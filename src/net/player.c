@@ -29,10 +29,12 @@
 #define PRIVATE(self) (self->private )
 static GObjectClass* parent_class = NULL;
 
-struct NetworkPlayerPrivate 
+struct NetworkPlayerPrivate
 {
 	gchar * name;
 };
+
+G_DEFINE_TYPE (NetworkPlayer, network_player, G_TYPE_OBJECT);
 
 NetworkPlayer *
 network_player_new  (const gchar * name)
@@ -50,8 +52,8 @@ network_player_get_name (NetworkPlayer * player)
 	return PRIVATE(player)->name;
 }
 
-static void 
-network_player_instance_init(NetworkPlayer * self) 
+static void
+network_player_init (NetworkPlayer* self)
 {
 	PRIVATE(self) = g_new0 (NetworkPlayerPrivate, 1);
 	PRIVATE(self)->name = NULL;
@@ -83,36 +85,5 @@ network_player_class_init (NetworkPlayerClass	* network_player_class)
 	g_object_class = G_OBJECT_CLASS(network_player_class);
 	g_object_class->finalize = network_player_finalize;
 
-}
-
-
-GType
-network_player_get_type (void)
-{
-	static GType	type = 0;
-
-	if (!type)
-	{
-		const GTypeInfo info = {
-			sizeof (NetworkPlayerClass),
-			NULL,	/* base initializer */
-			NULL,	/* base finalizer */
-			(GClassInitFunc)network_player_class_init,
-			NULL,	/* class finalizer */
-			NULL,	/* class data */
-			sizeof (NetworkPlayer),
-			1,
-			(GInstanceInitFunc) network_player_instance_init,
-			0
-		};
-
-		type = g_type_register_static (
-				G_TYPE_OBJECT,
-				"NetworkPlayer",
-				&info,
-				0);
-	}
-
-	return type;
 }
 
