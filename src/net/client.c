@@ -61,6 +61,8 @@ static void  recv_xml_message(NetworkMessageHandler * mmh,
 static void client_connection_closed(NetworkMessageHandler * mmh,
 				     NetworkClient * client);
 
+G_DEFINE_TYPE (NetworkClient, network_client, G_TYPE_OBJECT);
+
 NetworkClient *
 network_client_new  (guint32 client_id)
 {
@@ -249,17 +251,14 @@ void network_client_win(NetworkClient * client) {
 	PRIVATE(client)->score++;
 }
 
-
-
-static void 
-network_client_instance_init(NetworkClient * self) 
+static void
+network_client_init (NetworkClient* self)
 {
 	PRIVATE(self) = g_new0 (NetworkClientPrivate, 1);
 	PRIVATE(self)->player = NULL;
 	PRIVATE(self)->handler = NULL;
 	PRIVATE(self)->state = NETWORK_CLIENT_NOT_READY;
 }
-
 
 static void
 network_client_finalize (GObject * object) 
@@ -379,37 +378,5 @@ network_client_class_init (NetworkClientClass	* network_client_class)
 			      g_cclosure_marshal_VOID__VOID,
 			      G_TYPE_NONE,
 			      0,NULL);
-	
-}
-
-
-GType
-network_client_get_type (void)
-{
-	static GType	type = 0;
-
-	if (!type)
-	{
-		const GTypeInfo info = {
-			sizeof (NetworkClientClass),
-			NULL,	/* base initializer */
-			NULL,	/* base finalizer */
-			(GClassInitFunc)network_client_class_init,
-			NULL,	/* class finalizer */
-			NULL,	/* class data */
-			sizeof (NetworkClient),
-			1,
-			(GInstanceInitFunc) network_client_instance_init,
-			0
-		};
-
-		type = g_type_register_static (
-				G_TYPE_OBJECT,
-				"NetworkClient",
-				&info,
-				0);
-	}
-
-	return type;
 }
 
