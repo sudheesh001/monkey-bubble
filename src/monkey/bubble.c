@@ -40,9 +40,12 @@ enum {
 
 static guint32 signals[LAST_SIGNAL];
 
+G_DEFINE_TYPE (Bubble, bubble, G_TYPE_OBJECT);
 
-static void bubble_instance_init(Bubble * bubble) {
-  bubble->private =g_new0 (BubblePrivate, 1);			
+static void
+bubble_init (Bubble* bubble)
+{
+	bubble->private = g_new0 (BubblePrivate, 1);
 }
 
 static void bubble_finalize(GObject* object) {
@@ -75,35 +78,6 @@ static void bubble_class_init (BubbleClass *klass) {
 					    0,
 					    NULL);
 }
-
-
-GType bubble_get_type(void) {
-    static GType bubble_type = 0;
-    
-    if (!bubble_type) {
-      static const GTypeInfo bubble_info = {
-	sizeof(BubbleClass),
-	NULL,           /* base_init */
-	NULL,           /* base_finalize */
-	(GClassInitFunc) bubble_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data */
-	sizeof(Bubble),
-	1,              /* n_preallocs */
-	(GInstanceInitFunc) bubble_instance_init,
-      };
-
-
-      
-      bubble_type = g_type_register_static(G_TYPE_OBJECT,
-						"Bubble",
-						&bubble_info, 0);
-    }
-    
-    return bubble_type;
-}
-
-
 
 Bubble * bubble_new( Color  color,gdouble x,gdouble y) {
   Bubble * bubble;
