@@ -148,6 +148,7 @@ static void ui_main_draw_main(UiMain * ui_main);
 
 static UiMain* ui_main_new(void);
 
+G_DEFINE_TYPE (UiMain, ui_main, G_TYPE_OBJECT);
 
 #ifdef MAEMO
 static void ui_main_topmost_cb(GObject *self, GParamSpec *property_param, gpointer null)
@@ -175,34 +176,6 @@ void continue_game(void) {
         ui_main_new_1_player_game(ui_main);
 }
 #endif
-
-GType ui_main_get_type(void) {
-        static GType ui_main_type = 0;
-
-        if(!ui_main_type) {
-
-                static const GTypeInfo ui_main_info = {
-                        sizeof(UiMainClass),
-                        NULL,           /* base_init */
-                        NULL,           /* base_finalize */
-                        (GClassInitFunc) ui_main_class_init,
-                        NULL,           /* class_finalize */
-                        NULL,           /* class_data */
-                        sizeof(UiMain),
-                        1,              /* n_preallocs */
-                        (GInstanceInitFunc) ui_main_init,
-                };
-    
-
-                ui_main_type = g_type_register_static(G_TYPE_OBJECT,
-                                                      "UiMain",
-                                                      &ui_main_info, 0);
-
-
-        }
-        return ui_main_type;
-}
-
 
 UiMain * ui_main_get_instance(void) {
         static UiMain * instance = NULL;
