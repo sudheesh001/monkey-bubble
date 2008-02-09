@@ -1,5 +1,9 @@
 2008-02-09  Sven Herzberg  <sven@imendio.com>
 
+	* src/monkey/shooter.c: (shooter_init): use G_DEFINE_TYPE
+
+2008-02-09  Sven Herzberg  <sven@imendio.com>
+
 	* src/monkey/monkey.c: (monkey_init): use G_DEFINE_TYPE
 
 2008-02-09  Sven Herzberg  <sven@imendio.com>

@@ -54,7 +54,9 @@ static void shooter_notify_bubble_added(Shooter * self,Bubble * bubble);
 
 static void shooter_notify_shoot(Shooter * self,Bubble * b);
 
-Shooter * 
+G_DEFINE_TYPE (Shooter, shooter, G_TYPE_OBJECT);
+
+Shooter*
 shooter_new(gdouble x_pos,gdouble y_pos)
 {
 	Shooter *self;
@@ -67,10 +69,10 @@ shooter_new(gdouble x_pos,gdouble y_pos)
 }
 
 
-static void 
-shooter_instance_init(Shooter * self) 
+static void
+shooter_init (Shooter* self)
 {
-	self->private =g_new0 (ShooterPrivate, 1);			
+	self->private = g_new0 (ShooterPrivate, 1);
 	PRIVATE(self)->angle = 0;
 	PRIVATE(self)->current_bubble = NULL;
 	PRIVATE(self)->waiting_bubble = NULL;
@@ -295,29 +297,3 @@ shooter_class_init (ShooterClass *klass)
 				      G_TYPE_POINTER);
 }
 
-
-GType shooter_get_type(void) {
-	static GType shooter_type = 0;
-  
-	if (!shooter_type) {
-		static const GTypeInfo shooter_info = {
-			sizeof(ShooterClass),
-			NULL,           /* base_init */
-			NULL,           /* base_finalize */
-			(GClassInitFunc) shooter_class_init,
-			NULL,           /* class_finalize */
-			NULL,           /* class_data */
-			sizeof(Shooter),
-			1,              /* n_preallocs */
-			(GInstanceInitFunc) shooter_instance_init,
-		};
-    
-    
-    
-		shooter_type = g_type_register_static(G_TYPE_OBJECT,
-						      "Shooter",
-						      &shooter_info, 0);
-	}
-  
-	return shooter_type;
-}
