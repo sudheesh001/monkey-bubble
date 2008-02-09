@@ -1,5 +1,9 @@
 2008-02-08  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/game-1-player.c: (game_1_player_init): use G_DEFINE_TYPE
+
+2008-02-08  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-network-client.c: (ui_network_client_init): use
 	G_DEFINE_TYPE
 

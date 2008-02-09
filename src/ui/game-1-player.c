@@ -102,6 +102,7 @@ static gint get_time(Game1Player * game);
 static void time_paused(Game1Player * game);
 static void time_init(Game1Player * game);
 
+G_DEFINE_TYPE (Game1Player, game_1_player, TYPE_GAME);
 
 #ifdef MAEMO
 void game_1_player_save(Game1Player *game)
@@ -110,8 +111,10 @@ void game_1_player_save(Game1Player *game)
 }
 #endif
 
-static void game_1_player_instance_init(Game1Player * game) {
-        game->private =g_new0 (Game1PlayerPrivate, 1);		
+static void
+game_1_player_init (Game1Player* game)
+{
+	game->private = g_new0 (Game1PlayerPrivate, 1);
 }
 
 static void game_1_player_finalize(GObject* object) {
@@ -165,37 +168,6 @@ static void game_1_player_class_init (Game1PlayerClass *klass) {
         game_class->get_state = game_1_player_get_state;
 
 }
-
-
-GType game_1_player_get_type(void) {
-        static GType game_1_player_type = 0;
-    
-        if (!game_1_player_type) {
-                static const GTypeInfo game_1_player_info = {
-                        sizeof(Game1PlayerClass),
-                        NULL,           /* base_init */
-                        NULL,           /* base_finalize */
-                        (GClassInitFunc) game_1_player_class_init,
-                        NULL,           /* class_finalize */
-                        NULL,           /* class_data */
-                        sizeof(Game1Player),
-                        1,              /* n_preallocs */
-                        (GInstanceInitFunc) game_1_player_instance_init,
-                };
-      
-      
-                game_1_player_type = g_type_register_static(TYPE_GAME,
-                                                            "Game1Player",
-                                                            &game_1_player_info, 0);
-
-
-
-        }
-    
-        return game_1_player_type;
-}
-
-
 
 static void game_1_player_bubble_sticked(Monkey * monkey,Bubble * b,
 					 Game1Player * game) {
