@@ -57,11 +57,11 @@ struct UiNetworkClientPrivate {
 
 };
 
-
-
 #define PRIVATE( UiNetworkClient ) (UiNetworkClient->private)
 
 static GObjectClass* parent_class = NULL;
+
+G_DEFINE_TYPE (UiNetworkClient, ui_network_client, G_TYPE_OBJECT);
 
 void ui_network_client_finalize(GObject *);
 
@@ -801,43 +801,20 @@ void ui_network_client_finalize(GObject *object) {
 
         if (G_OBJECT_CLASS (parent_class)->finalize) {
                 (* G_OBJECT_CLASS (parent_class)->finalize) (object);
-        }		
+        }
 }
 
-static void ui_network_client_instance_init(UiNetworkClient * self) {
-        self->private =g_new0 (UiNetworkClientPrivate, 1);
+static void
+ui_network_client_init (UiNetworkClient* self)
+{
+	self->private = g_new0 (UiNetworkClientPrivate, 1);
 }
 
 static void ui_network_client_class_init (UiNetworkClientClass *klass) {
         GObjectClass* object_class;
-        
+
         parent_class = g_type_class_peek_parent(klass);
         object_class = G_OBJECT_CLASS(klass);
         object_class->finalize = ui_network_client_finalize;
 }
 
-GType ui_network_client_get_type(void) {
-        static GType ui_network_client_type = 0;
-        
-        if (!ui_network_client_type) {
-                static const GTypeInfo ui_network_client_info = {
-                        sizeof(UiNetworkClientClass),
-                        NULL,           /* base_init */
-                        NULL,           /* base_finalize */
-                        (GClassInitFunc) ui_network_client_class_init,
-                        NULL,           /* class_finalize */
-                        NULL,           /* class_data */
-                        sizeof(UiNetworkClient),
-                        1,              /* n_preallocs */
-                        (GInstanceInitFunc) ui_network_client_instance_init,
-                };
-                
-                ui_network_client_type = g_type_register_static(G_TYPE_OBJECT,
-                                                                     "UiNetworkClient",
-                                                                     &ui_network_client_info, 0
-                                                                     );
-
-        }
-        
-        return ui_network_client_type;
-}

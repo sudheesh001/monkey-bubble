@@ -1,5 +1,10 @@
 2008-02-08  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/ui-network-client.c: (ui_network_client_init): use
+	G_DEFINE_TYPE
+
+2008-02-08  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/keyboard-properties.c: use G_DEFINE_TYPE
 
 2008-02-08  Sven Herzberg  <sven@imendio.com>
