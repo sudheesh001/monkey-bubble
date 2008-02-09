@@ -122,9 +122,10 @@ static gint get_time (GameNetworkPlayer * game);
 static void time_paused (GameNetworkPlayer * game);
 static void time_init (GameNetworkPlayer * game);
 
+G_DEFINE_TYPE (GameNetworkPlayer, game_network_player, TYPE_GAME);
 
 static void
-game_network_player_instance_init (GameNetworkPlayer * game)
+game_network_player_init (GameNetworkPlayer* game)
 {
 	game->private = g_new0 (GameNetworkPlayerPrivate, 1);
 	PRIVATE (game)->lock = g_mutex_new ();
@@ -197,41 +198,6 @@ game_network_player_class_init (GameNetworkPlayerClass * klass)
 	game_class->get_state = game_network_player_get_state;
 
 }
-
-
-GType
-game_network_player_get_type (void)
-{
-	static GType game_network_player_type = 0;
-
-	if (!game_network_player_type)
-	{
-		static const GTypeInfo game_network_player_info = {
-			sizeof (GameNetworkPlayerClass),
-			NULL,	/* base_init */
-			NULL,	/* base_finalize */
-			(GClassInitFunc) game_network_player_class_init,
-			NULL,	/* class_finalize */
-			NULL,	/* class_data */
-			sizeof (GameNetworkPlayer),
-			1,	/* n_preallocs */
-			(GInstanceInitFunc) game_network_player_instance_init,
-		};
-
-
-		game_network_player_type = g_type_register_static (TYPE_GAME,
-								   "GameNetworkPlayer",
-								   &game_network_player_info,
-								   0);
-
-
-
-	}
-
-	return game_network_player_type;
-}
-
-
 
 static void
 game_network_player_bubble_sticked (Monkey * monkey, Bubble * b,
