@@ -55,6 +55,8 @@ static void recv_xml_message(NetworkMessageHandler * handler,
 			     xmlDoc * message,
 			     NetGameManagerProxy * self);
 
+G_DEFINE_TYPE (NetGameManagerProxy, net_game_manager_proxy, G_TYPE_OBJECT);
+
 NetGameManagerProxy *
 net_game_manager_proxy_new  (NetworkMessageHandler * handler,guint32 client_id)
 {
@@ -72,13 +74,12 @@ net_game_manager_proxy_new  (NetworkMessageHandler * handler,guint32 client_id)
 	return self;
 }
 
-static void 
-net_game_manager_proxy_instance_init(NetGameManagerProxy * self) 
+static void
+net_game_manager_proxy_init (NetGameManagerProxy* self)
 {
-	PRIVATE(self) = g_new0 (NetGameManagerProxyPrivate, 1);			
+	PRIVATE(self) = g_new0 (NetGameManagerProxyPrivate, 1);
 	PRIVATE(self)->clients = NULL;
 }
-
 
 static void
 net_game_manager_proxy_finalize (GObject * object) 
@@ -386,36 +387,5 @@ net_game_manager_proxy_class_init (NetGameManagerProxyClass	* net_game_manager_p
 					      G_TYPE_NONE,
 					      0,NULL);
 
-}
-
-
-GType
-net_game_manager_proxy_get_type (void)
-{
-	static GType	type = 0;
-
-	if (!type)
-	{
-		const GTypeInfo info = {
-			sizeof (NetGameManagerProxyClass),
-			NULL,	/* base initializer */
-			NULL,	/* base finalizer */
-			(GClassInitFunc)net_game_manager_proxy_class_init,
-			NULL,	/* class finalizer */
-			NULL,	/* class data */
-			sizeof (NetGameManagerProxy),
-			1,
-			(GInstanceInitFunc) net_game_manager_proxy_instance_init,
-			0
-		};
-
-		type = g_type_register_static (
-				G_TYPE_OBJECT,
-				"NetGameManagerProxy",
-				&info,
-				0);
-	}
-
-	return type;
 }
 
