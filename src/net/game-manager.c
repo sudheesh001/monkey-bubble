@@ -81,6 +81,8 @@ static void client_request_number_of_players(NetworkClient * client,
 
 static void start_game(NetworkGameManager * manager);
 
+G_DEFINE_TYPE (NetworkGameManager, network_game_manager, G_TYPE_OBJECT);
+
 NetworkGameManager *
 network_game_manager_new  (void)
 {
@@ -220,10 +222,10 @@ network_game_manager_remove_client(NetworkGameManager * manager,
 	g_mutex_unlock( PRIVATE(manager)->started_lock);
 }
 
-static void 
-network_game_manager_instance_init(NetworkGameManager * self) 
+static void
+network_game_manager_init (NetworkGameManager* self)
 {
-	PRIVATE(self) = g_new0 (NetworkGameManagerPrivate, 1);			
+	PRIVATE(self) = g_new0 (NetworkGameManagerPrivate, 1);
 	PRIVATE(self)->clients = NULL;
 	PRIVATE(self)->id_hash_table = 
 		g_hash_table_new(g_int_hash,g_int_equal);
@@ -588,36 +590,5 @@ network_game_manager_class_init (NetworkGameManagerClass	* network_game_manager_
 	g_object_class = G_OBJECT_CLASS(network_game_manager_class);
 	g_object_class->finalize = network_game_manager_finalize;
 
-}
-
-
-GType
-network_game_manager_get_type (void)
-{
-	static GType	type = 0;
-
-	if (!type)
-	{
-		const GTypeInfo info = {
-			sizeof (NetworkGameManagerClass),
-			NULL,	/* base initializer */
-			NULL,	/* base finalizer */
-			(GClassInitFunc)network_game_manager_class_init,
-			NULL,	/* class finalizer */
-			NULL,	/* class data */
-			sizeof (NetworkGameManager),
-			1,
-			(GInstanceInitFunc) network_game_manager_instance_init,
-			0
-		};
-
-		type = g_type_register_static (
-				G_TYPE_OBJECT,
-				"NetworkGameManager",
-				&info,
-				0);
-	}
-
-	return type;
 }
 
