@@ -77,6 +77,8 @@ static void client_notified(GConfClient *client,
 
 static void conf_keyboard(MbPlayerInput * self);
 
+G_DEFINE_TYPE (MbPlayerInput, mb_player_input, G_TYPE_OBJECT);
+
 MbPlayerInput *
 mb_player_input_new  (GtkWidget * window,
 		      GConfClient * client,
@@ -123,12 +125,11 @@ mb_player_input_new  (GtkWidget * window,
 	return self;
 }
 
-static void 
-mb_player_input_instance_init(MbPlayerInput * self) 
+static void
+mb_player_input_init (MbPlayerInput* self)
 {
-	PRIVATE(self) = g_new0 (MbPlayerInputPrivate, 1);			
+	PRIVATE(self) = g_new0 (MbPlayerInputPrivate, 1);
 }
-
 
 static void
 mb_player_input_finalize (GObject * object) 
@@ -312,36 +313,5 @@ mb_player_input_class_init (MbPlayerInputClass	* mb_player_input_class)
 						  G_TYPE_NONE,
 						  1, G_TYPE_INT);
 
-}
-
-
-GType
-mb_player_input_get_type (void)
-{
-	static GType	type = 0;
-
-	if (!type)
-	{
-		const GTypeInfo info = {
-			sizeof (MbPlayerInputClass),
-			NULL,	/* base initializer */
-			NULL,	/* base finalizer */
-			(GClassInitFunc)mb_player_input_class_init,
-			NULL,	/* class finalizer */
-			NULL,	/* class data */
-			sizeof (MbPlayerInput),
-			1,
-			(GInstanceInitFunc) mb_player_input_instance_init,
-			0
-		};
-
-		type = g_type_register_static (
-				G_TYPE_OBJECT,
-				"MbPlayerInput",
-				&info,
-				0);
-	}
-
-	return type;
 }
 

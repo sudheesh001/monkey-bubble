@@ -1,5 +1,9 @@
 2008-02-09  Sven Herzberg  <sven@imendio.com>
 
+	* src/input/player-input.c: (mb_player_input_init): use G_DEFINE_TYPE
+
+2008-02-09  Sven Herzberg  <sven@imendio.com>
+
 	* src/monkey/bubble.c: (bubble_init): use G_DEFINE_TYPE
 
 2008-02-09  Sven Herzberg  <sven@imendio.com>
