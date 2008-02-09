@@ -28,6 +28,8 @@ static guint32 signals[LAST_SIGNAL];
 
 static GObjectClass* parent_class = NULL;
 
+G_DEFINE_TYPE (Game, game, G_TYPE_OBJECT);
+
 static void game_finalize(GObject * object) {
 
   //  Game * game = GAME(object);
@@ -37,8 +39,9 @@ static void game_finalize(GObject * object) {
   }  
 }
 
-static void game_instance_init(Game * game) {
-}
+static void
+game_init (Game* self)
+{}
 
 static void game_class_init(GameClass* klass) {
 
@@ -59,37 +62,6 @@ static void game_class_init(GameClass* klass) {
 					   0,NULL);
     
 }
-
-GType game_get_type(void) {
-
-
-  static GType game_type = 0;
-
-
-  if (!game_type) {
-    static const GTypeInfo game_info = {
-      sizeof(GameClass),
-	NULL,           /* base_init */
-	NULL,           /* base_finalize */
-	(GClassInitFunc) game_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data */
-	sizeof(Game),
-	1,              /* n_preallocs */
-	(GInstanceInitFunc) game_instance_init,
-
-    };
-
-      
-    game_type = g_type_register_static(G_TYPE_OBJECT,
-				       "Game",
-				       &game_info, 0);
-
-  }
-  
-  return game_type;
-}
-
 
 /**
  * game_start:
