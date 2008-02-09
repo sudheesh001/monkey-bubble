@@ -1,5 +1,10 @@
 2008-02-08  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/game-1-player-manager.c: (game_1_player_manager_init): use
+	G_DEFINE_TYPE_WITH_CODE
+
+2008-02-08  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/game-1-player.c: (game_1_player_init): use G_DEFINE_TYPE
 
 2008-02-08  Sven Herzberg  <sven@imendio.com>
