@@ -49,7 +49,7 @@ struct PlaygroundPrivate {
 static void playground_notify_bubble_wall_collision(Playground * p);
 static void playground_notify_lost(Playground * p);
 
-
+G_DEFINE_TYPE (Playground, playground, G_TYPE_OBJECT);
 
 Playground * 
 playground_new(gdouble max_x,gdouble min_x,const gchar * level_filename,
@@ -66,8 +66,8 @@ playground_new(gdouble max_x,gdouble min_x,const gchar * level_filename,
 }
 
 
-static void 
-playground_instance_init(Playground * self) 
+static void
+playground_init (Playground* self)
 {
 	self->private =g_new0 (PlaygroundPrivate, 1);			
 	PRIVATE(self)->played_bubble = NULL;
@@ -280,35 +280,8 @@ static void playground_class_init (PlaygroundClass *klass) {
     
 }
 
-
-GType playground_get_type(void) {
-	static GType playground_type = 0;
-    
-	if (!playground_type) {
-		static const GTypeInfo playground_info = {
-			sizeof(PlaygroundClass),
-			NULL,           /* base_init */
-			NULL,           /* base_finalize */
-			(GClassInitFunc) playground_class_init,
-			NULL,           /* class_finalize */
-			NULL,           /* class_data */
-			sizeof(Playground),
-			1,              /* n_preallocs */
-			(GInstanceInitFunc) playground_instance_init,
-		};
-
-
-      
-		playground_type = g_type_register_static(G_TYPE_OBJECT,
-							 "Playground",
-							 &playground_info, 0);
-	}
-    
-	return playground_type;
-}
-
 #ifdef MAEMO
-void 
+void
 playground_save(Playground * self, const gchar * level_filename)
 {
        board_save_to_file(PRIVATE(self)->board, level_filename);
