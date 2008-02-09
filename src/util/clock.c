@@ -23,7 +23,7 @@
 
 typedef enum
 {
-  MB_CLOCK_STOPPED =1,
+  MB_CLOCK_STOPPED = 1,
   MB_CLOCK_RUNNING = 2,
   MB_CLOCK_PAUSED = 3
 } MbClockState;
@@ -36,10 +36,12 @@ struct MbClockPrivate {
   MbClockState state;
 };
 
+G_DEFINE_TYPE (MbClock, mb_clock, G_TYPE_OBJECT);
 
-
-static void mb_clock_instance_init(MbClock * clock) {
-  clock->private =g_new0 (MbClockPrivate, 1);			
+static void
+mb_clock_init (MbClock* clock)
+{
+	clock->private = g_new0 (MbClockPrivate, 1);
 }
 
 static void mb_clock_finalize(GObject* object) {
@@ -61,35 +63,6 @@ static void mb_clock_class_init (MbClockClass *klass) {
     object_class = G_OBJECT_CLASS(klass);
     object_class->finalize = mb_clock_finalize;
 }
-
-
-GType mb_clock_get_type(void) {
-    static GType mb_clock_type = 0;
-    
-    if (!mb_clock_type) {
-      static const GTypeInfo mb_clock_info = {
-	sizeof(MbClockClass),
-	NULL,           /* base_init */
-	NULL,           /* base_finalize */
-	(GClassInitFunc) mb_clock_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data */
-	sizeof(MbClock),
-	1,              /* n_preallocs */
-	(GInstanceInitFunc) mb_clock_instance_init,
-      };
-
-
-      
-      mb_clock_type = g_type_register_static(G_TYPE_OBJECT,
-						"MbClock",
-						&mb_clock_info, 0);
-    }
-    
-    return mb_clock_type;
-}
-
-
 
 MbClock * mb_clock_new(void) {
   MbClock * clock;
