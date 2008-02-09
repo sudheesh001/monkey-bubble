@@ -1,3 +1,7 @@
+2008-02-08  Sven Herzberg  <sven@imendio.com>
+
+	* src/view/mini-view.c: (mb_mini_view_init): use G_DEFINE_TYPE
+
 2008-02-08  Laurent Belmonte  <laurent.belmonte@gmail.com>
 
 	* src/ui/ui-main.c: (ui_main_new), (leave_fullscreen),

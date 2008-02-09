@@ -51,6 +51,8 @@ struct MbMiniViewPrivate
         GList * score_list;
 };
 
+G_DEFINE_TYPE (MbMiniView, mb_mini_view, G_TYPE_OBJECT);
+
 
 MbMiniView *
 mb_mini_view_new  (MonkeyCanvas * canvas,
@@ -81,10 +83,10 @@ mb_mini_view_new  (MonkeyCanvas * canvas,
 	return self;
 }
 
-static void 
-mb_mini_view_instance_init(MbMiniView * self) 
+static void
+mb_mini_view_init(MbMiniView * self)
 {
-	PRIVATE(self) = g_new0 (MbMiniViewPrivate, 1);			
+	PRIVATE(self) = g_new0 (MbMiniViewPrivate, 1);
 }
 
 
@@ -349,36 +351,5 @@ mb_mini_view_class_init (MbMiniViewClass	* mb_mini_view_class)
 	g_object_class = G_OBJECT_CLASS(mb_mini_view_class);
 	g_object_class->finalize = mb_mini_view_finalize;
 
-}
-
-
-GType
-mb_mini_view_get_type (void)
-{
-	static GType	type = 0;
-
-	if (!type)
-	{
-		const GTypeInfo info = {
-			sizeof (MbMiniViewClass),
-			NULL,	/* base initializer */
-			NULL,	/* base finalizer */
-			(GClassInitFunc)mb_mini_view_class_init,
-			NULL,	/* class finalizer */
-			NULL,	/* class data */
-			sizeof (MbMiniView),
-			1,
-			(GInstanceInitFunc) mb_mini_view_instance_init,
-			0
-		};
-
-		type = g_type_register_static (
-				G_TYPE_OBJECT,
-				"MbMiniView",
-				&info,
-				0);
-	}
-
-	return type;
 }
 
