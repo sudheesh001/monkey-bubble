@@ -113,9 +113,11 @@ static void set_number_of_games(UiNetworkServer * self,
 
 static void set_number_of_players(UiNetworkServer * self,
                                   int n);
- 
-UiNetworkServer *
-ui_network_server_new(NetworkSimpleServer * server) 
+
+G_DEFINE_TYPE (UiNetworkServer, ui_network_server, G_TYPE_OBJECT);
+
+UiNetworkServer*
+ui_network_server_new(NetworkSimpleServer * server)
 {
         UiNetworkServer * ngl;
         GtkWidget * item;
@@ -710,11 +712,13 @@ void ui_network_server_finalize(GObject *object) {
 
         if (G_OBJECT_CLASS (parent_class)->finalize) {
                 (* G_OBJECT_CLASS (parent_class)->finalize) (object);
-        }		
+        }
 }
 
-static void ui_network_server_instance_init(UiNetworkServer * self) {
-        self->private =g_new0 (UiNetworkServerPrivate, 1);
+static void
+ui_network_server_init (UiNetworkServer* self)
+{
+	self->private = g_new0 (UiNetworkServerPrivate, 1);
         PRIVATE(self)->np_from_server = FALSE;
         PRIVATE(self)->ng_from_server = FALSE;
 }
@@ -727,28 +731,3 @@ static void ui_network_server_class_init (UiNetworkServerClass *klass) {
         object_class->finalize = ui_network_server_finalize;
 }
 
-GType ui_network_server_get_type(void) {
-        static GType ui_network_server_type = 0;
-        
-        if (!ui_network_server_type) {
-                static const GTypeInfo ui_network_server_info = {
-                        sizeof(UiNetworkServerClass),
-                        NULL,           /* base_init */
-                        NULL,           /* base_finalize */
-                        (GClassInitFunc) ui_network_server_class_init,
-                        NULL,           /* class_finalize */
-                        NULL,           /* class_data */
-                        sizeof(UiNetworkServer),
-                        1,              /* n_preallocs */
-                        (GInstanceInitFunc) ui_network_server_instance_init,
-                };
-                
-                ui_network_server_type = g_type_register_static(G_TYPE_OBJECT,
-                                                                     "UiNetworkServer",
-                                                                     &ui_network_server_info, 0
-                                                                     );
-
-        }
-        
-        return ui_network_server_type;
-}
