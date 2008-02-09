@@ -32,6 +32,8 @@ struct MbGameSoundPrivate {
   
 };
 
+G_DEFINE_TYPE (MbGameSound, mb_game_sound, G_TYPE_OBJECT);
+
 MbGameSound *
 mb_game_sound_new (void) {
 	MbGameSound * self;
@@ -112,9 +114,10 @@ void mb_game_sound_connect_monkey(MbGameSound * mgs,Monkey * m)
 }
 
 
-static void 
-mb_game_sound_instance_init(MbGameSound * self) {
-	self->priv = g_new0(MbGameSoundPrivate, 1);			
+static void
+mb_game_sound_init (MbGameSound * self)
+{
+	self->priv = g_new0 (MbGameSoundPrivate, 1);
 }
 
 
@@ -141,33 +144,5 @@ mb_game_sound_class_init (MbGameSoundClass* mb_game_sound_class) {
 
 	g_object_class = G_OBJECT_CLASS(mb_game_sound_class);
 	g_object_class->dispose = mb_game_sound_dispose;
-}
-
-
-GType mb_game_sound_get_type (void) {
-	static GType	type = 0;
-
-	if (!type) {
-		const GTypeInfo info = {
-			sizeof (MbGameSoundClass),
-			NULL,	/* base initializer */
-			NULL,	/* base finalizer */
-			(GClassInitFunc)mb_game_sound_class_init,
-			NULL,	/* class finalizer */
-			NULL,	/* class data */
-			sizeof (MbGameSound),
-			1,
-			(GInstanceInitFunc) mb_game_sound_instance_init,
-			0
-		};
-
-		type = g_type_register_static (
-				G_TYPE_OBJECT,
-				"MbGameSound",
-				&info,
-				0);
-	}
-
-	return type;
 }
 

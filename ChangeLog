@@ -1,5 +1,9 @@
 2008-02-09  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/game-sound.c: (mb_game_sound_init): use G_DEFINE_TYPE
+
+2008-02-09  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/game.c: (game_init): use G_DEFINE_TYPE
 
 2008-02-08  Sven Herzberg  <sven@imendio.com>
