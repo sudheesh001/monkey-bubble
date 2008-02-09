@@ -39,6 +39,7 @@ struct MbInputManagerPrivate
 	MbPlayerInput * right;
 };
 
+G_DEFINE_TYPE (MbInputManager, mb_input_manager, G_TYPE_OBJECT);
 
 MbInputManager *
 mb_input_manager_new  (GtkWidget * window)
@@ -91,12 +92,11 @@ mb_input_manager_instance_set_window(GtkWidget * window)
 	instance = mb_input_manager_new(window);
 }
 
-static void 
-mb_input_manager_instance_init(MbInputManager * self) 
+static void
+mb_input_manager_init (MbInputManager* self)
 {
-	PRIVATE(self) = g_new0 (MbInputManagerPrivate, 1);			
+	PRIVATE(self) = g_new0 (MbInputManagerPrivate, 1);
 }
-
 
 static void
 mb_input_manager_finalize (GObject * object) 
@@ -123,36 +123,5 @@ mb_input_manager_class_init (MbInputManagerClass	* mb_input_manager_class)
 	g_object_class = G_OBJECT_CLASS(mb_input_manager_class);
 	g_object_class->finalize = mb_input_manager_finalize;
 
-}
-
-
-GType
-mb_input_manager_get_type (void)
-{
-	static GType	type = 0;
-
-	if (!type)
-	{
-		const GTypeInfo info = {
-			sizeof (MbInputManagerClass),
-			NULL,	/* base initializer */
-			NULL,	/* base finalizer */
-			(GClassInitFunc)mb_input_manager_class_init,
-			NULL,	/* class finalizer */
-			NULL,	/* class data */
-			sizeof (MbInputManager),
-			1,
-			(GInstanceInitFunc) mb_input_manager_instance_init,
-			0
-		};
-
-		type = g_type_register_static (
-				G_TYPE_OBJECT,
-				"MbInputManager",
-				&info,
-				0);
-	}
-
-	return type;
 }
 
