@@ -1,5 +1,9 @@
 2008-02-08  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/keyboard-properties.c: use G_DEFINE_TYPE
+
+2008-02-08  Sven Herzberg  <sven@imendio.com>
+
 	* src/util/clock.c: (mb_clock_init): use G_DEFINE_TYPE
 
 2008-02-08  Sven Herzberg  <sven@imendio.com>

@@ -140,6 +140,8 @@ struct KeyboardPropertiesPrivate {
   GtkTreeModel *model;
 };
 
+G_DEFINE_TYPE (KeyboardProperties, keyboard_properties, G_TYPE_OBJECT);
+
 static void keyboard_properties_class_init(KeyboardPropertiesClass* klass);
 
 static void keyboard_properties_init(KeyboardProperties* main);
@@ -152,35 +154,6 @@ GtkWidget * edit_keys_dialog_new (KeyboardProperties * kp,GtkWindow *transient_p
 
 
 static KeyboardProperties* keyboard_properties_new(void);
-
-
-GType keyboard_properties_get_type(void) {
-  static GType keyboard_properties_type = 0;
-
-  if(!keyboard_properties_type) {
-
-    static const GTypeInfo keyboard_properties_info = {
-      sizeof(KeyboardPropertiesClass),
-      NULL,           /* base_init */
-      NULL,           /* base_finalize */
-      (GClassInitFunc) keyboard_properties_class_init,
-      NULL,           /* class_finalize */
-      NULL,           /* class_data */
-      sizeof(KeyboardProperties),
-      1,              /* n_preallocs */
-      (GInstanceInitFunc) keyboard_properties_init,
-    };
-    
-
-    keyboard_properties_type = g_type_register_static(G_TYPE_OBJECT,
-					  "KeyboardProperties",
-					  &keyboard_properties_info, 0);
-
-
-  }
-  return keyboard_properties_type;
-}
-
 
 static KeyboardProperties * instance = NULL;
 
