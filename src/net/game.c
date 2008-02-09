@@ -91,6 +91,8 @@ static void notify_observers (NetworkGame * self, struct Client *client);
 static gboolean
 update_client_idle (gpointer d);
 
+G_DEFINE_TYPE (NetworkGame, network_game, G_TYPE_OBJECT);
+
 static void
 client_disconnected (NetworkClient * c, struct Client *client)
 {
@@ -812,7 +814,7 @@ network_game_start (NetworkGame * self)
 }
 
 static void
-network_game_instance_init (NetworkGame * self)
+network_game_init (NetworkGame* self)
 {
 	PRIVATE (self) = g_new0 (NetworkGamePrivate, 1);
 	PRIVATE (self)->clients = NULL;
@@ -938,30 +940,3 @@ network_game_class_init (NetworkGameClass * network_game_class)
 
 }
 
-
-GType
-network_game_get_type (void)
-{
-	static GType type = 0;
-
-	if (!type)
-	{
-		const GTypeInfo info = {
-			sizeof (NetworkGameClass),
-			NULL,	/* base initializer */
-			NULL,	/* base finalizer */
-			(GClassInitFunc) network_game_class_init,
-			NULL,	/* class finalizer */
-			NULL,	/* class data */
-			sizeof (NetworkGame),
-			1,
-			(GInstanceInitFunc) network_game_instance_init,
-			0
-		};
-
-		type = g_type_register_static (G_TYPE_OBJECT,
-					       "NetworkGame", &info, 0);
-	}
-
-	return type;
-}

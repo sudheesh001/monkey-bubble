@@ -1,5 +1,9 @@
 2008-02-09  Sven Herzberg  <sven@imendio.com>
 
+	* src/net/game.c: (network_game_init): use G_DEFINE_TYPE
+
+2008-02-09  Sven Herzberg  <sven@imendio.com>
+
 	* src/net/message-handler.c: (network_message_handler_init): use
 	G_DEFINE_TYPE
 
