@@ -81,6 +81,8 @@ struct _NetworkSimpleServerPrivate
 
 };
 
+G_DEFINE_TYPE (NetworkSimpleServer, network_simple_server, G_TYPE_OBJECT);
+
 NetworkSimpleServer *
 network_simple_server_new  (void)
 {
@@ -373,10 +375,10 @@ get_next_id(NetworkSimpleServer * self)
 
 }
 
-static void 
-network_simple_server_instance_init(NetworkSimpleServer * self) 
+static void
+network_simple_server_init (NetworkSimpleServer* self)
 {
-	PRIVATE(self) = g_new0 (NetworkSimpleServerPrivate, 1);			
+	PRIVATE(self) = g_new0 (NetworkSimpleServerPrivate, 1);
 	PRIVATE(self)->main_socket = -1;
 	PRIVATE(self)->is_running = FALSE;
 	PRIVATE(self)->main_thread = NULL;
@@ -386,7 +388,6 @@ network_simple_server_instance_init(NetworkSimpleServer * self)
 	PRIVATE(self)->current_id = 0;
 
 	PRIVATE(self)->game_manager = network_game_manager_new();
-
 }
 
 
@@ -441,36 +442,5 @@ network_simple_server_class_init (NetworkSimpleServerClass	* network_simple_serv
 	g_object_class = G_OBJECT_CLASS(network_simple_server_class);
 	g_object_class->finalize = network_simple_server_finalize;
 
-}
-
-
-GType
-network_simple_server_get_type (void)
-{
-	static GType	type = 0;
-
-	if (!type)
-	{
-		const GTypeInfo info = {
-			sizeof (NetworkSimpleServerClass),
-			NULL,	/* base initializer */
-			NULL,	/* base finalizer */
-			(GClassInitFunc)network_simple_server_class_init,
-			NULL,	/* class finalizer */
-			NULL,	/* class data */
-			sizeof (NetworkSimpleServer),
-			1,
-			(GInstanceInitFunc) network_simple_server_instance_init,
-			0
-		};
-
-		type = g_type_register_static (
-				G_TYPE_OBJECT,
-				"NetworkSimpleServer",
-				&info,
-				0);
-	}
-
-	return type;
 }
 
