@@ -106,6 +106,8 @@ void parse_next_range (NetworkMessageHandler * mmh, guint8 * message);
 
 gboolean read_chunk (NetworkMessageHandler * mmh, guint8 * data);
 
+G_DEFINE_TYPE (NetworkMessageHandler, network_message_handler, G_TYPE_OBJECT);
+
 NetworkMessageHandler *
 network_message_handler_new (int sock)
 {
@@ -197,7 +199,7 @@ network_message_handler_finalize (GObject * object)
 }
 
 static void
-network_message_handler_instance_init (NetworkMessageHandler * mmh)
+network_message_handler_init (NetworkMessageHandler* mmh)
 {
 	mmh->private = g_new0 (NetworkMessageHandlerPrivate, 1);
 }
@@ -354,37 +356,6 @@ network_message_handler_class_init (NetworkMessageHandlerClass * klass)
 						 monkey_net_marshal_VOID__UINT_POINTER,
 						 G_TYPE_NONE, 2, G_TYPE_UINT,
 						 G_TYPE_POINTER);
-}
-
-GType
-network_message_handler_get_type (void)
-{
-	static GType network_message_handler_type = 0;
-
-	if (!network_message_handler_type)
-	{
-		static const GTypeInfo network_message_handler_info = {
-			sizeof (NetworkMessageHandlerClass),
-			NULL,	/* base_init */
-			NULL,	/* base_finalize */
-			(GClassInitFunc) network_message_handler_class_init,
-			NULL,	/* class_finalize */
-			NULL,	/* class_data */
-			sizeof (NetworkMessageHandler),
-			1,	/* n_preallocs */
-			(GInstanceInitFunc)
-				network_message_handler_instance_init,
-		};
-
-		network_message_handler_type =
-			g_type_register_static (G_TYPE_OBJECT,
-						"NetworkMessageHandler",
-						&network_message_handler_info,
-						0);
-
-	}
-
-	return network_message_handler_type;
 }
 
 void
