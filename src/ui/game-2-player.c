@@ -105,6 +105,7 @@ static gint get_time(Game2Player * game);
 static void time_paused(Game2Player * game);
 static void time_init(Game2Player * game);
 
+G_DEFINE_TYPE (Game2Player, game_2_player, TYPE_GAME);
 
 static void 
 game_2_player_finalize(GObject* object)
@@ -671,10 +672,10 @@ void game_2_player_fire_changed(Game2Player * game )
 }
 
 
-static void 
-game_2_player_instance_init(Game2Player * game) 
+static void
+game_2_player_init (Game2Player* game)
 {
-        game->private =g_new0 (Game2PlayerPrivate, 2);		
+	game->private = g_new0 (Game2PlayerPrivate, 2);
 }
 
 static void
@@ -693,37 +694,5 @@ game_2_player_class_init (Game2PlayerClass *klass)
         i->stop = game_2_player_stop;
         i->pause = game_2_player_pause;
         i->get_state = game_2_player_get_state;
-        
 }
 
-
-GType 
-game_2_player_get_type(void) 
-{
-        static GType game_2_player_type = 0;
-    
-        if (!game_2_player_type) {
-                static const GTypeInfo game_2_player_info = {
-                        sizeof(Game2PlayerClass),
-                        NULL,           /* base_init */
-                        NULL,           /* base_finalize */
-                        (GClassInitFunc) game_2_player_class_init,
-                        NULL,           /* class_finalize */
-                        NULL,           /* class_data */
-                        sizeof(Game2Player),
-                        2,              /* n_preallocs */
-                        (GInstanceInitFunc) game_2_player_instance_init,
-                };
-
-
-
-      
-      
-                game_2_player_type = g_type_register_static(TYPE_GAME,
-                                                            "Game2Player",
-                                                            &game_2_player_info, 0);
-    
-        }
-        
-        return game_2_player_type;
-}
