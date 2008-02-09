@@ -91,10 +91,12 @@ static void monkey_notify_bubbles_exploded(Monkey * self,
 
 static gboolean monkey_has_waiting_row(Monkey * self);
 
-static void 
-monkey_instance_init(Monkey * self) 
+G_DEFINE_TYPE (Monkey, monkey, G_TYPE_OBJECT);
+
+static void
+monkey_init (Monkey* self)
 {
-	self->private =g_new0 (MonkeyPrivate, 1);			
+	self->private = g_new0 (MonkeyPrivate, 1);
 
 	PRIVATE(self)->shot_count = 0;
 
@@ -111,7 +113,6 @@ monkey_instance_init(Monkey * self)
 	PRIVATE(self)->waiting_bubbles_count = 0;
 
 	PRIVATE(self)->hurry_up = TRUE;
-
 }
 
 /**
@@ -705,36 +706,6 @@ monkey_class_init (MonkeyClass *klass)
 							g_cclosure_marshal_VOID__INT,
 							G_TYPE_NONE,
 							1, G_TYPE_INT);
-}
-
-
-GType monkey_get_type(void) {
-	static GType monkey_type = 0;
-    
-	if (!monkey_type) {
-		static const GTypeInfo monkey_info = {
-			sizeof(MonkeyClass),
-			NULL,           /* base_init */
-			NULL,           /* base_finalize */
-			(GClassInitFunc) monkey_class_init,
-			NULL,           /* class_finalize */
-			NULL,           /* class_data */
-			sizeof(Monkey),
-			1,              /* n_preallocs */
-			(GInstanceInitFunc) monkey_instance_init,
-		};
-
-
-		monkey_type = g_type_register_static(G_TYPE_OBJECT,
-						     "Monkey",
-						     &monkey_info,
-						     0);
-
-
-      
-	}
-    
-	return monkey_type;
 }
 
 #ifdef MAEMO
