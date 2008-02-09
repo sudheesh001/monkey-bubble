@@ -1,5 +1,11 @@
 2008-02-08  Sven Herzberg  <sven@imendio.com>
 
+	* src/ui/game-network-player-manager.c:
+	(game_network_player_manager_init),
+	(game_network_player_manager_class_init): use G_DEFINE_TYPE_WITH_CODE
+
+2008-02-08  Sven Herzberg  <sven@imendio.com>
+
 	* src/ui/ui-network-server.c: (ui_network_server_init): use
 	G_DEFINE_TYPE
 

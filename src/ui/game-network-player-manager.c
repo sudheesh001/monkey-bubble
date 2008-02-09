@@ -48,13 +48,8 @@ static void iface_init(GameManagerClass * i);
 
 static void finalize(GObject* object);
 
-static void instance_init(GameNetworkPlayerManager * game_network_player_manager);
-
-
-
-static void class_init (GameNetworkPlayerManagerClass *klass);
-
-
+G_DEFINE_TYPE_WITH_CODE (GameNetworkPlayerManager, game_network_player_manager, G_TYPE_OBJECT,
+			 G_IMPLEMENT_INTERFACE (TYPE_GAME_MANAGER, iface_init));
 
 GameNetworkPlayerManager * 
 game_network_player_manager_new(GtkWidget * window,MonkeyCanvas * canvas,
@@ -334,62 +329,21 @@ game_network_player_manager_stop(GameManager * g)
     ui_main_set_game(ui_main,NULL);
 }
 
-static void 
-instance_init(GameNetworkPlayerManager * self)
+static void
+game_network_player_manager_init (GameNetworkPlayerManager* self)
 {
-    self->private =g_new0 (GameNetworkPlayerManagerPrivate, 1);			
-    PRIVATE(self)->current_game = NULL;
-    PRIVATE(self)->playing = FALSE;
-
+	self->private = g_new0 (GameNetworkPlayerManagerPrivate, 1);
+	PRIVATE(self)->current_game = NULL;
+	PRIVATE(self)->playing = FALSE;
 }
 
-static void 
-class_init (GameNetworkPlayerManagerClass *klass) {
-    GObjectClass* object_class;
-
-    parent_class = g_type_class_peek_parent(klass);
-    object_class = G_OBJECT_CLASS(klass);
-    object_class->finalize = finalize;
-}
-
-
-GType 
-game_network_player_manager_get_type(void) 
+static void
+game_network_player_manager_class_init (GameNetworkPlayerManagerClass* klass)
 {
-    static GType game_network_player_manager_type = 0;
-    
-    if (!game_network_player_manager_type) {
-	static const GTypeInfo game_network_player_manager_info = {
-	    sizeof(GameNetworkPlayerManagerClass),
-	    NULL,           /* base_init */
-	    NULL,           /* base_finalize */
-	    (GClassInitFunc) class_init,
-	    NULL,           /* class_finalize */
-	    NULL,           /* class_data */
-	    sizeof(GameNetworkPlayerManager),
-	    1,              /* n_reallocs */
-	    (GInstanceInitFunc) instance_init,
-	};
+	GObjectClass* object_class;
 
-
-	static const GInterfaceInfo iface_game_manager = {
-	    (GInterfaceInitFunc) iface_init,
-	    NULL,
-	    NULL
-	};
-      
-	game_network_player_manager_type = g_type_register_static(G_TYPE_OBJECT,
-								  "GameNetworkPlayerManager",
-								  &game_network_player_manager_info,
-								  0);
-	 
-	 
-	g_type_add_interface_static(game_network_player_manager_type,
-				    TYPE_GAME_MANAGER,
-				    &iface_game_manager);
-      
-      
-    }
-    
-    return game_network_player_manager_type;
+	parent_class = g_type_class_peek_parent(klass);
+	object_class = G_OBJECT_CLASS(klass);
+	object_class->finalize = finalize;
 }
+
