@@ -106,6 +106,8 @@ struct MonkeyViewPrivate {
         gint last_shoot;
 };
 
+G_DEFINE_TYPE (MonkeyView, monkey_view, G_TYPE_OBJECT);
+
 static void animate_waiting_bubble(MonkeyView * d,gint dtime);
 static void monkey_view_animate_stars(MonkeyView * d,gint time);
 static void monkey_view_add_explode_stars(MonkeyView * d,Bubble * b) ;
@@ -757,12 +759,12 @@ static void monkey_view_animate_stars(MonkeyView * d,gint time) {
         }
 }
 
-static void monkey_view_instance_init(MonkeyView * self)
+static void
+monkey_view_init (MonkeyView * self)
 {
-        self->private =g_new0 (MonkeyViewPrivate, 1);			
-        
-        PRIVATE(self)->exploded_bubbles = NULL;
+        self->private = g_new0 (MonkeyViewPrivate, 1);
 
+        PRIVATE(self)->exploded_bubbles = NULL;
 }
 
 static void monkey_view_finalize(GObject* object) {
@@ -862,42 +864,6 @@ static void monkey_view_class_init (MonkeyViewClass *klass) {
         object_class = G_OBJECT_CLASS(klass);
         object_class->finalize = monkey_view_finalize;
 }
-
-
-GType monkey_view_get_type(void) {
-        static GType monkey_view_type = 0;
-    
-        if (!monkey_view_type) {
-                static const GTypeInfo monkey_view_info = {
-                        sizeof(MonkeyViewClass),
-                        NULL,           /* base_init */
-                        NULL,           /* base_finalize */
-                        (GClassInitFunc) monkey_view_class_init,
-                        NULL,           /* class_finalize */
-                        NULL,           /* class_data */
-                        sizeof(MonkeyView),
-                        1,              /* n_preallocs */
-                        (GInstanceInitFunc) monkey_view_instance_init,
-                };
-
-
-                monkey_view_type = g_type_register_static(G_TYPE_OBJECT,
-                                                       "MonkeyView",
-                                                       &monkey_view_info, 0);
-
-
-
-
-
-        }
-    
-        return monkey_view_type;
-}
-
-
-
-
-
 
 static void monkey_view_bubble_changed(Bubble * b,MonkeyView * view) {
         gdouble x,y;
