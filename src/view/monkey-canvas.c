@@ -70,6 +70,9 @@ struct Block {
   gdouble x_center;
   gdouble y_center;
 };
+
+G_DEFINE_TYPE (MonkeyCanvas, monkey_canvas, GTK_TYPE_DRAWING_AREA);
+
 static void monkey_canvas_scale_images(MonkeyCanvas * canvas);
 
 void create_pixbuf_svg(Image * i );
@@ -112,8 +115,10 @@ Image * monkey_canvas_load_image_from_path( MonkeyCanvas * canvas,
 					    gint x_size,
 					    gint y_size);
 
-static void monkey_canvas_instance_init(MonkeyCanvas * monkey_canvas) {
-  monkey_canvas->private =g_new0 (MonkeyCanvasPrivate, 1);			
+static void
+monkey_canvas_init (MonkeyCanvas* monkey_canvas)
+{
+	monkey_canvas->private = g_new0 (MonkeyCanvasPrivate, 1);
 }
 
 static void monkey_canvas_finalize(GObject* object) {
@@ -134,34 +139,6 @@ static void monkey_canvas_class_init (MonkeyCanvasClass *klass) {
   parent_class = g_type_class_peek_parent(klass);
   object_class = G_OBJECT_CLASS(klass);
   object_class->finalize = monkey_canvas_finalize;
-}
-
-
-GType monkey_canvas_get_type(void) {
-  static GType monkey_canvas_type = 0;
-    
-  if (!monkey_canvas_type) {
-    static const GTypeInfo monkey_canvas_info = {
-      sizeof(MonkeyCanvasClass),
-      NULL,           /* base_init */
-      NULL,           /* base_finalize */
-      (GClassInitFunc) monkey_canvas_class_init,
-      NULL,           /* class_finalize */
-      NULL,           /* class_data */
-      sizeof(MonkeyCanvas),
-      1,              /* n_preallocs */
-      (GInstanceInitFunc) monkey_canvas_instance_init,
-    };
-
-
-      
-    monkey_canvas_type = g_type_register_static(gtk_drawing_area_get_type(),
-						"MonkeyCanvas",
-						&monkey_canvas_info,
-						0);
-  }
-    
-  return monkey_canvas_type;
 }
 
 gint monkey_canvas_expose (GtkWidget *widget, GdkEventExpose *event, gpointer data);
