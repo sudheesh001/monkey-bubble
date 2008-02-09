@@ -42,8 +42,14 @@ static void game_2_player_manager_state_changed(Game * game,
 static void game_2_player_manager_game_manager_iface_init(GameManagerClass * i);
 
 static void game_2_player_manager_finalize(GObject* object);
-static void game_2_player_manager_instance_init(Game2PlayerManager * game_2_player_manager) {
-  game_2_player_manager->private =g_new0 (Game2PlayerManagerPrivate, 1);			
+
+G_DEFINE_TYPE_WITH_CODE (Game2PlayerManager, game_2_player_manager, G_TYPE_OBJECT,
+			 G_IMPLEMENT_INTERFACE (TYPE_GAME_MANAGER, game_2_player_manager_game_manager_iface_init););
+
+static void
+game_2_player_manager_init (Game2PlayerManager* game_2_player_manager)
+{
+	game_2_player_manager->private = g_new0 (Game2PlayerManagerPrivate, 1);
 }
 
 
@@ -54,50 +60,6 @@ static void game_2_player_manager_class_init (Game2PlayerManagerClass *klass) {
   object_class = G_OBJECT_CLASS(klass);
   object_class->finalize = game_2_player_manager_finalize;
 }
-
-
-GType game_2_player_manager_get_type(void) {
-  static GType game_2_player_manager_type = 0;
-    
-  if (!game_2_player_manager_type) {
-    static const GTypeInfo game_2_player_manager_info = {
-      sizeof(Game2PlayerManagerClass),
-      NULL,           /* base_init */
-      NULL,           /* base_finalize */
-      (GClassInitFunc) game_2_player_manager_class_init,
-      NULL,           /* class_finalize */
-      NULL,           /* class_data */
-      sizeof(Game2PlayerManager),
-      1,              /* n_preallocs */
-      (GInstanceInitFunc) game_2_player_manager_instance_init,
-    };
-
-
-
-      
-    static const GInterfaceInfo iface_game_manager = {
-      (GInterfaceInitFunc) game_2_player_manager_game_manager_iface_init,
-      NULL,
-      NULL
-    };
-      
-    game_2_player_manager_type = g_type_register_static(G_TYPE_OBJECT,
-					 "Game2PlayerManager",
-					 &game_2_player_manager_info,
-					 0);
-
-	 
-	 
-    g_type_add_interface_static(game_2_player_manager_type,
-				TYPE_GAME_MANAGER,
-				&iface_game_manager);
-      
-      
-  }
-    
-  return game_2_player_manager_type;
-}
-
 
 Game2PlayerManager * game_2_player_manager_new(GtkWidget * window,MonkeyCanvas * canvas) {
   Game2PlayerManager * game_2_player_manager;
