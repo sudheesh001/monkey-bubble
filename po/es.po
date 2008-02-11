@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: monkey-bubble.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-06 16:07+0000\n"
-"PO-Revision-Date: 2008-02-06 22:41+0100\n"
+"POT-Creation-Date: 2008-02-08 21:59+0000\n"
+"PO-Revision-Date: 2008-02-11 12:01+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -47,58 +47,8 @@ msgstr ""
 "</markup>"
 
 #: ../data/monkey-bubble.glade.h:7
-msgid "Join _network game"
-msgstr "Unirse a un juego en _red"
-
-#: ../data/monkey-bubble.glade.h:8 ../monkey-bubble.desktop.in.in.h:1
-#: ../src/ui/ui-main.c:291
-msgid "Monkey Bubble"
-msgstr "Monkey Bubble"
-
-#: ../data/monkey-bubble.glade.h:9
-msgid "New 1 player"
-msgstr "Nuevo 1 jugador"
-
-#: ../data/monkey-bubble.glade.h:10
-msgid "New 2 players"
-msgstr "Nuevo 2 jugadores"
-
-#: ../data/monkey-bubble.glade.h:11
-msgid "New network game"
-msgstr "Juego en red nuevo"
-
-#: ../data/monkey-bubble.glade.h:12 ../src/ui/ui-main.c:549
-#: ../src/ui/ui-main.c:676
-msgid "Pause game"
-msgstr "Pausar juego"
-
-#: ../data/monkey-bubble.glade.h:13 ../src/ui/keyboard-properties.c:84
-msgid "Stop game"
-msgstr "Detener juego"
-
-#: ../data/monkey-bubble.glade.h:14
 msgid "Warning"
 msgstr "Atención"
-
-#: ../data/monkey-bubble.glade.h:15
-msgid "_About"
-msgstr "A_cerca de"
-
-#: ../data/monkey-bubble.glade.h:16
-msgid "_Contents"
-msgstr "_Índice"
-
-#: ../data/monkey-bubble.glade.h:17
-msgid "_Game"
-msgstr "_Juego"
-
-#: ../data/monkey-bubble.glade.h:18
-msgid "_Help"
-msgstr "_Ayuda"
-
-#: ../data/monkey-bubble.glade.h:19
-msgid "_High Scores"
-msgstr "_Mejores puntuaciones"
 
 #: ../data/monkey-bubble.schemas.in.h:1
 msgid "1 player game"
@@ -120,7 +70,7 @@ msgstr "F2"
 msgid "Left"
 msgstr "Izquierda"
 
-#: ../data/monkey-bubble.schemas.in.h:6 ../src/ui/ui-main.c:255
+#: ../data/monkey-bubble.schemas.in.h:6
 msgid "Pause"
 msgstr "Pausa"
 
@@ -230,6 +180,11 @@ msgstr "Número de jugadores"
 msgid "Start Game"
 msgstr "Iniciar juego"
 
+#: ../monkey-bubble.desktop.in.in.h:1 ../src/ui/ui-main.c:290
+#: ../src/ui/ui-main.c:302
+msgid "Monkey Bubble"
+msgstr "Monkey Bubble"
+
 #: ../monkey-bubble.desktop.in.in.h:2
 msgid "Monkey Bubble Arcade Game"
 msgstr "Monkey Bubble Juego Arcade"
@@ -245,6 +200,10 @@ msgstr "Nuevo juego 2 jugadores"
 #: ../src/ui/keyboard-properties.c:82
 msgid "Pause/Resume"
 msgstr "Pausa/Continuar"
+
+#: ../src/ui/keyboard-properties.c:84 ../src/ui/ui-main.c:256
+msgid "Stop game"
+msgstr "Detener juego"
 
 #: ../src/ui/keyboard-properties.c:92
 msgid "Full Screen"
@@ -370,30 +329,66 @@ msgstr "Co_mbinación de teclas"
 msgid "Monkey Bubble is a Bust'a'Move clone for GNOME"
 msgstr "Monkey Bubble es un clon de Bust'a'Move para GNOME"
 
-#: ../src/ui/ui-main.c:247
-msgid "New Game"
-msgstr "Juego nuevo"
+#: ../src/ui/ui-main.c:230
+msgid "_Game"
+msgstr "_Juego"
 
-#: ../src/ui/ui-main.c:251
-msgid "Join network game"
-msgstr "Unirse a un juego en red"
+#: ../src/ui/ui-main.c:231
+msgid "New 1 player"
+msgstr "Nuevo 1 jugador"
 
-#: ../src/ui/ui-main.c:259
-msgid "Quit"
-msgstr "Salir"
+#: ../src/ui/ui-main.c:234
+msgid "Join _network game"
+msgstr "Unirse a un juego en _red"
 
-#: ../src/ui/ui-main.c:669
+#: ../src/ui/ui-main.c:237
+msgid "Pause game"
+msgstr "Pausar juego"
+
+#: ../src/ui/ui-main.c:240
 msgid "Resume game"
 msgstr "Continuar juego"
 
-#: ../src/ui/ui-main.c:793
+#: ../src/ui/ui-main.c:244
+msgid "New 2 players"
+msgstr "Nuevo 2 jugadores"
+
+#: ../src/ui/ui-main.c:247
+msgid "New network game"
+msgstr "Juego en red nuevo"
+
+#: ../src/ui/ui-main.c:253
+msgid "_High Scores"
+msgstr "_Mejores puntuaciones"
+
+#: ../src/ui/ui-main.c:259
+msgid "_Help"
+msgstr "_Ayuda"
+
+#: ../src/ui/ui-main.c:260
+msgid "_Contents"
+msgstr "_Índice"
+
+#: ../src/ui/ui-main.c:263
+msgid "_About"
+msgstr "A_cerca de"
+
+#: ../src/ui/ui-main.c:266
+msgid "_Fullscreen"
+msgstr "_Pantalla completa"
+
+#: ../src/ui/ui-main.c:269
+msgid "_Leave Fullscreen"
+msgstr "_Salir de pantalla completa"
+
+#: ../src/ui/ui-main.c:783
 msgid "translator_credits"
 msgstr ""
 "Jorge González <jorgegonz@svn.gnome.org>, 2008.\n"
 "Mikel Olasagasti <hey_neken@mundurat.net>, 2003.\n"
 "Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005."
 
-#: ../src/ui/ui-main.c:801
+#: ../src/ui/ui-main.c:791
 msgid ""
 "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
 "remove all Bubbles by the creation of unicolor triplets."
@@ -401,7 +396,7 @@ msgstr ""
 "Monkey Bubble es un juego Arcade para el GNOME Desktop Environment. "
 "Simplemente elimina todas las burbujas creando tríos del mismo color."
 
-#: ../src/ui/ui-main.c:824
+#: ../src/ui/ui-main.c:812
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Hubo un error al mostrar la ayuda: %s"
