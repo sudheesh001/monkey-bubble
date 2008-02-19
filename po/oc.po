@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-27 13:21+0100\n"
+"POT-Creation-Date: 2008-02-19 20:26+0100\n"
 "PO-Revision-Date: 2007-12-30 21:23+0100\n"
 "Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../data/keybinding.glade.h:1
 msgid "Keyboard Shortcuts"
@@ -41,57 +41,8 @@ msgstr ""
 "</markup>"
 
 #: ../data/monkey-bubble.glade.h:7
-msgid "Join _network game"
-msgstr "Jónher un jòc _ret"
-
-#: ../data/monkey-bubble.glade.h:8 ../monkey-bubble.desktop.in.h:1
-msgid "Monkey Bubble"
-msgstr "Monkey Bubble"
-
-#: ../data/monkey-bubble.glade.h:9
-msgid "New 1 player"
-msgstr ""
-
-#: ../data/monkey-bubble.glade.h:10
-msgid "New 2 players"
-msgstr ""
-
-#: ../data/monkey-bubble.glade.h:11
-msgid "New network game"
-msgstr ""
-
-#: ../data/monkey-bubble.glade.h:12 ../src/ui/ui-main.c:399
-#: ../src/ui/ui-main.c:529
-msgid "Pause game"
-msgstr ""
-
-#: ../data/monkey-bubble.glade.h:13 ../src/ui/keyboard-properties.c:84
-msgid "Stop game"
-msgstr "Arrestar lo jòc"
-
-#: ../data/monkey-bubble.glade.h:14
 msgid "Warning"
 msgstr "Alèrta"
-
-#: ../data/monkey-bubble.glade.h:15
-msgid "_About"
-msgstr "_A prepaus"
-
-#: ../data/monkey-bubble.glade.h:16
-msgid "_Contents"
-msgstr "_Ensenhador"
-
-#: ../data/monkey-bubble.glade.h:17
-msgid "_Game"
-msgstr "_Jòc"
-
-#: ../data/monkey-bubble.glade.h:18
-msgid "_Help"
-msgstr "_Ajuda"
-
-#: ../data/monkey-bubble.glade.h:19
-msgid "_High Scores"
-msgstr ""
 
 #: ../data/monkey-bubble.schemas.in.h:1
 msgid "1 player game"
@@ -177,32 +128,37 @@ msgstr ""
 msgid "*"
 msgstr "*"
 
-#: ../data/netgame.glade.h:2 ../data/netserver.glade.h:1
+#: ../data/netgame.glade.h:2
+msgid "Close"
+msgstr ""
+
+#: ../data/netgame.glade.h:3 ../data/netserver.glade.h:1
+#: ../src/ui/ui-network-client.c:156
 msgid "Network game"
 msgstr "Jòc ret"
 
-#: ../data/netgame.glade.h:3
+#: ../data/netgame.glade.h:4
 msgid "Number of games :"
 msgstr "Nombre de jòcs :"
 
-#: ../data/netgame.glade.h:4
+#: ../data/netgame.glade.h:5
 msgid "Number of players :"
 msgstr "Nombre de jogaires :"
 
-#: ../data/netgame.glade.h:5 ../data/netserver.glade.h:4
+#: ../data/netgame.glade.h:6 ../data/netserver.glade.h:4
 #: ../src/ui/keyboard-properties.c:86
 msgid "Quit game"
 msgstr ""
 
-#: ../data/netgame.glade.h:6 ../data/netserver.glade.h:5
+#: ../data/netgame.glade.h:7 ../data/netserver.glade.h:5
 msgid "Ready"
 msgstr "Prèst"
 
-#: ../data/netgame.glade.h:7
+#: ../data/netgame.glade.h:8
 msgid "_Go"
 msgstr "_Anar"
 
-#: ../data/netgame.glade.h:8
+#: ../data/netgame.glade.h:9
 msgid "_Server"
 msgstr "_Servidor"
 
@@ -218,7 +174,12 @@ msgstr "Nombre de jogaires"
 msgid "Start Game"
 msgstr "Començar lo jòc"
 
-#: ../monkey-bubble.desktop.in.h:2
+#: ../monkey-bubble.desktop.in.in.h:1 ../src/ui/ui-main.c:263
+#: ../src/ui/ui-main.c:275
+msgid "Monkey Bubble"
+msgstr "Monkey Bubble"
+
+#: ../monkey-bubble.desktop.in.in.h:2
 msgid "Monkey Bubble Arcade Game"
 msgstr ""
 
@@ -233,6 +194,10 @@ msgstr ""
 #: ../src/ui/keyboard-properties.c:82
 msgid "Pause/Resume"
 msgstr ""
+
+#: ../src/ui/keyboard-properties.c:84 ../src/ui/ui-main.c:229
+msgid "Stop game"
+msgstr "Arrestar lo jòc"
 
 #: ../src/ui/keyboard-properties.c:92
 msgid "Full Screen"
@@ -270,106 +235,159 @@ msgstr "Jòc"
 msgid "View"
 msgstr "Visualizacion"
 
-#: ../src/ui/keyboard-properties.c:336
+#: ../src/ui/keyboard-properties.c:309
 #, c-format
 msgid "There was an error loading config from %s. (%s)\n"
 msgstr ""
 
-#: ../src/ui/keyboard-properties.c:350
+#: ../src/ui/keyboard-properties.c:323
 #, c-format
 msgid ""
 "There was an error subscribing to notification of terminal keybinding "
 "changes. (%s)\n"
 msgstr ""
 
-#: ../src/ui/keyboard-properties.c:393
+#: ../src/ui/keyboard-properties.c:366
 #, c-format
 msgid "There was an error loading a terminal keybinding. (%s)\n"
 msgstr ""
 
-#: ../src/ui/keyboard-properties.c:409
+#: ../src/ui/keyboard-properties.c:382
 #, c-format
 msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
 msgstr ""
 
-#: ../src/ui/keyboard-properties.c:432
+#: ../src/ui/keyboard-properties.c:405
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menubar access "
 "keys. (%s)\n"
 msgstr ""
 
-#: ../src/ui/keyboard-properties.c:446
+#: ../src/ui/keyboard-properties.c:419
 #, c-format
 msgid ""
 "There was an error subscribing to notification on changes on whether to use "
 "menubar access keys (%s)\n"
 msgstr ""
 
-#: ../src/ui/keyboard-properties.c:457
+#: ../src/ui/keyboard-properties.c:430
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menu "
 "accelerators. (%s)\n"
 msgstr ""
 
-#: ../src/ui/keyboard-properties.c:473
+#: ../src/ui/keyboard-properties.c:446
 #, c-format
 msgid ""
 "There was an error subscribing to notification for use_menu_accelerators (%"
 "s)\n"
 msgstr ""
 
-#: ../src/ui/keyboard-properties.c:755
+#: ../src/ui/keyboard-properties.c:728
 msgid "Disabled"
 msgstr "Desactivat"
 
-#: ../src/ui/keyboard-properties.c:815
+#: ../src/ui/keyboard-properties.c:788
 #, c-format
 msgid "Error propagating accelerator change to configuration database: %s\n"
 msgstr ""
 
-#: ../src/ui/keyboard-properties.c:983
+#: ../src/ui/keyboard-properties.c:956
 #, c-format
 msgid "Error setting new accelerator in configuration database: %s\n"
 msgstr ""
 
-#: ../src/ui/keyboard-properties.c:1082
+#: ../src/ui/keyboard-properties.c:1055
 msgid "_Action"
 msgstr "_Accion"
 
-#: ../src/ui/keyboard-properties.c:1105
+#: ../src/ui/keyboard-properties.c:1078
 msgid "Shortcut _Key"
 msgstr ""
 
-#: ../src/ui/ui-main.c:522
+#: ../src/ui/main.c:91
+msgid "Monkey Bubble is a Bust'a'Move clone for GNOME"
+msgstr ""
+
+#: ../src/ui/ui-main.c:203
+msgid "_Game"
+msgstr "_Jòc"
+
+#: ../src/ui/ui-main.c:204
+msgid "New 1 player"
+msgstr ""
+
+#: ../src/ui/ui-main.c:207
+msgid "Join _network game"
+msgstr "Jónher un jòc _ret"
+
+#: ../src/ui/ui-main.c:210
+msgid "Pause game"
+msgstr ""
+
+#: ../src/ui/ui-main.c:213
 msgid "Resume game"
 msgstr ""
 
-#: ../src/ui/ui-main.c:620
+#: ../src/ui/ui-main.c:217
+msgid "New 2 players"
+msgstr ""
+
+#: ../src/ui/ui-main.c:220
+msgid "New network game"
+msgstr ""
+
+#: ../src/ui/ui-main.c:226
+msgid "_High Scores"
+msgstr ""
+
+#: ../src/ui/ui-main.c:232
+msgid "_Help"
+msgstr "_Ajuda"
+
+#: ../src/ui/ui-main.c:233
+msgid "_Contents"
+msgstr "_Ensenhador"
+
+#: ../src/ui/ui-main.c:236
+msgid "_About"
+msgstr "_A prepaus"
+
+#: ../src/ui/ui-main.c:239
+#
+msgid "_Fullscreen"
+msgstr "Ecran _complet"
+
+#: ../src/ui/ui-main.c:242
+#
+msgid "_Leave Fullscreen"
+msgstr "_Sortir de l'ecran complet"
+
+#: ../src/ui/ui-main.c:756
 msgid "translator_credits"
 msgstr "Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>"
 
-#: ../src/ui/ui-main.c:628
+#: ../src/ui/ui-main.c:764
 msgid ""
 "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
 "remove all Bubbles by the creation of unicolor triplets."
 msgstr ""
 
-#: ../src/ui/ui-main.c:649
+#: ../src/ui/ui-main.c:785
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "I a aguda una error al moment de visualizar l'ajuda : %s"
 
-#: ../src/ui/ui-network-server.c:159 ../src/ui/ui-network-client.c:149
+#: ../src/ui/ui-network-server.c:161 ../src/ui/ui-network-client.c:195
 msgid "_Player name"
 msgstr "Nom del _jogaire"
 
-#: ../src/ui/ui-network-server.c:166 ../src/ui/ui-network-client.c:156
+#: ../src/ui/ui-network-server.c:168 ../src/ui/ui-network-client.c:202
 msgid "_Owner"
 msgstr "_Propietari"
 
-#: ../src/ui/ui-network-server.c:173 ../src/ui/ui-network-client.c:163
+#: ../src/ui/ui-network-server.c:175 ../src/ui/ui-network-client.c:209
 msgid "_Ready"
 msgstr "_Prèst"
-
