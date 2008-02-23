@@ -1,16 +1,14 @@
 # Swedish messages for monkey-bubble.
-# Copyright (C) 2004, 2006 Free Software Foundation, Inc.
-# Daniel Nylander <po@danielnylander.se>, 2006.
+# Copyright (C) 2004, 2006, 2008 Free Software Foundation, Inc.
+# Daniel Nylander <po@danielnylander.se>, 2006, 2008.
 # Christian Rose <menthos@menthos.com>, 2004.
-#
-# $Id$
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: monkey-bubble\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-02 08:37+0200\n"
-"PO-Revision-Date: 2006-09-02 09:59+0100\n"
+"POT-Creation-Date: 2008-02-22 12:27+0100\n"
+"PO-Revision-Date: 2008-02-22 12:29+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -43,60 +41,8 @@ msgstr ""
 "</markup>"
 
 #: ../data/monkey-bubble.glade.h:7
-msgid "Join _network game"
-msgstr "Spela nätverksspel"
-
-#: ../data/monkey-bubble.glade.h:8
-#: ../monkey-bubble.desktop.in.h:1
-msgid "Monkey Bubble"
-msgstr "Monkey Bubble"
-
-#: ../data/monkey-bubble.glade.h:9
-msgid "New 1 player"
-msgstr "Nytt enspelarspel"
-
-#: ../data/monkey-bubble.glade.h:10
-msgid "New 2 players"
-msgstr "Nytt tvåspelarspel"
-
-#: ../data/monkey-bubble.glade.h:11
-msgid "New network game"
-msgstr "Nytt nätverksspel"
-
-#: ../data/monkey-bubble.glade.h:12
-#: ../src/ui/ui-main.c:412
-#: ../src/ui/ui-main.c:544
-msgid "Pause game"
-msgstr "Pausa spel"
-
-#: ../data/monkey-bubble.glade.h:13
-#: ../src/ui/keyboard-properties.c:84
-msgid "Stop game"
-msgstr "Stoppa spel"
-
-#: ../data/monkey-bubble.glade.h:14
 msgid "Warning"
 msgstr "Varning"
-
-#: ../data/monkey-bubble.glade.h:15
-msgid "_About"
-msgstr "_Om"
-
-#: ../data/monkey-bubble.glade.h:16
-msgid "_Contents"
-msgstr "_Innehåll"
-
-#: ../data/monkey-bubble.glade.h:17
-msgid "_Game"
-msgstr "_Spel"
-
-#: ../data/monkey-bubble.glade.h:18
-msgid "_Help"
-msgstr "_Hjälp"
-
-#: ../data/monkey-bubble.glade.h:19
-msgid "_High Scores"
-msgstr "_Topplistan"
 
 #: ../data/monkey-bubble.schemas.in.h:1
 msgid "1 player game"
@@ -183,34 +129,39 @@ msgid "*"
 msgstr "*"
 
 #: ../data/netgame.glade.h:2
+msgid "Close"
+msgstr "Stäng"
+
+#: ../data/netgame.glade.h:3
 #: ../data/netserver.glade.h:1
+#: ../src/ui/ui-network-client.c:156
 msgid "Network game"
 msgstr "Nätverksspel"
 
-#: ../data/netgame.glade.h:3
+#: ../data/netgame.glade.h:4
 msgid "Number of games :"
 msgstr "Antal spel :"
 
-#: ../data/netgame.glade.h:4
+#: ../data/netgame.glade.h:5
 msgid "Number of players :"
 msgstr "Antal spelare :"
 
-#: ../data/netgame.glade.h:5
+#: ../data/netgame.glade.h:6
 #: ../data/netserver.glade.h:4
 #: ../src/ui/keyboard-properties.c:86
 msgid "Quit game"
 msgstr "Avsluta spelet"
 
-#: ../data/netgame.glade.h:6
+#: ../data/netgame.glade.h:7
 #: ../data/netserver.glade.h:5
 msgid "Ready"
 msgstr "Redo"
 
-#: ../data/netgame.glade.h:7
+#: ../data/netgame.glade.h:8
 msgid "_Go"
 msgstr "_Gå"
 
-#: ../data/netgame.glade.h:8
+#: ../data/netgame.glade.h:9
 msgid "_Server"
 msgstr "_Server"
 
@@ -226,7 +177,13 @@ msgstr "Antal spelare"
 msgid "Start Game"
 msgstr "Starta spel"
 
-#: ../monkey-bubble.desktop.in.h:2
+#: ../monkey-bubble.desktop.in.in.h:1
+#: ../src/ui/ui-main.c:263
+#: ../src/ui/ui-main.c:275
+msgid "Monkey Bubble"
+msgstr "Monkey Bubble"
+
+#: ../monkey-bubble.desktop.in.in.h:2
 msgid "Monkey Bubble Arcade Game"
 msgstr "Arkadspelet Monkey Bubble"
 
@@ -241,6 +198,11 @@ msgstr "Nytt spel för två spelare"
 #: ../src/ui/keyboard-properties.c:82
 msgid "Pause/Resume"
 msgstr "Pausa/Återuppta"
+
+#: ../src/ui/keyboard-properties.c:84
+#: ../src/ui/ui-main.c:229
+msgid "Stop game"
+msgstr "Stoppa spel"
 
 #: ../src/ui/keyboard-properties.c:92
 msgid "Full Screen"
@@ -281,74 +243,126 @@ msgstr "Spel"
 msgid "View"
 msgstr "Visa"
 
-#: ../src/ui/keyboard-properties.c:336
+#: ../src/ui/keyboard-properties.c:309
 #, c-format
 msgid "There was an error loading config from %s. (%s)\n"
 msgstr "Ett fel uppstod vid inläsning av konfiguration från %s. (%s)\n"
 
 # Mycket osäker
-#: ../src/ui/keyboard-properties.c:350
+#: ../src/ui/keyboard-properties.c:323
 #, c-format
 msgid "There was an error subscribing to notification of terminal keybinding changes. (%s)\n"
 msgstr "Det inträffade ett fel vid prenumeration på notifieringar för ändringar av terminalens tangentbindningar. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:393
+#: ../src/ui/keyboard-properties.c:366
 #, c-format
 msgid "There was an error loading a terminal keybinding. (%s)\n"
 msgstr "Ett fel uppstod vid inläsning av terminaltangentbindning. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:409
+#: ../src/ui/keyboard-properties.c:382
 #, c-format
 msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
 msgstr "Värdet för konfigurationstangenten %s är inte giltig; värdet är \"%s\"\n"
 
-#: ../src/ui/keyboard-properties.c:432
+#: ../src/ui/keyboard-properties.c:405
 #, c-format
 msgid "There was an error loading config value for whether to use menubar access keys. (%s)\n"
 msgstr "Det inträffade ett fel vid inläsning av konfigurationsvärde för huruvida menyraden åtkomsttangenter ska användas. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:446
+#: ../src/ui/keyboard-properties.c:419
 #, c-format
 msgid "There was an error subscribing to notification on changes on whether to use menubar access keys (%s)\n"
 msgstr "Det inträffade ett fel vid prenumeration på notifieringar för ändringar på huruvida menyradens åtkomsttangenter ska användas (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:457
+#: ../src/ui/keyboard-properties.c:430
 #, c-format
 msgid "There was an error loading config value for whether to use menu accelerators. (%s)\n"
 msgstr "Det inträffade ett fel vid inläsning av konfigurationsvärde för huruvida menysnabbtangenter ska användas. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:473
+#: ../src/ui/keyboard-properties.c:446
 #, c-format
 msgid "There was an error subscribing to notification for use_menu_accelerators (%s)\n"
 msgstr "Det inträffade ett fel vid prenumation på notifiering för use_menu_accelerators (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:755
+#: ../src/ui/keyboard-properties.c:728
 msgid "Disabled"
 msgstr "Inaktiverad"
 
-#: ../src/ui/keyboard-properties.c:815
+#: ../src/ui/keyboard-properties.c:788
 #, c-format
 msgid "Error propagating accelerator change to configuration database: %s\n"
 msgstr "Fel vid information om ändring av snabbtangent till konfigurationsdatabasen: %s\n"
 
-#: ../src/ui/keyboard-properties.c:983
+#: ../src/ui/keyboard-properties.c:956
 #, c-format
 msgid "Error setting new accelerator in configuration database: %s\n"
 msgstr "Fel vid inställning av ny snabbtangent i konfigurationsdatabasen: %s\n"
 
-#: ../src/ui/keyboard-properties.c:1082
+#: ../src/ui/keyboard-properties.c:1055
 msgid "_Action"
 msgstr "_Åtgärd"
 
-#: ../src/ui/keyboard-properties.c:1105
+#: ../src/ui/keyboard-properties.c:1078
 msgid "Shortcut _Key"
 msgstr "Snabb_tangent"
 
-#: ../src/ui/ui-main.c:537
+#: ../src/ui/main.c:91
+msgid "Monkey Bubble is a Bust'a'Move clone for GNOME"
+msgstr "Monkey Bubble är en Bust'a'Move-klon för GNOME"
+
+#: ../src/ui/ui-main.c:203
+msgid "_Game"
+msgstr "_Spel"
+
+#: ../src/ui/ui-main.c:204
+msgid "New 1 player"
+msgstr "Nytt enspelarspel"
+
+#: ../src/ui/ui-main.c:207
+msgid "Join _network game"
+msgstr "Spela nätverksspel"
+
+#: ../src/ui/ui-main.c:210
+msgid "Pause game"
+msgstr "Pausa spel"
+
+#: ../src/ui/ui-main.c:213
 msgid "Resume game"
 msgstr "Återuppta spel"
 
-#: ../src/ui/ui-main.c:635
+#: ../src/ui/ui-main.c:217
+msgid "New 2 players"
+msgstr "Nytt tvåspelarspel"
+
+#: ../src/ui/ui-main.c:220
+msgid "New network game"
+msgstr "Nytt nätverksspel"
+
+#: ../src/ui/ui-main.c:226
+msgid "_High Scores"
+msgstr "_Topplistan"
+
+#: ../src/ui/ui-main.c:232
+msgid "_Help"
+msgstr "_Hjälp"
+
+#: ../src/ui/ui-main.c:233
+msgid "_Contents"
+msgstr "_Innehåll"
+
+#: ../src/ui/ui-main.c:236
+msgid "_About"
+msgstr "_Om"
+
+#: ../src/ui/ui-main.c:239
+msgid "_Fullscreen"
+msgstr "_Helskärmsläge"
+
+#: ../src/ui/ui-main.c:242
+msgid "_Leave Fullscreen"
+msgstr "_Lämna helskärmsläge"
+
+#: ../src/ui/ui-main.c:756
 msgid "translator_credits"
 msgstr ""
 "Daniel Nylander\n"
@@ -357,27 +371,27 @@ msgstr ""
 "Skicka synpunkter på översättningen till\n"
 "tp-sv@listor.tp-sv.se"
 
-#: ../src/ui/ui-main.c:643
+#: ../src/ui/ui-main.c:764
 msgid "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply remove all Bubbles by the creation of unicolor triplets."
 msgstr "Monkey Bubble är ett arkadspel för GNOME-skrivbordet. Ta helt enkelt bort alla bubblor genom att få ihop tre bubblor av samma färg."
 
-#: ../src/ui/ui-main.c:664
+#: ../src/ui/ui-main.c:785
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Ett fel uppstod vid visning av hjälpen: %s"
 
-#: ../src/ui/ui-network-server.c:159
-#: ../src/ui/ui-network-client.c:149
+#: ../src/ui/ui-network-server.c:161
+#: ../src/ui/ui-network-client.c:195
 msgid "_Player name"
 msgstr "_Spelarnamn"
 
-#: ../src/ui/ui-network-server.c:166
-#: ../src/ui/ui-network-client.c:156
+#: ../src/ui/ui-network-server.c:168
+#: ../src/ui/ui-network-client.c:202
 msgid "_Owner"
 msgstr "_Ägare"
 
-#: ../src/ui/ui-network-server.c:173
-#: ../src/ui/ui-network-client.c:163
+#: ../src/ui/ui-network-server.c:175
+#: ../src/ui/ui-network-client.c:209
 msgid "_Ready"
 msgstr "_Redo"
 
