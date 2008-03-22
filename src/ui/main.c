@@ -35,7 +35,7 @@
 
 #define APPNAME "monkey_bubble"
 #define APPVERSION "0.0.1"
-
+#define SERVICENAME "org.gnome.Games.MonkeyBubble"
 
 struct GlobalData global;
 
@@ -55,7 +55,7 @@ static void _hw_cb(osso_hw_state_t * state, gpointer data)
 osso_context_t *osso_init(void)
 {
     osso_context_t *osso =
-        osso_initialize(APPNAME, APPVERSION, TRUE, NULL);
+        osso_initialize(SERVICENAME, APPVERSION, TRUE, NULL);
 
     if (OSSO_OK != osso_application_set_top_cb(osso, _top_cb, NULL))
         return NULL;

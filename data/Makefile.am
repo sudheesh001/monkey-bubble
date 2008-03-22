@@ -6,7 +6,7 @@ leveldir = $(datadir)/monkey-bubble
 level_DATA = \
 	levels
 
-dbus_in_files=com.nokia.monkey_bubble.service.in
+dbus_in_files=org.gnome.Games.MonkeyBubble.service.in
 if MAEMO
 dbusdir=$(datadir)/dbus-1/services
 dbus_DATA=$(dbus_in_files:.service.in=.service)
