@@ -1,131 +1,171 @@
+# French translation of monkey-bubble documentation.
+# Copyright (C) 2008 Free Software Foundation, Inc.
+# This file is distributed under the same license as the monkey-bubble
+# documentation package.
+#
+# Claude Paroz <claude@2xlibre.net>, 2008.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2006-08-01 16:31+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Project-Id-Version: monkey-bubble doc fr\n"
+"POT-Creation-Date: 2008-03-29 19:42+0100\n"
+"PO-Revision-Date: 2008-03-29 19:42+0100\n"
+"Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
+"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: help/C/monkey-bubble.xml:17(title) help/C/monkey-bubble.xml:37(revnumber) 
+#: ../C/monkey-bubble.xml:17(title) ../C/monkey-bubble.xml:41(revnumber)
 msgid "Monkey Bubble Manual V0.1"
-msgstr "Manuel Monkey Bubble V0.1"
+msgstr "Manuel Monkey Bubble v0.1"
 
-#: help/C/monkey-bubble.xml:19(year) 
+#: ../C/monkey-bubble.xml:19(year)
 msgid "2004"
 msgstr "2004"
 
-#: help/C/monkey-bubble.xml:20(holder) help/C/monkey-bubble.xml:40(para) 
+#: ../C/monkey-bubble.xml:20(holder) ../C/monkey-bubble.xml:44(para)
 msgid "Thomas Cataldo"
 msgstr "Thomas Cataldo"
 
-#: help/C/monkey-bubble.xml:23(publishername) help/C/monkey-bubble.xml:30(orgname) help/C/monkey-bubble.xml:43(para) 
+#: ../C/monkey-bubble.xml:23(publishername) ../C/monkey-bubble.xml:30(orgname)
+#: ../C/monkey-bubble.xml:47(para)
 msgid "GNOME Documentation Project"
 msgstr "Projet de documentation GNOME"
 
-#: help/C/monkey-bubble.xml:27(firstname) 
+#: ../C/monkey-bubble.xml:27(firstname)
 msgid "Thomas"
 msgstr "Thomas"
 
-#: help/C/monkey-bubble.xml:28(surname) 
+#: ../C/monkey-bubble.xml:28(surname)
 msgid "Cataldo"
 msgstr "Cataldo"
 
-#: help/C/monkey-bubble.xml:50(releaseinfo) 
-msgid "This manual describes version 0.1.7 of Monkey Bubble."
-msgstr "Ce manuel d&eacute;crit la version 0.1.7 de Monkey Bubble."
+#: ../C/monkey-bubble.xml:34(firstname)
+msgid "Laurent"
+msgstr "Laurent"
 
-#: help/C/monkey-bubble.xml:53(title) 
+#: ../C/monkey-bubble.xml:35(surname)
+msgid "Belmont"
+msgstr "Belmont"
+
+#: ../C/monkey-bubble.xml:42(date)
+msgid "January 2004"
+msgstr "Janvier 2004"
+
+#: ../C/monkey-bubble.xml:54(releaseinfo)
+msgid "This manual describes version 0.1.7 of Monkey Bubble."
+msgstr "Ce manuel documente la version 0.1.7 de Monkey Bubble."
+
+#: ../C/monkey-bubble.xml:57(title)
 msgid "Feedback"
 msgstr "Votre avis"
 
-#: help/C/monkey-bubble.xml:54(para) 
-msgid "To report a bug or make a suggestion regarding the Monkey Bubble application or this manual, follow the directions in the <ulink url=\"ghelp:gnome-feedback\" type=\"help\">GNOME Feedback Page</ulink>."
-msgstr "Pour signaler un probl&egrave;me ou faire une suggestion concernant l'application Monkey Bubble ou le pr&eacute;sent manuel, proc&eacute;dez comme indiqu&eacute;&agrave; la <ulink url=\"ghelp:gnome-feedback\" type=\"help\">GNOME Feedback Page</ulink>."
+#: ../C/monkey-bubble.xml:58(para)
+msgid ""
+"To report a bug or make a suggestion regarding the Monkey Bubble application "
+"or this manual, follow the directions in the <ulink url=\"ghelp:gnome-"
+"feedback\" type=\"help\">GNOME Feedback Page</ulink>."
+msgstr ""
+"Pour signaler une anomalie ou faire une suggestion concernant "
+"l'application Monkey Bubble ou le présent manuel, procédez "
+"comme indiqué à la <ulink url=\"ghelp:gnome-feedback\" type="
+"\"help\">page de réations sur GNOME</ulink>."
 
-#: help/C/monkey-bubble.xml:64(primary) 
+#: ../C/monkey-bubble.xml:63(para)
+msgid "User manual for Monkey Bubble."
+msgstr "Manuel d'utilisation de Monkey Bubble"
+
+#: ../C/monkey-bubble.xml:68(primary)
+msgid "Monkey Bubble"
+msgstr "Monkey Bubble"
+
+#: ../C/monkey-bubble.xml:71(primary)
 msgid "bubble game"
-msgstr "jeu bulle"
+msgstr "jeu de boules"
 
-#: help/C/monkey-bubble.xml:68(title) 
+#: ../C/monkey-bubble.xml:75(title)
 msgid "Introduction"
 msgstr "Introduction"
 
-#: help/C/monkey-bubble.xml:69(para) 
-msgid "<application>Monkey Bubble</application> is an arcade game with the following objectives :"
-msgstr "<application>Monkey Bubble</application> est un jeu d'arcade avec les objectifs suivants :"
+#: ../C/monkey-bubble.xml:76(para)
+msgid ""
+"<application>Monkey Bubble</application> is an arcade game with the "
+"following objectives :"
+msgstr ""
+"<application>Monkey Bubble</application> est un jeu d'arcade avec les "
+"objectifs suivants :"
 
-#: help/C/monkey-bubble.xml:75(term) 
+#: ../C/monkey-bubble.xml:82(term)
 msgid "Clear the jungle from all those nasty bubbles"
 msgstr "Nettoyer la jungle de toutes ces horribles bulles"
 
-#: help/C/monkey-bubble.xml:77(para) 
-msgid "To clear a level, you need to stick at least 3 bubbles of the same color together using the bubble shooter."
-msgstr "Pour nettoyer un niveau, vous devez accrocher au moins 3 bulles de la même couleur à l'aide du cannon à bulle."
+#: ../C/monkey-bubble.xml:84(para)
+msgid ""
+"To clear a level, you need to stick at least 3 bubbles of the same color "
+"together using the bubble shooter."
+msgstr ""
+"Pour nettoyer un niveau, vous devez accrocher au moins 3 bulles de la même "
+"couleur à l'aide du cannon à bulle."
 
-#: help/C/monkey-bubble.xml:81(para) 
-msgid "Once 3 or more bubbles of the color are sticked together at the top of the playground, they will explode."
-msgstr "Lorsque 3 (ou plus) bulles de la même couleur sont accroch&eacute;s en haut de l'aire de jeu, elles explosent."
+#: ../C/monkey-bubble.xml:88(para)
+msgid ""
+"Once 3 or more bubbles of the color are sticked together at the top of the "
+"playground, they will explode."
+msgstr ""
+"Lorsqu'au moins 3 bulles de la même couleur sont accrochées en haut "
+"de l'aire de jeu, elles explosent."
 
-#: help/C/monkey-bubble.xml:85(para) 
+#: ../C/monkey-bubble.xml:92(para)
 msgid "To level up, you need to clear all the bubbles stuck in the playground."
-msgstr "Pour passer au niveau suivant vous devez nettoyer toutes les bulles de l'aire de jeu."
+msgstr ""
+"Pour passer au niveau suivant, vous devez faire disparaître toutes les bulles de "
+"l'aire de jeu."
 
-#: help/C/monkey-bubble.xml:94(title) 
+#: ../C/monkey-bubble.xml:101(title)
 msgid "Getting Started"
-msgstr "Introduction"
+msgstr "Premiers pas"
 
-#: help/C/monkey-bubble.xml:95(para) 
-msgid "The following sections describe how to start <application>Monkey Bubble</application>."
-msgstr "Les sections suivantes expliquent comment utiliser <application>Monkey Bubble</application>."
+#: ../C/monkey-bubble.xml:102(para)
+msgid ""
+"The following sections describe how to start <application>Monkey Bubble</"
+"application>."
+msgstr ""
+"Les sections suivantes expliquent comment utiliser <application>Monkey "
+"Bubble</application>."
 
-#: help/C/monkey-bubble.xml:100(title) 
+#: ../C/monkey-bubble.xml:107(title)
 msgid "To Start Monkey Bubble"
-msgstr "D&eacute;marrage de Monkey Bubble"
+msgstr "Démarrage de Monkey Bubble"
 
-#: help/C/monkey-bubble.xml:101(para) 
-msgid "You can start <application>Monkey Bubble</application> in the following ways:"
-msgstr "Vous pouvez d&eacute;marrer <application>Monkey Bubble</application> en recourant &agrave; l'une des m&eacute;thodes suivantes :"
+#: ../C/monkey-bubble.xml:108(para)
+msgid ""
+"You can start <application>Monkey Bubble</application> in the following ways:"
+msgstr ""
+"Vous pouvez démarrer <application>Monkey Bubble</application> en "
+"recourant à l'une des méthodes suivantes :"
 
-#: help/C/monkey-bubble.xml:106(term) 
+#: ../C/monkey-bubble.xml:113(term)
 msgid "Applications menu"
 msgstr "Menu Applications"
 
-#: help/C/monkey-bubble.xml:108(para) 
-msgid "Choose <menuchoice><guimenu>Games</guimenu><guimenuitem>Monkey Bubble</guimenuitem></menuchoice>."
-msgstr "S&eacute;lectionnez <menuchoice><guimenu>Jeux</guimenu><guimenuitem>Monkey Bubble</guimenuitem></menuchoice>."
+#: ../C/monkey-bubble.xml:115(para)
+msgid ""
+"Choose <menuchoice><guimenu>Games</guimenu><guimenuitem>Monkey Bubble</"
+"guimenuitem></menuchoice>."
+msgstr ""
+"Choisissez <menuchoice><guimenu>Jeux</guimenu><guimenuitem>Monkey "
+"Bubble</guimenuitem></menuchoice>."
 
-#: help/C/monkey-bubble.xml:117(term) 
+#: ../C/monkey-bubble.xml:124(term)
 msgid "Command line"
 msgstr "Ligne de commande"
 
-#: help/C/monkey-bubble.xml:119(para) 
+#: ../C/monkey-bubble.xml:126(para)
 msgid "Execute the following command: <command>monkey-bubble</command>"
-msgstr "Executez la commande suivante : <command>monkey-bubble</command>"
+msgstr "Exécutez la commande suivante : <command>monkey-bubble</command>"
 
-#: help/C/monkey-bubble-C.omf:4(creator) 
-msgid "tom@aliacom.fr"
-msgstr ""
-
-#: help/C/monkey-bubble-C.omf:7(maintainer) 
-msgid "laurentb@aliacom.fr"
-msgstr ""
-
-#: help/C/monkey-bubble-C.omf:11(title) 
-msgid "Monkey Bubble"
-msgstr ""
-
-#: help/C/monkey-bubble-C.omf:15(date) 
-msgid "2004-01-08"
-msgstr ""
-
-#: help/C/monkey-bubble-C.omf:20(description) 
-msgid "User manual for the Monkey Bubble game."
-msgstr ""
-
-#: help/C/monkey-bubble-C.omf:23(type) 
-msgid "user's guide"
-msgstr ""
-
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2.
+#: ../C/monkey-bubble.xml:0(None)
+msgid "translator-credits"
+msgstr "Claude Paroz <claude@2xlibre.net>, 2008"
