@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Arabic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-21 22:52+0100\n"
+"POT-Creation-Date: 2008-07-31 11:08+0100\n"
 "PO-Revision-Date: 2007-04-14 18:49+0100\n"
 "Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
 "Language-Team: Arabeyes <doc@arabeyes.org>\n"
@@ -35,67 +35,8 @@ msgid ""
 msgstr ""
 
 #: ../data/monkey-bubble.glade.h:7
-#, fuzzy
-msgid "Join _network game"
-msgstr "اسم ال_شبكة:"
-
-#: ../data/monkey-bubble.glade.h:8 ../monkey-bubble.desktop.in.h:1
-msgid "Monkey Bubble"
-msgstr ""
-
-#: ../data/monkey-bubble.glade.h:9
-#, fuzzy
-msgid "New 1 player"
-msgstr "طبقة جديدة"
-
-#: ../data/monkey-bubble.glade.h:10
-#, fuzzy
-msgid "New 2 players"
-msgstr "طبقة جديدة"
-
-#: ../data/monkey-bubble.glade.h:11
-#, fuzzy
-msgid "New network game"
-msgstr "لعبة _شبكة"
-
-#: ../data/monkey-bubble.glade.h:12 ../src/ui/ui-main.c:412
-#: ../src/ui/ui-main.c:544
-#, fuzzy
-msgid "Pause game"
-msgstr "إي_قاف اللعبة"
-
-#: ../data/monkey-bubble.glade.h:13 ../src/ui/keyboard-properties.c:84
-#, fuzzy
-msgid "Stop game"
-msgstr "اسم الأغنية"
-
-#: ../data/monkey-bubble.glade.h:14
 msgid "Warning"
 msgstr "تحذير"
-
-#: ../data/monkey-bubble.glade.h:15
-#, fuzzy
-msgid "_About"
-msgstr "_6 عن البرنامج"
-
-#: ../data/monkey-bubble.glade.h:16
-#, fuzzy
-msgid "_Contents"
-msgstr "المحتويات"
-
-#: ../data/monkey-bubble.glade.h:17
-msgid "_Game"
-msgstr "_لعبة"
-
-#: ../data/monkey-bubble.glade.h:18
-#, fuzzy
-msgid "_Help"
-msgstr "مساعدة"
-
-#: ../data/monkey-bubble.glade.h:19
-#, fuzzy
-msgid "_High Scores"
-msgstr "أعلى النتائج"
 
 #: ../data/monkey-bubble.schemas.in.h:1
 #, fuzzy
@@ -193,37 +134,42 @@ msgstr ""
 msgid "*"
 msgstr "*"
 
-#: ../data/netgame.glade.h:2 ../data/netserver.glade.h:1
+#: ../data/netgame.glade.h:2
+msgid "Close"
+msgstr ""
+
+#: ../data/netgame.glade.h:3 ../data/netserver.glade.h:1
+#: ../src/ui/ui-network-client.c:156
 #, fuzzy
 msgid "Network game"
 msgstr "لعبة _شبكة"
 
-#: ../data/netgame.glade.h:3
+#: ../data/netgame.glade.h:4
 #, fuzzy
 msgid "Number of games :"
 msgstr "عدد الإطارات"
 
-#: ../data/netgame.glade.h:4
+#: ../data/netgame.glade.h:5
 #, fuzzy
 msgid "Number of players :"
 msgstr "_عدد اللاعبين:"
 
-#: ../data/netgame.glade.h:5 ../data/netserver.glade.h:4
+#: ../data/netgame.glade.h:6 ../data/netserver.glade.h:4
 #: ../src/ui/keyboard-properties.c:86
 #, fuzzy
 msgid "Quit game"
 msgstr "خروج من اللعبة الحالية"
 
-#: ../data/netgame.glade.h:6 ../data/netserver.glade.h:5
+#: ../data/netgame.glade.h:7 ../data/netserver.glade.h:5
 #, fuzzy
 msgid "Ready"
 msgstr "اقرأ"
 
-#: ../data/netgame.glade.h:7
+#: ../data/netgame.glade.h:8
 msgid "_Go"
 msgstr "ا_ذهب"
 
-#: ../data/netgame.glade.h:8
+#: ../data/netgame.glade.h:9
 #, fuzzy
 msgid "_Server"
 msgstr "ال_خادم:"
@@ -243,7 +189,12 @@ msgstr "_عدد اللاعبين:"
 msgid "Start Game"
 msgstr "زمن البدء"
 
-#: ../monkey-bubble.desktop.in.h:2
+#: ../monkey-bubble.desktop.in.in.h:1 ../src/ui/ui-main.c:263
+#: ../src/ui/ui-main.c:275
+msgid "Monkey Bubble"
+msgstr ""
+
+#: ../monkey-bubble.desktop.in.in.h:2
 msgid "Monkey Bubble Arcade Game"
 msgstr ""
 
@@ -261,6 +212,11 @@ msgstr "طبقة جديدة"
 #, fuzzy
 msgid "Pause/Resume"
 msgstr "إيقاف مؤقت/إنهاء"
+
+#: ../src/ui/keyboard-properties.c:84 ../src/ui/ui-main.c:229
+#, fuzzy
+msgid "Stop game"
+msgstr "اسم الأغنية"
 
 #: ../src/ui/keyboard-properties.c:92
 #, fuzzy
@@ -305,29 +261,29 @@ msgstr "لعبة"
 msgid "View"
 msgstr "عرض"
 
-#: ../src/ui/keyboard-properties.c:336
+#: ../src/ui/keyboard-properties.c:309
 #, c-format
 msgid "There was an error loading config from %s. (%s)\n"
 msgstr "حدث خطأ عند تحميل اﻻعدادات من %s. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:350
+#: ../src/ui/keyboard-properties.c:323
 #, c-format
 msgid ""
 "There was an error subscribing to notification of terminal keybinding "
 "changes. (%s)\n"
 msgstr "حدث خطأ عند تسجيل تغييرات ارتباطات المفاتيح.  (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:393
+#: ../src/ui/keyboard-properties.c:366
 #, c-format
 msgid "There was an error loading a terminal keybinding. (%s)\n"
 msgstr "حصل خطأ عند تحميل ارتباط مفتاح طرفية.  (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:409
+#: ../src/ui/keyboard-properties.c:382
 #, c-format
 msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
 msgstr "قيمة مفتاح الإعداد %s غير سليمة، القيمة هي \"%s\"\n"
 
-#: ../src/ui/keyboard-properties.c:432
+#: ../src/ui/keyboard-properties.c:405
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menubar access "
@@ -336,7 +292,7 @@ msgstr ""
 "حدث خطأ عند تحميل قيمة الإعدادات المتعلقة بإمكانيّة إستخدام مفاتيح النفاذ إلى "
 "شريط القوائم.   (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:446
+#: ../src/ui/keyboard-properties.c:419
 #, c-format
 msgid ""
 "There was an error subscribing to notification on changes on whether to use "
@@ -345,7 +301,7 @@ msgstr ""
 "حدث خطأ عند التسجيل للإخبار عن تعديلات في إمكانيّة إستخدام مفاتيح النفاذ إلى "
 "شريط القوائم  (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:457
+#: ../src/ui/keyboard-properties.c:430
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menu "
@@ -353,70 +309,132 @@ msgid ""
 msgstr ""
 "حدث خطأ عند تحميل قيمة الإعداد في ما إذا تستعمل مسرعات القوائم.  (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:473
+#: ../src/ui/keyboard-properties.c:446
 #, c-format
 msgid ""
 "There was an error subscribing to notification for use_menu_accelerators (%"
 "s)\n"
 msgstr "حدث خطأ عند التسجيل للإخبار عند استعمال مسرعات القوائم (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:755
+#: ../src/ui/keyboard-properties.c:728
 msgid "Disabled"
 msgstr "معطل"
 
-#: ../src/ui/keyboard-properties.c:815
+#: ../src/ui/keyboard-properties.c:788
 #, c-format
 msgid "Error propagating accelerator change to configuration database: %s\n"
 msgstr "خطأ تمرير تغييرات المسرع لقاعدة بيانات الإعدادات:  %s\n"
 
-#: ../src/ui/keyboard-properties.c:983
+#: ../src/ui/keyboard-properties.c:956
 #, fuzzy, c-format
 msgid "Error setting new accelerator in configuration database: %s\n"
 msgstr "خطأ عند إلغاء ضبط مفتاح الإختصار في قاعدة بيانات الإعدادات: %s\n"
 
-#: ../src/ui/keyboard-properties.c:1082
+#: ../src/ui/keyboard-properties.c:1055
 msgid "_Action"
 msgstr "_فعل"
 
-#: ../src/ui/keyboard-properties.c:1105
+#: ../src/ui/keyboard-properties.c:1078
 msgid "Shortcut _Key"
 msgstr "مفتاح إ_ختصار"
 
-#: ../src/ui/ui-main.c:537
+#: ../src/ui/main.c:91
+msgid "Monkey Bubble is a Bust'a'Move clone for GNOME"
+msgstr ""
+
+#: ../src/ui/ui-main.c:203
+msgid "_Game"
+msgstr "_لعبة"
+
+#: ../src/ui/ui-main.c:204
+#, fuzzy
+msgid "New 1 player"
+msgstr "طبقة جديدة"
+
+#: ../src/ui/ui-main.c:207
+#, fuzzy
+msgid "Join _network game"
+msgstr "اسم ال_شبكة:"
+
+#: ../src/ui/ui-main.c:210
+#, fuzzy
+msgid "Pause game"
+msgstr "إي_قاف اللعبة"
+
+#: ../src/ui/ui-main.c:213
 #, fuzzy
 msgid "Resume game"
 msgstr "است_كمل لعبة قديمة"
 
-#: ../src/ui/ui-main.c:635
+#: ../src/ui/ui-main.c:217
+#, fuzzy
+msgid "New 2 players"
+msgstr "طبقة جديدة"
+
+#: ../src/ui/ui-main.c:220
+#, fuzzy
+msgid "New network game"
+msgstr "لعبة _شبكة"
+
+#: ../src/ui/ui-main.c:226
+#, fuzzy
+msgid "_High Scores"
+msgstr "أعلى النتائج"
+
+#: ../src/ui/ui-main.c:232
+#, fuzzy
+msgid "_Help"
+msgstr "مساعدة"
+
+#: ../src/ui/ui-main.c:233
+#, fuzzy
+msgid "_Contents"
+msgstr "المحتويات"
+
+#: ../src/ui/ui-main.c:236
+#, fuzzy
+msgid "_About"
+msgstr "_6 عن البرنامج"
+
+#: ../src/ui/ui-main.c:239
+#, fuzzy
+msgid "_Fullscreen"
+msgstr "_ملء الشاشة"
+
+#: ../src/ui/ui-main.c:242
+#, fuzzy
+msgid "_Leave Fullscreen"
+msgstr "_ملء الشاشة"
+
+#: ../src/ui/ui-main.c:756
 #, fuzzy
 msgid "translator_credits"
 msgstr "المترجمون:"
 
-#: ../src/ui/ui-main.c:643
+#: ../src/ui/ui-main.c:764
 msgid ""
 "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
 "remove all Bubbles by the creation of unicolor triplets."
 msgstr ""
 
-#: ../src/ui/ui-main.c:664
+#: ../src/ui/ui-main.c:785
 #, fuzzy, c-format
 msgid "There was an error displaying help: %s"
 msgstr ""
 "حدث خطأ عند عرض المساعدة:\n"
 " %s"
 
-#: ../src/ui/ui-network-server.c:159 ../src/ui/ui-network-client.c:149
+#: ../src/ui/ui-network-server.c:161 ../src/ui/ui-network-client.c:195
 #, fuzzy
 msgid "_Player name"
 msgstr "اسم ال_طبقة"
 
-#: ../src/ui/ui-network-server.c:166 ../src/ui/ui-network-client.c:156
+#: ../src/ui/ui-network-server.c:168 ../src/ui/ui-network-client.c:202
 #, fuzzy
 msgid "_Owner"
 msgstr "ال_مالك:"
 
-#: ../src/ui/ui-network-server.c:173 ../src/ui/ui-network-client.c:163
+#: ../src/ui/ui-network-server.c:175 ../src/ui/ui-network-client.c:209
 #, fuzzy
 msgid "_Ready"
 msgstr "اقرأ"
-
