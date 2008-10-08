@@ -1,3 +1,10 @@
+2008-10-08  Christian Persch  <chpe@gnome.org>
+
+	Bug 523832 – add bugzilla info to desktop file
+
+	* Makefile.am:
+	* monkey-bubble.desktop.in.in: Put VERSION into the desktop file.
+
 2008-03-22  Christian Persch  <chpe@gnome.org>
 
 	* data/Makefile.am:

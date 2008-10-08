@@ -33,9 +33,9 @@ endif
 
 $(applications_in_files): $(applications_in_in_files) Makefile
 if MAEMO
-	sed 's#@BINDIR@#$(bindir)/#' $< > $@
+	sed 's#@BINDIR@#$(bindir)/#;s#\@VERSION\@#$(VERSION)#' $< > $@
 else
-	sed 's#@BINDIR@##' $< > $@
+	sed 's#@BINDIR@##;s#\@VERSION\@#$(VERSION)#' $< > $@
 endif
 
 @INTLTOOL_DESKTOP_RULE@

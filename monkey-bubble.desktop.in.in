@@ -8,3 +8,7 @@ Terminal=false
 Type=Application
 Categories=GNOME;Application;Game;
 StartupNotify=true
+X-GNOME-Bugzilla-Bugzilla=GNOME
+X-GNOME-Bugzilla-Product=monkey-bubble
+X-GNOME-Bugzilla-Component=Game Engine
+X-GNOME-Bugzilla-Version=@VERSION@
