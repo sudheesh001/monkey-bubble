@@ -6,8 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: monkey-bubble 0.1.9\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-07 15:01+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=monkey-"
+"bubble&amp;component=general\n"
+"POT-Creation-Date: 2008-12-11 20:53+0000\n"
 "PO-Revision-Date: 2008-11-11 12:53-0400\n"
 "Last-Translator: Leonardo Gregianin <leogregianin@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
@@ -35,13 +36,13 @@ msgstr ""
 "<markup>\n"
 "<span weight=\"bold\" size=\"large\"\n"
 "style=\"oblique\">\n"
-"Não é possível criar servidor !\n"
+"Não foi possível criar o servidor !\n"
 "</span>\n"
 "</markup>"
 
 #: ../data/monkey-bubble.glade.h:7
 msgid "Warning"
-msgstr "Alerta"
+msgstr "Aviso"
 
 #: ../data/monkey-bubble.schemas.in.h:1
 msgid "1 player game"
@@ -65,11 +66,11 @@ msgstr "Esquerda"
 
 #: ../data/monkey-bubble.schemas.in.h:6
 msgid "Pause"
-msgstr "Suspender"
+msgstr "Pausar"
 
 #: ../data/monkey-bubble.schemas.in.h:7
 msgid "Pause the game"
-msgstr "Suspender o jogo"
+msgstr "Pausar o jogo"
 
 #: ../data/monkey-bubble.schemas.in.h:8
 msgid "Quit the game"
@@ -180,7 +181,7 @@ msgstr "Monkey Bubble"
 
 #: ../monkey-bubble.desktop.in.in.h:2
 msgid "Monkey Bubble Arcade Game"
-msgstr "Jogo de ação Monkey Bubble"
+msgstr "Jogo Arcade Monkey Bubble"
 
 #: ../src/ui/keyboard-properties.c:78
 msgid "New game 1 player"
@@ -192,7 +193,7 @@ msgstr "Novo jogo de 2 jogadores"
 
 #: ../src/ui/keyboard-properties.c:82
 msgid "Pause/Resume"
-msgstr "Suspender/continuar"
+msgstr "Pausar/Continuar"
 
 #: ../src/ui/keyboard-properties.c:84 ../src/ui/ui-main.c:229
 msgid "Stop game"
@@ -245,7 +246,7 @@ msgid ""
 "There was an error subscribing to notification of terminal keybinding "
 "changes. (%s)\n"
 msgstr ""
-"Ocorreu um erro ao assinar a notificação de mudanças de associações de "
+"Ocorreu um erro ao assinar a notificação de alterações de associações de "
 "teclas do terminal. (%s)\n"
 
 #: ../src/ui/keyboard-properties.c:366
@@ -257,7 +258,7 @@ msgstr ""
 #: ../src/ui/keyboard-properties.c:382
 #, c-format
 msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
-msgstr "O valor da chave de configuração %s não é válido; valor é \"%s\"\n"
+msgstr "O valor da chave de configuração %s não é válido; o valor é \"%s\"\n"
 
 #: ../src/ui/keyboard-properties.c:405
 #, c-format
@@ -265,8 +266,8 @@ msgid ""
 "There was an error loading config value for whether to use menubar access "
 "keys. (%s)\n"
 msgstr ""
-"Ocorreu um erro ao carregar valor de configuração sobre o uso de teclas de "
-"atalho nos menus. (%s)\n"
+"Ocorreu um erro ao carregar o valor de configuração para uso de teclas de "
+"acesso nos menus. (%s)\n"
 
 #: ../src/ui/keyboard-properties.c:419
 #, c-format
@@ -274,8 +275,8 @@ msgid ""
 "There was an error subscribing to notification on changes on whether to use "
 "menubar access keys (%s)\n"
 msgstr ""
-"Ocorreu um erro ao assinar a notificação de mudanças de configuração sobre o "
-"uso de teclas de atalho nos menus. (%s)\n"
+"Ocorreu um erro ao assinar a notificação de alterações de configuração sobre "
+"o uso de teclas de acesso nos menus. (%s)\n"
 "\n"
 
 #: ../src/ui/keyboard-properties.c:430
@@ -284,8 +285,8 @@ msgid ""
 "There was an error loading config value for whether to use menu "
 "accelerators. (%s)\n"
 msgstr ""
-"Ocorreu um erro ao carregar valor de configuração sobre o uso de "
-"aceleradores de menus. (%s)\n"
+"Ocorreu um erro ao carregar o valor de configuração para uso de aceleradores "
+"de menus. (%s)\n"
 
 #: ../src/ui/keyboard-properties.c:446
 #, c-format
@@ -297,13 +298,13 @@ msgstr ""
 
 #: ../src/ui/keyboard-properties.c:728
 msgid "Disabled"
-msgstr "Desativado"
+msgstr "Desabilitado"
 
 #: ../src/ui/keyboard-properties.c:788
 #, c-format
 msgid "Error propagating accelerator change to configuration database: %s\n"
 msgstr ""
-"Erro ao propagar mudança de acelerador para o banco de dados de "
+"Erro ao propagar alteração de acelerador para o banco de dados de "
 "configurações: %s\n"
 
 #: ../src/ui/keyboard-properties.c:956
@@ -321,9 +322,8 @@ msgid "Shortcut _Key"
 msgstr "_Tecla de atalho"
 
 #: ../src/ui/main.c:91
-#, fuzzy
 msgid "Monkey Bubble is a Bust'a'Move clone for GNOME"
-msgstr "Monkey Bubble é um clone Bust'a'Move para o GNOME"
+msgstr "Monkey Bubble é um clone do Bust'a'Move para o GNOME"
 
 #: ../src/ui/ui-main.c:203
 msgid "_Game"
@@ -331,15 +331,15 @@ msgstr "J_ogo"
 
 #: ../src/ui/ui-main.c:204
 msgid "New 1 player"
-msgstr "Novo 1 jogador"
+msgstr "Novo de 1 jogador"
 
 #: ../src/ui/ui-main.c:207
 msgid "Join _network game"
-msgstr "Participar de jogo em _rede"
+msgstr "Entrar em jogo em _rede"
 
 #: ../src/ui/ui-main.c:210
 msgid "Pause game"
-msgstr "Suspender jogo"
+msgstr "Pausar jogo"
 
 #: ../src/ui/ui-main.c:213
 msgid "Resume game"
@@ -347,7 +347,7 @@ msgstr "Continuar jogo"
 
 #: ../src/ui/ui-main.c:217
 msgid "New 2 players"
-msgstr "Novo 2 jogadores"
+msgstr "Novo de 2 jogadores"
 
 #: ../src/ui/ui-main.c:220
 msgid "New network game"
@@ -363,7 +363,7 @@ msgstr "A_juda"
 
 #: ../src/ui/ui-main.c:233
 msgid "_Contents"
-msgstr "_Conteúdo"
+msgstr "Su_mário"
 
 #: ../src/ui/ui-main.c:236
 msgid "_About"

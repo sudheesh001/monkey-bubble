@@ -1,5 +1,11 @@
 2008-12-11  Leonardo Ferreira Fontenelle  <leonardof@gnome.org>
 
+	* pt_BR.po: Updated Brazilian Portuguese translation with Vladimir
+	Melo's fixes to Leonardo Gregianin's translation (those fixes were 
+	missing in the last commit).
+
+2008-12-11  Leonardo Ferreira Fontenelle  <leonardof@gnome.org>
+
 	* pt_BR.po: Updated Brazilian Portuguese translation by Leonardo
 	Gregianin, reviewed by Vladimir Melo.
 
