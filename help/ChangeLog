@@ -1,3 +1,9 @@
+2009-04-03  Leonardo Ferreira Fontenelle  <leonardof@gnome.org>
+
+	* pt_BR/pt_BR.po: Added Brazilian Portuguese translation by Enrico
+	Nicoletto.
+	* Makefile.am: Added pt_BR to DOC_LINGUAS.
+
 2008-12-05  Mario Blättermann  <mariobl@svn.gnome.org>
 
 	* de/de.po: Added German translation
