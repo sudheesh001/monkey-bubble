@@ -1,30 +1,31 @@
 # Hungarian translation of monkey-bubble.
-# Copyright (C) 2004 Free Software Foundation, Inc.
+# Copyright (C) 2004, 2009 Free Software Foundation, Inc.
 # This file is distributed under the same license as the monkey-bubble package.
-# Gabor Kelemen <kelemeng@gnome.hu>, 2004, 2005.
 #
+# Gabor Kelemen <kelemeng@gnome.hu>, 2004, 2005, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: monkey-bubble\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-01 12:43+0200\n"
-"PO-Revision-Date: 2005-06-15 12:41+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=monkey-bubble&component=general\n"
+"POT-Creation-Date: 2009-04-17 10:33+0000\n"
+"PO-Revision-Date: 2009-05-15 23:07+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: data/keybinding.glade.h:1
+#: ../data/keybinding.glade.h:1
 msgid "Keyboard Shortcuts"
 msgstr "Gyorsbillentyűk"
 
-#: data/keybinding.glade.h:2
+#: ../data/keybinding.glade.h:2
 msgid "_Shortcut Keys:"
 msgstr "_Gyorsbillentyűk:"
 
-#: data/monkey-bubble.glade.h:1
+#: ../data/monkey-bubble.glade.h:1
 msgid ""
 "<markup>\n"
 "<span weight=\"bold\" size=\"large\"\n"
@@ -40,269 +41,207 @@ msgstr ""
 "</span>\n"
 "</markup>"
 
-#: data/monkey-bubble.glade.h:7
-msgid "Create network game"
-msgstr "Hálózati játék létrehozása"
-
-#: data/monkey-bubble.glade.h:8
-msgid "Join _network game"
-msgstr "_Kapcsolódás hálózati játékhoz"
-
-#: data/monkey-bubble.glade.h:9 monkey-bubble.desktop.in.h:1
-msgid "Monkey Bubble"
-msgstr "Monkey Bubble"
-
-#: data/monkey-bubble.glade.h:10
-msgid "New 1 player"
-msgstr "Új 1 játékos"
-
-#: data/monkey-bubble.glade.h:11
-msgid "New 2 players"
-msgstr "Új 2 játékos"
-
-#: data/monkey-bubble.glade.h:12 src/ui/ui-main.c:401 src/ui/ui-main.c:533
-msgid "Pause game"
-msgstr "Játék szüneteltetése"
-
-#: data/monkey-bubble.glade.h:13 src/ui/keyboard-properties.c:86
-msgid "Stop game"
-msgstr "Játék leállítása"
-
-#: data/monkey-bubble.glade.h:14
+#: ../data/monkey-bubble.glade.h:7
 msgid "Warning"
 msgstr "Figyelmeztetés"
 
-#: data/monkey-bubble.glade.h:15
-msgid "_About"
-msgstr "_Névjegy"
-
-#: data/monkey-bubble.glade.h:16
-msgid "_Contents"
-msgstr "_Tartalom"
-
-#: data/monkey-bubble.glade.h:17
-msgid "_Game"
-msgstr "_Játék"
-
-#: data/monkey-bubble.glade.h:18
-msgid "_Help"
-msgstr "_Súgó"
-
-#: data/monkey-bubble.glade.h:19
-msgid "_Settings"
-msgstr "_Beállítások"
-
-#: data/monkey-bubble.schemas.in.h:1
+#: ../data/monkey-bubble.schemas.in.h:1
 msgid "1 player game"
 msgstr "Egy játékos"
 
-#: data/monkey-bubble.schemas.in.h:2
+#: ../data/monkey-bubble.schemas.in.h:2
 msgid "2 players game"
 msgstr "Két játékos"
 
-#: data/monkey-bubble.schemas.in.h:3
+#: ../data/monkey-bubble.schemas.in.h:3
 msgid "F1"
 msgstr "F1"
 
-#: data/monkey-bubble.schemas.in.h:4
+#: ../data/monkey-bubble.schemas.in.h:4
 msgid "F2"
 msgstr "F2"
 
-#: data/monkey-bubble.schemas.in.h:5
+#: ../data/monkey-bubble.schemas.in.h:5
 msgid "Left"
 msgstr "Left"
 
-#: data/monkey-bubble.schemas.in.h:6
+#: ../data/monkey-bubble.schemas.in.h:6
 msgid "Pause"
 msgstr "Pause"
 
-#: data/monkey-bubble.schemas.in.h:7
+#: ../data/monkey-bubble.schemas.in.h:7
 msgid "Pause the game"
 msgstr "A játék szüneteltetése"
 
-#: data/monkey-bubble.schemas.in.h:8
+#: ../data/monkey-bubble.schemas.in.h:8
 msgid "Quit the game"
 msgstr "Kilépés a játékból"
 
-#: data/monkey-bubble.schemas.in.h:9
+#: ../data/monkey-bubble.schemas.in.h:9
 msgid "Right"
 msgstr "Right"
 
-#: data/monkey-bubble.schemas.in.h:10
+#: ../data/monkey-bubble.schemas.in.h:10
 msgid "Stop the game"
 msgstr "A játék leállítása"
 
-#: data/monkey-bubble.schemas.in.h:11
+#: ../data/monkey-bubble.schemas.in.h:11
 msgid "Up"
 msgstr "Up"
 
-#: data/monkey-bubble.schemas.in.h:12
+#: ../data/monkey-bubble.schemas.in.h:12
 msgid "d"
 msgstr "d"
 
-#: data/monkey-bubble.schemas.in.h:13
+#: ../data/monkey-bubble.schemas.in.h:13
 msgid "f"
 msgstr "f"
 
-#: data/monkey-bubble.schemas.in.h:14
+#: ../data/monkey-bubble.schemas.in.h:14
 msgid "left key for player one"
 msgstr "balra gomb az első játékosnak"
 
-#: data/monkey-bubble.schemas.in.h:15
+#: ../data/monkey-bubble.schemas.in.h:15
 msgid "left key for player two"
 msgstr "balra gomb a második játékosnak"
 
-#: data/monkey-bubble.schemas.in.h:16
+#: ../data/monkey-bubble.schemas.in.h:16
 msgid "right key for player one"
 msgstr "jobbra gomb az első játékosnak"
 
-#: data/monkey-bubble.schemas.in.h:17
+#: ../data/monkey-bubble.schemas.in.h:17
 msgid "right key for player two"
 msgstr "jobbra gomb a második játékosnak"
 
-#: data/monkey-bubble.schemas.in.h:18
+#: ../data/monkey-bubble.schemas.in.h:18
 msgid "s"
 msgstr "s"
 
-#: data/monkey-bubble.schemas.in.h:19
+#: ../data/monkey-bubble.schemas.in.h:19
 msgid "shoot key for player one"
 msgstr "lövés gomb az első játékosnak"
 
-#: data/monkey-bubble.schemas.in.h:20
+#: ../data/monkey-bubble.schemas.in.h:20
 msgid "shoot key for player two"
 msgstr "lövés gomb a második játékosnak"
 
-#: data/netgame.glade.h:1
+#: ../data/netgame.glade.h:1
 msgid "*"
 msgstr "*"
 
-#: data/netgame.glade.h:2 data/netserver.glade.h:1
+#: ../data/netgame.glade.h:2
+msgid "Close"
+msgstr "Bezárás"
+
+#: ../data/netgame.glade.h:3 ../data/netserver.glade.h:1
+#: ../src/ui/ui-network-client.c:156
 msgid "Network game"
 msgstr "Hálózati játék"
 
-#: data/netgame.glade.h:3
+#: ../data/netgame.glade.h:4
 msgid "Number of games :"
 msgstr "Játékok száma :"
 
-#: data/netgame.glade.h:4
+#: ../data/netgame.glade.h:5
 msgid "Number of players :"
 msgstr "Játékosok száma:"
 
-#: data/netgame.glade.h:5 data/netserver.glade.h:4
-#: src/ui/keyboard-properties.c:88
+#: ../data/netgame.glade.h:6 ../data/netserver.glade.h:4
+#: ../src/ui/keyboard-properties.c:86
 msgid "Quit game"
 msgstr "Kilépés"
 
-#: data/netgame.glade.h:6 data/netserver.glade.h:5
+#: ../data/netgame.glade.h:7 ../data/netserver.glade.h:5
 msgid "Ready"
 msgstr "Kész"
 
-#: data/netgame.glade.h:7
+#: ../data/netgame.glade.h:8
 msgid "_Go"
 msgstr "_Ugrás"
 
-#: data/netgame.glade.h:8
+#: ../data/netgame.glade.h:9
 msgid "_Server"
 msgstr "_Kiszolgáló"
 
-#: data/netserver.glade.h:2
+#: ../data/netserver.glade.h:2
 msgid "Number of game"
 msgstr "Játék száma"
 
-#: data/netserver.glade.h:3
+#: ../data/netserver.glade.h:3
 msgid "Number of players"
 msgstr "Játékosok száma"
 
-#: data/netserver.glade.h:6
+#: ../data/netserver.glade.h:6
 msgid "Start Game"
 msgstr "Játék indítása"
 
-#: monkey-bubble.desktop.in.h:2
+#: ../monkey-bubble.desktop.in.in.h:1 ../src/ui/ui-main.c:263
+#: ../src/ui/ui-main.c:275
+msgid "Monkey Bubble"
+msgstr "Monkey Bubble"
+
+#: ../monkey-bubble.desktop.in.in.h:2
 msgid "Monkey Bubble Arcade Game"
 msgstr "Monkey Bubble ügyességi játék"
 
-#: src/ui/eggcellrendererkeys.c:160 src/ui/eggcellrendererkeys.c:161
-msgid "Accelerator key"
-msgstr "Gyorsbillentyű"
-
-#: src/ui/eggcellrendererkeys.c:170 src/ui/eggcellrendererkeys.c:171
-msgid "Accelerator modifiers"
-msgstr "Gyorsbillentyű-módosítók"
-
-#: src/ui/eggcellrendererkeys.c:180
-msgid "Accelerator Mode"
-msgstr "Gyorsbillentyű mód"
-
-#: src/ui/eggcellrendererkeys.c:181
-msgid "The type of accelerator."
-msgstr "A gyorsbillentyű típusa."
-
-#: src/ui/eggcellrendererkeys.c:219 src/ui/keyboard-properties.c:765
-msgid "Disabled"
-msgstr "Tiltva"
-
-#: src/ui/eggcellrendererkeys.c:330 src/ui/eggcellrendererkeys.c:568
-msgid "Type a new accelerator, or press Backspace to clear"
-msgstr "Nyomja le az új gyorsbillentyűt, vagy nyomja meg a Backspace billentyűt a törléshez"
-
-#: src/ui/eggcellrendererkeys.c:571
-msgid "Type a new accelerator"
-msgstr "Új gyorsbillentyű megadása"
-
-#: src/ui/keyboard-properties.c:80
+#: ../src/ui/keyboard-properties.c:78
 msgid "New game 1 player"
 msgstr "Új játék egy játékossal"
 
-#: src/ui/keyboard-properties.c:82
+#: ../src/ui/keyboard-properties.c:80
 msgid "New game 2 player"
 msgstr "Új játék két játékossal"
 
-#: src/ui/keyboard-properties.c:84
+#: ../src/ui/keyboard-properties.c:82
 msgid "Pause/Resume"
 msgstr "Szünet/Folytatás"
 
-#: src/ui/keyboard-properties.c:94
+#: ../src/ui/keyboard-properties.c:84 ../src/ui/ui-main.c:229
+msgid "Stop game"
+msgstr "Játék leállítása"
+
+#: ../src/ui/keyboard-properties.c:92
 msgid "Full Screen"
 msgstr "Teljes képernyő"
 
-#: src/ui/keyboard-properties.c:96
+#: ../src/ui/keyboard-properties.c:94
 msgid "Normal Size"
 msgstr "Normál méret"
 
-#: src/ui/keyboard-properties.c:101 src/ui/keyboard-properties.c:111
+#: ../src/ui/keyboard-properties.c:99 ../src/ui/keyboard-properties.c:109
 msgid "aim left"
 msgstr "célzás balra"
 
-#: src/ui/keyboard-properties.c:103 src/ui/keyboard-properties.c:113
+#: ../src/ui/keyboard-properties.c:101 ../src/ui/keyboard-properties.c:111
 msgid "aim right"
 msgstr "célzás jobbra"
 
-#: src/ui/keyboard-properties.c:105 src/ui/keyboard-properties.c:115
+#: ../src/ui/keyboard-properties.c:103 ../src/ui/keyboard-properties.c:113
 msgid "shoot"
 msgstr "lövés"
 
-#: src/ui/keyboard-properties.c:122
+#: ../src/ui/keyboard-properties.c:120
 msgid "Player 1"
 msgstr "1. játékos"
 
-#: src/ui/keyboard-properties.c:123
+#: ../src/ui/keyboard-properties.c:121
 msgid "Player 2"
 msgstr "2. játékos"
 
-#: src/ui/keyboard-properties.c:124
+#: ../src/ui/keyboard-properties.c:122
 msgid "Game"
 msgstr "Játék"
 
-#: src/ui/keyboard-properties.c:125
+#: ../src/ui/keyboard-properties.c:123
 msgid "View"
 msgstr "Nézet"
 
-#: src/ui/keyboard-properties.c:338
+#: ../src/ui/keyboard-properties.c:309
 #, c-format
 msgid "There was an error loading config from %s. (%s)\n"
 msgstr "Hiba történt a konfiguráció betöltése közben innen: %s. (%s)\n"
 
-#: src/ui/keyboard-properties.c:352
+#: ../src/ui/keyboard-properties.c:323
 #, c-format
 msgid ""
 "There was an error subscribing to notification of terminal keybinding "
@@ -311,17 +250,17 @@ msgstr ""
 "Hiba történt a terminál forróbillentyű-változásainak figyelésére "
 "feljelentkezés közben (%s)\n"
 
-#: src/ui/keyboard-properties.c:395
+#: ../src/ui/keyboard-properties.c:366
 #, c-format
 msgid "There was an error loading a terminal keybinding. (%s)\n"
 msgstr "Hiba történt a billentyűparancsok betöltése közben. (%s)\n"
 
-#: src/ui/keyboard-properties.c:411
+#: ../src/ui/keyboard-properties.c:382
 #, c-format
 msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
 msgstr "A konfigurációs kulcs (%s) nem érvényes, az érték \"%s\"\n"
 
-#: src/ui/keyboard-properties.c:434
+#: ../src/ui/keyboard-properties.c:405
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menubar access "
@@ -330,7 +269,7 @@ msgstr ""
 "Hiba történt a menü-gyorsbillentyűk használatának konfigurációs értékének "
 "betöltésekor. (%s)\n"
 
-#: src/ui/keyboard-properties.c:448
+#: ../src/ui/keyboard-properties.c:419
 #, c-format
 msgid ""
 "There was an error subscribing to notification on changes on whether to use "
@@ -339,7 +278,7 @@ msgstr ""
 "Hiba történt a menüsor gyorsbillentyűk használata változásainak "
 "értesítéséhez történő feliratkozáskor. (%s)\n"
 
-#: src/ui/keyboard-properties.c:459
+#: ../src/ui/keyboard-properties.c:430
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menu "
@@ -348,7 +287,7 @@ msgstr ""
 "Hiba történt a menü-gyorsbillentyűk használatának konfigurációs értékének "
 "betöltésekor. (%s)\n"
 
-#: src/ui/keyboard-properties.c:475
+#: ../src/ui/keyboard-properties.c:446
 #, c-format
 msgid ""
 "There was an error subscribing to notification for use_menu_accelerators (%"
@@ -357,37 +296,96 @@ msgstr ""
 "Hiba történt az use_menu_accelerators értesítéséhez történő feliratkozáskor. "
 "(%s)\n"
 
-#: src/ui/keyboard-properties.c:825
+#: ../src/ui/keyboard-properties.c:728
+msgid "Disabled"
+msgstr "Tiltva"
+
+#: ../src/ui/keyboard-properties.c:788
 #, c-format
 msgid "Error propagating accelerator change to configuration database: %s\n"
 msgstr ""
 "Hiba történt a gyorsbillentyű-változás a konfigurációs adatbázisba "
 "bevitelekor: %s\n"
 
-#: src/ui/keyboard-properties.c:994
+#: ../src/ui/keyboard-properties.c:956
 #, c-format
 msgid "Error setting new accelerator in configuration database: %s\n"
 msgstr ""
 "Hiba történt az új gyorsbillentyű beállításánál a konfigurációs "
 "adatbázisban: %s\n"
 
-#: src/ui/keyboard-properties.c:1093
+#: ../src/ui/keyboard-properties.c:1055
 msgid "_Action"
 msgstr "_Művelet"
 
-#: src/ui/keyboard-properties.c:1115
+#: ../src/ui/keyboard-properties.c:1078
 msgid "Shortcut _Key"
 msgstr "_Gyorsbillentyű"
 
-#: src/ui/ui-main.c:526
+#: ../src/ui/main.c:91
+msgid "Monkey Bubble is a Bust'a'Move clone for GNOME"
+msgstr "A Monkey Bubble egy Bust'a'Move klón a GNOME-hoz"
+
+#: ../src/ui/ui-main.c:203
+msgid "_Game"
+msgstr "_Játék"
+
+#: ../src/ui/ui-main.c:204
+msgid "New 1 player"
+msgstr "Új 1 játékos"
+
+#: ../src/ui/ui-main.c:207
+msgid "Join _network game"
+msgstr "_Kapcsolódás hálózati játékhoz"
+
+#: ../src/ui/ui-main.c:210
+msgid "Pause game"
+msgstr "Játék szüneteltetése"
+
+#: ../src/ui/ui-main.c:213
 msgid "Resume game"
 msgstr "Játék folytatása"
 
-#: src/ui/ui-main.c:611
+#: ../src/ui/ui-main.c:217
+msgid "New 2 players"
+msgstr "Új 2 játékos"
+
+#: ../src/ui/ui-main.c:220
+#| msgid "Network game"
+msgid "New network game"
+msgstr "Új hálózati játék"
+
+#: ../src/ui/ui-main.c:226
+msgid "_High Scores"
+msgstr "T_oplista"
+
+#: ../src/ui/ui-main.c:232
+msgid "_Help"
+msgstr "_Súgó"
+
+#: ../src/ui/ui-main.c:233
+msgid "_Contents"
+msgstr "_Tartalom"
+
+#: ../src/ui/ui-main.c:236
+msgid "_About"
+msgstr "_Névjegy"
+
+#: ../src/ui/ui-main.c:239
+#| msgid "Full Screen"
+msgid "_Fullscreen"
+msgstr "_Teljes képernyő"
+
+#: ../src/ui/ui-main.c:242
+#| msgid "Full Screen"
+msgid "_Leave Fullscreen"
+msgstr "Teljes képernyő _elhagyása"
+
+#: ../src/ui/ui-main.c:756
 msgid "translator_credits"
 msgstr "Kelemen Gábor <kelemeng@gnome.hu>"
 
-#: src/ui/ui-main.c:619
+#: ../src/ui/ui-main.c:764
 msgid ""
 "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
 "remove all Bubbles by the creation of unicolor triplets."
@@ -395,20 +393,20 @@ msgstr ""
 "A Monkey Bubble egy ügyességi játék a GNOME asztali környezethez. Egyszerűen "
 "távolítsa el az összes buborékot azonos színű hármasok létrehozásával."
 
-#: src/ui/ui-main.c:640
+#: ../src/ui/ui-main.c:785
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Hiba történt a súgó megjelenítése közben: %s"
 
-#: src/ui/ui-network-server.c:159 src/ui/ui-network-client.c:149
+#: ../src/ui/ui-network-server.c:161 ../src/ui/ui-network-client.c:195
 msgid "_Player name"
 msgstr "Játékos _neve"
 
-#: src/ui/ui-network-server.c:166 src/ui/ui-network-client.c:156
+#: ../src/ui/ui-network-server.c:168 ../src/ui/ui-network-client.c:202
 msgid "_Owner"
 msgstr "_Tulajdonos"
 
-#: src/ui/ui-network-server.c:173 src/ui/ui-network-client.c:163
+#: ../src/ui/ui-network-server.c:175 ../src/ui/ui-network-client.c:209
 msgid "_Ready"
 msgstr "_Kész"
 
