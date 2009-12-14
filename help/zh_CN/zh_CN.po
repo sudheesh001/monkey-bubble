@@ -1,0 +1,163 @@
+ # Chinese (China) translation for monkey-bubble.
+# Copyright (C) 2009 monkey-bubble's COPYRIGHT HOLDER
+# This file is distributed under the same license as the monkey-bubble package.
+# careone <careoneagain@gmail.com>, 2009.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: monkey-bubble master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-08-17 18:11+0000\n"
+"PO-Revision-Date: 2009-12-14 12:08+0800\n"
+"Last-Translator: Careone <careoneagain@gmail.com>\n"
+"Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit"
+
+#: C/monkey-bubble.xml:17(title) C/monkey-bubble.xml:41(revnumber)
+msgid "Monkey Bubble Manual V0.1"
+msgstr "泡泡猴手册 版本 0.1"
+
+#: C/monkey-bubble.xml:19(year)
+msgid "2004"
+msgstr "2004"
+
+#: C/monkey-bubble.xml:20(holder) C/monkey-bubble.xml:44(para)
+msgid "Thomas Cataldo"
+msgstr "托马斯 卡塔多(Thomas Cataldo)"
+
+#: C/monkey-bubble.xml:23(publishername) C/monkey-bubble.xml:30(orgname)
+#: C/monkey-bubble.xml:47(para)
+msgid "GNOME Documentation Project"
+msgstr "GNOME 文档工程"
+
+#: C/monkey-bubble.xml:27(firstname)
+msgid "Thomas"
+msgstr "托马斯(Thomas)"
+
+#: C/monkey-bubble.xml:28(surname)
+msgid "Cataldo"
+msgstr "卡塔多(Cataldo)"
+
+#: C/monkey-bubble.xml:34(firstname)
+msgid "Laurent"
+msgstr "劳伦(Laurent)"
+
+#: C/monkey-bubble.xml:35(surname)
+msgid "Belmont"
+msgstr "贝尔蒙(Belmont)"
+
+#: C/monkey-bubble.xml:42(date)
+msgid "January 2004"
+msgstr "2004/01"
+
+#: C/monkey-bubble.xml:54(releaseinfo)
+msgid "This manual describes version 0.1.7 of Monkey Bubble."
+msgstr "本手册适用于“泡泡猴” 0.1.7 版本。"
+
+#: C/monkey-bubble.xml:57(title)
+msgid "Feedback"
+msgstr "反馈"
+
+#: C/monkey-bubble.xml:58(para)
+msgid ""
+"To report a bug or make a suggestion regarding the Monkey Bubble application "
+"or this manual, follow the directions in the <ulink url=\"ghelp:gnome-"
+"feedback\" type=\"help\">GNOME Feedback Page</ulink>."
+msgstr "如果想报告缺陷，或对“泡泡猴”程序或手册有任何建议，请按照下面网址的说明来进行"
+"<ulink url=\"ghelp:gnome-"
+"feedback\" type=\"help\">GNOME 反馈页面</ulink>。"
+
+#: C/monkey-bubble.xml:63(para)
+msgid "User manual for Monkey Bubble."
+msgstr "“泡泡猴”的用户手册"
+
+#: C/monkey-bubble.xml:68(primary)
+msgid "Monkey Bubble"
+msgstr "泡泡猴"
+
+#: C/monkey-bubble.xml:71(primary)
+msgid "bubble game"
+msgstr "泡泡龙游戏"
+
+#: C/monkey-bubble.xml:75(title)
+msgid "Introduction"
+msgstr "介绍"
+
+#: C/monkey-bubble.xml:76(para)
+msgid ""
+"<application>Monkey Bubble</application> is an arcade game with the "
+"following objectives :"
+msgstr ""
+"<application>泡泡猴</application> 是一个街机游戏，主要有以下特点："
+
+#: C/monkey-bubble.xml:82(term)
+msgid "Clear the jungle from all those nasty bubbles"
+msgstr "把丛林里这些讨厌的泡泡全部清除干净"
+
+#: C/monkey-bubble.xml:84(para)
+msgid ""
+"To clear a level, you need to stick at least 3 bubbles of the same color "
+"together using the bubble shooter."
+msgstr ""
+"要想过关，你就用泡泡发射器，把至少3个同颜色的泡泡粘在一起。"
+
+#: C/monkey-bubble.xml:88(para)
+msgid ""
+"Once 3 or more bubbles of the color are sticked together at the top of the "
+"playground, they will explode."
+msgstr "只要在游戏场景中，有3个或3个以上同颜色的泡泡连在一起，这些泡泡就会消掉。"
+
+#: C/monkey-bubble.xml:92(para)
+msgid "To level up, you need to clear all the bubbles stuck in the playground."
+msgstr "要想进入下一关，你需要清除游戏场景中堆起来的所有泡泡。"
+
+#: C/monkey-bubble.xml:101(title)
+msgid "Getting Started"
+msgstr "开始"
+
+#: C/monkey-bubble.xml:102(para)
+msgid ""
+"The following sections describe how to start <application>Monkey Bubble</"
+"application>."
+msgstr ""
+"下面的内容说明了怎样开始玩<application>泡泡猴</"
+"application>。"
+
+#: C/monkey-bubble.xml:107(title)
+msgid "To Start Monkey Bubble"
+msgstr "启动 泡泡猴"
+
+#: C/monkey-bubble.xml:108(para)
+msgid ""
+"You can start <application>Monkey Bubble</application> in the following ways:"
+msgstr "你可以用多种方式来启动<application>泡泡猴</application>："
+
+#: C/monkey-bubble.xml:113(term)
+msgid "Applications menu"
+msgstr "程序菜单"
+
+#: C/monkey-bubble.xml:115(para)
+msgid ""
+"Choose <menuchoice><guimenu>Games</guimenu><guimenuitem>Monkey Bubble</"
+"guimenuitem></menuchoice>."
+msgstr ""
+"选择 <menuchoice><guimenu>游戏</guimenu><guimenuitem>泡泡猴</"
+"guimenuitem></menuchoice>。"
+
+#: C/monkey-bubble.xml:124(term)
+msgid "Command line"
+msgstr "命令行"
+
+#: C/monkey-bubble.xml:126(para)
+msgid "Execute the following command: <command>monkey-bubble</command>"
+msgstr "运行下面的命令： <command>monkey-bubble</command>"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2.
+#: C/monkey-bubble.xml:0(None)
+msgid "translator-credits"
+msgstr ""
+"Careone <careoneagain@gmail.com>"
+""
