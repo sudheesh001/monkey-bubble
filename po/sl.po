@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: monkey-buble\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-07 04:01+0000\n"
-"PO-Revision-Date: 2009-10-16 14:45+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=monkey-bubble&component=general\n"
+"POT-Creation-Date: 2009-10-21 12:31+0000\n"
+"PO-Revision-Date: 2009-12-11 21:37+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -44,60 +44,8 @@ msgstr ""
 "</markup>"
 
 #: ../data/monkey-bubble.glade.h:7
-msgid "Join _network game"
-msgstr "Pridruži se _omrežni igri"
-
-#: ../data/monkey-bubble.glade.h:8
-#: ../monkey-bubble.desktop.in.h:1
-msgid "Monkey Bubble"
-msgstr "Monkey Bubble"
-
-#: ../data/monkey-bubble.glade.h:9
-msgid "New 1 player"
-msgstr "Nov igralec"
-
-#: ../data/monkey-bubble.glade.h:10
-msgid "New 2 players"
-msgstr "Nova dva igralca"
-
-#: ../data/monkey-bubble.glade.h:11
-msgid "New network game"
-msgstr "Nova omrežna igra"
-
-#: ../data/monkey-bubble.glade.h:12
-#: ../src/ui/ui-main.c:399
-#: ../src/ui/ui-main.c:529
-msgid "Pause game"
-msgstr "_Prekini igro"
-
-#: ../data/monkey-bubble.glade.h:13
-#: ../src/ui/keyboard-properties.c:84
-msgid "Stop game"
-msgstr "Zaustavi igro"
-
-#: ../data/monkey-bubble.glade.h:14
 msgid "Warning"
 msgstr "Opozorilo"
-
-#: ../data/monkey-bubble.glade.h:15
-msgid "_About"
-msgstr "_O programu"
-
-#: ../data/monkey-bubble.glade.h:16
-msgid "_Contents"
-msgstr "_Vsebina"
-
-#: ../data/monkey-bubble.glade.h:17
-msgid "_Game"
-msgstr "_Igra"
-
-#: ../data/monkey-bubble.glade.h:18
-msgid "_Help"
-msgstr "_Pomoč"
-
-#: ../data/monkey-bubble.glade.h:19
-msgid "_High Scores"
-msgstr "_Najboljši rezultati"
 
 #: ../data/monkey-bubble.schemas.in.h:1
 msgid "1 player game"
@@ -121,11 +69,11 @@ msgstr "Levo"
 
 #: ../data/monkey-bubble.schemas.in.h:6
 msgid "Pause"
-msgstr "Pavza"
+msgstr "Premor"
 
 #: ../data/monkey-bubble.schemas.in.h:7
 msgid "Pause the game"
-msgstr "Prekini igro"
+msgstr "Premor igranja"
 
 #: ../data/monkey-bubble.schemas.in.h:8
 msgid "Quit the game"
@@ -184,34 +132,39 @@ msgid "*"
 msgstr "*"
 
 #: ../data/netgame.glade.h:2
+msgid "Close"
+msgstr "Zapri"
+
+#: ../data/netgame.glade.h:3
 #: ../data/netserver.glade.h:1
+#: ../src/ui/ui-network-client.c:156
 msgid "Network game"
 msgstr "Omrežna igra"
 
-#: ../data/netgame.glade.h:3
+#: ../data/netgame.glade.h:4
 msgid "Number of games :"
 msgstr "Število iger :"
 
-#: ../data/netgame.glade.h:4
+#: ../data/netgame.glade.h:5
 msgid "Number of players :"
 msgstr "Število igralcev:"
 
-#: ../data/netgame.glade.h:5
+#: ../data/netgame.glade.h:6
 #: ../data/netserver.glade.h:4
 #: ../src/ui/keyboard-properties.c:86
 msgid "Quit game"
-msgstr "Izhod iz igre"
+msgstr "Končaj igro"
 
-#: ../data/netgame.glade.h:6
+#: ../data/netgame.glade.h:7
 #: ../data/netserver.glade.h:5
 msgid "Ready"
 msgstr "Pripravljen"
 
-#: ../data/netgame.glade.h:7
+#: ../data/netgame.glade.h:8
 msgid "_Go"
 msgstr "_Pojdi"
 
-#: ../data/netgame.glade.h:8
+#: ../data/netgame.glade.h:9
 msgid "_Server"
 msgstr "_Strežnik"
 
@@ -227,7 +180,13 @@ msgstr "Število igralcev"
 msgid "Start Game"
 msgstr "Začni igro"
 
-#: ../monkey-bubble.desktop.in.h:2
+#: ../monkey-bubble.desktop.in.in.h:1
+#: ../src/ui/ui-main.c:263
+#: ../src/ui/ui-main.c:275
+msgid "Monkey Bubble"
+msgstr "Monkey Bubble"
+
+#: ../monkey-bubble.desktop.in.in.h:2
 msgid "Monkey Bubble Arcade Game"
 msgstr "Arkadna igra Monkey Bubble"
 
@@ -242,6 +201,11 @@ msgstr "Nova igra za dva igralca"
 #: ../src/ui/keyboard-properties.c:82
 msgid "Pause/Resume"
 msgstr "premor/nadaljevanje"
+
+#: ../src/ui/keyboard-properties.c:84
+#: ../src/ui/ui-main.c:229
+msgid "Stop game"
+msgstr "Zaustavi igro"
 
 #: ../src/ui/keyboard-properties.c:92
 msgid "Full Screen"
@@ -282,97 +246,149 @@ msgstr "Igra"
 msgid "View"
 msgstr "Pogled"
 
-#: ../src/ui/keyboard-properties.c:336
+#: ../src/ui/keyboard-properties.c:309
 #, c-format
 msgid "There was an error loading config from %s. (%s)\n"
 msgstr "Prišlo je do napake med nalaganjem nastavitev iz %s. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:350
+#: ../src/ui/keyboard-properties.c:323
 #, c-format
 msgid "There was an error subscribing to notification of terminal keybinding changes. (%s)\n"
 msgstr "Prišlo je do napake med prijavljanjem na obvestila o spremembah profila terminalskih tipk. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:393
+#: ../src/ui/keyboard-properties.c:366
 #, c-format
 msgid "There was an error loading a terminal keybinding. (%s)\n"
-msgstr "Prišlo je do napake med nalaganjem tipkovničnih povezav terminala. (%s)\n"
+msgstr "Prišlo je do napake med nalaganjem tipkovnih povezav terminala. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:409
+#: ../src/ui/keyboard-properties.c:382
 #, c-format
 msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
 msgstr "Vrednost nastavitvenega ključa %s ni veljavna; vrednost je \"%s\"\n"
 
-#: ../src/ui/keyboard-properties.c:432
+#: ../src/ui/keyboard-properties.c:405
 #, c-format
 msgid "There was an error loading config value for whether to use menubar access keys. (%s)\n"
 msgstr "Prišlo je do napake med nalaganjem nastavitvene vrednosti o uporabi bližnjic menijske vrstice. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:446
+#: ../src/ui/keyboard-properties.c:419
 #, c-format
 msgid "There was an error subscribing to notification on changes on whether to use menubar access keys (%s)\n"
 msgstr "Prišlo je do napake med prijavljanjem na obvestila o spremembah o uporabi bližnjic menijske vrstice (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:457
+#: ../src/ui/keyboard-properties.c:430
 #, c-format
 msgid "There was an error loading config value for whether to use menu accelerators. (%s)\n"
 msgstr "Prišlo je do napake med nalaganjem nastavitvene vrednosti o uporabi bližnjic tipk. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:473
+#: ../src/ui/keyboard-properties.c:446
 #, c-format
 msgid "There was an error subscribing to notification for use_menu_accelerators (%s)\n"
 msgstr "Prišlo je do napake med prijavljanjem na obvestila use_menu_accelerators. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:755
+#: ../src/ui/keyboard-properties.c:728
 msgid "Disabled"
 msgstr "Onemogočeno"
 
-#: ../src/ui/keyboard-properties.c:815
+#: ../src/ui/keyboard-properties.c:788
 #, c-format
 msgid "Error propagating accelerator change to configuration database: %s\n"
 msgstr "Napaka ob vpisovanju sprememb bližnjice v zbirko nastavitvenih podatkov: %s\n"
 
-#: ../src/ui/keyboard-properties.c:983
+#: ../src/ui/keyboard-properties.c:956
 #, c-format
 msgid "Error setting new accelerator in configuration database: %s\n"
 msgstr "Napaka ob nastavljanju nove bližnjice v nastavitveni zbirki podatkov: %s\n"
 
-#: ../src/ui/keyboard-properties.c:1082
+#: ../src/ui/keyboard-properties.c:1055
 msgid "_Action"
 msgstr "_Dejanje"
 
-#: ../src/ui/keyboard-properties.c:1105
+#: ../src/ui/keyboard-properties.c:1078
 msgid "Shortcut _Key"
-msgstr "Bližnjična tip_ka"
+msgstr "Bližnjica tip_ka"
 
-#: ../src/ui/ui-main.c:522
+#: ../src/ui/main.c:91
+msgid "Monkey Bubble is a Bust'a'Move clone for GNOME"
+msgstr "Igra Monkey Bubble je prirejena namizju GNOME"
+
+#: ../src/ui/ui-main.c:203
+msgid "_Game"
+msgstr "_Igra"
+
+#: ../src/ui/ui-main.c:204
+msgid "New 1 player"
+msgstr "Nov igralec"
+
+#: ../src/ui/ui-main.c:207
+msgid "Join _network game"
+msgstr "Pridruži se _omrežni igri"
+
+#: ../src/ui/ui-main.c:210
+msgid "Pause game"
+msgstr "_Premor igre"
+
+#: ../src/ui/ui-main.c:213
 msgid "Resume game"
 msgstr "_Vrni se v igro"
 
-#: ../src/ui/ui-main.c:620
+#: ../src/ui/ui-main.c:217
+msgid "New 2 players"
+msgstr "Nova dva igralca"
+
+#: ../src/ui/ui-main.c:220
+msgid "New network game"
+msgstr "Nova omrežna igra"
+
+#: ../src/ui/ui-main.c:226
+msgid "_High Scores"
+msgstr "_Najboljši rezultati"
+
+#: ../src/ui/ui-main.c:232
+msgid "_Help"
+msgstr "_Pomoč"
+
+#: ../src/ui/ui-main.c:233
+msgid "_Contents"
+msgstr "_Vsebina"
+
+#: ../src/ui/ui-main.c:236
+msgid "_About"
+msgstr "_O programu"
+
+#: ../src/ui/ui-main.c:239
+msgid "_Fullscreen"
+msgstr "_Celozaslonski način"
+
+#: ../src/ui/ui-main.c:242
+msgid "_Leave Fullscreen"
+msgstr "_Zapusti celozaslonski način"
+
+#: ../src/ui/ui-main.c:756
 msgid "translator_credits"
 msgstr "Matej Urbančič"
 
-#: ../src/ui/ui-main.c:628
+#: ../src/ui/ui-main.c:764
 msgid "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply remove all Bubbles by the creation of unicolor triplets."
 msgstr "Monkey Bubble je arkadna igra za namizje GNOME. Odstrani vse balone z ustvarjanjem enobarvnih trojčkov."
 
-#: ../src/ui/ui-main.c:649
+#: ../src/ui/ui-main.c:785
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Pri prikazovanju pomoči je prišlo do napake: %s"
 
-#: ../src/ui/ui-network-server.c:159
-#: ../src/ui/ui-network-client.c:149
+#: ../src/ui/ui-network-server.c:161
+#: ../src/ui/ui-network-client.c:195
 msgid "_Player name"
 msgstr "_Ime igralca"
 
-#: ../src/ui/ui-network-server.c:166
-#: ../src/ui/ui-network-client.c:156
+#: ../src/ui/ui-network-server.c:168
+#: ../src/ui/ui-network-client.c:202
 msgid "_Owner"
 msgstr "_Lastnik"
 
-#: ../src/ui/ui-network-server.c:173
-#: ../src/ui/ui-network-client.c:163
+#: ../src/ui/ui-network-server.c:175
+#: ../src/ui/ui-network-client.c:209
 msgid "_Ready"
 msgstr "_Pripravljeno"
 
