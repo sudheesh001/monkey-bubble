@@ -1,0 +1,172 @@
+# Czech translation for monkey-bubble.
+# Copyright (C) 2010 monkey-bubble's COPYRIGHT HOLDER
+# This file is distributed under the same license as the monkey-bubble package.
+# Marek Černocký <marek@manet.cz>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: monkey-bubble master\n"
+"POT-Creation-Date: 2010-01-14 17:42+0000\n"
+"PO-Revision-Date: 2010-01-22 19:40+0100\n"
+"Last-Translator: Marek Černocký <marek@manet.cz>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Poedit-Language: Czech\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: C/monkey-bubble.xml:17(title) C/monkey-bubble.xml:41(revnumber)
+msgid "Monkey Bubble Manual V0.1"
+msgstr "Příručka V0.1 ke hře Monkey Bubble"
+
+#: C/monkey-bubble.xml:19(year)
+msgid "2004"
+msgstr "2004"
+
+#: C/monkey-bubble.xml:20(holder) C/monkey-bubble.xml:44(para)
+msgid "Thomas Cataldo"
+msgstr "Thomas Cataldo"
+
+#: C/monkey-bubble.xml:23(publishername) C/monkey-bubble.xml:30(orgname)
+#: C/monkey-bubble.xml:47(para)
+msgid "GNOME Documentation Project"
+msgstr "Dokumentační projekt GNOME"
+
+#: C/monkey-bubble.xml:27(firstname)
+msgid "Thomas"
+msgstr "Thomas"
+
+#: C/monkey-bubble.xml:28(surname)
+msgid "Cataldo"
+msgstr "Cataldo"
+
+#: C/monkey-bubble.xml:34(firstname)
+msgid "Laurent"
+msgstr "Laurent"
+
+#: C/monkey-bubble.xml:35(surname)
+msgid "Belmont"
+msgstr "Belmont"
+
+#: C/monkey-bubble.xml:42(date)
+msgid "January 2004"
+msgstr "Leden 2004"
+
+#: C/monkey-bubble.xml:54(releaseinfo)
+msgid "This manual describes version 0.1.7 of Monkey Bubble."
+msgstr "Tato příručka popisuje hru Monkey Bubble ve verzi 0.1.7."
+
+#: C/monkey-bubble.xml:57(title)
+msgid "Feedback"
+msgstr "Ohlasy"
+
+#: C/monkey-bubble.xml:58(para)
+msgid ""
+"To report a bug or make a suggestion regarding the Monkey Bubble application "
+"or this manual, follow the directions in the <ulink url=\"ghelp:gnome-"
+"feedback\" type=\"help\">GNOME Feedback Page</ulink>."
+msgstr ""
+"Pokud chcete oznámit chybu nebo navrhnout vylepšení vztahující se ke hře "
+"Monkey Bubble nebo této příručce, postupujte dle instrukcí na stránce <ulink "
+"url=\"ghelp:gnome-feedback\" type=\"help\">Stránka s ohlasy na GNOME</ulink>."
+
+#: C/monkey-bubble.xml:63(para)
+msgid "User manual for Monkey Bubble."
+msgstr "Uživatelská příručka ke hře Monkey Bubble."
+
+#: C/monkey-bubble.xml:68(primary)
+msgid "Monkey Bubble"
+msgstr "Monkey Bubble"
+
+#: C/monkey-bubble.xml:71(primary)
+msgid "bubble game"
+msgstr "hra s bublinami"
+
+#: C/monkey-bubble.xml:75(title)
+msgid "Introduction"
+msgstr "Úvod"
+
+#: C/monkey-bubble.xml:76(para)
+msgid ""
+"<application>Monkey Bubble</application> is an arcade game with the "
+"following objectives :"
+msgstr ""
+"<application>Monkey Bubble</application> je arkádová hra s následujícími "
+"úkoly:"
+
+#: C/monkey-bubble.xml:82(term)
+msgid "Clear the jungle from all those nasty bubbles"
+msgstr "Vyčistit džungli od všech těch odporných bublin"
+
+#: C/monkey-bubble.xml:84(para)
+msgid ""
+"To clear a level, you need to stick at least 3 bubbles of the same color "
+"together using the bubble shooter."
+msgstr ""
+"Abyste vyčistili úroveň, musíte pomocí metače bublin spojit dohromady "
+"nejméně 3 bubliny stejné barvy."
+
+#: C/monkey-bubble.xml:88(para)
+msgid ""
+"Once 3 or more bubbles of the color are sticked together at the top of the "
+"playground, they will explode."
+msgstr ""
+"Jakmile se 3 nebo více bublin stejné barvy spojí dohromady v horní části "
+"hrací plochy, tak explodují."
+
+#: C/monkey-bubble.xml:92(para)
+msgid "To level up, you need to clear all the bubbles stuck in the playground."
+msgstr ""
+"Abyste postoupili do vyšší úrovně, musíte zlikvidovat úplně celou hromadu "
+"bublin na hrací ploše."
+
+#: C/monkey-bubble.xml:101(title)
+msgid "Getting Started"
+msgstr "Začínáme"
+
+#: C/monkey-bubble.xml:102(para)
+msgid ""
+"The following sections describe how to start <application>Monkey Bubble</"
+"application>."
+msgstr ""
+"Následující oddíl popisuje, jak hru <application>Monkey Bubble</application> "
+"spustit."
+
+#: C/monkey-bubble.xml:107(title)
+msgid "To Start Monkey Bubble"
+msgstr "Spuštění Monkey Bubble"
+
+#: C/monkey-bubble.xml:108(para)
+msgid ""
+"You can start <application>Monkey Bubble</application> in the following ways:"
+msgstr ""
+"Hru <application>Monkey Bubble</application> můžete spustit následujícími "
+"způsoby:"
+
+#: C/monkey-bubble.xml:113(term)
+msgid "Applications menu"
+msgstr "Nabídka Aplikace"
+
+#: C/monkey-bubble.xml:115(para)
+msgid ""
+"Choose <menuchoice><guimenu>Games</guimenu><guimenuitem>Monkey Bubble</"
+"guimenuitem></menuchoice>."
+msgstr ""
+"Zvolte <menuchoice><guimenu>Hry</guimenu><guimenuitem>Monkey Bubble</"
+"guimenuitem></menuchoice>."
+
+#: C/monkey-bubble.xml:124(term)
+msgid "Command line"
+msgstr "Příkazový řádek"
+
+#: C/monkey-bubble.xml:126(para)
+msgid "Execute the following command: <command>monkey-bubble</command>"
+msgstr "Spusťte následující příkaz: <command>monkey-bubble</command>"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: C/monkey-bubble.xml:0(None)
+msgid "translator-credits"
+msgstr "Marek Černocký <marek@manet.cz>"
+
