@@ -1,14 +1,15 @@
+# Slovenian translation for monkey-bubble
 # Copyright (C) 2002-2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the package.
 #
-# Matej Urbančič <mateju@svn.gnome.org>, 2007 - 2009.
+# Matej Urbančič <mateju@svn.gnome.org>, 2007 - 2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: monkey-buble\n"
+"Project-Id-Version: monkey-buble master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=monkey-bubble&component=general\n"
 "POT-Creation-Date: 2009-10-21 12:31+0000\n"
-"PO-Revision-Date: 2009-12-11 21:37+0100\n"
+"PO-Revision-Date: 2010-06-07 20:16+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -305,8 +306,9 @@ msgid "_Action"
 msgstr "_Dejanje"
 
 #: ../src/ui/keyboard-properties.c:1078
+#: ../src/ui/keyboard-properties.c:1105
 msgid "Shortcut _Key"
-msgstr "Bližnjica tip_ka"
+msgstr "_Tipkovna bližnjica"
 
 #: ../src/ui/main.c:91
 msgid "Monkey Bubble is a Bust'a'Move clone for GNOME"
@@ -346,7 +348,7 @@ msgstr "_Najboljši rezultati"
 
 #: ../src/ui/ui-main.c:232
 msgid "_Help"
-msgstr "_Pomoč"
+msgstr "Pomo_č"
 
 #: ../src/ui/ui-main.c:233
 msgid "_Contents"
@@ -365,8 +367,9 @@ msgid "_Leave Fullscreen"
 msgstr "_Zapusti celozaslonski način"
 
 #: ../src/ui/ui-main.c:756
+#: ../src/ui/ui-main.c:620
 msgid "translator_credits"
-msgstr "Matej Urbančič"
+msgstr "Matej Urbančič, <mateju@svn.gnome.org>"
 
 #: ../src/ui/ui-main.c:764
 msgid "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply remove all Bubbles by the creation of unicolor triplets."
@@ -375,7 +378,7 @@ msgstr "Monkey Bubble je arkadna igra za namizje GNOME. Odstrani vse balone z us
 #: ../src/ui/ui-main.c:785
 #, c-format
 msgid "There was an error displaying help: %s"
-msgstr "Pri prikazovanju pomoči je prišlo do napake: %s"
+msgstr "Med prikazovanjem pomoči je prišlo do napake: %s"
 
 #: ../src/ui/ui-network-server.c:161
 #: ../src/ui/ui-network-client.c:195
@@ -391,4 +394,3 @@ msgstr "_Lastnik"
 #: ../src/ui/ui-network-client.c:209
 msgid "_Ready"
 msgstr "_Pripravljeno"
-
