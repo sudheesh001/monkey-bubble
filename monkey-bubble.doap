@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:gnome="http://api.gnome.org/doap-extensions#"
+         xmlns="http://usefulinc.com/ns/doap#">
+
+  <name xml:lang="en">Monkey Bubble</name>
+  <shortdesc xml:lang="en">Bust'a'Move clone for GNOME</shortdesc>
+  <!--<homepage rdf:resource="http://example.com/projectname" />-->
+  <!--<mailing-list rdf:resource="http://example.com/projectname/mail" />-->
+  <category rdf:resource="http://api.gnome.org/doap-extensions#desktop" />
+
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Sven Herzberg</foaf:name>
+      <gnome:userid>herzi</gnome:userid>
+    </foaf:Person>
+  </maintainer>
+</Project>
