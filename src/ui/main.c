@@ -11,7 +11,6 @@
 #include "ui-main.h"
 #include "input-manager.h"
 
-#include <esd.h>
 #include <gtk/gtk.h>
 #include <gst/gst.h>
 #include <glib/gi18n.h>
