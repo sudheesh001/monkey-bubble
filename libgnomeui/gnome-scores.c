@@ -35,10 +35,6 @@
 
 #include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
-
-#include <libgnome/gnome-macros.h>
-#include <libgnome/gnome-util.h>
-#include <libgnome/gnome-config.h>
 #include <libgnome/gnome-score.h>
 
 #include "gnome-scores.h"
@@ -64,11 +60,10 @@ static void gnome_scores_finalize   (GObject          *object);
  *
  * Returns the GType for the GnomeScores widget
  */
-GNOME_CLASS_BOILERPLATE (GnomeScores, gnome_scores,
-			 GtkDialog, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE (GnomeScores, gnome_scores, GTK_TYPE_DIALOG)
 
 static void
-gnome_scores_instance_init (GnomeScores *gs)
+gnome_scores_init (GnomeScores *gs)
 {
 	GtkWidget *label;
 
@@ -142,7 +137,7 @@ gnome_scores_finalize(GObject *object)
 	g_free (gs->_priv);
 	gs->_priv = NULL;
 
-	GNOME_CALL_PARENT (G_OBJECT_CLASS, finalize, (object));
+	G_OBJECT_CLASS (gnome_scores_parent_class)->finalize (object);
 }
 
 /**

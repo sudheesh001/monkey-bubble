@@ -7,6 +7,7 @@ INCLUDES = \
         -DLIBDIR=\""$(libdir)"\"                        \
         -DSYSCONFDIR=\""$(sysconfdir)"\"                \
         -DPREFIX=\""$(prefix)"\" 			\
+        -I$(top_srcdir) \
         -I$(top_srcdir)/src/monkey			\
 	-I$(top_srcdir)/src/view 			\
 	-I$(top_srcdir)/src/audio			\
@@ -49,6 +50,7 @@ monkey_bubble_LDADD =  \
 	../net/libmonkeynet.a \
 	../audio/libmonkeyaudio.a \
 	../input/libmbinput.a \
+        $(top_builddir)/libgnomeui/libgnomeui.la \
 	$(UI_LIBS) \
 	$(PLATFORM_LIBS) \
 	$(NULL)

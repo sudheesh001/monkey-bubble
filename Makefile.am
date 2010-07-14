@@ -1,12 +1,13 @@
 NULL=
 
 always_subdirs=\
-	data	\
-	pixmaps	\
-	sounds 	\
-        src     \
-        po      \
-	$(NULL)
+	data \
+	pixmaps \
+        sounds \
+        libgnomeui \
+        src \
+        po \
+        $(NULL)
 
 SUBDIRS=\
 	$(always_subdirs) \
