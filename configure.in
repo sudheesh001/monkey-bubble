@@ -9,7 +9,6 @@ dnl  -------------------------
 AC_INIT(configure.in)
 AM_INIT_AUTOMAKE(monkey-bubble, 0.4.0)
 AM_CONFIG_HEADER(config.h)
-AM_MAINTAINER_MODE
 
 DISTCHECK_CONFIGURE_FLAGS="--disable-schemas-install --disable-scrollkeeper"
 DISTCHECK_CONFIGURE_FLAGS="$DISTCHECK_CONFIGURE_FLAGS --disable-setgid"
