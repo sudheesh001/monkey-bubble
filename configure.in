@@ -80,7 +80,7 @@ dnl | library dependencies |--------------------------------------------------
 dnl  ----------------------
 
 dnl Versions shared with the (upcoming) .spec file.
-dnl GTK+ 2.12 comes with GtkBuilder support
+dnl GTK+ 2.14 comes with gtk_show_uri() support
 GTK_REQUIRED=2.12.0
 G_THREAD_REQUIRED=2.0.0
 

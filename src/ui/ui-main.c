@@ -38,7 +38,6 @@
 #include <libgnomeui/gnome-scores.h>
 #include <libgnome/gnome-score.h>
 #include <libgnome/gnome-sound.h>
-#include <libgnome/gnome-help.h>
 #endif
 #include <gdk/gdkkeysyms.h>
 #include <glib/gi18n.h>
@@ -790,19 +789,20 @@ about (GtkAction* action,
 
 static void
 show_help_content (GtkAction* action,
-		   UiMain   * ui_main)
+                   UiMain   * ui_main)
 {
-        GError *err = NULL;
+  GError* error = NULL;
 
-        gnome_help_display ("monkey-bubble", NULL, &err);
-
-        if (err) {
-                ui_main = ui_main_get_instance();
-                show_error_dialog (GTK_WINDOW (PRIVATE(ui_main)->window),
-                                   _("There was an error displaying help: %s"),
-                                   err->message);
-                g_error_free (err);
-        }
+  if (!gtk_show_uri (gtk_widget_get_screen (PRIVATE (ui_main)->window),
+                     "ghelp:monkey-bubble",
+                     GDK_CURRENT_TIME,
+                     &error))
+    {
+      show_error_dialog (GTK_WINDOW (PRIVATE(ui_main)->window),
+                         _("There was an error displaying help: %s"),
+                         error->message);
+      g_error_free (error);
+    }
 }
 
 static void show_error_dialog (GtkWindow *transient_parent,
