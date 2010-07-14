@@ -24,6 +24,7 @@
 #include <string.h>
 
 #ifdef MAEMO
+#include <stdlib.h>  /* exit() */
 #include <libosso.h>
 
 #include "state.h"
