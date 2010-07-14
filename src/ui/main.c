@@ -13,10 +13,7 @@
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
-#ifdef GNOME
 #include <libgnome/gnome-score.h>
-#include <libgnome/gnome-init.h>
-#endif
 #include <glib/gthread.h>
 
 #include <math.h>
@@ -112,15 +109,6 @@ int main(int  argc, char **argv)
        exit(1);
   }
   global.game = NULL;
-#endif
-
-#ifdef GNOME
-  /* to get help working */
-  gnome_program_init (PACKAGE, VERSION,
-		      LIBGNOME_MODULE,
-		      argc, argv,
-		      GNOME_PROGRAM_STANDARD_PROPERTIES,
-		      NULL);
 #endif
 
   gtk_window_set_default_icon_name ("monkey-bubble");

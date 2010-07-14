@@ -4,6 +4,7 @@ always_subdirs=\
 	data \
 	pixmaps \
         sounds \
+        libgnome \
         libgnomeui \
         src \
         po \

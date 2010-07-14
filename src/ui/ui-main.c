@@ -37,7 +37,6 @@
 #ifdef GNOME
 #include <libgnomeui/gnome-scores.h>
 #include <libgnome/gnome-score.h>
-#include <libgnome/gnome-sound.h>
 #endif
 #include <gdk/gdkkeysyms.h>
 #include <glib/gi18n.h>

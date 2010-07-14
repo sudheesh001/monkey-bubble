@@ -45,9 +45,7 @@
 
 #include <glib/gi18n-lib.h>
 
-#include "gnome-i18n.h"
 #include "gnome-score.h"
-#include "gnome-util.h"
 
 #ifdef G_OS_WIN32
 #include <fcntl.h>
@@ -62,8 +60,6 @@
  */
 #define strtok_r(s, delim, ptrptr) (*(ptrptr) = strtok (s, delim))
 #endif
-
-#include "libgnome-private.h"
 
 #ifndef NSCORES
 #define NSCORES 10
@@ -106,8 +102,9 @@ gnome_get_score_file_name (const gchar * progname, const gchar * level)
 static void
 print_ascore (struct ascore_t *ascore, FILE * outfile)
 {
+	char buf[G_ASCII_DTOSTR_BUF_SIZE];
 	/* make sure we write values to files in a consistent manner */
-	fprintf (outfile, "%f %ld %s\n", ascore->score,
+	fprintf (outfile, "%s %ld %s\n", g_ascii_dtostr (buf, sizeof (buf), ascore->score),
 		 (long int) ascore->scoretime, ascore->username);
 }
 
@@ -151,8 +148,6 @@ log_score (const gchar * progname, const gchar * level, gchar * username,
    infile = g_fopen (game_score_file, "r");
    if (infile)
      {
-       /* make sure we read values from files in a consistent manner */
-       gnome_i18n_push_c_numeric_locale ();
        while(fgets(buf, sizeof(buf), infile))
 	 {
 	     long ltime;
@@ -165,7 +160,7 @@ log_score (const gchar * progname, const gchar * level, gchar * username,
 
 	        if((buf2 = strtok_r (buf, " ", &tokp)) == NULL)
 		  break;
-	        ascore = atof (buf2);
+	        ascore = g_ascii_strtod (buf2, NULL);
 	        if((buf2 = strtok_r (NULL, " ", &tokp)) == NULL)
 		  break;
 	        ltime = atoi (buf2);
@@ -179,7 +174,6 @@ log_score (const gchar * progname, const gchar * level, gchar * username,
 	     anitem->scoretime = (time_t)ltime;
 	     scores = g_list_append (scores, (gpointer) anitem);
 	  }
-        gnome_i18n_pop_c_numeric_locale ();
 
 	fclose (infile);
      }
@@ -230,9 +224,7 @@ log_score (const gchar * progname, const gchar * level, gchar * username,
 
    if (outfile)
      {
-	gnome_i18n_push_c_numeric_locale ();
 	g_list_foreach (scores, (GFunc) print_ascore, outfile);
-	gnome_i18n_pop_c_numeric_locale ();
 	fclose (outfile);
      }
    else
@@ -492,8 +484,6 @@ gnome_score_get_notable (const gchar * gamename,
 	*scores = g_malloc ((NSCORES + 1) * sizeof (gfloat));
 	*scoretimes = g_malloc ((NSCORES + 1) * sizeof (time_t));
 
-        gnome_i18n_push_c_numeric_locale ();
-
 	for (retval = 0;
 	     fgets (buf, sizeof (buf), infile) && retval < NSCORES;
 	     retval++)
@@ -502,7 +492,7 @@ gnome_score_get_notable (const gchar * gamename,
 
 	     buf[strlen (buf) - 1] = 0;
 	     buf2 = strtok_r (buf, " ", &tokp);
-	     (*scores)[retval] = atof (buf2);
+	     (*scores)[retval] = g_ascii_strtod (buf2, NULL);
 	     buf2 = strtok_r (NULL, " ", &tokp);
 	     (*scoretimes)[retval] = atoi (buf2);
 	     buf2 = strtok_r (NULL, "\n", &tokp);
@@ -510,8 +500,6 @@ gnome_score_get_notable (const gchar * gamename,
 	  }
 	(*names)[retval] = NULL;
 	(*scores)[retval] = 0.0;
-
-        gnome_i18n_pop_c_numeric_locale ();
 
 	fclose (infile);
      }
