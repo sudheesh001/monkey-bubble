@@ -117,21 +117,21 @@ static void window_state_event	    (GtkWindow *window,
 
 static void ui_main_new_1_player_game(UiMain * ui_main);
 
-struct UiMainPrivate {
-        GtkAccelGroup * accel_group;
-        GtkItemFactory * item_factory;
-        GtkWidget * menu;
-        GtkWidget * status_bar;
-        MonkeyCanvas * canvas;
-        GtkWidget * window;
-        Block * main_image;
-        Game * game;
-        GameManager * manager;
-        gboolean fullscreen;
-        SoundManager * sm;
-	GtkActionGroup* actions;
+struct UiMainPrivate
+{
+  GtkAccelGroup  * accel_group;
+  GtkWidget      * menu;
+  GtkWidget      * status_bar;
+  MonkeyCanvas   * canvas;
+  GtkWidget      * window;
+  Block          * main_image;
+  Game           * game;
+  GameManager    * manager;
+  gboolean         fullscreen;
+  SoundManager   * sm;
+  GtkActionGroup * actions;
 #ifdef MAEMO
-	ConIcConnection *ic;
+  ConIcConnection* ic;
 #endif
 };
 
@@ -397,18 +397,11 @@ ui_main_new (void)
         ui_main_set_game( ui_main,NULL);
         PRIVATE(ui_main)->manager = NULL;
 
-        gtk_widget_push_visual (gdk_rgb_get_visual ());
-        gtk_widget_push_colormap (gdk_rgb_get_cmap ());
-
-        gtk_widget_pop_visual ();
-        gtk_widget_pop_colormap ();
-
         ui_main_draw_main(ui_main);
 
         PRIVATE(ui_main)->fullscreen = FALSE;
 
-        gtk_window_set_policy (GTK_WINDOW (PRIVATE(ui_main)->window), TRUE, TRUE, FALSE);
-
+        gtk_window_set_resizable (GTK_WINDOW (PRIVATE(ui_main)->window), TRUE);
 
         PRIVATE(ui_main)->sm = sound_manager_get_instance();
         sound_manager_play_music(PRIVATE(ui_main)->sm,MB_MUSIC_SPLASH);

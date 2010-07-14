@@ -174,14 +174,13 @@ MonkeyCanvas * monkey_canvas_new( void ) {
   dp->scale_x= 1;
   dp->scale_y = 1;
 
-  gtk_drawing_area_size(GTK_DRAWING_AREA(monkey_canvas),640,480);
+  gtk_widget_set_size_request (GTK_WIDGET (monkey_canvas), 640, 480);
 
-  g_signal_connect (GTK_OBJECT (monkey_canvas), "expose-event",
-		    GTK_SIGNAL_FUNC (monkey_canvas_expose), monkey_canvas);
+  g_signal_connect (monkey_canvas, "expose-event",
+                    G_CALLBACK (monkey_canvas_expose), monkey_canvas);
 
-  g_signal_connect( GTK_OBJECT(monkey_canvas), "configure-event",
-		    GTK_SIGNAL_FUNC (monkey_canvas_configure),monkey_canvas);
-  
+  g_signal_connect (monkey_canvas, "configure-event",
+                    G_CALLBACK (monkey_canvas_configure),monkey_canvas);
 
   dp->buffer = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
 			       dp->x_size,dp->y_size);
@@ -301,7 +300,7 @@ gint monkey_canvas_expose(GtkWidget *widget, GdkEventExpose *event, gpointer dat
 	    	    
 	layer_draw( (Layer*) next->data,
 		    widget->window,
-		    widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
+		    widget->style->fg_gc[gtk_widget_get_state (widget)],
 		    &rects[i] );
 	next = g_list_next( next );
       }

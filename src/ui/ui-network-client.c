@@ -182,18 +182,16 @@ ui_network_client_new (void)
 
 
   item = GTK_WIDGET (gtk_builder_get_object (PRIVATE (ngl)->builder, "go_button"));
-  g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(connect_server_signal),ngl);
-
+  g_signal_connect_swapped (item, "clicked", G_CALLBACK (connect_server_signal), ngl);
 
   item = GTK_WIDGET (gtk_builder_get_object (PRIVATE (ngl)->builder, "quit_button"));
-  g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(quit_server_signal),ngl);
+  g_signal_connect_swapped (item, "clicked", G_CALLBACK (quit_server_signal), ngl);
 
   item = GTK_WIDGET (gtk_builder_get_object (PRIVATE (ngl)->builder, "network_window"));
-  g_signal_connect_swapped( item,"delete_event",GTK_SIGNAL_FUNC(quit_signal),ngl);
-
+  g_signal_connect_swapped (item, "delete_event", G_CALLBACK (quit_signal), ngl);
 
   item = GTK_WIDGET (gtk_builder_get_object (PRIVATE (ngl)->builder, "ready_button"));
-  g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(ready_signal),ngl);
+  g_signal_connect_swapped (item, "clicked", G_CALLBACK (ready_signal), ngl);
 
   PRIVATE(ngl)->connection_label = GTK_LABEL (gtk_builder_get_object (PRIVATE (ngl)->builder, "connection_state_label"));
 

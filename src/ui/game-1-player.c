@@ -117,38 +117,35 @@ game_1_player_init (Game1Player* game)
 	game->private = g_new0 (Game1PlayerPrivate, 1);
 }
 
-static void game_1_player_finalize(GObject* object) {
+static void
+game_1_player_finalize (GObject* object)
+{
+  Game1Player* game = GAME_1_PLAYER (object);
 
-        Game1Player * game = GAME_1_PLAYER(object);
+  g_source_remove (PRIVATE (game)->timeout_id);
 
-        gtk_timeout_remove( PRIVATE(game)->timeout_id);
+  g_signal_handlers_disconnect_by_func (PRIVATE (game)->input, pressed, game);
+  g_signal_handlers_disconnect_by_func (PRIVATE (game)->input, released, game);
 
-        g_signal_handlers_disconnect_by_func( G_OBJECT(PRIVATE(game)->input) ,
-                                              GTK_SIGNAL_FUNC (pressed),game);
-
-
-        g_signal_handlers_disconnect_by_func( G_OBJECT(PRIVATE(game)->input) ,
-                                              GTK_SIGNAL_FUNC (released),game);
-
-        g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(game)->monkey ),
-                                               G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,game);
-                                                                                
+  g_signal_handlers_disconnect_matched(  G_OBJECT( PRIVATE(game)->monkey ),
+                                         G_SIGNAL_MATCH_DATA,0,0,NULL,NULL,game);
 
 
-        g_object_unref( PRIVATE(game)->clock);
-        g_object_unref( PRIVATE(game)->display );
+
+  g_object_unref( PRIVATE(game)->clock);
+  g_object_unref( PRIVATE(game)->display );
 
 
-        g_object_unref( PRIVATE(game)->monkey);
+  g_object_unref( PRIVATE(game)->monkey);
 
-        monkey_canvas_unref_block(game->private->canvas, 
-                                  game->private->paused_block);
+  monkey_canvas_unref_block(game->private->canvas, 
+                            game->private->paused_block);
 
-        g_free(game->private);
-  
-        if (G_OBJECT_CLASS (parent_class)->finalize) {
-                (* G_OBJECT_CLASS (parent_class)->finalize) (object);
-        }
+  g_free(game->private);
+
+  if (G_OBJECT_CLASS (parent_class)->finalize) {
+          (* G_OBJECT_CLASS (parent_class)->finalize) (object);
+  }
 
 }
 
@@ -240,10 +237,8 @@ Game1Player * game_1_player_new(GtkWidget * window,MonkeyCanvas * canvas, int le
 
 
         PRIVATE(game)->clock = mb_clock_new();
-        PRIVATE(game)->timeout_id = 
-                gtk_timeout_add (FRAME_DELAY, game_1_player_timeout, game);
-  
-  
+        PRIVATE (game)->timeout_id = g_timeout_add (FRAME_DELAY, game_1_player_timeout, game);
+
         PRIVATE(game)->state = GAME_STOPPED;
 
         PRIVATE(game)->lost = FALSE;
@@ -277,19 +272,15 @@ Game1Player * game_1_player_new(GtkWidget * window,MonkeyCanvas * canvas, int le
 
         game_1_player_add_bubble(game);
 
-
-        
         mgs = mb_game_sound_new();
         mb_game_sound_connect_monkey(mgs,PRIVATE(game)->monkey);
         input_manager = mb_input_manager_get_instance();
         PRIVATE(game)->input = mb_input_manager_get_left(input_manager);
 
-        g_signal_connect(PRIVATE(game)->input ,"notify-pressed",
-                         GTK_SIGNAL_FUNC (pressed),game);
-  
-        g_signal_connect(PRIVATE(game)->input ,"notify-released",
-                         GTK_SIGNAL_FUNC (released),game);
-  
+        g_signal_connect (PRIVATE (game)->input ,"notify-pressed",
+                          G_CALLBACK (pressed),game);
+        g_signal_connect (PRIVATE (game)->input ,"notify-released",
+                          G_CALLBACK (released),game);
 
         return game;
 }
@@ -572,3 +563,5 @@ static void game_1_player_bubble_shot( Monkey * monkey,
 void game_1_player_fire_changed(Game1Player * game) {	
         game_notify_changed( GAME(game));
 }
+
+/* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */

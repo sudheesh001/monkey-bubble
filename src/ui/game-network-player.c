@@ -135,48 +135,39 @@ static void
 game_network_player_finalize (GObject * object)
 {
 
-	GameNetworkPlayer *game = GAME_NETWORK_PLAYER (object);
+  GameNetworkPlayer* game = GAME_NETWORK_PLAYER (object);
 
-	gtk_timeout_remove (PRIVATE (game)->timeout_id);
+  g_source_remove (PRIVATE (game)->timeout_id);
 
-	g_signal_handlers_disconnect_by_func (G_OBJECT
-					      (PRIVATE (game)->input),
-					      GTK_SIGNAL_FUNC (pressed),
-					      game);
-
-	g_signal_handlers_disconnect_by_func (G_OBJECT
-					      (PRIVATE (game)->input),
-					      GTK_SIGNAL_FUNC (released),
-					      game);
-
-
-	g_signal_handlers_disconnect_matched (G_OBJECT
-					      (PRIVATE (game)->monkey),
-					      G_SIGNAL_MATCH_DATA, 0, 0, NULL,
-					      NULL, game);
+  g_signal_handlers_disconnect_by_func (PRIVATE (game)->input, pressed, game);
+  g_signal_handlers_disconnect_by_func (PRIVATE (game)->input, released, game);
+  g_signal_handlers_disconnect_matched (G_OBJECT
+                                        (PRIVATE (game)->monkey),
+                                        G_SIGNAL_MATCH_DATA, 0, 0, NULL,
+                                        NULL, game);
 
 
 
-	g_signal_handlers_disconnect_matched (G_OBJECT
-					      (PRIVATE (game)->handler),
-					      G_SIGNAL_MATCH_DATA, 0, 0, NULL,
-					      NULL, game);
+  g_signal_handlers_disconnect_matched (G_OBJECT
+                                        (PRIVATE (game)->handler),
+                                        G_SIGNAL_MATCH_DATA, 0, 0, NULL,
+                                        NULL, game);
 
 #ifdef DEBUG
-        g_print("finalized\n");
+  g_print("finalized\n");
 #endif
-	g_object_unref (PRIVATE (game)->clock);
-	g_object_unref (PRIVATE (game)->display);
+  g_object_unref (PRIVATE (game)->clock);
+  g_object_unref (PRIVATE (game)->display);
 
-	g_mutex_lock (PRIVATE (game)->lock);
-	g_mutex_unlock (PRIVATE (game)->lock);
-	g_object_unref (PRIVATE (game)->monkey);
-	g_free (game->private);
+  g_mutex_lock (PRIVATE (game)->lock);
+  g_mutex_unlock (PRIVATE (game)->lock);
+  g_object_unref (PRIVATE (game)->monkey);
+  g_free (game->private);
 
-	if (G_OBJECT_CLASS (parent_class)->finalize)
-	{
-		(*G_OBJECT_CLASS (parent_class)->finalize) (object);
-	}
+  if (G_OBJECT_CLASS (parent_class)->finalize)
+    {
+      (*G_OBJECT_CLASS (parent_class)->finalize) (object);
+    }
 
 }
 
@@ -508,9 +499,7 @@ game_network_player_new (GtkWidget * window, MonkeyCanvas * canvas,
 	PRIVATE (game)->monkey_id = monkey_id;
 
 	PRIVATE (game)->clock = mb_clock_new ();
-	PRIVATE (game)->timeout_id =
-		gtk_timeout_add (FRAME_DELAY, game_network_player_timeout,
-				 game);
+	PRIVATE (game)->timeout_id = g_timeout_add (FRAME_DELAY, game_network_player_timeout, game);
 
 
 	PRIVATE (game)->state = GAME_STOPPED;
@@ -544,10 +533,9 @@ game_network_player_new (GtkWidget * window, MonkeyCanvas * canvas,
 	PRIVATE (game)->input = mb_input_manager_get_left (input_manager);
 
 	g_signal_connect (PRIVATE (game)->input, "notify-pressed",
-			  GTK_SIGNAL_FUNC (pressed), game);
-
+			  G_CALLBACK (pressed), game);
 	g_signal_connect (PRIVATE (game)->input, "notify-released",
-			  GTK_SIGNAL_FUNC (released), game);
+			  G_CALLBACK (released), game);
 
 
         x=350;
@@ -817,3 +805,5 @@ game_network_player_fire_changed (GameNetworkPlayer * game)
 {
 	game_notify_changed (GAME (game));
 }
+
+/* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */

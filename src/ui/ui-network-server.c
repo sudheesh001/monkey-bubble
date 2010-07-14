@@ -151,16 +151,16 @@ ui_network_server_new (NetworkSimpleServer* server)
   PRIVATE (ngl)->window = GTK_WIDGET (gtk_builder_get_object (PRIVATE (ngl)->builder, "network_window"));
 
   item = GTK_WIDGET (gtk_builder_get_object ( PRIVATE(ngl)->builder, "quit_button"));
-  g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(quit_server_signal),ngl);
+  g_signal_connect_swapped (item, "clicked", G_CALLBACK (quit_server_signal), ngl);
 
   item = GTK_WIDGET (gtk_builder_get_object ( PRIVATE(ngl)->builder, "network_window"));
-  g_signal_connect_swapped( item,"delete-event",GTK_SIGNAL_FUNC(quit_signal),ngl);
+  g_signal_connect_swapped (item, "delete-event", G_CALLBACK (quit_signal), ngl);
 
   item = GTK_WIDGET (gtk_builder_get_object ( PRIVATE(ngl)->builder, "ready_button"));
-  g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(ready_signal),ngl);
+  g_signal_connect_swapped (item, "clicked", G_CALLBACK (ready_signal), ngl);
 
   item = GTK_WIDGET (gtk_builder_get_object ( PRIVATE(ngl)->builder, "start_button"));
-  g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(start_signal),ngl);
+  g_signal_connect_swapped (item, "clicked", G_CALLBACK (start_signal), ngl);
 
   item = GTK_WIDGET (gtk_builder_get_object ( PRIVATE(ngl)->builder,"players_treeview"));
   list = gtk_list_store_new(3,G_TYPE_STRING,G_TYPE_BOOLEAN,G_TYPE_BOOLEAN);
@@ -188,12 +188,12 @@ ui_network_server_new (NetworkSimpleServer* server)
   gtk_tree_view_set_model( GTK_TREE_VIEW(item), GTK_TREE_MODEL(list));
 
   item = GTK_WIDGET (gtk_builder_get_object ( PRIVATE(ngl)->builder,"number_of_players"));
-  g_signal_connect_swapped( item, "value_changed", GTK_SIGNAL_FUNC(number_of_players_changed),
-                            ngl);
+  g_signal_connect_swapped (item, "value_changed",
+                            G_CALLBACK (number_of_players_changed), ngl);
 
   item = GTK_WIDGET (gtk_builder_get_object ( PRIVATE(ngl)->builder,"number_of_games"));
-  g_signal_connect_swapped( item, "value_changed", GTK_SIGNAL_FUNC(number_of_games_changed),
-                            ngl);
+  g_signal_connect_swapped (item, "value_changed",
+                            G_CALLBACK (number_of_games_changed), ngl);
 
   PRIVATE(ngl)->players_list = list;
 

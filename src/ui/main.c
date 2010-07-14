@@ -121,7 +121,6 @@ int main(int  argc, char **argv)
   window = ui_main_get_window(ui_main);
 
   mb_input_manager_instance_set_window(window);
-  gdk_rgb_init ();
 
   gtk_widget_show (window);
 

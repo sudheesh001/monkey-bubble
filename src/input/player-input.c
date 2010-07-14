@@ -113,12 +113,12 @@ mb_player_input_new  (GtkWidget * window,
 
 	g_signal_connect( window ,
 			  "key-press-event",
-			  GTK_SIGNAL_FUNC (key_pressed),
+			  G_CALLBACK (key_pressed),
 			  self);
 	
 	g_signal_connect( window ,
 			  "key-release-event",
-			  GTK_SIGNAL_FUNC (key_released),
+			  G_CALLBACK (key_released),
 			  self);
 
 

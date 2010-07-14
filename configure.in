@@ -81,28 +81,31 @@ dnl  ----------------------
 
 dnl Versions shared with the (upcoming) .spec file.
 dnl GTK+ 2.14 comes with gtk_show_uri() support
-GTK_REQUIRED=2.12.0
+GTK_REQUIRED=2.14.0
 G_THREAD_REQUIRED=2.0.0
 
 AC_SUBST(GTK_REQUIRED)
 AC_SUBST(G_THREAD_REQUIRED)
 
+dnl check whether GTK+ 3.x is available
+PKG_CHECK_EXISTS([gtk+-3.0],[mb_gtk=gtk+-3.0],[mb_gtk=gtk+-2.0])
+
 PKG_CHECK_MODULES(LIBMONKEYUTIL_A,[
-	gtk+-2.0
+	$mb_gtk
 	gthread-2.0
 	])
 AC_SUBST(LIBMONKEYUTIL_A_CFLAGS)
 AC_SUBST(LIBMONKEYUTIL_A_LIBS)
 
 PKG_CHECK_MODULES(LIBMONKEY_A,[
-	gtk+-2.0
+	$mb_gtk
 	gthread-2.0
 	])
 AC_SUBST(LIBMONKEY_A_CFLAGS)
 AC_SUBST(LIBMONKEY_A_LIBS)
 
 PKG_CHECK_MODULES(LIBMBINPUT_A,[
-	gtk+-2.0
+	$mb_gtk
 	gthread-2.0
 	gconf-2.0
 	])
@@ -110,7 +113,7 @@ AC_SUBST(LIBMBINPUT_A_CFLAGS)
 AC_SUBST(LIBMBINPUT_A_LIBS)
 
 PKG_CHECK_MODULES(LIBMONKEYVIEW_A,[
-	gtk+-2.0
+	$mb_gtk
 	gthread-2.0
 	librsvg-2.0
 	])
@@ -118,7 +121,7 @@ AC_SUBST(LIBMONKEYVIEW_A_CFLAGS)
 AC_SUBST(LIBMONKEYVIEW_A_LIBS)
 
 PKG_CHECK_MODULES(LIBMONKEYAUDIO_A,[
-	gtk+-2.0
+	$mb_gtk
 	gthread-2.0
 	libcanberra
 	libcanberra-gtk
@@ -127,7 +130,7 @@ AC_SUBST(LIBMONKEYAUDIO_A_CFLAGS)
 AC_SUBST(LIBMONKEYAUDIO_A_LIBS)
 
 PKG_CHECK_MODULES(MONKEY_SRV,[
-	gtk+-2.0
+	$mb_gtk
 	gthread-2.0
 	libxml-2.0
 	])
@@ -137,7 +140,7 @@ AC_SUBST(MONKEY_SRV_LIBS)
 
 PKG_CHECK_MODULES(UI,[
 	gconf-2.0
-	gtk+-2.0 >= $GTK_REQUIRED
+	$mb_gtk >= $GTK_REQUIRED
 	gthread-2.0
 	librsvg-2.0
 	libcanberra
