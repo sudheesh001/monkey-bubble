@@ -36,7 +36,6 @@
 
 #ifdef GNOME
 #include <libgnomeui/libgnomeui.h>
-#include <libgnomeui/gnome-about.h>
 #include <libgnome/gnome-score.h>
 #include <libgnome/gnome-sound.h>
 #include <libgnome/gnome-help.h>
@@ -756,33 +755,37 @@ static void
 about (GtkAction* action,
        UiMain   * ui_main)
 {
+  const gchar* authors[] =
+    {
+      "Laurent Belmonte",
+      "Sven Herzberg",
+      "Thomas Cataldo",
+      NULL
+    };
+  const gchar* documenters [] =
+    {
+      "Thomas Cataldo",
+      NULL
+    };
+  GdkPixbuf	*logo = gdk_pixbuf_new_from_file(DATADIR"/monkey-bubble/gfx/monkey.png",NULL);
+  GtkWidget* dialog = gtk_about_dialog_new ();
 
-        const gchar* authors[] = {
-                "Laurent Belmonte <laurent.belmonte@aliacom.fr>",
-                "Sven Herzberg <herzi@gnome-de.org>",
-                "Thomas Cataldo <thomas.cataldo@aliacom.fr>",
-                NULL
-        };
-        const gchar* documenters [] = {
-                "Thomas Cataldo <thomas.cataldo@aliacom.fr>",
-                NULL
-        };
-        const gchar* translator_credits = _("translator_credits");
-        GdkPixbuf	*logo = gdk_pixbuf_new_from_file(DATADIR"/monkey-bubble/gfx/monkey.png",NULL);
-	
-        gtk_widget_show (
-                         gnome_about_new (
-                                          PACKAGE,
-                                          VERSION,
-                                          "Copyright (C) 2003 - Laurent Belmonte <laurent.belmonte@aliacom.fr>",
-                                          _("Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply remove all Bubbles by the creation of unicolor triplets."),
-                                          authors,
-                                          documenters,
-                                          strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
-                                          logo)
-                         );
+  gtk_about_dialog_set_authors (GTK_ABOUT_DIALOG (dialog), authors);
+  gtk_about_dialog_set_comments (GTK_ABOUT_DIALOG (dialog),
+                                 _("Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. "
+                                   "Simply remove all Bubbles by the creation of unicolor triplets."));
+  gtk_about_dialog_set_copyright (GTK_ABOUT_DIALOG (dialog),
+                                  "Copyright (C) 2003  Laurent Belmonte\n"
+                                  "Copyright (C) 2010  Sven Herzberg");
+  gtk_about_dialog_set_documenters (GTK_ABOUT_DIALOG (dialog), documenters);
+  gtk_about_dialog_set_logo (GTK_ABOUT_DIALOG (dialog), logo);
+  gtk_about_dialog_set_translator_credits (GTK_ABOUT_DIALOG (dialog), _("translator_credits"));
+  gtk_about_dialog_set_version (GTK_ABOUT_DIALOG (dialog), VERSION);
+  g_object_unref (logo);
 
-        g_object_unref( logo);
+  gtk_dialog_run (GTK_DIALOG (dialog));
+
+  gtk_widget_destroy (dialog);
 }
 
 static void

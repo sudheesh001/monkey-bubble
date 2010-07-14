@@ -96,6 +96,9 @@ int main(int  argc, char **argv)
   }
   g_option_context_free (context);
 
+  g_set_prgname ("monkey-bubble");
+  g_set_application_name (_("Monkey Bubble"));
+
 #ifdef GNOME
   if(gnome_score_init(PACKAGE)) {
 	g_message("You'll have to play without highscore support");
