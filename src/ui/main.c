@@ -15,7 +15,7 @@
 #include <glib/gi18n.h>
 #ifdef GNOME
 #include <libgnome/gnome-score.h>
-#include <libgnomeui/gnome-ui-init.h>
+#include <libgnome/gnome-init.h>
 #endif
 #include <glib/gthread.h>
 
@@ -117,7 +117,7 @@ int main(int  argc, char **argv)
 #ifdef GNOME
   /* to get help working */
   gnome_program_init (PACKAGE, VERSION,
-		      LIBGNOMEUI_MODULE,
+		      LIBGNOME_MODULE,
 		      argc, argv,
 		      GNOME_PROGRAM_STANDARD_PROPERTIES,
 		      NULL);

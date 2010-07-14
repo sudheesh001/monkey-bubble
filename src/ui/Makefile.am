@@ -43,11 +43,12 @@ monkey_bubble_LDFLAGS=
 
 
 monkey_bubble_LDADD =  \
-	$(UI_LIBS) \
-	$(PLATFORM_LIBS) \
 	../monkey/libmonkey.a \
 	../view/libmonkeyview.a \
 	../util/libmonkeyutil.a \
 	../net/libmonkeynet.a \
 	../audio/libmonkeyaudio.a \
-	../input/libmbinput.a
+	../input/libmbinput.a \
+	$(UI_LIBS) \
+	$(PLATFORM_LIBS) \
+	$(NULL)

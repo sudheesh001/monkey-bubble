@@ -35,7 +35,7 @@
 #include "sound-manager.h"
 
 #ifdef GNOME
-#include <libgnomeui/libgnomeui.h>
+#include <libgnomeui/gnome-scores.h>
 #include <libgnome/gnome-score.h>
 #include <libgnome/gnome-sound.h>
 #include <libgnome/gnome-help.h>

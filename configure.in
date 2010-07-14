@@ -147,7 +147,7 @@ AC_SUBST(UI_CFLAGS)
 AC_SUBST(UI_LIBS)
 
 if test "$with_platform" = "gnome"; then
-	PKG_CHECK_MODULES(PLATFORM,[libgnomeui-2.0])
+	PKG_CHECK_MODULES(PLATFORM,[libgnome-2.0 libbonoboui-2.0 libgnomecanvas-2.0 gnome-vfs-2.0])
 elif test "$with_platform" = "maemo"; then
 	PKG_CHECK_MODULES(PLATFORM,[hildon-1 libosso conic])
 fi
