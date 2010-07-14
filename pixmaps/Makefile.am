@@ -18,6 +18,9 @@ gfx_DATA = \
 icondir=$(datadir)/icons/hicolor/32x32/apps
 icon_DATA=monkey-bubble.png
 
+scalabledir=$(datadir)/icons/hicolor/scalable/apps
+dist_scalable_DATA=monkey-bubble.svg
+
 pixmapsdir=$(datadir)/monkey-bubble
 pixmaps_DATA=monkey-bubble.xpm
 
