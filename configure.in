@@ -79,7 +79,8 @@ dnl | library dependencies |--------------------------------------------------
 dnl  ----------------------
 
 dnl Versions shared with the (upcoming) .spec file.
-GTK_REQUIRED=2.0.0
+dnl GTK+ 2.12 comes with GtkBuilder support
+GTK_REQUIRED=2.12.0
 G_THREAD_REQUIRED=2.0.0
 
 AC_SUBST(GTK_REQUIRED)
@@ -134,13 +135,13 @@ AC_SUBST(MONKEY_SRV_LIBS)
 
 
 PKG_CHECK_MODULES(UI,[
-	gtk+-2.0 >= 2.10
+	gconf-2.0
+	gtk+-2.0 >= $GTK_REQUIRED
 	gthread-2.0
 	librsvg-2.0
 	libcanberra
 	libcanberra-gtk
-	gconf-2.0
-	libglade-2.0
+	libxml-2.0
 	])
 AC_SUBST(UI_CFLAGS)
 AC_SUBST(UI_LIBS)

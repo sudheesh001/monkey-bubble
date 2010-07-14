@@ -20,7 +20,6 @@
 #include <config.h>
 #include <string.h>
 
-#include <glade/glade.h>
 #include <glib/gi18n.h>
 #include <gconf/gconf-client.h>
 #include "keyboard-properties.h"
@@ -132,12 +131,13 @@ enum
 };
 
 
-struct KeyboardPropertiesPrivate {
-  GtkWidget * dialog;
-  GladeXML * glade_xml;
-  GConfClient * gconf_client;
-  GtkAccelGroup * hack_group;
-  GtkTreeModel *model;
+struct KeyboardPropertiesPrivate
+{
+  GtkWidget    * dialog;
+  GtkBuilder   * builder;
+  GConfClient  * gconf_client;
+  GtkAccelGroup* hack_group;
+  GtkTreeModel * model;
 };
 
 G_DEFINE_TYPE (KeyboardProperties, keyboard_properties, G_TYPE_OBJECT);
@@ -196,24 +196,22 @@ static KeyboardProperties* keyboard_properties_new(void) {
     return keyboard_properties;
 }
 
+static void
+keyboard_properties_finalize (GObject* object)
+{
+  KeyboardProperties* kp = KEYBOARD_PROPERTIES(object);
 
+  gtk_widget_destroy (PRIVATE (kp)->dialog);
 
+  g_object_unref (PRIVATE (kp)->builder);
+  g_object_unref (PRIVATE (kp)->gconf_client);
 
+  g_free (kp->private);
 
-
-static void keyboard_properties_finalize(GObject* object) {
-    KeyboardProperties* kp = KEYBOARD_PROPERTIES(object);
-
-    gtk_widget_destroy( PRIVATE(kp)->dialog);
-
-    g_object_unref( PRIVATE(kp)->glade_xml);
-    g_object_unref( PRIVATE(kp)->gconf_client);
-
-    g_free( kp->private);
-    if (G_OBJECT_CLASS (parent_class)->finalize) {
-	(* G_OBJECT_CLASS (parent_class)->finalize) (object);
+  if (G_OBJECT_CLASS (parent_class)->finalize)
+    {
+      G_OBJECT_CLASS (parent_class)->finalize (object);
     }
-
 }
 
 static void keyboard_properties_class_init (KeyboardPropertiesClass *klass) {
@@ -1018,27 +1016,35 @@ start_editing_cb (GtkTreeView    *tree_view,
 }
 
 GtkWidget*
-edit_keys_dialog_new (KeyboardProperties *kp,
-		      GtkWindow *transient_parent)
+edit_keys_dialog_new (KeyboardProperties* kp,
+                      GtkWindow         * transient_parent)
 {
-  GladeXML *xml;
   GtkWidget *w;
-  GtkCellRenderer *cell_renderer;
+  GtkCellRenderer* cell_renderer;
   int i;
   GtkTreeModel *sort_model;
   GtkTreeStore *tree;
   GtkTreeViewColumn *column;
   GtkTreeIter parent_iter;
+  GtkBuilder     * builder;
+  GError         * error = NULL;
+  gchar          * objects[] =
+    {
+      "keybindings-dialog",
+      NULL
+    };
 
-  xml =       glade_xml_new(DATADIR"/monkey-bubble/glade/keybinding.glade",
-		    "keybindings-dialog",
-		    NULL);
-  if (xml == NULL)
-    return NULL;
-  
+  builder = gtk_builder_new ();
+  if (0 == gtk_builder_add_objects_from_file (builder, DATADIR "/monkey-bubble/glade/keybinding.ui", objects, &error))
+    {
+      g_warning ("error loading keybinding dialog%c %s",
+                 error ? ':' : '\0',
+                 error ? error->message : "");
+      g_error_free (error);
+      return NULL;
+    }
 
-  
-  w = glade_xml_get_widget (xml, "accelerators-treeview");
+  w = GTK_WIDGET (gtk_builder_get_object (builder, "accelerators-treeview"));
 
   living_treeviews = g_slist_prepend (living_treeviews, w);
 
@@ -1049,26 +1055,26 @@ edit_keys_dialog_new (KeyboardProperties *kp,
                     &living_treeviews);
 
   tree = gtk_tree_store_new (N_COLUMNS, G_TYPE_STRING, G_TYPE_POINTER);
-  
+
   /* Column 1 */
   cell_renderer = gtk_cell_renderer_text_new ();
   column = gtk_tree_view_column_new_with_attributes (_("_Action"),
-						     cell_renderer,
-						     "text", ACTION_COLUMN,
-						     NULL);
+                                                     cell_renderer,
+                                                     "text", ACTION_COLUMN,
+                                                     NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (w), column);
   gtk_tree_view_column_set_sort_column_id (column, ACTION_COLUMN);
 
   /* Column 2 */
   cell_renderer = gtk_cell_renderer_accel_new();
   g_object_set(cell_renderer,
-	       "editable", TRUE,
-	       "accel-mode", GTK_CELL_RENDERER_ACCEL_MODE_OTHER,
-	       NULL);
+               "editable", TRUE,
+               "accel-mode", GTK_CELL_RENDERER_ACCEL_MODE_OTHER,
+               NULL);
   g_signal_connect (G_OBJECT (cell_renderer), "accel-edited",
                     G_CALLBACK (accel_edited_callback),
                     kp);
-  
+
   PRIVATE(kp)->model = GTK_TREE_MODEL( tree );
 
   g_object_set (G_OBJECT (cell_renderer),
@@ -1089,23 +1095,23 @@ edit_keys_dialog_new (KeyboardProperties *kp,
       int j;
       gtk_tree_store_append (tree, &parent_iter, NULL);
       gtk_tree_store_set (tree, &parent_iter,
-			  ACTION_COLUMN, _(all_entries[i].user_visible_name),
-			  -1);
+                          ACTION_COLUMN, _(all_entries[i].user_visible_name),
+                          -1);
       j = 0;
 
       while (j < all_entries[i].n_elements)
-	{
-	  GtkTreeIter iter;
-	  KeyEntry *key_entry;
+        {
+          GtkTreeIter iter;
+          KeyEntry *key_entry;
 
-	  key_entry = &(all_entries[i].key_entry[j]);
-	  gtk_tree_store_append (tree, &iter, &parent_iter);
-	  gtk_tree_store_set (tree, &iter,
-			      ACTION_COLUMN, _(key_entry->user_visible_name),
-			      KEYVAL_COLUMN, key_entry,
-			      -1);
-	  ++j;
-	}
+          key_entry = &(all_entries[i].key_entry[j]);
+          gtk_tree_store_append (tree, &iter, &parent_iter);
+          gtk_tree_store_set (tree, &iter,
+                              ACTION_COLUMN, _(key_entry->user_visible_name),
+                              KEYVAL_COLUMN, key_entry,
+                              -1);
+          ++j;
+        }
       ++i;
     }
 
@@ -1118,8 +1124,8 @@ edit_keys_dialog_new (KeyboardProperties *kp,
 
   gtk_tree_view_expand_all (GTK_TREE_VIEW (w));
   g_object_unref (G_OBJECT (tree));
-  
-  w = glade_xml_get_widget (xml, "keybindings-dialog");
+
+  w = GTK_WIDGET (gtk_builder_get_object (builder, "keybindings-dialog"));
 
   g_signal_connect (G_OBJECT (w), "response",
                     G_CALLBACK (gtk_widget_destroy),
@@ -1129,8 +1135,8 @@ edit_keys_dialog_new (KeyboardProperties *kp,
                                -1, 350);
 
 
-  g_object_unref (G_OBJECT (xml));
-  
+  g_object_unref (builder);
+
   return w;
 }
 
@@ -1166,3 +1172,5 @@ update_menu_accel_state (void)
                                         "gnome-terminal");
     }
 }
+
+/* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */

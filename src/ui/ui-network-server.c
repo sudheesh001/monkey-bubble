@@ -32,7 +32,6 @@
 #include <time.h>
 
 #include <gtk/gtk.h>
-#include <glade/glade.h>
 #include <glib/gi18n.h>
 
 #include "message-handler.h"
@@ -43,22 +42,21 @@
 #include "ui-main.h"
 #include "game-manager-proxy.h"
 
-struct UiNetworkServerPrivate {
-        GladeXML * glade_xml;
-        GtkWidget * window;
-        gchar * server_name;
-        NetworkMessageHandler * handler;
-        int client_id;
-        gboolean ready;
-        GtkLabel * connection_label;
-        GtkListStore * players_list;
-        NetworkSimpleServer * manager;
-        NetGameManagerProxy * manager_proxy;
-        gboolean np_from_server;
-        gboolean ng_from_server;
+struct UiNetworkServerPrivate
+{
+  GtkBuilder           * builder;
+  GtkWidget            * window;
+  gchar                * server_name;
+  NetworkMessageHandler* handler;
+  int                    client_id;
+  gboolean               ready;
+  GtkLabel             * connection_label;
+  GtkListStore         * players_list;
+  NetworkSimpleServer  * manager;
+  NetGameManagerProxy  * manager_proxy;
+  gboolean               np_from_server;
+  gboolean               ng_from_server;
 };
-
-
 
 #define PRIVATE( UiNetworkServer ) (UiNetworkServer->private)
 
@@ -117,87 +115,93 @@ static void set_number_of_players(UiNetworkServer * self,
 G_DEFINE_TYPE (UiNetworkServer, ui_network_server, G_TYPE_OBJECT);
 
 UiNetworkServer*
-ui_network_server_new(NetworkSimpleServer * server)
+ui_network_server_new (NetworkSimpleServer* server)
 {
-        UiNetworkServer * ngl;
-        GtkWidget * item;
+  GtkTreeViewColumn* column;
+  UiNetworkServer  * ngl;
+  GtkListStore     * list;
+  GtkWidget        * item;
+  GError           * error = NULL;
+  gchar            * objects[] =
+    {
+      "network_window",
+      NULL
+    };
 
-        GtkTreeViewColumn * column;
-        GtkListStore * list;
+  ngl = UI_NETWORK_SERVER(g_object_new(TYPE_UI_NETWORK_SERVER,
+                                       NULL));
 
-        ngl = UI_NETWORK_SERVER(g_object_new(TYPE_UI_NETWORK_SERVER,
-                                                   NULL));
+  PRIVATE(ngl)->manager = server;
+  PRIVATE(ngl)->server_name = NULL;
 
-        PRIVATE(ngl)->manager = server;
-        PRIVATE(ngl)->server_name = NULL;
+  PRIVATE(ngl)->ready = FALSE;
 
-        PRIVATE(ngl)->ready = FALSE;
+  PRIVATE(ngl)->builder = gtk_builder_new ();
+  if (0 == gtk_builder_add_objects_from_file (PRIVATE (ngl)->builder, DATADIR "/monkey-bubble/glade/netserver.ui", objects, &error))
+    {
+      g_warning ("error loading UI for network game server%c %s",
+                 error ? ':' : '\0',
+                 error ? error->message : "");
+      g_error_free (error);
+      g_object_unref (ngl);
 
-        PRIVATE(ngl)->glade_xml = glade_xml_new(DATADIR"/monkey-bubble/glade/netserver.glade","network_window",NULL);
-        
-        PRIVATE(ngl)->window = glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "network_window");
+      return NULL;
+    }
 
-       
+  PRIVATE (ngl)->window = GTK_WIDGET (gtk_builder_get_object (PRIVATE (ngl)->builder, "network_window"));
 
+  item = GTK_WIDGET (gtk_builder_get_object ( PRIVATE(ngl)->builder, "quit_button"));
+  g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(quit_server_signal),ngl);
 
-        item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "quit_button");
-        g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(quit_server_signal),ngl);
+  item = GTK_WIDGET (gtk_builder_get_object ( PRIVATE(ngl)->builder, "network_window"));
+  g_signal_connect_swapped( item,"delete-event",GTK_SIGNAL_FUNC(quit_signal),ngl);
 
-        item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "network_window");
-        g_signal_connect_swapped( item,"delete-event",GTK_SIGNAL_FUNC(quit_signal),ngl);
+  item = GTK_WIDGET (gtk_builder_get_object ( PRIVATE(ngl)->builder, "ready_button"));
+  g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(ready_signal),ngl);
 
+  item = GTK_WIDGET (gtk_builder_get_object ( PRIVATE(ngl)->builder, "start_button"));
+  g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(start_signal),ngl);
 
-        item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "ready_button");
-        g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(ready_signal),ngl);
-        
-        item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "start_button");
-        g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(start_signal),ngl);
-        
+  item = GTK_WIDGET (gtk_builder_get_object ( PRIVATE(ngl)->builder,"players_treeview"));
+  list = gtk_list_store_new(3,G_TYPE_STRING,G_TYPE_BOOLEAN,G_TYPE_BOOLEAN);
 
+  column = gtk_tree_view_column_new_with_attributes(_("_Player name"),gtk_cell_renderer_text_new(),
+                                                    "text",0, (char *)NULL);
 
-       item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml,"players_treeview");
-       list = gtk_list_store_new(3,G_TYPE_STRING,G_TYPE_BOOLEAN,G_TYPE_BOOLEAN);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (item), column);
 
-        column = gtk_tree_view_column_new_with_attributes(_("_Player name"),gtk_cell_renderer_text_new(),
-                                                          "text",0, (char *)NULL);
+  column = gtk_tree_view_column_new();
 
-        gtk_tree_view_append_column (GTK_TREE_VIEW (item), column);
+  column = gtk_tree_view_column_new_with_attributes(_("_Owner"),gtk_cell_renderer_toggle_new(),
+                                                    "active",1, (char *)NULL);
 
-        column = gtk_tree_view_column_new();
+  gtk_tree_view_append_column (GTK_TREE_VIEW (item), column);
 
-        column = gtk_tree_view_column_new_with_attributes(_("_Owner"),gtk_cell_renderer_toggle_new(),
-                                                          "active",1, (char *)NULL);
+  column = gtk_tree_view_column_new();
 
-        gtk_tree_view_append_column (GTK_TREE_VIEW (item), column);
+  column = gtk_tree_view_column_new_with_attributes(_("_Ready"),gtk_cell_renderer_toggle_new(),
+                                                    "active",2, (char *)NULL);
 
-        column = gtk_tree_view_column_new();
-
-        column = gtk_tree_view_column_new_with_attributes(_("_Ready"),gtk_cell_renderer_toggle_new(),
-                                                          "active",2, (char *)NULL);
-
-        gtk_tree_view_append_column (GTK_TREE_VIEW (item), column);
-
-
-        gtk_tree_view_set_model( GTK_TREE_VIEW(item), GTK_TREE_MODEL(list));
-
-        item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml,"number_of_players");
-        g_signal_connect_swapped( item, "value_changed", GTK_SIGNAL_FUNC(number_of_players_changed),
-                                  ngl);
-
-
-        item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml,"number_of_games");
-        g_signal_connect_swapped( item, "value_changed", GTK_SIGNAL_FUNC(number_of_games_changed),
-                                  ngl);
-        
-        PRIVATE(ngl)->players_list = list;
-        
-        PRIVATE(ngl)->server_name = "localhost";
+  gtk_tree_view_append_column (GTK_TREE_VIEW (item), column);
 
 
-        connect_server(ngl);
+  gtk_tree_view_set_model( GTK_TREE_VIEW(item), GTK_TREE_MODEL(list));
 
-        return ngl;
-        
+  item = GTK_WIDGET (gtk_builder_get_object ( PRIVATE(ngl)->builder,"number_of_players"));
+  g_signal_connect_swapped( item, "value_changed", GTK_SIGNAL_FUNC(number_of_players_changed),
+                            ngl);
+
+  item = GTK_WIDGET (gtk_builder_get_object ( PRIVATE(ngl)->builder,"number_of_games"));
+  g_signal_connect_swapped( item, "value_changed", GTK_SIGNAL_FUNC(number_of_games_changed),
+                            ngl);
+
+  PRIVATE(ngl)->players_list = list;
+
+  PRIVATE(ngl)->server_name = "localhost";
+
+  connect_server(ngl);
+
+  return ngl;
 }
 
 
@@ -303,56 +307,31 @@ static void quit_signal(gpointer    callback_data,
 
 }
 
+static void
+ready_signal (gpointer   callback_data,
+              guint      callback_action,
+              GtkWidget* widget)
+{
+  UiNetworkServer * self = UI_NETWORK_SERVER(callback_data);
+  gboolean          ready = PRIVATE (self)->ready;
 
 
-static void ready_signal(gpointer    callback_data,
-                         guint       callback_action,
-                         GtkWidget  *widget) {
-
-
-        UiNetworkServer * self;
-        GtkWidget * item;
-
-        self = UI_NETWORK_SERVER(callback_data);
-
-        item = glade_xml_get_widget( PRIVATE(self)->glade_xml, "ready_button");
-
-        if( ! PRIVATE(self)->ready ) {
-                net_game_manager_proxy_send_ready_state(PRIVATE(self)->manager_proxy,
-                                                        TRUE);
-                PRIVATE(self)->ready = TRUE;
-        } else {
-
-                net_game_manager_proxy_send_ready_state(PRIVATE(self)->manager_proxy,
-                                                        FALSE);
-                
-                PRIVATE(self)->ready = FALSE;
-                
-        }
+  net_game_manager_proxy_send_ready_state(PRIVATE(self)->manager_proxy,
+                                          !ready);
+  PRIVATE (self)->ready = !ready;
 }
 
+static void start_signal(gpointer   callback_data,
+                         guint      callback_action,
+                         GtkWidget* widget)
+{
+  UiNetworkServer * self = UI_NETWORK_SERVER(callback_data);
 
+  net_game_manager_proxy_send_start( PRIVATE(self)->manager_proxy);
 
-static void start_signal(gpointer    callback_data,
-                         guint       callback_action,
-                         GtkWidget  *widget) {
-
-
-        UiNetworkServer * self;
-
-        self = UI_NETWORK_SERVER(callback_data);
-
-        net_game_manager_proxy_send_start( PRIVATE(self)->manager_proxy);
-
-        set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
-                                             , "start_button"),FALSE); 
-
-        set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
-                                             , "quit_button"),FALSE); 
-
-        set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
-                                             , "ready_button"),FALSE); 
-
+  set_sensitive (GTK_WIDGET (gtk_builder_get_object (PRIVATE (self)->builder, "start_button")), FALSE);
+  set_sensitive (GTK_WIDGET (gtk_builder_get_object (PRIVATE (self)->builder, "quit_button")), FALSE);
+  set_sensitive (GTK_WIDGET (gtk_builder_get_object (PRIVATE (self)->builder, "ready_button")), FALSE);
 }
 
 
@@ -466,19 +445,20 @@ players_list_updated(NetGameManagerProxy * proxy,
 
 
 static gboolean
-update_number_of_players_idle(gpointer data) 
+update_number_of_players_idle (gpointer data)
 {
-        UiNetworkServer * self;
-        GtkWidget * item;
+  UiNetworkServer* self = UI_NETWORK_SERVER(data);
+  GtkWidget      * item;
 
-        self = UI_NETWORK_SERVER(data);
-        item = glade_xml_get_widget( PRIVATE(self)->glade_xml, "number_of_players");
-        PRIVATE(self)->np_from_server = TRUE;
-        gtk_spin_button_set_value ( GTK_SPIN_BUTTON(item), 
-                                    net_game_manager_proxy_get_number_of_players(PRIVATE(self)->manager_proxy));
+  item = GTK_WIDGET (gtk_builder_get_object (PRIVATE (self)->builder, "number_of_players"));
 
-        PRIVATE(self)->np_from_server = FALSE;
-        return FALSE;
+  /* FIXME: this looks like a replacement for g_signal_handler_block() */
+  PRIVATE (self)->np_from_server = TRUE;
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (item),
+                             net_game_manager_proxy_get_number_of_players (PRIVATE (self)->manager_proxy));
+
+  PRIVATE (self)->np_from_server = FALSE;
+  return FALSE;
 }
 
 static void
@@ -497,19 +477,18 @@ net_number_of_players_changed(NetGameManagerProxy * proxy,
 
 
 static gboolean
-update_number_of_games_idle(gpointer data) 
+update_number_of_games_idle (gpointer data)
 {
-        UiNetworkServer * self;
-        GtkWidget * item;
+  UiNetworkServer* self = UI_NETWORK_SERVER(data);
+  GtkWidget      * item;
 
-        self = UI_NETWORK_SERVER(data);
-        item = glade_xml_get_widget( PRIVATE(self)->glade_xml, "number_of_games");
-        PRIVATE(self)->ng_from_server = TRUE;
-        gtk_spin_button_set_value ( GTK_SPIN_BUTTON(item), 
-                                    net_game_manager_proxy_get_number_of_games(PRIVATE(self)->manager_proxy));
-
-        PRIVATE(self)->ng_from_server = FALSE;
-        return FALSE;
+  item = GTK_WIDGET (gtk_builder_get_object (PRIVATE (self)->builder, "number_of_games"));
+  /* FIXME: this looks like a replacement for g_signal_handler_block() */
+  PRIVATE (self)->ng_from_server = TRUE;
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (item),
+                             net_game_manager_proxy_get_number_of_games (PRIVATE (self)->manager_proxy));
+  PRIVATE (self)->ng_from_server = FALSE;
+  return FALSE;
 }
 
 static void
@@ -731,3 +710,4 @@ static void ui_network_server_class_init (UiNetworkServerClass *klass) {
         object_class->finalize = ui_network_server_finalize;
 }
 
+/* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */

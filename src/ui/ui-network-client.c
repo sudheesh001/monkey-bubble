@@ -32,7 +32,6 @@
 #include <time.h>
 
 #include <gtk/gtk.h>
-#include <glade/glade.h>
 #include <glib/gi18n.h>
 
 #include "message-handler.h"
@@ -42,19 +41,17 @@
 #include "ui-main.h"
 #include "game-manager-proxy.h"
 
-
-
-struct UiNetworkClientPrivate {
-        GladeXML * glade_xml;
-        GtkWidget * window;
-        gchar * server_name;
-        NetworkMessageHandler * handler;
-        int client_id;
-        gboolean ready;
-        GtkLabel * connection_label;
-        GtkListStore * players_list;
-        NetGameManagerProxy * manager_proxy;
-
+struct UiNetworkClientPrivate
+{
+  GtkBuilder           * builder;
+  GtkWidget            * window;
+  gchar                * server_name;
+  NetworkMessageHandler* handler;
+  int                    client_id;
+  gboolean               ready; /* FIXME: check whether this can be removed */
+  GtkLabel             * connection_label;
+  GtkListStore         * players_list;
+  NetGameManagerProxy  * manager_proxy;
 };
 
 #define PRIVATE( UiNetworkClient ) (UiNetworkClient->private)
@@ -116,115 +113,132 @@ static gboolean close_signal(gpointer    callback_data,
 }
 
 void connected_set_sensitive(UiNetworkClient * ngl, gboolean sensitive) {
-    set_sensitive( glade_xml_get_widget( PRIVATE(ngl)->glade_xml
-        ,"scrolledwindow2"), sensitive);
-    set_sensitive( glade_xml_get_widget( PRIVATE(ngl)->glade_xml
-        ,"quit_button"), sensitive);
-    set_sensitive( glade_xml_get_widget( PRIVATE(ngl)->glade_xml
-        ,"ready_button"), sensitive);
+    set_sensitive (GTK_WIDGET (gtk_builder_get_object (PRIVATE (ngl)->builder, "scrolledwindow2")), sensitive);
+    set_sensitive (GTK_WIDGET (gtk_builder_get_object (PRIVATE (ngl)->builder ,"quit_button")), sensitive);
+    set_sensitive (GTK_WIDGET (gtk_builder_get_object (PRIVATE (ngl)->builder ,"ready_button")), sensitive);
 }
 #endif
 
-UiNetworkClient *ui_network_client_new() {
+UiNetworkClient*
+ui_network_client_new (void)
+{
+  GtkTreeViewColumn* column;
+  UiNetworkClient  * ngl;
+  GtkListStore     * list;
+  GtkWidget        * item;
 #ifdef MAEMO
-	GtkWidget * container;
+  GtkWidget        * container;
 #endif
-        UiNetworkClient * ngl;
-        GtkWidget * item;
+  GError           * error = NULL;
+  gchar            * objects[] =
+    {
+      NULL, NULL
+    };
 
-        GtkTreeViewColumn * column;
-        GtkListStore * list;
+  ngl = UI_NETWORK_CLIENT(g_object_new(TYPE_UI_NETWORK_CLIENT , NULL));
 
-        ngl = 
-                UI_NETWORK_CLIENT(g_object_new(TYPE_UI_NETWORK_CLIENT
-                                                    , NULL));
+  PRIVATE(ngl)->server_name = NULL;
 
-        PRIVATE(ngl)->server_name = NULL;
+  PRIVATE(ngl)->ready = FALSE;
 
-        PRIVATE(ngl)->ready = FALSE;
+  PRIVATE (ngl)->builder = gtk_builder_new ();
+#ifdef GNOME
+  objects[0] = "network_window";
+  if (0 == gtk_builder_add_objects_from_file (PRIVATE (ngl)->builder, DATADIR "/monkey-bubble/glade/netgame.ui", objects, &error))
+    {
+      g_warning ("error loading network game UI%c %s",
+                 error ? ':' : '\0',
+                 error ? error->message : "");
+      g_error_free (error);
+      g_object_unref (ngl);
+      return NULL;
+    }
+
+  PRIVATE(ngl)->window = GTK_WIDGET (gtk_builder_get_object (PRIVATE (ngl)->builder, "network_window"));
+  gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (PRIVATE (ngl)->builder, "close_button")));
+#endif
+#ifdef MAEMO
+  objects[0] = "vbox1";
+  if (0 == gtk_builder_add_objects_from_file (PRIVATE (ngl)->builder, DATADIR "/monkey-bubble/glade/netgame.ui", objects, &error))
+    {
+      g_warning ("error loading network game UI%c %s",
+                 error ? ':' : '\0',
+                 error ? error->message : "");
+      g_error_free (error);
+      g_object_unref (ngl);
+      return NULL;
+    }
+
+  PRIVATE(ngl)->window = gtk_dialog_new();
+  gtk_window_set_title(GTK_WINDOW(PRIVATE(ngl)->window), _("Network game"));
+  container = GTK_WIDGET (gtk_builder_get_object (PRIVATE (ngl)->builder, "vbox1"));
+  gtk_container_add(GTK_CONTAINER(GTK_DIALOG(PRIVATE(ngl)->window)->vbox), container);
+  item = GTK_WIDGET (gtk_builder_get_object (PRIVATE (ngl)->builder, "close_button"));
+  g_signal_connect_swapped (item, "clicked",
+                            G_CALLBACK (close_signal), ngl);
+  gtk_widget_set_size_request (GTK_WIDGET (gtk_builder_get_object (PRIVATE (ngl)->builder, "scrolledwindow2")),
+                               -1, 298); // FIXME: check if necessary
+#endif
+
+
+  item = GTK_WIDGET (gtk_builder_get_object (PRIVATE (ngl)->builder, "go_button"));
+  g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(connect_server_signal),ngl);
+
+
+  item = GTK_WIDGET (gtk_builder_get_object (PRIVATE (ngl)->builder, "quit_button"));
+  g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(quit_server_signal),ngl);
+
+  item = GTK_WIDGET (gtk_builder_get_object (PRIVATE (ngl)->builder, "network_window"));
+  g_signal_connect_swapped( item,"delete_event",GTK_SIGNAL_FUNC(quit_signal),ngl);
+
+
+  item = GTK_WIDGET (gtk_builder_get_object (PRIVATE (ngl)->builder, "ready_button"));
+  g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(ready_signal),ngl);
+
+  PRIVATE(ngl)->connection_label = GTK_LABEL (gtk_builder_get_object (PRIVATE (ngl)->builder, "connection_state_label"));
 
 #ifdef GNOME
-        PRIVATE(ngl)->glade_xml = glade_xml_new(DATADIR"/monkey-bubble/glade/netgame.glade","network_window",NULL);
-        
-        PRIVATE(ngl)->window = glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "network_window");
-	gtk_widget_hide (glade_xml_get_widget (PRIVATE(ngl)->glade_xml, "close_button"));
+  gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (PRIVATE (ngl)->builder, "connected_game_hbox")),
+                            FALSE);
 #endif
 #ifdef MAEMO
-	PRIVATE(ngl)->glade_xml = glade_xml_new(DATADIR"/monkey-bubble/glade/netgame.glade","vbox1",NULL);
-
-	PRIVATE(ngl)->window = gtk_dialog_new();
-	gtk_window_set_title(GTK_WINDOW(PRIVATE(ngl)->window), _("Network game"));
-	container = glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "vbox1");
-	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(PRIVATE(ngl)->window)->vbox), container);
-	item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "close_button");
-	g_signal_connect_swapped (item, "clicked",
-				  G_CALLBACK (close_signal), ngl);
-	gtk_widget_set_size_request (glade_xml_get_widget (PRIVATE(ngl)->glade_xml, "scrolledwindow2"), -1, 298); // FIXME: check if necessary
+  connected_set_sensitive(ngl, FALSE);
 #endif
 
-       
-        item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "go_button");
-        g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(connect_server_signal),ngl);
+  item = GTK_WIDGET (gtk_builder_get_object (PRIVATE (ngl)->builder, "players_treeview"));
+  list = gtk_list_store_new(3,G_TYPE_STRING,G_TYPE_BOOLEAN,G_TYPE_BOOLEAN);
+
+  column = gtk_tree_view_column_new_with_attributes(_("_Player name"),gtk_cell_renderer_text_new(),
+                                                    "text",0, (char *)NULL);
+
+  gtk_tree_view_append_column (GTK_TREE_VIEW (item), column);
+
+  column = gtk_tree_view_column_new();
+
+  column = gtk_tree_view_column_new_with_attributes(_("_Owner"),gtk_cell_renderer_toggle_new(),
+                                                    "active",1, (char *)NULL);
+
+  gtk_tree_view_append_column (GTK_TREE_VIEW (item), column);
+
+  column = gtk_tree_view_column_new();
+
+  column = gtk_tree_view_column_new_with_attributes(_("_Ready"),gtk_cell_renderer_toggle_new(),
+                                                    "active",2, (char *)NULL);
+
+  gtk_tree_view_append_column (GTK_TREE_VIEW (item), column);
 
 
-        item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "quit_button");
-        g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(quit_server_signal),ngl);
-
-        item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "network_window");
-        g_signal_connect_swapped( item,"delete_event",GTK_SIGNAL_FUNC(quit_signal),ngl);
+  gtk_tree_view_set_model( GTK_TREE_VIEW(item), GTK_TREE_MODEL(list));
 
 
-        item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "ready_button");
-        g_signal_connect_swapped( item,"clicked",GTK_SIGNAL_FUNC(ready_signal),ngl);
-        
-        PRIVATE(ngl)->connection_label = GTK_LABEL(glade_xml_get_widget( PRIVATE(ngl)->glade_xml, "connection_state_label"));
-        
-#ifdef GNOME
-       gtk_widget_set_sensitive( glade_xml_get_widget( PRIVATE(ngl)->glade_xml
-                                                       , "connected_game_hbox"),
-                                 FALSE);
-#endif
-#ifdef MAEMO
-	connected_set_sensitive(ngl, FALSE);
-#endif
-
-
-       item = glade_xml_get_widget( PRIVATE(ngl)->glade_xml,"players_treeview");
-       list = gtk_list_store_new(3,G_TYPE_STRING,G_TYPE_BOOLEAN,G_TYPE_BOOLEAN);
-
-        column = gtk_tree_view_column_new_with_attributes(_("_Player name"),gtk_cell_renderer_text_new(),
-                                                          "text",0, (char *)NULL);
-
-        gtk_tree_view_append_column (GTK_TREE_VIEW (item), column);
-
-        column = gtk_tree_view_column_new();
-
-        column = gtk_tree_view_column_new_with_attributes(_("_Owner"),gtk_cell_renderer_toggle_new(),
-                                                          "active",1, (char *)NULL);
-
-        gtk_tree_view_append_column (GTK_TREE_VIEW (item), column);
-
-        column = gtk_tree_view_column_new();
-
-        column = gtk_tree_view_column_new_with_attributes(_("_Ready"),gtk_cell_renderer_toggle_new(),
-                                                          "active",2, (char *)NULL);
-
-        gtk_tree_view_append_column (GTK_TREE_VIEW (item), column);
-
-
-        gtk_tree_view_set_model( GTK_TREE_VIEW(item), GTK_TREE_MODEL(list));
-
-        
-        PRIVATE(ngl)->players_list = list;
+  PRIVATE(ngl)->players_list = list;
 
 #ifdef MAEMO
-	gtk_widget_show_all(GTK_WIDGET(PRIVATE(ngl)->window));
+  gtk_widget_show_all(GTK_WIDGET(PRIVATE(ngl)->window));
 #endif
-        
-        return ngl;
-        
+
+  return ngl;
 }
-
 
 struct StatusJob {
         UiNetworkClient * self;
@@ -266,18 +280,20 @@ connect_server_signal (gpointer   callback_data,
                        GtkWidget* widget)
 {
   UiNetworkClient* self = UI_NETWORK_CLIENT (callback_data);
-  GtkWidget      * combo = glade_xml_get_widget (PRIVATE (self)->glade_xml, "comboboxentry1");
+  GtkWidget      * combo = GTK_WIDGET (gtk_builder_get_object (PRIVATE (self)->builder, "comboboxentry1"));
 
-  g_free(PRIVATE (self)->server_name);
+  g_free (PRIVATE (self)->server_name);
   PRIVATE(self)->server_name = gtk_combo_box_get_active_text (GTK_COMBO_BOX (combo));
 
+  /* FIXME: check for leak */
   set_status_message (self, g_strdup_printf("Connecting to %s...", PRIVATE (self)->server_name));
 
-  set_sensitive (glade_xml_get_widget (PRIVATE(self)->glade_xml, "connect_hbox"),FALSE);
-  if(!connect_server(self))
+  set_sensitive (GTK_WIDGET (gtk_builder_get_object (PRIVATE (self)->builder, "connect_hbox")), FALSE);
+  if (!connect_server(self))
     {
-      set_status_message(self, g_strdup_printf ("Can't connect to %s.", PRIVATE (self)->server_name));
-      set_sensitive (glade_xml_get_widget (PRIVATE (self)->glade_xml, "connect_hbox"),TRUE);
+      /* FIXME: check for leak */
+      set_status_message (self, g_strdup_printf ("Can't connect to %s.", PRIVATE (self)->server_name));
+      set_sensitive (GTK_WIDGET (gtk_builder_get_object (PRIVATE (self)->builder, "connect_hbox")), TRUE);
     }
 }
 
@@ -299,26 +315,22 @@ static void send_disconnect(UiNetworkClient * self) {
 
 }
 
-static void disconnected(UiNetworkClient * self) {
-        g_object_unref( PRIVATE(self)->manager_proxy);
-        
-        PRIVATE(self)->manager_proxy = NULL;
-                
-        update_players_list(self);
+static void
+disconnected (UiNetworkClient* self)
+{
+  g_object_unref (PRIVATE (self)->manager_proxy);
+  PRIVATE (self)->manager_proxy = NULL;
+
+  update_players_list (self);
 #ifdef GNOME
-        set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
-                                             , "connected_game_hbox"),FALSE);
+  set_sensitive (GTK_WIDGET (gtk_builder_get_object (PRIVATE (self)->builder, "connected_game_hbox")), FALSE);
 #endif
 #ifdef MAEMO
-	connected_set_sensitive(self, FALSE);
+  connected_set_sensitive(self, FALSE);
 #endif
-        
-        set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
-                                             , "connect_hbox"),TRUE);
-                                
+
+  set_sensitive (GTK_WIDGET (gtk_builder_get_object (PRIVATE(self)->builder, "connect_hbox")), TRUE);
 }
-
-
 
 static gboolean quit_signal(gpointer    callback_data,
                            guint       callback_action,
@@ -354,80 +366,60 @@ static gboolean quit_signal(gpointer    callback_data,
 }
 
 
-static gboolean quit_server_signal(gpointer    callback_data,
-                           guint       callback_action,
-                               GtkWidget  *widget) {
+static gboolean
+quit_server_signal (gpointer   callback_data,
+                    guint      callback_action,
+                    GtkWidget* widget)
+{
+  UiNetworkClient * self = UI_NETWORK_CLIENT(callback_data);
 
-        UiNetworkClient * self;
+  if (PRIVATE (self)->manager_proxy)
+    {
+      g_object_unref (PRIVATE (self)->manager_proxy);
+      PRIVATE (self)->manager_proxy = NULL;
+    }
 
-        self = UI_NETWORK_CLIENT(callback_data);
 
-        if( PRIVATE(self)->manager_proxy != NULL) {
-                g_object_unref( PRIVATE(self)->manager_proxy);
-        
-                PRIVATE(self)->manager_proxy = NULL;
-        }
-        
+  if (PRIVATE (self)->handler)
+    {
+      send_disconnect (self);
 
-        if( PRIVATE(self)->handler != NULL) {
-                send_disconnect(self);
-                
-                network_message_handler_disconnect(PRIVATE(self)->handler);
-        
-                
-                g_object_unref( PRIVATE(self)->handler);
-                PRIVATE(self)->handler = NULL;
-                
-        }
-        
+      network_message_handler_disconnect (PRIVATE (self)->handler);
 
-        update_players_list(self);
-        
-        set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
-                                             , "connect_hbox"),TRUE); 
+      g_object_unref (PRIVATE (self)->handler);
+      PRIVATE (self)->handler = NULL;
+    }
 
+  update_players_list(self);
+
+  set_sensitive (GTK_WIDGET (gtk_builder_get_object (PRIVATE (self)->builder, "connect_hbox")), TRUE);
 #ifdef GNOME
-        set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
-                                             , "connected_game_hbox"),FALSE); 
+  set_sensitive (GTK_WIDGET (gtk_builder_get_object (PRIVATE (self)->builder, "connected_game_hbox")), FALSE);
 #endif
 #ifdef MAEMO
-	connected_set_sensitive(self, FALSE);
+  connected_set_sensitive(self, FALSE);
 #endif
 
-        
-        return FALSE;
+
+  return FALSE;
 }
 
+static void
+ready_signal (gpointer   callback_data,
+              guint      callback_action,
+              GtkWidget* widget)
+{
+  UiNetworkClient* self = UI_NETWORK_CLIENT (callback_data);
+  GtkWidget      * item;
+  gboolean         ready;
 
+  item = GTK_WIDGET (gtk_builder_get_object (PRIVATE (self)->builder, "ready_button"));
 
-static void ready_signal(gpointer    callback_data,
-                         guint       callback_action,
-                         GtkWidget  *widget) {
-
-
-        UiNetworkClient * self;
-        GtkWidget * item;
-
-        self = UI_NETWORK_CLIENT(callback_data);
-
-        item = glade_xml_get_widget( PRIVATE(self)->glade_xml, "ready_button");
-
-        if( ! PRIVATE(self)->ready ) {
-                net_game_manager_proxy_send_ready_state(PRIVATE(self)->manager_proxy,
-                                                        TRUE);
-                PRIVATE(self)->ready = TRUE;
-        } else {
-
-                net_game_manager_proxy_send_ready_state(PRIVATE(self)->manager_proxy,
-                                                        FALSE);
-                
-                PRIVATE(self)->ready = FALSE;
-                
-        }
-        net_game_manager_proxy_send_start( PRIVATE(self)->manager_proxy);
-
+  ready = PRIVATE(self)->ready;
+  net_game_manager_proxy_send_ready_state (PRIVATE (self)->manager_proxy, !ready);
+  PRIVATE (self)->ready = !ready;
+  net_game_manager_proxy_send_start( PRIVATE(self)->manager_proxy);
 }
-
 
 void send_init(UiNetworkClient * self) {
         xmlDoc * doc;
@@ -551,16 +543,18 @@ game_created(NetGameManagerProxy * proxy,
 
 
 static gboolean
-update_number_of_players_idle(gpointer data) 
+update_number_of_players_idle (gpointer data)
 {
-        UiNetworkClient * self;
-        GtkWidget * item;
+  UiNetworkClient* self = UI_NETWORK_CLIENT(data);
+  GtkWidget      * item;
+  gchar          * label;
 
-        self = UI_NETWORK_CLIENT(data);
-        item = glade_xml_get_widget( PRIVATE(self)->glade_xml, "number_of_players");
-        gtk_label_set_label(GTK_LABEL(item),g_strdup_printf("%d", net_game_manager_proxy_get_number_of_players(PRIVATE(self)->manager_proxy)));
+  item = GTK_WIDGET (gtk_builder_get_object (PRIVATE (self)->builder, "number_of_players"));
+  label = g_strdup_printf("%d", net_game_manager_proxy_get_number_of_players (PRIVATE (self)->manager_proxy));
+  gtk_label_set_label (GTK_LABEL(item), label);
+  g_free (label);
 
-        return FALSE;
+  return FALSE;
 }
 
 static void
@@ -580,16 +574,18 @@ number_of_players_changed(NetGameManagerProxy * proxy,
 
 
 static gboolean
-update_number_of_games_idle(gpointer data) 
+update_number_of_games_idle (gpointer data)
 {
-        UiNetworkClient * self;
-        GtkWidget * item;
+  UiNetworkClient* self = UI_NETWORK_CLIENT(data);
+  GtkWidget      * item;
+  gchar          * label;
 
-        self = UI_NETWORK_CLIENT(data);
-        item = glade_xml_get_widget( PRIVATE(self)->glade_xml, "number_of_games");
-        gtk_label_set_label(GTK_LABEL(item),g_strdup_printf("%d", net_game_manager_proxy_get_number_of_games(PRIVATE(self)->manager_proxy)));
+  item = GTK_WIDGET (gtk_builder_get_object (PRIVATE (self)->builder, "number_of_games"));
+  label = g_strdup_printf("%d", net_game_manager_proxy_get_number_of_games(PRIVATE(self)->manager_proxy));
+  gtk_label_set_label (GTK_LABEL (item), label);
+  g_free (label);
 
-        return FALSE;
+  return FALSE;
 }
 
 static void
@@ -669,10 +665,9 @@ void recv_network_xml_message(NetworkMessageHandler * mmh,
 
                 } else {
                         g_print("init not ok!!");
-                        
-                        set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
-                                                             , "connect_hbox"),TRUE); 
-                        
+
+                        set_sensitive (GTK_WIDGET (gtk_builder_get_object (PRIVATE (self)->builder, "connect_hbox")),
+                                       TRUE);
                         set_status_message(self,"Not ok");
                 }
         } else if(g_str_equal(message_name,"game_joined")) {
@@ -683,11 +678,11 @@ void recv_network_xml_message(NetworkMessageHandler * mmh,
                 sscanf((gchar*)root->children->content,"%d",&game_id);
                 g_print("game id : %d\n",game_id);                
 #ifdef GNOME
-                set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
-                                                     ,"connected_game_hbox"),TRUE); 
+                set_sensitive (GTK_WIDGET (gtk_builder_get_object (PRIVATE (self)->builder, "connected_game_hbox")),
+                               TRUE);
 #endif
 #ifdef MAEMO
-	connected_set_sensitive(self, TRUE);
+                connected_set_sensitive(self, TRUE);
 #endif
 
                 sscanf((gchar*)root->children->content,"%d",&game_id);
@@ -705,15 +700,11 @@ void recv_network_xml_message(NetworkMessageHandler * mmh,
 
         } else if( g_str_equal( message_name,"cant_join_game")) {
                 set_status_message(self, "Can't join the game");
-                set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
-                                                             , "connect_hbox"),TRUE); 
-                        
-                
+                set_sensitive (GTK_WIDGET (gtk_builder_get_object (PRIVATE (self)->builder, "connect_hbox")),
+                               TRUE);
         }
 
-
         xmlFree(message_name);
-        
 }
 
 gboolean set_sensitive_true_idle(gpointer data) {

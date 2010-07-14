@@ -15,9 +15,8 @@ $(dbus_DATA): $(dbus_in_files) Makefile
 	sed 's#@BINDIR@#$(bindir)#' $< > $@
 endif
 
-gladexmldir = $(datadir)/monkey-bubble/glade
-gladexml_DATA = \
-	monkey-bubble.glade keybinding.glade netgame.glade netserver.glade
+uidir=$(pkgdatadir)/glade
+dist_ui_DATA=monkey-bubble.ui keybinding.ui netgame.ui netserver.ui
 
 schemasdir   = $(GCONF_SCHEMA_FILE_DIR)
 schemas_in_files = monkey-bubble.schemas.in

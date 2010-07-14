@@ -42,7 +42,6 @@
 #include <libgnome/gnome-help.h>
 #endif
 #include <gdk/gdkkeysyms.h>
-#include <glade/glade.h>
 #include <glib/gi18n.h>
 
 #include <string.h>
@@ -687,26 +686,41 @@ new_network_game(GtkAction* action,
 #ifdef GNOME
 static void
 new_network_server (GtkAction* action,
-		    UiMain   * ui_main)
+                    UiMain   * ui_main)
 {
-        UiNetworkServer  * ngl;
-        NetworkSimpleServer * server;
+  NetworkSimpleServer* server;
+  UiNetworkServer    * ngl;
 
-        server = network_simple_server_new();
+  server = network_simple_server_new ();
 
-        if( network_simple_server_start( server ) == TRUE) {
-                ngl = ui_network_server_new(server);
-        } else {
-                GladeXML * gx;
+  if(network_simple_server_start (server) == TRUE)
+    {
+      ngl = ui_network_server_new (server);
+    }
+  else
+    {
+      GtkBuilder* builder   = gtk_builder_new ();
+      GError    * error     = NULL;
+      gchar     * objects[] =
+        {
+          "create_server_warning",
+          NULL
+        };
 
-                g_object_unref(server);
-                gx = glade_xml_new(DATADIR"/monkey-bubble/glade/monkey-bubble.glade",
-                                   "create_server_warning",
-                                   NULL);
-                glade_xml_signal_autoconnect(gx);
-                gtk_widget_show( glade_xml_get_widget(gx,"create_server_warning"));
-                g_object_unref(gx);
+      if (0 == gtk_builder_add_objects_from_file (builder, DATADIR "/monkey-bubble/glade/monkey-bubble.ui", objects, &error))
+        {
+          g_warning ("error loading UI elements%c %s",
+                     error ? ':' : '\0',
+                     error ? error->message : "");
+          g_error_free (error);
         }
+
+      gtk_builder_connect_signals (builder, NULL);
+      gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (builder, "create_server_warning")));
+      g_object_unref (builder);
+
+      g_object_unref(server);
+    }
 }
 
 static void
@@ -844,3 +858,5 @@ static void window_state_event (GtkWindow *window,
         }
 }
 #endif
+
+/* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */
