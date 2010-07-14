@@ -260,42 +260,26 @@ static void set_status_message(UiNetworkClient * self,
         g_idle_add(status_idle,j);
 }
 
-static void connect_server_signal(gpointer    callback_data,
-                           guint       callback_action,
-                           GtkWidget  *widget) {
-        UiNetworkClient  * self;
-        GtkWidget * entry;
+static void
+connect_server_signal (gpointer   callback_data,
+                       guint      callback_action,
+                       GtkWidget* widget)
+{
+  UiNetworkClient* self = UI_NETWORK_CLIENT (callback_data);
+  GtkWidget      * combo = glade_xml_get_widget (PRIVATE (self)->glade_xml, "comboboxentry1");
 
-        self = UI_NETWORK_CLIENT(callback_data);
+  g_free(PRIVATE (self)->server_name);
+  PRIVATE(self)->server_name = gtk_combo_box_get_active_text (GTK_COMBO_BOX (combo));
 
-        entry =  glade_xml_get_widget( PRIVATE(self)->glade_xml, "server_name_entry");
-        if( PRIVATE(self)->server_name != NULL) {
-                g_free(PRIVATE(self)->server_name);
-        }
+  set_status_message (self, g_strdup_printf("Connecting to %s...", PRIVATE (self)->server_name));
 
-        PRIVATE(self)->server_name = 
-                g_strdup( gtk_entry_get_text(GTK_ENTRY(entry)));
-
-        
-        set_status_message(self,  g_strdup_printf("Connecting %s ...",
-                                                 PRIVATE(self)->server_name));
-
-        set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
-                                             , "connect_hbox"),FALSE);        
-        if( connect_server(self) ) {
-
-        } else {
-                set_status_message(self,  g_strdup_printf("Can't connect to %s ...",
-                                                              PRIVATE(self)->server_name));
-
-
-                set_sensitive( glade_xml_get_widget( PRIVATE(self)->glade_xml
-                                                     , "connect_hbox"),TRUE);        
-        }
-
+  set_sensitive (glade_xml_get_widget (PRIVATE(self)->glade_xml, "connect_hbox"),FALSE);
+  if(!connect_server(self))
+    {
+      set_status_message(self, g_strdup_printf ("Can't connect to %s.", PRIVATE (self)->server_name));
+      set_sensitive (glade_xml_get_widget (PRIVATE (self)->glade_xml, "connect_hbox"),TRUE);
+    }
 }
-
-
 
 static void send_disconnect(UiNetworkClient * self) {
         xmlDoc * doc;
@@ -818,3 +802,4 @@ static void ui_network_client_class_init (UiNetworkClientClass *klass) {
         object_class->finalize = ui_network_client_finalize;
 }
 
+/* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */
