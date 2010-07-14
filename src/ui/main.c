@@ -12,7 +12,6 @@
 #include "input-manager.h"
 
 #include <gtk/gtk.h>
-#include <gst/gst.h>
 #include <glib/gi18n.h>
 #ifdef GNOME
 #include <libgnome/gnome-score.h>
@@ -89,7 +88,6 @@ int main(int  argc, char **argv)
   context = g_option_context_new ("");
   g_option_context_set_summary (context, _("Monkey Bubble is a Bust'a'Move clone for GNOME"));
   g_option_context_add_group   (context, gtk_get_option_group (TRUE));
-  g_option_context_add_group   (context, gst_init_get_option_group ());
   if (!g_option_context_parse (context, &argc, &argv, &error)) {
     g_printerr ("%s\n", error->message);
     g_error_free (error);

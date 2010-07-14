@@ -10,9 +10,5 @@ noinst_LIBRARIES = libmonkeyaudio.a
 
 libmonkeyaudio_a_SOURCES = \
 	sound-manager.h sound-manager.c \
-	gst-mbmem-content.h gst-mbmem-content.c \
-	gst-mbmem-src.h gst-mbmem-src.c \
-	mb-audio-engine.h mb-audio-engine.c \
-	mb-music-bin.h mb-music-bin.c \
 	$(NULL)
 

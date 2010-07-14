@@ -36,7 +36,8 @@ typedef enum {
 typedef enum {
   MB_MUSIC_SPLASH,
   MB_MUSIC_GAME,
-  NO_MUSIC
+  NO_MUSIC,
+  MB_N_MUSICS = NO_MUSIC
 } MbMusic;
 
 #define TYPE_SOUND_MANAGER      (sound_manager_get_type())

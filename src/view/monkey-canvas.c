@@ -498,10 +498,13 @@ void create_pixbuf_svg(Image * i ) {
   }
 }
 
-void image_create_pixbuf(Image * i,MonkeyCanvas * canvas) {
-    
+void
+image_create_pixbuf (Image       * i,
+                     MonkeyCanvas* canvas)
+{
   i->create_pixbuf(i);
 
+  g_warn_if_fail (i->scaled_pixbuf != NULL);
 }
 
 Layer * monkey_canvas_get_root_layer(MonkeyCanvas * canvas) {
@@ -634,53 +637,51 @@ void monkey_canvas_unref_block(MonkeyCanvas * canvas,
 }
 
 
-void layer_draw( Layer* l,
-		 GdkDrawable * d,
-		 GdkGC *gc,
-		 GdkRectangle * rect) {
+void
+layer_draw (Layer       * l,
+            GdkDrawable * d,
+            GdkGC       * gc,
+            GdkRectangle* rect)
+{
+  GList* iter;
 
-  GList * next;
-    
-  next = l->block_list;
-  while( next != NULL ) {
-
-    block_draw( (Block *) next->data,
-		d,
-		gc,
-		rect  );
-    next = g_list_next( next );    
-	
-  }
-
+  for (iter = l->block_list; iter; iter = iter->next)
+    {
+      block_draw (iter->data,
+                  d,
+                  gc,
+                  rect);
+    }
 }
 
 
-void block_draw(Block * block,
-		GdkDrawable * d,
-		GdkGC *gc,
-		GdkRectangle * rect) {
-
+void
+block_draw (Block       * block,
+            GdkDrawable * d,
+            GdkGC       * gc,
+            GdkRectangle* rect)
+{
   GdkRectangle irect;
   GdkRectangle r;
-    
-  block_get_rectangle(block,&r);
 
+  g_return_if_fail (block->image->scaled_pixbuf);
 
-  if( gdk_rectangle_intersect( &r,rect,&irect)){
-    gdk_draw_pixbuf
-      (d,
-       gc,
-       block->image->scaled_pixbuf,
-       irect.x - r.x ,irect.y - r.y,
-       irect.x,
-       irect.y,
-       irect.width,irect.height,
-       GDK_RGB_DITHER_NONE,
-       0,0);
-    
-    
-  }
+  block_get_rectangle (block, &r);
 
+  if (gdk_rectangle_intersect(&r, rect, &irect))
+    {
+      gdk_draw_pixbuf (d,
+                       gc,
+                       block->image->scaled_pixbuf,
+                       irect.x - r.x,
+                       irect.y - r.y,
+                       irect.x,
+                       irect.y,
+                       irect.width,
+                       irect.height,
+                       GDK_RGB_DITHER_NONE,
+                       0,0);
+    }
 }
 
 
@@ -764,3 +765,5 @@ void monkey_canvas_paint(MonkeyCanvas * monkey_canvas){
   gdk_region_destroy( screen);
   
 }
+
+/* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */

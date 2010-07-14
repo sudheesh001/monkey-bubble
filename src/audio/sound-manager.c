@@ -19,30 +19,50 @@
 #include <gtk/gtk.h>
 #include "sound-manager.h"
 #include "playground.h"
-#include <gst/gst.h>
-#include "mb-audio-engine.h"
+#include <canberra.h>
+
+enum
+{
+  PLAY_ID_0,
+  PLAY_ID_FX,
+  PLAY_ID_MUSIC
+};
 
 #define PRIVATE(sound_manager) (sound_manager->private)
 
 static GObjectClass* parent_class = NULL;
 
-struct SoundManagerPrivate {
-  MbAudioEngine * engine;
-  gchar ** samples_path;
-  gint current_music_id;
-  MbMusic current_music;
-  gboolean active;
-
+struct SoundManagerPrivate
+{
+  ca_context* context;
+  gchar     **samples_path;
+  int       * sample_ids;
+  gint        current_music_id;
+  MbMusic     current_music;
+  gboolean    active;
 };
 
 
-static SoundManager * sound_manager_new( void );
-static void load_samples(SoundManager * m);
+static SoundManager* sound_manager_new (void);
+static void          load_samples      (SoundManager* m);
 
-static void sound_manager_instance_init(SoundManager * sound_manager) {
-  sound_manager->private =g_new0 (SoundManagerPrivate, 1);			
-  sound_manager->private->engine = mb_audio_engine_new();
+static void
+sound_manager_instance_init (SoundManager* sound_manager)
+{
+  int result;
 
+  sound_manager->private =g_new0 (SoundManagerPrivate, 1);
+
+  result = ca_context_create (&PRIVATE (sound_manager)->context);
+  if (result != CA_SUCCESS)
+    {
+      g_warning ("ca_context_create(): %d", result);
+    }
+  result = ca_context_open (PRIVATE (sound_manager)->context);
+  if (result != CA_SUCCESS)
+    {
+      g_warning ("ca_context_open(): %d", result);
+    }
 }
 
 static void sound_manager_finalize(GObject* object) {
@@ -116,8 +136,10 @@ GType sound_manager_get_type(void) {
 
 
 static void load_sample(SoundManager * m,int i) {
+#if 0
   mb_audio_engine_cache_audio_file(  PRIVATE(m)->engine,
 				     PRIVATE(m)->samples_path[i]);
+#endif
 }
 
 static void load_samples(SoundManager * m) {
@@ -151,35 +173,59 @@ static SoundManager * sound_manager_new( void ) {
 }
 
 
-void sound_manager_play_music(SoundManager *m,MbMusic music)
+void
+sound_manager_play_music (SoundManager* m,
+                          MbMusic       music)
 {
+  g_return_if_fail (IS_SOUND_MANAGER (m));
 
-	g_assert(IS_SOUND_MANAGER(m));
-	if( PRIVATE(m)->current_music_id != -1 ) {
-		mb_audio_engine_stop( PRIVATE(m)->engine, PRIVATE(m)->current_music_id );
-		PRIVATE(m)->current_music_id = -1;
-	}
+  if (PRIVATE (m)->current_music_id != NO_MUSIC)
+    {
+      int result = ca_context_cancel (PRIVATE (m)->context, PLAY_ID_MUSIC);
 
-	PRIVATE(m)->current_music = music;
-	switch(music) {
-	case MB_MUSIC_SPLASH : {
-		PRIVATE(m)->current_music_id = 
-			mb_audio_engine_play_audio_file_full(PRIVATE(m)->engine,
-							DATADIR"/monkey-bubble/sounds/splash.ogg",TRUE);
-		break;
-		}
-	case MB_MUSIC_GAME : {
-		PRIVATE(m)->current_music_id = 
-			mb_audio_engine_play_audio_file_full(PRIVATE(m)->engine,
-							DATADIR"/monkey-bubble/sounds/game.ogg",TRUE);
-		break;
-		}
-	}
+      if (result != CA_SUCCESS)
+        {
+          g_warning ("ca_context_cancel(): %d", result);
+        }
+    }
+
+  PRIVATE (m)->current_music_id = music;
+
+  if (PRIVATE (m)->current_music_id != NO_MUSIC)
+    {
+      gchar const* paths[] =
+        {
+          DATADIR "/monkey-bubble/sounds/splash.ogg",
+          DATADIR "/monkey-bubble/sounds/game.ogg"
+        };
+      int result = ca_context_play (PRIVATE (m)->context,
+                                    PLAY_ID_MUSIC,
+                                    CA_PROP_MEDIA_FILENAME, paths[PRIVATE (m)->current_music_id],
+                                    NULL);
+
+      g_print ("trying to play %s\n", paths[PRIVATE (m)->current_music_id]);
+
+      /* FIXME: set up the looping */
+
+      if (result != CA_SUCCESS)
+        {
+          g_warning ("ca_context_play(): %d", result);
+        }
+    }
 }
 
-void sound_manager_play_fx(SoundManager *m,MbSample sample) 
+void sound_manager_play_fx (SoundManager* m,
+                            MbSample      sample)
 {
+  int result = ca_context_play (PRIVATE (m)->context,
+                                PLAY_ID_FX,
+                                CA_PROP_MEDIA_FILENAME, PRIVATE (m)->samples_path[sample],
+                                NULL);
 
-
-  mb_audio_engine_play_audio_file(PRIVATE(m)->engine,PRIVATE(m)->samples_path[sample]);
+  if (result != CA_SUCCESS)
+    {
+      g_print ("ca_context_play(): %d\n", result);
+    }
 }
+
+/* vim:set et sw=2 cino=t0,f0,(0,{s,>2s,n-1s,^-1s,e2s: */

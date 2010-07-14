@@ -119,7 +119,8 @@ AC_SUBST(LIBMONKEYVIEW_A_LIBS)
 PKG_CHECK_MODULES(LIBMONKEYAUDIO_A,[
 	gtk+-2.0
 	gthread-2.0
-	gstreamer-0.10
+	libcanberra
+	libcanberra-gtk
 	])
 AC_SUBST(LIBMONKEYAUDIO_A_CFLAGS)
 AC_SUBST(LIBMONKEYAUDIO_A_LIBS)
@@ -137,9 +138,8 @@ PKG_CHECK_MODULES(UI,[
 	gtk+-2.0 >= 2.10
 	gthread-2.0
 	librsvg-2.0
-	gstreamer-0.10
-        gstreamer-base-0.10
-        gstreamer-controller-0.10
+	libcanberra
+	libcanberra-gtk
 	gconf-2.0
 	libglade-2.0
 	])
