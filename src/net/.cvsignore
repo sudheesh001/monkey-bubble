@@ -1,9 +1,0 @@
-.deps
-.libs
-Makefile
-Makefile.in
-*.lo
-*.la
-monkey-srv
-test
-monkey-net-marshal.*
