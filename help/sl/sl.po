@@ -2,13 +2,13 @@
 # Copyright (C) 2010 monkey-bubble's COPYRIGHT HOLDER
 # This file is distributed under the same license as the monkey-bubble package.
 #
-# Ime Priimek <email>, leto
+# Matej Urbančič <mateju@svn.gnome.org>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: monkey-bubble help master\n"
 "POT-Creation-Date: 2010-09-04 20:41+0000\n"
-"PO-Revision-Date: 2010-10-22 08:14+0100\n"
+"PO-Revision-Date: 2010-10-25 13:56+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: C/monkey-bubble.xml:17(title)
 #: C/monkey-bubble.xml:41(revnumber)
 msgid "Monkey Bubble Manual V0.1"
-msgstr ""
+msgstr "Priročnik arkadne igre Monkey Bubble V0.1"
 
 #: C/monkey-bubble.xml:19(year)
 msgid "2004"
@@ -57,11 +57,11 @@ msgstr "Belmont"
 
 #: C/monkey-bubble.xml:42(date)
 msgid "January 2004"
-msgstr ""
+msgstr "januar, 2004"
 
 #: C/monkey-bubble.xml:54(releaseinfo)
 msgid "This manual describes version 0.1.7 of Monkey Bubble."
-msgstr ""
+msgstr "Priročnik je napisan za različico 0.1.7 igre Monkey Bubble."
 
 #: C/monkey-bubble.xml:57(title)
 msgid "Feedback"
@@ -69,19 +69,19 @@ msgstr "Odziv"
 
 #: C/monkey-bubble.xml:58(para)
 msgid "To report a bug or make a suggestion regarding the Monkey Bubble application or this manual, follow the directions in the <ulink url=\"ghelp:gnome-feedback\" type=\"help\">GNOME Feedback Page</ulink>."
-msgstr ""
+msgstr "Navodila za pošiljanje poročil o hroščih ali pa predlogov o igri Monkey Bubble je mogoče najti na <ulink url=\"ghelp:gnome-feedback\" type=\"help\">straneh odzivov GNOME namizja</ulink>."
 
 #: C/monkey-bubble.xml:63(para)
 msgid "User manual for Monkey Bubble."
-msgstr ""
+msgstr "Priročnik arkadne igre Monkey Bubble"
 
 #: C/monkey-bubble.xml:68(primary)
 msgid "Monkey Bubble"
-msgstr ""
+msgstr "Monkey Bubble"
 
 #: C/monkey-bubble.xml:71(primary)
 msgid "bubble game"
-msgstr ""
+msgstr "igra mehurčkov"
 
 #: C/monkey-bubble.xml:75(title)
 msgid "Introduction"
@@ -89,58 +89,58 @@ msgstr "Uvod"
 
 #: C/monkey-bubble.xml:76(para)
 msgid "<application>Monkey Bubble</application> is an arcade game with the following objectives :"
-msgstr ""
+msgstr "Igra <application>Monkey Bubble</application> je arkadna igra z naslednjimi cilji:"
 
 #: C/monkey-bubble.xml:82(term)
 msgid "Clear the jungle from all those nasty bubbles"
-msgstr ""
+msgstr "Pragozd je treba očistiti vseh mehurčkov."
 
 #: C/monkey-bubble.xml:84(para)
 msgid "To clear a level, you need to stick at least 3 bubbles of the same color together using the bubble shooter."
-msgstr ""
+msgstr "Mehurčke je treba počistiti s streljanjem mehurčkov, da se zlepijo vsaj trije mehurčki iste barve."
 
 #: C/monkey-bubble.xml:88(para)
 msgid "Once 3 or more bubbles of the color are sticked together at the top of the playground, they will explode."
-msgstr ""
+msgstr "Ko se vsaj trije mehurčki v skladni barvi zlepijo na vrhu igrišča, se razpočijo."
 
 #: C/monkey-bubble.xml:92(para)
 msgid "To level up, you need to clear all the bubbles stuck in the playground."
-msgstr ""
+msgstr "Za nadaljevanje je treba počistiti vse mehurčke na igrišču."
 
 #: C/monkey-bubble.xml:101(title)
 msgid "Getting Started"
-msgstr ""
+msgstr "Kako začeti"
 
 #: C/monkey-bubble.xml:102(para)
 msgid "The following sections describe how to start <application>Monkey Bubble</application>."
-msgstr ""
+msgstr "Nadaljnji odseki opisujejo načine zagona igre <application>Monkey Bubble</application>."
 
 #: C/monkey-bubble.xml:107(title)
 msgid "To Start Monkey Bubble"
-msgstr ""
+msgstr "Zagon igre Monkey Bubble"
 
 #: C/monkey-bubble.xml:108(para)
 msgid "You can start <application>Monkey Bubble</application> in the following ways:"
-msgstr ""
+msgstr "Igro <application>Monkey Bubble</application> je mogoče začeti na naslednje načine:"
 
 #: C/monkey-bubble.xml:113(term)
 msgid "Applications menu"
-msgstr ""
+msgstr "Meni Programi"
 
 #: C/monkey-bubble.xml:115(para)
 msgid "Choose <menuchoice><guimenu>Games</guimenu><guimenuitem>Monkey Bubble</guimenuitem></menuchoice>."
-msgstr ""
+msgstr "Preko menija <menuchoice><guimenu>Igre</guimenu><guimenuitem>Monkey Bubble</guimenuitem></menuchoice>."
 
 #: C/monkey-bubble.xml:124(term)
 msgid "Command line"
-msgstr ""
+msgstr "Ukazna vrstica"
 
 #: C/monkey-bubble.xml:126(para)
 msgid "Execute the following command: <command>monkey-bubble</command>"
-msgstr ""
+msgstr "Preko ukazne vrstice z ukazom: <command>monkey-bubble</command>"
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
 #: C/monkey-bubble.xml:0(None)
 msgid "translator-credits"
-msgstr ""
+msgstr "Matej Urbančič <mateju@svn.gnome.org>, 2010."
 
