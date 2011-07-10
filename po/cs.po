@@ -2,52 +2,32 @@
 # Copyright (C) 2004 monkey-bubble'S COPYRIGHT HOLDER
 # Copyright (C) 2004 Miloslav Trmac <mitr@volny.cz>
 # This file is distributed under the same license as the monkey-bubble package.
+#
 # Miloslav Trmac <mitr@volny.cz>, 2004.
-# Marek Černocký <marek@manet.cz>, 2009.
+# Marek Černocký <marek@manet.cz>, 2009, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: monkey-buble gnome-master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=monkey-"
-"bubble&component=general\n"
-"POT-Creation-Date: 2009-08-17 18:11+0000\n"
-"PO-Revision-Date: 2009-10-14 13:53+0100\n"
+"bubble&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-07-10 13:22+0000\n"
+"PO-Revision-Date: 2011-07-10 18:51+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
+"Language: cs\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Poedit-Language: Czech\n"
-"X-Poedit-SourceCharset: utf-8\n"
 
-#: ../data/keybinding.glade.h:1
+#: ../data/keybinding.ui.h:1
 msgid "Keyboard Shortcuts"
 msgstr "Klávesové zkratky"
 
-#: ../data/keybinding.glade.h:2
+#: ../data/keybinding.ui.h:2
 msgid "_Shortcut Keys:"
 msgstr "_Klávesové zkratky:"
-
-#: ../data/monkey-bubble.glade.h:1
-msgid ""
-"<markup>\n"
-"<span weight=\"bold\" size=\"large\"\n"
-"style=\"oblique\">\n"
-"Can't create server !\n"
-"</span>\n"
-"</markup>"
-msgstr ""
-"<markup>\n"
-"<span weight=\"bold\" size=\"large\"\n"
-"style=\"oblique\">\n"
-"Nelze vytvořit server!\n"
-"</span>\n"
-"</markup>"
-
-#: ../data/monkey-bubble.glade.h:7
-msgid "Warning"
-msgstr "Varování"
 
 #: ../data/monkey-bubble.schemas.in.h:1
 msgid "1 player game"
@@ -129,58 +109,101 @@ msgstr "klávesa střílení pro hráče jedna"
 msgid "shoot key for player two"
 msgstr "klávesa střílení pro hráče dva"
 
-#: ../data/netgame.glade.h:1
-msgid "*"
-msgstr "*"
+#: ../data/monkey-bubble.ui.h:1
+msgid ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Can't create server !\n"
+"</span>\n"
+"</markup>"
+msgstr ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Nelze vytvořit server!\n"
+"</span>\n"
+"</markup>"
 
-#: ../data/netgame.glade.h:2
+#: ../data/monkey-bubble.ui.h:7
+msgid "Warning"
+msgstr "Varování"
+
+#: ../data/netgame.ui.h:1
 msgid "Close"
 msgstr "Zavřít"
 
-#: ../data/netgame.glade.h:3 ../data/netserver.glade.h:1
-#: ../src/ui/ui-network-client.c:156
+#: ../data/netgame.ui.h:2 ../data/netserver.ui.h:1
+#: ../src/ui/ui-network-client.c:173
 msgid "Network game"
 msgstr "Síťová hra"
 
-#: ../data/netgame.glade.h:4
+#: ../data/netgame.ui.h:3
 msgid "Number of games :"
 msgstr "Počet her:"
 
-#: ../data/netgame.glade.h:5
+#: ../data/netgame.ui.h:4
 msgid "Number of players :"
 msgstr "Počet hráčů:"
 
-#: ../data/netgame.glade.h:6 ../data/netserver.glade.h:4
-#: ../src/ui/keyboard-properties.c:86
+#: ../data/netgame.ui.h:5 ../data/netserver.ui.h:4
+#: ../src/ui/keyboard-properties.c:85
 msgid "Quit game"
 msgstr "Ukončit hru"
 
-#: ../data/netgame.glade.h:7 ../data/netserver.glade.h:5
+#: ../data/netgame.ui.h:6 ../data/netserver.ui.h:5
 msgid "Ready"
 msgstr "Připraven"
 
-#: ../data/netgame.glade.h:8
+#: ../data/netgame.ui.h:7
 msgid "_Go"
 msgstr "_Spustit"
 
-#: ../data/netgame.glade.h:9
+#: ../data/netgame.ui.h:8
 msgid "_Server"
 msgstr "_Server"
 
-#: ../data/netserver.glade.h:2
+#: ../data/netserver.ui.h:2
 msgid "Number of game"
 msgstr "Číslo hry"
 
-#: ../data/netserver.glade.h:3
+#: ../data/netserver.ui.h:3
 msgid "Number of players"
 msgstr "Počet hráčů"
 
-#: ../data/netserver.glade.h:6
+#: ../data/netserver.ui.h:6
 msgid "Start Game"
 msgstr "Spustit hru"
 
-#: ../monkey-bubble.desktop.in.in.h:1 ../src/ui/ui-main.c:263
-#: ../src/ui/ui-main.c:275
+#: ../libgnomeui/gnome-scores.c:72
+msgid "Top Ten"
+msgstr "První desítka"
+
+#: ../libgnomeui/gnome-scores.c:85
+msgid "User"
+msgstr "Uživatel"
+
+#: ../libgnomeui/gnome-scores.c:88
+msgid "Score"
+msgstr "Skóre"
+
+#: ../libgnomeui/gnome-scores.c:91
+msgid "Date"
+msgstr "Datum"
+
+#. TRANSLATORS NOTE: Date format used when showing scores in games.
+#. * Please refer to manpage of strftime(3) for complete reference.
+#.
+#: ../libgnomeui/gnome-scores.c:188
+msgid "%a %b %d %T %Y"
+msgstr "%a %e. %b %Y %k:%M:%S"
+
+#: ../libgnomeui/gnome-scores.c:389
+msgid "Sans 14"
+msgstr "Sans 14"
+
+#: ../monkey-bubble.desktop.in.in.h:1 ../src/ui/main.c:97
+#: ../src/ui/ui-main.c:259 ../src/ui/ui-main.c:271
 msgid "Monkey Bubble"
 msgstr "Monkey Bubble"
 
@@ -188,64 +211,64 @@ msgstr "Monkey Bubble"
 msgid "Monkey Bubble Arcade Game"
 msgstr "Akční hra Monkey Bubble"
 
-#: ../src/ui/keyboard-properties.c:78
+#: ../src/ui/keyboard-properties.c:77
 msgid "New game 1 player"
 msgstr "Nová hra pro jednoho hráče"
 
-#: ../src/ui/keyboard-properties.c:80
+#: ../src/ui/keyboard-properties.c:79
 msgid "New game 2 player"
 msgstr "Nová hra pro dva hráče"
 
-#: ../src/ui/keyboard-properties.c:82
+#: ../src/ui/keyboard-properties.c:81
 msgid "Pause/Resume"
 msgstr "Pozastavit/obnovit"
 
-#: ../src/ui/keyboard-properties.c:84 ../src/ui/ui-main.c:229
+#: ../src/ui/keyboard-properties.c:83 ../src/ui/ui-main.c:225
 msgid "Stop game"
 msgstr "Zastavit hru"
 
-#: ../src/ui/keyboard-properties.c:92
+#: ../src/ui/keyboard-properties.c:91
 msgid "Full Screen"
 msgstr "Přes celou obrazovku"
 
-#: ../src/ui/keyboard-properties.c:94
+#: ../src/ui/keyboard-properties.c:93
 msgid "Normal Size"
 msgstr "Normální velikost"
 
-#: ../src/ui/keyboard-properties.c:99 ../src/ui/keyboard-properties.c:109
+#: ../src/ui/keyboard-properties.c:98 ../src/ui/keyboard-properties.c:108
 msgid "aim left"
 msgstr "mířit doleva"
 
-#: ../src/ui/keyboard-properties.c:101 ../src/ui/keyboard-properties.c:111
+#: ../src/ui/keyboard-properties.c:100 ../src/ui/keyboard-properties.c:110
 msgid "aim right"
 msgstr "mířit doprava"
 
-#: ../src/ui/keyboard-properties.c:103 ../src/ui/keyboard-properties.c:113
+#: ../src/ui/keyboard-properties.c:102 ../src/ui/keyboard-properties.c:112
 msgid "shoot"
 msgstr "střílet"
 
-#: ../src/ui/keyboard-properties.c:120
+#: ../src/ui/keyboard-properties.c:119
 msgid "Player 1"
 msgstr "Hráč 1"
 
-#: ../src/ui/keyboard-properties.c:121
+#: ../src/ui/keyboard-properties.c:120
 msgid "Player 2"
 msgstr "Hráč 2"
 
-#: ../src/ui/keyboard-properties.c:122
+#: ../src/ui/keyboard-properties.c:121
 msgid "Game"
 msgstr "Hra"
 
-#: ../src/ui/keyboard-properties.c:123
+#: ../src/ui/keyboard-properties.c:122
 msgid "View"
 msgstr "Zobrazit"
 
-#: ../src/ui/keyboard-properties.c:309
+#: ../src/ui/keyboard-properties.c:307
 #, c-format
 msgid "There was an error loading config from %s. (%s)\n"
 msgstr "Při načítání nastavení z %s došlo k chybě. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:323
+#: ../src/ui/keyboard-properties.c:321
 #, c-format
 msgid ""
 "There was an error subscribing to notification of terminal keybinding "
@@ -254,17 +277,17 @@ msgstr ""
 "Při přihlašování se k upozornění na změnu klávesových zkratek terminálu "
 "došlo k chybě. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:366
+#: ../src/ui/keyboard-properties.c:364
 #, c-format
 msgid "There was an error loading a terminal keybinding. (%s)\n"
 msgstr "Při načítání klávesových zkratek terminálu došlo k chybě. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:382
+#: ../src/ui/keyboard-properties.c:380
 #, c-format
 msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
 msgstr "Hodnota klíče nastavení %s není platná; hodnota je „%s“\n"
 
-#: ../src/ui/keyboard-properties.c:405
+#: ../src/ui/keyboard-properties.c:403
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menubar access "
@@ -273,7 +296,7 @@ msgstr ""
 "Při načítání hodnoty nastavení, jestli používat klávesy přístupu k menu, "
 "došlo k chybě. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:419
+#: ../src/ui/keyboard-properties.c:417
 #, c-format
 msgid ""
 "There was an error subscribing to notification on changes on whether to use "
@@ -282,7 +305,7 @@ msgstr ""
 "Při přihlašování se k upozornění na změnu toho, jestli používat klávesy "
 "přístupu k menu, došlo k chybě. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:430
+#: ../src/ui/keyboard-properties.c:428
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menu "
@@ -291,101 +314,95 @@ msgstr ""
 "Při načítání hodnoty nastavení, jestli používat klávesové zkratky menu, "
 "došlo k chybě. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:446
+#: ../src/ui/keyboard-properties.c:444
 #, c-format
 msgid ""
-"There was an error subscribing to notification for use_menu_accelerators (%"
-"s)\n"
+"There was an error subscribing to notification for use_menu_accelerators "
+"(%s)\n"
 msgstr ""
 "Při přihlašování se k upozornění na změnu use_menu_accelerators došlo k "
 "chybě. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:728
+#: ../src/ui/keyboard-properties.c:726
 msgid "Disabled"
 msgstr "Zakázáno"
 
-#: ../src/ui/keyboard-properties.c:788
+#: ../src/ui/keyboard-properties.c:786
 #, c-format
 msgid "Error propagating accelerator change to configuration database: %s\n"
 msgstr "Chyba při ukládání změny klávesové zkratky do databáze nastavení: %s\n"
 
-#: ../src/ui/keyboard-properties.c:956
+#: ../src/ui/keyboard-properties.c:954
 #, c-format
 msgid "Error setting new accelerator in configuration database: %s\n"
 msgstr ""
 "Chyba při nastavování nové klávesové zkratky do databáze nastavení: %s\n"
 
-#: ../src/ui/keyboard-properties.c:1055
+#: ../src/ui/keyboard-properties.c:1061
 msgid "_Action"
 msgstr "_Akce"
 
-#: ../src/ui/keyboard-properties.c:1078
+#: ../src/ui/keyboard-properties.c:1084
 msgid "Shortcut _Key"
 msgstr "_Klávesová zkratka"
 
-#: ../src/ui/main.c:91
+#: ../src/ui/main.c:87
 msgid "Monkey Bubble is a Bust'a'Move clone for GNOME"
 msgstr "Monkey Bubble je klon hry Bust'a'Move pro GNOME"
 
-#: ../src/ui/ui-main.c:203
+#: ../src/ui/ui-main.c:199
 msgid "_Game"
 msgstr "_Hra"
 
-#: ../src/ui/ui-main.c:204
+#: ../src/ui/ui-main.c:200
 msgid "New 1 player"
 msgstr "Nová pro jednoho hráče"
 
-#: ../src/ui/ui-main.c:207
+#: ../src/ui/ui-main.c:203
 msgid "Join _network game"
 msgstr "Přidat se k _síťové hře"
 
-#: ../src/ui/ui-main.c:210
+#: ../src/ui/ui-main.c:206
 msgid "Pause game"
 msgstr "Pozastavit hru"
 
-#: ../src/ui/ui-main.c:213
+#: ../src/ui/ui-main.c:209
 msgid "Resume game"
 msgstr "Obnovit hru"
 
-#: ../src/ui/ui-main.c:217
+#: ../src/ui/ui-main.c:213
 msgid "New 2 players"
 msgstr "Nová pro dva hráče"
 
-#: ../src/ui/ui-main.c:220
+#: ../src/ui/ui-main.c:216
 msgid "New network game"
 msgstr "Nová síťová hra"
 
-#: ../src/ui/ui-main.c:226
+#: ../src/ui/ui-main.c:222
 msgid "_High Scores"
 msgstr "N_ejlepší skóre"
 
-#: ../src/ui/ui-main.c:232
+#: ../src/ui/ui-main.c:228
 msgid "_Help"
 msgstr "Nápo_věda"
 
-#: ../src/ui/ui-main.c:233
+#: ../src/ui/ui-main.c:229
 msgid "_Contents"
 msgstr "_Obsah"
 
-#: ../src/ui/ui-main.c:236
+#: ../src/ui/ui-main.c:232
 msgid "_About"
 msgstr "O _aplikaci"
 
-#: ../src/ui/ui-main.c:239
+#: ../src/ui/ui-main.c:235
 msgid "_Fullscreen"
 msgstr "_Celá obrazovka"
 
-#: ../src/ui/ui-main.c:242
+#: ../src/ui/ui-main.c:238
 msgid "_Leave Fullscreen"
 msgstr "_Opustit celou obrazovku"
 
-#: ../src/ui/ui-main.c:756
-msgid "translator_credits"
-msgstr ""
-"Miloslav Trmač <mitr@volny.cz>\n"
-"Marek Černocký <marek@manet.cz>"
-
-#: ../src/ui/ui-main.c:764
+#: ../src/ui/ui-main.c:766
 msgid ""
 "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
 "remove all Bubbles by the creation of unicolor triplets."
@@ -393,48 +410,25 @@ msgstr ""
 "Monkey Bubble je hra pro prostředí pracovní plochy GNOME. Jenoduše odstraňte "
 "všechny bubliny vytvářením jednobarevných trojic."
 
-#: ../src/ui/ui-main.c:785
+#: ../src/ui/ui-main.c:773
+msgid "translator_credits"
+msgstr ""
+"Miloslav Trmač <mitr@volny.cz>\n"
+"Marek Černocký <marek@manet.cz>"
+
+#: ../src/ui/ui-main.c:794
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Při zobrazování nápovědy došlo k chybě: %s"
 
-#: ../src/ui/ui-network-server.c:161 ../src/ui/ui-network-client.c:195
+#: ../src/ui/ui-network-client.c:209 ../src/ui/ui-network-server.c:168
 msgid "_Player name"
 msgstr "_Jméno hráče"
 
-#: ../src/ui/ui-network-server.c:168 ../src/ui/ui-network-client.c:202
+#: ../src/ui/ui-network-client.c:216 ../src/ui/ui-network-server.c:175
 msgid "_Owner"
 msgstr "_Vlastník"
 
-#: ../src/ui/ui-network-server.c:175 ../src/ui/ui-network-client.c:209
+#: ../src/ui/ui-network-client.c:223 ../src/ui/ui-network-server.c:182
 msgid "_Ready"
 msgstr "_Připraven"
-
-#~ msgid "Create network game"
-#~ msgstr "Vytvořit síťovou hru"
-
-#~ msgid "_Settings"
-#~ msgstr "_Nastavení"
-
-#~ msgid "Accelerator key"
-#~ msgstr "Klávesová zkratka"
-
-#~ msgid "Accelerator modifiers"
-#~ msgstr "Modifikátory klávesové zkratky"
-
-#~ msgid "Accelerator Mode"
-#~ msgstr "Režim klávesové zkratky"
-
-#~ msgid "The type of accelerator."
-#~ msgstr "Typ klávesové zkratky."
-
-#~ msgid "Type a new accelerator, or press Backspace to clear"
-#~ msgstr ""
-#~ "Stiskněte novou klávesovou zkratku nebo ji vymažte stisknutím Backspace"
-
-#~ msgid "Type a new accelerator"
-#~ msgstr "Stiskněte novou klávesovou zkratku"
-
-#~ msgid "Players"
-#~ msgstr "Hráči"
-
