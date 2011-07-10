@@ -1,13 +1,14 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
-data/keybinding.glade
-data/monkey-bubble.glade
+[type: gettext/glade]data/keybinding.ui
 data/monkey-bubble.schemas.in
-data/netgame.glade
-data/netserver.glade
+[type: gettext/glade]data/monkey-bubble.ui
+[type: gettext/glade]data/netgame.ui
+[type: gettext/glade]data/netserver.ui
+libgnomeui/gnome-scores.c
 monkey-bubble.desktop.in.in
 src/ui/keyboard-properties.c
 src/ui/main.c
 src/ui/ui-main.c
-src/ui/ui-network-server.c
 src/ui/ui-network-client.c
+src/ui/ui-network-server.c
