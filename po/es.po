@@ -8,47 +8,30 @@
 # Mikel Olasagasti <hey_neken@mundurat.net>, 2003.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005.
 # Jorge González <jorgegonz@svn.gnome.org>, 200, 2009.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: monkey-bubble.HEAD\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-07 15:01+0100\n"
-"PO-Revision-Date: 2009-04-12 17:12+0200\n"
-"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=monkey-"
+"bubble&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-07-10 13:22+0000\n"
+"PO-Revision-Date: 2011-07-14 10:20+0200\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../data/keybinding.glade.h:1
+#: ../data/keybinding.ui.h:1
 msgid "Keyboard Shortcuts"
 msgstr "Combinaciones de teclas"
 
-#: ../data/keybinding.glade.h:2
+#: ../data/keybinding.ui.h:2
 msgid "_Shortcut Keys:"
 msgstr "Com_binaciones de teclas:"
-
-#: ../data/monkey-bubble.glade.h:1
-msgid ""
-"<markup>\n"
-"<span weight=\"bold\" size=\"large\"\n"
-"style=\"oblique\">\n"
-"Can't create server !\n"
-"</span>\n"
-"</markup>"
-msgstr ""
-"<markup>\n"
-"<span weight=\"bold\" size=\"large\"\n"
-"style=\"oblique\">\n"
-"¡No se ha podido crear el servidor! \n"
-"</span>\n"
-"</markup>"
-
-#: ../data/monkey-bubble.glade.h:7
-msgid "Warning"
-msgstr "Atención"
 
 #: ../data/monkey-bubble.schemas.in.h:1
 msgid "1 player game"
@@ -130,58 +113,101 @@ msgstr "disparo para jugador 1"
 msgid "shoot key for player two"
 msgstr "tecla de disparo para jugador 2"
 
-#: ../data/netgame.glade.h:1
-msgid "*"
-msgstr "*"
+#: ../data/monkey-bubble.ui.h:1
+msgid ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Can't create server !\n"
+"</span>\n"
+"</markup>"
+msgstr ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"¡No se ha podido crear el servidor! \n"
+"</span>\n"
+"</markup>"
 
-#: ../data/netgame.glade.h:2
+#: ../data/monkey-bubble.ui.h:7
+msgid "Warning"
+msgstr "Atención"
+
+#: ../data/netgame.ui.h:1
 msgid "Close"
 msgstr "Cerrar"
 
-#: ../data/netgame.glade.h:3 ../data/netserver.glade.h:1
-#: ../src/ui/ui-network-client.c:156
+#: ../data/netgame.ui.h:2 ../data/netserver.ui.h:1
+#: ../src/ui/ui-network-client.c:173
 msgid "Network game"
 msgstr "Juego en red"
 
-#: ../data/netgame.glade.h:4
+#: ../data/netgame.ui.h:3
 msgid "Number of games :"
 msgstr "Número de juegos :"
 
-#: ../data/netgame.glade.h:5
+#: ../data/netgame.ui.h:4
 msgid "Number of players :"
 msgstr "Nuevo 2 jugadores"
 
-#: ../data/netgame.glade.h:6 ../data/netserver.glade.h:4
-#: ../src/ui/keyboard-properties.c:86
+#: ../data/netgame.ui.h:5 ../data/netserver.ui.h:4
+#: ../src/ui/keyboard-properties.c:85
 msgid "Quit game"
 msgstr "Salir del juego"
 
-#: ../data/netgame.glade.h:7 ../data/netserver.glade.h:5
+#: ../data/netgame.ui.h:6 ../data/netserver.ui.h:5
 msgid "Ready"
 msgstr "Preparado"
 
-#: ../data/netgame.glade.h:8
+#: ../data/netgame.ui.h:7
 msgid "_Go"
 msgstr "_Ir a"
 
-#: ../data/netgame.glade.h:9
+#: ../data/netgame.ui.h:8
 msgid "_Server"
 msgstr "_Servidor"
 
-#: ../data/netserver.glade.h:2
+#: ../data/netserver.ui.h:2
 msgid "Number of game"
 msgstr "Número de juego"
 
-#: ../data/netserver.glade.h:3
+#: ../data/netserver.ui.h:3
 msgid "Number of players"
 msgstr "Número de jugadores"
 
-#: ../data/netserver.glade.h:6
+#: ../data/netserver.ui.h:6
 msgid "Start Game"
 msgstr "Iniciar juego"
 
-#: ../monkey-bubble.desktop.in.in.h:1 ../src/ui/ui-main.c:263
-#: ../src/ui/ui-main.c:275
+#: ../libgnomeui/gnome-scores.c:72
+msgid "Top Ten"
+msgstr "Diez primeros"
+
+#: ../libgnomeui/gnome-scores.c:85
+msgid "User"
+msgstr "Usuario"
+
+#: ../libgnomeui/gnome-scores.c:88
+msgid "Score"
+msgstr "Puntuación"
+
+#: ../libgnomeui/gnome-scores.c:91
+msgid "Date"
+msgstr "Fecha"
+
+#. TRANSLATORS NOTE: Date format used when showing scores in games.
+#. * Please refer to manpage of strftime(3) for complete reference.
+#.
+#: ../libgnomeui/gnome-scores.c:188
+msgid "%a %b %d %T %Y"
+msgstr "%a, %d de %b de %Y, %T"
+
+#: ../libgnomeui/gnome-scores.c:389
+msgid "Sans 14"
+msgstr "Sans 14"
+
+#: ../monkey-bubble.desktop.in.in.h:1 ../src/ui/main.c:97
+#: ../src/ui/ui-main.c:259 ../src/ui/ui-main.c:271
 msgid "Monkey Bubble"
 msgstr "Monkey Bubble"
 
@@ -189,64 +215,64 @@ msgstr "Monkey Bubble"
 msgid "Monkey Bubble Arcade Game"
 msgstr "Monkey Bubble Juego Arcade"
 
-#: ../src/ui/keyboard-properties.c:78
+#: ../src/ui/keyboard-properties.c:77
 msgid "New game 1 player"
 msgstr "Nuevo juego 1 jugador"
 
-#: ../src/ui/keyboard-properties.c:80
+#: ../src/ui/keyboard-properties.c:79
 msgid "New game 2 player"
 msgstr "Nuevo juego 2 jugadores"
 
-#: ../src/ui/keyboard-properties.c:82
+#: ../src/ui/keyboard-properties.c:81
 msgid "Pause/Resume"
 msgstr "Pausa/Continuar"
 
-#: ../src/ui/keyboard-properties.c:84 ../src/ui/ui-main.c:229
+#: ../src/ui/keyboard-properties.c:83 ../src/ui/ui-main.c:225
 msgid "Stop game"
 msgstr "Detener juego"
 
-#: ../src/ui/keyboard-properties.c:92
+#: ../src/ui/keyboard-properties.c:91
 msgid "Full Screen"
 msgstr "Pantalla completa"
 
-#: ../src/ui/keyboard-properties.c:94
+#: ../src/ui/keyboard-properties.c:93
 msgid "Normal Size"
 msgstr "Tamaño normal"
 
-#: ../src/ui/keyboard-properties.c:99 ../src/ui/keyboard-properties.c:109
+#: ../src/ui/keyboard-properties.c:98 ../src/ui/keyboard-properties.c:108
 msgid "aim left"
 msgstr "apuntar a la izquierda"
 
-#: ../src/ui/keyboard-properties.c:101 ../src/ui/keyboard-properties.c:111
+#: ../src/ui/keyboard-properties.c:100 ../src/ui/keyboard-properties.c:110
 msgid "aim right"
 msgstr "apuntar a la derecha"
 
-#: ../src/ui/keyboard-properties.c:103 ../src/ui/keyboard-properties.c:113
+#: ../src/ui/keyboard-properties.c:102 ../src/ui/keyboard-properties.c:112
 msgid "shoot"
 msgstr "disparar"
 
-#: ../src/ui/keyboard-properties.c:120
+#: ../src/ui/keyboard-properties.c:119
 msgid "Player 1"
 msgstr "Jugador 1"
 
-#: ../src/ui/keyboard-properties.c:121
+#: ../src/ui/keyboard-properties.c:120
 msgid "Player 2"
 msgstr "Jugador 2"
 
-#: ../src/ui/keyboard-properties.c:122
+#: ../src/ui/keyboard-properties.c:121
 msgid "Game"
 msgstr "Juego"
 
-#: ../src/ui/keyboard-properties.c:123
+#: ../src/ui/keyboard-properties.c:122
 msgid "View"
 msgstr "Vista"
 
-#: ../src/ui/keyboard-properties.c:309
+#: ../src/ui/keyboard-properties.c:307
 #, c-format
 msgid "There was an error loading config from %s. (%s)\n"
 msgstr "Ha ocurrido un error cargando la configuración desde %s (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:323
+#: ../src/ui/keyboard-properties.c:321
 #, c-format
 msgid ""
 "There was an error subscribing to notification of terminal keybinding "
@@ -255,19 +281,19 @@ msgstr ""
 "Ha ocurrido un error suscribiendo al aviso sobre los cambios de asignación "
 "de teclas de la terminal (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:366
+#: ../src/ui/keyboard-properties.c:364
 #, c-format
 msgid "There was an error loading a terminal keybinding. (%s)\n"
 msgstr ""
 "Ha ocurrido un error cargando una asignación de teclas de terminal. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:382
+#: ../src/ui/keyboard-properties.c:380
 #, c-format
 msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
 msgstr ""
 "El valor de la clave de configuración %s no es válido; el valor es «%s»\n"
 
-#: ../src/ui/keyboard-properties.c:405
+#: ../src/ui/keyboard-properties.c:403
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menubar access "
@@ -276,7 +302,7 @@ msgstr ""
 "Ha ocurrido un error cargando el valor de configuración para intentar usar "
 "las combinaciones de teclas. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:419
+#: ../src/ui/keyboard-properties.c:417
 #, c-format
 msgid ""
 "There was an error subscribing to notification on changes on whether to use "
@@ -285,7 +311,7 @@ msgstr ""
 "Ha ocurrido un error subscribiendo al aviso de cambio en el uso de teclas de "
 "acceso de la barra de menús (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:430
+#: ../src/ui/keyboard-properties.c:428
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menu "
@@ -294,104 +320,97 @@ msgstr ""
 "Ha ocurrido un error cargando el valor de configuración para intentar usar "
 "las combinaciones de teclas. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:446
+#: ../src/ui/keyboard-properties.c:444
 #, c-format
 msgid ""
-"There was an error subscribing to notification for use_menu_accelerators (%"
-"s)\n"
+"There was an error subscribing to notification for use_menu_accelerators "
+"(%s)\n"
 msgstr ""
 "Ha ocurrido un error subscribiendo al aviso de use_menu_accelerators (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:728
+#: ../src/ui/keyboard-properties.c:726
 msgid "Disabled"
 msgstr "Deshabilitado"
 
-#: ../src/ui/keyboard-properties.c:788
+#: ../src/ui/keyboard-properties.c:786
 #, c-format
 msgid "Error propagating accelerator change to configuration database: %s\n"
 msgstr ""
 "Ocurrió un error al propagar el cambio de la combinación de teclas hacia la "
 "base de datos de configuración: %s\n"
 
-#: ../src/ui/keyboard-properties.c:956
+#: ../src/ui/keyboard-properties.c:954
 #, c-format
 msgid "Error setting new accelerator in configuration database: %s\n"
 msgstr ""
 "Error al definir una nueva combinación en la base de datos de configuración: "
 "%s\n"
 
-#: ../src/ui/keyboard-properties.c:1055
+#: ../src/ui/keyboard-properties.c:1061
 msgid "_Action"
 msgstr "_Acción"
 
-#: ../src/ui/keyboard-properties.c:1078
+#: ../src/ui/keyboard-properties.c:1084
 msgid "Shortcut _Key"
 msgstr "Co_mbinación de teclas"
 
-#: ../src/ui/main.c:91
+#: ../src/ui/main.c:87
 msgid "Monkey Bubble is a Bust'a'Move clone for GNOME"
 msgstr "Monkey Bubble es un clon de Bust'a'Move para GNOME"
 
-#: ../src/ui/ui-main.c:203
+#: ../src/ui/ui-main.c:199
 msgid "_Game"
 msgstr "_Juego"
 
-#: ../src/ui/ui-main.c:204
+#: ../src/ui/ui-main.c:200
 msgid "New 1 player"
 msgstr "Nuevo 1 jugador"
 
-#: ../src/ui/ui-main.c:207
+#: ../src/ui/ui-main.c:203
 msgid "Join _network game"
 msgstr "Unirse a un juego en _red"
 
-#: ../src/ui/ui-main.c:210
+#: ../src/ui/ui-main.c:206
 msgid "Pause game"
 msgstr "Pausar juego"
 
-#: ../src/ui/ui-main.c:213
+#: ../src/ui/ui-main.c:209
 msgid "Resume game"
 msgstr "Continuar juego"
 
-#: ../src/ui/ui-main.c:217
+#: ../src/ui/ui-main.c:213
 msgid "New 2 players"
 msgstr "Nuevo 2 jugadores"
 
-#: ../src/ui/ui-main.c:220
+#: ../src/ui/ui-main.c:216
 msgid "New network game"
 msgstr "Juego en red nuevo"
 
-#: ../src/ui/ui-main.c:226
+#: ../src/ui/ui-main.c:222
 msgid "_High Scores"
 msgstr "_Mejores puntuaciones"
 
-#: ../src/ui/ui-main.c:232
+#: ../src/ui/ui-main.c:228
 msgid "_Help"
 msgstr "Ay_uda"
 
-#: ../src/ui/ui-main.c:233
+#: ../src/ui/ui-main.c:229
 msgid "_Contents"
 msgstr "Índ_ice"
 
-#: ../src/ui/ui-main.c:236
+#: ../src/ui/ui-main.c:232
 msgid "_About"
 msgstr "Acerca _de"
 
-#: ../src/ui/ui-main.c:239
+#: ../src/ui/ui-main.c:235
 msgid "_Fullscreen"
 msgstr "_Pantalla completa"
 
-#: ../src/ui/ui-main.c:242
+#: ../src/ui/ui-main.c:238
 msgid "_Leave Fullscreen"
 msgstr "_Salir de pantalla completa"
 
-#: ../src/ui/ui-main.c:756
-msgid "translator_credits"
-msgstr ""
-"Jorge González <jorgegonz@svn.gnome.org>, 2008-2009\n"
-"Mikel Olasagasti <hey_neken@mundurat.net>, 2003\n"
-"Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005"
-
-#: ../src/ui/ui-main.c:764
+#: ../src/ui/ui-main.c:766
 msgid ""
 "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
 "remove all Bubbles by the creation of unicolor triplets."
@@ -399,19 +418,29 @@ msgstr ""
 "Monkey Bubble es un juego Arcade para el GNOME Desktop Environment. "
 "Simplemente elimina todas las burbujas creando tríos del mismo color."
 
-#: ../src/ui/ui-main.c:785
+#: ../src/ui/ui-main.c:773
+msgid "translator_credits"
+msgstr ""
+"Jorge González <jorgegonz@svn.gnome.org>, 2008-2009\n"
+"Mikel Olasagasti <hey_neken@mundurat.net>, 2003\n"
+"Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005"
+
+#: ../src/ui/ui-main.c:794
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Hubo un error al mostrar la ayuda: %s"
 
-#: ../src/ui/ui-network-server.c:161 ../src/ui/ui-network-client.c:195
+#: ../src/ui/ui-network-client.c:209 ../src/ui/ui-network-server.c:168
 msgid "_Player name"
 msgstr "_Nombre del jugador"
 
-#: ../src/ui/ui-network-server.c:168 ../src/ui/ui-network-client.c:202
+#: ../src/ui/ui-network-client.c:216 ../src/ui/ui-network-server.c:175
 msgid "_Owner"
 msgstr "_Dueño"
 
-#: ../src/ui/ui-network-server.c:175 ../src/ui/ui-network-client.c:209
+#: ../src/ui/ui-network-client.c:223 ../src/ui/ui-network-server.c:182
 msgid "_Ready"
 msgstr "P_reparado"
+
+#~ msgid "*"
+#~ msgstr "*"
