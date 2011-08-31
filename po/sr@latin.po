@@ -1,346 +1,466 @@
 # Serbian translation of monkey-bubble
 # Courtesy of Prevod.org team (http://prevod.org/) -- 2004.
-#
 # This file is distributed under the same license as the monkey-bubble package.
-#
-# Maintainer: Danilo Šegan <dsegan@gmx.net>
-#
+# Maintainer: Danilo Šegan <dsegan@gmx.net>, 2004
+# Miroslav Nikolić <miroslavnikolic@rocketmail.com>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: monkey-bubble\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-22 05:36+0100\n"
-"PO-Revision-Date: 2004-02-22 07:47+0100\n"
-"Last-Translator: Danilo Šegan <danilo@prevod.org>\n"
-"Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=monkey-"
+"bubble&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-07-15 18:39+0000\n"
+"PO-Revision-Date: 2011-07-30 00:10+0200\n"
+"Last-Translator: Miroslav Nikolić <miroslavnikolic@rocketmail.com>\n"
+"Language-Team: Serbian <gnom@prevod.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3;    plural=n%10==1 && n%100!=11 ? 0 :    n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Language: Serbian (sr)\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Virtaal 0.7.0\n"
+"X-Project-Style: gnome\n"
 
-#: data/keybinding.glade.h:1
+#: ../data/keybinding.ui.h:1
 msgid "Keyboard Shortcuts"
-msgstr "Prečice sa tastature"
+msgstr "Prečice tastature"
 
-#: data/keybinding.glade.h:2
+#: ../data/keybinding.ui.h:2
 msgid "_Shortcut Keys:"
 msgstr "_Prečice:"
 
-#: data/monkey-bubble.glade.h:1 monkey-bubble.desktop.in.h:1
-msgid "Monkey Bubble"
-msgstr "Majmun sa klikerima"
-
-#: data/monkey-bubble.glade.h:2
-msgid "New 1 player"
-msgstr "Nova, 1 igrač"
-
-#: data/monkey-bubble.glade.h:3
-msgid "New 2 players"
-msgstr "Nova, 2 igrača"
-
-#: data/monkey-bubble.glade.h:4 src/ui/ui-main.c:393 src/ui/ui-main.c:523
-msgid "Pause game"
-msgstr "Pauziraj igru"
-
-#: data/monkey-bubble.glade.h:5 src/ui/keyboard-properties.c:85
-msgid "Stop game"
-msgstr "Zaustavi igru"
-
-#: data/monkey-bubble.glade.h:6
-msgid "_About"
-msgstr "_O programu"
-
-#: data/monkey-bubble.glade.h:7
-msgid "_Contents"
-msgstr "_Sadržaj"
-
-#: data/monkey-bubble.glade.h:8
-msgid "_Game"
-msgstr "_Igra"
-
-#: data/monkey-bubble.glade.h:9
-msgid "_Help"
-msgstr "_Pomoć"
-
-#: data/monkey-bubble.glade.h:10
-msgid "_Settings"
-msgstr "P_odešavanja"
-
-#: data/monkey-bubble.schemas.in.h:1
+#: ../data/monkey-bubble.schemas.in.h:1
 msgid "1 player game"
 msgstr "Igra za 1 igrača"
 
-#: data/monkey-bubble.schemas.in.h:2
+#: ../data/monkey-bubble.schemas.in.h:2
 msgid "2 players game"
 msgstr "Igra za 2 igrača"
 
-#: data/monkey-bubble.schemas.in.h:3
+#: ../data/monkey-bubble.schemas.in.h:3
 msgid "F1"
 msgstr "F1"
 
-#: data/monkey-bubble.schemas.in.h:4
+#: ../data/monkey-bubble.schemas.in.h:4
 msgid "F2"
 msgstr "F2"
 
-#: data/monkey-bubble.schemas.in.h:5
+#: ../data/monkey-bubble.schemas.in.h:5
 msgid "Left"
 msgstr "Levo"
 
-#: data/monkey-bubble.schemas.in.h:6
+#: ../data/monkey-bubble.schemas.in.h:6
 msgid "Pause"
 msgstr "Pauza"
 
-#: data/monkey-bubble.schemas.in.h:7
+#: ../data/monkey-bubble.schemas.in.h:7
 msgid "Pause the game"
 msgstr "Pauziraj igru"
 
-#: data/monkey-bubble.schemas.in.h:8
+#: ../data/monkey-bubble.schemas.in.h:8
 msgid "Quit the game"
 msgstr "Završi igru"
 
-#: data/monkey-bubble.schemas.in.h:9
+#: ../data/monkey-bubble.schemas.in.h:9
 msgid "Right"
 msgstr "Desno"
 
-#: data/monkey-bubble.schemas.in.h:10
+#: ../data/monkey-bubble.schemas.in.h:10
 msgid "Stop the game"
 msgstr "Zaustavi igru"
 
-#: data/monkey-bubble.schemas.in.h:11
+#: ../data/monkey-bubble.schemas.in.h:11
 msgid "Up"
 msgstr "Gore"
 
-#: data/monkey-bubble.schemas.in.h:12
+#: ../data/monkey-bubble.schemas.in.h:12
 msgid "d"
 msgstr "d"
 
-#: data/monkey-bubble.schemas.in.h:13
+#: ../data/monkey-bubble.schemas.in.h:13
 msgid "f"
 msgstr "f"
 
-#: data/monkey-bubble.schemas.in.h:14
+#: ../data/monkey-bubble.schemas.in.h:14
 msgid "left key for player one"
 msgstr "levi taster za prvog igrača"
 
-#: data/monkey-bubble.schemas.in.h:15
+#: ../data/monkey-bubble.schemas.in.h:15
 msgid "left key for player two"
 msgstr "levi taster za drugog igrača"
 
-#: data/monkey-bubble.schemas.in.h:16
+#: ../data/monkey-bubble.schemas.in.h:16
 msgid "right key for player one"
 msgstr "desni taster za prvog igrača"
 
-#: data/monkey-bubble.schemas.in.h:17
+#: ../data/monkey-bubble.schemas.in.h:17
 msgid "right key for player two"
 msgstr "desni taster za drugog igrača"
 
-#: data/monkey-bubble.schemas.in.h:18
+#: ../data/monkey-bubble.schemas.in.h:18
 msgid "s"
 msgstr "s"
 
-#: data/monkey-bubble.schemas.in.h:19
+#: ../data/monkey-bubble.schemas.in.h:19
 msgid "shoot key for player one"
 msgstr "taster za paljbu za prvog igrača"
 
-#: data/monkey-bubble.schemas.in.h:20
+#: ../data/monkey-bubble.schemas.in.h:20
 msgid "shoot key for player two"
 msgstr "taster za paljbu za drugog igrača"
 
-#: data/netgame.glade.h:1
-msgid "*"
-msgstr "*"
+#: ../data/monkey-bubble.ui.h:1
+msgid ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Can't create server !\n"
+"</span>\n"
+"</markup>"
+msgstr ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Ne mogu da napravim server !\n"
+"</span>\n"
+"</markup>"
 
-#: data/netgame.glade.h:2
+#: ../data/monkey-bubble.ui.h:7
+msgid "Warning"
+msgstr "Upozorenje"
+
+#: ../data/netgame.ui.h:1
+msgid "Close"
+msgstr "Zatvori"
+
+#: ../data/netgame.ui.h:2 ../data/netserver.ui.h:1
+#: ../src/ui/ui-network-client.c:173
 msgid "Network game"
-msgstr "Mrežna igra"
+msgstr "Igra na mreži"
 
-#: data/netgame.glade.h:3
-msgid "Players"
-msgstr "Igrači"
+#: ../data/netgame.ui.h:3
+msgid "Number of games :"
+msgstr "Broj igara :"
 
-#: data/netgame.glade.h:4 src/ui/keyboard-properties.c:87
+#: ../data/netgame.ui.h:4
+msgid "Number of players :"
+msgstr "Broj igrača :"
+
+#: ../data/netgame.ui.h:5 ../data/netserver.ui.h:4
+#: ../src/ui/keyboard-properties.c:85
 msgid "Quit game"
 msgstr "Završi igru"
 
-#: data/netgame.glade.h:5
+#: ../data/netgame.ui.h:6 ../data/netserver.ui.h:5
 msgid "Ready"
 msgstr "Spreman"
 
-#: data/netgame.glade.h:6
-msgid "Start Game"
-msgstr "Počni igru"
-
-#: data/netgame.glade.h:7
+#: ../data/netgame.ui.h:7
 msgid "_Go"
 msgstr "_Idi"
 
-#: data/netgame.glade.h:8
+#: ../data/netgame.ui.h:8
 msgid "_Server"
 msgstr "_Server"
 
-#: monkey-bubble.desktop.in.h:2
+#: ../data/netserver.ui.h:2
+msgid "Number of game"
+msgstr "Broj igara"
+
+#: ../data/netserver.ui.h:3
+msgid "Number of players"
+msgstr "Broj igrača"
+
+#: ../data/netserver.ui.h:6
+msgid "Start Game"
+msgstr "Počni igru"
+
+#: ../libgnomeui/gnome-scores.c:72
+msgid "Top Ten"
+msgstr "Prvih deset"
+
+#: ../libgnomeui/gnome-scores.c:85
+msgid "User"
+msgstr "Korisnik"
+
+#: ../libgnomeui/gnome-scores.c:88
+msgid "Score"
+msgstr "Razultat"
+
+#: ../libgnomeui/gnome-scores.c:91
+msgid "Date"
+msgstr "Datum"
+
+#. TRANSLATORS NOTE: Date format used when showing scores in games.
+#. * Please refer to manpage of strftime(3) for complete reference.
+#.
+#: ../libgnomeui/gnome-scores.c:188
+msgid "%a %b %d %T %Y"
+msgstr "%a, %d. %B %Y. %T"
+
+#: ../libgnomeui/gnome-scores.c:389
+msgid "Sans 14"
+msgstr "Sans 14"
+
+#: ../monkey-bubble.desktop.in.in.h:1 ../src/ui/main.c:97
+#: ../src/ui/ui-main.c:259 ../src/ui/ui-main.c:271
+msgid "Monkey Bubble"
+msgstr "Majmunče sa balončićima"
+
+#: ../monkey-bubble.desktop.in.in.h:2
 msgid "Monkey Bubble Arcade Game"
-msgstr "Arkadna igra Majmun s klikerima"
+msgstr "Arkadna igra Majmunče sa balončićima"
 
-#: src/ui/eggcellrendererkeys.c:160 src/ui/eggcellrendererkeys.c:161
-msgid "Accelerator key"
-msgstr "Taster prečice"
-
-#: src/ui/eggcellrendererkeys.c:170 src/ui/eggcellrendererkeys.c:171
-msgid "Accelerator modifiers"
-msgstr "Izmenjivači prečice"
-
-#: src/ui/eggcellrendererkeys.c:180
-msgid "Accelerator Mode"
-msgstr "Režim prečice"
-
-#: src/ui/eggcellrendererkeys.c:181
-msgid "The type of accelerator."
-msgstr "Vrsta prečice."
-
-#: src/ui/eggcellrendererkeys.c:219 src/ui/keyboard-properties.c:764
-msgid "Disabled"
-msgstr "Isključeno"
-
-#: src/ui/eggcellrendererkeys.c:330 src/ui/eggcellrendererkeys.c:568
-msgid "Type a new accelerator, or press Backspace to clear"
-msgstr "Ukucajte novu prečicu, ili pritisnite „Backspace“ da uklonite postojeću"
-
-#: src/ui/eggcellrendererkeys.c:571
-msgid "Type a new accelerator"
-msgstr "Ukucajte novu prečicu"
-
-#: src/ui/keyboard-properties.c:79
+#: ../src/ui/keyboard-properties.c:77
 msgid "New game 1 player"
 msgstr "Nova igra za 1 igrača"
 
-#: src/ui/keyboard-properties.c:81
+#: ../src/ui/keyboard-properties.c:79
 msgid "New game 2 player"
 msgstr "Nova igra za 2 igrača"
 
-#: src/ui/keyboard-properties.c:83
+#: ../src/ui/keyboard-properties.c:81
 msgid "Pause/Resume"
 msgstr "Pauziraj/nastavi"
 
-#: src/ui/keyboard-properties.c:93
+#: ../src/ui/keyboard-properties.c:83 ../src/ui/ui-main.c:225
+msgid "Stop game"
+msgstr "Zaustavi igru"
+
+#: ../src/ui/keyboard-properties.c:91
 msgid "Full Screen"
 msgstr "Ceo ekran"
 
-#: src/ui/keyboard-properties.c:95
+#: ../src/ui/keyboard-properties.c:93
 msgid "Normal Size"
-msgstr "Obična veličina"
+msgstr "Uobičajena veličina"
 
-#: src/ui/keyboard-properties.c:100 src/ui/keyboard-properties.c:110
+#: ../src/ui/keyboard-properties.c:98 ../src/ui/keyboard-properties.c:108
 msgid "aim left"
 msgstr "nišani levo"
 
-#: src/ui/keyboard-properties.c:102 src/ui/keyboard-properties.c:112
+#: ../src/ui/keyboard-properties.c:100 ../src/ui/keyboard-properties.c:110
 msgid "aim right"
 msgstr "nišani desno"
 
-#: src/ui/keyboard-properties.c:104 src/ui/keyboard-properties.c:114
+#: ../src/ui/keyboard-properties.c:102 ../src/ui/keyboard-properties.c:112
 msgid "shoot"
 msgstr "pali"
 
-#: src/ui/keyboard-properties.c:121
+#: ../src/ui/keyboard-properties.c:119
 msgid "Player 1"
 msgstr "1. igrač"
 
-#: src/ui/keyboard-properties.c:122
+#: ../src/ui/keyboard-properties.c:120
 msgid "Player 2"
 msgstr "2. igrač"
 
-#: src/ui/keyboard-properties.c:123
+#: ../src/ui/keyboard-properties.c:121
 msgid "Game"
 msgstr "Igra"
 
-#: src/ui/keyboard-properties.c:124
+#: ../src/ui/keyboard-properties.c:122
 msgid "View"
 msgstr "Pregled"
 
-#: src/ui/keyboard-properties.c:337
+#: ../src/ui/keyboard-properties.c:307
 #, c-format
 msgid "There was an error loading config from %s. (%s)\n"
 msgstr "Došlo je do greške pri učitavanju podešavanja iz %s. (%s)\n"
 
-#: src/ui/keyboard-properties.c:351
+#: ../src/ui/keyboard-properties.c:321
 #, c-format
 msgid ""
 "There was an error subscribing to notification of terminal keybinding "
 "changes. (%s)\n"
-msgstr "Došlo je do greške pri pretplaćivanju na obaveštenja o izmeni prečica terminala. (%s)\n"
+msgstr ""
+"Došlo je do greške pri pretplaćivanju na obaveštenja o izmeni prečica "
+"terminala. (%s)\n"
 
-#: src/ui/keyboard-properties.c:394
+#: ../src/ui/keyboard-properties.c:364
 #, c-format
 msgid "There was an error loading a terminal keybinding. (%s)\n"
 msgstr "Došlo je do greške pri učitavanju prečica terminala. (%s)\n"
 
-#: src/ui/keyboard-properties.c:410
+#: ../src/ui/keyboard-properties.c:380
 #, c-format
 msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
-msgstr "Vrednost ključa podešavanja %s nije ispravna; vrednost je „%s“\n"
+msgstr "Vrednost ključa podešavanja „%s“ nije ispravna; vrednost je „%s“\n"
 
-#: src/ui/keyboard-properties.c:433
+#: ../src/ui/keyboard-properties.c:403
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menubar access "
 "keys. (%s)\n"
-msgstr "Došlo je do greške pri učitavanju vrednosti podešavanja o korišćenju prečica u meniju. (%s)\n"
+msgstr ""
+"Došlo je do greške pri učitavanju vrednosti podešavanja o korišćenju prečica u "
+"meniju. (%s)\n"
 
-#: src/ui/keyboard-properties.c:447
+#: ../src/ui/keyboard-properties.c:417
 #, c-format
 msgid ""
 "There was an error subscribing to notification on changes on whether to use "
 "menubar access keys (%s)\n"
-msgstr "Došlo je do greške pri pretplaćivanju na obaveštenja o izmeni da li se koriste prečice menija. (%s)\n"
+msgstr ""
+"Došlo je do greške pri pretplaćivanju na obaveštenja o izmeni da li se koriste "
+"prečice menija. (%s)\n"
 
-#: src/ui/keyboard-properties.c:458
+#: ../src/ui/keyboard-properties.c:428
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menu "
 "accelerators. (%s)\n"
-msgstr "Došlo je do greške pri učitavanju vrednosti podešavanja o korišćenju slovnih prečica u meniju. (%s)\n"
+msgstr ""
+"Došlo je do greške pri učitavanju vrednosti podešavanja o korišćenju slovnih "
+"prečica u meniju. (%s)\n"
 
-#: src/ui/keyboard-properties.c:474
+#: ../src/ui/keyboard-properties.c:444
 #, c-format
 msgid ""
 "There was an error subscribing to notification for use_menu_accelerators (%"
 "s)\n"
-msgstr "Došlo je do greške pri pretplaćivanju na obaveštenja o use_menu_accelerators (%s)\n"
+msgstr ""
+"Došlo je do greške pri pretplaćivanju na obaveštenja o korišćenju prečica "
+"menija (use_menu_accelerators) (%s)\n"
 
-#: src/ui/keyboard-properties.c:824
+#: ../src/ui/keyboard-properties.c:726
+msgid "Disabled"
+msgstr "Isključeno"
+
+#: ../src/ui/keyboard-properties.c:786
 #, c-format
 msgid "Error propagating accelerator change to configuration database: %s\n"
 msgstr "Greška pri rasprostiranju izmene prečica u bazu sa podešavanjima: %s\n"
 
-#: src/ui/keyboard-properties.c:993
+#: ../src/ui/keyboard-properties.c:954
 #, c-format
 msgid "Error setting new accelerator in configuration database: %s\n"
 msgstr "Greška pri postavljanju nove prečice u bazi sa podešavanjima: %s\n"
 
-#: src/ui/keyboard-properties.c:1092
+#: ../src/ui/keyboard-properties.c:1061
 msgid "_Action"
 msgstr "_Akcije"
 
-#: src/ui/keyboard-properties.c:1114
+#: ../src/ui/keyboard-properties.c:1084
 msgid "Shortcut _Key"
 msgstr "_Taster prečice"
 
-#: src/ui/ui-main.c:516
+#: ../src/ui/main.c:87
+msgid "Monkey Bubble is a Bust'a'Move clone for GNOME"
+msgstr "Majmunče sa balončićima je klon Bust'a'Muva za Gnom"
+
+#: ../src/ui/ui-main.c:199
+msgid "_Game"
+msgstr "_Igra"
+
+#: ../src/ui/ui-main.c:200
+msgid "New 1 player"
+msgstr "Nova, 1 igrač"
+
+#: ../src/ui/ui-main.c:203
+msgid "Join _network game"
+msgstr "Pridruži se igri _na mreži"
+
+#: ../src/ui/ui-main.c:206
+msgid "Pause game"
+msgstr "Pauziraj igru"
+
+#: ../src/ui/ui-main.c:209
 msgid "Resume game"
 msgstr "Nastavi igru"
 
-#: src/ui/ui-main.c:570
+#: ../src/ui/ui-main.c:213
+msgid "New 2 players"
+msgstr "Nova, 2 igrača"
+
+#: ../src/ui/ui-main.c:216
+msgid "New network game"
+msgstr "Nova igra na mreži"
+
+#: ../src/ui/ui-main.c:222
+msgid "_High Scores"
+msgstr "_Najbolji rezultati"
+
+#: ../src/ui/ui-main.c:228
+msgid "_Help"
+msgstr "_Pomoć"
+
+#: ../src/ui/ui-main.c:229
+msgid "_Contents"
+msgstr "_Sadržaj"
+
+#: ../src/ui/ui-main.c:232
+msgid "_About"
+msgstr "_O programu"
+
+#: ../src/ui/ui-main.c:235
+msgid "_Fullscreen"
+msgstr "_Ceo ekran"
+
+#: ../src/ui/ui-main.c:238
+msgid "_Leave Fullscreen"
+msgstr "_Napusti ceo ekran"
+
+#: ../src/ui/ui-main.c:766
+msgid ""
+"Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
+"remove all Bubbles by the creation of unicolor triplets."
+msgstr ""
+"Majmunče sa balončićima je arkadna igra za Gnom okruženje. Jednostavno "
+"uklonite sve balončiće stvaranjem jednobojnih trojki."
+
+#: ../src/ui/ui-main.c:773
 msgid "translator_credits"
 msgstr ""
 "Danilo Šegan <danilo@prevod.org>\n"
+"Miroslav Nikolić <miroslavnikolic@rocketmail.com>\n"
 "\n"
 "Prevod.org — prevod na srpski jezik."
 
-#: src/ui/ui-main.c:599
+#: ../src/ui/ui-main.c:794
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Javila se greška pri prikazu pomoći: %s"
+
+#: ../src/ui/ui-network-client.c:209 ../src/ui/ui-network-server.c:168
+msgid "_Player name"
+msgstr "_Ime igrača"
+
+#: ../src/ui/ui-network-client.c:216 ../src/ui/ui-network-server.c:175
+msgid "_Owner"
+msgstr "_Vlasnik"
+
+#: ../src/ui/ui-network-client.c:223 ../src/ui/ui-network-server.c:182
+msgid "_Ready"
+msgstr "_Spreman"
+
+#~ msgid "_Settings"
+#~ msgstr "P_odešavanja"
+
+#~ msgid "*"
+#~ msgstr "*"
+
+#~ msgid "Players"
+#~ msgstr "Igrači"
+
+#~ msgid "Accelerator key"
+#~ msgstr "Taster prečice"
+
+#~ msgid "Accelerator modifiers"
+#~ msgstr "Izmenjivači prečice"
+
+#~ msgid "Accelerator Mode"
+#~ msgstr "Režim prečice"
+
+#~ msgid "The type of accelerator."
+#~ msgstr "Vrsta prečice."
+
+#~ msgid "Type a new accelerator, or press Backspace to clear"
+#~ msgstr ""
+#~ "Ukucajte novu prečicu, ili pritisnite „Backspace“ da uklonite postojeću"
+
+#~ msgid "Type a new accelerator"
+#~ msgstr "Ukucajte novu prečicu"
 
 #~ msgid "Base Card: "
 #~ msgstr "Osnovna karta:  "
@@ -821,9 +941,6 @@ msgstr "Javila se greška pri prikazu pomoći: %s"
 #~ msgid "Aisleriot"
 #~ msgstr "Ajslriot"
 
-#~ msgid "Score:"
-#~ msgstr "Razultat:"
-
 #~ msgid "Time:"
 #~ msgstr "Vreme:"
 
@@ -1223,10 +1340,10 @@ msgstr "Javila se greška pri prikazu pomoći: %s"
 #~ msgstr "Izabela"
 
 #~ msgid "Jamestown"
-#~ msgstr "DŽejmstaun"
+#~ msgstr "Džejmstaun"
 
 #~ msgid "Jumbo"
-#~ msgstr "DŽambo"
+#~ msgstr "Džambo"
 
 #~ msgid "Kansas"
 #~ msgstr "Kanzas"
@@ -1241,7 +1358,7 @@ msgstr "Javila se greška pri prikazu pomoći: %s"
 #~ msgstr "Lavirint"
 
 #~ msgid "Lady jane"
-#~ msgstr "Gospođica DŽejn"
+#~ msgstr "Gospođica Džejn"
 
 #~ msgid "Maze"
 #~ msgstr "Lavirinti"
@@ -1718,7 +1835,7 @@ msgstr "Javila se greška pri prikazu pomoći: %s"
 #~ msgstr "Časne slike:"
 
 #~ msgid "Joker icon:"
-#~ msgstr "DŽoker ikonica:"
+#~ msgstr "Džoker ikonica:"
 
 #~ msgid "Rank font:"
 #~ msgstr "Font stanja:"
@@ -1927,9 +2044,6 @@ msgstr "Javila se greška pri prikazu pomoći: %s"
 #~ msgid "Me"
 #~ msgstr "Ja"
 
-#~ msgid "Scores"
-#~ msgstr "Rezultati"
-
 #~ msgid "Drawn"
 #~ msgstr "Nerešeno"
 
@@ -2119,9 +2233,6 @@ msgstr "Javila se greška pri prikazu pomoći: %s"
 #~ msgid "Key to use for motion up."
 #~ msgstr "Taster za kretanje gore."
 
-#~ msgid "Number of players."
-#~ msgstr "Broj igrača:"
-
 #~ msgid "Play levels in random order"
 #~ msgstr "Nivoi u nasumičnom poretku"
 
@@ -2190,9 +2301,6 @@ msgstr "Javila se greška pri prikazu pomoći: %s"
 
 #~ msgid "Starting level:"
 #~ msgstr "Početni nivo: "
-
-#~ msgid "Number of players:"
-#~ msgstr "Broj igrača:"
 
 #~ msgid "Board size"
 #~ msgstr "Veličina Table"
@@ -3029,9 +3137,6 @@ msgstr "Javila se greška pri prikazu pomoći: %s"
 #~ msgid "Custom size"
 #~ msgstr "Nestandardna Veličina"
 
-#~ msgid "Number of mines:"
-#~ msgstr "Broj mina:"
-
 #~ msgid "Horizontal:"
 #~ msgstr "Vodoravno:"
 
@@ -3049,9 +3154,6 @@ msgstr "Javila se greška pri prikazu pomoći: %s"
 
 #~ msgid "Height of grid"
 #~ msgstr "Dužina mreže"
-
-#~ msgid "Number of mines"
-#~ msgstr "Broj mina"
 
 #~ msgid "NUMBER"
 #~ msgstr "Broj"
@@ -3565,14 +3667,8 @@ msgstr "Javila se greška pri prikazu pomoći: %s"
 #~ msgid "Select Map"
 #~ msgstr "Biraj Mapu:"
 
-#~ msgid "Colors"
-#~ msgstr "Boje"
-
 #~ msgid "Background Color"
 #~ msgstr "Pozadina:"
-
-#~ msgid "Warnings"
-#~ msgstr "Upozorenja"
 
 #~ msgid "Warn when tiles don't match"
 #~ msgstr "Upozori kada se slike ne poklapaju"
@@ -3891,4 +3987,4 @@ msgstr "Javila se greška pri prikazu pomoći: %s"
 #~ msgstr "Dodatni Jamb bonus"
 
 #~ msgid "Enforce Joker Rules"
-#~ msgstr "Naznači DŽoker Pravila"
+#~ msgstr "Naznači Džoker Pravila"
