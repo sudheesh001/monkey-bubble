@@ -1,49 +1,30 @@
 # Danish translation of monkey-bubble.
-# Copyright (C) 2009 Free Software Foundation, Inc.
+# Copyright (C) 2011 Free Software Foundation, Inc.
 # This file is distributed under the same license as the monkey-bubble package.
 # Peter Bach <bach.peter@gmail.com>, 2007.
-# Joe Hansen (joedalton2@yahoo.dk), 2009.
+# Joe Hansen (joedalton2@yahoo.dk), 2009, 2011.
 #
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: monkey-bubble\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-14 18:41+0100\n"
-"PO-Revision-Date: 2009-12-20 12:42+0000\n"
+"POT-Creation-Date: 2011-09-24 22:43+0200\n"
+"PO-Revision-Date: 2011-09-24 12:42+0000\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../data/keybinding.glade.h:1
+#: ../data/keybinding.ui.h:1
 msgid "Keyboard Shortcuts"
 msgstr "Tastaturgenveje"
 
-#: ../data/keybinding.glade.h:2
+#: ../data/keybinding.ui.h:2
 msgid "_Shortcut Keys:"
 msgstr "Genvej_staster:"
-
-#: ../data/monkey-bubble.glade.h:1
-msgid ""
-"<markup>\n"
-"<span weight=\"bold\" size=\"large\"\n"
-"style=\"oblique\">\n"
-"Can't create server !\n"
-"</span>\n"
-"</markup>"
-msgstr ""
-"<markup>\n"
-"<span weight=\"bold\" size=\"large\"\n"
-"style=\"oblique\">\n"
-"Kan ikke oprette server !\n"
-"</span>\n"
-"</markup>"
-
-#: ../data/monkey-bubble.glade.h:7
-msgid "Warning"
-msgstr "Advarsel"
 
 #: ../data/monkey-bubble.schemas.in.h:1
 msgid "1 player game"
@@ -125,58 +106,102 @@ msgstr "skydetast for spiller et"
 msgid "shoot key for player two"
 msgstr "skydetast for spiller to"
 
-#: ../data/netgame.glade.h:1
-msgid "*"
-msgstr "*"
+#: ../data/monkey-bubble.ui.h:1
+msgid ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Can't create server !\n"
+"</span>\n"
+"</markup>"
+msgstr ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Kan ikke oprette server !\n"
+"</span>\n"
+"</markup>"
 
-#: ../data/netgame.glade.h:2
+#: ../data/monkey-bubble.ui.h:7
+msgid "Warning"
+msgstr "Advarsel"
+
+#: ../data/netgame.ui.h:1
 msgid "Close"
 msgstr "Luk"
 
-#: ../data/netgame.glade.h:3 ../data/netserver.glade.h:1
-#: ../src/ui/ui-network-client.c:156
+#: ../data/netgame.ui.h:2 ../data/netserver.ui.h:1
+#: ../src/ui/ui-network-client.c:173
 msgid "Network game"
 msgstr "Netværksspil"
 
-#: ../data/netgame.glade.h:4
+#: ../data/netgame.ui.h:3
 msgid "Number of games :"
 msgstr "Antal af spil:"
 
-#: ../data/netgame.glade.h:5
+#: ../data/netgame.ui.h:4
 msgid "Number of players :"
 msgstr "Antal spillere:"
 
-#: ../data/netgame.glade.h:6 ../data/netserver.glade.h:4
-#: ../src/ui/keyboard-properties.c:86
+#: ../data/netgame.ui.h:5 ../data/netserver.ui.h:4
+#: ../src/ui/keyboard-properties.c:85
 msgid "Quit game"
 msgstr "Afslut spil"
 
-#: ../data/netgame.glade.h:7 ../data/netserver.glade.h:5
+#: ../data/netgame.ui.h:6 ../data/netserver.ui.h:5
 msgid "Ready"
 msgstr "Klar"
 
-#: ../data/netgame.glade.h:8
+#: ../data/netgame.ui.h:7
 msgid "_Go"
 msgstr "_Start"
 
-#: ../data/netgame.glade.h:9
+#: ../data/netgame.ui.h:8
 msgid "_Server"
 msgstr "_Server"
 
-#: ../data/netserver.glade.h:2
+#: ../data/netserver.ui.h:2
 msgid "Number of game"
 msgstr "Antal spil"
 
-#: ../data/netserver.glade.h:3
+#: ../data/netserver.ui.h:3
 msgid "Number of players"
 msgstr "Antal spillere"
 
-#: ../data/netserver.glade.h:6
+#: ../data/netserver.ui.h:6
 msgid "Start Game"
 msgstr "Start spil"
 
-#: ../monkey-bubble.desktop.in.in.h:1 ../src/ui/ui-main.c:263
-#: ../src/ui/ui-main.c:275
+#: ../libgnomeui/gnome-scores.c:72
+msgid "Top Ten"
+msgstr "Top ti"
+
+#: ../libgnomeui/gnome-scores.c:85
+msgid "User"
+msgstr "Spiller"
+
+#: ../libgnomeui/gnome-scores.c:88
+msgid "Score"
+msgstr "Point"
+
+#: ../libgnomeui/gnome-scores.c:91
+msgid "Date"
+msgstr "Dato"
+
+# Sat Sep 24 20:09:20 2011
+#. TRANSLATORS NOTE: Date format used when showing scores in games.
+#. * Please refer to manpage of strftime(3) for complete reference.
+#.
+#: ../libgnomeui/gnome-scores.c:188
+msgid "%a %b %d %T %Y"
+msgstr "%a den %d. %b %Y %T"
+
+#: ../libgnomeui/gnome-scores.c:389
+msgid "Sans 14"
+msgstr "Sans 14"
+
+#: ../monkey-bubble.desktop.in.in.h:1 ../src/ui/main.c:97
+#: ../src/ui/ui-main.c:259 ../src/ui/ui-main.c:271
 msgid "Monkey Bubble"
 msgstr "Monkey Bubble"
 
@@ -184,64 +209,64 @@ msgstr "Monkey Bubble"
 msgid "Monkey Bubble Arcade Game"
 msgstr "Monkey Bubble Arkadespil"
 
-#: ../src/ui/keyboard-properties.c:78
+#: ../src/ui/keyboard-properties.c:77
 msgid "New game 1 player"
 msgstr "Nyt spil 1 spiller"
 
-#: ../src/ui/keyboard-properties.c:80
+#: ../src/ui/keyboard-properties.c:79
 msgid "New game 2 player"
 msgstr "Nyt spil 2 spiller"
 
-#: ../src/ui/keyboard-properties.c:82
+#: ../src/ui/keyboard-properties.c:81
 msgid "Pause/Resume"
 msgstr "Pause/Genoptag"
 
-#: ../src/ui/keyboard-properties.c:84 ../src/ui/ui-main.c:229
+#: ../src/ui/keyboard-properties.c:83 ../src/ui/ui-main.c:225
 msgid "Stop game"
 msgstr "Stop spil"
 
-#: ../src/ui/keyboard-properties.c:92
+#: ../src/ui/keyboard-properties.c:91
 msgid "Full Screen"
 msgstr "Fuldskærm"
 
-#: ../src/ui/keyboard-properties.c:94
+#: ../src/ui/keyboard-properties.c:93
 msgid "Normal Size"
 msgstr "Normal størrelse"
 
-#: ../src/ui/keyboard-properties.c:99 ../src/ui/keyboard-properties.c:109
+#: ../src/ui/keyboard-properties.c:98 ../src/ui/keyboard-properties.c:108
 msgid "aim left"
 msgstr "sigt venstre"
 
-#: ../src/ui/keyboard-properties.c:101 ../src/ui/keyboard-properties.c:111
+#: ../src/ui/keyboard-properties.c:100 ../src/ui/keyboard-properties.c:110
 msgid "aim right"
 msgstr "sigt højre"
 
-#: ../src/ui/keyboard-properties.c:103 ../src/ui/keyboard-properties.c:113
+#: ../src/ui/keyboard-properties.c:102 ../src/ui/keyboard-properties.c:112
 msgid "shoot"
 msgstr "skyd"
 
-#: ../src/ui/keyboard-properties.c:120
+#: ../src/ui/keyboard-properties.c:119
 msgid "Player 1"
 msgstr "Spiller 1"
 
-#: ../src/ui/keyboard-properties.c:121
+#: ../src/ui/keyboard-properties.c:120
 msgid "Player 2"
 msgstr "Spiller 2"
 
-#: ../src/ui/keyboard-properties.c:122
+#: ../src/ui/keyboard-properties.c:121
 msgid "Game"
 msgstr "Spil"
 
-#: ../src/ui/keyboard-properties.c:123
+#: ../src/ui/keyboard-properties.c:122
 msgid "View"
 msgstr "Visning"
 
-#: ../src/ui/keyboard-properties.c:309
+#: ../src/ui/keyboard-properties.c:307
 #, c-format
 msgid "There was an error loading config from %s. (%s)\n"
 msgstr "Der opstod en fejl ved hentning af konfiguration fra %s. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:323
+#: ../src/ui/keyboard-properties.c:321
 #, c-format
 msgid ""
 "There was an error subscribing to notification of terminal keybinding "
@@ -250,17 +275,17 @@ msgstr ""
 "Der opstod en fejl ved binding til påmindelse om terminaltaste-"
 "kombinationsændringer. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:366
+#: ../src/ui/keyboard-properties.c:364
 #, c-format
 msgid "There was an error loading a terminal keybinding. (%s)\n"
 msgstr "Der opstod en fejl ved hentning af terminaltastekombination. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:382
+#: ../src/ui/keyboard-properties.c:380
 #, c-format
 msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
 msgstr "Værdien af konfigurationstast %s er ikke gyldig; værdi er \"%s\"\n"
 
-#: ../src/ui/keyboard-properties.c:405
+#: ../src/ui/keyboard-properties.c:403
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menubar access "
@@ -269,7 +294,7 @@ msgstr ""
 "Der opstod en fejl ved hentning af konfigurationsværdi for brugen af menubar-"
 "tilgangstaster. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:419
+#: ../src/ui/keyboard-properties.c:417
 #, c-format
 msgid ""
 "There was an error subscribing to notification on changes on whether to use "
@@ -278,7 +303,7 @@ msgstr ""
 "Der opstod en fejl ved binding til påmindelse om ændringer af brugen af "
 "menubartilgangstaster (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:430
+#: ../src/ui/keyboard-properties.c:428
 #, c-format
 msgid ""
 "There was an error loading config value for whether to use menu "
@@ -287,95 +312,103 @@ msgstr ""
 "Der opstod en fejl ved hentning af konfigurationsværdi for brugen af "
 "menuacceleratorer. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:446
+#: ../src/ui/keyboard-properties.c:444
 #, c-format
 msgid ""
-"There was an error subscribing to notification for use_menu_accelerators (%"
-"s)\n"
+"There was an error subscribing to notification for use_menu_accelerators "
+"(%s)\n"
 msgstr ""
 "Der opstod en fejl ved binding til påmindelse om brugen af menu-"
 "acceleratorer (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:728
+#: ../src/ui/keyboard-properties.c:726
 msgid "Disabled"
 msgstr "Deaktiveret"
 
-#: ../src/ui/keyboard-properties.c:788
+#: ../src/ui/keyboard-properties.c:786
 #, c-format
 msgid "Error propagating accelerator change to configuration database: %s\n"
 msgstr ""
 "Fejl ved udgivelse af acceleratorændring til konfigurationsdatabase: %s\n"
 
-#: ../src/ui/keyboard-properties.c:956
+#: ../src/ui/keyboard-properties.c:954
 #, c-format
 msgid "Error setting new accelerator in configuration database: %s\n"
 msgstr "Fejl ved opsætning af ny accelerator i konfigurationsdatabase: %s\n"
 
-#: ../src/ui/keyboard-properties.c:1055
+#: ../src/ui/keyboard-properties.c:1061
 msgid "_Action"
 msgstr "_Handling"
 
-#: ../src/ui/keyboard-properties.c:1078
+#: ../src/ui/keyboard-properties.c:1084
 msgid "Shortcut _Key"
 msgstr "_Genvejstast"
 
-#: ../src/ui/main.c:91
+#: ../src/ui/main.c:87
 msgid "Monkey Bubble is a Bust'a'Move clone for GNOME"
 msgstr "Monkey Bubble er en Bust'a'Move-klon til GNOME"
 
-#: ../src/ui/ui-main.c:203
+#: ../src/ui/ui-main.c:199
 msgid "_Game"
 msgstr "_Spil"
 
-#: ../src/ui/ui-main.c:204
+#: ../src/ui/ui-main.c:200
 msgid "New 1 player"
 msgstr "Nyt 1-persons spil"
 
-#: ../src/ui/ui-main.c:207
+#: ../src/ui/ui-main.c:203
 msgid "Join _network game"
 msgstr "Tilslut _netværksspil"
 
-#: ../src/ui/ui-main.c:210
+#: ../src/ui/ui-main.c:206
 msgid "Pause game"
 msgstr "Pause spil"
 
-#: ../src/ui/ui-main.c:213
+#: ../src/ui/ui-main.c:209
 msgid "Resume game"
 msgstr "Genoptag spil"
 
-#: ../src/ui/ui-main.c:217
+#: ../src/ui/ui-main.c:213
 msgid "New 2 players"
 msgstr "Nyt 2-personers spil"
 
-#: ../src/ui/ui-main.c:220
+#: ../src/ui/ui-main.c:216
 msgid "New network game"
 msgstr "Nyt netværksspil"
 
-#: ../src/ui/ui-main.c:226
+#: ../src/ui/ui-main.c:222
 msgid "_High Scores"
 msgstr "_Højeste score"
 
-#: ../src/ui/ui-main.c:232
+#: ../src/ui/ui-main.c:228
 msgid "_Help"
 msgstr "_Hjælp"
 
-#: ../src/ui/ui-main.c:233
+#: ../src/ui/ui-main.c:229
 msgid "_Contents"
 msgstr "_Indhold"
 
-#: ../src/ui/ui-main.c:236
+#: ../src/ui/ui-main.c:232
 msgid "_About"
 msgstr "_Om"
 
-#: ../src/ui/ui-main.c:239
+#: ../src/ui/ui-main.c:235
 msgid "_Fullscreen"
 msgstr "_Fuldskærm"
 
-#: ../src/ui/ui-main.c:242
+#: ../src/ui/ui-main.c:238
 msgid "_Leave Fullscreen"
 msgstr "For_lad fuldskærm"
 
-#: ../src/ui/ui-main.c:756
+#: ../src/ui/ui-main.c:766
+msgid ""
+"Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
+"remove all Bubbles by the creation of unicolor triplets."
+msgstr ""
+"Monkey Bubble er et Arkade spil til GNOME-skrivebordsmiljøet. Fjern alle "
+"bobler ved samling af tre ensfarvede bobler."
+
+#: ../src/ui/ui-main.c:773
 msgid "translator_credits"
 msgstr ""
 "Peter Bach, 2007.\n"
@@ -384,27 +417,22 @@ msgstr ""
 "Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
 "Mere info: http://www.dansk-gruppen.dk"
 
-#: ../src/ui/ui-main.c:764
-msgid ""
-"Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
-"remove all Bubbles by the creation of unicolor triplets."
-msgstr ""
-"Monkey Bubble er et Arkade spil til GNOME-skrivebordsmiljøet. Fjern alle "
-"bobler ved samling af tre ensfarvede bobler."
-
-#: ../src/ui/ui-main.c:785
+#: ../src/ui/ui-main.c:794
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Der opstod en fejl ved visning af hjælp: %s"
 
-#: ../src/ui/ui-network-server.c:161 ../src/ui/ui-network-client.c:195
+#: ../src/ui/ui-network-client.c:209 ../src/ui/ui-network-server.c:168
 msgid "_Player name"
 msgstr "_Spillernavn"
 
-#: ../src/ui/ui-network-server.c:168 ../src/ui/ui-network-client.c:202
+#: ../src/ui/ui-network-client.c:216 ../src/ui/ui-network-server.c:175
 msgid "_Owner"
 msgstr "_Ejer"
 
-#: ../src/ui/ui-network-server.c:175 ../src/ui/ui-network-client.c:209
+#: ../src/ui/ui-network-client.c:223 ../src/ui/ui-network-server.c:182
 msgid "_Ready"
 msgstr "Kla_r"
+
+#~ msgid "*"
+#~ msgstr "*"
