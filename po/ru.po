@@ -6,24 +6,104 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: monkey-bubble\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-04 18:50+0400\n"
-"PO-Revision-Date: 2004-09-04 00:59+0200\n"
-"Last-Translator: Nickolay V. Shmyrev <nshmyrev@yandex.ru>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=monkey-bubble&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-12-01 08:04+0000\n"
+"PO-Revision-Date: 2011-12-01 20:16+0300\n"
+"Last-Translator: Yuri Myasoedov <omerta13@yandex.ru>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/keybinding.glade.h:1
+#: ../data/keybinding.ui.h:1
 msgid "Keyboard Shortcuts"
 msgstr "Комбинации клавиш"
 
-#: data/keybinding.glade.h:2
+#: ../data/keybinding.ui.h:2
 msgid "_Shortcut Keys:"
 msgstr "_Комбинации клавиш"
 
-#: data/monkey-bubble.glade.h:1
+#: ../data/monkey-bubble.schemas.in.h:1
+msgid "1 player game"
+msgstr "Одиночная игра"
+
+#: ../data/monkey-bubble.schemas.in.h:2
+msgid "2 players game"
+msgstr "Игра вдвоем"
+
+#: ../data/monkey-bubble.schemas.in.h:3
+msgid "F1"
+msgstr "F1"
+
+#: ../data/monkey-bubble.schemas.in.h:4
+msgid "F2"
+msgstr "F2"
+
+#: ../data/monkey-bubble.schemas.in.h:5
+msgid "Left"
+msgstr "Влево"
+
+#: ../data/monkey-bubble.schemas.in.h:6
+msgid "Pause"
+msgstr "Pause"
+
+#: ../data/monkey-bubble.schemas.in.h:7
+msgid "Pause the game"
+msgstr "Приостановить игру"
+
+#: ../data/monkey-bubble.schemas.in.h:8
+msgid "Quit the game"
+msgstr "Выйти из игры"
+
+#: ../data/monkey-bubble.schemas.in.h:9
+msgid "Right"
+msgstr "Вправо"
+
+#: ../data/monkey-bubble.schemas.in.h:10
+msgid "Stop the game"
+msgstr "Закончить игру"
+
+#: ../data/monkey-bubble.schemas.in.h:11
+msgid "Up"
+msgstr "Вверх"
+
+#: ../data/monkey-bubble.schemas.in.h:12
+msgid "d"
+msgstr "d"
+
+#: ../data/monkey-bubble.schemas.in.h:13
+msgid "f"
+msgstr "f"
+
+#: ../data/monkey-bubble.schemas.in.h:14
+msgid "left key for player one"
+msgstr "Клавиша влево для первого игрока"
+
+#: ../data/monkey-bubble.schemas.in.h:15
+msgid "left key for player two"
+msgstr "Клавиша влево для второго игрока"
+
+#: ../data/monkey-bubble.schemas.in.h:16
+msgid "right key for player one"
+msgstr "Клавиша вправо для первого игрока"
+
+#: ../data/monkey-bubble.schemas.in.h:17
+msgid "right key for player two"
+msgstr "Клавиша вправо для второго игрока"
+
+#: ../data/monkey-bubble.schemas.in.h:18
+msgid "s"
+msgstr "s"
+
+#: ../data/monkey-bubble.schemas.in.h:19
+msgid "shoot key for player one"
+msgstr "Клавиша выстрела для первого игрока"
+
+#: ../data/monkey-bubble.schemas.in.h:20
+msgid "shoot key for player two"
+msgstr "Клавиша выстрела для второго игрока"
+
+#: ../data/monkey-bubble.ui.h:1
 msgid ""
 "<markup>\n"
 "<span weight=\"bold\" size=\"large\"\n"
@@ -39,372 +119,296 @@ msgstr ""
 "</span>\n"
 "</markup>"
 
-#: data/monkey-bubble.glade.h:7
-msgid "Create network game"
-msgstr "Создать сетевую игру"
-
-#: data/monkey-bubble.glade.h:8
-msgid "Join _network game"
-msgstr "_Присоединиться к сетевой игре"
-
-#: data/monkey-bubble.glade.h:9 monkey-bubble.desktop.in.h:1
-msgid "Monkey Bubble"
-msgstr "Monkey Bubble"
-
-#: data/monkey-bubble.glade.h:10
-msgid "New 1 player"
-msgstr "Начать игру в одиночку"
-
-#: data/monkey-bubble.glade.h:11
-msgid "New 2 players"
-msgstr "Начать игру вдвоем"
-
-#: data/monkey-bubble.glade.h:12 src/ui/ui-main.c:402 src/ui/ui-main.c:534
-msgid "Pause game"
-msgstr "Приостановить игру"
-
-#: data/monkey-bubble.glade.h:13 src/ui/keyboard-properties.c:85
-msgid "Stop game"
-msgstr "Закончить игру"
-
-#: data/monkey-bubble.glade.h:14
+#: ../data/monkey-bubble.ui.h:7
 msgid "Warning"
 msgstr "Предупреждение"
 
-#: data/monkey-bubble.glade.h:15
-msgid "_About"
-msgstr "_О программе"
+#: ../data/netgame.ui.h:1
+msgid "Close"
+msgstr "Закрыть"
 
-#: data/monkey-bubble.glade.h:16
-msgid "_Contents"
-msgstr "_Содержание"
-
-#: data/monkey-bubble.glade.h:17
-msgid "_Game"
-msgstr "_Игра"
-
-#: data/monkey-bubble.glade.h:18
-msgid "_Help"
-msgstr "_Справка"
-
-#: data/monkey-bubble.glade.h:19
-msgid "_Settings"
-msgstr "_Параметры"
-
-#: data/monkey-bubble.schemas.in.h:1
-msgid "1 player game"
-msgstr "Одиночная игра"
-
-#: data/monkey-bubble.schemas.in.h:2
-msgid "2 players game"
-msgstr "Игра вдвоем"
-
-#: data/monkey-bubble.schemas.in.h:3
-msgid "F1"
-msgstr "F1"
-
-#: data/monkey-bubble.schemas.in.h:4
-msgid "F2"
-msgstr "F2"
-
-#: data/monkey-bubble.schemas.in.h:5
-msgid "Left"
-msgstr "Left"
-
-#: data/monkey-bubble.schemas.in.h:6
-msgid "Pause"
-msgstr "Pause"
-
-#: data/monkey-bubble.schemas.in.h:7
-msgid "Pause the game"
-msgstr "Приостановить игру"
-
-#: data/monkey-bubble.schemas.in.h:8
-msgid "Quit the game"
-msgstr "Выйти из игры"
-
-#: data/monkey-bubble.schemas.in.h:9
-msgid "Right"
-msgstr "Right"
-
-#: data/monkey-bubble.schemas.in.h:10
-msgid "Stop the game"
-msgstr "Закончить игру"
-
-#: data/monkey-bubble.schemas.in.h:11
-msgid "Up"
-msgstr "Up"
-
-#: data/monkey-bubble.schemas.in.h:12
-msgid "d"
-msgstr "d"
-
-#: data/monkey-bubble.schemas.in.h:13
-msgid "f"
-msgstr "f"
-
-#: data/monkey-bubble.schemas.in.h:14
-msgid "left key for player one"
-msgstr "Клавиша влево для первого игрока"
-
-#: data/monkey-bubble.schemas.in.h:15
-msgid "left key for player two"
-msgstr "Клавиша влево для второго игрока"
-
-#: data/monkey-bubble.schemas.in.h:16
-msgid "right key for player one"
-msgstr "Клавиша вправо для первого игрока"
-
-#: data/monkey-bubble.schemas.in.h:17
-msgid "right key for player two"
-msgstr "Клавиша вправо для второго игрока"
-
-#: data/monkey-bubble.schemas.in.h:18
-msgid "s"
-msgstr "s"
-
-#: data/monkey-bubble.schemas.in.h:19
-msgid "shoot key for player one"
-msgstr "Клавиша выстрела для первого игрока"
-
-#: data/monkey-bubble.schemas.in.h:20
-msgid "shoot key for player two"
-msgstr "Клавиша выстрела для второго игрока"
-
-#: data/netgame.glade.h:1
-msgid "*"
-msgstr "*"
-
-#: data/netgame.glade.h:2 data/netserver.glade.h:1
+#: ../data/netgame.ui.h:2
+#: ../data/netserver.ui.h:1
+#: ../src/ui/ui-network-client.c:173
 msgid "Network game"
 msgstr "Сетевая игра"
 
-#: data/netgame.glade.h:3
+#: ../data/netgame.ui.h:3
 msgid "Number of games :"
 msgstr "Максимальное число игр:"
 
-#: data/netgame.glade.h:4
+#: ../data/netgame.ui.h:4
 msgid "Number of players :"
 msgstr "Максимальное число игроков:"
 
-#: data/netgame.glade.h:5 data/netserver.glade.h:4
-#: src/ui/keyboard-properties.c:87
+#: ../data/netgame.ui.h:5
+#: ../data/netserver.ui.h:4
+#: ../src/ui/keyboard-properties.c:85
 msgid "Quit game"
 msgstr "Выйти из игры"
 
-#: data/netgame.glade.h:6 data/netserver.glade.h:5
+#: ../data/netgame.ui.h:6
+#: ../data/netserver.ui.h:5
 msgid "Ready"
 msgstr "Готов"
 
-#: data/netgame.glade.h:7
+#: ../data/netgame.ui.h:7
 msgid "_Go"
 msgstr "_Вперед"
 
-#: data/netgame.glade.h:8
+#: ../data/netgame.ui.h:8
 msgid "_Server"
 msgstr "_Сервер"
 
-#: data/netserver.glade.h:2
+#: ../data/netserver.ui.h:2
 msgid "Number of game"
 msgstr "Максимальное число игр:"
 
-#: data/netserver.glade.h:3
+#: ../data/netserver.ui.h:3
 msgid "Number of players"
 msgstr "Максимальное число игроков:"
 
-#: data/netserver.glade.h:6
+#: ../data/netserver.ui.h:6
 msgid "Start Game"
 msgstr "Начать игру"
 
-#: monkey-bubble.desktop.in.h:2
+#: ../libgnomeui/gnome-scores.c:72
+msgid "Top Ten"
+msgstr "Десятка лучших"
+
+#: ../libgnomeui/gnome-scores.c:85
+msgid "User"
+msgstr "Пользователь"
+
+#: ../libgnomeui/gnome-scores.c:88
+msgid "Score"
+msgstr "Счёт"
+
+#: ../libgnomeui/gnome-scores.c:91
+msgid "Date"
+msgstr "Дата"
+
+#. TRANSLATORS NOTE: Date format used when showing scores in games.
+#. * Please refer to manpage of strftime(3) for complete reference.
+#.
+#: ../libgnomeui/gnome-scores.c:188
+msgid "%a %b %d %T %Y"
+msgstr "%a %d %b %Y %T "
+
+#: ../libgnomeui/gnome-scores.c:389
+msgid "Sans 14"
+msgstr "Sans 14"
+
+#: ../monkey-bubble.desktop.in.in.h:1
+#: ../src/ui/main.c:97
+#: ../src/ui/ui-main.c:259
+#: ../src/ui/ui-main.c:271
+msgid "Monkey Bubble"
+msgstr "Monkey Bubble"
+
+#: ../monkey-bubble.desktop.in.in.h:2
 msgid "Monkey Bubble Arcade Game"
 msgstr "Аркадная игра Monkey Bubble"
 
-#: src/ui/eggcellrendererkeys.c:160 src/ui/eggcellrendererkeys.c:161
-msgid "Accelerator key"
-msgstr "Комбинация клавиш"
-
-#: src/ui/eggcellrendererkeys.c:170 src/ui/eggcellrendererkeys.c:171
-msgid "Accelerator modifiers"
-msgstr "Модификатор комбинации"
-
-#: src/ui/eggcellrendererkeys.c:180
-msgid "Accelerator Mode"
-msgstr "Режим комбинации"
-
-#: src/ui/eggcellrendererkeys.c:181
-msgid "The type of accelerator."
-msgstr "Тип комбинации клавиш"
-
-#: src/ui/eggcellrendererkeys.c:219 src/ui/keyboard-properties.c:764
-msgid "Disabled"
-msgstr "Выключен"
-
-#: src/ui/eggcellrendererkeys.c:330 src/ui/eggcellrendererkeys.c:568
-msgid "Type a new accelerator, or press Backspace to clear"
-msgstr "Нажмите новую комбинацию, для очистки нажмите Backspace"
-
-#: src/ui/eggcellrendererkeys.c:571
-msgid "Type a new accelerator"
-msgstr "Нажмите новую комбинацию"
-
-#: src/ui/keyboard-properties.c:79
+#: ../src/ui/keyboard-properties.c:77
 msgid "New game 1 player"
-msgstr "Новая игра в одиночку"
+msgstr "Создать игру на одного"
 
-#: src/ui/keyboard-properties.c:81
+#: ../src/ui/keyboard-properties.c:79
 msgid "New game 2 player"
-msgstr "Новая игра вдвоем"
+msgstr "Создать игру на двоих"
 
-#: src/ui/keyboard-properties.c:83
+#: ../src/ui/keyboard-properties.c:81
 msgid "Pause/Resume"
 msgstr "Приостановить/Продолжить"
 
-#: src/ui/keyboard-properties.c:93
+#: ../src/ui/keyboard-properties.c:83
+#: ../src/ui/ui-main.c:225
+msgid "Stop game"
+msgstr "Закончить игру"
+
+#: ../src/ui/keyboard-properties.c:91
 msgid "Full Screen"
 msgstr "Во весь экран"
 
-#: src/ui/keyboard-properties.c:95
+#: ../src/ui/keyboard-properties.c:93
 msgid "Normal Size"
 msgstr "Обычный размер"
 
-#: src/ui/keyboard-properties.c:100 src/ui/keyboard-properties.c:110
+#: ../src/ui/keyboard-properties.c:98
+#: ../src/ui/keyboard-properties.c:108
 msgid "aim left"
 msgstr "Целиться влево"
 
-#: src/ui/keyboard-properties.c:102 src/ui/keyboard-properties.c:112
+#: ../src/ui/keyboard-properties.c:100
+#: ../src/ui/keyboard-properties.c:110
 msgid "aim right"
 msgstr "Целиться вправо"
 
-#: src/ui/keyboard-properties.c:104 src/ui/keyboard-properties.c:114
+#: ../src/ui/keyboard-properties.c:102
+#: ../src/ui/keyboard-properties.c:112
 msgid "shoot"
 msgstr "Выстрел"
 
-#: src/ui/keyboard-properties.c:121
+#: ../src/ui/keyboard-properties.c:119
 msgid "Player 1"
 msgstr "Игрок 1"
 
-#: src/ui/keyboard-properties.c:122
+#: ../src/ui/keyboard-properties.c:120
 msgid "Player 2"
 msgstr "Игрок 2"
 
-#: src/ui/keyboard-properties.c:123
+#: ../src/ui/keyboard-properties.c:121
 msgid "Game"
 msgstr "Игра"
 
-#: src/ui/keyboard-properties.c:124
+#: ../src/ui/keyboard-properties.c:122
 msgid "View"
 msgstr "Вид"
 
-#: src/ui/keyboard-properties.c:337
+#: ../src/ui/keyboard-properties.c:307
 #, c-format
 msgid "There was an error loading config from %s. (%s)\n"
-msgstr "В процессе загрузки конфигурации из %s произошла ошибка %s'\n"
+msgstr "В процессе загрузки конфигурации из %s произошла ошибка (%s)\n"
 
-#: src/ui/keyboard-properties.c:351
+#: ../src/ui/keyboard-properties.c:321
 #, c-format
-msgid ""
-"There was an error subscribing to notification of terminal keybinding "
-"changes. (%s)\n"
-msgstr ""
-"Во время подписки на уведомления уведомления о измененниибыстрых клавиш "
-"произошла ошибка. (%s)\n"
+msgid "There was an error subscribing to notification of terminal keybinding changes. (%s)\n"
+msgstr "Во время подписки на уведомления об измененнии быстрых клавиш произошла ошибка. (%s)\n"
 
-#: src/ui/keyboard-properties.c:394
+#: ../src/ui/keyboard-properties.c:364
 #, c-format
 msgid "There was an error loading a terminal keybinding. (%s)\n"
 msgstr "Во время загрузки быстрых клавиш произошла ошибка. (%s)\n"
 
-#: src/ui/keyboard-properties.c:410
+#: ../src/ui/keyboard-properties.c:380
 #, c-format
 msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
 msgstr "Значение конфигурационной клавиши %s некорректно; значение \"%s\"\n"
 
-#: src/ui/keyboard-properties.c:433
+#: ../src/ui/keyboard-properties.c:403
 #, c-format
-msgid ""
-"There was an error loading config value for whether to use menubar access "
-"keys. (%s)\n"
-msgstr ""
-"Во время загрузки конфигурационного значения для клавиш доступа к "
-"менюпроизошла ошибка. (%s)\n"
+msgid "There was an error loading config value for whether to use menubar access keys. (%s)\n"
+msgstr "Во время загрузки конфигурационного значения для клавиш доступа к меню произошла ошибка. (%s)\n"
 
-#: src/ui/keyboard-properties.c:447
+#: ../src/ui/keyboard-properties.c:417
 #, c-format
-msgid ""
-"There was an error subscribing to notification on changes on whether to use "
-"menubar access keys (%s)\n"
-msgstr ""
-"Во время подписки на уведомления об изменении настроекиспользования быстрых "
-"клавиш в меню произошла ошибка (%s)\n"
+msgid "There was an error subscribing to notification on changes on whether to use menubar access keys (%s)\n"
+msgstr "Во время подписки на уведомления об изменении настроек использования быстрых клавиш в меню произошла ошибка (%s)\n"
 
-#: src/ui/keyboard-properties.c:458
+#: ../src/ui/keyboard-properties.c:428
 #, c-format
-msgid ""
-"There was an error loading config value for whether to use menu "
-"accelerators. (%s)\n"
-msgstr ""
-"Во премя загрузки конфигурационных значения для использованиябыстрых клавиш "
-"меню произошла ошибка. (%s)\n"
+msgid "There was an error loading config value for whether to use menu accelerators. (%s)\n"
+msgstr "Во премя загрузки конфигурационных значения для использованиябыстрых клавиш меню произошла ошибка. (%s)\n"
 
-#: src/ui/keyboard-properties.c:474
+#: ../src/ui/keyboard-properties.c:444
 #, c-format
-msgid ""
-"There was an error subscribing to notification for use_menu_accelerators (%"
-"s)\n"
-msgstr ""
-"Во время подписки на уведомления об использовании быстрых клавиш в "
-"менюпроизошла ошибка: %s\n"
+msgid "There was an error subscribing to notification for use_menu_accelerators (%s)\n"
+msgstr "Во время подписки на уведомления об использовании быстрых клавиш в меню произошла ошибка: %s\n"
 
-#: src/ui/keyboard-properties.c:824
+#: ../src/ui/keyboard-properties.c:726
+msgid "Disabled"
+msgstr "Выключен"
+
+#: ../src/ui/keyboard-properties.c:786
 #, c-format
 msgid "Error propagating accelerator change to configuration database: %s\n"
 msgstr "Во время сохранения быстрых клавиш произошла ошибка: %s\n"
 
-#: src/ui/keyboard-properties.c:993
+#: ../src/ui/keyboard-properties.c:954
 #, c-format
 msgid "Error setting new accelerator in configuration database: %s\n"
-msgstr ""
-"Во время сохранения быстрой клавиши в конфигурационнойбазе произошла ошибка: "
-"%s\n"
+msgstr "Во время сохранения быстрой клавиши в конфигурационной базе произошла ошибка: %s\n"
 
-#: src/ui/keyboard-properties.c:1092
+#: ../src/ui/keyboard-properties.c:1061
 msgid "_Action"
 msgstr "_Действие"
 
-#: src/ui/keyboard-properties.c:1114
+#: ../src/ui/keyboard-properties.c:1084
 msgid "Shortcut _Key"
 msgstr "Быстрая _Клавиша"
 
-#: src/ui/ui-main.c:527
+#: ../src/ui/main.c:87
+msgid "Monkey Bubble is a Bust'a'Move clone for GNOME"
+msgstr "Monkey Bubble — это клон игры «Bust'a'Move» для GNOME"
+
+#: ../src/ui/ui-main.c:199
+msgid "_Game"
+msgstr "_Игра"
+
+#: ../src/ui/ui-main.c:200
+msgid "New 1 player"
+msgstr "Начать игру в одиночку"
+
+#: ../src/ui/ui-main.c:203
+msgid "Join _network game"
+msgstr "_Присоединиться к сетевой игре"
+
+#: ../src/ui/ui-main.c:206
+msgid "Pause game"
+msgstr "Приостановить игру"
+
+#: ../src/ui/ui-main.c:209
 msgid "Resume game"
 msgstr "Продолжить игру"
 
-#: src/ui/ui-main.c:611
+#: ../src/ui/ui-main.c:213
+msgid "New 2 players"
+msgstr "Создать игру на двоих"
+
+#: ../src/ui/ui-main.c:216
+msgid "New network game"
+msgstr "Создать сетевую игру"
+
+#: ../src/ui/ui-main.c:222
+msgid "_High Scores"
+msgstr "_Лучшие результаты"
+
+#: ../src/ui/ui-main.c:228
+msgid "_Help"
+msgstr "_Справка"
+
+#: ../src/ui/ui-main.c:229
+msgid "_Contents"
+msgstr "_Содержание"
+
+#: ../src/ui/ui-main.c:232
+msgid "_About"
+msgstr "_О программе"
+
+#: ../src/ui/ui-main.c:235
+msgid "_Fullscreen"
+msgstr "Полно_экранный режим"
+
+#: ../src/ui/ui-main.c:238
+msgid "_Leave Fullscreen"
+msgstr "По_кинуть полноэкранный режим"
+
+#: ../src/ui/ui-main.c:766
+msgid "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply remove all Bubbles by the creation of unicolor triplets."
+msgstr "Monkey Bubble это аркадная игра, использующая рабочую среду GNOME. Просто удаляйте пузыри, создавая из них тройки одного цвета."
+
+#: ../src/ui/ui-main.c:773
 msgid "translator_credits"
 msgstr "Николай В. Шмырев <nshmyrev@yandex.ru>"
 
-#: src/ui/ui-main.c:619
-msgid ""
-"Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
-"remove all Bubbles by the creation of unicolor triplets."
-msgstr ""
-"Monkey Bubble это аркадная игра, использующая рабочую среду Гном. Просто "
-"удаляйте пузыри, создавая из них тройки."
-
-#: src/ui/ui-main.c:640
+#: ../src/ui/ui-main.c:794
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Во время отображения помощи произошла ошибка: %s."
 
-#: src/ui/ui-network-server.c:158 src/ui/ui-network-client.c:148
+#: ../src/ui/ui-network-client.c:209
+#: ../src/ui/ui-network-server.c:168
 msgid "_Player name"
 msgstr "_Игрок"
 
-#: src/ui/ui-network-server.c:165 src/ui/ui-network-client.c:155
+#: ../src/ui/ui-network-client.c:216
+#: ../src/ui/ui-network-server.c:175
 msgid "_Owner"
 msgstr "_Владелец"
 
-#: src/ui/ui-network-server.c:172 src/ui/ui-network-client.c:162
+#: ../src/ui/ui-network-client.c:223
+#: ../src/ui/ui-network-server.c:182
 msgid "_Ready"
 msgstr "_Готов"
+
