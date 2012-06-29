@@ -3,97 +3,28 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Giorgos Koklas <geokok1981@gmail.com>, 2007.
 # Athanasios Lefteris <alefteris@gmail.com>, 2007.
-# 
-# 
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: monkey-bubble.HEAD\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-27 13:45+0200\n"
-"PO-Revision-Date: 2007-01-27 13:44+0200\n"
-"Last-Translator: Athanasios Lefteris <alefteris@gmail.com>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=monkey-bubble&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-07-10 13:22+0000\n"
+"PO-Revision-Date: 2012-06-29 10:40+0200\n"
+"Last-Translator: Tom Tryfonidis <tomtryf@gmail.com>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../data/keybinding.glade.h:1
+#: ../data/keybinding.ui.h:1
 msgid "Keyboard Shortcuts"
 msgstr "Συντομεύσεις πληκτρολογίου"
 
-#: ../data/keybinding.glade.h:2
+#: ../data/keybinding.ui.h:2
 msgid "_Shortcut Keys:"
 msgstr "Πλήκτρα _συντόμευσης:"
-
-#: ../data/monkey-bubble.glade.h:1
-msgid ""
-"<markup>\n"
-"<span weight=\"bold\" size=\"large\"\n"
-"style=\"oblique\">\n"
-"Can't create server !\n"
-"</span>\n"
-"</markup>"
-msgstr ""
-"<markup>\n"
-"<span weight=\"bold\" size=\"large\"\n"
-"style=\"oblique\">\n"
-"Αδυναμία δημιουργίας εξυπηρετητή !\n"
-"</span>\n"
-"</markup>"
-
-#: ../data/monkey-bubble.glade.h:7
-msgid "Join _network game"
-msgstr "Συμμετοχή σε δικτυακό παιχ_νίδι"
-
-#: ../data/monkey-bubble.glade.h:8 ../monkey-bubble.desktop.in.h:1
-msgid "Monkey Bubble"
-msgstr "Monkey Bubble"
-
-#: ../data/monkey-bubble.glade.h:9
-msgid "New 1 player"
-msgstr "Νέο 1 παίκτης"
-
-#: ../data/monkey-bubble.glade.h:10
-msgid "New 2 players"
-msgstr "Νέο 2 παίκτες"
-
-#: ../data/monkey-bubble.glade.h:11
-msgid "New network game"
-msgstr "Νέο παιχνίδι μέσω δικτύου"
-
-#: ../data/monkey-bubble.glade.h:12 ../src/ui/ui-main.c:412
-#: ../src/ui/ui-main.c:544
-msgid "Pause game"
-msgstr "Παύση παιχνιδιού"
-
-#: ../data/monkey-bubble.glade.h:13 ../src/ui/keyboard-properties.c:84
-msgid "Stop game"
-msgstr "Διακοπή παιχνιδιού"
-
-#: ../data/monkey-bubble.glade.h:14
-msgid "Warning"
-msgstr "Προειδοποίηση"
-
-#: ../data/monkey-bubble.glade.h:15
-msgid "_About"
-msgstr "_Περί"
-
-#: ../data/monkey-bubble.glade.h:16
-msgid "_Contents"
-msgstr "Περιε_χόμενα"
-
-#: ../data/monkey-bubble.glade.h:17
-msgid "_Game"
-msgstr "_Παιχνίδι"
-
-#: ../data/monkey-bubble.glade.h:18
-msgid "_Help"
-msgstr "_Βοήθεια"
-
-#: ../data/monkey-bubble.glade.h:19
-msgid "_High Scores"
-msgstr "Βα_θμολογίες"
 
 #: ../data/monkey-bubble.schemas.in.h:1
 msgid "1 player game"
@@ -175,215 +106,316 @@ msgstr "πλήκτρο βολής για τον παίκτη ένα"
 msgid "shoot key for player two"
 msgstr "πλήκτρο βολής για τον παίκτη δύο"
 
-#: ../data/netgame.glade.h:1
-msgid "*"
-msgstr "*"
+#: ../data/monkey-bubble.ui.h:1
+msgid ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Can't create server !\n"
+"</span>\n"
+"</markup>"
+msgstr ""
+"<markup>\n"
+"<span weight=\"bold\" size=\"large\"\n"
+"style=\"oblique\">\n"
+"Αδυναμία δημιουργίας εξυπηρετητή !\n"
+"</span>\n"
+"</markup>"
 
-#: ../data/netgame.glade.h:2 ../data/netserver.glade.h:1
+#: ../data/monkey-bubble.ui.h:7
+msgid "Warning"
+msgstr "Προειδοποίηση"
+
+#: ../data/netgame.ui.h:1
+msgid "Close"
+msgstr "Κλείσιμο"
+
+#: ../data/netgame.ui.h:2
+#: ../data/netserver.ui.h:1
+#: ../src/ui/ui-network-client.c:173
 msgid "Network game"
 msgstr "Παιχνίδι μέσω δικτύου"
 
-#: ../data/netgame.glade.h:3
+#: ../data/netgame.ui.h:3
 msgid "Number of games :"
 msgstr "Αριθμός παιχνιδιών :"
 
-#: ../data/netgame.glade.h:4
+#: ../data/netgame.ui.h:4
 msgid "Number of players :"
 msgstr "Αριθμός παικτών :"
 
-#: ../data/netgame.glade.h:5 ../data/netserver.glade.h:4
-#: ../src/ui/keyboard-properties.c:86
+#: ../data/netgame.ui.h:5
+#: ../data/netserver.ui.h:4
+#: ../src/ui/keyboard-properties.c:85
 msgid "Quit game"
 msgstr "Έξοδος από το παιχνίδι"
 
-#: ../data/netgame.glade.h:6 ../data/netserver.glade.h:5
+#: ../data/netgame.ui.h:6
+#: ../data/netserver.ui.h:5
 msgid "Ready"
 msgstr "Έτοιμος"
 
-#: ../data/netgame.glade.h:7
+#: ../data/netgame.ui.h:7
 msgid "_Go"
 msgstr "Σύν_δεση"
 
-#: ../data/netgame.glade.h:8
+#: ../data/netgame.ui.h:8
 msgid "_Server"
 msgstr "Ε_ξυπηρετητής:"
 
-#: ../data/netserver.glade.h:2
+#: ../data/netserver.ui.h:2
 msgid "Number of game"
 msgstr "Αριθμός παιχνιδιού"
 
-#: ../data/netserver.glade.h:3
+#: ../data/netserver.ui.h:3
 msgid "Number of players"
 msgstr "Αριθμός παικτών"
 
-#: ../data/netserver.glade.h:6
+#: ../data/netserver.ui.h:6
 msgid "Start Game"
 msgstr "Έναρξη παιχνιδιού"
 
-#: ../monkey-bubble.desktop.in.h:2
+#: ../libgnomeui/gnome-scores.c:72
+msgid "Top Ten"
+msgstr "Οι πρώτοι δέκα"
+
+#: ../libgnomeui/gnome-scores.c:85
+msgid "User"
+msgstr "Χρήστης"
+
+#: ../libgnomeui/gnome-scores.c:88
+msgid "Score"
+msgstr "Βαθμολογία"
+
+#: ../libgnomeui/gnome-scores.c:91
+msgid "Date"
+msgstr "Ημερομηνία"
+
+#. TRANSLATORS NOTE: Date format used when showing scores in games.
+#. * Please refer to manpage of strftime(3) for complete reference.
+#.
+#: ../libgnomeui/gnome-scores.c:188
+msgid "%a %b %d %T %Y"
+msgstr "%a %b %d %T %Y"
+
+#: ../libgnomeui/gnome-scores.c:389
+msgid "Sans 14"
+msgstr "Sans 14"
+
+#: ../monkey-bubble.desktop.in.in.h:1
+#: ../src/ui/main.c:97
+#: ../src/ui/ui-main.c:259
+#: ../src/ui/ui-main.c:271
+msgid "Monkey Bubble"
+msgstr "Monkey Bubble"
+
+#: ../monkey-bubble.desktop.in.in.h:2
 msgid "Monkey Bubble Arcade Game"
 msgstr "Monkey Bubble Arcade Παιχνίδι"
 
-#: ../src/ui/keyboard-properties.c:78
+#: ../src/ui/keyboard-properties.c:77
 msgid "New game 1 player"
 msgstr "Νέο παιχνίδι 1 παίκτης"
 
-#: ../src/ui/keyboard-properties.c:80
+#: ../src/ui/keyboard-properties.c:79
 msgid "New game 2 player"
 msgstr "Νέο παιχνίδι 2 παίκτες"
 
-#: ../src/ui/keyboard-properties.c:82
+#: ../src/ui/keyboard-properties.c:81
 msgid "Pause/Resume"
 msgstr "Παύση/Συνέχεια"
 
-#: ../src/ui/keyboard-properties.c:92
+#: ../src/ui/keyboard-properties.c:83
+#: ../src/ui/ui-main.c:225
+msgid "Stop game"
+msgstr "Διακοπή παιχνιδιού"
+
+#: ../src/ui/keyboard-properties.c:91
 msgid "Full Screen"
 msgstr "Πλήρης οθόνη"
 
-#: ../src/ui/keyboard-properties.c:94
+#: ../src/ui/keyboard-properties.c:93
 msgid "Normal Size"
 msgstr "Κανονικό μέγεθος"
 
-#: ../src/ui/keyboard-properties.c:99 ../src/ui/keyboard-properties.c:109
+#: ../src/ui/keyboard-properties.c:98
+#: ../src/ui/keyboard-properties.c:108
 msgid "aim left"
 msgstr "στόχευση αριστερά"
 
-#: ../src/ui/keyboard-properties.c:101 ../src/ui/keyboard-properties.c:111
+#: ../src/ui/keyboard-properties.c:100
+#: ../src/ui/keyboard-properties.c:110
 msgid "aim right"
 msgstr "στόχευση δεξιά"
 
-#: ../src/ui/keyboard-properties.c:103 ../src/ui/keyboard-properties.c:113
+#: ../src/ui/keyboard-properties.c:102
+#: ../src/ui/keyboard-properties.c:112
 msgid "shoot"
 msgstr "βολή"
 
-#: ../src/ui/keyboard-properties.c:120
+#: ../src/ui/keyboard-properties.c:119
 msgid "Player 1"
 msgstr "Παίκτης 1"
 
-#: ../src/ui/keyboard-properties.c:121
+#: ../src/ui/keyboard-properties.c:120
 msgid "Player 2"
 msgstr "Παίκτης 2"
 
-#: ../src/ui/keyboard-properties.c:122
+#: ../src/ui/keyboard-properties.c:121
 msgid "Game"
 msgstr "Παιχνίδι"
 
-#: ../src/ui/keyboard-properties.c:123
+#: ../src/ui/keyboard-properties.c:122
 msgid "View"
 msgstr "Προβολή"
 
-#: ../src/ui/keyboard-properties.c:336
+#: ../src/ui/keyboard-properties.c:307
 #, c-format
 msgid "There was an error loading config from %s. (%s)\n"
 msgstr "Σφάλμα κατά τη φόρτωση ρυθμίσεων από το %s. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:350
+#: ../src/ui/keyboard-properties.c:321
 #, c-format
-msgid ""
-"There was an error subscribing to notification of terminal keybinding "
-"changes. (%s)\n"
-msgstr ""
-"Σφάλμα συνδρομής στην ειδοποίηση των αλλαγών συνδυασμών πλήκτρων τερματικού. "
-"(%s)\n"
+msgid "There was an error subscribing to notification of terminal keybinding changes. (%s)\n"
+msgstr "Σφάλμα συνδρομής στην ειδοποίηση των αλλαγών συνδυασμών πλήκτρων τερματικού. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:393
+#: ../src/ui/keyboard-properties.c:364
 #, c-format
 msgid "There was an error loading a terminal keybinding. (%s)\n"
 msgstr "Σφάλμα φόρτωσης συνδυασμού πλήκτρων τερματικού. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:409
+#: ../src/ui/keyboard-properties.c:380
 #, c-format
 msgid "The value of configuration key %s is not valid; value is \"%s\"\n"
 msgstr "Η τιμή στο κλειδί ρύθμισης %s δεν είναι έγκυρη, η τιμή είναι \"%s\"\n"
 
-#: ../src/ui/keyboard-properties.c:432
+#: ../src/ui/keyboard-properties.c:403
 #, c-format
-msgid ""
-"There was an error loading config value for whether to use menubar access "
-"keys. (%s)\n"
-msgstr ""
-"Σφάλμα φόρτωσης τιμής ρυθμίσεων για το αν θα χρησιμοποιηθούν πλήκτρα "
-"πρόσβασης εργαλειοθήκης μενού. (%s)\n"
+msgid "There was an error loading config value for whether to use menubar access keys. (%s)\n"
+msgstr "Σφάλμα φόρτωσης τιμής ρυθμίσεων για το αν θα χρησιμοποιηθούν πλήκτρα πρόσβασης εργαλειοθήκης μενού. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:446
+#: ../src/ui/keyboard-properties.c:417
 #, c-format
-msgid ""
-"There was an error subscribing to notification on changes on whether to use "
-"menubar access keys (%s)\n"
-msgstr ""
-"Σφάλμα συνδρομής στην ειδοποίηση στις αλλαγές για το αν θα γίνει χρήση "
-"πλήκτρων πρόσβασης μενού (%s)\n"
+msgid "There was an error subscribing to notification on changes on whether to use menubar access keys (%s)\n"
+msgstr "Σφάλμα συνδρομής στην ειδοποίηση στις αλλαγές για το αν θα γίνει χρήση πλήκτρων πρόσβασης μενού (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:457
+#: ../src/ui/keyboard-properties.c:428
 #, c-format
-msgid ""
-"There was an error loading config value for whether to use menu "
-"accelerators. (%s)\n"
-msgstr ""
-"Σφάλμα φόρτωσης τιμής ρυθμίσεων για αν θα χρησιμοποιηθούν συντομεύσεις "
-"μενού. (%s)\n"
+msgid "There was an error loading config value for whether to use menu accelerators. (%s)\n"
+msgstr "Σφάλμα φόρτωσης τιμής ρυθμίσεων για αν θα χρησιμοποιηθούν συντομεύσεις μενού. (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:473
+#: ../src/ui/keyboard-properties.c:444
 #, c-format
-msgid ""
-"There was an error subscribing to notification for use_menu_accelerators (%"
-"s)\n"
+msgid "There was an error subscribing to notification for use_menu_accelerators (%s)\n"
 msgstr "Σφάλμα συνδρομής στην ειδοποίηση για χρήση συντομεύσεων μενού (%s)\n"
 
-#: ../src/ui/keyboard-properties.c:755
+#: ../src/ui/keyboard-properties.c:726
 msgid "Disabled"
 msgstr "Απενεργοποιημένο"
 
-#: ../src/ui/keyboard-properties.c:815
+#: ../src/ui/keyboard-properties.c:786
 #, c-format
 msgid "Error propagating accelerator change to configuration database: %s\n"
-msgstr ""
-"Σφάλμα αναπαραγωγής αλλαγής συντόμευσης στη βάση δεδομένων ρυθμίσεων: %s\n"
+msgstr "Σφάλμα αναπαραγωγής αλλαγής συντόμευσης στη βάση δεδομένων ρυθμίσεων: %s\n"
 
-#: ../src/ui/keyboard-properties.c:983
+#: ../src/ui/keyboard-properties.c:954
 #, c-format
 msgid "Error setting new accelerator in configuration database: %s\n"
-msgstr ""
-"Σφάλμα κατά τη ρύθμιση νέας συντόμευσης στη βάση δεδομένων ρυθμίσεων: %s\n"
+msgstr "Σφάλμα κατά τη ρύθμιση νέας συντόμευσης στη βάση δεδομένων ρυθμίσεων: %s\n"
 
-#: ../src/ui/keyboard-properties.c:1082
+#: ../src/ui/keyboard-properties.c:1061
 msgid "_Action"
 msgstr "Ενέργει_α"
 
-#: ../src/ui/keyboard-properties.c:1105
+#: ../src/ui/keyboard-properties.c:1084
 msgid "Shortcut _Key"
 msgstr "Πλή_κτρο συντόμευσης"
 
-#: ../src/ui/ui-main.c:537
+#: ../src/ui/main.c:87
+msgid "Monkey Bubble is a Bust'a'Move clone for GNOME"
+msgstr "Το Monkey Bubble είναι ένας Bust'a'Move κλώνος του GNOME"
+
+#: ../src/ui/ui-main.c:199
+msgid "_Game"
+msgstr "_Παιχνίδι"
+
+#: ../src/ui/ui-main.c:200
+msgid "New 1 player"
+msgstr "Νέο 1 παίκτης"
+
+#: ../src/ui/ui-main.c:203
+msgid "Join _network game"
+msgstr "Συμμετοχή σε δικτυακό παιχ_νίδι"
+
+#: ../src/ui/ui-main.c:206
+msgid "Pause game"
+msgstr "Παύση παιχνιδιού"
+
+#: ../src/ui/ui-main.c:209
 msgid "Resume game"
 msgstr "Συνέ_χεια παιχνιδιού"
 
-#: ../src/ui/ui-main.c:635
+#: ../src/ui/ui-main.c:213
+msgid "New 2 players"
+msgstr "Νέο 2 παίκτες"
+
+#: ../src/ui/ui-main.c:216
+msgid "New network game"
+msgstr "Νέο παιχνίδι μέσω δικτύου"
+
+#: ../src/ui/ui-main.c:222
+msgid "_High Scores"
+msgstr "Βα_θμολογίες"
+
+#: ../src/ui/ui-main.c:228
+msgid "_Help"
+msgstr "_Βοήθεια"
+
+#: ../src/ui/ui-main.c:229
+msgid "_Contents"
+msgstr "Περιε_χόμενα"
+
+#: ../src/ui/ui-main.c:232
+msgid "_About"
+msgstr "_Περί"
+
+#: ../src/ui/ui-main.c:235
+#| msgid "Full Screen"
+msgid "_Fullscreen"
+msgstr "_Πλήρης οθόνη"
+
+#: ../src/ui/ui-main.c:238
+#| msgid "Full Screen"
+msgid "_Leave Fullscreen"
+msgstr "Έξ_οδος από πλήρη οθόνη"
+
+#: ../src/ui/ui-main.c:766
+msgid "Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply remove all Bubbles by the creation of unicolor triplets."
+msgstr "Το Monkey Bubble είναι ένα παιχνίδι Arcade για το γραφικό περιβάλλον εργασίας GNOME. Απλά αφαιρέστε όλες τις φούσκες δημιουργώντας τριάδες του ίδιου χρώματος."
+
+#: ../src/ui/ui-main.c:773
 msgid "translator_credits"
 msgstr "Giorgos Koklas <geokok1981@gmail.com>"
 
-#: ../src/ui/ui-main.c:643
-msgid ""
-"Monkey Bubble is an Arcade Game for the GNOME Desktop Environment. Simply "
-"remove all Bubbles by the creation of unicolor triplets."
-msgstr ""
-"Το Monkey Bubble είναι ένα παιχνίδι Arcade για το γραφικό περιβάλλον "
-"εργασίας GNOME. Απλά αφαιρέστε όλες τις φούσκες δημιουργώντας τριάδες του "
-"ίδιου χρώματος."
-
-#: ../src/ui/ui-main.c:664
+#: ../src/ui/ui-main.c:794
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Σφάλμα κατά την εμφάνιση βοήθειας: %s"
 
-#: ../src/ui/ui-network-server.c:159 ../src/ui/ui-network-client.c:149
+#: ../src/ui/ui-network-client.c:209
+#: ../src/ui/ui-network-server.c:168
 msgid "_Player name"
 msgstr "Όνομα _παίκτη"
 
-#: ../src/ui/ui-network-server.c:166 ../src/ui/ui-network-client.c:156
+#: ../src/ui/ui-network-client.c:216
+#: ../src/ui/ui-network-server.c:175
 msgid "_Owner"
 msgstr "Ιδι_οκτήτης:"
 
-#: ../src/ui/ui-network-server.c:173 ../src/ui/ui-network-client.c:163
+#: ../src/ui/ui-network-client.c:223
+#: ../src/ui/ui-network-server.c:182
 msgid "_Ready"
 msgstr "Έ_τοιμος"
+
+#~ msgid "*"
+#~ msgstr "*"
