@@ -1,3 +1,11 @@
+2013-07-22  Sudheesh Singanamalla <sudheesh1995@outlook.com>
+	
+	* Fixup INSTALL to INSTALL.md
+	* Fixup COPYING to COPYING.md
+	* Fixup NEWS to NEWS.md
+	* Fixup README to README.md
+	* Added information to README.md
+
 2008-10-08  Christian Persch  <chpe@gnome.org>
 
 	Bug 523832 – add bugzilla info to desktop file
